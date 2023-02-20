@@ -3,6 +3,7 @@ import DataLoader from 'dataloader';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Network } from '~types/network.interface';
 
 const GET_POOL_VOLUMES_QUERY = gql`
@@ -34,7 +35,7 @@ export abstract class BalancerV1PoolSubgraphVolumeDataLoader {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   getLoader() {
-    const dataLoaderOptions = { cache: false, maxBatchSize: 1000 };
+    const dataLoaderOptions = { cache: true, maxBatchSize: 1000 };
     return new DataLoader<string, number>(this.batchGetVolume.bind(this), dataLoaderOptions);
   }
 
@@ -42,7 +43,7 @@ export abstract class BalancerV1PoolSubgraphVolumeDataLoader {
     const ts = Math.round(new Date().getTime() / 1000);
     const tsYesterday = ts - 24 * 3600;
 
-    const volumeResponse = await this.appToolkit.helpers.theGraphHelper.request<GetPoolVolumesResponse>({
+    const volumeResponse = await gqlFetch<GetPoolVolumesResponse>({
       endpoint: this.subgraphUrl,
       query: GET_POOL_VOLUMES_QUERY,
       variables: { tsYesterday, addresses },

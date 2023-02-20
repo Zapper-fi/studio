@@ -1,5 +1,4 @@
 import { Network } from '~types/network.interface';
-import { ArrayOfOneOrMore } from '~types/utils';
 
 export enum AppAction {
   VIEW = 'view',
@@ -87,12 +86,12 @@ export type PresentationConfig = {
 export type AppDefinitionObject = {
   id: string;
   name: string;
-  tags: ArrayOfOneOrMore<AppTag>;
+  tags: AppTag[];
   keywords?: string[];
   description: string;
-  groups: Record<string, AppGroup>;
+  groups?: Record<string, AppGroup>;
   presentationConfig?: PresentationConfig;
-  supportedNetworks: { [N in Network]?: AppAction[] };
+  supportedNetworks?: { [N in Network]?: AppAction[] };
   primaryColor?: string;
   url: string;
   links: AppLinks;

@@ -1,31 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { CONVEX_ARBITRUM_PROVIDERS } from './arbitrum';
 import { ConvexContractFactory } from './contracts';
-import { ConvexAppDefinition, CONVEX_DEFINITION } from './convex.definition';
-import { EthereumConvexAbracadabraClaimableContractPositionFetcher } from './ethereum/convex.abracadabra-claimable.contract-position-fetcher';
-import { EthereumConvexBoosterContractPositionFetcher } from './ethereum/convex.booster.contract-position-fetcher';
-import { EthereumConvexCvxCrvStakingContractPositionFetcher } from './ethereum/convex.cvx-crv-staking.contract-position-fetcher';
-import { EthereumConvexCvxStakingContractPositionFetcher } from './ethereum/convex.cvx-staking.contract-position-fetcher';
-import { EthereumConvexDepositTokenFetcher } from './ethereum/convex.deposit.token-fetcher';
-import { EthereumConvexDepositorContractPositionFetcher } from './ethereum/convex.depositor.contract-position-fetcher';
-import { EthereumConvexLpFarmContractPositionFetcher } from './ethereum/convex.lp-farm.contract-position-fetcher';
-import { EthereumConvexVotingEscrowContractPositionFetcher } from './ethereum/convex.voting-escrow.contract-position-fetcher';
+import { CONVEX_ETHEREUM_PROVIDERS } from './ethereum';
 
-@Register.AppModule({
-  appId: CONVEX_DEFINITION.id,
-  providers: [
-    ConvexAppDefinition,
-    ConvexContractFactory,
-    // Ethereum
-    EthereumConvexDepositorContractPositionFetcher,
-    EthereumConvexBoosterContractPositionFetcher,
-    EthereumConvexAbracadabraClaimableContractPositionFetcher,
-    EthereumConvexDepositTokenFetcher,
-    EthereumConvexCvxStakingContractPositionFetcher,
-    EthereumConvexCvxCrvStakingContractPositionFetcher,
-    EthereumConvexLpFarmContractPositionFetcher,
-    EthereumConvexVotingEscrowContractPositionFetcher,
-  ],
+@Module({
+  providers: [ConvexContractFactory, ...CONVEX_ARBITRUM_PROVIDERS, ...CONVEX_ETHEREUM_PROVIDERS],
 })
 export class ConvexAppModule extends AbstractApp() {}

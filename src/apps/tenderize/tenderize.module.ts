@@ -1,26 +1,28 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumTenderizeFarmTokenFetcher } from './arbitrum/tenderize.farm.contract-position-fetcher';
 import { ArbitrumTenderizeSwapTokenFetcher } from './arbitrum/tenderize.swap.token-fetcher';
-import { ArbitrumTenderizeTenderTokenFetcher } from './arbitrum/tenderize.tender.tender.token-fetcher';
+import { ArbitrumTenderizeTenderTokenFetcher } from './arbitrum/tenderize.tender.token-fetcher';
 import { TenderizeTokenDefinitionsResolver } from './common/tenderize.token-definition-resolver';
 import { TenderizeContractFactory } from './contracts';
+import { EthereumTenderizeFarmTokenFetcher } from './ethereum/tenderize.farm.contract-position-fetcher';
 import { EthereumTenderizeSwapTokenFetcher } from './ethereum/tenderize.swap.token-fetcher';
-import { EthereumTenderizeTenderTokenFetcher } from './ethereum/tenderize.tender.tender.token-fetcher';
-import { TenderizeAppDefinition, TENDERIZE_DEFINITION } from './tenderize.definition';
+import { EthereumTenderizeTenderTokenFetcher } from './ethereum/tenderize.tender.token-fetcher';
 
-@Register.AppModule({
-  appId: TENDERIZE_DEFINITION.id,
+@Module({
   providers: [
-    TenderizeAppDefinition,
     TenderizeContractFactory,
     TenderizeTokenDefinitionsResolver,
     // Arbitrum
     ArbitrumTenderizeSwapTokenFetcher,
     ArbitrumTenderizeTenderTokenFetcher,
+    ArbitrumTenderizeFarmTokenFetcher,
     // Ethereum
     EthereumTenderizeTenderTokenFetcher,
     EthereumTenderizeSwapTokenFetcher,
+    EthereumTenderizeFarmTokenFetcher,
   ],
 })
 export class TenderizeAppModule extends AbstractApp() {}

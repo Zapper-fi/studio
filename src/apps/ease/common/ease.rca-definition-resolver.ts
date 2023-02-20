@@ -23,7 +23,7 @@ export class EaseRcaDefinitionsResolver {
     ttl: 5 * 60, // 5 minutes
   })
   private async getRcaDefinitionsData() {
-    const { data } = await Axios.get<EaseRcaFetcherResponse>('https://app.ease.org/api/v1/vaults');
+    const { data } = await Axios.get<EaseRcaFetcherResponse>('https://api.ease.org/api/v1/vaults');
 
     return data;
   }

@@ -2,9 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { YearnGovernance } from './YearnGovernance';
+export type { YearnLpYCrv } from './YearnLpYCrv';
+export type { YearnStakedYCrv } from './YearnStakedYCrv';
 export type { YearnVault } from './YearnVault';
 export type { YearnVaultV2 } from './YearnVaultV2';
+export type { YearnYCrv } from './YearnYCrv';
 export * as factories from './factories';
 export { YearnGovernance__factory } from './factories/YearnGovernance__factory';
+export { YearnLpYCrv__factory } from './factories/YearnLpYCrv__factory';
+export { YearnStakedYCrv__factory } from './factories/YearnStakedYCrv__factory';
 export { YearnVaultV2__factory } from './factories/YearnVaultV2__factory';
 export { YearnVault__factory } from './factories/YearnVault__factory';
+export { YearnYCrv__factory } from './factories/YearnYCrv__factory';

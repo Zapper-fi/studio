@@ -1,19 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDataProps } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types';
 
-import { BOTTO_DEFINITION } from '../botto.definition';
 import { BottoContractFactory, BottoGovernance } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<BottoGovernance> {
-  appId = BOTTO_DEFINITION.id;
-  groupId = BOTTO_DEFINITION.groups.governance.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Governance';
 
   constructor(

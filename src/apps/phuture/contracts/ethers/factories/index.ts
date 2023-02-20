@@ -2,3 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PhutureManagedIndex__factory } from './PhutureManagedIndex__factory';
+export { PhutureVToken__factory } from './PhutureVToken__factory';
+export { PhutureVTokenFactory__factory } from './PhutureVTokenFactory__factory';

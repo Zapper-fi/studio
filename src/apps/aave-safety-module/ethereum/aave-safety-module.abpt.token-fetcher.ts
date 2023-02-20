@@ -1,34 +1,29 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
 import { AaveAbpt, AaveSafetyModuleContractFactory } from '../contracts';
 
-type AaveSafetyModuleAbptTokenDataProps = {
-  reserves: number[];
-  liquidity: number;
+type AaveSafetyModuleAbptTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePositionFetcher<
   AaveAbpt,
   AaveSafetyModuleAbptTokenDataProps
 > {
-  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.abpt.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'ABPT';
 
   readonly bptAddress = '0xc697051d1c6296c24ae3bcef39aca743861d9a81';
@@ -51,8 +46,11 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return ['0x41a08648c3766f9f9d85598ff102a08f4ef84f84'];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveAbpt>): Promise<string | string[]> {
-    return [this.aaveAddress, this.wethAddress];
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<AaveAbpt>) {
+    return [
+      { address: this.aaveAddress, network: this.network },
+      { address: this.wethAddress, network: this.network },
+    ];
   }
 
   async getPricePerShare({
@@ -74,11 +72,15 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
-    const fee = 0.003;
+  async getLiquidity({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
-    return { fee, reserves, liquidity };
+    return liquidity;
+  }
+
+  async getDataProps(params: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+    const defaultDataProps = await super.getDataProps(params);
+    return { ...defaultDataProps, fee: 0.003 };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {

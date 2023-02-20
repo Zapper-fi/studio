@@ -1,18 +1,18 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { AvalanchePhutureIndexTokenFetcher } from './avalanche/phuture.index.token-fetcher';
 import { PhutureContractFactory } from './contracts';
-import { EthereumPhutureBalanceFetcher } from './ethereum/phuture.balance-fetcher';
 import { EthereumPhutureIndexTokenFetcher } from './ethereum/phuture.index.token-fetcher';
-import { PHUTURE_DEFINITION, PhutureAppDefinition } from './phuture.definition';
 
-@Register.AppModule({
-  appId: PHUTURE_DEFINITION.id,
+@Module({
   providers: [
-    EthereumPhutureBalanceFetcher,
-    EthereumPhutureIndexTokenFetcher,
-    PhutureAppDefinition,
     PhutureContractFactory,
+    // Avalanche
+    AvalanchePhutureIndexTokenFetcher,
+    // Ethereum
+    EthereumPhutureIndexTokenFetcher,
   ],
 })
 export class PhutureAppModule extends AbstractApp() {}

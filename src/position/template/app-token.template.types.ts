@@ -1,15 +1,28 @@
 import { IMulticallWrapper } from '~multicall/multicall.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
+import { Network } from '~types/network.interface';
 
 export type DefaultAppTokenDefinition = {
   address: string;
 };
 
+export type DefaultAppTokenDataProps = {
+  liquidity: number;
+  reserves: number[];
+  apy: number;
+};
+
+export type UnderlyingTokenDefinition = {
+  address: string;
+  network: Network;
+  tokenId?: number;
+};
+
 // PHASE 1: List addresses and definitions
 export type GetDefinitionsParams = {
   multicall: IMulticallWrapper;
+  tokenLoader: TokenDependencySelector;
 };
 
 export type GetAddressesParams<R = DefaultAppTokenDefinition> = {
@@ -28,7 +41,7 @@ type PositionBuilderContext<T, R = DefaultAppTokenDefinition> = {
 
 type PositionBuilderContextWithAppToken<
   T,
-  V = DefaultDataProps,
+  V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
   K extends keyof AppTokenPosition = keyof AppTokenPosition,
 > = PositionBuilderContext<T, R> & {
@@ -37,29 +50,37 @@ type PositionBuilderContextWithAppToken<
 
 export type GetUnderlyingTokensParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
 
-export type GetTokenPropsParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
-
-export type GetPricePerShareParams<
+export type GetTokenPropsParams<
   T,
-  V = DefaultDataProps,
+  V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
-> = PositionBuilderContextWithAppToken<T, V, R, 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'>;
-
-export type GetPriceParams<T, V = DefaultDataProps, R = DefaultAppTokenDefinition> = PositionBuilderContextWithAppToken<
+> = PositionBuilderContextWithAppToken<
   T,
   V,
   R,
-  'price' | 'dataProps' | 'displayProps'
+  'symbol' | 'decimals' | 'supply' | 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
 >;
+
+export type GetPricePerShareParams<
+  T,
+  V = DefaultAppTokenDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<T, V, R, 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'>;
+
+export type GetPriceParams<
+  T,
+  V = DefaultAppTokenDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<T, V, R, 'price' | 'dataProps' | 'displayProps'>;
 
 export type GetDataPropsParams<
   T,
-  V = DefaultDataProps,
+  V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<T, V, R, 'dataProps' | 'displayProps'>;
 
 export type GetDisplayPropsParams<
   T,
-  V = DefaultDataProps,
+  V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<T, V, R, 'displayProps'>;

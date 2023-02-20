@@ -2,12 +2,11 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
-  GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -22,7 +21,7 @@ export type UnagiiTokenDefinition = {
 
 export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   UnagiiUtoken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   UnagiiTokenDefinition
 > {
   abstract vaultManagerAddresses: string[];
@@ -75,21 +74,13 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
     });
     const totalAssetsRaw = await multicall.wrap(vaultManagerContract).totalAssets();
     const underlyingAssets = Number(totalAssetsRaw) / 10 ** appToken.tokens[0].decimals;
-    return underlyingAssets / appToken.supply;
+    const pricePerShare = underlyingAssets / appToken.supply;
+    return [pricePerShare];
   }
 
-  async getUnderlyingTokenAddresses({
-    definition,
-  }: GetUnderlyingTokensParams<UnagiiUtoken, UnagiiTokenDefinition>): Promise<string[]> {
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<UnagiiUtoken, UnagiiTokenDefinition>) {
     const underlyingTokenAddress =
       definition.underlyingTokenAddress === ETH_ADDR_ALIAS ? ZERO_ADDRESS : definition.underlyingTokenAddress;
-    return [underlyingTokenAddress];
-  }
-
-  async getDataProps(opts: GetDataPropsParams<UnagiiUtoken, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
-
-    return { liquidity };
+    return [{ address: underlyingTokenAddress, network: this.network }];
   }
 }

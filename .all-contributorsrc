@@ -730,6 +730,107 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "justingreenberg",
+      "name": "Justin Greenberg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1539088?v=4",
+      "profile": "https://github.com/justingreenberg",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "maximebedard",
+      "name": "Maxime Bedard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/801405?v=4",
+      "profile": "https://github.com/maximebedard",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "senamakel",
+      "name": "Steven Enamakel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31011319?v=4",
+      "profile": "https://enamakel.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "gdeschryver",
+      "name": "gauloiseth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70271293?v=4",
+      "profile": "https://github.com/gdeschryver",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "eugenesh1",
+      "name": "Eugene",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81377977?v=4",
+      "profile": "https://ooki.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Robsonsjre",
+      "name": "Rob",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11945073?v=4",
+      "profile": "https://github.com/Robsonsjre",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "vedantd",
+      "name": "Vedant Dalvi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29754152?v=4",
+      "profile": "https://github.com/vedantd",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ibeandyy",
+      "name": "ibeandyy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16962763?v=4",
+      "profile": "https://github.com/ibeandyy",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "0xdapper",
+      "name": "0xdapper",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94534135?v=4",
+      "profile": "https://github.com/0xdapper",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "OlehX",
+      "name": "Oleh Vovnianko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16556962?v=4",
+      "profile": "https://github.com/OlehX",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "akashiceth",
+      "name": "akashiceth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96811933?v=4",
+      "profile": "https://github.com/akashiceth",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

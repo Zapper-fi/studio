@@ -1,12 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { DopexContractFactory, DopexDualRewardStaking } from '../contracts';
-import { DOPEX_DEFINITION } from '../dopex.definition';
 
 const FARMS = [
   // rDPX v1
@@ -23,11 +22,8 @@ const FARMS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<DopexDualRewardStaking> {
-  appId = DOPEX_DEFINITION.id;
-  groupId = DOPEX_DEFINITION.groups.farm.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(

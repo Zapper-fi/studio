@@ -1,22 +1,15 @@
-import { Injectable } from '@nestjs/common';
-
-import { AaveV2AToken } from '~apps/aave-v2/contracts';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
-  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+} from '~apps/aave-v2/common/aave-v2.lending.token-fetcher';
+import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import AGAVE_DEFINITION from '../agave.definition';
-
-@Injectable()
-export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
-  appId = AGAVE_DEFINITION.id;
-  groupId = AGAVE_DEFINITION.groups.stableBorrow.id;
-  network = Network.GNOSIS_MAINNET;
+@PositionTemplate()
+export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0x24dcbd376db23e4771375092344f5cbea3541fc0';
   isDebt = true;
@@ -25,7 +18,7 @@ export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTemplateTo
     return reserveTokenAddressesData.stableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.stableBorrowApy;
   }
 

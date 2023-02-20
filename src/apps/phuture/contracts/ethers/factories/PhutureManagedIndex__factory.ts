@@ -8,11 +8,6 @@ import type { PhutureManagedIndex, PhutureManagedIndexInterface } from '../Phutu
 
 const _abi = [
   {
-    inputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
-  {
     anonymous: false,
     inputs: [
       {

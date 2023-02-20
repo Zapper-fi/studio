@@ -1,0 +1,19 @@
+import { Module } from '@nestjs/common';
+
+import { AbstractApp } from '~app/app.dynamic-module';
+
+import { SynthetixContractFactory } from '../synthetix/contracts';
+
+import { KwentaContractFactory } from './contracts';
+import { OptimismKwentaPerpV1CrossMarginContractPositionFetcher } from './optimism/kwenta.perp-v1-cross-margin.contract-position-fetcher';
+import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.staking.contract-position-fetcher';
+
+@Module({
+  providers: [
+    KwentaContractFactory,
+    SynthetixContractFactory,
+    OptimismKwentaPerpV1CrossMarginContractPositionFetcher,
+    OptimismKwentaStakingContractPositionFetcher,
+  ],
+})
+export class KwentaAppModule extends AbstractApp() { }

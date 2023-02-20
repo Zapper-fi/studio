@@ -53,6 +53,8 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Build package
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
         run: pnpm build
         if: ${{ steps.release.outputs.release_created }}
 

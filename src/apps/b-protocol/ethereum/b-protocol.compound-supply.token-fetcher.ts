@@ -1,0 +1,62 @@
+import { Inject } from '@nestjs/common';
+
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
+import { CompoundContractFactory } from '~apps/compound/contracts';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
+
+import { BProtocolContractFactory, BProtocolCompoundComptroller, BProtocolCompoundToken } from '../contracts';
+
+@PositionTemplate()
+export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
+  BProtocolCompoundToken,
+  BProtocolCompoundComptroller
+> {
+  groupLabel = 'Compound Lending';
+  comptrollerAddress = '0x9db10b9429989cc13408d7368644d4a1cb704ea3';
+
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
+    @Inject(CompoundContractFactory) protected readonly compoundContractFactory: CompoundContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.bProtocolCompoundToken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.bProtocolCompoundComptroller({ address, network: this.network });
+  }
+
+  async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
+    const cTokenAddresses = await contract.getAllMarkets();
+    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
+    return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
+  }
+
+  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<BProtocolCompoundToken>) {
+    return contract.underlying();
+  }
+
+  async getExchangeRate({ contract }: GetPricePerShareParams<BProtocolCompoundToken>) {
+    return contract.callStatic.exchangeRateCurrent();
+  }
+
+  async getSupplyRate({ contract, multicall }: GetDataPropsParams<BProtocolCompoundToken>) {
+    const cTokenAddress = await contract.cToken();
+    const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
+    return multicall
+      .wrap(cToken)
+      .supplyRatePerBlock()
+      .catch(() => 0);
+  }
+}

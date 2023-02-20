@@ -4,3 +4,4 @@
 export { HakuswapFactory__factory } from './HakuswapFactory__factory';
 export { HakuswapMasterchef__factory } from './HakuswapMasterchef__factory';
 export { HakuswapPool__factory } from './HakuswapPool__factory';
+export { HakuswapXHaku__factory } from './HakuswapXHaku__factory';

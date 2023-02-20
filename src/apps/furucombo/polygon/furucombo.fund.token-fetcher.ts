@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import Axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { DisplayProps } from '~position/display.interface';
@@ -12,11 +13,11 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetAddressesParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-import { Network, NETWORK_IDS } from '~types/network.interface';
+import { NETWORK_IDS } from '~types/network.interface';
 
 import { FurucomboContractFactory, FurucomboFundShareToken } from '../contracts';
-import { FURUCOMBO_DEFINITION } from '../furucombo.definition';
 
 interface FurucomboFund {
   address: string;
@@ -40,11 +41,6 @@ interface FurucomboFund {
   fundVault: string;
 }
 
-type FurucomboFundDataProps = {
-  apy: number;
-  liquidity: number;
-};
-
 type FurucomboFundDefinition = {
   address: string;
   vaultAddress: string;
@@ -55,19 +51,12 @@ type FurucomboFundDefinition = {
   price: string;
 };
 
-const appId = FURUCOMBO_DEFINITION.id;
-const groupId = FURUCOMBO_DEFINITION.groups.fund.id;
-const network = Network.POLYGON_MAINNET;
-
-@Injectable()
+@PositionTemplate()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
-  FurucomboFundDataProps,
+  DefaultAppTokenDataProps,
   FurucomboFundDefinition
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
   groupLabel = 'Funds';
   minLiquidity = 0;
 
@@ -83,8 +72,9 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   @CacheOnInterval({
-    key: `studio:${appId}:${groupId}:${network}:funds`,
+    key: `studio:furucombo:fund:ethereum:funds`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getFurucomboFunds() {
     const { data } = await Axios.get<{ investables: FurucomboFund[] }>('https://api.furucombo.app/v1/investables', {
@@ -112,32 +102,41 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<FurucomboFundShareToken, FurucomboFundDefinition>) {
-    return definition.stakingTokenAddress;
+    return [{ address: definition.stakingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({
     appToken,
     definition,
-  }: GetPricePerShareParams<FurucomboFundShareToken, FurucomboFundDataProps, FurucomboFundDefinition>) {
-    return Number(definition.price) / appToken.tokens[0].price;
+  }: GetPricePerShareParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
+    return [Number(definition.price) / appToken.tokens[0].price];
   }
 
-  async getDataProps({
+  async getLiquidity({
     definition,
-  }: GetDataPropsParams<
-    FurucomboFundShareToken,
-    FurucomboFundDataProps,
-    FurucomboFundDefinition
-  >): Promise<FurucomboFundDataProps> {
-    return { apy: Number(definition.apy) * 100, liquidity: Number(definition.liquidity) };
+  }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
+    return Number(definition.liquidity);
+  }
+
+  async getReserves({
+    definition,
+    appToken,
+  }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
+    return [Number(definition.liquidity) / appToken.tokens[0].price];
+  }
+
+  async getApy({
+    definition,
+  }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
+    return Number(definition.apy) * 100;
   }
 
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps, FurucomboFundDefinition>): Promise<
+  }: GetDisplayPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>): Promise<
     DisplayProps['label']
   > {
     return definition.name;
@@ -145,7 +144,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
 
   async getImages({
     appToken,
-  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['images']> {
+  }: GetDisplayPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps>): Promise<DisplayProps['images']> {
     return appToken.tokens.flatMap(t => getImagesFromToken(t));
   }
 }

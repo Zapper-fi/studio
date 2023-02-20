@@ -1,11 +1,16 @@
 import { Inject } from '@nestjs/common';
 import { Contract } from 'ethers';
-import { sum } from 'lodash';
+import { compact, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDefinition, GetAddressesParams } from '~position/template/app-token.template.types';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
+import {
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition,
+  GetAddressesParams,
+  GetUnderlyingTokensParams,
+  GetDataPropsParams,
+} from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ContractFactory } from '../contracts';
 
@@ -20,9 +25,7 @@ export type PoolTogetherV3PrizePoolDefinition = DefaultAppTokenDefinition & {
   }[];
 };
 
-export type PoolTogetherV3PrizePoolDataProps = {
-  apy: number;
-  liquidity: number;
+export type PoolTogetherV3PrizePoolDataProps = DefaultAppTokenDataProps & {
   faucetAddresses: string[];
 };
 
@@ -44,21 +47,36 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
 
   abstract getDefinitions(): Promise<PoolTogetherV3PrizePoolDefinition[]>;
 
-  async getUnderlyingTokenAddresses({
-    definition,
-  }: GetUnderlyingTokensParams<T, PoolTogetherV3PrizePoolDefinition>): Promise<string | string[]> {
-    return [definition.underlyingTokenAddress];
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<T, PoolTogetherV3PrizePoolDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  protected async getApy({
+  async getPricePerShare() {
+    return [1];
+  }
+
+  async getApy({
     definition,
     multicall,
-    liquidity,
     tokenLoader,
-  }: GetDataPropsParams<T, PoolTogetherV3PrizePoolDataProps, PoolTogetherV3PrizePoolDefinition> & {
-    liquidity: number;
-  }) {
-    const { tokenFaucets } = definition;
+    appToken,
+  }: GetDataPropsParams<T, PoolTogetherV3PrizePoolDataProps, PoolTogetherV3PrizePoolDefinition>) {
+    const { tokenFaucets, sponsorshipAddress, ticketAddress } = definition;
+
+    const sponsorshipTokenContract = this.contractFactory.erc20({ address: sponsorshipAddress, network: this.network });
+    const ticketTokenContract = this.contractFactory.erc20({ address: ticketAddress, network: this.network });
+    const [sponsorshipSupplyRaw, sponsorshipDecimals, ticketSupplyRaw, ticketDecimals] = await Promise.all([
+      sponsorshipTokenContract.totalSupply(),
+      sponsorshipTokenContract.decimals(),
+      ticketTokenContract.totalSupply(),
+      ticketTokenContract.decimals(),
+    ]);
+
+    const sponsorshipSupply = Number(sponsorshipSupplyRaw) / 10 ** sponsorshipDecimals;
+    const ticketSupply = Number(ticketSupplyRaw) / 10 ** ticketDecimals;
+    const totalSupply = sponsorshipSupply + ticketSupply;
+    const totalLiquidity = totalSupply * appToken.tokens[0].price;
+
     const apys = await Promise.all(
       tokenFaucets.map(async tokenFaucet => {
         const { tokenFaucetAddress, assetAddress } = tokenFaucet;
@@ -90,10 +108,19 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
         const rewardTokenPrice = tokenDependency?.price ?? 0;
 
         const totalDripDailyValue = totalDripPerDay * rewardTokenPrice;
-        return (totalDripDailyValue / liquidity) * 365;
+        return (totalDripDailyValue / totalLiquidity) * 365;
       }),
     );
 
     return sum(apys);
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<T, PoolTogetherV3PrizePoolDataProps, PoolTogetherV3PrizePoolDefinition>,
+  ) {
+    const defaultDataProps = await super.getDataProps(params);
+    const { tokenFaucets } = params.definition;
+    const faucetAddresses = compact(tokenFaucets.map(tokenFaucet => tokenFaucet.tokenFaucetAddress));
+    return { ...defaultDataProps, faucetAddresses };
   }
 }

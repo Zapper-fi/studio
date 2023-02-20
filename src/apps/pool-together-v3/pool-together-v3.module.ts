@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { CeloPoolTogetherV3ClaimableContractPositionFetcher } from './celo/pool-together-v3.claimable.contract-position-fetcher';
@@ -18,13 +19,11 @@ import { PolygonPoolTogetherV3ClaimableContractPositionFetcher } from './polygon
 import { PolygonPoolTogetherV3CommunityTicketTokenFetcher } from './polygon/pool-together-v3.community-ticket.token-fetcher';
 import { PolygonPoolTogetherV3SponsorshipTokenFetcher } from './polygon/pool-together-v3.sponsorship.token-fetcher';
 import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together-v3.ticket.token-fetcher';
-import POOL_TOGETHER_V3_DEFINITION, { PoolTogetherV3AppDefinition } from './pool-together-v3.definition';
 
-@Register.AppModule({
-  appId: POOL_TOGETHER_V3_DEFINITION.id,
+@Module({
   providers: [
     PoolTogetherV3ApiPrizePoolRegistry,
-    PoolTogetherV3AppDefinition,
+
     PoolTogetherV3ContractFactory,
     PoolTogetherV3LogProvider,
     // Celo
@@ -46,6 +45,5 @@ import POOL_TOGETHER_V3_DEFINITION, { PoolTogetherV3AppDefinition } from './pool
     PolygonPoolTogetherV3SponsorshipTokenFetcher,
     PolygonPoolTogetherV3TicketTokenFetcher,
   ],
-  exports: [PoolTogetherV3ApiPrizePoolRegistry],
 })
 export class PoolTogetherV3AppModule extends AbstractApp() {}

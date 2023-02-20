@@ -2,5 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { PhutureManagedIndex } from './PhutureManagedIndex';
+export type { PhutureVToken } from './PhutureVToken';
+export type { PhutureVTokenFactory } from './PhutureVTokenFactory';
 export * as factories from './factories';
 export { PhutureManagedIndex__factory } from './factories/PhutureManagedIndex__factory';
+export { PhutureVTokenFactory__factory } from './factories/PhutureVTokenFactory__factory';
+export { PhutureVToken__factory } from './factories/PhutureVToken__factory';

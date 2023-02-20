@@ -19,617 +19,366 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 
 export interface MaplePoolInterface extends utils.Interface {
   functions: {
-    'BPTVal(address,address,address,address)': FunctionFragment;
-    'DL_FACTORY()': FunctionFragment;
-    'accumulativeFundsOf(address)': FunctionFragment;
-    'accumulativeLossesOf(address)': FunctionFragment;
+    'BOOTSTRAP_MINT()': FunctionFragment;
+    'DOMAIN_SEPARATOR()': FunctionFragment;
+    'PERMIT_TYPEHASH()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
-    'allowedLiquidityProviders(address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
+    'asset()': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'cancelWithdraw()': FunctionFragment;
-    'claim(address,address)': FunctionFragment;
-    'custodyAllowance(address,address)': FunctionFragment;
-    'deactivate()': FunctionFragment;
-    'debtLockers(address,address)': FunctionFragment;
+    'balanceOfAssets(address)': FunctionFragment;
+    'convertToAssets(uint256)': FunctionFragment;
+    'convertToExitAssets(uint256)': FunctionFragment;
+    'convertToExitShares(uint256)': FunctionFragment;
+    'convertToShares(uint256)': FunctionFragment;
     'decimals()': FunctionFragment;
     'decreaseAllowance(address,uint256)': FunctionFragment;
-    'delegateFee()': FunctionFragment;
-    'deposit(uint256)': FunctionFragment;
-    'depositDate(address)': FunctionFragment;
-    'finalize()': FunctionFragment;
-    'fundLoan(address,address,uint256)': FunctionFragment;
-    'getInitialStakeRequirements()': FunctionFragment;
-    'getPoolSharesRequired(address,address,address,address,uint256)': FunctionFragment;
+    'deposit(uint256,address)': FunctionFragment;
+    'depositWithPermit(uint256,address,uint256,uint8,bytes32,bytes32)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'increaseCustodyAllowance(address,uint256)': FunctionFragment;
-    'intendToWithdraw()': FunctionFragment;
-    'interestBalance()': FunctionFragment;
-    'interestSum()': FunctionFragment;
-    'isDepositAllowed(uint256)': FunctionFragment;
-    'isPoolFinalized()': FunctionFragment;
-    'liquidityAsset()': FunctionFragment;
-    'liquidityCap()': FunctionFragment;
-    'liquidityLocker()': FunctionFragment;
-    'lockupPeriod()': FunctionFragment;
-    'lossesBalance()': FunctionFragment;
+    'manager()': FunctionFragment;
+    'maxDeposit(address)': FunctionFragment;
+    'maxMint(address)': FunctionFragment;
+    'maxRedeem(address)': FunctionFragment;
+    'maxWithdraw(address)': FunctionFragment;
+    'mint(uint256,address)': FunctionFragment;
+    'mintWithPermit(uint256,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
     'name()': FunctionFragment;
-    'openToPublic()': FunctionFragment;
-    'poolAdmins(address)': FunctionFragment;
-    'poolDelegate()': FunctionFragment;
-    'poolLosses()': FunctionFragment;
-    'poolState()': FunctionFragment;
-    'principalOut()': FunctionFragment;
-    'reclaimERC20(address)': FunctionFragment;
-    'recognizableLossesOf(address)': FunctionFragment;
-    'recognizedLossesOf(address)': FunctionFragment;
-    'setAllowList(address,bool)': FunctionFragment;
-    'setLiquidityCap(uint256)': FunctionFragment;
-    'setLockupPeriod(uint256)': FunctionFragment;
-    'setOpenToPublic(bool)': FunctionFragment;
-    'setPoolAdmin(address,bool)': FunctionFragment;
-    'setStakingFee(uint256)': FunctionFragment;
-    'stakeAsset()': FunctionFragment;
-    'stakeLocker()': FunctionFragment;
-    'stakingFee()': FunctionFragment;
-    'superFactory()': FunctionFragment;
+    'nonces(address)': FunctionFragment;
+    'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'previewDeposit(uint256)': FunctionFragment;
+    'previewMint(uint256)': FunctionFragment;
+    'previewRedeem(uint256)': FunctionFragment;
+    'previewWithdraw(uint256)': FunctionFragment;
+    'redeem(uint256,address,address)': FunctionFragment;
+    'removeShares(uint256,address)': FunctionFragment;
+    'requestRedeem(uint256,address)': FunctionFragment;
+    'requestWithdraw(uint256,address)': FunctionFragment;
     'symbol()': FunctionFragment;
-    'totalCustodyAllowance(address)': FunctionFragment;
+    'totalAssets()': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
-    'transferByCustodian(address,address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
-    'triggerDefault(address,address)': FunctionFragment;
-    'updateFundsReceived()': FunctionFragment;
-    'updateLossesReceived()': FunctionFragment;
-    'withdraw(uint256)': FunctionFragment;
-    'withdrawCooldown(address)': FunctionFragment;
-    'withdrawFunds()': FunctionFragment;
-    'withdrawableFundsOf(address)': FunctionFragment;
-    'withdrawnFundsOf(address)': FunctionFragment;
+    'unrealizedLosses()': FunctionFragment;
+    'withdraw(uint256,address,address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'BPTVal'
-      | 'DL_FACTORY'
-      | 'accumulativeFundsOf'
-      | 'accumulativeLossesOf'
+      | 'BOOTSTRAP_MINT'
+      | 'DOMAIN_SEPARATOR'
+      | 'PERMIT_TYPEHASH'
       | 'allowance'
-      | 'allowedLiquidityProviders'
       | 'approve'
+      | 'asset'
       | 'balanceOf'
-      | 'cancelWithdraw'
-      | 'claim'
-      | 'custodyAllowance'
-      | 'deactivate'
-      | 'debtLockers'
+      | 'balanceOfAssets'
+      | 'convertToAssets'
+      | 'convertToExitAssets'
+      | 'convertToExitShares'
+      | 'convertToShares'
       | 'decimals'
       | 'decreaseAllowance'
-      | 'delegateFee'
       | 'deposit'
-      | 'depositDate'
-      | 'finalize'
-      | 'fundLoan'
-      | 'getInitialStakeRequirements'
-      | 'getPoolSharesRequired'
+      | 'depositWithPermit'
       | 'increaseAllowance'
-      | 'increaseCustodyAllowance'
-      | 'intendToWithdraw'
-      | 'interestBalance'
-      | 'interestSum'
-      | 'isDepositAllowed'
-      | 'isPoolFinalized'
-      | 'liquidityAsset'
-      | 'liquidityCap'
-      | 'liquidityLocker'
-      | 'lockupPeriod'
-      | 'lossesBalance'
+      | 'manager'
+      | 'maxDeposit'
+      | 'maxMint'
+      | 'maxRedeem'
+      | 'maxWithdraw'
+      | 'mint'
+      | 'mintWithPermit'
       | 'name'
-      | 'openToPublic'
-      | 'poolAdmins'
-      | 'poolDelegate'
-      | 'poolLosses'
-      | 'poolState'
-      | 'principalOut'
-      | 'reclaimERC20'
-      | 'recognizableLossesOf'
-      | 'recognizedLossesOf'
-      | 'setAllowList'
-      | 'setLiquidityCap'
-      | 'setLockupPeriod'
-      | 'setOpenToPublic'
-      | 'setPoolAdmin'
-      | 'setStakingFee'
-      | 'stakeAsset'
-      | 'stakeLocker'
-      | 'stakingFee'
-      | 'superFactory'
+      | 'nonces'
+      | 'permit'
+      | 'previewDeposit'
+      | 'previewMint'
+      | 'previewRedeem'
+      | 'previewWithdraw'
+      | 'redeem'
+      | 'removeShares'
+      | 'requestRedeem'
+      | 'requestWithdraw'
       | 'symbol'
-      | 'totalCustodyAllowance'
+      | 'totalAssets'
       | 'totalSupply'
       | 'transfer'
-      | 'transferByCustodian'
       | 'transferFrom'
-      | 'triggerDefault'
-      | 'updateFundsReceived'
-      | 'updateLossesReceived'
-      | 'withdraw'
-      | 'withdrawCooldown'
-      | 'withdrawFunds'
-      | 'withdrawableFundsOf'
-      | 'withdrawnFundsOf',
+      | 'unrealizedLosses'
+      | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: 'BPTVal',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'DL_FACTORY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accumulativeFundsOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'accumulativeLossesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'BOOTSTRAP_MINT', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'allowedLiquidityProviders', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'approve',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'cancelWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'custodyAllowance',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'deactivate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'debtLockers', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOfAssets', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'convertToExitAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'convertToExitShares', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'decreaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'delegateFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'depositDate', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'finalize', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'fundLoan',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'getInitialStakeRequirements', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'getPoolSharesRequired',
+    functionFragment: 'depositWithPermit',
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
     ],
   ): string;
   encodeFunctionData(
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'manager', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxDeposit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxMint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxRedeem', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxWithdraw', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'increaseCustodyAllowance',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'mintWithPermit',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'intendToWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'interestBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'interestSum', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isDepositAllowed', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'isPoolFinalized', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidityAsset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidityCap', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidityLocker', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lockupPeriod', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lossesBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'openToPublic', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolAdmins', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'poolDelegate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolLosses', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolState', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'principalOut', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reclaimERC20', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'recognizableLossesOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'recognizedLossesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'setAllowList',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+    functionFragment: 'permit',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setLockupPeriod', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setOpenToPublic', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'previewDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewMint', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewRedeem', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'setPoolAdmin',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+    functionFragment: 'redeem',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'setStakingFee', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'stakeAsset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakeLocker', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakingFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'superFactory', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'removeShares',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'requestRedeem',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'requestWithdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalCustodyAllowance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transfer',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferByCustodian',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'transferFrom',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'unrealizedLosses', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'triggerDefault',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'updateFundsReceived', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateLossesReceived', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'withdrawCooldown', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'withdrawFunds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawableFundsOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'withdrawnFundsOf', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: 'BPTVal', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'DL_FACTORY', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accumulativeFundsOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accumulativeLossesOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'BOOTSTRAP_MINT', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'PERMIT_TYPEHASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'allowedLiquidityProviders', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cancelWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'custodyAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deactivate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'debtLockers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOfAssets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'convertToExitAssets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'convertToExitShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'delegateFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositDate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'finalize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'fundLoan', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getInitialStakeRequirements', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getPoolSharesRequired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositWithPermit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'increaseCustodyAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'intendToWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'interestBalance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'interestSum', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isDepositAllowed', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isPoolFinalized', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'liquidityAsset', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'liquidityCap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'liquidityLocker', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lockupPeriod', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lossesBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'manager', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxMint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxRedeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintWithPermit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'openToPublic', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolAdmins', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolDelegate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolLosses', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolState', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'principalOut', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'reclaimERC20', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'recognizableLossesOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'recognizedLossesOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setAllowList', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setLiquidityCap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setLockupPeriod', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setOpenToPublic', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setPoolAdmin', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setStakingFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakeAsset', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakeLocker', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakingFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'superFactory', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'permit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewMint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewRedeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requestRedeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requestWithdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalCustodyAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferByCustodian', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'triggerDefault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateFundsReceived', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateLossesReceived', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unrealizedLosses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawCooldown', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawFunds', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawableFundsOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawnFundsOf', data: BytesLike): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
-    'BalanceUpdated(address,address,uint256)': EventFragment;
-    'Claim(address,uint256,uint256,uint256,uint256,uint256)': EventFragment;
-    'Cooldown(address,uint256)': EventFragment;
-    'CustodyAllowanceChanged(address,address,uint256,uint256)': EventFragment;
-    'CustodyTransfer(address,address,address,uint256)': EventFragment;
-    'DefaultSuffered(address,uint256,uint256,uint256,uint256)': EventFragment;
-    'DepositDateUpdated(address,uint256)': EventFragment;
-    'FundsDistributed(address,uint256)': EventFragment;
-    'FundsWithdrawn(address,uint256,uint256)': EventFragment;
-    'LPStatusChanged(address,bool)': EventFragment;
-    'LiquidityCapSet(uint256)': EventFragment;
-    'LoanFunded(address,address,uint256)': EventFragment;
-    'LockupPeriodSet(uint256)': EventFragment;
-    'LossesCorrectionUpdated(address,int256)': EventFragment;
-    'LossesDistributed(address,uint256)': EventFragment;
-    'LossesPerShareUpdated(uint256)': EventFragment;
-    'LossesRecognized(address,uint256,uint256)': EventFragment;
-    'PointsCorrectionUpdated(address,int256)': EventFragment;
-    'PointsPerShareUpdated(uint256)': EventFragment;
-    'PoolAdminSet(address,bool)': EventFragment;
-    'PoolOpenedToPublic(bool)': EventFragment;
-    'PoolStateChanged(uint8)': EventFragment;
-    'StakingFeeSet(uint256)': EventFragment;
-    'TotalCustodyAllowanceUpdated(address,uint256)': EventFragment;
+    'BootstrapMintPerformed(address,address,uint256,uint256,uint256)': EventFragment;
+    'Deposit(address,address,uint256,uint256)': EventFragment;
+    'OwnershipAccepted(address,address)': EventFragment;
+    'PendingOwnerSet(address,address)': EventFragment;
+    'RedemptionRequested(address,uint256,uint256)': EventFragment;
+    'SharesRemoved(address,uint256)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
+    'Withdraw(address,address,address,uint256,uint256)': EventFragment;
+    'WithdrawRequested(address,uint256,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'BalanceUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Cooldown'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'CustodyAllowanceChanged'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'CustodyTransfer'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'DefaultSuffered'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'DepositDateUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'FundsDistributed'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'FundsWithdrawn'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LPStatusChanged'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LiquidityCapSet'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LoanFunded'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LockupPeriodSet'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LossesCorrectionUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LossesDistributed'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LossesPerShareUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LossesRecognized'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PointsCorrectionUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PointsPerShareUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PoolAdminSet'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PoolOpenedToPublic'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PoolStateChanged'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'StakingFeeSet'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'TotalCustodyAllowanceUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BootstrapMintPerformed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipAccepted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PendingOwnerSet'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RedemptionRequested'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SharesRemoved'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawRequested'): EventFragment;
 }
 
 export interface ApprovalEventObject {
-  owner: string;
-  spender: string;
-  value: BigNumber;
+  owner_: string;
+  spender_: string;
+  amount_: BigNumber;
 }
 export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
-export interface BalanceUpdatedEventObject {
-  liquidityProvider: string;
-  token: string;
-  balance: BigNumber;
+export interface BootstrapMintPerformedEventObject {
+  caller_: string;
+  receiver_: string;
+  assets_: BigNumber;
+  shares_: BigNumber;
+  bootStrapMintAmount_: BigNumber;
 }
-export type BalanceUpdatedEvent = TypedEvent<[string, string, BigNumber], BalanceUpdatedEventObject>;
-
-export type BalanceUpdatedEventFilter = TypedEventFilter<BalanceUpdatedEvent>;
-
-export interface ClaimEventObject {
-  loan: string;
-  interest: BigNumber;
-  principal: BigNumber;
-  fee: BigNumber;
-  stakeLockerPortion: BigNumber;
-  poolDelegatePortion: BigNumber;
-}
-export type ClaimEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber], ClaimEventObject>;
-
-export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
-
-export interface CooldownEventObject {
-  liquidityProvider: string;
-  cooldown: BigNumber;
-}
-export type CooldownEvent = TypedEvent<[string, BigNumber], CooldownEventObject>;
-
-export type CooldownEventFilter = TypedEventFilter<CooldownEvent>;
-
-export interface CustodyAllowanceChangedEventObject {
-  liquidityProvider: string;
-  custodian: string;
-  oldAllowance: BigNumber;
-  newAllowance: BigNumber;
-}
-export type CustodyAllowanceChangedEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  CustodyAllowanceChangedEventObject
+export type BootstrapMintPerformedEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber, BigNumber],
+  BootstrapMintPerformedEventObject
 >;
 
-export type CustodyAllowanceChangedEventFilter = TypedEventFilter<CustodyAllowanceChangedEvent>;
+export type BootstrapMintPerformedEventFilter = TypedEventFilter<BootstrapMintPerformedEvent>;
 
-export interface CustodyTransferEventObject {
-  custodian: string;
-  from: string;
-  to: string;
-  amount: BigNumber;
+export interface DepositEventObject {
+  caller_: string;
+  owner_: string;
+  assets_: BigNumber;
+  shares_: BigNumber;
 }
-export type CustodyTransferEvent = TypedEvent<[string, string, string, BigNumber], CustodyTransferEventObject>;
+export type DepositEvent = TypedEvent<[string, string, BigNumber, BigNumber], DepositEventObject>;
 
-export type CustodyTransferEventFilter = TypedEventFilter<CustodyTransferEvent>;
+export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface DefaultSufferedEventObject {
-  loan: string;
-  defaultSuffered: BigNumber;
-  bptsBurned: BigNumber;
-  bptsReturned: BigNumber;
-  liquidityAssetRecoveredFromBurn: BigNumber;
+export interface OwnershipAcceptedEventObject {
+  previousOwner_: string;
+  newOwner_: string;
 }
-export type DefaultSufferedEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber, BigNumber],
-  DefaultSufferedEventObject
->;
+export type OwnershipAcceptedEvent = TypedEvent<[string, string], OwnershipAcceptedEventObject>;
 
-export type DefaultSufferedEventFilter = TypedEventFilter<DefaultSufferedEvent>;
+export type OwnershipAcceptedEventFilter = TypedEventFilter<OwnershipAcceptedEvent>;
 
-export interface DepositDateUpdatedEventObject {
-  liquidityProvider: string;
-  depositDate: BigNumber;
+export interface PendingOwnerSetEventObject {
+  owner_: string;
+  pendingOwner_: string;
 }
-export type DepositDateUpdatedEvent = TypedEvent<[string, BigNumber], DepositDateUpdatedEventObject>;
+export type PendingOwnerSetEvent = TypedEvent<[string, string], PendingOwnerSetEventObject>;
 
-export type DepositDateUpdatedEventFilter = TypedEventFilter<DepositDateUpdatedEvent>;
+export type PendingOwnerSetEventFilter = TypedEventFilter<PendingOwnerSetEvent>;
 
-export interface FundsDistributedEventObject {
-  by: string;
-  fundsDistributed: BigNumber;
+export interface RedemptionRequestedEventObject {
+  owner_: string;
+  shares_: BigNumber;
+  escrowedShares_: BigNumber;
 }
-export type FundsDistributedEvent = TypedEvent<[string, BigNumber], FundsDistributedEventObject>;
+export type RedemptionRequestedEvent = TypedEvent<[string, BigNumber, BigNumber], RedemptionRequestedEventObject>;
 
-export type FundsDistributedEventFilter = TypedEventFilter<FundsDistributedEvent>;
+export type RedemptionRequestedEventFilter = TypedEventFilter<RedemptionRequestedEvent>;
 
-export interface FundsWithdrawnEventObject {
-  by: string;
-  fundsWithdrawn: BigNumber;
-  totalWithdrawn: BigNumber;
+export interface SharesRemovedEventObject {
+  owner_: string;
+  shares_: BigNumber;
 }
-export type FundsWithdrawnEvent = TypedEvent<[string, BigNumber, BigNumber], FundsWithdrawnEventObject>;
+export type SharesRemovedEvent = TypedEvent<[string, BigNumber], SharesRemovedEventObject>;
 
-export type FundsWithdrawnEventFilter = TypedEventFilter<FundsWithdrawnEvent>;
-
-export interface LPStatusChangedEventObject {
-  liquidityProvider: string;
-  status: boolean;
-}
-export type LPStatusChangedEvent = TypedEvent<[string, boolean], LPStatusChangedEventObject>;
-
-export type LPStatusChangedEventFilter = TypedEventFilter<LPStatusChangedEvent>;
-
-export interface LiquidityCapSetEventObject {
-  newLiquidityCap: BigNumber;
-}
-export type LiquidityCapSetEvent = TypedEvent<[BigNumber], LiquidityCapSetEventObject>;
-
-export type LiquidityCapSetEventFilter = TypedEventFilter<LiquidityCapSetEvent>;
-
-export interface LoanFundedEventObject {
-  loan: string;
-  debtLocker: string;
-  amountFunded: BigNumber;
-}
-export type LoanFundedEvent = TypedEvent<[string, string, BigNumber], LoanFundedEventObject>;
-
-export type LoanFundedEventFilter = TypedEventFilter<LoanFundedEvent>;
-
-export interface LockupPeriodSetEventObject {
-  newLockupPeriod: BigNumber;
-}
-export type LockupPeriodSetEvent = TypedEvent<[BigNumber], LockupPeriodSetEventObject>;
-
-export type LockupPeriodSetEventFilter = TypedEventFilter<LockupPeriodSetEvent>;
-
-export interface LossesCorrectionUpdatedEventObject {
-  account: string;
-  lossesCorrection: BigNumber;
-}
-export type LossesCorrectionUpdatedEvent = TypedEvent<[string, BigNumber], LossesCorrectionUpdatedEventObject>;
-
-export type LossesCorrectionUpdatedEventFilter = TypedEventFilter<LossesCorrectionUpdatedEvent>;
-
-export interface LossesDistributedEventObject {
-  by: string;
-  lossesDistributed: BigNumber;
-}
-export type LossesDistributedEvent = TypedEvent<[string, BigNumber], LossesDistributedEventObject>;
-
-export type LossesDistributedEventFilter = TypedEventFilter<LossesDistributedEvent>;
-
-export interface LossesPerShareUpdatedEventObject {
-  lossesPerShare: BigNumber;
-}
-export type LossesPerShareUpdatedEvent = TypedEvent<[BigNumber], LossesPerShareUpdatedEventObject>;
-
-export type LossesPerShareUpdatedEventFilter = TypedEventFilter<LossesPerShareUpdatedEvent>;
-
-export interface LossesRecognizedEventObject {
-  by: string;
-  lossesRecognized: BigNumber;
-  totalLossesRecognized: BigNumber;
-}
-export type LossesRecognizedEvent = TypedEvent<[string, BigNumber, BigNumber], LossesRecognizedEventObject>;
-
-export type LossesRecognizedEventFilter = TypedEventFilter<LossesRecognizedEvent>;
-
-export interface PointsCorrectionUpdatedEventObject {
-  account: string;
-  pointsCorrection: BigNumber;
-}
-export type PointsCorrectionUpdatedEvent = TypedEvent<[string, BigNumber], PointsCorrectionUpdatedEventObject>;
-
-export type PointsCorrectionUpdatedEventFilter = TypedEventFilter<PointsCorrectionUpdatedEvent>;
-
-export interface PointsPerShareUpdatedEventObject {
-  pointsPerShare: BigNumber;
-}
-export type PointsPerShareUpdatedEvent = TypedEvent<[BigNumber], PointsPerShareUpdatedEventObject>;
-
-export type PointsPerShareUpdatedEventFilter = TypedEventFilter<PointsPerShareUpdatedEvent>;
-
-export interface PoolAdminSetEventObject {
-  poolAdmin: string;
-  allowed: boolean;
-}
-export type PoolAdminSetEvent = TypedEvent<[string, boolean], PoolAdminSetEventObject>;
-
-export type PoolAdminSetEventFilter = TypedEventFilter<PoolAdminSetEvent>;
-
-export interface PoolOpenedToPublicEventObject {
-  isOpen: boolean;
-}
-export type PoolOpenedToPublicEvent = TypedEvent<[boolean], PoolOpenedToPublicEventObject>;
-
-export type PoolOpenedToPublicEventFilter = TypedEventFilter<PoolOpenedToPublicEvent>;
-
-export interface PoolStateChangedEventObject {
-  state: number;
-}
-export type PoolStateChangedEvent = TypedEvent<[number], PoolStateChangedEventObject>;
-
-export type PoolStateChangedEventFilter = TypedEventFilter<PoolStateChangedEvent>;
-
-export interface StakingFeeSetEventObject {
-  newStakingFee: BigNumber;
-}
-export type StakingFeeSetEvent = TypedEvent<[BigNumber], StakingFeeSetEventObject>;
-
-export type StakingFeeSetEventFilter = TypedEventFilter<StakingFeeSetEvent>;
-
-export interface TotalCustodyAllowanceUpdatedEventObject {
-  liquidityProvider: string;
-  newTotalAllowance: BigNumber;
-}
-export type TotalCustodyAllowanceUpdatedEvent = TypedEvent<
-  [string, BigNumber],
-  TotalCustodyAllowanceUpdatedEventObject
->;
-
-export type TotalCustodyAllowanceUpdatedEventFilter = TypedEventFilter<TotalCustodyAllowanceUpdatedEvent>;
+export type SharesRemovedEventFilter = TypedEventFilter<SharesRemovedEvent>;
 
 export interface TransferEventObject {
-  from: string;
-  to: string;
-  value: BigNumber;
+  owner_: string;
+  recipient_: string;
+  amount_: BigNumber;
 }
 export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
+
+export interface WithdrawEventObject {
+  caller_: string;
+  receiver_: string;
+  owner_: string;
+  assets_: BigNumber;
+  shares_: BigNumber;
+}
+export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNumber], WithdrawEventObject>;
+
+export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
+
+export interface WithdrawRequestedEventObject {
+  owner_: string;
+  assets_: BigNumber;
+  escrowedShares_: BigNumber;
+}
+export type WithdrawRequestedEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawRequestedEventObject>;
+
+export type WithdrawRequestedEventFilter = TypedEventFilter<WithdrawRequestedEvent>;
 
 export interface MaplePool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -654,1361 +403,986 @@ export interface MaplePool extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    BPTVal(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    BOOTSTRAP_MINT(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    DL_FACTORY(overrides?: CallOverrides): Promise<[number]>;
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string] & { domainSeparator_: string }>;
 
-    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
-
-    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    asset(overrides?: CallOverrides): Promise<[string]>;
 
-    cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claim(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    custodyAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+    balanceOfAssets(
+      account_: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber] & { balanceOfAssets_: BigNumber }>;
 
-    deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    debtLockers(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+    convertToAssets(
+      shares_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<[string]>;
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
+
+    convertToExitAssets(
+      shares_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
+
+    convertToExitShares(
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
+
+    convertToShares(
+      assets_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    delegateFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    fundLoan(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
+    depositWithPermit(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    getInitialStakeRequirements(
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber, boolean, BigNumber, BigNumber]>;
-
-    getPoolSharesRequired(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber]>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    increaseCustodyAllowance(
-      custodian: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    manager(overrides?: CallOverrides): Promise<[string]>;
+
+    maxDeposit(
+      receiver_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxAssets_: BigNumber }>;
+
+    maxMint(
+      receiver_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxShares_: BigNumber }>;
+
+    maxRedeem(
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxShares_: BigNumber }>;
+
+    maxWithdraw(
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxAssets_: BigNumber }>;
+
+    mint(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    interestBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    interestSum(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isPoolFinalized(overrides?: CallOverrides): Promise<[boolean]>;
-
-    liquidityAsset(overrides?: CallOverrides): Promise<[string]>;
-
-    liquidityCap(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    liquidityLocker(overrides?: CallOverrides): Promise<[string]>;
-
-    lockupPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    lossesBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
+    mintWithPermit(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    openToPublic(overrides?: CallOverrides): Promise<[boolean]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    poolDelegate(overrides?: CallOverrides): Promise<[string]>;
-
-    poolLosses(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    poolState(overrides?: CallOverrides): Promise<[number]>;
-
-    principalOut(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    reclaimERC20(
-      token: PromiseOrValue<string>,
+    permit(
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previewDeposit(
+      assets_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
 
-    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previewMint(
+      shares_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
 
-    setAllowList(
-      account: PromiseOrValue<string>,
-      status: PromiseOrValue<boolean>,
+    previewRedeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
+
+    previewWithdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
+
+    redeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setLiquidityCap(
-      newLiquidityCap: PromiseOrValue<BigNumberish>,
+    removeShares(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setLockupPeriod(
-      newLockupPeriod: PromiseOrValue<BigNumberish>,
+    requestRedeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setOpenToPublic(
-      open: PromiseOrValue<boolean>,
+    requestWithdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    setPoolAdmin(
-      poolAdmin: PromiseOrValue<string>,
-      allowed: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setStakingFee(
-      newStakingFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    stakeAsset(overrides?: CallOverrides): Promise<[string]>;
-
-    stakeLocker(overrides?: CallOverrides): Promise<[string]>;
-
-    stakingFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    superFactory(overrides?: CallOverrides): Promise<[string]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalAssets(overrides?: CallOverrides): Promise<[BigNumber] & { totalAssets_: BigNumber }>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    transferByCustodian(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    triggerDefault(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    unrealizedLosses(overrides?: CallOverrides): Promise<[BigNumber] & { unrealizedLosses_: BigNumber }>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  BPTVal(
-    _bPool: PromiseOrValue<string>,
-    _liquidityAsset: PromiseOrValue<string>,
-    _staker: PromiseOrValue<string>,
-    _stakeLocker: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  BOOTSTRAP_MINT(overrides?: CallOverrides): Promise<BigNumber>;
 
-  DL_FACTORY(overrides?: CallOverrides): Promise<number>;
+  DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-  accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-  accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  allowance(
-    owner: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+    spender_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  asset(overrides?: CallOverrides): Promise<string>;
 
-  cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claim(
-    loan: PromiseOrValue<string>,
-    dlFactory: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  custodyAllowance(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  convertToExitAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  debtLockers(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+  convertToExitShares(amount_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: PromiseOrValue<string>,
-    subtractedValue: PromiseOrValue<BigNumberish>,
+    spender_: PromiseOrValue<string>,
+    subtractedAmount_: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  delegateFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    amt: PromiseOrValue<BigNumberish>,
+    assets_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  fundLoan(
-    loan: PromiseOrValue<string>,
-    dlFactory: PromiseOrValue<string>,
-    amt: PromiseOrValue<BigNumberish>,
+  depositWithPermit(
+    assets_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    deadline_: PromiseOrValue<BigNumberish>,
+    v_: PromiseOrValue<BigNumberish>,
+    r_: PromiseOrValue<BytesLike>,
+    s_: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  getInitialStakeRequirements(
-    overrides?: CallOverrides,
-  ): Promise<[BigNumber, BigNumber, boolean, BigNumber, BigNumber]>;
-
-  getPoolSharesRequired(
-    _bPool: PromiseOrValue<string>,
-    _liquidityAsset: PromiseOrValue<string>,
-    _staker: PromiseOrValue<string>,
-    _stakeLocker: PromiseOrValue<string>,
-    _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<[BigNumber, BigNumber]>;
 
   increaseAllowance(
-    spender: PromiseOrValue<string>,
-    addedValue: PromiseOrValue<BigNumberish>,
+    spender_: PromiseOrValue<string>,
+    addedAmount_: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  increaseCustodyAllowance(
-    custodian: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+  manager(overrides?: CallOverrides): Promise<string>;
+
+  maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  mint(
+    shares_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  interestBalance(overrides?: CallOverrides): Promise<BigNumber>;
-
-  interestSum(overrides?: CallOverrides): Promise<BigNumber>;
-
-  isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
-
-  isPoolFinalized(overrides?: CallOverrides): Promise<boolean>;
-
-  liquidityAsset(overrides?: CallOverrides): Promise<string>;
-
-  liquidityCap(overrides?: CallOverrides): Promise<BigNumber>;
-
-  liquidityLocker(overrides?: CallOverrides): Promise<string>;
-
-  lockupPeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-  lossesBalance(overrides?: CallOverrides): Promise<BigNumber>;
+  mintWithPermit(
+    shares_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    maxAssets_: PromiseOrValue<BigNumberish>,
+    deadline_: PromiseOrValue<BigNumberish>,
+    v_: PromiseOrValue<BigNumberish>,
+    r_: PromiseOrValue<BytesLike>,
+    s_: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  openToPublic(overrides?: CallOverrides): Promise<boolean>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  poolDelegate(overrides?: CallOverrides): Promise<string>;
-
-  poolLosses(overrides?: CallOverrides): Promise<BigNumber>;
-
-  poolState(overrides?: CallOverrides): Promise<number>;
-
-  principalOut(overrides?: CallOverrides): Promise<BigNumber>;
-
-  reclaimERC20(
-    token: PromiseOrValue<string>,
+  permit(
+    owner_: PromiseOrValue<string>,
+    spender_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
+    deadline_: PromiseOrValue<BigNumberish>,
+    v_: PromiseOrValue<BigNumberish>,
+    r_: PromiseOrValue<BytesLike>,
+    s_: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  setAllowList(
-    account: PromiseOrValue<string>,
-    status: PromiseOrValue<boolean>,
+  previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  redeem(
+    shares_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    owner_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setLiquidityCap(
-    newLiquidityCap: PromiseOrValue<BigNumberish>,
+  removeShares(
+    shares_: PromiseOrValue<BigNumberish>,
+    owner_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setLockupPeriod(
-    newLockupPeriod: PromiseOrValue<BigNumberish>,
+  requestRedeem(
+    shares_: PromiseOrValue<BigNumberish>,
+    owner_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOpenToPublic(
-    open: PromiseOrValue<boolean>,
+  requestWithdraw(
+    assets_: PromiseOrValue<BigNumberish>,
+    owner_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  setPoolAdmin(
-    poolAdmin: PromiseOrValue<string>,
-    allowed: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setStakingFee(
-    newStakingFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  stakeAsset(overrides?: CallOverrides): Promise<string>;
-
-  stakeLocker(overrides?: CallOverrides): Promise<string>;
-
-  stakingFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-  superFactory(overrides?: CallOverrides): Promise<string>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  transferByCustodian(
-    from: PromiseOrValue<string>,
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+    recipient_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+    owner_: PromiseOrValue<string>,
+    recipient_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  triggerDefault(
-    loan: PromiseOrValue<string>,
-    dlFactory: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  unrealizedLosses(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    amt: PromiseOrValue<BigNumberish>,
+    assets_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    owner_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
   callStatic: {
-    BPTVal(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    BOOTSTRAP_MINT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    DL_FACTORY(overrides?: CallOverrides): Promise<number>;
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<boolean>;
-
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    cancelWithdraw(overrides?: CallOverrides): Promise<void>;
-
-    claim(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber[]>;
-
-    custodyAllowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    deactivate(overrides?: CallOverrides): Promise<void>;
+    approve(
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    debtLockers(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+    asset(overrides?: CallOverrides): Promise<string>;
+
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    convertToExitAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    convertToExitShares(amount_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    delegateFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    deposit(amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    finalize(overrides?: CallOverrides): Promise<void>;
-
-    fundLoan(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
+    deposit(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
-    getInitialStakeRequirements(
+    depositWithPermit(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber, boolean, BigNumber, BigNumber]>;
-
-    getPoolSharesRequired(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber]>;
+    ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    increaseCustodyAllowance(
-      custodian: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    manager(overrides?: CallOverrides): Promise<string>;
+
+    maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    mint(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
-    intendToWithdraw(overrides?: CallOverrides): Promise<void>;
-
-    interestBalance(overrides?: CallOverrides): Promise<BigNumber>;
-
-    interestSum(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
-
-    isPoolFinalized(overrides?: CallOverrides): Promise<boolean>;
-
-    liquidityAsset(overrides?: CallOverrides): Promise<string>;
-
-    liquidityCap(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liquidityLocker(overrides?: CallOverrides): Promise<string>;
-
-    lockupPeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lossesBalance(overrides?: CallOverrides): Promise<BigNumber>;
+    mintWithPermit(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    openToPublic(overrides?: CallOverrides): Promise<boolean>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    poolDelegate(overrides?: CallOverrides): Promise<string>;
-
-    poolLosses(overrides?: CallOverrides): Promise<BigNumber>;
-
-    poolState(overrides?: CallOverrides): Promise<number>;
-
-    principalOut(overrides?: CallOverrides): Promise<BigNumber>;
-
-    reclaimERC20(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    setAllowList(
-      account: PromiseOrValue<string>,
-      status: PromiseOrValue<boolean>,
+    permit(
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setLiquidityCap(newLiquidityCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setLockupPeriod(newLockupPeriod: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setOpenToPublic(open: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+    previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setPoolAdmin(
-      poolAdmin: PromiseOrValue<string>,
-      allowed: PromiseOrValue<boolean>,
+    previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    redeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
-    setStakingFee(newStakingFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    removeShares(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    stakeAsset(overrides?: CallOverrides): Promise<string>;
+    requestRedeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    stakeLocker(overrides?: CallOverrides): Promise<string>;
-
-    stakingFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    superFactory(overrides?: CallOverrides): Promise<string>;
+    requestWithdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
-
-    transferByCustodian(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    triggerDefault(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
+    unrealizedLosses(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<void>;
-
-    updateFundsReceived(overrides?: CallOverrides): Promise<void>;
-
-    updateLossesReceived(overrides?: CallOverrides): Promise<void>;
-
-    withdraw(amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawFunds(overrides?: CallOverrides): Promise<void>;
-
-    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    ): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
-      value?: null,
+      owner_?: PromiseOrValue<string> | null,
+      spender_?: PromiseOrValue<string> | null,
+      amount_?: null,
     ): ApprovalEventFilter;
     Approval(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
-      value?: null,
+      owner_?: PromiseOrValue<string> | null,
+      spender_?: PromiseOrValue<string> | null,
+      amount_?: null,
     ): ApprovalEventFilter;
 
-    'BalanceUpdated(address,address,uint256)'(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      token?: PromiseOrValue<string> | null,
-      balance?: null,
-    ): BalanceUpdatedEventFilter;
-    BalanceUpdated(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      token?: PromiseOrValue<string> | null,
-      balance?: null,
-    ): BalanceUpdatedEventFilter;
+    'BootstrapMintPerformed(address,address,uint256,uint256,uint256)'(
+      caller_?: PromiseOrValue<string> | null,
+      receiver_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+      bootStrapMintAmount_?: null,
+    ): BootstrapMintPerformedEventFilter;
+    BootstrapMintPerformed(
+      caller_?: PromiseOrValue<string> | null,
+      receiver_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+      bootStrapMintAmount_?: null,
+    ): BootstrapMintPerformedEventFilter;
 
-    'Claim(address,uint256,uint256,uint256,uint256,uint256)'(
-      loan?: PromiseOrValue<string> | null,
-      interest?: null,
-      principal?: null,
-      fee?: null,
-      stakeLockerPortion?: null,
-      poolDelegatePortion?: null,
-    ): ClaimEventFilter;
-    Claim(
-      loan?: PromiseOrValue<string> | null,
-      interest?: null,
-      principal?: null,
-      fee?: null,
-      stakeLockerPortion?: null,
-      poolDelegatePortion?: null,
-    ): ClaimEventFilter;
+    'Deposit(address,address,uint256,uint256)'(
+      caller_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+    ): DepositEventFilter;
+    Deposit(
+      caller_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+    ): DepositEventFilter;
 
-    'Cooldown(address,uint256)'(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      cooldown?: null,
-    ): CooldownEventFilter;
-    Cooldown(liquidityProvider?: PromiseOrValue<string> | null, cooldown?: null): CooldownEventFilter;
+    'OwnershipAccepted(address,address)'(
+      previousOwner_?: PromiseOrValue<string> | null,
+      newOwner_?: PromiseOrValue<string> | null,
+    ): OwnershipAcceptedEventFilter;
+    OwnershipAccepted(
+      previousOwner_?: PromiseOrValue<string> | null,
+      newOwner_?: PromiseOrValue<string> | null,
+    ): OwnershipAcceptedEventFilter;
 
-    'CustodyAllowanceChanged(address,address,uint256,uint256)'(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      custodian?: PromiseOrValue<string> | null,
-      oldAllowance?: null,
-      newAllowance?: null,
-    ): CustodyAllowanceChangedEventFilter;
-    CustodyAllowanceChanged(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      custodian?: PromiseOrValue<string> | null,
-      oldAllowance?: null,
-      newAllowance?: null,
-    ): CustodyAllowanceChangedEventFilter;
+    'PendingOwnerSet(address,address)'(
+      owner_?: PromiseOrValue<string> | null,
+      pendingOwner_?: PromiseOrValue<string> | null,
+    ): PendingOwnerSetEventFilter;
+    PendingOwnerSet(
+      owner_?: PromiseOrValue<string> | null,
+      pendingOwner_?: PromiseOrValue<string> | null,
+    ): PendingOwnerSetEventFilter;
 
-    'CustodyTransfer(address,address,address,uint256)'(
-      custodian?: PromiseOrValue<string> | null,
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      amount?: null,
-    ): CustodyTransferEventFilter;
-    CustodyTransfer(
-      custodian?: PromiseOrValue<string> | null,
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      amount?: null,
-    ): CustodyTransferEventFilter;
+    'RedemptionRequested(address,uint256,uint256)'(
+      owner_?: PromiseOrValue<string> | null,
+      shares_?: null,
+      escrowedShares_?: null,
+    ): RedemptionRequestedEventFilter;
+    RedemptionRequested(
+      owner_?: PromiseOrValue<string> | null,
+      shares_?: null,
+      escrowedShares_?: null,
+    ): RedemptionRequestedEventFilter;
 
-    'DefaultSuffered(address,uint256,uint256,uint256,uint256)'(
-      loan?: PromiseOrValue<string> | null,
-      defaultSuffered?: null,
-      bptsBurned?: null,
-      bptsReturned?: null,
-      liquidityAssetRecoveredFromBurn?: null,
-    ): DefaultSufferedEventFilter;
-    DefaultSuffered(
-      loan?: PromiseOrValue<string> | null,
-      defaultSuffered?: null,
-      bptsBurned?: null,
-      bptsReturned?: null,
-      liquidityAssetRecoveredFromBurn?: null,
-    ): DefaultSufferedEventFilter;
-
-    'DepositDateUpdated(address,uint256)'(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      depositDate?: null,
-    ): DepositDateUpdatedEventFilter;
-    DepositDateUpdated(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      depositDate?: null,
-    ): DepositDateUpdatedEventFilter;
-
-    'FundsDistributed(address,uint256)'(
-      by?: PromiseOrValue<string> | null,
-      fundsDistributed?: null,
-    ): FundsDistributedEventFilter;
-    FundsDistributed(by?: PromiseOrValue<string> | null, fundsDistributed?: null): FundsDistributedEventFilter;
-
-    'FundsWithdrawn(address,uint256,uint256)'(
-      by?: PromiseOrValue<string> | null,
-      fundsWithdrawn?: null,
-      totalWithdrawn?: null,
-    ): FundsWithdrawnEventFilter;
-    FundsWithdrawn(
-      by?: PromiseOrValue<string> | null,
-      fundsWithdrawn?: null,
-      totalWithdrawn?: null,
-    ): FundsWithdrawnEventFilter;
-
-    'LPStatusChanged(address,bool)'(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      status?: null,
-    ): LPStatusChangedEventFilter;
-    LPStatusChanged(liquidityProvider?: PromiseOrValue<string> | null, status?: null): LPStatusChangedEventFilter;
-
-    'LiquidityCapSet(uint256)'(newLiquidityCap?: null): LiquidityCapSetEventFilter;
-    LiquidityCapSet(newLiquidityCap?: null): LiquidityCapSetEventFilter;
-
-    'LoanFunded(address,address,uint256)'(
-      loan?: PromiseOrValue<string> | null,
-      debtLocker?: null,
-      amountFunded?: null,
-    ): LoanFundedEventFilter;
-    LoanFunded(loan?: PromiseOrValue<string> | null, debtLocker?: null, amountFunded?: null): LoanFundedEventFilter;
-
-    'LockupPeriodSet(uint256)'(newLockupPeriod?: null): LockupPeriodSetEventFilter;
-    LockupPeriodSet(newLockupPeriod?: null): LockupPeriodSetEventFilter;
-
-    'LossesCorrectionUpdated(address,int256)'(
-      account?: PromiseOrValue<string> | null,
-      lossesCorrection?: null,
-    ): LossesCorrectionUpdatedEventFilter;
-    LossesCorrectionUpdated(
-      account?: PromiseOrValue<string> | null,
-      lossesCorrection?: null,
-    ): LossesCorrectionUpdatedEventFilter;
-
-    'LossesDistributed(address,uint256)'(
-      by?: PromiseOrValue<string> | null,
-      lossesDistributed?: null,
-    ): LossesDistributedEventFilter;
-    LossesDistributed(by?: PromiseOrValue<string> | null, lossesDistributed?: null): LossesDistributedEventFilter;
-
-    'LossesPerShareUpdated(uint256)'(lossesPerShare?: null): LossesPerShareUpdatedEventFilter;
-    LossesPerShareUpdated(lossesPerShare?: null): LossesPerShareUpdatedEventFilter;
-
-    'LossesRecognized(address,uint256,uint256)'(
-      by?: PromiseOrValue<string> | null,
-      lossesRecognized?: null,
-      totalLossesRecognized?: null,
-    ): LossesRecognizedEventFilter;
-    LossesRecognized(
-      by?: PromiseOrValue<string> | null,
-      lossesRecognized?: null,
-      totalLossesRecognized?: null,
-    ): LossesRecognizedEventFilter;
-
-    'PointsCorrectionUpdated(address,int256)'(
-      account?: PromiseOrValue<string> | null,
-      pointsCorrection?: null,
-    ): PointsCorrectionUpdatedEventFilter;
-    PointsCorrectionUpdated(
-      account?: PromiseOrValue<string> | null,
-      pointsCorrection?: null,
-    ): PointsCorrectionUpdatedEventFilter;
-
-    'PointsPerShareUpdated(uint256)'(pointsPerShare?: null): PointsPerShareUpdatedEventFilter;
-    PointsPerShareUpdated(pointsPerShare?: null): PointsPerShareUpdatedEventFilter;
-
-    'PoolAdminSet(address,bool)'(poolAdmin?: PromiseOrValue<string> | null, allowed?: null): PoolAdminSetEventFilter;
-    PoolAdminSet(poolAdmin?: PromiseOrValue<string> | null, allowed?: null): PoolAdminSetEventFilter;
-
-    'PoolOpenedToPublic(bool)'(isOpen?: null): PoolOpenedToPublicEventFilter;
-    PoolOpenedToPublic(isOpen?: null): PoolOpenedToPublicEventFilter;
-
-    'PoolStateChanged(uint8)'(state?: null): PoolStateChangedEventFilter;
-    PoolStateChanged(state?: null): PoolStateChangedEventFilter;
-
-    'StakingFeeSet(uint256)'(newStakingFee?: null): StakingFeeSetEventFilter;
-    StakingFeeSet(newStakingFee?: null): StakingFeeSetEventFilter;
-
-    'TotalCustodyAllowanceUpdated(address,uint256)'(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      newTotalAllowance?: null,
-    ): TotalCustodyAllowanceUpdatedEventFilter;
-    TotalCustodyAllowanceUpdated(
-      liquidityProvider?: PromiseOrValue<string> | null,
-      newTotalAllowance?: null,
-    ): TotalCustodyAllowanceUpdatedEventFilter;
+    'SharesRemoved(address,uint256)'(owner_?: PromiseOrValue<string> | null, shares_?: null): SharesRemovedEventFilter;
+    SharesRemoved(owner_?: PromiseOrValue<string> | null, shares_?: null): SharesRemovedEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      value?: null,
+      owner_?: PromiseOrValue<string> | null,
+      recipient_?: PromiseOrValue<string> | null,
+      amount_?: null,
     ): TransferEventFilter;
     Transfer(
-      from?: PromiseOrValue<string> | null,
-      to?: PromiseOrValue<string> | null,
-      value?: null,
+      owner_?: PromiseOrValue<string> | null,
+      recipient_?: PromiseOrValue<string> | null,
+      amount_?: null,
     ): TransferEventFilter;
+
+    'Withdraw(address,address,address,uint256,uint256)'(
+      caller_?: PromiseOrValue<string> | null,
+      receiver_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+    ): WithdrawEventFilter;
+    Withdraw(
+      caller_?: PromiseOrValue<string> | null,
+      receiver_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+    ): WithdrawEventFilter;
+
+    'WithdrawRequested(address,uint256,uint256)'(
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      escrowedShares_?: null,
+    ): WithdrawRequestedEventFilter;
+    WithdrawRequested(
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      escrowedShares_?: null,
+    ): WithdrawRequestedEventFilter;
   };
 
   estimateGas: {
-    BPTVal(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    BOOTSTRAP_MINT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    DL_FACTORY(overrides?: CallOverrides): Promise<BigNumber>;
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
-
-    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    asset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    custodyAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    convertToExitAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtLockers(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    convertToExitShares(amount_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    delegateFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    fundLoan(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
+    depositWithPermit(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    getInitialStakeRequirements(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getPoolSharesRequired(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    increaseCustodyAllowance(
-      custodian: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    manager(overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    mint(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    interestBalance(overrides?: CallOverrides): Promise<BigNumber>;
-
-    interestSum(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isPoolFinalized(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liquidityAsset(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liquidityCap(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liquidityLocker(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockupPeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lossesBalance(overrides?: CallOverrides): Promise<BigNumber>;
+    mintWithPermit(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    openToPublic(overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    poolDelegate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    poolLosses(overrides?: CallOverrides): Promise<BigNumber>;
-
-    poolState(overrides?: CallOverrides): Promise<BigNumber>;
-
-    principalOut(overrides?: CallOverrides): Promise<BigNumber>;
-
-    reclaimERC20(
-      token: PromiseOrValue<string>,
+    permit(
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setAllowList(
-      account: PromiseOrValue<string>,
-      status: PromiseOrValue<boolean>,
+    previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    redeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setLiquidityCap(
-      newLiquidityCap: PromiseOrValue<BigNumberish>,
+    removeShares(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setLockupPeriod(
-      newLockupPeriod: PromiseOrValue<BigNumberish>,
+    requestRedeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOpenToPublic(
-      open: PromiseOrValue<boolean>,
+    requestWithdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    setPoolAdmin(
-      poolAdmin: PromiseOrValue<string>,
-      allowed: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setStakingFee(
-      newStakingFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    stakeAsset(overrides?: CallOverrides): Promise<BigNumber>;
-
-    stakeLocker(overrides?: CallOverrides): Promise<BigNumber>;
-
-    stakingFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    superFactory(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    transferByCustodian(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    triggerDefault(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    unrealizedLosses(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    BPTVal(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
+    BOOTSTRAP_MINT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    DL_FACTORY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
-
-    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claim(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    custodyAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+    convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    convertToExitAssets(
+      shares_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    debtLockers(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
+    convertToExitShares(
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    delegateFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      amt: PromiseOrValue<BigNumberish>,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    fundLoan(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      amt: PromiseOrValue<BigNumberish>,
+    depositWithPermit(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    getInitialStakeRequirements(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getPoolSharesRequired(
-      _bPool: PromiseOrValue<string>,
-      _liquidityAsset: PromiseOrValue<string>,
-      _staker: PromiseOrValue<string>,
-      _stakeLocker: PromiseOrValue<string>,
-      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    increaseCustodyAllowance(
-      custodian: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    mint(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    interestBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    interestSum(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isDepositAllowed(
-      depositAmt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+    mintWithPermit(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    isPoolFinalized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    liquidityAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    liquidityCap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    liquidityLocker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lockupPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lossesBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    openToPublic(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    poolDelegate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    poolLosses(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    poolState(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    principalOut(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    reclaimERC20(
-      token: PromiseOrValue<string>,
+    permit(
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setAllowList(
-      account: PromiseOrValue<string>,
-      status: PromiseOrValue<boolean>,
+    previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    redeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setLiquidityCap(
-      newLiquidityCap: PromiseOrValue<BigNumberish>,
+    removeShares(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setLockupPeriod(
-      newLockupPeriod: PromiseOrValue<BigNumberish>,
+    requestRedeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setOpenToPublic(
-      open: PromiseOrValue<boolean>,
+    requestWithdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    setPoolAdmin(
-      poolAdmin: PromiseOrValue<string>,
-      allowed: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setStakingFee(
-      newStakingFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    stakeAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    stakeLocker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    stakingFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    superFactory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    transferByCustodian(
-      from: PromiseOrValue<string>,
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    triggerDefault(
-      loan: PromiseOrValue<string>,
-      dlFactory: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    unrealizedLosses(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amt: PromiseOrValue<BigNumberish>,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

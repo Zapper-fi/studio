@@ -8,6 +8,7 @@ import {
   GetAddressesParams,
   GetPricePerShareParams,
   GetDataPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { TenderizeContractFactory, TenderToken } from '../contracts';
@@ -17,7 +18,7 @@ import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-
 
 export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher<
   TenderToken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   TenderizeTokenDefinition
 > {
   constructor(
@@ -34,15 +35,18 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
   }
 
   async getDefinitions(): Promise<TenderizeTokenDefinition[]> {
-    return this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    const definitions = await this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    return definitions.map(v => ({ ...v, address: v.tenderToken }));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<TenderizeTokenDefinition>): Promise<string[]> {
-    return definitions.map(v => v.address);
+    return definitions.map(v => v.tenderToken);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
-    return definition.steak;
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
+    return [{ address: definition.steak, network: this.network }];
   }
 
   async getPricePerShare({
@@ -57,15 +61,10 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
 
     const pricePerShareRaw = await multicall.wrap(tenderSwapContract).getVirtualPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
-    return pricePerShare;
+    return [pricePerShare];
   }
 
-  async getDataProps(opts: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
-    const { appToken, definition } = opts;
-    const reserve = Number(appToken.pricePerShare) * appToken.supply;
-    const liquidity = reserve * appToken.tokens[0].price;
-    const apy = await this.tokenDefinitionsResolver.getTokenApy(definition.id);
-
-    return { liquidity, apy };
+  async getApy({ definition }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
+    return this.tokenDefinitionsResolver.getTokenApy(definition.id);
   }
 }

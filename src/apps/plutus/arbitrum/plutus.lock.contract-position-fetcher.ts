@@ -1,17 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory, PlutusLock } from '../contracts';
-import PLUTUS_DEFINITION from '../plutus.definition';
 
 const PLUTUS_LOCKS = [
   {
@@ -46,11 +45,8 @@ const PLUTUS_LOCKS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusLock> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.lock.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Locked PLS';
 
   constructor(

@@ -4,14 +4,18 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { TraderJoeChefBoosted__factory } from './ethers';
-import { TraderJoeChefV2__factory } from './ethers';
-import { TraderJoeChefV2Rewarder__factory } from './ethers';
-import { TraderJoeChefV3__factory } from './ethers';
-import { TraderJoeChefV3Rewarder__factory } from './ethers';
-import { TraderJoeStableStaking__factory } from './ethers';
-import { TraderJoeVeJoeStaking__factory } from './ethers';
-import { TraderJoeXJoe__factory } from './ethers';
+import {
+  TraderJoeChefBoosted__factory,
+  TraderJoeChefBoostedRewarder__factory,
+  TraderJoeChefV2__factory,
+  TraderJoeChefV2Rewarder__factory,
+  TraderJoeChefV3__factory,
+  TraderJoeChefV3Rewarder__factory,
+  TraderJoeStableStaking__factory,
+  TraderJoeVeJoe__factory,
+  TraderJoeVeJoeStaking__factory,
+  TraderJoeXJoe__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -24,6 +28,9 @@ export class TraderJoeContractFactory extends ContractFactory {
 
   traderJoeChefBoosted({ address, network }: ContractOpts) {
     return TraderJoeChefBoosted__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  traderJoeChefBoostedRewarder({ address, network }: ContractOpts) {
+    return TraderJoeChefBoostedRewarder__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   traderJoeChefV2({ address, network }: ContractOpts) {
     return TraderJoeChefV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -40,6 +47,9 @@ export class TraderJoeContractFactory extends ContractFactory {
   traderJoeStableStaking({ address, network }: ContractOpts) {
     return TraderJoeStableStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  traderJoeVeJoe({ address, network }: ContractOpts) {
+    return TraderJoeVeJoe__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   traderJoeVeJoeStaking({ address, network }: ContractOpts) {
     return TraderJoeVeJoeStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -49,10 +59,12 @@ export class TraderJoeContractFactory extends ContractFactory {
 }
 
 export type { TraderJoeChefBoosted } from './ethers';
+export type { TraderJoeChefBoostedRewarder } from './ethers';
 export type { TraderJoeChefV2 } from './ethers';
 export type { TraderJoeChefV2Rewarder } from './ethers';
 export type { TraderJoeChefV3 } from './ethers';
 export type { TraderJoeChefV3Rewarder } from './ethers';
 export type { TraderJoeStableStaking } from './ethers';
+export type { TraderJoeVeJoe } from './ethers';
 export type { TraderJoeVeJoeStaking } from './ethers';
 export type { TraderJoeXJoe } from './ethers';

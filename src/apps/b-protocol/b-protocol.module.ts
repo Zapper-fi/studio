@@ -1,25 +1,24 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CompoundAppModule } from '~apps/compound/compound.module';
+import { CompoundContractFactory } from '~apps/compound/contracts';
+import { MakerContractFactory } from '~apps/maker/contracts';
 
-import { CompoundBProtocolAdapter } from './adapters/compound.b-protocol-adapter';
-import { LiquityBProtocolAdapter } from './adapters/liquity.b-protocol-adapter';
-import { MakerBProtocolAdapter } from './adapters/maker.b-protocol.adapter';
 import { BProtocolContractFactory } from './contracts';
-import { EthereumBProtocolBalanceFetcher } from './ethereum/b-protocol.balance-fetcher';
+import { EthereumBProtocolCompoundBorrowContractPositionFetcher } from './ethereum/b-protocol.compound-borrow.contract-position-fetcher';
+import { EthereumBProtocolCompoundSupplyTokenFetcher } from './ethereum/b-protocol.compound-supply.token-fetcher';
+import { EthereumLiquityStabilityPoolContractPositionFetcher } from './ethereum/b-protocol.liquity-stability-pool.contract-position-fetcher';
+import { EthereumBProtocolMakerVaultContractPositionFetcher } from './ethereum/b-protocol.maker-vault.contract-position-fetcher';
 
-import { BProtocolAppDefinition, B_PROTOCOL_DEFINITION } from '.';
-
-@Register.AppModule({
-  appId: B_PROTOCOL_DEFINITION.id,
-  imports: [CompoundAppModule],
+@Module({
   providers: [
-    BProtocolAppDefinition,
     BProtocolContractFactory,
-    CompoundBProtocolAdapter,
-    LiquityBProtocolAdapter,
-    MakerBProtocolAdapter,
-    EthereumBProtocolBalanceFetcher,
+    CompoundContractFactory,
+    MakerContractFactory,
+    EthereumBProtocolCompoundSupplyTokenFetcher,
+    EthereumBProtocolCompoundBorrowContractPositionFetcher,
+    EthereumLiquityStabilityPoolContractPositionFetcher,
+    EthereumBProtocolMakerVaultContractPositionFetcher,
   ],
 })
 export class BProtocolAppModule extends AbstractApp() {}

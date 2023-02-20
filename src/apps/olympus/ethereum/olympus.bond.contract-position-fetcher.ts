@@ -1,34 +1,52 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { OlympusBondContractPositionHelper } from '../helpers/olympus.bond.contract-position-helper';
-import { OLYMPUS_DEFINITION } from '../olympus.definition';
+import { OlympusBondContractPositionFetcher } from '../common/olympus.bond.contract-position-fetcher';
+import { OlympusContractFactory, OlympusV2BondDepository } from '../contracts';
 
-@Register.ContractPositionFetcher({
-  appId: OLYMPUS_DEFINITION.id,
-  groupId: OLYMPUS_DEFINITION.groups.bond.id,
-  network: Network.ETHEREUM_MAINNET,
-})
-export class EthereumOlympusBondContractPositionFetcher implements PositionFetcher<ContractPosition> {
+@PositionTemplate()
+export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContractPositionFetcher<OlympusV2BondDepository> {
+  groupLabel = 'Bonds';
+  bondDefinitions = [
+    {
+      address: '0x9025046c6fb25fb39e720d97a8fd881ed69a1ef6',
+      mintedTokenAddress: '0x0ab87046fbb341d058f17cbc4c1133f25a20a52f',
+      bondedTokenAddress: '0x0ab87046fbb341d058f17cbc4c1133f25a20a52f',
+    },
+  ];
+
   constructor(
-    @Inject(OlympusBondContractPositionHelper)
-    private readonly olympusContractPositionHelper: OlympusBondContractPositionHelper,
-  ) {}
-  async getPositions(): Promise<ContractPosition[]> {
-    const network = Network.ETHEREUM_MAINNET;
-    const depositories = [{ depositoryAddress: '0x9025046c6fb25fb39e720d97a8fd881ed69a1ef6', symbol: 'gOHM' }];
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(OlympusContractFactory) protected readonly contractFactory: OlympusContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-    return this.olympusContractPositionHelper.getPositions({
-      appId: OLYMPUS_DEFINITION.id,
-      network,
-      mintedTokenAddress: '0x0ab87046fbb341d058f17cbc4c1133f25a20a52f', // gOHM
-      groupId: OLYMPUS_DEFINITION.groups.bond.id,
-      depositories,
-      dependencies: [{ appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network }],
-    });
+  getContract(address: string): OlympusV2BondDepository {
+    return this.contractFactory.olympusV2BondDepository({ address, network: this.network });
+  }
+
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
+
+  async resolveVestingBalance({ address, contract, multicall }: GetTokenBalancesParams<OlympusV2BondDepository>) {
+    const indexes = await multicall.wrap(contract).indexesFor(address);
+    const pendingBonds = await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index)));
+    const vestingBonds = pendingBonds.filter(p => !p.matured_);
+    const vestingAmount = vestingBonds.reduce((acc, bond) => acc.add(bond.payout_), BigNumber.from('0'));
+    return vestingAmount;
+  }
+
+  async resolveClaimableBalance({ address, contract, multicall }: GetTokenBalancesParams<OlympusV2BondDepository>) {
+    const indexes = await multicall.wrap(contract).indexesFor(address);
+    const pendingBonds = await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index)));
+    const claimableBonds = pendingBonds.filter(p => p.matured_);
+    const claimableAmount = claimableBonds.reduce((acc, bond) => acc.add(bond.payout_), BigNumber.from('0'));
+    return claimableAmount;
   }
 }

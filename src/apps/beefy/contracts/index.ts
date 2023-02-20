@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { BeefyBoostVault__factory } from './ethers';
 import { BeefyVaultToken__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -15,9 +16,13 @@ export class BeefyContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  beefyBoostVault({ address, network }: ContractOpts) {
+    return BeefyBoostVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   beefyVaultToken({ address, network }: ContractOpts) {
     return BeefyVaultToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
+export type { BeefyBoostVault } from './ethers';
 export type { BeefyVaultToken } from './ethers';

@@ -3,18 +3,11 @@ import { ethers } from 'ethers';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetUnderlyingTokensParams,
-  GetDisplayPropsParams,
-  GetDataPropsParams,
-} from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams, GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { AelinContractFactory, AelinPool } from '../contracts';
-
-type AelinPoolTokenDataProps = {
-  liquidity: number;
-};
 
 type AelinPoolsResponse = {
   poolCreateds: {
@@ -30,10 +23,7 @@ const query = gql`
   }
 `;
 
-export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
-  AelinPool,
-  AelinPoolTokenDataProps
-> {
+export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetcher<AelinPool> {
   abstract subgraphUrl: string;
   minLiquidity = 0;
 
@@ -49,20 +39,16 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<AelinPoolsResponse>({
-      endpoint: this.subgraphUrl,
-      query,
-    });
+    const data = await gqlFetch<AelinPoolsResponse>({ endpoint: this.subgraphUrl, query });
     return data.poolCreateds.map(v => v.id);
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AelinPool>) {
-    return contract.purchaseToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AelinPool>) {
+    return [{ address: await contract.purchaseToken(), network: this.network }];
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<AelinPool>): Promise<AelinPoolTokenDataProps> {
-    const liquidity = appToken.supply * appToken.price;
-    return { liquidity };
+  async getPricePerShare() {
+    return [1];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<AelinPool>) {

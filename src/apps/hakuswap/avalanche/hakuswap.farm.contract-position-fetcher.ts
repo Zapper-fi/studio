@@ -1,49 +1,71 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+  RewardRateUnit,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { HakuswapContractFactory, HakuswapMasterchef } from '../contracts';
-import { HAKUSWAP_DEFINITION } from '../hakuswap.definition';
 
-const appId = HAKUSWAP_DEFINITION.id;
-const groupId = HAKUSWAP_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheHakuswapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<HakuswapMasterchef> {
+  chefAddress = '0xba438a6f03c03fb1cf86567f6bb866ccfc9b2da7';
+  groupLabel = 'Farms';
+  rewardRateUnit = RewardRateUnit.SECOND;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheHakuswapFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(HakuswapContractFactory) private readonly hakuswapContractFactory: HakuswapContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(HakuswapContractFactory) private readonly contractFactory: HakuswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<HakuswapMasterchef>({
-      address: '0xba438a6f03c03fb1cf86567f6bb866ccfc9b2da7',
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId, groupIds: [HAKUSWAP_DEFINITION.groups.pool.id], network }],
-      resolveContract: ({ address, network }) => this.hakuswapContractFactory.hakuswapMasterchef({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .poolInfo(poolIndex)
-          .then(v => v.lpToken),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).cake(),
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).cakePerSecond(),
-      }),
-    });
+  getContract(address: string): HakuswapMasterchef {
+    return this.contractFactory.hakuswapMasterchef({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: HakuswapMasterchef): Promise<BigNumberish> {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: HakuswapMasterchef, poolIndex: number): Promise<string> {
+    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: HakuswapMasterchef): Promise<string> {
+    return contract.cake();
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<HakuswapMasterchef>) {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<HakuswapMasterchef>) {
+    return contract.cakePerSecond();
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<HakuswapMasterchef>) {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<HakuswapMasterchef>): Promise<BigNumberish> {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<HakuswapMasterchef>): Promise<BigNumberish> {
+    return contract.pendingCake(contractPosition.dataProps.poolIndex, address);
   }
 }

@@ -1,13 +1,13 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
   GetDataPropsParams,
   GetPriceParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { TenderizeContractFactory, TenderToken } from '../contracts';
@@ -17,7 +17,7 @@ import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-
 
 export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
   TenderToken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   TenderizeTokenDefinition
 > {
   constructor(
@@ -34,15 +34,21 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
   }
 
   async getDefinitions(): Promise<TenderizeTokenDefinition[]> {
-    return this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    const definitions = await this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    return definitions.map(v => ({ ...v, address: v.lpToken }));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<TenderizeTokenDefinition>): Promise<string[]> {
     return definitions.map(v => v.lpToken);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
-    return [definition.steak, definition.address];
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
+    return [
+      { address: definition.steak, network: this.network },
+      { address: definition.tenderToken, network: this.network },
+    ];
   }
 
   async getPricePerShare() {
@@ -51,15 +57,19 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
 
   async getPrice({
     appToken,
-  }: GetPriceParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>): Promise<number> {
+  }: GetPriceParams<TenderToken, DefaultAppTokenDataProps, TenderizeTokenDefinition>): Promise<number> {
     return appToken.tokens[0].price;
   }
 
-  async getDataProps(opts: GetDataPropsParams<TenderToken, DefaultDataProps>) {
-    const { appToken } = opts;
-    const reserve = Number(appToken.pricePerShare) * appToken.supply;
-    const liquidity = reserve * appToken.tokens[0].price;
+  async getLiquidity({ appToken }: GetDataPropsParams<TenderToken>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<TenderToken>) {
+    return (appToken.pricePerShare as number[]).map(t => t * appToken.supply);
+  }
+
+  async getApy() {
+    return 0;
   }
 }

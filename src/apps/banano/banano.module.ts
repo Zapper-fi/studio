@@ -1,35 +1,22 @@
-import { Register } from '~app-toolkit/decorators';
-import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2AppModule } from '~apps/uniswap-v2';
+import { Module } from '@nestjs/common';
 
-import BANANO_DEFINITION, { BananoAppDefinition } from './banano.definition';
-import { BinanceSmartChainBananoBalanceFetcher } from './binance-smart-chain/banano.balance-fetcher';
+import { AbstractApp } from '~app/app.dynamic-module';
+
+import { ArbitrumBananoFarmContractPositionFetcher } from './arbitrum/banano.farm.contract-position-fetcher';
 import { BinanceSmartChainBananoFarmContractPositionFetcher } from './binance-smart-chain/banano.farm.contract-position-fetcher';
 import { BananoContractFactory } from './contracts';
-import { FantomBananoBalanceFetcher } from './fantom/banano.balance-fetcher';
+import { EthereumBananoFarmContractPositionFetcher } from './ethereum/banano.farm.contract-position-fetcher';
 import { FantomBananoFarmContractPositionFetcher } from './fantom/banano.farm.contract-position-fetcher';
-import { BananoFarmBalanceFetcherHelper } from './helpers/banano.farm.balance-fetcher-helper';
-import { BananoFarmContractPositionFetcherHelper } from './helpers/banano.farm.contract-position-fetcher-helper';
-import { PolygonBananoBalanceFetcher } from './polygon/banano.balance-fetcher';
 import { PolygonBananoFarmContractPositionFetcher } from './polygon/banano.farm.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: BANANO_DEFINITION.id,
-  imports: [UniswapV2AppModule],
+@Module({
   providers: [
-    BananoAppDefinition,
     BananoContractFactory,
-    BananoFarmContractPositionFetcherHelper,
-    BananoFarmBalanceFetcherHelper,
-    // BSC
-    BinanceSmartChainBananoBalanceFetcher,
     BinanceSmartChainBananoFarmContractPositionFetcher,
-    // Polygon
-    PolygonBananoBalanceFetcher,
     PolygonBananoFarmContractPositionFetcher,
-    // Fantom
-    FantomBananoBalanceFetcher,
     FantomBananoFarmContractPositionFetcher,
+    EthereumBananoFarmContractPositionFetcher,
+    ArbitrumBananoFarmContractPositionFetcher,
   ],
 })
 export class BananoAppModule extends AbstractApp() {}

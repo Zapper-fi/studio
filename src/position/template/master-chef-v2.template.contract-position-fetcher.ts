@@ -69,7 +69,9 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
 
     const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
     const extraRewardTokenAddresses = await this.getExtraRewardTokenAddresses(rewarderContract, definition.poolIndex);
-    tokenDefinitions.push(...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+    tokenDefinitions.push(
+      ...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v, network: this.network })),
+    );
 
     return tokenDefinitions;
   }
@@ -82,6 +84,7 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
     const { contract, definition, multicall } = params;
     const extraRewarderAddress = await this.getExtraRewarder(contract, definition.poolIndex);
     const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
+    if (extraRewarderAddress === ZERO_ADDRESS) return rewardRates;
 
     const extraRewardRates = await this.getExtraRewardTokenRewardRates({ ...params, rewarderContract });
     return [...rewardRates, ...(Array.isArray(extraRewardRates) ? extraRewardRates : [extraRewardRates])];

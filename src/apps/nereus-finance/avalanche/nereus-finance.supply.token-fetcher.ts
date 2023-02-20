@@ -1,22 +1,15 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
-  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+} from '~apps/aave-v2/common/aave-v2.lending.token-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { NEREUS_FINANCE_DEFINITION } from '../nereus-finance.definition';
-
-@Injectable()
-export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
-  appId = NEREUS_FINANCE_DEFINITION.id;
-  groupId = NEREUS_FINANCE_DEFINITION.groups.supply.id;
-  network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0xec090929fbc1b285fc9b3c8ebb92fbc62f01d804';
   isDebt = false;
@@ -25,7 +18,7 @@ export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTempl
     return reserveTokenAddressesData.aTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.supplyApy;
   }
 

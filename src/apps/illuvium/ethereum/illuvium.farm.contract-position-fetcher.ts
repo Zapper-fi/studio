@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { isSupplied } from '~position/position.utils';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { IlluviumContractFactory, IlluviumCorePool } from '../contracts';
-import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumCorePool> {
-  appId = ILLUVIUM_DEFINITION.id;
-  groupId = ILLUVIUM_DEFINITION.groups.farm.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(

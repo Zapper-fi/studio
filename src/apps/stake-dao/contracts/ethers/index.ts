@@ -2,7 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { StakeDaoCurvePool } from './StakeDaoCurvePool';
+export type { StakeDaoFarm } from './StakeDaoFarm';
 export type { StakeDaoGauge } from './StakeDaoGauge';
+export type { StakeDaoVotingEscrow } from './StakeDaoVotingEscrow';
 export * as factories from './factories';
 export { StakeDaoCurvePool__factory } from './factories/StakeDaoCurvePool__factory';
+export { StakeDaoFarm__factory } from './factories/StakeDaoFarm__factory';
 export { StakeDaoGauge__factory } from './factories/StakeDaoGauge__factory';
+export { StakeDaoVotingEscrow__factory } from './factories/StakeDaoVotingEscrow__factory';

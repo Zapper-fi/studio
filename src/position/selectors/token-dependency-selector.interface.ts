@@ -1,17 +1,19 @@
-import { AppTokenPosition } from '~position/position.interface';
-import { BaseTokenPrice } from '~token/selectors/token-price-selector.interface';
+import { AppTokenPosition, NonFungibleToken } from '~position/position.interface';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types';
 
 export type LoggingTags = {
   network?: Network;
   context?: string;
 };
+
 export type TokenDependencySelectorKey = {
-  network: Network;
   address: string;
+  network: Network;
+  tokenId?: number;
 };
 
-export type TokenDependency = AppTokenPosition | BaseTokenPrice;
+export type TokenDependency = BaseToken | AppTokenPosition | NonFungibleToken;
 
 export type GetOne = (opts: TokenDependencySelectorKey) => Promise<TokenDependency | null>;
 export type GetMany = (opts: TokenDependencySelectorKey[]) => Promise<(TokenDependency | null)[]>;

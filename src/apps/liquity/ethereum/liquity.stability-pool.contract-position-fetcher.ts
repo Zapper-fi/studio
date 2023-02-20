@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -10,16 +11,11 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { LiquityContractFactory, StabilityPool } from '../contracts';
-import LIQUITY_DEFINITION from '../liquity.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumLiquityStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StabilityPool> {
-  appId = LIQUITY_DEFINITION.id;
-  groupId = LIQUITY_DEFINITION.groups.stabilityPool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Stability Pool';
 
   constructor(
@@ -39,9 +35,21 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0' }, // LUSD
-      { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS }, // ETH
-      { metaType: MetaType.CLAIMABLE, address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d' }, // LQTY
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0', // LUSD
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: ZERO_ADDRESS, // ETH
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d', // LQTY
+        network: this.network,
+      },
     ];
   }
 

@@ -26,6 +26,18 @@ export const DEFAULT_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY = gql`
   }
 `;
 
+export const FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY = gql`
+  query getFuraLatestBlockNumber($subgraphName: String) {
+    indexingStatusForCurrentVersion(subgraphName: $subgraphName) {
+      chains {
+        latestBlock {
+          number
+        }
+      }
+    }
+  }
+`;
+
 export const DEFAULT_POOL_VOLUMES_QUERY = gql`
   query getCurrentPairVolumes($first: Int) {
     pairs(first: $first, skip: 0, orderBy: reserveUSD, orderDirection: desc) {
@@ -87,6 +99,16 @@ export type LastBlockSyncedResponse = {
     block: {
       number: number;
     };
+  };
+};
+
+export type LastBlockSyncedFuraResponse = {
+  indexingStatusForCurrentVersion: {
+    chains: {
+      latestBlock: {
+        number: number;
+      };
+    }[];
   };
 };
 

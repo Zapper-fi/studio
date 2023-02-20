@@ -22,5 +22,17 @@ export interface ContractPositionBalance<T = DefaultDataProps> extends ContractP
   balanceUSD: number;
 }
 
+export type RawTokenBalance = {
+  key: string;
+  balance: string;
+};
+
+export type RawAppTokenBalance = RawTokenBalance;
+
+export type RawContractPositionBalance = {
+  key: string;
+  tokens: RawTokenBalance[];
+};
+
 export type TokenBalance = BaseTokenBalance | AppTokenPositionBalance | NonFungibleTokenBalance;
 export type PositionBalance<T = DefaultDataProps> = ContractPositionBalance<T> | AppTokenPositionBalance<T>;

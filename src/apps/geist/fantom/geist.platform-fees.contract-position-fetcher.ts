@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -13,16 +14,11 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { GeistContractFactory, GeistStaking } from '../contracts';
-import { GEIST_DEFINITION } from '../geist.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistStaking> {
-  network = Network.FANTOM_OPERA_MAINNET;
-  appId = GEIST_DEFINITION.id;
-  groupId = GEIST_DEFINITION.groups.platformFees.id;
   groupLabel = 'Platform Fees';
 
   isExcludedFromExplore = true;
@@ -56,10 +52,23 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     ).then(addresses => compact(addresses));
 
     return [
-      { address: this.geistTokenAddress, metaType: MetaType.LOCKED }, // Locked GEIST
-      { address: this.geistTokenAddress, metaType: MetaType.CLAIMABLE }, // Unlocked GEIST
-      { address: this.geistTokenAddress, metaType: MetaType.CLAIMABLE }, // Vested GEIST
-      ...rewardTokenAddresses.map(address => ({ address: address.toLowerCase(), metaType: MetaType.CLAIMABLE })),
+      {
+        metaType: MetaType.LOCKED,
+        address: this.geistTokenAddress, // Locked GEIST
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.geistTokenAddress, // Vested/Unlocked GEIST
+        network: this.network,
+      },
+      ...rewardTokenAddresses
+        .map(address => ({
+          metaType: MetaType.CLAIMABLE,
+          address: address.toLowerCase(),
+          network: this.network,
+        }))
+        .filter(({ address }) => address !== this.geistTokenAddress),
     ];
   }
 
@@ -77,22 +86,17 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<GeistStaking>) {
-    const [lockedBalancesData, withdrawableDataRaw, unlockedBalanceRaw, platformFeesPlatformFees] = await Promise.all([
+    const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
       contract.lockedBalances(address),
       contract.withdrawableBalance(address),
-      contract.unlockedBalance(address),
       contract.claimableRewards(address),
     ]);
 
-    const vestedBalanceRaw = withdrawableDataRaw.amount
-      .add(withdrawableDataRaw.penaltyAmount)
-      .sub(unlockedBalanceRaw)
-      .toString();
+    const withdrawableBalanceRaw = withdrawableDataRaw.amount.add(withdrawableDataRaw.penaltyAmount).toString();
 
     return contractPosition.tokens.map((token, idx) => {
       if (idx === 0) return lockedBalancesData.total; // Locked GEIST
-      if (idx === 1) return unlockedBalanceRaw; // Unlocked GEIST
-      if (idx === 2) return vestedBalanceRaw; // Vested GEIST
+      if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked GEIST
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
         ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,

@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -11,10 +12,8 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { ConvexAbracadabraWrapper, ConvexContractFactory } from '../contracts';
-import { CONVEX_DEFINITION } from '../convex.definition';
 
 export const ABRACADABRA_WRAPPERS = [
   '0x5958a8db7dfe0cc49382209069b00f54e17929c2', // stk-tricrypto2
@@ -22,11 +21,8 @@ export const ABRACADABRA_WRAPPERS = [
   '0x3ba207c25a278524e1cc7faaea950753049072a4', // stk-cvx3pool
 ];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexAbracadabraWrapper> {
-  appId = CONVEX_DEFINITION.id;
-  groupId = CONVEX_DEFINITION.groups.abracadabraClaimable.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Abracadabra Rewards';
 
   isExcludedFromExplore = true;
@@ -53,9 +49,21 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<ConvexAbracadabraWrapper>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.convexToken() },
-      { metaType: MetaType.CLAIMABLE, address: '0xd533a949740bb3306d119cc777fa900ba034cd52' },
-      { metaType: MetaType.CLAIMABLE, address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await contract.convexToken(),
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
+        network: this.network,
+      },
     ];
   }
 

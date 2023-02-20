@@ -1,15 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
 
-import { VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
-import { Network } from '~types/network.interface';
-
-import { ROOK_DEFINITION } from '../rook.definition';
-
-@Injectable()
-export class EthereumRookXRookTokenFetcher extends VaultTokenFetcher {
-  appId = ROOK_DEFINITION.id;
-  groupId = ROOK_DEFINITION.groups.xRook.id;
-  network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumRookXRookTokenFetcher extends VaultTemplateTokenFetcher {
   groupLabel = 'xROOK';
 
   vaultAddress = '0x8ac32f0a635a0896a8428a9c31fbf1ab06ecf489';

@@ -1,30 +1,26 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ContractFactory, PoolTogetherV3Pod } from '../contracts';
 
-type Definition = DefaultAppTokenDefinition & {
+type PoolTogetherV3PodDefinition = DefaultAppTokenDefinition & {
   underlyingTokenAddress: string;
-};
-
-type PoolTogetherV3PodDataProps = {
-  liquidity: number;
 };
 
 export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePositionFetcher<
   PoolTogetherV3Pod,
-  DefaultDataProps,
-  Definition
+  DefaultAppTokenDataProps,
+  PoolTogetherV3PodDefinition
 > {
   abstract registryAddress: string;
 
@@ -50,25 +46,13 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
     return contract.name();
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-  }: GetPricePerShareParams<PoolTogetherV3Pod, PoolTogetherV3PodDataProps>) {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PoolTogetherV3Pod>) {
     const pricePerShareRaw = await contract.getPricePerShare();
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    return [pricePerShare];
   }
 
-  async getUnderlyingTokenAddresses({
-    contract,
-  }: GetUnderlyingTokensParams<PoolTogetherV3Pod, Definition>): Promise<string | string[]> {
-    const underlyingTokenAddress = await contract.token().then(addr => addr.toLowerCase());
-    return [underlyingTokenAddress];
-  }
-
-  async getDataProps({
-    appToken,
-  }: GetDataPropsParams<PoolTogetherV3Pod, PoolTogetherV3PodDataProps>): Promise<PoolTogetherV3PodDataProps> {
-    const liquidity = appToken.price * appToken.supply;
-    return { liquidity };
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PoolTogetherV3Pod>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 }

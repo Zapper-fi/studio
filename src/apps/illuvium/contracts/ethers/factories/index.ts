@@ -3,4 +3,5 @@
 /* eslint-disable */
 export { IlluviumCorePool__factory } from './IlluviumCorePool__factory';
 export { IlluviumIlvPoolV2__factory } from './IlluviumIlvPoolV2__factory';
+export { IlluviumSIlv2__factory } from './IlluviumSIlv2__factory';
 export { IlluviumSushiLpPoolV2__factory } from './IlluviumSushiLpPoolV2__factory';

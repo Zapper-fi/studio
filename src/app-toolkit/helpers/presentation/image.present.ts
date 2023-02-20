@@ -24,6 +24,11 @@ export const getImagesFromToken = (token: Token): string[] => {
       ? token.displayProps.images
       : [getAppImg(token.appId)];
   }
+
+  if (token.type === ContractType.NON_FUNGIBLE_TOKEN) {
+    return token.collection?.img ? [token.collection?.img] : [];
+  }
+
   return [getTokenImg(token.address, token.network)];
 };
 

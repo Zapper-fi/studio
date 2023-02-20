@@ -12,21 +12,16 @@ import t = recast.types.namedTypes;
 
 export async function generateAppModule(appId: string) {
   const appTitleCase = strings.titleCase(appId);
-  const appUpperCase = strings.upperCase(appId);
 
   const content = dedent`
-    import { Register } from '~app-toolkit/decorators';
+    import { Module } from '@nestjs/common';
+
     import { AbstractApp } from '~app/app.dynamic-module';
     
     import { ${appTitleCase}ContractFactory } from './contracts';
-    import { ${appTitleCase}AppDefinition, ${appUpperCase}_DEFINITION } from './${appId}.definition';
 
-    @Register.AppModule({
-      appId: ${appUpperCase}_DEFINITION.id,
-      providers: [
-        ${appTitleCase}AppDefinition,
-        ${appTitleCase}ContractFactory,
-      ],
+    @Module({
+      providers: [${appTitleCase}ContractFactory],
     })
     export class ${appTitleCase}AppModule extends AbstractApp() {}
   `;

@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { isClaimable } from '~position/position.utils';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { LlamaAirforceContractFactory, LlamaAirforceMerkleDistributor } from '../contracts';
-import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
 
 import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleTemplateContractPositionFetcher<LlamaAirforceMerkleDistributor> {
-  appId = LLAMA_AIRFORCE_DEFINITION.id;
-  groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Airdrop';
   merkleAddress = '0xa83043df401346a67eddeb074679b4570b956183';
 
@@ -36,7 +32,7 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleT
 
   async getRewardTokenAddresses() {
     return [
-      '0x83507cc8c8b67ed48badd1f59f684d5d02884c81', // uCRV
+      '0x4ebad8dbd4edbd74db0278714fbd67ebc76b89b7', // uCRV
       '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
       '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
     ];

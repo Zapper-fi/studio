@@ -1,30 +1,72 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetTokenDefinitionsParams,
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
-import { COMPOUND_DEFINITION } from '../compound.definition';
-import { CompoundBorrowContractPositionHelper } from '../helper/compound.borrow.contract-position-helper';
+import {
+  CompoundBorrowContractPositionFetcher,
+  CompoundBorrowTokenDataProps,
+  GetMarketsParams,
+} from '../common/compound.borrow.contract-position-fetcher';
+import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
-const appId = COMPOUND_DEFINITION.id;
-const groupId = COMPOUND_DEFINITION.groups.borrow.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
+  CompoundCToken,
+  CompoundComptroller
+> {
+  groupLabel = 'Lending';
+  comptrollerAddress = '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumCompoundBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(CompoundBorrowContractPositionHelper)
-    private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(CompoundContractFactory) protected readonly contractFactory: CompoundContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.compoundBorrowContractPositionHelper.getPositions({
-      network,
-      appId,
-      groupId,
-      supplyGroupId: COMPOUND_DEFINITION.groups.supply.id,
-    });
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.compoundCToken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.compoundComptroller({ address, network: this.network });
+  }
+
+  async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<CompoundCToken>) {
+    return contract.underlying();
+  }
+
+  async getExchangeRate({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+    return contract.exchangeRateCurrent();
+  }
+
+  async getBorrowRate({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+    return contract.borrowRatePerBlock().catch(() => 0);
+  }
+
+  async getCash({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+    return contract.getCash();
+  }
+
+  async getCTokenSupply({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+    return contract.totalSupply();
+  }
+
+  async getCTokenDecimals({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+    return contract.decimals();
+  }
+
+  async getBorrowBalance({ address, contract }: GetTokenBalancesParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+    return contract.borrowBalanceCurrent(address);
   }
 }

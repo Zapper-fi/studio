@@ -1,45 +1,48 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
 import { MakerContractFactory, MakerGovernance } from '../contracts';
-import { MAKER_DEFINITION } from '../maker.definition';
 
-const FARMS = [
-  // MKR
-  {
-    address: '0x9ef05f7f6deb616fd37ac3c959a2ddd25a54e4f5',
-    stakedTokenAddress: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
-    rewardTokenAddresses: ['0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2'],
-  },
-];
+@PositionTemplate()
+export class EthereumMakerGovernanceContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<MakerGovernance> {
+  groupLabel = 'Governance';
 
-const appId = MAKER_DEFINITION.id;
-const groupId = MAKER_DEFINITION.groups.governance.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumMakerGovernanceContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT)
-    private readonly appToolkit: IAppToolkit,
-    @Inject(MakerContractFactory)
-    private readonly makerContractFactory: MakerContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MakerContractFactory) protected readonly contractFactory: MakerContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<MakerGovernance>({
-      network,
-      appId,
-      groupId,
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ network, address }) => this.makerContractFactory.makerGovernance({ network, address }),
-      resolveIsActive: () => true,
-      resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  getContract(address: string): MakerGovernance {
+    return this.contractFactory.makerGovernance({ address, network: this.network });
+  }
+
+  getFarmAddresses() {
+    return ['0x9ef05f7f6deb616fd37ac3c959a2ddd25a54e4f5'];
+  }
+
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<MakerGovernance>) {
+    return contract.GOV();
+  }
+
+  async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<MakerGovernance>) {
+    return [await contract.GOV()];
+  }
+
+  async getRewardRates() {
+    return [0];
+  }
+
+  async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MakerGovernance>) {
+    return contract.deposits(address);
+  }
+
+  async getRewardTokenBalances() {
+    return [0];
   }
 }

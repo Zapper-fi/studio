@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { UnagiiVaultTokenFetcher } from '../common/unagii.vault-token-fetcher';
-import { UNAGII_DEFINITION } from '../unagii.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumUnagiiVaultTokenFetcher extends UnagiiVaultTokenFetcher {
-  appId = UNAGII_DEFINITION.id;
-  groupId = UNAGII_DEFINITION.groups.vault.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vaults';
   vaultManagerAddresses = [
     '0x7f75d72886d6a8677321e5602d18948abcb4281a',

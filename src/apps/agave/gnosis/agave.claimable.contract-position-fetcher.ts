@@ -1,17 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AaveV2ClaimablePositionFetcher } from '~apps/aave-v2/common/aave-v2.claimable.contract-position-fetcher';
 
-import { AaveV2ClaimableTemplatePositionFetcher } from '~apps/aave-v2/helpers/aave-v2.claimable.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
-
-import AGAVE_DEFINITION from '../agave.definition';
-
-@Injectable()
-export class GnosisAgaveClaimableContractPositionFetcher extends AaveV2ClaimableTemplatePositionFetcher {
-  appId = AGAVE_DEFINITION.id;
-  groupId = AGAVE_DEFINITION.groups.claimable.id;
-  network = Network.GNOSIS_MAINNET;
+@PositionTemplate()
+export class GnosisAgaveClaimableContractPositionFetcher extends AaveV2ClaimablePositionFetcher {
   groupLabel = 'Rewards';
-
   isExcludedFromExplore = true;
   isExcludedFromTvl = true;
 

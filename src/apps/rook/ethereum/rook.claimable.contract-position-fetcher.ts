@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import Axios from 'axios';
 import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
@@ -13,10 +14,8 @@ import {
   GetTokenBalancesParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { RookContractFactory, RookLiquidityPoolDistributor } from '../contracts';
-import { ROOK_DEFINITION } from '../rook.definition';
 
 type RewardOfLiquidityProviderResponse = {
   owner: string;
@@ -59,15 +58,12 @@ export type RookClaimableContractPositionDefinition = {
   name: string;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRookClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   RookLiquidityPoolDistributor,
   DefaultDataProps,
   RookClaimableContractPositionDefinition
 > {
-  appId = ROOK_DEFINITION.id;
-  groupId = ROOK_DEFINITION.groups.claimable.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Claimable';
 
   constructor(
@@ -86,7 +82,13 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
   }
 
   async getTokenDefinitions(): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0xfa5047c9c78b8877af97bdcb85db743fd7313d4a' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xfa5047c9c78b8877af97bdcb85db743fd7313d4a',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<RookLiquidityPoolDistributor>) {

@@ -4,9 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { HakuswapFactory__factory } from './ethers';
-import { HakuswapMasterchef__factory } from './ethers';
-import { HakuswapPool__factory } from './ethers';
+import {
+  HakuswapFactory__factory,
+  HakuswapMasterchef__factory,
+  HakuswapPool__factory,
+  HakuswapXHaku__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -26,8 +29,12 @@ export class HakuswapContractFactory extends ContractFactory {
   hakuswapPool({ address, network }: ContractOpts) {
     return HakuswapPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  hakuswapXHaku({ address, network }: ContractOpts) {
+    return HakuswapXHaku__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { HakuswapFactory } from './ethers';
 export type { HakuswapMasterchef } from './ethers';
 export type { HakuswapPool } from './ethers';
+export type { HakuswapXHaku } from './ethers';

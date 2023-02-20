@@ -4,9 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { GammaStrategiesFactory__factory } from './ethers';
-import { GammaStrategiesHypervisor__factory } from './ethers';
-import { GammaStrategiesHypervisorFactory__factory } from './ethers';
+import {
+  GammaStrategiesFactory__factory,
+  GammaStrategiesHypervisor__factory,
+  GammaStrategiesHypervisorFactory__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

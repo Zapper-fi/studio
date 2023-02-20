@@ -1,21 +1,20 @@
-import { Inject, Injectable, NotImplementedException } from '@nestjs/common';
+import { Inject, NotImplementedException } from '@nestjs/common';
 import { compact } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
 import { SablierContractFactory, SablierStream } from '../contracts';
-import { SABLIER_DEFINITION } from '../sablier.definition';
 
 export type SablierStreamLegacyContractPositionDataProps = {
   deposited: number;
@@ -27,15 +26,12 @@ export type SablierStreamLegacyContractPositionDefinition = {
   tokenAddress: string;
 };
 
-@Injectable()
-export class EthereumSablierStreamLegacyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+@PositionTemplate()
+export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SablierStream,
   SablierStreamLegacyContractPositionDataProps,
   SablierStreamLegacyContractPositionDefinition
 > {
-  appId = SABLIER_DEFINITION.id;
-  groupId = SABLIER_DEFINITION.groups.streamLegacy.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Streams (Legacy)';
 
   constructor(
@@ -59,7 +55,13 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
   async getTokenDefinitions({
     definition,
   }: GetTokenDefinitionsParams<SablierStream, SablierStreamLegacyContractPositionDefinition>) {
-    return [{ address: definition.tokenAddress, metaType: MetaType.SUPPLIED }];
+    return [
+      {
+        address: definition.tokenAddress,
+        metaType: MetaType.SUPPLIED,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({

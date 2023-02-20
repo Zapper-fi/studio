@@ -1,20 +1,18 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { BalancerV2ContractFactory } from '~apps/balancer-v2/contracts/index';
+import { BalancerV2ContractFactory } from '~apps/balancer-v2/contracts';
 
 import { AuroraKoyoPoolTokenFetcher } from './aurora/koyo.pool.token-fetcher';
-import { KoyoAppDefinition, KOYO_DEFINITION } from './koyo.definition';
 import { MoonriverKoyoPoolTokenFetcher } from './moonriver/koyo.pool.token-fetcher';
 import { PolygonKoyoPoolTokenFetcher } from './polygon/koyo.pool.token-fetcher';
 
-@Register.AppModule({
-  appId: KOYO_DEFINITION.id,
+@Module({
   providers: [
     BalancerV2ContractFactory,
     AuroraKoyoPoolTokenFetcher,
     MoonriverKoyoPoolTokenFetcher,
     PolygonKoyoPoolTokenFetcher,
-    KoyoAppDefinition,
   ],
 })
 export class KoyoAppModule extends AbstractApp() {}

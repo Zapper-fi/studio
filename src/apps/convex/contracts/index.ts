@@ -4,15 +4,20 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { ConvexAbracadabraWrapper__factory } from './ethers';
-import { ConvexBooster__factory } from './ethers';
-import { ConvexCvxCrvStaking__factory } from './ethers';
-import { ConvexCvxStaking__factory } from './ethers';
-import { ConvexDepositToken__factory } from './ethers';
-import { ConvexDepositor__factory } from './ethers';
-import { ConvexSingleStakingRewards__factory } from './ethers';
-import { ConvexVirtualBalanceRewardPool__factory } from './ethers';
-import { ConvexVotingEscrow__factory } from './ethers';
+import {
+  ConvexAbracadabraWrapper__factory,
+  ConvexBooster__factory,
+  ConvexBoosterSidechain__factory,
+  ConvexCvxCrvStaking__factory,
+  ConvexCvxCrvStakingUtilities__factory,
+  ConvexCvxCrvStakingWrapped__factory,
+  ConvexCvxStaking__factory,
+  ConvexDepositToken__factory,
+  ConvexDepositor__factory,
+  ConvexSingleStakingRewards__factory,
+  ConvexVirtualBalanceRewardPool__factory,
+  ConvexVotingEscrow__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -29,8 +34,17 @@ export class ConvexContractFactory extends ContractFactory {
   convexBooster({ address, network }: ContractOpts) {
     return ConvexBooster__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  convexBoosterSidechain({ address, network }: ContractOpts) {
+    return ConvexBoosterSidechain__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   convexCvxCrvStaking({ address, network }: ContractOpts) {
     return ConvexCvxCrvStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  convexCvxCrvStakingUtilities({ address, network }: ContractOpts) {
+    return ConvexCvxCrvStakingUtilities__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  convexCvxCrvStakingWrapped({ address, network }: ContractOpts) {
+    return ConvexCvxCrvStakingWrapped__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   convexCvxStaking({ address, network }: ContractOpts) {
     return ConvexCvxStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -54,7 +68,10 @@ export class ConvexContractFactory extends ContractFactory {
 
 export type { ConvexAbracadabraWrapper } from './ethers';
 export type { ConvexBooster } from './ethers';
+export type { ConvexBoosterSidechain } from './ethers';
 export type { ConvexCvxCrvStaking } from './ethers';
+export type { ConvexCvxCrvStakingUtilities } from './ethers';
+export type { ConvexCvxCrvStakingWrapped } from './ethers';
 export type { ConvexCvxStaking } from './ethers';
 export type { ConvexDepositToken } from './ethers';
 export type { ConvexDepositor } from './ethers';

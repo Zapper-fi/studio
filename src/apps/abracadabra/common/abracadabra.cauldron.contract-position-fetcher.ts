@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -32,31 +31,62 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     return this.cauldrons.map(address => ({ address }));
   }
 
-  async getTokenDefinitions({ contract, multicall }: GetTokenDefinitionsParams<AbracadabraCauldron>) {
+  async getTokenDefinitions({ address, contract, multicall }: GetTokenDefinitionsParams<AbracadabraCauldron>) {
     const [collateralAddressRaw, debtAddressRaw] = await Promise.all([
       contract.collateral(),
       contract.magicInternetMoney(),
     ]);
 
+    let realCollateralAddressRaw = collateralAddressRaw;
+
     // Abracadabra wraps Convex pools in its own wrapper ERC20 token
-    const _convexWrapper = this.contractFactory.abracadabraConvexWrapper({
-      address: collateralAddressRaw.toLowerCase(),
-      network: this.network,
-    });
+    const convexCauldrons = [
+      '0x4eaed76c3a388f4a841e9c765560bbe7b3e4b3a0',
+      '0x35a0dd182e4bca59d5931eae13d0a2332fa30321',
+      '0x806e16ec797c69afa8590a55723ce4cc1b54050e',
+      '0x6371efe5cd6e3d2d7c477935b7669401143b7985',
+      '0x257101f20cb7243e2c7129773ed5dbbcef8b34e0',
+    ];
 
-    const convexWrapper = multicall.wrap(_convexWrapper);
-    const maybeConvexAddressRaw = await convexWrapper.convexToken().catch(err => {
-      if (isMulticallUnderlyingError(err)) return null;
-      throw err;
-    });
+    if (convexCauldrons.includes(address)) {
+      const convexWrapper = this.contractFactory.abracadabraConvexWrapper({
+        address: collateralAddressRaw.toLowerCase(),
+        network: this.network,
+      });
 
-    const collateralAddress = maybeConvexAddressRaw
-      ? maybeConvexAddressRaw.toLowerCase()
-      : collateralAddressRaw.toLowerCase();
+      realCollateralAddressRaw = await multicall.wrap(convexWrapper).convexToken();
+    }
+
+    // Abracadabra wraps GLP pools in its own wrapper ERC20 token
+    const glpCauldrons = ['0x5698135ca439f21a57bddbe8b582c62f090406d5'];
+
+    if (glpCauldrons.includes(address)) {
+      const glpWrapper = this.contractFactory.abracadabraGlpWrapper({
+        address: collateralAddressRaw.toLowerCase(),
+        network: this.network,
+      });
+
+      const sGlpAddressRaw = await multicall.wrap(glpWrapper).underlying();
+      const sGlp = this.contractFactory.abracadabraGmxSGlp({
+        address: sGlpAddressRaw.toLowerCase(),
+        network: this.network,
+      });
+
+      const glpAddress = await multicall.wrap(sGlp).glp();
+      realCollateralAddressRaw = glpAddress;
+    }
 
     return [
-      { metaType: MetaType.SUPPLIED, address: collateralAddress },
-      { metaType: MetaType.BORROWED, address: debtAddressRaw },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: realCollateralAddressRaw,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: debtAddressRaw,
+        network: this.network,
+      },
     ];
   }
 
@@ -69,6 +99,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     address,
     contractPosition,
     contract,
+    multicall,
   }: GetTokenBalancesParams<AbracadabraCauldron>) {
     const [borrowPartRaw, totalBorrowRaw, collateralShareRaw, bentoBoxAddressRaw] = await Promise.all([
       contract.userBorrowPart(address),
@@ -77,10 +108,12 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
       contract.bentoBox(),
     ]);
 
-    const bentoBoxTokenContract = this.contractFactory.abracadabraBentoBoxTokenContract({
-      address: bentoBoxAddressRaw,
-      network: this.network,
-    });
+    const bentoBoxTokenContract = multicall.wrap(
+      this.contractFactory.abracadabraBentoBoxTokenContract({
+        address: bentoBoxAddressRaw,
+        network: this.network,
+      }),
+    );
 
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     const suppliedBalanceRaw = await bentoBoxTokenContract.toAmount(suppliedToken.address, collateralShareRaw, false);

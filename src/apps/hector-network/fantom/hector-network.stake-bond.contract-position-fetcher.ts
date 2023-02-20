@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -9,16 +10,11 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { HectorNetworkContractFactory, HectorNetworkStakeBondDepository } from '../contracts';
-import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomHectorNetworkStakeBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkStakeBondDepository> {
-  appId = HECTOR_NETWORK_DEFINITION.id;
-  groupId = HECTOR_NETWORK_DEFINITION.groups.stakeBond.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Bonds';
 
   constructor(
@@ -48,9 +44,21 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     const [principle, claimable] = await Promise.all([contract.principle(), contract.sHEC()]);
 
     return [
-      { address: claimable, metaType: MetaType.VESTING },
-      { address: claimable, metaType: MetaType.CLAIMABLE },
-      { address: principle, metaType: MetaType.SUPPLIED },
+      {
+        metaType: MetaType.VESTING,
+        address: claimable,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: claimable,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: principle,
+        network: this.network,
+      },
     ];
   }
 

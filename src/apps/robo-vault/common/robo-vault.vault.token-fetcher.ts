@@ -12,15 +12,7 @@ import { RoboVault, RoboVaultContractFactory } from '../contracts';
 
 import { RoboVaultApiClient } from './robo-vault.api.client';
 
-export type RoboTokenDataProps = {
-  apy: number;
-  liquidity: number;
-};
-
-export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
-  RoboVault,
-  RoboTokenDataProps
-> {
+export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositionFetcher<RoboVault> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(RoboVaultContractFactory) protected readonly contractFactory: RoboVaultContractFactory,
@@ -38,19 +30,19 @@ export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositio
     return data.map(v => v.addr.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RoboVault>) {
-    return contract.token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<RoboVault>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
-  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<RoboVault, RoboTokenDataProps>) {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<RoboVault>) {
     const pricePerShareRaw = await contract.pricePerShare();
-    return Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
+    return [pricePerShare];
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<RoboVault, RoboTokenDataProps>): Promise<RoboTokenDataProps> {
-    const liquidity = appToken.supply * appToken.price;
+  async getApy({ appToken }: GetDataPropsParams<RoboVault>) {
     const data = await this.apiClient.getCachedVaults(this.network);
     const apy = (data.find(v => v.addr.toLowerCase() === appToken.address)?.apy ?? 0) * 100;
-    return { liquidity, apy };
+    return apy;
   }
 }

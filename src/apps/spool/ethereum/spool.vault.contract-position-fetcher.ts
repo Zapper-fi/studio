@@ -1,32 +1,33 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
+import { BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
-import _ from 'lodash';
+import { uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
   buildStringDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-import { SpoolContractFactory } from '~apps/spool';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+import { SpoolContractFactory, SpoolVault } from '~apps/spool/contracts';
 import { ANALYTICS_API_BASE_URL, SUBGRAPH_API_BASE_URL } from '~apps/spool/ethereum/spool.constants';
-import { ContractType } from '~position/contract.interface';
 import { WithMetaType } from '~position/display.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, Token } from '~position/position.interface';
+import { MetaType, Token } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { BaseToken } from '~position/token.interface';
-import { Network } from '~types/network.interface';
-
-import { SPOOL_DEFINITION } from '../spool.definition';
 
 import { Platform, RewardAnalytics, VaultDetails, SpoolVaults, StrategyAnalytics, VaultAnalytics } from './spool.types';
-
-const appId = SPOOL_DEFINITION.id;
-const groupId = SPOOL_DEFINITION.groups.vault.id;
-const network = Network.ETHEREUM_MAINNET;
 
 const platformQuery = gql`
   query {
@@ -90,12 +91,159 @@ const vaultsQuery = gql`
 
 const riskModels = { '0xc216ad6280f4fa92a5159ef383a1206d432481c8': 'Spool Labs' };
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumSpoolVaultContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export type SpoolVaultDefinition = {
+  address: string;
+  name: string;
+  riskModel: string;
+  suppliedTokenAddress: string;
+  rewardTokenAddresses: string[];
+  strategyAddresses: string[];
+  stats: {
+    riskTolerance: number;
+    adjustedApy: number;
+    incentivizedApy: number;
+    apy: number;
+    tvr: number;
+    fees: number;
+  };
+};
+
+export type SpoolVaultDataProps = {
+  totalValueRouted: number;
+  apy: number;
+  adjustedApy: number;
+  incentivizedApy: number;
+  fees: number;
+  strategies: string[];
+  riskScore: string;
+  riskTolerance: number;
+};
+
+@PositionTemplate()
+export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  SpoolVault,
+  SpoolVaultDataProps,
+  SpoolVaultDefinition
+> {
+  groupLabel = 'Vaults';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SpoolContractFactory) private readonly spoolContractFactory: SpoolContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(SpoolContractFactory) protected readonly contractFactory: SpoolContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): SpoolVault {
+    return this.contractFactory.spoolVault({ address, network: this.network });
+  }
+
+  async getDefinitions() {
+    // Request all vaults
+    const vaultsData = await gqlFetch<SpoolVaults>({
+      endpoint: SUBGRAPH_API_BASE_URL,
+      query: vaultsQuery,
+    });
+
+    // Request platform fees
+    const platformFees = await gqlFetch<Platform>({
+      endpoint: SUBGRAPH_API_BASE_URL,
+      query: platformQuery,
+    });
+
+    const vaultAddresses = vaultsData.spools.map(v => v.id.toLowerCase());
+    const strategyAddresses = uniq(vaultsData.spools.flatMap(v => v.strategies.map(v => v.strategy.id.toLowerCase())));
+
+    // Request strategy, vault, and reward analytics
+    const strategyAnalytics = await this.getStrategyAnalytics(strategyAddresses);
+    const vaultAnalytics = await this.getVaultAnalytics(vaultAddresses);
+    const rewardAnalytics = await this.getRewardAnalytics(vaultAddresses);
+
+    const vaultDefinitions = vaultsData.spools.map(vault => ({
+      address: vault.id.toLowerCase(),
+      name: vault.name,
+      riskModel: vault.riskProvider.id ?? '',
+      suppliedTokenAddress: vault.underlying.id.toLowerCase(),
+      rewardTokenAddresses: vault.rewardTokens.map(rt => rt.token.id.toLowerCase()),
+      strategyAddresses: vault.strategies.map(s => s.strategy.id.toLowerCase()),
+      stats: this.getVaultStats(vault, strategyAnalytics, rewardAnalytics, vaultAnalytics, platformFees),
+    }));
+
+    return vaultDefinitions;
+  }
+
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<SpoolVault, SpoolVaultDefinition>) {
+    return [
+      { metaType: MetaType.SUPPLIED, address: definition.suppliedTokenAddress, network: this.network },
+      ...definition.rewardTokenAddresses.map(address => ({
+        metaType: MetaType.CLAIMABLE,
+        address,
+        network: this.network,
+      })),
+    ];
+  }
+
+  async getDataProps({ definition }: GetDataPropsParams<SpoolVault, any, SpoolVaultDefinition>) {
+    return {
+      totalValueRouted: definition.stats.tvr,
+      apy: definition.stats.apy,
+      adjustedApy: definition.stats.adjustedApy,
+      incentivizedApy: definition.stats.incentivizedApy,
+      fees: definition.stats.fees,
+      strategies: definition.strategyAddresses,
+      riskScore: this.getRiskScoreString(definition.stats.riskTolerance),
+      riskTolerance: definition.stats.riskTolerance,
+    };
+  }
+
+  async getLabel({ definition }: GetDisplayPropsParams<SpoolVault, SpoolVaultDataProps, SpoolVaultDefinition>) {
+    return definition.name;
+  }
+
+  async getSecondaryLabel({
+    contractPosition,
+  }: GetDisplayPropsParams<SpoolVault, SpoolVaultDataProps, SpoolVaultDefinition>) {
+    return getLabelFromToken(contractPosition.tokens[0]);
+  }
+
+  async getTertiaryLabel({ contractPosition }: GetDisplayPropsParams<SpoolVault, SpoolVaultDataProps>) {
+    return `${contractPosition.dataProps.adjustedApy.toFixed(3)}% APY`;
+  }
+
+  async getStatsItems({ definition }: GetDisplayPropsParams<SpoolVault, SpoolVaultDataProps, SpoolVaultDefinition>) {
+    return [
+      { label: 'APY', value: buildPercentageDisplayItem(definition.stats.adjustedApy) },
+      { label: 'TVR', value: buildDollarDisplayItem(definition.stats.tvr) },
+      { label: 'Risk Model', value: buildStringDisplayItem(riskModels[definition.riskModel]) },
+      {
+        label: 'Risk Appetite',
+        value: buildStringDisplayItem(
+          `${this.getRiskScoreString(definition.stats.riskTolerance)} (${this.mapRiskToRange(
+            definition.stats.riskTolerance,
+          )})`,
+        ),
+      },
+    ];
+  }
+
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    contract,
+    multicall,
+  }: GetTokenBalancesParams<SpoolVault, SpoolVaultDataProps>): Promise<BigNumberish[]> {
+    const strategies = contractPosition.dataProps.strategies;
+
+    const [balanceRaw] = await Promise.all([
+      multicall.wrap(contract).callStatic.getUpdatedUser(strategies, { from: address }),
+    ]);
+
+    // balanceRaw[5] + balanceRaw[7]: pending deposits
+    // balanceRaw[4]: user's funds in underlying asset
+    const pendingDeposit = balanceRaw[5].add(balanceRaw[7]);
+    const balance = balanceRaw[4].add(pendingDeposit);
+    return [balance.toString(), ...contractPosition.tokens.slice(1).map(() => '0')];
+  }
 
   /**
    * Fetch reward token analytics
@@ -125,88 +273,6 @@ export class EthereumSpoolVaultContractPositionFetcher implements PositionFetche
     const addresses = vaults.map(address => `address=${address}`).join('&');
     const url = `${ANALYTICS_API_BASE_URL}/spool?latest=true&${addresses}`;
     return await Axios.get<VaultAnalytics>(url).then(v => v.data);
-  }
-
-  async getPositions() {
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const vaults = (
-      await graphHelper.requestGraph<SpoolVaults>({
-        endpoint: SUBGRAPH_API_BASE_URL,
-        query: vaultsQuery,
-      })
-    ).spools;
-
-    const platformFees = await graphHelper.requestGraph<Platform>({
-      endpoint: SUBGRAPH_API_BASE_URL,
-      query: platformQuery,
-    });
-
-    const tokenAddresses = _.uniq(
-      vaults
-        .map(vault => vault.underlying.id.toLowerCase())
-        .concat(_.flattenDeep(vaults.map(vault => vault.rewardTokens.map(token => token.token.id.toLowerCase())))),
-    );
-
-    const tokens = await Promise.all(
-      tokenAddresses.map((address: string) => this.appToolkit.getBaseTokenPrice({ network, address })),
-    );
-
-    const strategyAddresses = _.uniq(
-      _.flattenDeep(vaults.map(vault => vault.strategies.map(strategy => strategy.strategy.id))),
-    );
-
-    const vaultAddresses = vaults.map(vault => vault.id.toLowerCase());
-    const strategyAnalytics = await this.getStrategyAnalytics(strategyAddresses);
-    const vaultAnalytics = await this.getVaultAnalytics(vaultAddresses);
-    const rewardAnalytics = await this.getRewardAnalytics(vaultAddresses);
-
-    const vaultDefinitions = await Promise.all(
-      vaults.map(async (vault: VaultDetails) => {
-        const stats = this.getVaultStats(vault, strategyAnalytics, rewardAnalytics, vaultAnalytics, platformFees);
-        const vaultTokens = this.getVaultTokens(vault, tokens);
-        const riskTolerance = parseInt(vault.riskTolerance);
-
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address: vault.id,
-          network,
-          tokens: vaultTokens,
-          dataProps: {
-            totalValueRouted: stats.tvr,
-            apy: stats.apy,
-            adjustedApy: stats.adjustedApy,
-            incentivizedApy: stats.incentivizedApy,
-            fees: stats.fees,
-            strategies: vault.strategies.map(strategy => strategy.strategy.id),
-            riskScore: this.getRiskScoreString(riskTolerance),
-            riskTolerance,
-          },
-          displayProps: {
-            label: vault.name,
-            secondaryLabel: vault.underlying.symbol,
-            images: [],
-            statsItems: [
-              { label: 'APY', value: buildPercentageDisplayItem(stats.adjustedApy * 100) },
-              { label: 'TVR', value: buildDollarDisplayItem(stats.tvr) },
-              { label: 'Risk Model', value: buildStringDisplayItem(riskModels[vault.riskProvider.id] || '') },
-              { label: 'Asset', value: buildStringDisplayItem(vault.underlying.symbol) },
-              {
-                label: 'Risk Appetite',
-                value: buildStringDisplayItem(
-                  `${this.getRiskScoreString(riskTolerance)} (${this.mapRiskToRange(riskTolerance)})`,
-                ),
-              },
-            ],
-          },
-        };
-
-        return position;
-      }),
-    );
-
-    return _.compact(vaultDefinitions);
   }
 
   /**
@@ -243,17 +309,19 @@ export class EthereumSpoolVaultContractPositionFetcher implements PositionFetche
     const apy = stats.apy || baseApy / 100.0;
     const tvr = parseFloat(stats.tvr);
 
+    const riskTolerance = Number(vault.riskTolerance);
     const incentivizedApy = Object.values(rewardAnalytics[vault.id] || {})
       .map(rewardToken => parseFloat(rewardToken[0].apy))
       .reduce((a, b) => a + b, 0);
     const adjustedApy = apy * ((100 - fees) / 100) + incentivizedApy || apy;
 
     return {
-      adjustedApy,
-      incentivizedApy,
-      apy,
+      riskTolerance,
       tvr,
       fees,
+      adjustedApy: adjustedApy * 100,
+      incentivizedApy: incentivizedApy * 100,
+      apy: apy * 100,
     };
   }
 

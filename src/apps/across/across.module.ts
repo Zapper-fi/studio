@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AcrossAppDefinition, ACROSS_DEFINITION } from './across.definition';
 import { AcrossContractFactory } from './contracts';
-import { EthereumAcrossPoolTokenFetcher } from './ethereum/across.pool.token-fetcher';
+import { EthereumAcrossPoolV1TokenFetcher } from './ethereum/across.pool-v1.token-fetcher';
+import { EthereumAcrossPoolV2TokenFetcher } from './ethereum/across.pool-v2.token-fetcher';
 
-@Register.AppModule({
-  appId: ACROSS_DEFINITION.id,
-  providers: [AcrossAppDefinition, AcrossContractFactory, EthereumAcrossPoolTokenFetcher],
+@Module({
+  providers: [AcrossContractFactory, EthereumAcrossPoolV1TokenFetcher, EthereumAcrossPoolV2TokenFetcher],
 })
 export class AcrossAppModule extends AbstractApp() {}

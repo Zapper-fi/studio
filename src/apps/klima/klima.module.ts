@@ -1,25 +1,19 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { OlympusAppModule } from '~apps/olympus';
 
 import { KlimaContractFactory } from './contracts';
-import { KlimaAppDefinition, KLIMA_DEFINITION } from './klima.definition';
-import { PolygonKlimaBalanceFetcher } from './polygon/klima.balance-fetcher';
-import { PolygonKlimaBondContractPositionFetcher } from './polygon/klima.bond.contract-position';
-import { PolygonKlimaSTokenFetcher } from './polygon/klima.s-klima.token-fetcher';
-import { PolygonKlimaWsTokenFetcher } from './polygon/klima.ws-klima.token-fetcher';
+import { PolygonKlimaBondContractPositionFetcher } from './polygon/klima.bond.contract-position-fetcher';
+import { PolygonKlimaSKlimaTokenFetcher } from './polygon/klima.s-klima.token-fetcher';
+import { PolygonKlimaWsKlimaTokenFetcher } from './polygon/klima.ws-klima.token-fetcher';
 
-@Register.AppModule({
-  appId: KLIMA_DEFINITION.id,
-  imports: [OlympusAppModule],
+@Module({
   providers: [
-    KlimaAppDefinition,
     KlimaContractFactory,
     // Polygon
-    PolygonKlimaBalanceFetcher,
     PolygonKlimaBondContractPositionFetcher,
-    PolygonKlimaSTokenFetcher,
-    PolygonKlimaWsTokenFetcher,
+    PolygonKlimaSKlimaTokenFetcher,
+    PolygonKlimaWsKlimaTokenFetcher,
   ],
 })
 export class KlimaAppModule extends AbstractApp() {}

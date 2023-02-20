@@ -3,4 +3,5 @@
 /* eslint-disable */
 export { RocketDaoNodeTrusted__factory } from './RocketDaoNodeTrusted__factory';
 export { RocketMinipoolManager__factory } from './RocketMinipoolManager__factory';
+export { RocketNodeDeposit__factory } from './RocketNodeDeposit__factory';
 export { RocketNodeStaking__factory } from './RocketNodeStaking__factory';

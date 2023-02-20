@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { ContractFactory } from '~contract';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { PositionBalanceFetcher } from '~position/position-balance-fetcher.interface';

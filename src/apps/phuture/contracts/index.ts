@@ -5,6 +5,8 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { PhutureManagedIndex__factory } from './ethers';
+import { PhutureVToken__factory } from './ethers';
+import { PhutureVTokenFactory__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -18,6 +20,14 @@ export class PhutureContractFactory extends ContractFactory {
   phutureManagedIndex({ address, network }: ContractOpts) {
     return PhutureManagedIndex__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  phutureVToken({ address, network }: ContractOpts) {
+    return PhutureVToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  phutureVTokenFactory({ address, network }: ContractOpts) {
+    return PhutureVTokenFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { PhutureManagedIndex } from './ethers';
+export type { PhutureVToken } from './ethers';
+export type { PhutureVTokenFactory } from './ethers';

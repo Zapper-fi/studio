@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -9,16 +10,11 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
-import PLUTUS_DEFINITION from '../plutus.definition';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.tgeClaimable.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Private TGE Allocation';
 
   constructor(
@@ -37,7 +33,13 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
   }
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<PlutusPrivateTgeVester>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0x51318b7d00db7acc4026c88c3952b66278b6a67f' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x51318b7d00db7acc4026c88c3952b66278b6a67f',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusPrivateTgeVester>) {
@@ -46,6 +48,6 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
     const pendingClaims = await contract.pendingClaims(address);
-    return [pendingClaims._claimable];
+    return [pendingClaims._allocation.sub(pendingClaims._claimed)];
   }
 }

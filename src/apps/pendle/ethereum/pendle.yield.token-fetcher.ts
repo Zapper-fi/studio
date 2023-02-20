@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -15,13 +16,12 @@ import {
   DefaultAppTokenDefinition,
   GetDefinitionsParams,
   GetAddressesParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { PendleContractFactory, PendleYieldToken } from '../contracts';
-import { PENDLE_DEFINITION } from '../pendle.definition';
 
-export type PendleYieldTokenDataProps = {
+export type PendleYieldTokenDataProps = DefaultAppTokenDataProps & {
   expiry: number;
   baseTokenAddress: string;
   marketAddress: string;
@@ -39,15 +39,12 @@ export type PendleYieldTokenDefinition = {
   expiry: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleYieldToken,
   PendleYieldTokenDataProps,
   PendleYieldTokenDefinition
 > {
-  appId = PENDLE_DEFINITION.id;
-  groupId = PENDLE_DEFINITION.groups.yield.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Future Yield';
   pendleDataAddress = '0xe8a6916576832aa5504092c1cccc46e3bb9491d6';
 
@@ -110,8 +107,8 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.pendleYieldToken({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
-    return contract.underlyingAsset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
+    return [{ address: await contract.underlyingAsset(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -124,7 +121,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     const { expiry, baseTokenAddress } = definition;
 
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
-    if (!baseToken || Date.now() / 1000 > Number(expiry)) return 0;
+    if (!baseToken || Date.now() / 1000 > Number(expiry)) return [0];
 
     const reserves = await multicall.wrap(market).getReserves();
 
@@ -137,14 +134,15 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
       .times(baseToken.price)
       .toNumber();
 
-    return price / appToken.tokens[0].price;
+    return [price / appToken.tokens[0].price];
   }
 
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
-    const { marketAddress, expiry, baseTokenAddress } = definition;
-    return { marketAddress, baseTokenAddress, expiry };
+  async getDataProps(
+    params: GetDataPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>,
+  ) {
+    const defaultDataProps = await super.getDataProps(params);
+    const { marketAddress, expiry, baseTokenAddress } = params.definition;
+    return { ...defaultDataProps, marketAddress, baseTokenAddress, expiry };
   }
 
   async getLabel({

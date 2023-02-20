@@ -1,0 +1,39 @@
+import { Inject } from '@nestjs/common';
+
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetPricePerShareParams } from '~position/template/app-token.template.types';
+
+import { AladdinFxs, ConcentratorContractFactory } from '../contracts';
+
+@PositionTemplate()
+export class EthereumConcentratorAfxsTokenFetcher extends AppTokenTemplatePositionFetcher<AladdinFxs> {
+  groupLabel = 'aFxs';
+
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(ConcentratorContractFactory) protected readonly contractFactory: ConcentratorContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): AladdinFxs {
+    return this.contractFactory.aladdinFxs({ address, network: this.network });
+  }
+
+  async getAddresses() {
+    return ['0xdaf03d70fe637b91ba6e521a32e1fb39256d3ec9'];
+  }
+
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0xfeef77d3f69374f66429c91d732a244f074bdf74', network: this.network }];
+  }
+
+  async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AladdinFxs>) {
+    const reserveRaw = await contract.totalAssets();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
+  }
+}
