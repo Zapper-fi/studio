@@ -27,7 +27,7 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
   }
 
   async getDefinitions() {
-    return [{ address: '0x2c360b513ae52947eeb37cfad57ac9b7c9373e1b' }];
+    return [{ address: '0x910F16455E5eB4605Fe639e2846579c228eeD3B5' }];
   }
 
   async getTokenDefinitions() {
@@ -44,7 +44,7 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: '0xb4d930279552397bba2ee473229f89ec245bc365', // MAHA
+        address: '0x745407c86DF8DB893011912d3aB28e68B62E49B0', // MAHA
         network: this.network,
       },
     ];
