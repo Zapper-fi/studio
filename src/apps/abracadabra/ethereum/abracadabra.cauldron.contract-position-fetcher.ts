@@ -44,5 +44,6 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
     '0x85f60D3ea4E86Af43c9D4E9CC9095281fC25c405', // Migrated WBTC
     '0x7259e152103756e1616A77Ae982353c3751A6a90', // yvCrv3Crypto
     '0x1062eB452f8C7A94276437ec1F4aAca9b1495B72', // Stargate USDT (POF)
+    '0x692887E8877C6Dd31593cda44c382DB5b289B684', // magicAPE
   ];
 }

@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface Erc721Interface extends utils.Interface {
   functions: {
@@ -119,57 +119,78 @@ export interface Erc721Interface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'MAX_MINTS_PER_TXN', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'baseURI', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burn', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencySetStartingIndexBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'flipPreSaleState', values?: undefined): string;
   encodeFunctionData(functionFragment: 'flipSaleState', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'maxTokenSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxTokensPerTicket', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mintPrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mintTOR', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'mintUsingTicket', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'mintTOR', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'mintUsingTicket', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'preSaleIsActive', values?: undefined): string;
   encodeFunctionData(functionFragment: 'provenance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reserveMint(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'reserveMint(uint256,address)', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'reserveMint(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'reserveMint(uint256,address)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(functionFragment: 'saleIsActive', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setBaseURI', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setMaxTokenSupply', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxTokensPerTicket', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMintPrice', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setProvenanceHash', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setMaxTokenSupply', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMaxTokensPerTicket', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMintPrice', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setProvenanceHash', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'setStartingIndex', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setTicketContractAddress', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setTicketContractAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'startingIndex', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startingIndexBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenByIndex', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenOfOwnerByIndex', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokenByIndex', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'tokenOfOwnerByIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawForGiveaway', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawForGiveaway',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'MAX_MINTS_PER_TXN', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -302,31 +323,35 @@ export interface Erc721 extends BaseContract {
     MAX_MINTS_PER_TXN(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
     burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencySetStartingIndexBlock(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    flipPreSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    flipPreSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    flipSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    flipSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     maxTokenSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -335,161 +360,169 @@ export interface Erc721 extends BaseContract {
     mintPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintTOR(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      numberOfTokens: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintUsingTicket(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      numberOfTokens: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     preSaleIsActive(overrides?: CallOverrides): Promise<[boolean]>;
 
     provenance(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'reserveMint(uint256)'(
-      reservedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'reserveMint(uint256,address)'(
-      reservedAmount: BigNumberish,
-      mintAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      mintAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     saleIsActive(overrides?: CallOverrides): Promise<[boolean]>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBaseURI(
-      newBaseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBaseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxTokenSupply(
-      maxTorSupply: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxTorSupply: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxTokensPerTicket(
-      maxTokensPerMintTicket: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxTokensPerMintTicket: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMintPrice(
-      newPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setProvenanceHash(
-      provenanceHash: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provenanceHash: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setStartingIndex(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setStartingIndex(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setTicketContractAddress(
-      mintTicketContractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      mintTicketContractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startingIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     startingIndexBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawForGiveaway(
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   MAX_MINTS_PER_TXN(overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
   burn(
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencySetStartingIndexBlock(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  flipPreSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  flipPreSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  flipSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  flipSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   maxTokenSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -498,142 +531,150 @@ export interface Erc721 extends BaseContract {
   mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   mintTOR(
-    numberOfTokens: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    numberOfTokens: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintUsingTicket(
-    numberOfTokens: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    numberOfTokens: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   preSaleIsActive(overrides?: CallOverrides): Promise<boolean>;
 
   provenance(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'reserveMint(uint256)'(
-    reservedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reservedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'reserveMint(uint256,address)'(
-    reservedAmount: BigNumberish,
-    mintAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reservedAmount: PromiseOrValue<BigNumberish>,
+    mintAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   saleIsActive(overrides?: CallOverrides): Promise<boolean>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBaseURI(
-    newBaseURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBaseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxTokenSupply(
-    maxTorSupply: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    maxTorSupply: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxTokensPerTicket(
-    maxTokensPerMintTicket: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    maxTokensPerMintTicket: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMintPrice(
-    newPrice: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setProvenanceHash(
-    provenanceHash: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    provenanceHash: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setStartingIndex(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setStartingIndex(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setTicketContractAddress(
-    mintTicketContractAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    mintTicketContractAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
   startingIndexBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenOfOwnerByIndex(
+    owner: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawForGiveaway(
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     MAX_MINTS_PER_TXN(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
-    burn(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burn(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emergencySetStartingIndexBlock(overrides?: CallOverrides): Promise<void>;
 
@@ -641,9 +682,13 @@ export interface Erc721 extends BaseContract {
 
     flipSaleState(overrides?: CallOverrides): Promise<void>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     maxTokenSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -651,15 +696,15 @@ export interface Erc721 extends BaseContract {
 
     mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mintTOR(numberOfTokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mintTOR(numberOfTokens: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    mintUsingTicket(numberOfTokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mintUsingTicket(numberOfTokens: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     preSaleIsActive(overrides?: CallOverrides): Promise<boolean>;
 
@@ -667,128 +712,173 @@ export interface Erc721 extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    'reserveMint(uint256)'(reservedAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'reserveMint(uint256)'(reservedAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     'reserveMint(uint256,address)'(
-      reservedAmount: BigNumberish,
-      mintAddress: string,
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      mintAddress: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     saleIsActive(overrides?: CallOverrides): Promise<boolean>;
 
-    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setBaseURI(newBaseURI: string, overrides?: CallOverrides): Promise<void>;
+    setBaseURI(newBaseURI: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMaxTokenSupply(maxTorSupply: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxTokenSupply(maxTorSupply: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMaxTokensPerTicket(maxTokensPerMintTicket: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxTokensPerTicket(
+      maxTokensPerMintTicket: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMintPrice(newPrice: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMintPrice(newPrice: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setProvenanceHash(provenanceHash: string, overrides?: CallOverrides): Promise<void>;
+    setProvenanceHash(provenanceHash: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setStartingIndex(overrides?: CallOverrides): Promise<void>;
 
-    setTicketContractAddress(mintTicketContractAddress: string, overrides?: CallOverrides): Promise<void>;
+    setTicketContractAddress(
+      mintTicketContractAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     startingIndexBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(from: string, to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawForGiveaway(amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    withdrawForGiveaway(
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PaymentReleased(address,uint256)'(to?: null, amount?: null): PaymentReleasedEventFilter;
     PaymentReleased(to?: null, amount?: null): PaymentReleasedEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     MAX_MINTS_PER_TXN(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(tokenId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burn(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    emergencySetStartingIndexBlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencySetStartingIndexBlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    flipPreSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    flipPreSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    flipSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    flipSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     maxTokenSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -797,124 +887,134 @@ export interface Erc721 extends BaseContract {
     mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintTOR(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      numberOfTokens: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintUsingTicket(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      numberOfTokens: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     preSaleIsActive(overrides?: CallOverrides): Promise<BigNumber>;
 
     provenance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'reserveMint(uint256)'(
-      reservedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'reserveMint(uint256,address)'(
-      reservedAmount: BigNumberish,
-      mintAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      mintAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     saleIsActive(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBaseURI(newBaseURI: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBaseURI(
+      newBaseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setMaxTokenSupply(
-      maxTorSupply: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxTorSupply: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxTokensPerTicket(
-      maxTokensPerMintTicket: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxTokensPerMintTicket: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMintPrice(
-      newPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setProvenanceHash(
-      provenanceHash: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provenanceHash: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setStartingIndex(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setStartingIndex(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setTicketContractAddress(
-      mintTicketContractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      mintTicketContractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     startingIndexBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawForGiveaway(
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -922,31 +1022,35 @@ export interface Erc721 extends BaseContract {
     MAX_MINTS_PER_TXN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencySetStartingIndexBlock(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    flipPreSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    flipPreSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    flipSaleState(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    flipSaleState(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     maxTokenSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -955,130 +1059,134 @@ export interface Erc721 extends BaseContract {
     mintPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintTOR(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      numberOfTokens: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintUsingTicket(
-      numberOfTokens: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      numberOfTokens: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     preSaleIsActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     provenance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'reserveMint(uint256)'(
-      reservedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'reserveMint(uint256,address)'(
-      reservedAmount: BigNumberish,
-      mintAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reservedAmount: PromiseOrValue<BigNumberish>,
+      mintAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     saleIsActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBaseURI(
-      newBaseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBaseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxTokenSupply(
-      maxTorSupply: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxTorSupply: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxTokensPerTicket(
-      maxTokensPerMintTicket: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxTokensPerMintTicket: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMintPrice(
-      newPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setProvenanceHash(
-      provenanceHash: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provenanceHash: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setStartingIndex(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setStartingIndex(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setTicketContractAddress(
-      mintTicketContractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      mintTicketContractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startingIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     startingIndexBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawForGiveaway(
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

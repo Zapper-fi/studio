@@ -11,4 +11,3 @@ export const S_SPELL_ADDRESS = '0xf7428ffcb2581a2804998efbb036a43255c8a8d3';
 export const SPELL_ADDRESS = '0xf7428ffcb2581a2804998efbb036a43255c8a8d3';
 
 export const MAGIC_GLP_ADDRESS = '0x85667409a723684fe1e57dd1abde8d88c2f54214';
-export const S_GLP_ADDRESS = '0x5402b5f40310bded796c7d0f3ff6683f5c0cffdf';
