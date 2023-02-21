@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.396.1](https://github.com/Zapper-fi/studio/compare/v0.396.0...v0.396.1) (2023-02-21)
+
+
+### Bug Fixes
+
+* **gains-network:** fix pricePerShare call ([#2342](https://github.com/Zapper-fi/studio/issues/2342)) ([6ff97d8](https://github.com/Zapper-fi/studio/commit/6ff97d81e46d8ad43d1d2432506cb9e22a4edf6f))
+
 ## [0.396.0](https://github.com/Zapper-fi/studio/compare/v0.395.0...v0.396.0) (2023-02-20)
 
 
