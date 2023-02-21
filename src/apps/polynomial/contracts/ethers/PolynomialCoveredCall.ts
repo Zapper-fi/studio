@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PolynomialCoveredCallInterface extends utils.Interface {
   functions: {
@@ -155,46 +155,70 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'UNDERLYING', values?: undefined): string;
   encodeFunctionData(functionFragment: 'UNDERLYING_SYNTH_KEY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'VAULT_TOKEN', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addCollateral', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addCollateral',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'closePosition', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'closePosition',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'collateralization', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'depositQueue', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositsPaused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeReceipient', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLiveStrikes', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTokenPrice', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTotalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initiateDeposit', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initiateWithdrawal', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'liveStrikes', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'initiateDeposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initiateWithdrawal',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'liveStrikes', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'minDepositAmount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'minDepositDelay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'minWithdrawDelay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextQueuedDepositId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextQueuedWithdrawalId', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'openPosition', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'openPosition',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pauseDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'performanceFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'positionDatas', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'processDepositQueue', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'processWithdrawalQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'positionDatas', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'processDepositQueue', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'processWithdrawalQueue', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'queuedDepositHead', values?: undefined): string;
   encodeFunctionData(functionFragment: 'queuedWithdrawalHead', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'saveToken', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setAuthority', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setCollateralization', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDelays', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeReceipient', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setFees', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMinDepositAmount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSynthetixTracking', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'settleOptions', values: [BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'saveToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setAuthority', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setCollateralization', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setDelays',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeReceipient', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setFees',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMinDepositAmount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSynthetixTracking', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'settleOptions', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'synthetixTrackingCode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalFunds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalPremiumCollected', values?: undefined): string;
@@ -204,7 +228,7 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'unpauseDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'usedFunds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawalFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawalQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdrawalQueue', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'GREEKS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MARKET', data: BytesLike): Result;
@@ -569,24 +593,24 @@ export interface PolynomialCoveredCall extends BaseContract {
     VAULT_TOKEN(overrides?: CallOverrides): Promise<[string]>;
 
     addCollateral(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     authority(overrides?: CallOverrides): Promise<[string]>;
 
     closePosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      premiumAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      premiumAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     collateralization(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     depositQueue(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -609,18 +633,18 @@ export interface PolynomialCoveredCall extends BaseContract {
     getTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initiateDeposit(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initiateWithdrawal(
-      user: string,
-      tokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    liveStrikes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     minDepositAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -635,23 +659,23 @@ export interface PolynomialCoveredCall extends BaseContract {
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     openPosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     performanceFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     positionDatas(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -663,13 +687,13 @@ export interface PolynomialCoveredCall extends BaseContract {
     >;
 
     processDepositQueue(
-      idCount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      idCount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     processWithdrawalQueue(
-      idCount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      idCount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -677,57 +701,57 @@ export interface PolynomialCoveredCall extends BaseContract {
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     saveToken(
-      token: string,
-      receiver: string,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAuthority(
-      newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCollateralization(
-      _ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDelays(
-      _depositDelay: BigNumberish,
-      _withdrawDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositDelay: PromiseOrValue<BigNumberish>,
+      _withdrawDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeReceipient(
-      _feeReceipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeReceipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFees(
-      _performanceFee: BigNumberish,
-      _withdrawalFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      _withdrawalFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMinDepositAmount(
-      _minAmt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSynthetixTracking(
-      _code: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _code: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     settleOptions(
-      strikeIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     synthetixTrackingCode(overrides?: CallOverrides): Promise<[string]>;
@@ -740,16 +764,16 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     totalQueuedWithdrawals(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     usedFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdrawalFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdrawalQueue(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -783,24 +807,24 @@ export interface PolynomialCoveredCall extends BaseContract {
   VAULT_TOKEN(overrides?: CallOverrides): Promise<string>;
 
   addCollateral(
-    strikeId: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strikeId: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   authority(overrides?: CallOverrides): Promise<string>;
 
   closePosition(
-    strikeId: BigNumberish,
-    amount: BigNumberish,
-    premiumAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strikeId: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    premiumAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   collateralization(overrides?: CallOverrides): Promise<BigNumber>;
 
   depositQueue(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -823,18 +847,18 @@ export interface PolynomialCoveredCall extends BaseContract {
   getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   initiateDeposit(
-    user: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initiateWithdrawal(
-    user: string,
-    tokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    tokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  liveStrikes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   minDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -849,23 +873,23 @@ export interface PolynomialCoveredCall extends BaseContract {
   nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
 
   openPosition(
-    strikeId: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strikeId: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   positionDatas(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -877,13 +901,13 @@ export interface PolynomialCoveredCall extends BaseContract {
   >;
 
   processDepositQueue(
-    idCount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    idCount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   processWithdrawalQueue(
-    idCount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    idCount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
@@ -891,54 +915,57 @@ export interface PolynomialCoveredCall extends BaseContract {
   queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
   saveToken(
-    token: string,
-    receiver: string,
-    amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    receiver: PromiseOrValue<string>,
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAuthority(
-    newAuthority: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newAuthority: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCollateralization(
-    _ratio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _ratio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDelays(
-    _depositDelay: BigNumberish,
-    _withdrawDelay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositDelay: PromiseOrValue<BigNumberish>,
+    _withdrawDelay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeReceipient(
-    _feeReceipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeReceipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFees(
-    _performanceFee: BigNumberish,
-    _withdrawalFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _performanceFee: PromiseOrValue<BigNumberish>,
+    _withdrawalFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMinDepositAmount(
-    _minAmt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minAmt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setSynthetixTracking(
-    _code: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _code: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   settleOptions(
-    strikeIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strikeIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   synthetixTrackingCode(overrides?: CallOverrides): Promise<string>;
@@ -951,16 +978,16 @@ export interface PolynomialCoveredCall extends BaseContract {
 
   totalQueuedWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdrawalQueue(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -993,21 +1020,25 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     VAULT_TOKEN(overrides?: CallOverrides): Promise<string>;
 
-    addCollateral(strikeId: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addCollateral(
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     authority(overrides?: CallOverrides): Promise<string>;
 
     closePosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      premiumAmount: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      premiumAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     collateralization(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositQueue(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -1029,11 +1060,19 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initiateDeposit(user: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    initiateDeposit(
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    initiateWithdrawal(user: string, tokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    initiateWithdrawal(
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    liveStrikes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     minDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1047,7 +1086,11 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    openPosition(strikeId: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    openPosition(
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1060,7 +1103,7 @@ export interface PolynomialCoveredCall extends BaseContract {
     performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     positionDatas(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1071,33 +1114,46 @@ export interface PolynomialCoveredCall extends BaseContract {
       }
     >;
 
-    processDepositQueue(idCount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    processDepositQueue(idCount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    processWithdrawalQueue(idCount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    processWithdrawalQueue(idCount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
 
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
-    saveToken(token: string, receiver: string, amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    saveToken(
+      token: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setAuthority(newAuthority: string, overrides?: CallOverrides): Promise<void>;
+    setAuthority(newAuthority: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setCollateralization(_ratio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCollateralization(_ratio: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setDelays(_depositDelay: BigNumberish, _withdrawDelay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDelays(
+      _depositDelay: PromiseOrValue<BigNumberish>,
+      _withdrawDelay: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFeeReceipient(_feeReceipient: string, overrides?: CallOverrides): Promise<void>;
+    setFeeReceipient(_feeReceipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setFees(_performanceFee: BigNumberish, _withdrawalFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFees(
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      _withdrawalFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMinDepositAmount(_minAmt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMinDepositAmount(_minAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSynthetixTracking(_code: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setSynthetixTracking(_code: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    settleOptions(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    settleOptions(strikeIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     synthetixTrackingCode(overrides?: CallOverrides): Promise<string>;
 
@@ -1118,7 +1174,7 @@ export interface PolynomialCoveredCall extends BaseContract {
     withdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawalQueue(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -1140,10 +1196,13 @@ export interface PolynomialCoveredCall extends BaseContract {
     AddCollateral(strikeId?: null, positionId?: null, amount?: null): AddCollateralEventFilter;
 
     'AuthorityUpdated(address,address)'(
-      user?: string | null,
-      newAuthority?: string | null,
+      user?: PromiseOrValue<string> | null,
+      newAuthority?: PromiseOrValue<string> | null,
     ): AuthorityUpdatedEventFilter;
-    AuthorityUpdated(user?: string | null, newAuthority?: string | null): AuthorityUpdatedEventFilter;
+    AuthorityUpdated(
+      user?: PromiseOrValue<string> | null,
+      newAuthority?: PromiseOrValue<string> | null,
+    ): AuthorityUpdatedEventFilter;
 
     'ClosePosition(uint256,uint256,uint256,uint256,uint256)'(
       strikeId?: null,
@@ -1198,8 +1257,14 @@ export interface PolynomialCoveredCall extends BaseContract {
       callDelta?: null,
     ): OpenPositionEventFilter;
 
-    'OwnerUpdated(address,address)'(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
-    OwnerUpdated(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
+    'OwnerUpdated(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnerUpdatedEventFilter;
+    OwnerUpdated(
+      user?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnerUpdatedEventFilter;
 
     'ProcessDeposit(uint256,address,uint256,uint256,uint256)'(
       depositId?: null,
@@ -1343,23 +1408,23 @@ export interface PolynomialCoveredCall extends BaseContract {
     VAULT_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
 
     addCollateral(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     authority(overrides?: CallOverrides): Promise<BigNumber>;
 
     closePosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      premiumAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      premiumAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     collateralization(overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    depositQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositsPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1372,18 +1437,18 @@ export interface PolynomialCoveredCall extends BaseContract {
     getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     initiateDeposit(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initiateWithdrawal(
-      user: string,
-      tokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    liveStrikes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     minDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1398,31 +1463,31 @@ export interface PolynomialCoveredCall extends BaseContract {
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
 
     openPosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    positionDatas(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    positionDatas(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     processDepositQueue(
-      idCount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      idCount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     processWithdrawalQueue(
-      idCount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      idCount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1430,51 +1495,57 @@ export interface PolynomialCoveredCall extends BaseContract {
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
     saveToken(
-      token: string,
-      receiver: string,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setAuthority(newAuthority: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAuthority(
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setCollateralization(
-      _ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDelays(
-      _depositDelay: BigNumberish,
-      _withdrawDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositDelay: PromiseOrValue<BigNumberish>,
+      _withdrawDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFeeReceipient(
-      _feeReceipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeReceipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFees(
-      _performanceFee: BigNumberish,
-      _withdrawalFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      _withdrawalFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMinDepositAmount(
-      _minAmt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setSynthetixTracking(
-      _code: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _code: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     settleOptions(
-      strikeIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     synthetixTrackingCode(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1487,15 +1558,15 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     totalQueuedWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1520,23 +1591,23 @@ export interface PolynomialCoveredCall extends BaseContract {
     VAULT_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addCollateral(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     closePosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      premiumAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      premiumAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     collateralization(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    depositQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    depositQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositsPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1549,18 +1620,18 @@ export interface PolynomialCoveredCall extends BaseContract {
     getTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initiateDeposit(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initiateWithdrawal(
-      user: string,
-      tokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    liveStrikes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     minDepositAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1575,31 +1646,31 @@ export interface PolynomialCoveredCall extends BaseContract {
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     openPosition(
-      strikeId: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     performanceFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    positionDatas(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    positionDatas(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     processDepositQueue(
-      idCount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      idCount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     processWithdrawalQueue(
-      idCount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      idCount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1607,57 +1678,57 @@ export interface PolynomialCoveredCall extends BaseContract {
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     saveToken(
-      token: string,
-      receiver: string,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAuthority(
-      newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCollateralization(
-      _ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDelays(
-      _depositDelay: BigNumberish,
-      _withdrawDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositDelay: PromiseOrValue<BigNumberish>,
+      _withdrawDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeReceipient(
-      _feeReceipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeReceipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFees(
-      _performanceFee: BigNumberish,
-      _withdrawalFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      _withdrawalFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMinDepositAmount(
-      _minAmt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSynthetixTracking(
-      _code: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _code: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     settleOptions(
-      strikeIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     synthetixTrackingCode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1670,14 +1741,14 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     totalQueuedWithdrawals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpauseDeposits(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     usedFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawalFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
