@@ -4,15 +4,19 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AbracadabraBentoBoxTokenContract__factory } from './ethers';
-import { AbracadabraCauldron__factory } from './ethers';
-import { AbracadabraConvexWrapper__factory } from './ethers';
-import { AbracadabraGlpWrapper__factory } from './ethers';
-import { AbracadabraGmxSGlp__factory } from './ethers';
-import { AbracadabraMspell__factory } from './ethers';
-import { AbracadabraStakedSpell__factory } from './ethers';
-import { PopsicleChef__factory } from './ethers';
-import { SushiswapBentobox__factory } from './ethers';
+import {
+  AbracadabraBentoBoxTokenContract__factory,
+  AbracadabraCauldron__factory,
+  AbracadabraConvexWrapper__factory,
+  AbracadabraGlpWrapper__factory,
+  AbracadabraGmxSGlp__factory,
+  AbracadabraMagicGlpHarvestor__factory,
+  AbracadabraMspell__factory,
+  AbracadabraStakedSpell__factory,
+  GmxRewardTracker__factory,
+  PopsicleChef__factory,
+  SushiswapBentobox__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -38,11 +42,17 @@ export class AbracadabraContractFactory extends ContractFactory {
   abracadabraGmxSGlp({ address, network }: ContractOpts) {
     return AbracadabraGmxSGlp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  abracadabraMagicGlpHarvestor({ address, network }: ContractOpts) {
+    return AbracadabraMagicGlpHarvestor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   abracadabraMspell({ address, network }: ContractOpts) {
     return AbracadabraMspell__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   abracadabraStakedSpell({ address, network }: ContractOpts) {
     return AbracadabraStakedSpell__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  gmxRewardTracker({ address, network }: ContractOpts) {
+    return GmxRewardTracker__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   popsicleChef({ address, network }: ContractOpts) {
     return PopsicleChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -57,7 +67,9 @@ export type { AbracadabraCauldron } from './ethers';
 export type { AbracadabraConvexWrapper } from './ethers';
 export type { AbracadabraGlpWrapper } from './ethers';
 export type { AbracadabraGmxSGlp } from './ethers';
+export type { AbracadabraMagicGlpHarvestor } from './ethers';
 export type { AbracadabraMspell } from './ethers';
 export type { AbracadabraStakedSpell } from './ethers';
+export type { GmxRewardTracker } from './ethers';
 export type { PopsicleChef } from './ethers';
 export type { SushiswapBentobox } from './ethers';
