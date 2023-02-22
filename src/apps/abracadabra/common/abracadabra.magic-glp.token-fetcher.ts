@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Erc20 } from '~contract/contracts';
 import { isAppToken } from '~position/position.interface';
@@ -10,6 +11,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
+
 import { AbracadabraContractFactory } from '../contracts';
 
 const SECONDS_PER_YEAR = 31536000;

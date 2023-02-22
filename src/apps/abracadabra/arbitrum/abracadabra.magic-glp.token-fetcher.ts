@@ -1,4 +1,5 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+
 import { AbracadabraMagicGlpTokenFetcher } from '../common/abracadabra.magic-glp.token-fetcher';
 
 import {
