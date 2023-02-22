@@ -1,14 +1,10 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
-import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
-import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
+
+import { AbracadabraMagicApeTokenFetcher } from '../common/abracadabra.magic-ape.token-fetcher';
 
 @PositionTemplate()
-export class EthereumAbracadabraMagicApeTokenFetcher extends Erc4626VaultTemplateTokenFetcher {
-  groupLabel = 'Magic APE';
+export class EthereumAbracadabraMagicApeTokenFetcher extends AbracadabraMagicApeTokenFetcher {
   vaultAddress = '0xf35b31b941d94b249eaded041db1b05b7097feb6';
-
-  async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
-    return contract.name();
-  }
+  magicApeAnnualHarvests = 730;
+  magicApeLensAddress = '0xefdac7dd721985b4bd7fede78465fe3525b468fd';
 }
