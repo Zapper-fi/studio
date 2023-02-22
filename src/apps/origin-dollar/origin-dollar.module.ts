@@ -4,7 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { OriginDollarContractFactory } from './contracts';
 import { EthereumOriginDollarRewardsContractPositionFetcher } from './ethereum/origin-dollar.rewards.contract-position-fetcher';
-import { EthereumOriginDollarVeogvTokenFetcher } from './ethereum/origin-dollar.veogv.token-fetcher';
+import { EthereumOriginDollarVoteEscrowedTokenFetcher } from './ethereum/origin-dollar.vote-escrowed.token-fetcher';
 import { EthereumOriginDollarWousdTokenFetcher } from './ethereum/origin-dollar.wousd.token-fetcher';
 
 @Module({
@@ -12,7 +12,7 @@ import { EthereumOriginDollarWousdTokenFetcher } from './ethereum/origin-dollar.
     OriginDollarContractFactory,
     // Ethereum
     EthereumOriginDollarRewardsContractPositionFetcher,
-    EthereumOriginDollarVeogvTokenFetcher,
+    EthereumOriginDollarVoteEscrowedTokenFetcher,
     EthereumOriginDollarWousdTokenFetcher,
   ],
 })
