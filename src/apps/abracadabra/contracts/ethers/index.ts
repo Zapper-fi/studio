@@ -6,6 +6,8 @@ export type { AbracadabraCauldron } from './AbracadabraCauldron';
 export type { AbracadabraConvexWrapper } from './AbracadabraConvexWrapper';
 export type { AbracadabraGlpWrapper } from './AbracadabraGlpWrapper';
 export type { AbracadabraGmxSGlp } from './AbracadabraGmxSGlp';
+export type { AbracadabraMagicApe } from './AbracadabraMagicApe';
+export type { AbracadabraMagicApeLens } from './AbracadabraMagicApeLens';
 export type { AbracadabraMagicGlpHarvestor } from './AbracadabraMagicGlpHarvestor';
 export type { AbracadabraMspell } from './AbracadabraMspell';
 export type { AbracadabraStakedSpell } from './AbracadabraStakedSpell';
@@ -18,6 +20,8 @@ export { AbracadabraCauldron__factory } from './factories/AbracadabraCauldron__f
 export { AbracadabraConvexWrapper__factory } from './factories/AbracadabraConvexWrapper__factory';
 export { AbracadabraGlpWrapper__factory } from './factories/AbracadabraGlpWrapper__factory';
 export { AbracadabraGmxSGlp__factory } from './factories/AbracadabraGmxSGlp__factory';
+export { AbracadabraMagicApeLens__factory } from './factories/AbracadabraMagicApeLens__factory';
+export { AbracadabraMagicApe__factory } from './factories/AbracadabraMagicApe__factory';
 export { AbracadabraMagicGlpHarvestor__factory } from './factories/AbracadabraMagicGlpHarvestor__factory';
 export { AbracadabraMspell__factory } from './factories/AbracadabraMspell__factory';
 export { AbracadabraStakedSpell__factory } from './factories/AbracadabraStakedSpell__factory';
