@@ -6,7 +6,7 @@ import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vau
 @PositionTemplate()
 export class EthereumAbracadabraMagicApeTokenFetcher extends Erc4626VaultTemplateTokenFetcher {
   groupLabel = 'Magic APE';
-  vaultAddress = '0xf35b31B941D94B249EaDED041DB1b05b7097fEb6';
+  vaultAddress = '0xf35b31b941d94b249eaded041db1b05b7097feb6';
 
   async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
     return contract.name();

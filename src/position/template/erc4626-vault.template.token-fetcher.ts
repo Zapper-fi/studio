@@ -1,5 +1,6 @@
 import { Erc20, Erc4626 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+
 import { GetDataPropsParams, GetPricePerShareParams, GetUnderlyingTokensParams } from './app-token.template.types';
 
 export abstract class Erc4626VaultTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
