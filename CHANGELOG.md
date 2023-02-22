@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.398.0](https://github.com/Zapper-fi/studio/compare/v0.397.0...v0.398.0) (2023-02-22)
+
+
+### Features
+
+* **abracadabra:** Add APY for magicAPE ([#2354](https://github.com/Zapper-fi/studio/issues/2354)) ([41d9d10](https://github.com/Zapper-fi/studio/commit/41d9d10b7c9de66dac50857d480247b67e558c13))
+
+
+### Bug Fixes
+
+* **abracadabra:** Change magicGLP APY from decimals to percent ([#2353](https://github.com/Zapper-fi/studio/issues/2353)) ([cf61f3d](https://github.com/Zapper-fi/studio/commit/cf61f3db2ebbfc3f3718b4bbe25aa8531888d4d2))
+* **llama-airforce:** Fix merkle distributor addresses ([#2357](https://github.com/Zapper-fi/studio/issues/2357)) ([efd07e2](https://github.com/Zapper-fi/studio/commit/efd07e2295c188723577936f712386096514cceb))
+* **origin-dollar:** Fix labels and images ([#2359](https://github.com/Zapper-fi/studio/issues/2359)) ([af479c9](https://github.com/Zapper-fi/studio/commit/af479c9469614ed0a6b23c1b874f111704f43839))
+
 ## [0.397.0](https://github.com/Zapper-fi/studio/compare/v0.396.1...v0.397.0) (2023-02-22)
 
 
