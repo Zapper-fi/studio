@@ -105,7 +105,7 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
       const apr = annualUsdRewards.map(annualUsdReward => annualUsdReward / glpSupplyUsd).reduce((a, b) => a + b, 0);
       const apy = Math.pow(1 + apr / magicGlpAnnualHarvests, magicGlpAnnualHarvests) - 1;
       const apyWithFees = apy * (1 - magicGlpFeeProcent);
-      return apyWithFees;
+      return apyWithFees * 100;
     }
   }
 }
