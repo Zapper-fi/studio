@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface Erc20Interface extends utils.Interface {
   functions: {
@@ -44,14 +44,23 @@ export interface Erc20Interface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -116,161 +125,206 @@ export interface Erc20 extends BaseContract {
     name(overrides?: CallOverrides): Promise<[string]>;
 
     approve(
-      _spender: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber] & { balance: BigNumber }>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { balance: BigNumber }>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     transfer(
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
   };
 
   name(overrides?: CallOverrides): Promise<string>;
 
   approve(
-    _spender: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    _from: string,
-    _to: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  balanceOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   transfer(
-    _to: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   callStatic: {
     name(overrides?: CallOverrides): Promise<string>;
 
-    approve(_spender: string, _value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(_from: string, _to: string, _value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    transfer(_to: string, _value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      _spender: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      _spender: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

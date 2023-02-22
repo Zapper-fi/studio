@@ -3,5 +3,6 @@
 /* eslint-disable */
 export { Erc1155__factory } from './Erc1155__factory';
 export { Erc20__factory } from './Erc20__factory';
+export { Erc4626__factory } from './Erc4626__factory';
 export { Erc721__factory } from './Erc721__factory';
 export { Multicall__factory } from './Multicall__factory';

@@ -4,6 +4,33 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.397.0](https://github.com/Zapper-fi/studio/compare/v0.396.1...v0.397.0) (2023-02-22)
+
+
+### Features
+
+* **abracadabra:** Add APY to magicGLP ([#2350](https://github.com/Zapper-fi/studio/issues/2350)) ([e8feb5a](https://github.com/Zapper-fi/studio/commit/e8feb5a64889adf540401ceddfcf824473402c88))
+* **abracadabra:** Add support for magicAPE ([#2341](https://github.com/Zapper-fi/studio/issues/2341)) ([0706feb](https://github.com/Zapper-fi/studio/commit/0706febc5eac5cce53da8813a720e2518932e52f))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2352](https://github.com/Zapper-fi/studio/issues/2352)) ([1dd507a](https://github.com/Zapper-fi/studio/commit/1dd507a4271cc24463a31a29a87824cc118ec9e4))
+
+## [0.396.1](https://github.com/Zapper-fi/studio/compare/v0.396.0...v0.396.1) (2023-02-21)
+
+
+### Bug Fixes
+
+* **gains-network:** fix pricePerShare call ([#2342](https://github.com/Zapper-fi/studio/issues/2342)) ([6ff97d8](https://github.com/Zapper-fi/studio/commit/6ff97d81e46d8ad43d1d2432506cb9e22a4edf6f))
+
+## [0.396.0](https://github.com/Zapper-fi/studio/compare/v0.395.0...v0.396.0) (2023-02-20)
+
+
+### Features
+
+* **ethereum-staking:** Deal with rate limits by falling back to subgraph ([#2339](https://github.com/Zapper-fi/studio/issues/2339)) ([4026035](https://github.com/Zapper-fi/studio/commit/4026035d0dd3a4166470562ec960f3bb769a0e1d))
+
 ## [0.395.0](https://github.com/Zapper-fi/studio/compare/v0.394.0...v0.395.0) (2023-02-19)
 
 
