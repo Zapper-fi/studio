@@ -1,4 +1,3 @@
-import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
@@ -35,7 +34,6 @@ export const ARTH_DEFINITION = appDefinition({
   primaryColor: '#222',
 });
 
-@Register.AppDefinition(ARTH_DEFINITION.id)
 export class ArthAppDefinition extends AppDefinition {
   constructor() {
     super(ARTH_DEFINITION);
