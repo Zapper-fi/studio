@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.397.0](https://github.com/Zapper-fi/studio/compare/v0.396.1...v0.397.0) (2023-02-22)
+
+
+### Features
+
+* **abracadabra:** Add APY to magicGLP ([#2350](https://github.com/Zapper-fi/studio/issues/2350)) ([e8feb5a](https://github.com/Zapper-fi/studio/commit/e8feb5a64889adf540401ceddfcf824473402c88))
+* **abracadabra:** Add support for magicAPE ([#2341](https://github.com/Zapper-fi/studio/issues/2341)) ([0706feb](https://github.com/Zapper-fi/studio/commit/0706febc5eac5cce53da8813a720e2518932e52f))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2352](https://github.com/Zapper-fi/studio/issues/2352)) ([1dd507a](https://github.com/Zapper-fi/studio/commit/1dd507a4271cc24463a31a29a87824cc118ec9e4))
+
 ## [0.396.1](https://github.com/Zapper-fi/studio/compare/v0.396.0...v0.396.1) (2023-02-21)
 
 
