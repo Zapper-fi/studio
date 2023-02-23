@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MaplePool__factory } from './MaplePool__factory';
+export { MaplePoolManager__factory } from './MaplePoolManager__factory';
 export { MapleRewards__factory } from './MapleRewards__factory';
+export { MapleWithdrawalManager__factory } from './MapleWithdrawalManager__factory';
 export { MapleXMpl__factory } from './MapleXMpl__factory';
