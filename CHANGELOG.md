@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.398.2](https://github.com/Zapper-fi/studio/compare/v0.398.1...v0.398.2) (2023-02-23)
+
+
+### Bug Fixes
+
+* **multicall-contract:** Revert contract interfaces update ([#2366](https://github.com/Zapper-fi/studio/issues/2366)) ([6154897](https://github.com/Zapper-fi/studio/commit/615489730f0d296a2623f56a9f31208835a3471f))
+
 ## [0.398.1](https://github.com/Zapper-fi/studio/compare/v0.398.0...v0.398.1) (2023-02-23)
 
 
