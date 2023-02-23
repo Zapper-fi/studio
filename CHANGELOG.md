@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.398.1](https://github.com/Zapper-fi/studio/compare/v0.398.0...v0.398.1) (2023-02-23)
+
+
+### Bug Fixes
+
+* **contracts:** Fix generic contract interfaces ([#2363](https://github.com/Zapper-fi/studio/issues/2363)) ([e113e1c](https://github.com/Zapper-fi/studio/commit/e113e1c40ea285c31de630fc4412b5a76857b0ee))
+
 ## [0.398.0](https://github.com/Zapper-fi/studio/compare/v0.397.0...v0.398.0) (2023-02-22)
 
 
