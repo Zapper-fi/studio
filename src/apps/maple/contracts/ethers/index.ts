@@ -2,9 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MaplePool } from './MaplePool';
+export type { MaplePoolManager } from './MaplePoolManager';
 export type { MapleRewards } from './MapleRewards';
+export type { MapleWithdrawalManager } from './MapleWithdrawalManager';
 export type { MapleXMpl } from './MapleXMpl';
 export * as factories from './factories';
+export { MaplePoolManager__factory } from './factories/MaplePoolManager__factory';
 export { MaplePool__factory } from './factories/MaplePool__factory';
 export { MapleRewards__factory } from './factories/MapleRewards__factory';
+export { MapleWithdrawalManager__factory } from './factories/MapleWithdrawalManager__factory';
 export { MapleXMpl__factory } from './factories/MapleXMpl__factory';
