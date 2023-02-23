@@ -2,9 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type { Multicall, MulticallInterface } from "../Multicall";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type { Multicall, MulticallInterface } from '../Multicall';
 
 const _abi = [
   {
@@ -13,171 +13,171 @@ const _abi = [
       {
         components: [
           {
-            internalType: "address",
-            name: "target",
-            type: "address",
+            internalType: 'address',
+            name: 'target',
+            type: 'address',
           },
           {
-            internalType: "bytes",
-            name: "callData",
-            type: "bytes",
+            internalType: 'bytes',
+            name: 'callData',
+            type: 'bytes',
           },
         ],
-        internalType: "struct Multicall.Call[]",
-        name: "calls",
-        type: "tuple[]",
+        internalType: 'struct Multicall.Call[]',
+        name: 'calls',
+        type: 'tuple[]',
       },
       {
-        internalType: "bool",
-        name: "strict",
-        type: "bool",
+        internalType: 'bool',
+        name: 'strict',
+        type: 'bool',
       },
     ],
-    name: "aggregate",
+    name: 'aggregate',
     outputs: [
       {
-        internalType: "uint256",
-        name: "blockNumber",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'blockNumber',
+        type: 'uint256',
       },
       {
         components: [
           {
-            internalType: "bool",
-            name: "success",
-            type: "bool",
+            internalType: 'bool',
+            name: 'success',
+            type: 'bool',
           },
           {
-            internalType: "bytes",
-            name: "data",
-            type: "bytes",
+            internalType: 'bytes',
+            name: 'data',
+            type: 'bytes',
           },
         ],
-        internalType: "struct Multicall.Return[]",
-        name: "returnData",
-        type: "tuple[]",
+        internalType: 'struct Multicall.Return[]',
+        name: 'returnData',
+        type: 'tuple[]',
       },
     ],
     payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [
       {
-        internalType: "uint256",
-        name: "blockNumber",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'blockNumber',
+        type: 'uint256',
       },
     ],
-    name: "getBlockHash",
+    name: 'getBlockHash',
     outputs: [
       {
-        internalType: "bytes32",
-        name: "blockHash",
-        type: "bytes32",
+        internalType: 'bytes32',
+        name: 'blockHash',
+        type: 'bytes32',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "getCurrentBlockCoinbase",
+    name: 'getCurrentBlockCoinbase',
     outputs: [
       {
-        internalType: "address",
-        name: "coinbase",
-        type: "address",
+        internalType: 'address',
+        name: 'coinbase',
+        type: 'address',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "getCurrentBlockDifficulty",
+    name: 'getCurrentBlockDifficulty',
     outputs: [
       {
-        internalType: "uint256",
-        name: "difficulty",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'difficulty',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "getCurrentBlockGasLimit",
+    name: 'getCurrentBlockGasLimit',
     outputs: [
       {
-        internalType: "uint256",
-        name: "gaslimit",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'gaslimit',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "getCurrentBlockTimestamp",
+    name: 'getCurrentBlockTimestamp',
     outputs: [
       {
-        internalType: "uint256",
-        name: "timestamp",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
       },
     ],
-    name: "getEthBalance",
+    name: 'getEthBalance',
     outputs: [
       {
-        internalType: "uint256",
-        name: "balance",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'balance',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "getLastBlockHash",
+    name: 'getLastBlockHash',
     outputs: [
       {
-        internalType: "bytes32",
-        name: "blockHash",
-        type: "bytes32",
+        internalType: 'bytes32',
+        name: 'blockHash',
+        type: 'bytes32',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ];
 
@@ -186,10 +186,7 @@ export class Multicall__factory {
   static createInterface(): MulticallInterface {
     return new utils.Interface(_abi) as MulticallInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): Multicall {
+  static connect(address: string, signerOrProvider: Signer | Provider): Multicall {
     return new Contract(address, _abi, signerOrProvider) as Multicall;
   }
 }
