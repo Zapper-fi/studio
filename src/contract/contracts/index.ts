@@ -3,8 +3,18 @@ import { Injectable } from '@nestjs/common';
 
 import { Network } from '~types/network.interface';
 
-import { Erc1155__factory, Erc20__factory, Erc4626__factory, Erc721__factory, Multicall__factory } from './ethers';
-import type { Erc1155, Erc20, Erc4626, Erc721, Multicall } from './ethers';
+import {
+  Erc1155,
+  Erc1155__factory,
+  Erc20,
+  Erc20__factory,
+  Erc4626,
+  Erc4626__factory,
+  Erc721,
+  Erc721__factory,
+  Multicall,
+  Multicall__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
