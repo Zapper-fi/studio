@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.399.0](https://github.com/Zapper-fi/studio/compare/v0.398.2...v0.399.0) (2023-02-23)
+
+
+### Features
+
+* **teahouse:** create app + vaults ([#2365](https://github.com/Zapper-fi/studio/issues/2365)) ([c9662be](https://github.com/Zapper-fi/studio/commit/c9662beffea5dfab53cc384b63b728dca74e5d8a))
+
+
+### Bug Fixes
+
+* **maple:** Add pending withdrawals positions ([#2368](https://github.com/Zapper-fi/studio/issues/2368)) ([d787dca](https://github.com/Zapper-fi/studio/commit/d787dcabebe15dba151f52bd5719cd1d2068655f))
+
 ## [0.398.2](https://github.com/Zapper-fi/studio/compare/v0.398.1...v0.398.2) (2023-02-23)
 
 
