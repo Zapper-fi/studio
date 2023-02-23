@@ -4,7 +4,7 @@ import { ContractFactory } from '~contract';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { Network } from '~types';
 
-import EthersMulticall from './multicall.ethers';
+import { EthersMulticall } from './multicall.ethers';
 import { MULTICALL_ADDRESSES } from './multicall.registry';
 
 export class MulticallService {
