@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.399.1](https://github.com/Zapper-fi/studio/compare/v0.399.0...v0.399.1) (2023-02-24)
+
+
+### Bug Fixes
+
+* **abracadabra:** Add logos for Magic-GLP and Magic-APE app tokens ([#2372](https://github.com/Zapper-fi/studio/issues/2372)) ([d09dea1](https://github.com/Zapper-fi/studio/commit/d09dea1d6d5ef2795ef0f79816a0be1b41f37fd3))
+
 ## [0.399.0](https://github.com/Zapper-fi/studio/compare/v0.398.2...v0.399.0) (2023-02-23)
 
 
