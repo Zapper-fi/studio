@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts';
 import {
   DefaultAppTokenDataProps,
@@ -29,6 +30,12 @@ export abstract class AbracadabraMagicApeTokenFetcher extends Erc4626VaultTempla
 
   async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
     return contract.name();
+  }
+
+  async getImages({
+    appToken,
+  }: GetDisplayPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
+    return [getTokenImg(appToken.address, this.network)];
   }
 
   async getApy({
