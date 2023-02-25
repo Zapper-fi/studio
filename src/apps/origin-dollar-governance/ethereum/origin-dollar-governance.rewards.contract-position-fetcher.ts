@@ -15,7 +15,7 @@ import {
 import { OriginDollarContractFactory, Veogv } from '../contracts';
 
 @PositionTemplate()
-export class EthereumOriginDollarRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Veogv> {
+export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Veogv> {
   groupLabel = 'Staking Reward';
 
   constructor(
