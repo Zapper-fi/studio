@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.399.2](https://github.com/Zapper-fi/studio/compare/v0.399.1...v0.399.2) (2023-02-25)
+
+
+### Bug Fixes
+
+* **origin-dollar-governance:** Rename App ([#2374](https://github.com/Zapper-fi/studio/issues/2374)) ([61af25e](https://github.com/Zapper-fi/studio/commit/61af25e86414a0fa9e98bdff867ffb9ae3b8013f))
+
 ## [0.399.1](https://github.com/Zapper-fi/studio/compare/v0.399.0...v0.399.1) (2023-02-24)
 
 
