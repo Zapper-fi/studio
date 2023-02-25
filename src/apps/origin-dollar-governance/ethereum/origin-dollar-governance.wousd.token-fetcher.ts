@@ -18,7 +18,7 @@ const oneEther = ethers.constants.WeiPerEther;
 const format = v => ethers.utils.formatUnits(v);
 
 @PositionTemplate()
-export class EthereumOriginDollarWousdTokenFetcher extends AppTokenTemplatePositionFetcher<Wousd> {
+export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTemplatePositionFetcher<Wousd> {
   groupLabel = 'Wrapped OUSD';
 
   constructor(

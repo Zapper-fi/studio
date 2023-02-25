@@ -35,7 +35,7 @@ const format = v => ethers.utils.formatUnits(v);
 const stamp = () => Date.now() / 1000;
 
 @PositionTemplate()
-export class EthereumOriginDollarVoteEscrowedTokenFetcher extends AppTokenTemplatePositionFetcher<Veogv> {
+export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppTokenTemplatePositionFetcher<Veogv> {
   groupLabel = 'Origin Dollar Governance Staked';
 
   constructor(
