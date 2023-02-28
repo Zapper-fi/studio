@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AccountFactory } from './AccountFactory';
+export type { AirdropDistributor } from './AirdropDistributor';
 export type { ContractsRegister } from './ContractsRegister';
 export type { CreditManagerV2 } from './CreditManagerV2';
 export type { DieselToken } from './DieselToken';
@@ -9,6 +10,7 @@ export type { PhantomToken } from './PhantomToken';
 export type { PoolService } from './PoolService';
 export * as factories from './factories';
 export { AccountFactory__factory } from './factories/AccountFactory__factory';
+export { AirdropDistributor__factory } from './factories/AirdropDistributor__factory';
 export { ContractsRegister__factory } from './factories/ContractsRegister__factory';
 export { CreditManagerV2__factory } from './factories/CreditManagerV2__factory';
 export { DieselToken__factory } from './factories/DieselToken__factory';

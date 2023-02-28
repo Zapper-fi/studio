@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AccountFactory__factory } from './AccountFactory__factory';
+export { AirdropDistributor__factory } from './AirdropDistributor__factory';
 export { ContractsRegister__factory } from './ContractsRegister__factory';
 export { CreditManagerV2__factory } from './CreditManagerV2__factory';
 export { DieselToken__factory } from './DieselToken__factory';

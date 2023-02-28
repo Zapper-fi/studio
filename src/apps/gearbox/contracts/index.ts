@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import {
   AccountFactory__factory,
+  AirdropDistributor__factory,
   ContractsRegister__factory,
   CreditManagerV2__factory,
   DieselToken__factory,
@@ -25,6 +26,9 @@ export class GearboxContractFactory extends ContractFactory {
   accountFactory({ address, network }: ContractOpts) {
     return AccountFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  airdropDistributor({ address, network }: ContractOpts) {
+    return AirdropDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   contractsRegister({ address, network }: ContractOpts) {
     return ContractsRegister__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -43,6 +47,7 @@ export class GearboxContractFactory extends ContractFactory {
 }
 
 export type { AccountFactory } from './ethers';
+export type { AirdropDistributor } from './ethers';
 export type { ContractsRegister } from './ethers';
 export type { CreditManagerV2 } from './ethers';
 export type { DieselToken } from './ethers';
