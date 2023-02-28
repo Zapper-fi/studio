@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.401.0](https://github.com/Zapper-fi/studio/compare/v0.400.0...v0.401.0) (2023-02-28)
+
+
+### Features
+
+* **gearbox:** add rewards ([#2384](https://github.com/Zapper-fi/studio/issues/2384)) ([55e3c50](https://github.com/Zapper-fi/studio/commit/55e3c50b1a7a4d258f944b96595d943e5adfdec7))
+* **polynomial:** perps ([#2386](https://github.com/Zapper-fi/studio/issues/2386)) ([91a9f8d](https://github.com/Zapper-fi/studio/commit/91a9f8dcb2a4a7247e49c0f77039194b50b7209e))
+
+
+### Bug Fixes
+
+* **idle:** Testing renaming group + cleanup ([#2387](https://github.com/Zapper-fi/studio/issues/2387)) ([5696361](https://github.com/Zapper-fi/studio/commit/5696361cb96b4c5aeed715aa87d3d370798b25df))
+
 ## [0.400.0](https://github.com/Zapper-fi/studio/compare/v0.399.2...v0.400.0) (2023-02-25)
 
 
