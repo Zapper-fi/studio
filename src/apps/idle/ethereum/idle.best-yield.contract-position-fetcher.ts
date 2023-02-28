@@ -4,8 +4,8 @@ import _ from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
-import { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDisplayPropsParams,
@@ -15,18 +15,18 @@ import {
 
 import { IdleContractFactory, IdleToken } from '../contracts';
 
-export type IdleVaultTokenDefinition = {
+export type IdleBestYieldTokenDefinition = {
   address: string;
   rewardTokenAddresses: string[];
 };
 
 @PositionTemplate()
-export class EthereumIdleVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   IdleToken,
-  DefaultAppTokenDataProps,
-  IdleVaultTokenDefinition
+  DefaultDataProps,
+  IdleBestYieldTokenDefinition
 > {
-  groupLabel = 'Vault';
+  groupLabel = 'Best Yield';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -39,15 +39,15 @@ export class EthereumIdleVaultContractPositionFetcher extends ContractPositionTe
     return this.contractFactory.idleToken({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<IdleVaultTokenDefinition[]> {
+  async getDefinitions(): Promise<IdleBestYieldTokenDefinition[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
-      groupIds: [this.groupId],
+      groupIds: ['vault'],
       network: this.network,
     });
 
-    const vaultDefinitions = await Promise.all(
+    const definitions = await Promise.all(
       appTokens.map(async appToken => {
         const idleTokenContract = this.contractFactory.idleToken({ address: appToken.address, network: this.network });
         const isRiskAdjusted = await multicall.wrap(idleTokenContract).isRiskAdjusted();
@@ -62,10 +62,10 @@ export class EthereumIdleVaultContractPositionFetcher extends ContractPositionTe
       }),
     );
 
-    return _.compact(vaultDefinitions);
+    return _.compact(definitions);
   }
 
-  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<IdleToken, IdleVaultTokenDefinition>) {
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<IdleToken, IdleBestYieldTokenDefinition>) {
     return [
       {
         metaType: MetaType.SUPPLIED,
