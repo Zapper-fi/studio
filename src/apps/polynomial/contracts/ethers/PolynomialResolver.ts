@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace PolynomialEarnResolver {
   export type MinimalStrikeStruct = {
-    strikeId: BigNumberish;
-    expiry: BigNumberish;
-    strikePrice: BigNumberish;
+    strikeId: PromiseOrValue<BigNumberish>;
+    expiry: PromiseOrValue<BigNumberish>;
+    strikePrice: PromiseOrValue<BigNumberish>;
   };
 
   export type MinimalStrikeStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -31,10 +31,10 @@ export declare namespace PolynomialEarnResolver {
   };
 
   export type FuturesDataStruct = {
-    spotPrice: BigNumberish;
-    shortPosition: BigNumberish;
-    margin: BigNumberish;
-    leverage: BigNumberish;
+    spotPrice: PromiseOrValue<BigNumberish>;
+    shortPosition: PromiseOrValue<BigNumberish>;
+    margin: PromiseOrValue<BigNumberish>;
+    leverage: PromiseOrValue<BigNumberish>;
   };
 
   export type FuturesDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -45,15 +45,15 @@ export declare namespace PolynomialEarnResolver {
   };
 
   export type OptionDataStruct = {
-    strikeId: BigNumberish;
-    strikePrice: BigNumberish;
-    expiry: BigNumberish;
-    positionId: BigNumberish;
-    optionAmount: BigNumberish;
-    premiumPaid: BigNumberish;
-    premiumCollected: BigNumberish;
-    collateral: BigNumberish;
-    currentOptionDelta: BigNumberish;
+    strikeId: PromiseOrValue<BigNumberish>;
+    strikePrice: PromiseOrValue<BigNumberish>;
+    expiry: PromiseOrValue<BigNumberish>;
+    positionId: PromiseOrValue<BigNumberish>;
+    optionAmount: PromiseOrValue<BigNumberish>;
+    premiumPaid: PromiseOrValue<BigNumberish>;
+    premiumCollected: PromiseOrValue<BigNumberish>;
+    collateral: PromiseOrValue<BigNumberish>;
+    currentOptionDelta: PromiseOrValue<BigNumberish>;
   };
 
   export type OptionDataStructOutput = [
@@ -121,17 +121,26 @@ export interface PolynomialResolverInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'GREEKS', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MARKET', values?: undefined): string;
   encodeFunctionData(functionFragment: 'RATES', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addVault', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addVault',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getDeltaWithSpotPrice', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getDeltas', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getStrikeDetails', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getUserPositions', values: [string, string[]]): string;
-  encodeFunctionData(functionFragment: 'getVaultPositions', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isVault', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'getDeltaWithSpotPrice',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getDeltas', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'getStrikeDetails', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'getUserPositions',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'getVaultPositions', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isVault', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAuthority', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setAuthority', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'FUTURES_MARKET', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'GREEKS', data: BytesLike): Result;
@@ -206,21 +215,21 @@ export interface PolynomialResolver extends BaseContract {
     RATES(overrides?: CallOverrides): Promise<[string]>;
 
     addVault(
-      vault: string,
-      vaultType: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault: PromiseOrValue<string>,
+      vaultType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     authority(overrides?: CallOverrides): Promise<[string]>;
 
     getDeltaWithSpotPrice(
-      spotPrice: BigNumberish,
-      strikeId: BigNumberish,
+      spotPrice: PromiseOrValue<BigNumberish>,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>;
 
     getDeltas(
-      strikeIds: BigNumberish[],
+      strikeIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber[], BigNumber[]] & {
@@ -230,7 +239,7 @@ export interface PolynomialResolver extends BaseContract {
     >;
 
     getStrikeDetails(
-      strikeIds: BigNumberish[],
+      strikeIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<
       [PolynomialEarnResolver.MinimalStrikeStructOutput[]] & {
@@ -239,8 +248,8 @@ export interface PolynomialResolver extends BaseContract {
     >;
 
     getUserPositions(
-      user: string,
-      vaults: string[],
+      user: PromiseOrValue<string>,
+      vaults: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber[], BigNumber[]] & {
@@ -250,7 +259,7 @@ export interface PolynomialResolver extends BaseContract {
     >;
 
     getVaultPositions(
-      vault: string,
+      vault: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [PolynomialEarnResolver.FuturesDataStructOutput, PolynomialEarnResolver.OptionDataStructOutput[]] & {
@@ -259,18 +268,18 @@ export interface PolynomialResolver extends BaseContract {
       }
     >;
 
-    isVault(arg0: string, overrides?: CallOverrides): Promise<[number]>;
+    isVault(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[number]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     setAuthority(
-      newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -283,21 +292,21 @@ export interface PolynomialResolver extends BaseContract {
   RATES(overrides?: CallOverrides): Promise<string>;
 
   addVault(
-    vault: string,
-    vaultType: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vault: PromiseOrValue<string>,
+    vaultType: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   authority(overrides?: CallOverrides): Promise<string>;
 
   getDeltaWithSpotPrice(
-    spotPrice: BigNumberish,
-    strikeId: BigNumberish,
+    spotPrice: PromiseOrValue<BigNumberish>,
+    strikeId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>;
 
   getDeltas(
-    strikeIds: BigNumberish[],
+    strikeIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber[], BigNumber[]] & {
@@ -307,13 +316,13 @@ export interface PolynomialResolver extends BaseContract {
   >;
 
   getStrikeDetails(
-    strikeIds: BigNumberish[],
+    strikeIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<PolynomialEarnResolver.MinimalStrikeStructOutput[]>;
 
   getUserPositions(
-    user: string,
-    vaults: string[],
+    user: PromiseOrValue<string>,
+    vaults: PromiseOrValue<string>[],
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber[], BigNumber[]] & {
@@ -323,7 +332,7 @@ export interface PolynomialResolver extends BaseContract {
   >;
 
   getVaultPositions(
-    vault: string,
+    vault: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [PolynomialEarnResolver.FuturesDataStructOutput, PolynomialEarnResolver.OptionDataStructOutput[]] & {
@@ -332,16 +341,19 @@ export interface PolynomialResolver extends BaseContract {
     }
   >;
 
-  isVault(arg0: string, overrides?: CallOverrides): Promise<number>;
+  isVault(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   setAuthority(
-    newAuthority: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newAuthority: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     FUTURES_MARKET(overrides?: CallOverrides): Promise<string>;
@@ -352,18 +364,22 @@ export interface PolynomialResolver extends BaseContract {
 
     RATES(overrides?: CallOverrides): Promise<string>;
 
-    addVault(vault: string, vaultType: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addVault(
+      vault: PromiseOrValue<string>,
+      vaultType: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     authority(overrides?: CallOverrides): Promise<string>;
 
     getDeltaWithSpotPrice(
-      spotPrice: BigNumberish,
-      strikeId: BigNumberish,
+      spotPrice: PromiseOrValue<BigNumberish>,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { callDelta: BigNumber; putDelta: BigNumber }>;
 
     getDeltas(
-      strikeIds: BigNumberish[],
+      strikeIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber[], BigNumber[]] & {
@@ -373,13 +389,13 @@ export interface PolynomialResolver extends BaseContract {
     >;
 
     getStrikeDetails(
-      strikeIds: BigNumberish[],
+      strikeIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PolynomialEarnResolver.MinimalStrikeStructOutput[]>;
 
     getUserPositions(
-      user: string,
-      vaults: string[],
+      user: PromiseOrValue<string>,
+      vaults: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber[], BigNumber[]] & {
@@ -389,7 +405,7 @@ export interface PolynomialResolver extends BaseContract {
     >;
 
     getVaultPositions(
-      vault: string,
+      vault: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [PolynomialEarnResolver.FuturesDataStructOutput, PolynomialEarnResolver.OptionDataStructOutput[]] & {
@@ -398,24 +414,33 @@ export interface PolynomialResolver extends BaseContract {
       }
     >;
 
-    isVault(arg0: string, overrides?: CallOverrides): Promise<number>;
+    isVault(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    setAuthority(newAuthority: string, overrides?: CallOverrides): Promise<void>;
+    setAuthority(newAuthority: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'AuthorityUpdated(address,address)'(
-      user?: string | null,
-      newAuthority?: string | null,
+      user?: PromiseOrValue<string> | null,
+      newAuthority?: PromiseOrValue<string> | null,
     ): AuthorityUpdatedEventFilter;
-    AuthorityUpdated(user?: string | null, newAuthority?: string | null): AuthorityUpdatedEventFilter;
+    AuthorityUpdated(
+      user?: PromiseOrValue<string> | null,
+      newAuthority?: PromiseOrValue<string> | null,
+    ): AuthorityUpdatedEventFilter;
 
-    'OwnerUpdated(address,address)'(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
-    OwnerUpdated(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
+    'OwnerUpdated(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnerUpdatedEventFilter;
+    OwnerUpdated(
+      user?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnerUpdatedEventFilter;
   };
 
   estimateGas: {
@@ -428,34 +453,44 @@ export interface PolynomialResolver extends BaseContract {
     RATES(overrides?: CallOverrides): Promise<BigNumber>;
 
     addVault(
-      vault: string,
-      vaultType: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault: PromiseOrValue<string>,
+      vaultType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     authority(overrides?: CallOverrides): Promise<BigNumber>;
 
     getDeltaWithSpotPrice(
-      spotPrice: BigNumberish,
-      strikeId: BigNumberish,
+      spotPrice: PromiseOrValue<BigNumberish>,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getDeltas(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getDeltas(strikeIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStrikeDetails(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getStrikeDetails(strikeIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserPositions(user: string, vaults: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getUserPositions(
+      user: PromiseOrValue<string>,
+      vaults: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getVaultPositions(vault: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getVaultPositions(vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isVault(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isVault(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setAuthority(newAuthority: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAuthority(
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -468,39 +503,46 @@ export interface PolynomialResolver extends BaseContract {
     RATES(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addVault(
-      vault: string,
-      vaultType: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault: PromiseOrValue<string>,
+      vaultType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getDeltaWithSpotPrice(
-      spotPrice: BigNumberish,
-      strikeId: BigNumberish,
+      spotPrice: PromiseOrValue<BigNumberish>,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getDeltas(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDeltas(strikeIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStrikeDetails(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStrikeDetails(
+      strikeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getUserPositions(user: string, vaults: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserPositions(
+      user: PromiseOrValue<string>,
+      vaults: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getVaultPositions(vault: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getVaultPositions(vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isVault(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isVault(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAuthority(
-      newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

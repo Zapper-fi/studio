@@ -4,10 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PolynomialCoveredCall__factory } from './ethers';
-import { PolynomialPutSelling__factory } from './ethers';
-import { PolynomialResolver__factory } from './ethers';
-import { PolynomialVaultToken__factory } from './ethers';
+import {
+  PolynomialAccountResolver__factory,
+  PolynomialCoveredCall__factory,
+  PolynomialPutSelling__factory,
+  PolynomialResolver__factory,
+  PolynomialVaultToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -18,6 +21,9 @@ export class PolynomialContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  polynomialAccountResolver({ address, network }: ContractOpts) {
+    return PolynomialAccountResolver__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   polynomialCoveredCall({ address, network }: ContractOpts) {
     return PolynomialCoveredCall__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -32,6 +38,7 @@ export class PolynomialContractFactory extends ContractFactory {
   }
 }
 
+export type { PolynomialAccountResolver } from './ethers';
 export type { PolynomialCoveredCall } from './ethers';
 export type { PolynomialPutSelling } from './ethers';
 export type { PolynomialResolver } from './ethers';
