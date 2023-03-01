@@ -2,12 +2,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 
 import { EthereumIdleTranchesPoolTokenFetcher } from '../common/idle.tranche.token-fetcher';
 
-export type IdleAppTokenDefinition = {
-  address: string;
-  cdoAddress: string;
-  underlyingTokenAddress: string;
-};
-
 @PositionTemplate()
 export class EthereumIdleSeniorTranchesPoolTokenFetcher extends EthereumIdleTranchesPoolTokenFetcher {
   groupLabel = 'Senior Tranches';

@@ -4,7 +4,7 @@ import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDisplayPropsParams,
@@ -18,7 +18,7 @@ const oneEther = ethers.constants.WeiPerEther;
 const format = v => ethers.utils.formatUnits(v);
 
 @PositionTemplate()
-export class EthereumOriginDollarWousdTokenFetcher extends AppTokenTemplatePositionFetcher<Wousd> {
+export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTemplatePositionFetcher<Wousd> {
   groupLabel = 'Wrapped OUSD';
 
   constructor(
@@ -67,5 +67,9 @@ export class EthereumOriginDollarWousdTokenFetcher extends AppTokenTemplatePosit
 
   async getLabel({ appToken }: GetDisplayPropsParams<Wousd>): Promise<string> {
     return `Wrapped ${getLabelFromToken(appToken.tokens[0])}`;
+  }
+
+  async getImages({ appToken }: GetDisplayPropsParams<Wousd>) {
+    return [getTokenImg(appToken.address, this.network)];
   }
 }

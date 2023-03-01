@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -32,9 +31,8 @@ export class ArbitrumGainsNetworkGTokenTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<GainsNetworkGToken>) {
-    const oneUnit = ethers.BigNumber.from(10).pow(18);
-    const pricePerShareWar = await contract.convertToShares(oneUnit);
-    const pricePerShare = Number(pricePerShareWar) / 10 ** appToken.decimals;
+    const pricePerShareRaw = await contract.shareToAssetsPrice();
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
 
     return [pricePerShare];
   }

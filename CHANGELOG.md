@@ -4,6 +4,122 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.401.0](https://github.com/Zapper-fi/studio/compare/v0.400.0...v0.401.0) (2023-02-28)
+
+
+### Features
+
+* **gearbox:** add rewards ([#2384](https://github.com/Zapper-fi/studio/issues/2384)) ([55e3c50](https://github.com/Zapper-fi/studio/commit/55e3c50b1a7a4d258f944b96595d943e5adfdec7))
+* **polynomial:** perps ([#2386](https://github.com/Zapper-fi/studio/issues/2386)) ([91a9f8d](https://github.com/Zapper-fi/studio/commit/91a9f8dcb2a4a7247e49c0f77039194b50b7209e))
+
+
+### Bug Fixes
+
+* **idle:** Testing renaming group + cleanup ([#2387](https://github.com/Zapper-fi/studio/issues/2387)) ([5696361](https://github.com/Zapper-fi/studio/commit/5696361cb96b4c5aeed715aa87d3d370798b25df))
+
+## [0.400.0](https://github.com/Zapper-fi/studio/compare/v0.399.2...v0.400.0) (2023-02-25)
+
+
+### Features
+
+* **moonrock:** add JPG index ([#2376](https://github.com/Zapper-fi/studio/issues/2376)) ([fe2506e](https://github.com/Zapper-fi/studio/commit/fe2506eae416a4fa4db379c0854499bc668cf409))
+
+## [0.399.2](https://github.com/Zapper-fi/studio/compare/v0.399.1...v0.399.2) (2023-02-25)
+
+
+### Bug Fixes
+
+* **origin-dollar-governance:** Rename App ([#2374](https://github.com/Zapper-fi/studio/issues/2374)) ([61af25e](https://github.com/Zapper-fi/studio/commit/61af25e86414a0fa9e98bdff867ffb9ae3b8013f))
+
+## [0.399.1](https://github.com/Zapper-fi/studio/compare/v0.399.0...v0.399.1) (2023-02-24)
+
+
+### Bug Fixes
+
+* **abracadabra:** Add logos for Magic-GLP and Magic-APE app tokens ([#2372](https://github.com/Zapper-fi/studio/issues/2372)) ([d09dea1](https://github.com/Zapper-fi/studio/commit/d09dea1d6d5ef2795ef0f79816a0be1b41f37fd3))
+
+## [0.399.0](https://github.com/Zapper-fi/studio/compare/v0.398.2...v0.399.0) (2023-02-23)
+
+
+### Features
+
+* **teahouse:** create app + vaults ([#2365](https://github.com/Zapper-fi/studio/issues/2365)) ([c9662be](https://github.com/Zapper-fi/studio/commit/c9662beffea5dfab53cc384b63b728dca74e5d8a))
+
+
+### Bug Fixes
+
+* **maple:** Add pending withdrawals positions ([#2368](https://github.com/Zapper-fi/studio/issues/2368)) ([d787dca](https://github.com/Zapper-fi/studio/commit/d787dcabebe15dba151f52bd5719cd1d2068655f))
+
+## [0.398.2](https://github.com/Zapper-fi/studio/compare/v0.398.1...v0.398.2) (2023-02-23)
+
+
+### Bug Fixes
+
+* **multicall-contract:** Revert contract interfaces update ([#2366](https://github.com/Zapper-fi/studio/issues/2366)) ([6154897](https://github.com/Zapper-fi/studio/commit/615489730f0d296a2623f56a9f31208835a3471f))
+
+## [0.398.1](https://github.com/Zapper-fi/studio/compare/v0.398.0...v0.398.1) (2023-02-23)
+
+
+### Bug Fixes
+
+* **contracts:** Fix generic contract interfaces ([#2363](https://github.com/Zapper-fi/studio/issues/2363)) ([e113e1c](https://github.com/Zapper-fi/studio/commit/e113e1c40ea285c31de630fc4412b5a76857b0ee))
+
+## [0.398.0](https://github.com/Zapper-fi/studio/compare/v0.397.0...v0.398.0) (2023-02-22)
+
+
+### Features
+
+* **abracadabra:** Add APY for magicAPE ([#2354](https://github.com/Zapper-fi/studio/issues/2354)) ([41d9d10](https://github.com/Zapper-fi/studio/commit/41d9d10b7c9de66dac50857d480247b67e558c13))
+
+
+### Bug Fixes
+
+* **abracadabra:** Change magicGLP APY from decimals to percent ([#2353](https://github.com/Zapper-fi/studio/issues/2353)) ([cf61f3d](https://github.com/Zapper-fi/studio/commit/cf61f3db2ebbfc3f3718b4bbe25aa8531888d4d2))
+* **llama-airforce:** Fix merkle distributor addresses ([#2357](https://github.com/Zapper-fi/studio/issues/2357)) ([efd07e2](https://github.com/Zapper-fi/studio/commit/efd07e2295c188723577936f712386096514cceb))
+* **origin-dollar:** Fix labels and images ([#2359](https://github.com/Zapper-fi/studio/issues/2359)) ([af479c9](https://github.com/Zapper-fi/studio/commit/af479c9469614ed0a6b23c1b874f111704f43839))
+
+## [0.397.0](https://github.com/Zapper-fi/studio/compare/v0.396.1...v0.397.0) (2023-02-22)
+
+
+### Features
+
+* **abracadabra:** Add APY to magicGLP ([#2350](https://github.com/Zapper-fi/studio/issues/2350)) ([e8feb5a](https://github.com/Zapper-fi/studio/commit/e8feb5a64889adf540401ceddfcf824473402c88))
+* **abracadabra:** Add support for magicAPE ([#2341](https://github.com/Zapper-fi/studio/issues/2341)) ([0706feb](https://github.com/Zapper-fi/studio/commit/0706febc5eac5cce53da8813a720e2518932e52f))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2352](https://github.com/Zapper-fi/studio/issues/2352)) ([1dd507a](https://github.com/Zapper-fi/studio/commit/1dd507a4271cc24463a31a29a87824cc118ec9e4))
+
+## [0.396.1](https://github.com/Zapper-fi/studio/compare/v0.396.0...v0.396.1) (2023-02-21)
+
+
+### Bug Fixes
+
+* **gains-network:** fix pricePerShare call ([#2342](https://github.com/Zapper-fi/studio/issues/2342)) ([6ff97d8](https://github.com/Zapper-fi/studio/commit/6ff97d81e46d8ad43d1d2432506cb9e22a4edf6f))
+
+## [0.396.0](https://github.com/Zapper-fi/studio/compare/v0.395.0...v0.396.0) (2023-02-20)
+
+
+### Features
+
+* **ethereum-staking:** Deal with rate limits by falling back to subgraph ([#2339](https://github.com/Zapper-fi/studio/issues/2339)) ([4026035](https://github.com/Zapper-fi/studio/commit/4026035d0dd3a4166470562ec960f3bb769a0e1d))
+
+## [0.395.0](https://github.com/Zapper-fi/studio/compare/v0.394.0...v0.395.0) (2023-02-19)
+
+
+### Features
+
+* **abracadabra:** Update Ethereum cauldrons ([#2336](https://github.com/Zapper-fi/studio/issues/2336)) ([a7ee75d](https://github.com/Zapper-fi/studio/commit/a7ee75d946c4ea7ae564c363595d4c17da698c7b))
+* **ethereum-staking:** Use beaconcha.in API to retrieve real lives balances ([#2337](https://github.com/Zapper-fi/studio/issues/2337)) ([de0ef8d](https://github.com/Zapper-fi/studio/commit/de0ef8d48db225f844ead18554ef6a2134de0cf4))
+* **klima:** ✨ Display staking APY ([#2333](https://github.com/Zapper-fi/studio/issues/2333)) ([68c5d62](https://github.com/Zapper-fi/studio/commit/68c5d6277c4f808a799ed978eeb7b2c8fe674b1c))
+
+
+### Bug Fixes
+
+* **abracadabra:** Wrap bentobox calls in multicall to mitigate reverts ([#2335](https://github.com/Zapper-fi/studio/issues/2335)) ([b8287bc](https://github.com/Zapper-fi/studio/commit/b8287bc70f747a33ea416ba158a69e723dce77b9))
+* **kwenta:** avoid duplicate code ([#2332](https://github.com/Zapper-fi/studio/issues/2332)) ([5986660](https://github.com/Zapper-fi/studio/commit/598666051735546291e2997c1cb8c933f3821393))
+
 ## [0.394.0](https://github.com/Zapper-fi/studio/compare/v0.393.0...v0.394.0) (2023-02-19)
 
 

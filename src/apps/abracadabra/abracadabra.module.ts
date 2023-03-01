@@ -16,6 +16,7 @@ import { AbracadabraContractFactory } from './contracts';
 import { EthereumAbracadabraCauldronContractPositionFetcher } from './ethereum/abracadabra.cauldron.contract-position-fetcher';
 import { EthereumAbracadabraFarmContractPositionFetcher } from './ethereum/abracadabra.farm.contract-position-fetcher';
 import { EthereumAbracadabraMspellContractPositionFetcher } from './ethereum/abracadabra.m-spell.contract-position-fetcher';
+import { EthereumAbracadabraMagicApeTokenFetcher } from './ethereum/abracadabra.magic-ape.token-fetcher';
 import { EthereumAbracadabraStakedSpellTokenFetcher } from './ethereum/abracadabra.staked-spell.token-fetcher';
 import { FantomAbracadabraCauldronContractPositionFetcher } from './fantom/abracadabra.cauldron.contract-position-fetcher';
 import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadabra.farm.contract-position-fetcher';
@@ -25,20 +26,26 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
 @Module({
   providers: [
     AbracadabraContractFactory,
+    // Arbitrum
     ArbitrumAbracadabraCauldronContractPositionFetcher,
     ArbitrumAbracadabraFarmContractPositionFetcher,
     ArbitrumAbracadabraMagicGlpTokenFetcher,
     ArbitrumAbracadabraMspellContractPositionFetcher,
     ArbitrumAbracadabraStakedSpellTokenFetcher,
+    // Avalanche
     AvalancheAbracadabraCauldronContractPositionFetcher,
     AvalancheAbracadabraFarmContractPositionFetcher,
     AvalancheAbracadabraMspellContractPositionFetcher,
     AvalancheAbracadabraStakedSpellTokenFetcher,
+    // Binance-smart-chain
     BinanceSmartChainAbracadabraCauldronContractPositionFetcher,
+    // Ethereum
     EthereumAbracadabraCauldronContractPositionFetcher,
     EthereumAbracadabraFarmContractPositionFetcher,
+    EthereumAbracadabraMagicApeTokenFetcher,
     EthereumAbracadabraMspellContractPositionFetcher,
     EthereumAbracadabraStakedSpellTokenFetcher,
+    // Fantom
     FantomAbracadabraCauldronContractPositionFetcher,
     FantomAbracadabraFarmContractPositionFetcher,
     FantomAbracadabraMspellContractPositionFetcher,

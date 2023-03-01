@@ -5,7 +5,7 @@ import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -35,8 +35,8 @@ const format = v => ethers.utils.formatUnits(v);
 const stamp = () => Date.now() / 1000;
 
 @PositionTemplate()
-export class EthereumOriginDollarVeogvTokenFetcher extends AppTokenTemplatePositionFetcher<Veogv> {
-  groupLabel = 'OGV Stake';
+export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppTokenTemplatePositionFetcher<Veogv> {
+  groupLabel = 'Origin Dollar Governance Staked';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -82,14 +82,6 @@ export class EthereumOriginDollarVeogvTokenFetcher extends AppTokenTemplatePosit
     return [1 / ratio];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<Veogv>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Veogv>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
   async getApy({ contract }: GetDataPropsParams<Veogv>) {
     const stakeAmount = ethers.BigNumber.from('1000000000000000000000');
     const fourYears = ethers.BigNumber.from(moment.duration(4, 'years').asSeconds());
@@ -106,7 +98,11 @@ export class EthereumOriginDollarVeogvTokenFetcher extends AppTokenTemplatePosit
     return parseFloat(format(apr));
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<Veogv>): Promise<string> {
-    return `Vote Escrowed ${getLabelFromToken(appToken.tokens[0])}`;
+  async getLabel(): Promise<string> {
+    return `Vote Escrowed Origin Dollar Governance`;
+  }
+
+  async getImages({ appToken }: GetDisplayPropsParams<Veogv>) {
+    return [getTokenImg(appToken.address, this.network)];
   }
 }
