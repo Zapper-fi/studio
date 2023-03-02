@@ -7,7 +7,7 @@ import { DefiedgeStrategyDefinitionsResolver } from './common/defiedge.strategy.
 import { DefiedgeContractFactory } from './contracts';
 import { EthereumDefiedgeStrategyTokenFetcher } from './ethereum/defiedge.strategy.token-fetcher';
 import { OPTIMISM_DEFIEDGE_PROVIDERS } from './optimism';
-import { PolygonDefiedgeStrategyTokenFetcher } from './polygon/defiedge.strategy.token-fetcher';
+import { POLYGON_DEFIEDGE_PROVIDERS } from './polygon';
 
 @Module({
   providers: [
@@ -15,7 +15,7 @@ import { PolygonDefiedgeStrategyTokenFetcher } from './polygon/defiedge.strategy
     DefiedgeStrategyDefinitionsResolver,
     ArbitrumDefiedgeStrategyTokenFetcher,
     EthereumDefiedgeStrategyTokenFetcher,
-    PolygonDefiedgeStrategyTokenFetcher,
+    ...POLYGON_DEFIEDGE_PROVIDERS,
     ...OPTIMISM_DEFIEDGE_PROVIDERS,
   ],
 })
