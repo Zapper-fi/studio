@@ -16,6 +16,7 @@ export class EthereumParaspaceBorrowTokenFetcher extends AppTokenTemplatePositio
 > {
   groupLabel: string;
   providerAddress = '0xbc88150ebefda53fb61f4c59e98d0de5ebbb8cd3';
+  isDebt = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
