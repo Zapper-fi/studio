@@ -8,7 +8,8 @@ import { Network } from '~types/network.interface';
 import { type Previewer, Previewer__factory } from '../contracts/ethers';
 
 export const PREVIEWER_ADDRESSES = {
-  [Network.ETHEREUM_MAINNET]: '0x37ac9c4a26db589ee35215c7053009ee645585bb',
+  [Network.ETHEREUM_MAINNET]: '0x5fe09baaa75fd107a8df8565813f66b3603a13d3',
+  [Network.OPTIMISM_MAINNET]: '0xb8b1f590272b541b263a49b28bf52f8774b0e6c9',
 } as Partial<Record<Network, string>>;
 
 export type ExactlyMarketDefinition = DefaultAppTokenDefinition &

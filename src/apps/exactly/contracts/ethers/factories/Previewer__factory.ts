@@ -206,6 +206,48 @@ const _abi = [
             type: 'tuple[]',
           },
           {
+            components: [
+              {
+                internalType: 'address',
+                name: 'asset',
+                type: 'address',
+              },
+              {
+                internalType: 'string',
+                name: 'assetName',
+                type: 'string',
+              },
+              {
+                internalType: 'string',
+                name: 'assetSymbol',
+                type: 'string',
+              },
+              {
+                internalType: 'uint256',
+                name: 'usdPrice',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'borrow',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'floatingDeposit',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256[]',
+                name: 'maturities',
+                type: 'uint256[]',
+              },
+            ],
+            internalType: 'struct Previewer.RewardRate[]',
+            name: 'rewardRates',
+            type: 'tuple[]',
+          },
+          {
             internalType: 'uint256',
             name: 'floatingBorrowRate',
             type: 'uint256',
@@ -341,6 +383,33 @@ const _abi = [
             ],
             internalType: 'struct Previewer.FixedPosition[]',
             name: 'fixedBorrowPositions',
+            type: 'tuple[]',
+          },
+          {
+            components: [
+              {
+                internalType: 'address',
+                name: 'asset',
+                type: 'address',
+              },
+              {
+                internalType: 'string',
+                name: 'assetName',
+                type: 'string',
+              },
+              {
+                internalType: 'string',
+                name: 'assetSymbol',
+                type: 'string',
+              },
+              {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct Previewer.ClaimableReward[]',
+            name: 'claimableRewards',
             type: 'tuple[]',
           },
         ],
