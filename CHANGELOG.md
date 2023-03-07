@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.402.0](https://github.com/Zapper-fi/studio/compare/v0.401.0...v0.402.0) (2023-03-06)
+
+
+### Features
+
+* **silo-finance:** Integrate new app ([#2383](https://github.com/Zapper-fi/studio/issues/2383)) ([7bf7806](https://github.com/Zapper-fi/studio/commit/7bf7806cb90d66af7ba2b010679f9cda24e4153c))
+
 ## [0.401.0](https://github.com/Zapper-fi/studio/compare/v0.400.0...v0.401.0) (2023-02-28)
 
 
