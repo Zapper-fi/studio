@@ -3,4 +3,4 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { ExactlyFixedBorrowFetcher } from '../common/exactly.fixed-borrow.token-fetcher';
 
 @PositionTemplate()
-export class EthereumExactlyFixedBorrowFetcher extends ExactlyFixedBorrowFetcher {}
+export class OptimismExactlyFixedBorrowFetcher extends ExactlyFixedBorrowFetcher {}
