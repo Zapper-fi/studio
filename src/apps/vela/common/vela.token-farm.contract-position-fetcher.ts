@@ -3,28 +3,36 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { IMulticallWrapper } from '~multicall';
+import { DefaultDataProps } from '~position/display.interface';
 import {
-  DefaultContractPositionDefinition,
-  GetTokenDefinitionsParams,
   GetTokenBalancesParams,
   GetDataPropsParams,
+  GetDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmDataProps } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import {
-  SingleStakingFarmDataProps,
-  SingleStakingFarmDynamicTemplateContractPositionFetcher,
-} from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { VelaComplexRewarder, VelaContractFactory, VelaTokenFarm } from '../contracts';
 
-interface VelaTokenFarmPool {
+export interface VelaTokenFarmDefinition extends SingleStakingFarmDefinition {
   poolId: number;
 }
 
-export abstract class VelaTokenFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<VelaTokenFarm> {
+export interface VelaTokenFarmDataProps extends DefaultDataProps, SingleStakingFarmDataProps {
+  poolId: number;
+}
+
+export abstract class VelaTokenFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<
+  VelaTokenFarm,
+  VelaTokenFarmDataProps,
+  VelaTokenFarmDefinition
+> {
   groupLabel = 'Farms';
 
   abstract get velaTokenFarmAddress(): string | Promise<string>;
-  abstract get pool(): VelaTokenFarmPool | Promise<VelaTokenFarmPool>;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -40,61 +48,71 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
     });
   }
 
-  async getFarmAddresses(): Promise<string[]> {
+  async getFarmDefinitions({ multicall }: GetDefinitionsParams): Promise<VelaTokenFarmDefinition[]> {
     const velaTokenFarmAddress = await this.velaTokenFarmAddress;
-    return [velaTokenFarmAddress];
-  }
+    const velaTokenFarm = multicall.wrap(this.getContract(velaTokenFarmAddress));
+    const poolCount = await velaTokenFarm.poolLength();
 
-  async getStakedTokenAddress({
-    contract,
-  }: GetTokenDefinitionsParams<VelaTokenFarm, DefaultContractPositionDefinition>): Promise<string> {
-    const pool = await this.pool;
-    const poolInfo = await contract.poolInfo(pool.poolId);
-    return poolInfo.lpToken;
-  }
+    const stakingFarmDefinitions: VelaTokenFarmDefinition[] = [];
+    for (let poolId = 0; poolCount.gt(poolId); poolId++) {
+      const [{ lpToken: stakedTokenAddress }, { addresses: rewardTokenAddresses }] = await Promise.all([
+        velaTokenFarm.poolInfo(poolId),
+        velaTokenFarm.poolRewardsPerSec(poolId),
+      ]);
+      stakingFarmDefinitions.push({
+        poolId,
+        address: velaTokenFarmAddress,
+        stakedTokenAddress,
+        rewardTokenAddresses,
+      });
+    }
 
-  async getRewardTokenAddresses({
-    contract,
-    multicall,
-  }: GetTokenDefinitionsParams<VelaTokenFarm, DefaultContractPositionDefinition>): Promise<string | string[]> {
-    const poolRewarders = await this.getPoolRewarders(contract, multicall);
-    return await Promise.all(
-      poolRewarders.map(poolRewarder => {
-        return poolRewarder.rewardToken();
-      }),
-    );
+    return stakingFarmDefinitions;
   }
 
   async getRewardRates({
+    definition: { poolId },
     contract,
-    multicall,
-  }: GetDataPropsParams<VelaTokenFarm, SingleStakingFarmDataProps, DefaultContractPositionDefinition>): Promise<
+  }: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>): Promise<
     BigNumberish | BigNumberish[]
   > {
-    const poolRewarders = await this.getPoolRewarders(contract, multicall);
-    const poolRewardersRewardsPerSec = await Promise.all(
-      poolRewarders.map(poolRewarder => poolRewarder.poolRewardsPerSec(0)),
-    );
-    return poolRewardersRewardsPerSec;
+    const { rewardsPerSec } = await contract.poolRewardsPerSec(poolId);
+    return rewardsPerSec;
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>,
+  ): Promise<VelaTokenFarmDataProps> {
+    return {
+      ...(await super.getDataProps(params)),
+      poolId: params.definition.poolId,
+    };
   }
 
   async getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesParams<VelaTokenFarm, SingleStakingFarmDataProps>): Promise<BigNumberish> {
-    const pool = await this.pool;
-    const userInfo = await contract.userInfo(pool.poolId, address);
-    return userInfo.amount;
+    contractPosition: {
+      dataProps: { poolId },
+    },
+  }: GetTokenBalancesParams<VelaTokenFarm, VelaTokenFarmDataProps>): Promise<BigNumberish> {
+    const { amount: stakedTokenBalance } = await contract.userInfo(poolId, address);
+    return stakedTokenBalance;
   }
 
   async getRewardTokenBalances({
     address,
     contract,
     multicall,
-  }: GetTokenBalancesParams<VelaTokenFarm, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
-    const poolRewarders = await this.getPoolRewarders(contract, multicall);
+    contractPosition: {
+      dataProps: { poolId },
+    },
+  }: GetTokenBalancesParams<VelaTokenFarm, VelaTokenFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
+    const poolRewarders = await this.getPoolRewarders(contract, multicall, poolId);
     const poolRewardersPendingTokens = await Promise.all(
-      poolRewarders.map(poolRewarder => poolRewarder.pendingTokens(0, address)),
+      poolRewarders.map(poolRewarder => {
+        return poolRewarder.pendingTokens(poolId, address);
+      }),
     );
 
     return poolRewardersPendingTokens;
@@ -103,9 +121,9 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
   private async getPoolRewarders(
     contract: VelaTokenFarm,
     multicall: IMulticallWrapper,
+    poolId: number,
   ): Promise<VelaComplexRewarder[]> {
-    const pool = await this.pool;
-    const poolRewarderAddresses = await contract.poolRewarders(pool.poolId);
+    const poolRewarderAddresses = await contract.poolRewarders(poolId);
     const poolRewarders = poolRewarderAddresses.map(poolRewarderAddress => {
       return multicall.wrap(
         this.velaContractFactory.velaComplexRewarder({
