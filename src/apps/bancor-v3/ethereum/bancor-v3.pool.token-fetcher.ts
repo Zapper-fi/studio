@@ -7,7 +7,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetAddressesParams,
   DefaultAppTokenDefinition,
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
@@ -55,7 +54,7 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
     multicall,
     appToken,
   }: GetPricePerShareParams<PoolToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
-    if (appToken.supply === 0) return 0;
+    if (appToken.supply === 0) return [0];
 
     const bancorContract = this.contractFactory.bancorNetwork({ address: this.bancorAddress, network: this.network });
     const poolCollectionAddress = (await multicall.wrap(bancorContract).poolCollections()).at(-1)!;
@@ -70,18 +69,6 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
     const reserve = Number(poolData.liquidity.stakedBalance) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
 
-    return pricePerShare;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<PoolToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<PoolToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<PoolToken>) {
-    return 0;
+    return [pricePerShare];
   }
 }

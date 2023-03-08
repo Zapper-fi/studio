@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AuroraSolaceBondsContractPositionFetcher } from './aurora/solace.bonds.contract-position-fetcher';
@@ -16,12 +17,9 @@ import { FantomSolaceXslockerContractPositionFetcher } from './fantom/solace.xs-
 import { PolygonSolaceBondsContractPositionFetcher } from './polygon/solace.bonds.contract-position-fetcher';
 import { PolygonSolacePoliciesContractPositionFetcher } from './polygon/solace.policies.contract-position-fetcher';
 import { PolygonSolaceXslockerContractPositionFetcher } from './polygon/solace.xs-locker.contract-position-fetcher';
-import SOLACE_DEFINITION, { SolaceAppDefinition } from './solace.definition';
 
-@Register.AppModule({
-  appId: SOLACE_DEFINITION.id,
+@Module({
   providers: [
-    SolaceAppDefinition,
     SolaceContractFactory,
     // Ethereum
     EthereumSolaceBondsContractPositionFetcher,

@@ -99,6 +99,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     address,
     contractPosition,
     contract,
+    multicall,
   }: GetTokenBalancesParams<AbracadabraCauldron>) {
     const [borrowPartRaw, totalBorrowRaw, collateralShareRaw, bentoBoxAddressRaw] = await Promise.all([
       contract.userBorrowPart(address),
@@ -107,10 +108,12 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
       contract.bentoBox(),
     ]);
 
-    const bentoBoxTokenContract = this.contractFactory.abracadabraBentoBoxTokenContract({
-      address: bentoBoxAddressRaw,
-      network: this.network,
-    });
+    const bentoBoxTokenContract = multicall.wrap(
+      this.contractFactory.abracadabraBentoBoxTokenContract({
+        address: bentoBoxAddressRaw,
+        network: this.network,
+      }),
+    );
 
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     const suppliedBalanceRaw = await bentoBoxTokenContract.toAmount(suppliedToken.address, collateralShareRaw, false);

@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { LlamapayStream__factory } from './LlamapayStream__factory';
+export { LlamapayVestingEscrow__factory } from './LlamapayVestingEscrow__factory';

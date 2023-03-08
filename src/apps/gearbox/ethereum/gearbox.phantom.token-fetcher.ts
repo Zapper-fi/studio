@@ -11,6 +11,7 @@ import { GearboxContractFactory, PhantomToken } from '../contracts';
 export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePositionFetcher<PhantomToken> {
   groupLabel = 'Phantom Tokens';
   isExcludedFromExplore = true;
+  isExcludedFromBalances = true;
   isExcludedFromTvl = true;
 
   constructor(
@@ -41,5 +42,9 @@ export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePosition
     contract,
   }: GetUnderlyingTokensParams<PhantomToken>): Promise<UnderlyingTokenDefinition[]> {
     return [{ address: await contract.underlying(), network: this.network }];
+  }
+
+  async getPricePerShare() {
+    return [1];
   }
 }

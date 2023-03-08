@@ -1,12 +1,15 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
+  GetDisplayPropsParams,
   GetPricePerShareParams,
+  GetTokenPropsParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -20,6 +23,7 @@ export type BeefyVaultTokenDefinition = {
   id: string;
   marketName: string;
   symbol: string;
+  apy: number;
 };
 
 export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -40,6 +44,10 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.beefyVaultToken({ network: this.network, address });
   }
 
+  async getDecimals({ appToken }: GetTokenPropsParams<BeefyVaultToken>): Promise<number> {
+    return appToken.tokens[0].decimals;
+  }
+
   async getDefinitions(): Promise<BeefyVaultTokenDefinition[]> {
     return this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
   }
@@ -54,26 +62,17 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return [{ address: definition.underlyingAddress, network: this.network }];
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-    multicall,
-  }: GetPricePerShareParams<BeefyVaultToken>): Promise<number | number[]> {
+  async getPricePerShare({ contract, multicall }: GetPricePerShareParams<BeefyVaultToken>) {
     const ratioRaw = await multicall.wrap(contract).getPricePerFullShare();
-    const decimals = appToken.decimals;
-
-    return Number(ratioRaw) / 10 ** decimals;
+    const ratio = Number(ratioRaw) / 10 ** 18;
+    return [ratio];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
-    return appToken.supply * appToken.price;
+  async getLabel({ appToken }: GetDisplayPropsParams<BeefyVaultToken>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Vault`;
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<BeefyVaultToken>) {
-    return 0;
+  getApy({ definition }: GetDataPropsParams<BeefyVaultToken, DefaultAppTokenDataProps, BeefyVaultTokenDefinition>) {
+    return Promise.resolve(definition.apy * 100);
   }
 }

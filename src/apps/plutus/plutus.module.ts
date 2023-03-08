@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumPlutusFarmPlsDpxLpContractPositionFetcher } from './arbitrum/plutus.farm-pls-dpx-lp.contract-position-fetcher';
@@ -15,10 +16,8 @@ import { ArbitrumPlutusPlsJonesTokenFetcher } from './arbitrum/plutus.pls-jones.
 import { ArbitrumPlutusPlvGlpTokenFetcher } from './arbitrum/plutus.plv-glp.token-fetcher';
 import { ArbitrumPlutusTgeClaimableContractPositionFetcher } from './arbitrum/plutus.tge-claimable.contract-position-fetcher';
 import { PlutusContractFactory } from './contracts';
-import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
 
-@Register.AppModule({
-  appId: PLUTUS_DEFINITION.id,
+@Module({
   providers: [
     ArbitrumPlutusFarmPlsDpxLpContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher,
@@ -33,7 +32,7 @@ import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
     ArbitrumPlutusPlsGlpTokenFetcher,
     ArbitrumPlutusPlvGlpTokenFetcher,
     ArbitrumPlutusTgeClaimableContractPositionFetcher,
-    PlutusAppDefinition,
+
     PlutusContractFactory,
   ],
 })

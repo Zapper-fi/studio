@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 export type EulerTokenDefinition = {
   address: string;
@@ -63,7 +64,7 @@ export class EulerTokenDefinitionsResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   private async getTokenDefinitionsData() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({
+    const data = await gqlFetch<EulerMarketsResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet`,
       query: MARKET_QUERY,
     });
@@ -91,5 +92,11 @@ export class EulerTokenDefinitionsResolver {
     const definitionsData = await this.getTokenDefinitionsData();
 
     return definitionsData.find(x => x[tokenType].toLowerCase() === tokenAddress);
+  }
+
+  async getMarketByUnderlying(tokenAddress: string) {
+    const definitionsData = await this.getTokenDefinitionsData();
+
+    return definitionsData.find(x => x.id.toLowerCase() === tokenAddress);
   }
 }

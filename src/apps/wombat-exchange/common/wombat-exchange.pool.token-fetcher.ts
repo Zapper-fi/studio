@@ -5,7 +5,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
-  GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -53,18 +52,7 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
 
     const amount = new BigNumber(10).pow(appToken.tokens[0].decimals).toFixed(0);
     const pricePerShareRaw = await pool.quotePotentialWithdraw(appToken.tokens[0].address, amount);
-    return Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<WombatExchangePoolToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<WombatExchangePoolToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<WombatExchangePoolToken>) {
-    return 0;
+    const pricePerShare = Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
+    return [pricePerShare];
   }
 }

@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import _ from 'lodash';
-import { get, groupBy } from 'lodash';
+import _, { get, groupBy } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { AppDefinition } from '~app/app.definition';
 import { AppService } from '~app/app.service';
+import { DefaultDataProps } from '~position/display.interface';
 import {
   AppTokenPositionBalance,
   ContractPositionBalance,
@@ -17,16 +16,7 @@ import { Network } from '~types';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 
-export type PresentParams = {
-  appId: string;
-  network: Network;
-  address: string;
-  balances: (AppTokenPositionBalance | ContractPositionBalance)[];
-};
-
-interface IAppService {
-  getApp(appId: string): Promise<AppDefinition | undefined>;
-}
+type Balances = (AppTokenPositionBalance | ContractPositionBalance)[];
 
 @Injectable()
 export class BalancePresentationService {
@@ -34,7 +24,7 @@ export class BalancePresentationService {
     @Inject(PositionPresenterRegistry) private readonly positionPresenterRegistry: PositionPresenterRegistry,
     @Inject(PositionFetcherTemplateRegistry)
     private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
-    @Inject(AppService) private readonly appService: IAppService,
+    @Inject(AppService) private readonly appService: AppService,
   ) {}
 
   private groupBalancesByPositionGroup(
@@ -55,11 +45,21 @@ export class BalancePresentationService {
     }
   }
 
-  async presentTemplates({ address, appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
-    return this.presentBalances(address, appId, network, balances);
+  async presentTemplates({
+    appId,
+    network,
+    balances,
+    dataProps,
+  }: {
+    appId: string;
+    balances: Balances;
+    network: Network;
+    dataProps?: DefaultDataProps;
+  }): Promise<TokenBalanceResponse> {
+    return this.presentBalances(appId, network, balances, dataProps);
   }
 
-  async present({ appId, balances }: PresentParams): Promise<TokenBalanceResponse> {
+  async present({ appId, balances }: { appId: string; balances: Balances }): Promise<TokenBalanceResponse> {
     // Build labelled groups by the labels defined in the app definition
     const app = await this.appService.getApp(appId);
     const products = Object.values(app!.groups ?? {}).map(group => {
@@ -93,32 +93,53 @@ export class BalancePresentationService {
     }));
   }
 
-  private async presentBalances(address: string, appId: string, network: Network, balances: PositionBalance[]) {
-    const customPresenter = this.positionPresenterRegistry.get(appId, network);
-    const positionGroups = customPresenter?.positionGroups ?? this.getBalanceProductGroups(appId, network);
+  async balanceDataProps({ appId, network, address }: { appId: string; network: Network; address: string }) {
+    const presenter = this.positionPresenterRegistry.get(appId, network);
+    if (!presenter) return;
 
-    const balanceMetaResolvers = this.positionPresenterRegistry.getBalanceProductMetaResolvers(appId, network);
-    const products = await Promise.all(
-      positionGroups.map(async group => {
-        const groupBalances = this.groupBalancesByPositionGroup(balances, group);
+    const dataProps = await presenter.dataProps(address);
+    return dataProps;
+  }
 
-        return Promise.all(
-          Object.entries(groupBalances).map(async ([computedGroupLabel, balances]) => {
-            if (!balances.length) return;
+  private groupBalances(
+    appId: string,
+    network: Network,
+    balances: PositionBalance[],
+  ): { [groupLabel: string]: PositionBalance[] } {
+    const presenter = this.positionPresenterRegistry.get(appId, network);
+    const positionGroups = presenter?.positionGroups ?? this.getBalanceProductGroups(appId, network);
 
-            const groupMetaResolver = balanceMetaResolvers?.get(group.label);
-            const meta = groupMetaResolver && (await groupMetaResolver(address, balances).catch(_ => undefined));
+    return positionGroups
+      .map(group => this.groupBalancesByPositionGroup(balances, group))
+      .reduce((acc, v) => {
+        Object.entries(v).forEach(([groupLabel, balances]) => {
+          acc[groupLabel] = (acc[groupLabel] || []).concat(balances);
+        });
+        return acc;
+      }, {});
+  }
 
-            return {
-              label: computedGroupLabel,
-              assets: balances,
-              ...(meta && { meta }),
-            };
-          }),
-        ).then(v => _.compact(v));
-      }),
-    );
+  private presentBalances(appId: string, network: Network, balances: PositionBalance[], dataProps?: DefaultDataProps) {
+    const balancesByGroupLabel = this.groupBalances(appId, network, balances);
+    const presenter = this.positionPresenterRegistry.get(appId, network);
 
-    return presentBalanceFetcherResponse(products.flat());
+    const products = _(balancesByGroupLabel)
+      .mapValues((assets, label) => {
+        // Ignore groups with no assets/balances
+        if (!assets.length) return;
+
+        const meta = presenter && presenter.metadataItemsForBalanceGroup(label, assets, dataProps);
+
+        return {
+          label,
+          assets,
+          ...(meta && { meta }),
+        };
+      })
+      .values()
+      .compact()
+      .value();
+
+    return presentBalanceFetcherResponse(products);
   }
 }

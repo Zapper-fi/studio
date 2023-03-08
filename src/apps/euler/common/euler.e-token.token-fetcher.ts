@@ -2,8 +2,8 @@ import { Inject } from '@nestjs/common';
 import { ethers } from 'ethers';
 import _ from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -57,17 +57,12 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
     return `E${market!.symbol}`;
   }
 
-  async getPricePerShare({
-    contract,
-    multicall,
-    appToken,
-  }: GetPricePerShareParams<EulerEtokenContract>): Promise<number> {
+  async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<EulerEtokenContract>) {
     const pricePerShareRaw = await multicall
       .wrap(contract)
       .convertBalanceToUnderlying(ethers.BigNumber.from(10).pow(18));
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
-
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<EulerEtokenContract>) {

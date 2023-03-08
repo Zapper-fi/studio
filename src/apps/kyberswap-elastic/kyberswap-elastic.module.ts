@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumKyberswapElasticFarmContractPositionFetcher } from './arbitrum/kyberswap-elastic.farm.contract-position-fetcher';
@@ -14,16 +15,13 @@ import { CronosKyberswapElasticLiquidityContractPositionFetcher } from './cronos
 import { EthereumKyberswapElasticFarmContractPositionFetcher } from './ethereum/kyberswap-elastic.farm.contract-position-fetcher';
 import { EthereumKyberswapElasticLiquidityContractPositionFetcher } from './ethereum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { FantomKyberswapElasticLiquidityContractPositionFetcher } from './fantom/kyberswap-elastic.liquidity.contract-position-fetcher';
-import KYBERSWAP_ELASTIC_DEFINITION, { KyberswapElasticAppDefinition } from './kyberswap-elastic.definition';
 import { OptimismKyberswapElasticFarmContractPositionFetcher } from './optimism/kyberswap-elastic.farm.contract-position-fetcher';
 import { OptimismKyberswapElasticLiquidityContractPositionFetcher } from './optimism/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { PolygonKyberswapElasticFarmContractPositionFetcher } from './polygon/kyberswap-elastic.farm.contract-position-fetcher';
 import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polygon/kyberswap-elastic.liquidity.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: KYBERSWAP_ELASTIC_DEFINITION.id,
+@Module({
   providers: [
-    KyberswapElasticAppDefinition,
     KyberswapElasticContractFactory,
     KyberswapElasticApyDataLoader,
     KyberswapElasticFarmContractPositionBuilder,

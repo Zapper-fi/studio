@@ -1,7 +1,8 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveAmmAppModule } from '~apps/aave-amm/aave-amm.module';
-import { AaveV2AppModule } from '~apps/aave-v2';
+import { AaveAmmContractFactory } from '~apps/aave-amm/contracts';
+import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
 
 import { SturdyContractFactory } from './contracts';
 import { EthereumSturdyPositionPresenter } from './ethereum/sturdy.position-presenter';
@@ -12,14 +13,12 @@ import { FantomSturdyPositionPresenter } from './fantom/sturdy.position-presente
 import { FantomSturdyStableDebtTokenFetcher } from './fantom/sturdy.stable-debt.token-fetcher';
 import { FantomSturdySupplyTokenFetcher } from './fantom/sturdy.supply.token-fetcher';
 import { FantomSturdyVariableDebtTokenFetcher } from './fantom/sturdy.variable-debt.token-fetcher';
-import { SturdyAppDefinition, STURDY_DEFINITION } from './sturdy.definition';
 
-@Register.AppModule({
-  appId: STURDY_DEFINITION.id,
-  imports: [AaveAmmAppModule, AaveV2AppModule],
+@Module({
   providers: [
-    SturdyAppDefinition,
     SturdyContractFactory,
+    AaveV2ContractFactory,
+    AaveAmmContractFactory,
     // Ethereum
     EthereumSturdyPositionPresenter,
     EthereumSturdyStableDebtTokenFetcher,

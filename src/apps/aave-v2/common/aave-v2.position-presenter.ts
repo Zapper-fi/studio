@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
 import { PresentationConfig } from '~app/app.interface';
+import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { AaveV2ContractFactory } from '../contracts';
 
-export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate {
+export type AaveV2PositionPresenterDataProps = { healthFactor: number };
+export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<AaveV2PositionPresenterDataProps> {
   abstract lendingPoolAddress: string;
 
   constructor(@Inject(AaveV2ContractFactory) protected readonly aaveV2ContractFactory: AaveV2ContractFactory) {
@@ -45,28 +46,38 @@ export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate 
     ],
   };
 
-  protected async getHealthFactor(address: string) {
+  override async dataProps(address: string): Promise<AaveV2PositionPresenterDataProps | undefined> {
     const lendingPoolContract = this.aaveV2ContractFactory.aaveV2LendingPoolProvider({
       network: this.network,
       address: this.lendingPoolAddress,
     });
 
     const lendingPoolUserData = await lendingPoolContract.getUserAccountData(address);
-    return lendingPoolUserData.healthFactor;
+    const healthFactor = Number(lendingPoolUserData.healthFactor) / 10 ** 18;
+    return { healthFactor };
   }
 
-  @Register.BalanceProductMeta('Lending')
-  async getLendingMeta(address: string, balances: ReadonlyBalances) {
-    // When no debt, no health factor (pas de bras, pas de chocolat)
-    if (!balances.some(balance => balance.balanceUSD < 0)) return [];
-    const healthFactor = await this.getHealthFactor(address);
+  override metadataItemsForBalanceGroup(
+    groupLabel: string,
+    balances: ReadonlyBalances,
+    dataProps?: AaveV2PositionPresenterDataProps,
+  ): MetadataItemWithLabel[] {
+    if (groupLabel === 'Lending') {
+      // When no debt, no health factor (pas de bras, pas de chocolat)
+      if (!balances.some(balance => balance.balanceUSD < 0)) return [];
+      if (!dataProps) return [];
 
-    return [
-      {
-        label: 'Health Factor',
-        value: Number(healthFactor) / 10 ** 18,
-        type: 'number',
-      },
-    ];
+      const { healthFactor } = dataProps;
+
+      return [
+        {
+          label: 'Health Factor',
+          value: healthFactor,
+          type: 'number',
+        },
+      ];
+    }
+
+    return [];
   }
 }

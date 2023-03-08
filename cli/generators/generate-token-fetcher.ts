@@ -6,40 +6,59 @@ import { strings } from '../strings';
 import { formatAndWrite } from './utils';
 
 export async function generateTokenFetcher(appId: string, groupId: string, network: Network) {
-  const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appCamelCase = strings.camelCase(appId);
   const appTitleCase = strings.titleCase(appCamelCase);
   const groupKey = strings.camelCase(groupId);
   const groupTitleCase = strings.titleCase(groupKey);
-
-  const networkKey = Object.keys(Network).filter(k => network.includes(Network[k]));
   const networkTitleCase = strings.titleCase(network);
 
   const content = dedent`
     import { Inject } from '@nestjs/common';
 
-    import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-    import { Register } from '~app-toolkit/decorators';
-    import { PositionFetcher } from '~position/position-fetcher.interface';
-    import { AppTokenPosition } from '~position/position.interface';
-    import { Network } from '~types/network.interface';
+    import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+    import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+    import { Erc20 } from '~contract/contracts';
+    import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+    import {
+      GetAddressesParams,
+      DefaultAppTokenDefinition,
+      GetUnderlyingTokensParams,
+      UnderlyingTokenDefinition,
+      GetPricePerShareParams,
+      DefaultAppTokenDataProps,
+    } from '~position/template/app-token.template.types';
     
     import { ${appTitleCase}ContractFactory } from '../contracts';
-    import { ${appDefinitionName} } from '../${appId}.definition';
     
-    const appId = ${appDefinitionName}.id;
-    const groupId = ${appDefinitionName}.groups.${groupKey}.id;
-    const network = Network.${networkKey};
-    
-    @Register.TokenPositionFetcher({ appId, groupId, network })
-    export class ${networkTitleCase}${appTitleCase}${groupTitleCase}TokenFetcher implements PositionFetcher<AppTokenPosition> {
+    @PositionTemplate()
+    export class ${networkTitleCase}${appTitleCase}${groupTitleCase}TokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+      groupLabel: string;
+      
       constructor(
         @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
         @Inject(${appTitleCase}ContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
-      ) {}
+      ) {
+        super(appToolkit);
+      }
     
-      async getPositions() {
-        return [];
+      getContract(_address: string): Erc20 {
+        throw new Error('Method not implemented.');
+      }
+    
+      async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
+        throw new Error('Method not implemented.');
+      }
+    
+      async getUnderlyingTokenDefinitions(
+        _params: GetUnderlyingTokensParams<Erc20, DefaultAppTokenDefinition>,
+      ): Promise<UnderlyingTokenDefinition[]> {
+        throw new Error('Method not implemented.');
+      }
+    
+      async getPricePerShare(
+        _params: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>,
+      ): Promise<number[]> {
+        throw new Error('Method not implemented.');
       }
     }
   `;

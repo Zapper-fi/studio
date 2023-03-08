@@ -4,6 +4,7 @@ import { gql } from 'graphql-request';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 import { getTimeDayAgo } from './kyberswap-elastic.liquidity.utils';
 import { GET_BLOCKS, POOLS_FEE_HISTORY } from './kyberswap-elastic.pool.subgraph.types';
@@ -46,7 +47,7 @@ export class KyberswapElasticApyDataLoader {
     const dataLoaderOptions = { cache: true, maxBatchSize: 1000 };
     return new DataLoader<string, number>(async (addresses: string[]) => {
       // Get block from 24h ago
-      const response = await this.appToolkit.helpers.theGraphHelper.request<GetBlockOneDayAgoResponse>({
+      const response = await gqlFetch<GetBlockOneDayAgoResponse>({
         query: GET_BLOCKS([getTimeDayAgo()]),
         endpoint: blockSubgraphUrl,
       });
@@ -54,7 +55,7 @@ export class KyberswapElasticApyDataLoader {
       const blockNumberOneDayAgo = Number(response.blocks[0].number);
 
       // Get pool stats
-      const poolStatsResponse = await this.appToolkit.helpers.theGraphHelper.request<GetPoolInfoResponse>({
+      const poolStatsResponse = await gqlFetch<GetPoolInfoResponse>({
         endpoint: subgraphUrl,
         query: GET_POOL_INFOS,
         variables: {
@@ -68,7 +69,7 @@ export class KyberswapElasticApyDataLoader {
         .value();
 
       // Get fees
-      const poolsFeeResponse = await this.appToolkit.helpers.theGraphHelper.request<PoolsFeeResponse>({
+      const poolsFeeResponse = await gqlFetch<PoolsFeeResponse>({
         endpoint: subgraphUrl,
         query: POOLS_FEE_HISTORY,
         variables: { block: blockNumberOneDayAgo },

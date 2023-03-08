@@ -1,16 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { LlamaAirforceContractFactory } from './contracts';
 import { EthereumLlamaAirforceAirdropContractPositionFetcher } from './ethereum/llama-airforce.airdrop.contract-position-fetcher';
 import { EthereumLlamaAirforceMerkleCache } from './ethereum/llama-airforce.merkle-cache';
 import { EthereumLlamaAirforceVaultTokenFetcher } from './ethereum/llama-airforce.vault.token-fetcher';
-import { LlamaAirforceAppDefinition, LLAMA_AIRFORCE_DEFINITION } from './llama-airforce.definition';
 
-@Register.AppModule({
-  appId: LLAMA_AIRFORCE_DEFINITION.id,
+@Module({
   providers: [
-    LlamaAirforceAppDefinition,
     LlamaAirforceContractFactory,
     // Ethereum
     EthereumLlamaAirforceMerkleCache,

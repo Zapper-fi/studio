@@ -11,6 +11,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -70,7 +71,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   async getAddresses() {
     this.volumeDataLoader = this.volumeDataLoaderBuilder.getLoader();
 
-    const poolsFromSubgraph = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetAllPoolsData>({
+    const poolsFromSubgraph = await gqlFetch<GetAllPoolsData>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer',
       query: getPoolsQuery,
     });

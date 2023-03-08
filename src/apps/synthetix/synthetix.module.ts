@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixMintrSnxHoldersCache } from './common/synthetix.mintr.snx-holders.cache';
@@ -9,26 +10,17 @@ import { EthereumSynthetixMintrContractPositionFetcher } from './ethereum/synthe
 import { EthereumSynthetixPositionPresenter } from './ethereum/synthetix.position-presenter';
 import { EthereumSynthetixSnxTokenFetcher } from './ethereum/synthetix.snx.token-fetcher';
 import { EthereumSynthetixSynthTokenFetcher } from './ethereum/synthetix.synth.token-fetcher';
-import { SynthetixSingleStakingFarmContractPositionBalanceHelper } from './helpers/synthetix.single-staking-farm-contract-position-balance-helper';
-import { SynthetixSingleStakingFarmContractPositionHelper } from './helpers/synthetix.single-staking-farm-contract-position-helper';
-import { SynthetixSingleStakingIsActiveStrategy } from './helpers/synthetix.single-staking.is-active-strategy';
-import { SynthetixSingleStakingRoiStrategy } from './helpers/synthetix.single-staking.roi-strategy';
 import { OptimismSynthetixLoanContractPositionFetcher } from './optimism/synthetix.loan.contract-position-fetcher';
 import { OptimismSynthetixMintrContractPositionFetcher } from './optimism/synthetix.mintr.contract-position-fetcher';
+import { OptimismSynthetixPerpV1ContractPositionFetcher } from './optimism/synthetix.perp-v1.contract-position-fetcher';
+import { OptimismSynthetixPerpV2ContractPositionFetcher } from './optimism/synthetix.perp-v2.contract-position-fetcher';
 import { OptimismSynthetixPositionPresenter } from './optimism/synthetix.position-presenter';
 import { OptimismSynthetixSnxTokenFetcher } from './optimism/synthetix.snx.token-fetcher';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
-import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.definition';
 
-@Register.AppModule({
-  appId: SYNTHETIX_DEFINITION.id,
+@Module({
   providers: [
-    SynthetixAppDefinition,
     SynthetixContractFactory,
-    SynthetixSingleStakingIsActiveStrategy,
-    SynthetixSingleStakingRoiStrategy,
-    SynthetixSingleStakingFarmContractPositionHelper,
-    SynthetixSingleStakingFarmContractPositionBalanceHelper,
     SynthetixMintrSnxHoldersCache,
     // Ethereum
     EthereumSynthetixFarmContractPositionFetcher,
@@ -43,13 +35,8 @@ import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.defini
     OptimismSynthetixSnxTokenFetcher,
     OptimismSynthetixLoanContractPositionFetcher,
     OptimismSynthetixPositionPresenter,
-  ],
-  exports: [
-    SynthetixContractFactory,
-    SynthetixSingleStakingIsActiveStrategy,
-    SynthetixSingleStakingRoiStrategy,
-    SynthetixSingleStakingFarmContractPositionHelper,
-    SynthetixSingleStakingFarmContractPositionBalanceHelper,
+    OptimismSynthetixPerpV2ContractPositionFetcher,
+    OptimismSynthetixPerpV1ContractPositionFetcher,
   ],
 })
 export class SynthetixAppModule extends AbstractApp() {}

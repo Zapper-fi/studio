@@ -91,22 +91,6 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 
-  async getReserves({
-    appToken,
-  }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getLiquidity({
-    appToken,
-  }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getApy(_params: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
-    return 0;
-  }
-
   async getFee({
     multicall,
     appToken,

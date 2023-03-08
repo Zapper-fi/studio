@@ -58,8 +58,4 @@ export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFet
     const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
     return [Number(reserveRaw) / 10 ** underlyingToken.decimals];
   }
-
-  async getApy() {
-    return 0;
-  }
 }

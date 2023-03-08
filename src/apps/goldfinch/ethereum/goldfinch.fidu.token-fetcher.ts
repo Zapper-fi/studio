@@ -24,16 +24,18 @@ export class EthereumGoldfinchFiduTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getAddresses() {
-    return ['0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf'];
+    const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
+    return [FIDU];
   }
 
   async getUnderlyingTokenDefinitions() {
-    return [{ address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', network: this.network }];
+    const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
+    return [{ address: USDC, network: this.network }];
   }
 
   async getPricePerShare({ multicall }: GetPricePerShareParams<Erc20>) {
-    const seniorPoolAdress = '0x8481a6ebaf5c7dabc3f7e09e44a89531fd31f822';
-    const seniorPool = this.contractFactory.goldfinchSeniorPool({ address: seniorPoolAdress, network: this.network });
+    const seniorPoolAddress = '0x8481a6ebaf5c7dabc3f7e09e44a89531fd31f822';
+    const seniorPool = this.contractFactory.goldfinchSeniorPool({ address: seniorPoolAddress, network: this.network });
     const sharePriceRaw = await multicall.wrap(seniorPool).sharePrice();
     return [Number(sharePriceRaw) / 10 ** 18];
   }

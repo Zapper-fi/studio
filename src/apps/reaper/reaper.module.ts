@@ -1,16 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ReaperVaultCacheManager } from './common/reaper.vault.cache-manager';
 import { ReaperContractFactory } from './contracts';
 import { FantomReaperVaultTokenFetcher } from './fantom/reaper.vault.token-fetcher';
 import { OptimismReaperVaultTokenFetcher } from './optimism/reaper.vault.token-fetcher';
-import { ReaperAppDefinition, REAPER_DEFINITION } from './reaper.definition';
 
-@Register.AppModule({
-  appId: REAPER_DEFINITION.id,
+@Module({
   providers: [
-    ReaperAppDefinition,
     ReaperContractFactory,
     ReaperVaultCacheManager,
     FantomReaperVaultTokenFetcher,

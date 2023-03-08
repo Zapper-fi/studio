@@ -58,15 +58,11 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<string> {
     return contract.name();
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<MeshswapSinglePool>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<MeshswapSinglePool>) {
@@ -76,10 +72,6 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     const borrowAmount = Number(borrowAmountRaw) / 10 ** appToken.decimals;
 
     return borrowAmount + cash;
-  }
-
-  async getApy(_params: GetDataPropsParams<MeshswapSinglePool>) {
-    return 0;
   }
 
   async getDataProps(params: GetDataPropsParams<MeshswapSinglePool>) {

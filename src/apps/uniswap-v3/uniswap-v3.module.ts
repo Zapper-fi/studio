@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumUniswapV3LiquidityContractPositionFetcher } from './arbitrum/uniswap-v3.liquidity.contract-position-fetcher';
@@ -7,12 +8,9 @@ import { UniswapV3ContractFactory } from './contracts';
 import { EthereumUniswapV3LiquidityContractPositionFetcher } from './ethereum/uniswap-v3.liquidity.contract-position-fetcher';
 import { OptimismUniswapV3LiquidityContractPositionFetcher } from './optimism/uniswap-v3.liquidity.contract-position-fetcher';
 import { PolygonUniswapV3LiquidityContractPositionFetcher } from './polygon/uniswap-v3.liquidity.contract-position-fetcher';
-import { UniswapV3AppDefinition, UNISWAP_V3_DEFINITION } from './uniswap-v3.definition';
 
-@Register.AppModule({
-  appId: UNISWAP_V3_DEFINITION.id,
+@Module({
   providers: [
-    UniswapV3AppDefinition,
     UniswapV3ContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumUniswapV3LiquidityContractPositionFetcher,
@@ -20,6 +18,5 @@ import { UniswapV3AppDefinition, UNISWAP_V3_DEFINITION } from './uniswap-v3.defi
     OptimismUniswapV3LiquidityContractPositionFetcher,
     PolygonUniswapV3LiquidityContractPositionFetcher,
   ],
-  exports: [UniswapV3ContractFactory],
 })
 export class UniswapV3AppModule extends AbstractApp() {}

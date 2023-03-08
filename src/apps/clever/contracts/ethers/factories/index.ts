@@ -2,4 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { CleverFurnace__factory } from './CleverFurnace__factory';
+export { CleverGauge__factory } from './CleverGauge__factory';
+export { CleverGaugeController__factory } from './CleverGaugeController__factory';
 export { CleverLocker__factory } from './CleverLocker__factory';
+export { CleverVesting__factory } from './CleverVesting__factory';

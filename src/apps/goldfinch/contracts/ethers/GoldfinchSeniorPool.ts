@@ -17,6 +17,34 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
+export declare namespace ISeniorPoolEpochWithdrawals {
+  export type EpochStruct = {
+    endsAt: PromiseOrValue<BigNumberish>;
+    fiduRequested: PromiseOrValue<BigNumberish>;
+    fiduLiquidated: PromiseOrValue<BigNumberish>;
+    usdcAllocated: PromiseOrValue<BigNumberish>;
+  };
+
+  export type EpochStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
+    endsAt: BigNumber;
+    fiduRequested: BigNumber;
+    fiduLiquidated: BigNumber;
+    usdcAllocated: BigNumber;
+  };
+
+  export type WithdrawalRequestStruct = {
+    epochCursor: PromiseOrValue<BigNumberish>;
+    usdcWithdrawable: PromiseOrValue<BigNumberish>;
+    fiduRequested: PromiseOrValue<BigNumberish>;
+  };
+
+  export type WithdrawalRequestStructOutput = [BigNumber, BigNumber, BigNumber] & {
+    epochCursor: BigNumber;
+    usdcWithdrawable: BigNumber;
+    fiduRequested: BigNumber;
+  };
+}
+
 export interface GoldfinchSeniorPoolInterface extends utils.Interface {
   functions: {
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
@@ -25,12 +53,16 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
     'ZAPPER_ROLE()': FunctionFragment;
     '__BaseUpgradeablePausable__init(address)': FunctionFragment;
     '__PauserPausable__init()': FunctionFragment;
+    'addToWithdrawalRequest(uint256,uint256)': FunctionFragment;
     'assets()': FunctionFragment;
     'calculateWritedown(uint256)': FunctionFragment;
-    'compoundBalance()': FunctionFragment;
+    'cancelWithdrawalRequest(uint256)': FunctionFragment;
+    'claimWithdrawalRequest(uint256)': FunctionFragment;
     'config()': FunctionFragment;
+    'currentEpoch()': FunctionFragment;
     'deposit(uint256)': FunctionFragment;
     'depositWithPermit(uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'epochDuration()': FunctionFragment;
     'estimateInvestment(address)': FunctionFragment;
     'getNumShares(uint256)': FunctionFragment;
     'getRoleAdmin(bytes32)': FunctionFragment;
@@ -38,26 +70,27 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
     'getRoleMemberCount(bytes32)': FunctionFragment;
     'grantRole(bytes32,address)': FunctionFragment;
     'hasRole(bytes32,address)': FunctionFragment;
-    'initZapperRole()': FunctionFragment;
     'initialize(address,address)': FunctionFragment;
+    'initializeEpochs()': FunctionFragment;
     'invest(address)': FunctionFragment;
     'isAdmin()': FunctionFragment;
-    'isZapper()': FunctionFragment;
     'pause()': FunctionFragment;
     'paused()': FunctionFragment;
     'redeem(uint256)': FunctionFragment;
     'renounceRole(bytes32,address)': FunctionFragment;
+    'requestWithdrawal(uint256)': FunctionFragment;
     'revokeRole(bytes32,address)': FunctionFragment;
+    'setEpochDuration(uint256)': FunctionFragment;
     'sharePrice()': FunctionFragment;
-    'sweepFromCompound()': FunctionFragment;
-    'sweepToCompound()': FunctionFragment;
+    'sharesOutstanding()': FunctionFragment;
     'totalLoansOutstanding()': FunctionFragment;
     'totalWritedowns()': FunctionFragment;
     'unpause()': FunctionFragment;
+    'usdcAvailable()': FunctionFragment;
     'withdraw(uint256)': FunctionFragment;
     'withdrawInFidu(uint256)': FunctionFragment;
+    'withdrawalRequest(uint256)': FunctionFragment;
     'writedown(uint256)': FunctionFragment;
-    'writedowns(address)': FunctionFragment;
     'writedownsByPoolToken(uint256)': FunctionFragment;
   };
 
@@ -69,12 +102,16 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
       | 'ZAPPER_ROLE'
       | '__BaseUpgradeablePausable__init'
       | '__PauserPausable__init'
+      | 'addToWithdrawalRequest'
       | 'assets'
       | 'calculateWritedown'
-      | 'compoundBalance'
+      | 'cancelWithdrawalRequest'
+      | 'claimWithdrawalRequest'
       | 'config'
+      | 'currentEpoch'
       | 'deposit'
       | 'depositWithPermit'
+      | 'epochDuration'
       | 'estimateInvestment'
       | 'getNumShares'
       | 'getRoleAdmin'
@@ -82,26 +119,27 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
       | 'getRoleMemberCount'
       | 'grantRole'
       | 'hasRole'
-      | 'initZapperRole'
       | 'initialize'
+      | 'initializeEpochs'
       | 'invest'
       | 'isAdmin'
-      | 'isZapper'
       | 'pause'
       | 'paused'
       | 'redeem'
       | 'renounceRole'
+      | 'requestWithdrawal'
       | 'revokeRole'
+      | 'setEpochDuration'
       | 'sharePrice'
-      | 'sweepFromCompound'
-      | 'sweepToCompound'
+      | 'sharesOutstanding'
       | 'totalLoansOutstanding'
       | 'totalWritedowns'
       | 'unpause'
+      | 'usdcAvailable'
       | 'withdraw'
       | 'withdrawInFidu'
+      | 'withdrawalRequest'
       | 'writedown'
-      | 'writedowns'
       | 'writedownsByPoolToken',
   ): FunctionFragment;
 
@@ -111,10 +149,16 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ZAPPER_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: '__BaseUpgradeablePausable__init', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: '__PauserPausable__init', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'addToWithdrawalRequest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'assets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calculateWritedown', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'compoundBalance', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cancelWithdrawalRequest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'claimWithdrawalRequest', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'config', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'currentEpoch', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'depositWithPermit',
@@ -126,6 +170,7 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
       PromiseOrValue<BytesLike>,
     ],
   ): string;
+  encodeFunctionData(functionFragment: 'epochDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'estimateInvestment', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getNumShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
@@ -139,11 +184,10 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'initZapperRole', values?: undefined): string;
   encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'initializeEpochs', values?: undefined): string;
   encodeFunctionData(functionFragment: 'invest', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isAdmin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isZapper', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<BigNumberish>]): string;
@@ -151,20 +195,22 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
     functionFragment: 'renounceRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'requestWithdrawal', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'revokeRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'setEpochDuration', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'sharePrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sweepFromCompound', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sweepToCompound', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sharesOutstanding', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalLoansOutstanding', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalWritedowns', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'usdcAvailable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawInFidu', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdrawalRequest', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'writedown', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'writedowns', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'writedownsByPoolToken', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
@@ -173,12 +219,16 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'ZAPPER_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '__BaseUpgradeablePausable__init', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '__PauserPausable__init', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addToWithdrawalRequest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'assets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateWritedown', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'compoundBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cancelWithdrawalRequest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimWithdrawalRequest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'config', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currentEpoch', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'depositWithPermit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'epochDuration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'estimateInvestment', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getNumShares', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
@@ -186,31 +236,34 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getRoleMemberCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initZapperRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initializeEpochs', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'invest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isAdmin', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isZapper', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requestWithdrawal', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEpochDuration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'sharePrice', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'sweepFromCompound', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'sweepToCompound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sharesOutstanding', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalLoansOutstanding', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalWritedowns', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'usdcAvailable', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawInFidu', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawalRequest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'writedown', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'writedowns', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'writedownsByPoolToken', data: BytesLike): Result;
 
   events: {
     'DepositMade(address,uint256,uint256)': EventFragment;
-    'GoldfinchConfigUpdated(address,address)': EventFragment;
+    'EpochDurationChanged(uint256)': EventFragment;
+    'EpochEnded(uint256,uint256,uint256,uint256,uint256)': EventFragment;
+    'EpochExtended(uint256,uint256,uint256)': EventFragment;
     'InterestCollected(address,uint256)': EventFragment;
     'InvestmentMadeInJunior(address,uint256)': EventFragment;
     'InvestmentMadeInSenior(address,uint256)': EventFragment;
@@ -218,14 +271,20 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
     'PrincipalCollected(address,uint256)': EventFragment;
     'PrincipalWrittenDown(address,int256)': EventFragment;
     'ReserveFundsCollected(address,uint256)': EventFragment;
+    'ReserveSharesCollected(address,address,uint256)': EventFragment;
     'RoleGranted(bytes32,address,address)': EventFragment;
     'RoleRevoked(bytes32,address,address)': EventFragment;
     'Unpaused(address)': EventFragment;
+    'WithdrawalAddedTo(uint256,uint256,address,uint256)': EventFragment;
+    'WithdrawalCanceled(uint256,uint256,address,uint256,uint256)': EventFragment;
     'WithdrawalMade(address,uint256,uint256)': EventFragment;
+    'WithdrawalRequested(uint256,uint256,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'DepositMade'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'GoldfinchConfigUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EpochDurationChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EpochEnded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EpochExtended'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'InterestCollected'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'InvestmentMadeInJunior'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'InvestmentMadeInSenior'): EventFragment;
@@ -233,10 +292,14 @@ export interface GoldfinchSeniorPoolInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'PrincipalCollected'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PrincipalWrittenDown'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ReserveFundsCollected'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ReserveSharesCollected'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawalAddedTo'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawalCanceled'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'WithdrawalMade'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawalRequested'): EventFragment;
 }
 
 export interface DepositMadeEventObject {
@@ -248,13 +311,35 @@ export type DepositMadeEvent = TypedEvent<[string, BigNumber, BigNumber], Deposi
 
 export type DepositMadeEventFilter = TypedEventFilter<DepositMadeEvent>;
 
-export interface GoldfinchConfigUpdatedEventObject {
-  who: string;
-  configAddress: string;
+export interface EpochDurationChangedEventObject {
+  newDuration: BigNumber;
 }
-export type GoldfinchConfigUpdatedEvent = TypedEvent<[string, string], GoldfinchConfigUpdatedEventObject>;
+export type EpochDurationChangedEvent = TypedEvent<[BigNumber], EpochDurationChangedEventObject>;
 
-export type GoldfinchConfigUpdatedEventFilter = TypedEventFilter<GoldfinchConfigUpdatedEvent>;
+export type EpochDurationChangedEventFilter = TypedEventFilter<EpochDurationChangedEvent>;
+
+export interface EpochEndedEventObject {
+  epochId: BigNumber;
+  endTime: BigNumber;
+  fiduRequested: BigNumber;
+  usdcAllocated: BigNumber;
+  fiduLiquidated: BigNumber;
+}
+export type EpochEndedEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+  EpochEndedEventObject
+>;
+
+export type EpochEndedEventFilter = TypedEventFilter<EpochEndedEvent>;
+
+export interface EpochExtendedEventObject {
+  epochId: BigNumber;
+  newEndTime: BigNumber;
+  oldEndTime: BigNumber;
+}
+export type EpochExtendedEvent = TypedEvent<[BigNumber, BigNumber, BigNumber], EpochExtendedEventObject>;
+
+export type EpochExtendedEventFilter = TypedEventFilter<EpochExtendedEvent>;
 
 export interface InterestCollectedEventObject {
   payer: string;
@@ -311,6 +396,15 @@ export type ReserveFundsCollectedEvent = TypedEvent<[string, BigNumber], Reserve
 
 export type ReserveFundsCollectedEventFilter = TypedEventFilter<ReserveFundsCollectedEvent>;
 
+export interface ReserveSharesCollectedEventObject {
+  user: string;
+  reserve: string;
+  amount: BigNumber;
+}
+export type ReserveSharesCollectedEvent = TypedEvent<[string, string, BigNumber], ReserveSharesCollectedEventObject>;
+
+export type ReserveSharesCollectedEventFilter = TypedEventFilter<ReserveSharesCollectedEvent>;
+
 export interface RoleGrantedEventObject {
   role: string;
   account: string;
@@ -336,6 +430,33 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
+export interface WithdrawalAddedToEventObject {
+  epochId: BigNumber;
+  tokenId: BigNumber;
+  operator: string;
+  fiduRequested: BigNumber;
+}
+export type WithdrawalAddedToEvent = TypedEvent<
+  [BigNumber, BigNumber, string, BigNumber],
+  WithdrawalAddedToEventObject
+>;
+
+export type WithdrawalAddedToEventFilter = TypedEventFilter<WithdrawalAddedToEvent>;
+
+export interface WithdrawalCanceledEventObject {
+  epochId: BigNumber;
+  tokenId: BigNumber;
+  operator: string;
+  fiduCanceled: BigNumber;
+  reserveFidu: BigNumber;
+}
+export type WithdrawalCanceledEvent = TypedEvent<
+  [BigNumber, BigNumber, string, BigNumber, BigNumber],
+  WithdrawalCanceledEventObject
+>;
+
+export type WithdrawalCanceledEventFilter = TypedEventFilter<WithdrawalCanceledEvent>;
+
 export interface WithdrawalMadeEventObject {
   capitalProvider: string;
   userAmount: BigNumber;
@@ -344,6 +465,19 @@ export interface WithdrawalMadeEventObject {
 export type WithdrawalMadeEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawalMadeEventObject>;
 
 export type WithdrawalMadeEventFilter = TypedEventFilter<WithdrawalMadeEvent>;
+
+export interface WithdrawalRequestedEventObject {
+  epochId: BigNumber;
+  tokenId: BigNumber;
+  operator: string;
+  fiduRequested: BigNumber;
+}
+export type WithdrawalRequestedEvent = TypedEvent<
+  [BigNumber, BigNumber, string, BigNumber],
+  WithdrawalRequestedEventObject
+>;
+
+export type WithdrawalRequestedEventFilter = TypedEventFilter<WithdrawalRequestedEvent>;
 
 export interface GoldfinchSeniorPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -383,13 +517,29 @@ export interface GoldfinchSeniorPool extends BaseContract {
 
     __PauserPausable__init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+    addToWithdrawalRequest(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     assets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calculateWritedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    compoundBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
+    cancelWithdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    claimWithdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     config(overrides?: CallOverrides): Promise<[string]>;
+
+    currentEpoch(overrides?: CallOverrides): Promise<[ISeniorPoolEpochWithdrawals.EpochStructOutput]>;
 
     deposit(
       amount: PromiseOrValue<BigNumberish>,
@@ -405,9 +555,11 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    epochDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     estimateInvestment(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getNumShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNumShares(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
@@ -431,13 +583,13 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    initZapperRole(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
     initialize(
       owner: PromiseOrValue<string>,
       _config: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    initializeEpochs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     invest(
       pool: PromiseOrValue<string>,
@@ -445,8 +597,6 @@ export interface GoldfinchSeniorPool extends BaseContract {
     ): Promise<ContractTransaction>;
 
     isAdmin(overrides?: CallOverrides): Promise<[boolean]>;
-
-    isZapper(overrides?: CallOverrides): Promise<[boolean]>;
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -463,23 +613,33 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    requestWithdrawal(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    setEpochDuration(
+      newEpochDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     sharePrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    sweepFromCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    sweepToCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    sharesOutstanding(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalLoansOutstanding(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalWritedowns(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    usdcAvailable(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
       usdcAmount: PromiseOrValue<BigNumberish>,
@@ -491,12 +651,15 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    withdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[ISeniorPoolEpochWithdrawals.WithdrawalRequestStructOutput]>;
+
     writedown(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    writedowns(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     writedownsByPoolToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
@@ -516,13 +679,29 @@ export interface GoldfinchSeniorPool extends BaseContract {
 
   __PauserPausable__init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+  addToWithdrawalRequest(
+    fiduAmount: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   assets(overrides?: CallOverrides): Promise<BigNumber>;
 
   calculateWritedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  compoundBalance(overrides?: CallOverrides): Promise<BigNumber>;
+  cancelWithdrawalRequest(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  claimWithdrawalRequest(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   config(overrides?: CallOverrides): Promise<string>;
+
+  currentEpoch(overrides?: CallOverrides): Promise<ISeniorPoolEpochWithdrawals.EpochStructOutput>;
 
   deposit(
     amount: PromiseOrValue<BigNumberish>,
@@ -538,9 +717,11 @@ export interface GoldfinchSeniorPool extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  epochDuration(overrides?: CallOverrides): Promise<BigNumber>;
+
   estimateInvestment(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getNumShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+  getNumShares(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
@@ -564,13 +745,13 @@ export interface GoldfinchSeniorPool extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  initZapperRole(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
   initialize(
     owner: PromiseOrValue<string>,
     _config: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  initializeEpochs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   invest(
     pool: PromiseOrValue<string>,
@@ -578,8 +759,6 @@ export interface GoldfinchSeniorPool extends BaseContract {
   ): Promise<ContractTransaction>;
 
   isAdmin(overrides?: CallOverrides): Promise<boolean>;
-
-  isZapper(overrides?: CallOverrides): Promise<boolean>;
 
   pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -596,23 +775,33 @@ export interface GoldfinchSeniorPool extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  requestWithdrawal(
+    fiduAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   revokeRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  setEpochDuration(
+    newEpochDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   sharePrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  sweepFromCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  sweepToCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  sharesOutstanding(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalLoansOutstanding(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalWritedowns(overrides?: CallOverrides): Promise<BigNumber>;
 
   unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  usdcAvailable(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
     usdcAmount: PromiseOrValue<BigNumberish>,
@@ -624,12 +813,15 @@ export interface GoldfinchSeniorPool extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  withdrawalRequest(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<ISeniorPoolEpochWithdrawals.WithdrawalRequestStructOutput>;
+
   writedown(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  writedowns(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   writedownsByPoolToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -646,13 +838,23 @@ export interface GoldfinchSeniorPool extends BaseContract {
 
     __PauserPausable__init(overrides?: CallOverrides): Promise<void>;
 
+    addToWithdrawalRequest(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     assets(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateWritedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    compoundBalance(overrides?: CallOverrides): Promise<BigNumber>;
+    cancelWithdrawalRequest(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    claimWithdrawalRequest(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<string>;
+
+    currentEpoch(overrides?: CallOverrides): Promise<ISeniorPoolEpochWithdrawals.EpochStructOutput>;
 
     deposit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -665,9 +867,11 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    epochDuration(overrides?: CallOverrides): Promise<BigNumber>;
+
     estimateInvestment(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNumShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    getNumShares(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
@@ -691,19 +895,17 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    initZapperRole(overrides?: CallOverrides): Promise<void>;
-
     initialize(
       owner: PromiseOrValue<string>,
       _config: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    invest(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    initializeEpochs(overrides?: CallOverrides): Promise<void>;
+
+    invest(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isAdmin(overrides?: CallOverrides): Promise<boolean>;
-
-    isZapper(overrides?: CallOverrides): Promise<boolean>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -717,17 +919,19 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    requestWithdrawal(fiduAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    setEpochDuration(newEpochDuration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     sharePrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sweepFromCompound(overrides?: CallOverrides): Promise<void>;
-
-    sweepToCompound(overrides?: CallOverrides): Promise<void>;
+    sharesOutstanding(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLoansOutstanding(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -735,13 +939,18 @@ export interface GoldfinchSeniorPool extends BaseContract {
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
+    usdcAvailable(overrides?: CallOverrides): Promise<BigNumber>;
+
     withdraw(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawInFidu(fiduAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    writedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    withdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<ISeniorPoolEpochWithdrawals.WithdrawalRequestStructOutput>;
 
-    writedowns(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    writedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     writedownsByPoolToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -754,14 +963,34 @@ export interface GoldfinchSeniorPool extends BaseContract {
     ): DepositMadeEventFilter;
     DepositMade(capitalProvider?: PromiseOrValue<string> | null, amount?: null, shares?: null): DepositMadeEventFilter;
 
-    'GoldfinchConfigUpdated(address,address)'(
-      who?: PromiseOrValue<string> | null,
-      configAddress?: null,
-    ): GoldfinchConfigUpdatedEventFilter;
-    GoldfinchConfigUpdated(
-      who?: PromiseOrValue<string> | null,
-      configAddress?: null,
-    ): GoldfinchConfigUpdatedEventFilter;
+    'EpochDurationChanged(uint256)'(newDuration?: null): EpochDurationChangedEventFilter;
+    EpochDurationChanged(newDuration?: null): EpochDurationChangedEventFilter;
+
+    'EpochEnded(uint256,uint256,uint256,uint256,uint256)'(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      endTime?: null,
+      fiduRequested?: null,
+      usdcAllocated?: null,
+      fiduLiquidated?: null,
+    ): EpochEndedEventFilter;
+    EpochEnded(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      endTime?: null,
+      fiduRequested?: null,
+      usdcAllocated?: null,
+      fiduLiquidated?: null,
+    ): EpochEndedEventFilter;
+
+    'EpochExtended(uint256,uint256,uint256)'(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      newEndTime?: null,
+      oldEndTime?: null,
+    ): EpochExtendedEventFilter;
+    EpochExtended(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      newEndTime?: null,
+      oldEndTime?: null,
+    ): EpochExtendedEventFilter;
 
     'InterestCollected(address,uint256)'(
       payer?: PromiseOrValue<string> | null,
@@ -808,6 +1037,17 @@ export interface GoldfinchSeniorPool extends BaseContract {
     ): ReserveFundsCollectedEventFilter;
     ReserveFundsCollected(user?: PromiseOrValue<string> | null, amount?: null): ReserveFundsCollectedEventFilter;
 
+    'ReserveSharesCollected(address,address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      reserve?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ReserveSharesCollectedEventFilter;
+    ReserveSharesCollected(
+      user?: PromiseOrValue<string> | null,
+      reserve?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ReserveSharesCollectedEventFilter;
+
     'RoleGranted(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
@@ -833,6 +1073,34 @@ export interface GoldfinchSeniorPool extends BaseContract {
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
+    'WithdrawalAddedTo(uint256,uint256,address,uint256)'(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      operator?: PromiseOrValue<string> | null,
+      fiduRequested?: null,
+    ): WithdrawalAddedToEventFilter;
+    WithdrawalAddedTo(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      operator?: PromiseOrValue<string> | null,
+      fiduRequested?: null,
+    ): WithdrawalAddedToEventFilter;
+
+    'WithdrawalCanceled(uint256,uint256,address,uint256,uint256)'(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      operator?: PromiseOrValue<string> | null,
+      fiduCanceled?: null,
+      reserveFidu?: null,
+    ): WithdrawalCanceledEventFilter;
+    WithdrawalCanceled(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      operator?: PromiseOrValue<string> | null,
+      fiduCanceled?: null,
+      reserveFidu?: null,
+    ): WithdrawalCanceledEventFilter;
+
     'WithdrawalMade(address,uint256,uint256)'(
       capitalProvider?: PromiseOrValue<string> | null,
       userAmount?: null,
@@ -843,6 +1111,19 @@ export interface GoldfinchSeniorPool extends BaseContract {
       userAmount?: null,
       reserveAmount?: null,
     ): WithdrawalMadeEventFilter;
+
+    'WithdrawalRequested(uint256,uint256,address,uint256)'(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      operator?: PromiseOrValue<string> | null,
+      fiduRequested?: null,
+    ): WithdrawalRequestedEventFilter;
+    WithdrawalRequested(
+      epochId?: PromiseOrValue<BigNumberish> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      operator?: PromiseOrValue<string> | null,
+      fiduRequested?: null,
+    ): WithdrawalRequestedEventFilter;
   };
 
   estimateGas: {
@@ -861,13 +1142,29 @@ export interface GoldfinchSeniorPool extends BaseContract {
 
     __PauserPausable__init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
+    addToWithdrawalRequest(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     assets(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateWritedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    compoundBalance(overrides?: CallOverrides): Promise<BigNumber>;
+    cancelWithdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    claimWithdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<BigNumber>;
+
+    currentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
       amount: PromiseOrValue<BigNumberish>,
@@ -883,9 +1180,11 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    epochDuration(overrides?: CallOverrides): Promise<BigNumber>;
+
     estimateInvestment(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNumShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    getNumShares(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -909,19 +1208,17 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    initZapperRole(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
     initialize(
       owner: PromiseOrValue<string>,
       _config: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    initializeEpochs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
     invest(pool: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     isAdmin(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isZapper(overrides?: CallOverrides): Promise<BigNumber>;
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
@@ -938,23 +1235,33 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    requestWithdrawal(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    setEpochDuration(
+      newEpochDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     sharePrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sweepFromCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    sweepToCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    sharesOutstanding(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLoansOutstanding(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalWritedowns(overrides?: CallOverrides): Promise<BigNumber>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    usdcAvailable(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
       usdcAmount: PromiseOrValue<BigNumberish>,
@@ -966,12 +1273,12 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    withdrawalRequest(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
     writedown(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    writedowns(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     writedownsByPoolToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -992,13 +1299,29 @@ export interface GoldfinchSeniorPool extends BaseContract {
 
     __PauserPausable__init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
+    addToWithdrawalRequest(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     assets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateWritedown(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    compoundBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cancelWithdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    claimWithdrawalRequest(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    currentEpoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
       amount: PromiseOrValue<BigNumberish>,
@@ -1014,9 +1337,11 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    epochDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     estimateInvestment(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getNumShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNumShares(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1040,13 +1365,13 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    initZapperRole(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
     initialize(
       owner: PromiseOrValue<string>,
       _config: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    initializeEpochs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     invest(
       pool: PromiseOrValue<string>,
@@ -1054,8 +1379,6 @@ export interface GoldfinchSeniorPool extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     isAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isZapper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
@@ -1072,23 +1395,33 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    requestWithdrawal(
+      fiduAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    setEpochDuration(
+      newEpochDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     sharePrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sweepFromCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    sweepToCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    sharesOutstanding(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalLoansOutstanding(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalWritedowns(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    usdcAvailable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       usdcAmount: PromiseOrValue<BigNumberish>,
@@ -1100,12 +1433,12 @@ export interface GoldfinchSeniorPool extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    withdrawalRequest(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     writedown(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    writedowns(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     writedownsByPoolToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

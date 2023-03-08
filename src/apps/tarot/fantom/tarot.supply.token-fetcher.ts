@@ -133,7 +133,8 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TarotBorrowable>) {
     const exchangeRateRaw = await contract.callStatic.exchangeRate();
-    return Number(exchangeRateRaw) / 10 ** appToken.decimals;
+    const exchangeRate = Number(exchangeRateRaw) / 10 ** appToken.decimals;
+    return [exchangeRate];
   }
 
   async getLabel({
@@ -141,18 +142,6 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
   }: GetDisplayPropsParams<TarotBorrowable, TarotSupplyDataProps>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
     return `${getLabelFromToken(underlyingToken)} in ${appToken.dataProps.poolTokenLabel} Lending Pool`;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<TarotBorrowable>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<TarotBorrowable>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 
   async getDataProps(params: GetDataPropsParams<TarotBorrowable, TarotSupplyDataProps, Definition>) {

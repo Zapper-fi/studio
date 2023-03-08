@@ -3,6 +3,8 @@
 /* eslint-disable */
 export type { JpegdBondDepository } from './JpegdBondDepository';
 export type { JpegdLpFarm } from './JpegdLpFarm';
+export type { JpegdLpFarmV2 } from './JpegdLpFarmV2';
 export * as factories from './factories';
 export { JpegdBondDepository__factory } from './factories/JpegdBondDepository__factory';
+export { JpegdLpFarmV2__factory } from './factories/JpegdLpFarmV2__factory';
 export { JpegdLpFarm__factory } from './factories/JpegdLpFarm__factory';

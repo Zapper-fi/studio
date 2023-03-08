@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumSushiSwapBentoBoxContractPositionFetcher } from './arbitrum/sushiswap-bentobox.vault.contract-position-fetcher';
@@ -9,12 +10,9 @@ import { SushiswapBentoboxContractFactory } from './contracts';
 import { EthereumSushiSwapBentoBoxContractPositionFetcher } from './ethereum/sushiswap-bentobox.vault.contract-position-fetcher';
 import { FantomSushiSwapBentoBoxContractPositionFetcher } from './fantom/sushiswap-bentobox.vault.contract-position-fetcher';
 import { PolygonSushiSwapBentoBoxContractPositionFetcher } from './polygon/sushiswap-bentobox.vault.contract-position-fetcher';
-import { SushiSwapBentoBoxAppDefinition, SUSHISWAP_BENTOBOX_DEFINITION } from './sushiswap-bentobox.definition';
 
-@Register.AppModule({
-  appId: SUSHISWAP_BENTOBOX_DEFINITION.id,
+@Module({
   providers: [
-    SushiSwapBentoBoxAppDefinition,
     SushiswapBentoboxContractFactory,
     SushiswapBentoboxVaultTokensResolver,
     // Arbitrum

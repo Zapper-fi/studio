@@ -5,5 +5,5 @@ import { SushiswapKashiLendingTokenFetcher } from '../common/sushiswap-kashi.len
 @PositionTemplate()
 export class BinanceSmartChainSushiswapKashiLendingTokenFetcher extends SushiswapKashiLendingTokenFetcher {
   groupLabel = 'Lending';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/matthewlilley/kashi-bsc';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/sushi-labs/kashi-bsc';
 }

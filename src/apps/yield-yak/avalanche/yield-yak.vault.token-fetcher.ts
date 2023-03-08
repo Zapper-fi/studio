@@ -9,7 +9,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetUnderlyingTokensParams,
   GetDisplayPropsParams,
-  GetDataPropsParams,
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
@@ -56,19 +55,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<YieldYakVault>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<YieldYakVault>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
-  }
-
-  async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>): Promise<number | number[]> {
+  async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>) {
     const one_receipt_token = BigNumber.from(10).pow(_params.appToken.decimals);
     try {
       const depositToken = await _params.contract.depositToken();
@@ -80,9 +67,9 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
 
       const underlying = await _params.contract.getDepositTokensForShares(one_receipt_token);
       const pps = ethers.utils.formatUnits(underlying, depositTokenDecimals);
-      return +pps;
+      return [+pps];
     } catch (err) {
-      return 1;
+      return [1];
     }
   }
 }

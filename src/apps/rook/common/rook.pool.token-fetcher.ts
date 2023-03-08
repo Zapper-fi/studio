@@ -4,14 +4,9 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetDataPropsParams,
-  GetPricePerShareParams,
-  GetUnderlyingTokensParams,
-} from '~position/template/app-token.template.types';
+import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { RookContractFactory } from '../contracts';
-import { RookKToken } from '../contracts';
+import { RookContractFactory, RookKToken } from '../contracts';
 
 export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetcher<RookKToken> {
   abstract kTokenAddresses: string[];
@@ -59,18 +54,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
     }
 
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<RookKToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<RookKToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 }

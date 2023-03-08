@@ -1,19 +1,16 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { MakerContractFactory } from './contracts';
 import { EthereumMakerGovernanceContractPositionFetcher } from './ethereum/maker.governance.contract-position-fetcher';
 import { EthereumMakerVaultContractPositionFetcher } from './ethereum/maker.vault.contract-position-fetcher';
-import { MakerAppDefinition, MAKER_DEFINITION } from './maker.definition';
 
-@Register.AppModule({
-  appId: MAKER_DEFINITION.id,
+@Module({
   providers: [
-    MakerAppDefinition,
     MakerContractFactory,
     EthereumMakerGovernanceContractPositionFetcher,
     EthereumMakerVaultContractPositionFetcher,
   ],
-  exports: [MakerContractFactory],
 })
 export class MakerAppModule extends AbstractApp() {}

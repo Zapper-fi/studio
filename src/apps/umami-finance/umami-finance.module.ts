@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumUmamiFinanceCompoundTokenFetcher } from './arbitrum/umami-finance.compound.token-fetcher';
@@ -7,12 +8,9 @@ import { ArbitrumUmamiFinanceMarinateContractPositionFetcher } from './arbitrum/
 import { ArbitrumUmamiFinanceVaultsTokenFetcher } from './arbitrum/umami-finance.vaults.token-fetcher';
 import { UmamiFinanceYieldResolver } from './common/umami-finance.marinate.token-definition-resolver';
 import { UmamiFinanceContractFactory } from './contracts';
-import { UmamiFinanceAppDefinition, UMAMI_FINANCE_DEFINITION } from './umami-finance.definition';
 
-@Register.AppModule({
-  appId: UMAMI_FINANCE_DEFINITION.id,
+@Module({
   providers: [
-    UmamiFinanceAppDefinition,
     UmamiFinanceContractFactory,
     UmamiFinanceYieldResolver,
     // Arbitrum

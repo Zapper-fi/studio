@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -48,9 +48,9 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
     return (ethPrice * Number(totalEthRaw)) / Number(totalSupplyRaw);
   }
 
-  async getPricePerShare({ contract }: GetPricePerShareParams<AlphaBank>): Promise<number> {
+  async getPricePerShare({ contract }: GetPricePerShareParams<AlphaBank>) {
     const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.totalETH(), contract.totalSupply()]);
-    return Number(totalEthRaw) / Number(totalSupplyRaw);
+    return [Number(totalEthRaw) / Number(totalSupplyRaw)];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AlphaBank>) {

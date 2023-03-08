@@ -5,7 +5,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
@@ -47,20 +46,12 @@ export abstract class EulerPTokenTokenFetcher extends AppTokenTemplatePositionFe
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getSymbol({ address }): Promise<string> {
     const market = await this.tokenDefinitionsResolver.getMarket(address, this.tokenType);
     return `P${market!.symbol}`;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<EulerPtokenContract>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<EulerPtokenContract>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

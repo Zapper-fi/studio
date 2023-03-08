@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePenguinChefV1FarmContractPositionFetcher } from './avalanche/penguin.chef-v1-farm.contract-position-fetcher';
@@ -8,12 +9,9 @@ import { AvalanchePenguinVaultClaimableContractPositionFetcher } from './avalanc
 import { AvalanchePenguinVaultTokenFetcher } from './avalanche/penguin.vault.token-fetcher';
 import { AvalanchePenguinXPefiTokenFetcher } from './avalanche/penguin.x-pefi.token-fetcher';
 import { PenguinContractFactory } from './contracts';
-import { PenguinAppDefinition, PENGUIN_DEFINITION } from './penguin.definition';
 
-@Register.AppModule({
-  appId: PENGUIN_DEFINITION.id,
+@Module({
   providers: [
-    PenguinAppDefinition,
     PenguinContractFactory,
     AvalanchePenguinChefV1FarmContractPositionFetcher,
     AvalanchePenguinChefV2FarmContractPositionFetcher,

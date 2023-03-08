@@ -43,14 +43,6 @@ export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppToke
     return [{ address: vault!.token.address.toLowerCase(), network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<T>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<T>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
   async getApy({ appToken }: GetDataPropsParams<T>) {
     const vault = await this.selectVault(appToken.address);
     if (!vault) throw new Error('Cannot find specified vault');

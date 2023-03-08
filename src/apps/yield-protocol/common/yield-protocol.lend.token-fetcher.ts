@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -103,7 +104,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getDefinitions(): Promise<FyTokenDefinition[]> {
-    const { pools, seriesEntities } = await this.appToolkit.helpers.theGraphHelper.request<YieldRes>({
+    const { pools, seriesEntities } = await gqlFetch<YieldRes>({
       endpoint: this.subgraphUrl,
       query,
     });
@@ -128,11 +129,11 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     contract,
     multicall,
   }: GetPricePerShareParams<YieldProtocolLendToken, DefaultAppTokenDataProps, FyTokenDefinition>) {
-    if (!definition.poolAddress) return 1;
+    if (!definition.poolAddress) return [1];
 
     const maturity = await contract.maturity();
     const isMatured = Math.floor(new Date().getTime() / 1000) > Number(maturity);
-    if (isMatured) return 1;
+    if (isMatured) return [1];
 
     const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
 
@@ -142,19 +143,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
         ? (await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('.01', appToken.decimals))).mul(100)
         : await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('1', appToken.decimals));
 
-    return +ethers.utils.formatUnits(estimateRaw, appToken.decimals);
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<YieldProtocolLendToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<YieldProtocolLendToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<YieldProtocolLendToken>) {
-    return 0;
+    return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }
 
   async getDataProps(params: GetDataPropsParams<YieldProtocolLendToken, FyTokenDataProps, FyTokenDefinition>) {

@@ -7,7 +7,6 @@ import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
-  GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -55,18 +54,6 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
       ? Number(pricePerShareRaw) / Number(convertRate) / 10 ** Number(localDecimalsRaw)
       : Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
 
-    return pricePerShare;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<StargatePool>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<StargatePool>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+    return [pricePerShare];
   }
 }

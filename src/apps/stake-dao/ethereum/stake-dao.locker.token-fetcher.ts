@@ -1,15 +1,11 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetUnderlyingTokensParams,
-  GetPricePerShareParams,
-  GetDataPropsParams,
-} from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { StakeDaoContractFactory } from '../contracts';
 
@@ -36,6 +32,12 @@ export const LOCKERS = [
     tokenAddress: '0xf24d8651578a55b0c119b9910759a351a3458895', // sdBAL
     underlyingTokenAddress: '0x5c6ee304399dbdb9c8ef030ab642b10820db8f56', // Balancer 80BAL-20WETH
     gaugeAddress: '0x3e8c72655e48591d93e6dfda16823db0ff23d859',
+  },
+  {
+    tokenAddress: '0x97983236be88107cc8998733ef73d8d969c52e37', // sdYFI
+    underlyingTokenAddress: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e', // YFI
+    poolAddress: '0x79e281bc69a03dabccd66858c65ef6724e50aebe',
+    gaugeAddress: '0x5adf559f5d24aacbe4fa3a3a4f44fdc7431e6b52',
   },
 ];
 
@@ -65,7 +67,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20>) {
     // Lockers are minted 1:1; if an exchange market exists in Curve, use it to derive the price
     const locker = LOCKERS.find(v => v.tokenAddress == appToken.address)!;
-    if (!locker.poolAddress) return 1;
+    if (!locker.poolAddress) return [1];
 
     const pool = this.contractFactory.stakeDaoCurvePool({ address: locker.poolAddress, network: this.network });
     const token0 = await multicall.wrap(pool).coins(0);
@@ -73,18 +75,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
     const amount = new BigNumber(1e18).toFixed(0);
 
     const pricePerShareRaw = await multicall.wrap(pool).get_dy(1 - knownIndex, knownIndex, amount);
-    return Number(pricePerShareRaw) / 10 ** 18;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Erc20>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+    return [pricePerShare];
   }
 }

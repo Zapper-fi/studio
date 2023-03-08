@@ -57,21 +57,24 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
       tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).allWhitelistedTokens(tokenIndex)),
     );
 
-    const definitions = whitelistedTokens.flatMap(v =>
-      whitelistedTokens.flatMap(t => {
-        if (v === t) return null;
-        const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
-        const short = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: false };
-        return [long, short];
+    const definitions = await Promise.all(
+      whitelistedTokens.flatMap(async v => {
+        const isShortable = await multicall.wrap(vaultContract).shortableTokens(v.toLowerCase());
+        if (!isShortable) return null;
+        return whitelistedTokens.flatMap(t => {
+          const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
+          const short = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: false };
+          return [long, short];
+        });
       }),
     );
 
-    return compact(definitions);
+    return compact(definitions.flat());
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<GmxVault, GmxOptionContractPositionDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.collateralTokenAddress, network: this.network },
+      { metaType: MetaType.LOCKED, address: definition.collateralTokenAddress, network: this.network },
       { metaType: MetaType.SUPPLIED, address: definition.indexTokenAddress, network: this.network },
       { metaType: MetaType.SUPPLIED, address: this.usdcAddress, network: this.network },
     ];

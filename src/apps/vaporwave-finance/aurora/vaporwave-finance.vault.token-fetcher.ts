@@ -63,8 +63,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher extends AppTokenTemplatePos
     const reserveRaw = await contract.balance();
     const reserve = Number(reserveRaw) / 10 ** appToken.decimals;
     const pricePerShare = reserve / appToken.supply;
-
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getApy({

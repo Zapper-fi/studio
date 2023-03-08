@@ -6,7 +6,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDefinition,
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
@@ -54,18 +53,8 @@ export class EthereumBancorV3BntPoolTokenFetcher extends AppTokenTemplatePositio
     const ratioRaw = await multicall
       .wrap(bntPoolContract)
       .poolTokenToUnderlying((10 ** appToken.tokens[0].decimals).toString());
-    return Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
-  }
+    const ratio = Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
 
-  async getLiquidity({ appToken }: GetDataPropsParams<PoolToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<PoolToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<PoolToken>) {
-    return 0;
+    return [ratio];
   }
 }

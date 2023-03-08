@@ -8,7 +8,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -83,7 +82,7 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     BarnbridgeSmartAlphaToken,
     DefaultAppTokenDataProps,
     BarnbridgeSmartAlphaJuniorPoolTokenDefinition
-  >): Promise<number | number[]> {
+  >) {
     const alphaPoolContract = this.contractFactory.barnbridgeSmartAlphaPool({
       address: definition.smartPoolAddress,
       network: this.network,
@@ -91,7 +90,7 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
 
     const pricePerShareRaw = await multicall.wrap(alphaPoolContract).estimateCurrentJuniorTokenPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getLabel({
@@ -111,17 +110,5 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     const duration = moment.duration(Number(durationRaw), 'seconds').format('w [weeks]');
 
     return [appToken.tokens[0].symbol, 'Junior Pool', '-', duration].join(' ');
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
-    return 0;
   }
 }

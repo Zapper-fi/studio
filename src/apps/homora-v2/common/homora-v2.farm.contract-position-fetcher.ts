@@ -1,9 +1,9 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
 import { compact, sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { Cache } from '~cache/cache.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -18,7 +18,6 @@ import { Network, NETWORK_IDS } from '~types';
 
 import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
 import httpClient from '../helpers/httpClient';
-import HOMORA_V_2_DEFINITION from '../homora-v2.definition';
 import { Exchange, Poolstatus } from '../interfaces/enums';
 import {
   HomoraV2FarmingPositionDataProps,
@@ -145,7 +144,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${HOMORA_V_2_DEFINITION.id}:${network}:positions-data`,
+    key: (network: Network) => `studio:homora-v2:${network}:positions-data`,
     ttl: 3 * 60,
   })
   private async getPositionsData(network: Network) {

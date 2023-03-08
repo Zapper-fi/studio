@@ -10,10 +10,6 @@ export class AppService {
     @Inject(AppApiSource) private readonly appApiSource: AppApiSource,
   ) {}
 
-  getApps() {
-    return this.appRegistry.getSupported();
-  }
-
   async getApp(appId: string) {
     return this.appRegistry.get(appId) ?? (await this.appApiSource.get(appId));
   }

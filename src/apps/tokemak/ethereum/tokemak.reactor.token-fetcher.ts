@@ -2,8 +2,9 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import { GetDisplayPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { TokemakContractFactory, TokemakReactor } from '../contracts';
 
@@ -52,5 +53,13 @@ export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePosition
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TokemakReactor>) {
     return [{ address: await contract.underlyer(), network: this.network }];
+  }
+
+  async getPricePerShare() {
+    return [1];
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<TokemakReactor>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Reactor`;
   }
 }

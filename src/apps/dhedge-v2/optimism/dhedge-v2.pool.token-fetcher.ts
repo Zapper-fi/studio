@@ -1,14 +1,9 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Network } from '~types/network.interface';
 
 import { DhedgeV2PoolTokenFetcher } from '../common/dhedge-v2.pool.token-fetcher';
-import { DHEDGE_V_2_DEFINITION } from '../dhedge-v2.definition';
 
 @PositionTemplate()
 export class OptimismDhedgeV2PoolTokenFetcher extends DhedgeV2PoolTokenFetcher {
-  appId = DHEDGE_V_2_DEFINITION.id;
-  groupId = DHEDGE_V_2_DEFINITION.groups.pool.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Pools';
 
   factoryAddress = '0x5e61a079a178f0e5784107a4963baae0c5a680c6';

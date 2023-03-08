@@ -9,6 +9,7 @@ import {
   GetAddressesParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -51,6 +52,23 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MaplePool>) {
     return [{ address: await contract.asset(), network: this.network }];
+  }
+
+  async getPricePerShare({
+    contract,
+    appToken,
+  }: GetPricePerShareParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {
+    const [totalAssetsRaw, unrealizedLossesRaw] = await Promise.all([
+      contract.totalAssets(),
+      contract.unrealizedLosses(),
+    ]);
+
+    const totalAssets = Number(totalAssetsRaw) / 10 ** appToken.decimals;
+    const unrealizedLosses = Number(unrealizedLossesRaw) / 10 ** appToken.decimals;
+    const reserve = totalAssets - unrealizedLosses;
+
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 
   async getApy({ definition }: GetDataPropsParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {

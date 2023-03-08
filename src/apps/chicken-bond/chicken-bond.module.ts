@@ -1,15 +1,13 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ChickenBondAppDefinition, CHICKEN_BOND_DEFINITION } from './chicken-bond.definition';
 import { ChickenBondContractFactory } from './contracts';
 import { EthereumChickenBondBlusdTokenFetcher } from './ethereum/chicken-bond.blusd.token-fetcher';
 import { EthereumChickenBondBondContractPositionFetcher } from './ethereum/chicken-bond.bond.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: CHICKEN_BOND_DEFINITION.id,
+@Module({
   providers: [
-    ChickenBondAppDefinition,
     ChickenBondContractFactory,
     EthereumChickenBondBlusdTokenFetcher,
     EthereumChickenBondBondContractPositionFetcher,

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
@@ -20,13 +21,11 @@ import { MoonriverPickleJarTokenFetcher } from './moonriver/pickle.jar.token-fet
 import { OptimismUniV3PickleJarTokenFetcher } from './optimism/pickle.jar-univ3.token-fetcher';
 import { OptimismPickleJarTokenFetcher } from './optimism/pickle.jar.token-fetcher';
 import { OptimismPickleFarmContractPositionFetcher } from './optimism/pickle.masterchef-v2-farm.contract-position-fetcher';
-import { PickleAppDefinition, PICKLE_DEFINITION } from './pickle.definition';
 import { PolygonUniV3PickleJarTokenFetcher } from './polygon/pickle.jar-univ3.token-fetcher';
 import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher';
 import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.masterchef-v2-farm.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: PICKLE_DEFINITION.id,
+@Module({
   providers: [
     ArbitrumPickleFarmContractPositionFetcher,
     ArbitrumPickleJarTokenFetcher,
@@ -44,7 +43,7 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     OptimismPickleJarTokenFetcher,
     OptimismUniV3PickleJarTokenFetcher,
     PickleApiJarRegistry,
-    PickleAppDefinition,
+
     PickleContractFactory,
     PolygonPickleFarmContractPositionFetcher,
     PolygonPickleJarTokenFetcher,

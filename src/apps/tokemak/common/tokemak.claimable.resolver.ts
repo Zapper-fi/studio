@@ -6,7 +6,6 @@ import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
 import { TokemakContractFactory } from '../contracts';
-import { TOKEMAK_DEFINITION } from '../tokemak.definition';
 
 type ClaimableDataResponse = {
   payload: {
@@ -25,7 +24,7 @@ export class TokemakClaimableResolver {
   ) {}
 
   @Cache({
-    key: `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm.id}:ethereum:cycle-rewards-hash`,
+    key: `studio:tokemak:farm:ethereum:cycle-rewards-hash`,
     ttl: 15 * 60, // 15 min
   })
   private async getCycleRewardsHash() {
@@ -50,8 +49,7 @@ export class TokemakClaimableResolver {
   }
 
   @Cache({
-    key: (address: string) =>
-      `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.claimable.id}:ethereum:${address}`,
+    key: (address: string) => `studio:tokemak:claimable:ethereum:${address}`,
     ttl: 5 * 60, // 5 min
   })
   async getClaimableBalanceData(address: string) {

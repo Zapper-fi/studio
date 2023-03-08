@@ -80,18 +80,6 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher<
     return pricePerShare;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<T>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<T>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy(_params: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
-    return 0;
-  }
-
   async getDataProps(params: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
     const fee = this.fee;

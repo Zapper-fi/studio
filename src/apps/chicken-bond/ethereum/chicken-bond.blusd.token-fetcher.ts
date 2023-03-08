@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import { GetPriceParams } from '~position/template/app-token.template.types';
 
 import { ChickenBondBlusd, ChickenBondContractFactory } from '../contracts';
 
@@ -31,6 +31,10 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     return [{ address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0', network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getPrice({ multicall }: GetPriceParams<ChickenBondBlusd>): Promise<number> {
     // Temporary solution until Curve is migrated to template
     const curvePoolContract = this.contractFactory.curvePool({
@@ -43,17 +47,5 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     const price = Number(priceRaw) / 10 ** 18;
 
     return price;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

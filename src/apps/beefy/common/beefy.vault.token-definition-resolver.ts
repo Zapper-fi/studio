@@ -24,6 +24,8 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',
   [Network.AVALANCHE_MAINNET]: 'avax',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
+  [Network.ETHEREUM_MAINNET]: 'ethereum',
+  [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.CELO_MAINNET]: 'celo',
   [Network.AURORA_MAINNET]: 'aurora',
 };
@@ -50,16 +52,31 @@ export class BeefyVaultTokenDefinitionsResolver {
   }
 
   async getVaultDefinitions(network: Network) {
-    const definitionsDataRaw = await this.getVaultDefinitionsData(network);
-    const definitionsData = definitionsDataRaw.filter(x => x.status != 'paused' && x.tokenAddress);
+    const [definitionsDataRaw, apyData] = await Promise.all([
+      this.getVaultDefinitionsData(network),
+      this.getVaultApyData(),
+    ]);
+    const definitionsData = definitionsDataRaw.filter(x => x.tokenAddress);
 
     const vaultDefinitions = definitionsData.map(t => {
+      const tokenAddress = t.tokenAddress.toLowerCase();
       return {
         address: t.earnContractAddress.toLowerCase(),
-        underlyingAddress: t.tokenAddress.toLowerCase(),
+        underlyingAddress:
+          (
+            {
+              arbitrum: {
+                '0x5402b5f40310bded796c7d0f3ff6683f5c0cffdf': '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258', // sGLP
+              },
+              avax: {
+                '0xae64d55a6f09e4263421737397d1fdfa71896a69': '0x01234181085565ed162a948b6a5e88758cd7c7b8', // sGLP
+              },
+            } as Record<string, Record<string, string>>
+          )[t.network]?.[tokenAddress] ?? tokenAddress,
         id: t.id,
         marketName: t.name,
         symbol: t.token,
+        apy: apyData[t.id] ?? 0,
       };
     });
 

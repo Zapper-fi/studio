@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-88-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -71,13 +73,12 @@ pnpm studio create-group [app-id]
 ```bash
 pnpm studio create-token-fetcher [app-id]
 pnpm studio create-contract-position-fetcher [app-id]
-pnpm studio create-balance-fetcher [app-id]
 ```
 
 ## Clearing the cache
 
 Clears the file-system cache that persists app tokens, contract positions and any other app related data.
-Useful when your are doing modification to an app and it keeps on returning stale data.
+Useful when you are doing modification to an app and it keeps on returning stale data.
 
 ```bash
 pnpm studio clear-cache
@@ -109,7 +110,7 @@ Simply copy `.env.sample` to `.env` and edit the configuration file.
 ### ENABLED_APPS
 
 Control which app to enable on startup. Particularly useful to keep local build times snappy.
-When developing your own app, it's recommended to add its identifier (aka: the folder name) and it's dependant apps
+When developing your own app, it's recommended to add its identifier (aka: the folder name) and its dependant apps
 (also their respective folder name) into this configuration key. See the `.env` file for further details.
 
 ## Contributing
@@ -124,7 +125,7 @@ You can generate a new cli command by running the hidden command:
 pnpm studio new:command [my-command-name]
 ```
 
-## Need help ?
+## Need help?
 
 Join our community on <a href="https://zapper.fi/discord">Discord</a>
 

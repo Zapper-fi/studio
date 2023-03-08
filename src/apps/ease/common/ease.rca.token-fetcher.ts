@@ -52,12 +52,8 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<EaseRcaShield>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<EaseRcaShield>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy({ appToken }: GetDataPropsParams<EaseRcaShield>) {

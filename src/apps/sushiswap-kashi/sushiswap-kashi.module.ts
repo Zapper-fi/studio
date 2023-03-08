@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumSushiswapKashiLendingTokenFetcher } from './arbitrum/sushiswap-kashi.lending.token-fetcher';
@@ -10,12 +11,9 @@ import { EthereumSushiswapKashiLendingTokenFetcher } from './ethereum/sushiswap-
 import { EthereumSushiswapKashiLeverageContractPositionFetcher } from './ethereum/sushiswap-kashi.leverage.contract-position-fetcher';
 import { PolygonSushiswapKashiLendingTokenFetcher } from './polygon/sushiswap-kashi.lending.token-fetcher';
 import { PolygonSushiswapKashiLeverageContractPositionFetcher } from './polygon/sushiswap-kashi.leverage.contract-position-fetcher';
-import { SushiswapKashiAppDefinition, SUSHISWAP_KASHI_DEFINITION } from './sushiswap-kashi.definition';
 
-@Register.AppModule({
-  appId: SUSHISWAP_KASHI_DEFINITION.id,
+@Module({
   providers: [
-    SushiswapKashiAppDefinition,
     SushiswapKashiContractFactory,
     // Arbitrum
     ArbitrumSushiswapKashiLendingTokenFetcher,

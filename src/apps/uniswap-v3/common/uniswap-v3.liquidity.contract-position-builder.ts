@@ -3,8 +3,8 @@ import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
@@ -16,7 +16,6 @@ import { TokenDependencySelector } from '~position/selectors/token-dependency-se
 import { Network } from '~types/network.interface';
 
 import { UniswapV3ContractFactory } from '../contracts';
-import { UNISWAP_V3_DEFINITION } from '../uniswap-v3.definition';
 
 import { UniswapV3LiquidityPositionDataProps } from './uniswap-v3.liquidity.contract-position-fetcher';
 import { getSupplied, getClaimable, getRange } from './uniswap-v3.liquidity.utils';
@@ -132,8 +131,8 @@ export class UniswapV3LiquidityContractPositionBuilder {
     const balance: ContractPositionBalance<UniswapV3LiquidityPositionDataProps> = {
       type: ContractType.POSITION,
       address: this.managerAddress,
-      appId: UNISWAP_V3_DEFINITION.id,
-      groupId: UNISWAP_V3_DEFINITION.groups.liquidity.id,
+      appId: 'uniswap-v3',
+      groupId: 'liquidity',
       network,
       tokens,
       dataProps,

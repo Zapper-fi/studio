@@ -63,7 +63,7 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
 
     const pricePerShare = reserve / appToken.supply;
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getApy({

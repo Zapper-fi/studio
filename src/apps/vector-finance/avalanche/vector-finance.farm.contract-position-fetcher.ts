@@ -4,7 +4,6 @@ import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -19,6 +18,7 @@ import {
   GetMasterChefDataPropsParams,
   MasterChefContractPositionDataProps,
   MasterChefContractPositionDefinition,
+  RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { VectorFinanceContractFactory, VectorFinanceMasterChef, VectorFinanceMasterChefRewarder } from '../contracts';

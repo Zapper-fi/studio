@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import axios from 'axios';
 import { range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -15,9 +14,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
+import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
 import { VelodromeContractFactory, VelodromeGauge } from '../contracts';
-
-import { VelodromeApiPairData } from './velodrome.pool.token-fetcher';
 
 @PositionTemplate()
 export class OptimismVelodromeStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<VelodromeGauge> {
@@ -26,6 +24,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(VelodromeContractFactory) protected readonly contractFactory: VelodromeContractFactory,
+    @Inject(VelodromeDefinitionsResolver) protected readonly definitionsResolver: VelodromeDefinitionsResolver,
   ) {
     super(appToolkit);
   }
@@ -35,9 +34,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
   }
 
   async getFarmAddresses() {
-    const { data } = await axios.get<{ data: VelodromeApiPairData[] }>('https://api.velodrome.finance/api/v1/pairs');
-    const gaugeAddresses = data.data.map(pool => pool.gauge_address).filter(v => !!v);
-    return gaugeAddresses;
+    return this.definitionsResolver.getFarmAddresses();
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<VelodromeGauge>) {
@@ -49,9 +46,10 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
     return Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
   }
 
-  getRewardRates({ contract, contractPosition }: GetDataPropsParams<VelodromeGauge, SingleStakingFarmDataProps>) {
+  // @TODO: Find rewards rates which matches the APY returned from their API
+  getRewardRates({ contractPosition }: GetDataPropsParams<VelodromeGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.rewardPerToken(rt.address)));
+    return Promise.all(rewardTokens.map(_rt => 0));
   }
 
   async getStakedTokenBalance({

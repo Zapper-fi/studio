@@ -5,10 +5,10 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -52,7 +52,7 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<DystopiaQueryResponse>({
+    const data = await gqlFetch<DystopiaQueryResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia',
       query: DYSTOPIA_QUERY,
     });
@@ -72,18 +72,6 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
     const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<DystopiaPair>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<DystopiaPair>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy() {
-    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<DystopiaPair>): Promise<string> {

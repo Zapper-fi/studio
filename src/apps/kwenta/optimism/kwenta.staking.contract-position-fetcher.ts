@@ -17,6 +17,11 @@ const FARMS = [
     stakedTokenAddress: '0x920cf626a271321c151d027030d5d08af699456b', // Kwenta
     rewardTokenAddresses: ['0x920cf626a271321c151d027030d5d08af699456b'], // Kwenta
   },
+  {
+    address: '0x6077987e8e06c062094c33177eb12c4a65f90b65',
+    stakedTokenAddress: '0x56dea47c40877c2aac2a689ac56aa56cae4938d2', // Kwenta/WETH Arrakis vault token
+    rewardTokenAddresses: ['0x920cf626a271321c151d027030d5d08af699456b'], // Kwenta
+  },
 ];
 
 @PositionTemplate()

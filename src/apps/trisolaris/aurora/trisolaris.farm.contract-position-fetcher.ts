@@ -3,7 +3,6 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefV2ExtraRewardTokenBalancesParams,
   GetMasterChefV2ExtraRewardTokenRewardRates,
@@ -12,6 +11,7 @@ import {
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
+  RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { TrisolarisMasterChef, TrisolarisRewarder, TrisolarisContractFactory } from '../contracts';

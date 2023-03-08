@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheIronBankBorrowContractPositionFetcher } from './avalanche/iron-bank.borrow.contract-position-fetcher';
@@ -11,13 +12,11 @@ import { EthereumIronBankSupplyTokenFetcher } from './ethereum/iron-bank.supply.
 import { FantomIronBankBorrowContractPositionFetcher } from './fantom/iron-bank.borrow.contract-position-fetcher';
 import { FantomIronBankPositionPresenter } from './fantom/iron-bank.position-presenter';
 import { FantomIronBankSupplyTokenFetcher } from './fantom/iron-bank.supply.token-fetcher';
-import { IronBankAppDefinition, IRON_BANK_DEFINITION } from './iron-bank.definition';
 import { OptimismIronBankBorrowContractPositionFetcher } from './optimism/iron-bank.borrow.contract-position-fetcher';
 import { OptimismIronBankPositionPresenter } from './optimism/iron-bank.position-presenter';
 import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.token-fetcher';
 
-@Register.AppModule({
-  appId: IRON_BANK_DEFINITION.id,
+@Module({
   providers: [
     AvalancheIronBankBorrowContractPositionFetcher,
     AvalancheIronBankPositionPresenter,
@@ -28,7 +27,7 @@ import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.
     FantomIronBankBorrowContractPositionFetcher,
     FantomIronBankPositionPresenter,
     FantomIronBankSupplyTokenFetcher,
-    IronBankAppDefinition,
+
     IronBankContractFactory,
     IronBankContractFactory,
     OptimismIronBankBorrowContractPositionFetcher,

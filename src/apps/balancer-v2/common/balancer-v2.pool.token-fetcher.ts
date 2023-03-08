@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -74,7 +75,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getDefinitions(): Promise<BalancerV2PoolTokenDefinition[]> {
-    const poolsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetPoolsResponse>({
+    const poolsResponse = await gqlFetch<GetPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_POOLS_QUERY,
     });
@@ -137,18 +138,6 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const reservesRaw = poolTokens.balances.filter((_, i) => i !== redundantIndex);
     const reserves = reservesRaw.map((v, i) => Number(v) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(r => r / appToken.supply);
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPool>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<BalancerPool>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy(_params: GetDataPropsParams<BalancerPool>) {
-    return 0;
   }
 
   async getDataProps(

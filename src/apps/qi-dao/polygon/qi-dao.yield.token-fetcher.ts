@@ -3,11 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetDataPropsParams,
-  GetUnderlyingTokensParams,
-  GetPricePerShareParams,
-} from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { QiDaoContractFactory, QiDaoYieldToken } from '../contracts';
 
@@ -51,18 +47,8 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
 
     const reserveRaw = await underlyingTokenContract.balanceOf(appToken.address);
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    return reserve / appToken.supply;
-  }
+    const pricePerShare = reserve / appToken.supply;
 
-  async getLiquidity({ appToken }: GetDataPropsParams<QiDaoYieldToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<QiDaoYieldToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<QiDaoYieldToken>) {
-    return 0;
+    return [pricePerShare];
   }
 }

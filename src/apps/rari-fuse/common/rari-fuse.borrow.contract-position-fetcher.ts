@@ -1,8 +1,8 @@
 import { BigNumber, BigNumberish, Contract } from 'ethers';
 import { sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';

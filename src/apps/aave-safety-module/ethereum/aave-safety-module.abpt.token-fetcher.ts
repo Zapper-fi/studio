@@ -78,14 +78,6 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return liquidity;
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy() {
-    return 0;
-  }
-
   async getDataProps(params: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
     return { ...defaultDataProps, fee: 0.003 };

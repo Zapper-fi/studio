@@ -2,10 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
-
-import { SUSHISWAP_BENTOBOX_DEFINITION } from '../sushiswap-bentobox.definition';
 
 export type UnipilotVaultDefinition = {
   address: string;
@@ -38,11 +37,11 @@ export class SushiswapBentoboxVaultTokensResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   @Cache({
-    key: _network => `studio:${SUSHISWAP_BENTOBOX_DEFINITION.id}:${_network}:vault-data`,
+    key: (_, network) => `studio:sushiswap-bentobox:${network}:vault-data`,
     ttl: 5 * 60, // 5 minutes
   })
   private async getVaultTokensData(subgraphUrl: string, _network: Network) {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<TokensResponse>({
+    const data = await gqlFetch<TokensResponse>({
       endpoint: subgraphUrl,
       query: ALL_TOKENS_QUERY,
     });

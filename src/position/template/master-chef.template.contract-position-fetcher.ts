@@ -5,7 +5,6 @@ import { isArray, range, sum } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -20,6 +19,11 @@ import {
   GetTokenBalancesParams,
   GetDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+
+export enum RewardRateUnit {
+  BLOCK = 'block',
+  SECOND = 'second',
+}
 
 export type MasterChefContractPositionDataProps = {
   poolIndex: number;

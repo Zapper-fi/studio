@@ -2,18 +2,28 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
-import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { LlamaAirforceContractFactory, LlamaAirforceMerkleDistributor } from '../contracts';
 
 import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
+export type LlamaAirforceAirdropDefinition = {
+  address: string;
+  rewardTokenAddress: string;
+};
+
 @PositionTemplate()
-export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleTemplateContractPositionFetcher<LlamaAirforceMerkleDistributor> {
+export class EthereumLlamaAirforceAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LlamaAirforceMerkleDistributor> {
   groupLabel = 'Airdrop';
-  merkleAddress = '0xa83043df401346a67eddeb074679b4570b956183';
 
   isExcludedFromExplore = true;
   isExcludedFromTvl = true;
@@ -30,12 +40,33 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleT
     return this.contractFactory.llamaAirforceMerkleDistributor({ address, network: this.network });
   }
 
-  async getRewardTokenAddresses() {
+  async getDefinitions(): Promise<LlamaAirforceAirdropDefinition[]> {
     return [
-      '0x83507cc8c8b67ed48badd1f59f684d5d02884c81', // uCRV
-      '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
-      '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
+      {
+        address: '0x0ed7d0497194fc029ae02223fec6d4d567696f17',
+        rewardTokenAddress: '0x4ebad8dbd4edbd74db0278714fbd67ebc76b89b7', // uCRV
+      },
+      {
+        address: '0x11fe17c5ab68cc4cc6d3c281feddfff80bc1d4c7',
+        rewardTokenAddress: '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
+      },
+
+      {
+        address: '0x27a11054b62c29c166f3fab2b0ac708043b0cb49',
+        rewardTokenAddress: '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
+      },
     ];
+  }
+
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<LlamaAirforceMerkleDistributor, LlamaAirforceAirdropDefinition>) {
+    return [{ metaType: MetaType.CLAIMABLE, address: definition.rewardTokenAddress, network: this.network }];
+  }
+
+  async getLabel({ contractPosition }: GetDisplayPropsParams<LlamaAirforceMerkleDistributor>) {
+    const claimableToken = contractPosition.tokens.find(isClaimable)!;
+    return `Claimable ${getLabelFromToken(claimableToken)}`;
   }
 
   async getTokenBalancesPerPosition({

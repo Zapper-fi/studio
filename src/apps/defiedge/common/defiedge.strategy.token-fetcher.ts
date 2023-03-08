@@ -1,120 +1,175 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import { ethers } from 'ethers';
 import { formatEther, parseEther } from 'ethers/lib/utils';
-import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetAddressesParams,
+  GetUnderlyingTokensParams,
+  DefaultAppTokenDataProps,
+  GetPricePerShareParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenPropsParams,
+  GetPriceParams,
+} from '~position/template/app-token.template.types';
 
-import { DefiedgeContractFactory } from '../contracts';
+import { DefiedgeContractFactory, Strategy } from '../contracts';
 import { expandTo18Decimals } from '../utils';
 
-import { DefiEdgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
+import { DefiedgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
-export type StrategyTokenDataProps = {
+export type DefiedgeStrategyDefinition = {
+  address: string;
+  title: string;
+  subTitle: string | null;
+  token0Address: string;
+  token1Address: string;
+};
+
+export type DefiedgeStrategyTokenDataProps = DefaultAppTokenDataProps & {
   sinceInception: number;
   sharePrice: number;
   aum: number;
 };
 
-export abstract class DefiedgeStrategyTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  abstract network: Network;
-  abstract appId: string;
-  abstract groupId: string;
+export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePositionFetcher<
+  Strategy,
+  DefiedgeStrategyTokenDataProps,
+  DefiedgeStrategyDefinition
+> {
+  groupLabel = 'Strategies';
 
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(DefiedgeContractFactory) private readonly defiedgeContractFactory: DefiedgeContractFactory,
-    @Inject(DefiEdgeStrategyDefinitionsResolver)
-    private readonly defiEdgeStrategyDefinitionsResolver: DefiEdgeStrategyDefinitionsResolver,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(DefiedgeContractFactory) protected readonly contractFactory: DefiedgeContractFactory,
+    @Inject(DefiedgeStrategyDefinitionsResolver)
+    protected readonly definitionResolver: DefiedgeStrategyDefinitionsResolver,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  getContract(address: string): Strategy {
+    return this.contractFactory.strategy({ address, network: this.network });
+  }
 
-    const [strategies, baseTokens] = await Promise.all([
-      this.defiEdgeStrategyDefinitionsResolver.getStrategies(this.network),
-      this.appToolkit.getBaseTokenPrices(this.network),
+  async getDefinitions() {
+    const apiDefinitions = await this.definitionResolver.getStrategies(this.network);
+
+    const definitions = apiDefinitions.map(v => ({
+      address: v.id.toLowerCase(),
+      title: v.title,
+      subTitle: v.subTitle,
+      token0Address: v.token0.id.toLowerCase(),
+      token1Address: v.token1.id.toLowerCase(),
+    }));
+
+    return definitions;
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams<DefiedgeStrategyDefinition>) {
+    return definitions.map(v => v.address);
+  }
+
+  async getSymbol({ contract }: GetTokenPropsParams<Strategy>) {
+    return ethers.utils.parseBytes32String(await contract.symbol());
+  }
+
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<Strategy, DefiedgeStrategyDefinition>) {
+    return [
+      { address: definition.token0Address, network: this.network },
+      { address: definition.token1Address, network: this.network },
+    ];
+  }
+
+  async getPrice({
+    contract,
+    appToken,
+  }: GetPriceParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>): Promise<number> {
+    const [aumWithFee, totalSupplyBN] = await Promise.all([
+      contract.callStatic.getAUMWithFees(false),
+      contract.totalSupply(),
     ]);
 
-    const appTokens = await Promise.all(
-      strategies.map(async strategy => {
-        const strategyContract = this.defiedgeContractFactory.strategy({
-          address: strategy.id,
-          network: this.network,
-        });
+    const { amount0, amount1 } = aumWithFee;
+    const [token0, token1] = appToken.tokens;
 
-        const [decimals, symbol, totalSupplyBN, aumWithFee] = await Promise.all([
-          multicall.wrap(strategyContract).decimals(),
-          multicall.wrap(strategyContract).symbol(),
-          multicall.wrap(strategyContract).totalSupply(),
-          multicall.wrap(strategyContract).callStatic.getAUMWithFees(false),
-        ]);
+    const t0Price = parseEther(token0.price.toString());
+    const t1Price = parseEther(token1.price.toString());
+    const aumBN = expandTo18Decimals(amount0, token0.decimals)
+      .mul(t0Price)
+      .add(expandTo18Decimals(amount1, token1.decimals).mul(t1Price));
 
-        const token0 = baseTokens.find(x => x.address === strategy.token0.id.toLowerCase());
-        const token1 = baseTokens.find(x => x.address === strategy.token1.id.toLowerCase());
+    const sharePrice = totalSupplyBN.eq(0) ? 0 : +Number(+formatEther(aumBN.div(totalSupplyBN))).toFixed(8) || 100;
 
-        if (!token0 || !token1 || totalSupplyBN.lte(BigNumber.from(0))) return null;
+    return sharePrice;
+  }
 
-        const tokens = [token0, token1];
-        const supply = Number(totalSupplyBN) / 10 ** decimals;
-        const { amount0, amount1 } = aumWithFee;
-        const t0Price = parseEther(token0.price.toString());
-        const t1Price = parseEther(token1.price.toString());
+  async getPricePerShare({
+    contract,
+    appToken,
+  }: GetPricePerShareParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
+    const [aumWithFee, totalSupplyBN] = await Promise.all([
+      contract.callStatic.getAUMWithFees(false),
+      contract.totalSupply(),
+    ]);
 
-        const aumBN = expandTo18Decimals(amount0, +token0.decimals)
-          .mul(t0Price)
-          .add(expandTo18Decimals(amount1, +token1.decimals).mul(t1Price));
+    if (totalSupplyBN.eq(0)) return [0, 0];
 
-        const sharePrice = +Number(+formatEther(aumBN.div(totalSupplyBN))).toFixed(8) || 100;
-        const aum = +formatEther(aumBN) / 1e18;
+    const { amount0, amount1 } = aumWithFee;
+    const [token0, token1] = appToken.tokens;
 
-        const pricePerShare = [
-          +formatEther(expandTo18Decimals(amount0, +token0.decimals).mul(t0Price)) / 1e18 / aum,
-          +formatEther(expandTo18Decimals(amount1, +token1.decimals).mul(t1Price)) / 1e18 / aum,
-        ];
+    const totalSupply = +formatEther(totalSupplyBN);
 
-        const appToken: AppTokenPosition<StrategyTokenDataProps> = {
-          type: ContractType.APP_TOKEN,
-          address: strategy.id,
-          appId: this.appId,
-          tokens,
-          decimals,
-          groupId: this.groupId,
-          network: this.network,
-          supply,
-          symbol,
-          pricePerShare,
-          price: sharePrice,
-          dataProps: { aum, sharePrice, sinceInception: sharePrice - 100 },
-          displayProps: {
-            label: strategy.subTitle || strategy.title,
-            secondaryLabel: strategy.subTitle ? undefined : strategy.title,
-            images: tokens.map(getImagesFromToken).flat(),
-            statsItems: [
-              {
-                label: 'AUM',
-                value: buildDollarDisplayItem(aum),
-              },
-              {
-                label: 'Since inception',
-                value: buildPercentageDisplayItem(sharePrice - 100),
-              },
-            ],
-          },
-        };
-        return appToken;
-      }),
-    );
+    const pricePerShare = [
+      +formatEther(expandTo18Decimals(amount0, token0.decimals)) / totalSupply,
+      +formatEther(expandTo18Decimals(amount1, token1.decimals)) / totalSupply,
+    ];
 
-    return _.compact(appTokens);
+    return pricePerShare;
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>,
+  ): Promise<DefiedgeStrategyTokenDataProps> {
+    const defaultDataProps = await super.getDataProps(params);
+
+    const { contract, appToken } = params;
+    const totalSupplyBN = await contract.totalSupply();
+    const sharePrice = appToken.price;
+    const liquidity = +formatEther(totalSupplyBN) * appToken.price;
+
+    return { ...defaultDataProps, liquidity, sharePrice, sinceInception: sharePrice - 100 };
+  }
+
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
+    return definition.subTitle ?? definition.title;
+  }
+
+  async getSecondaryLabel({
+    definition,
+  }: GetDisplayPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
+    return definition.subTitle ?? '';
+  }
+
+  async getStatsItems({
+    appToken,
+  }: GetDisplayPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
+    const { liquidity, apy, reserves, sinceInception } = appToken.dataProps;
+    const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
+
+    return [
+      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      { label: 'Reserves', value: reservesDisplay },
+      { label: 'APY', value: buildPercentageDisplayItem(apy) },
+      { label: 'Since inception', value: buildPercentageDisplayItem(sinceInception) },
+    ];
   }
 }

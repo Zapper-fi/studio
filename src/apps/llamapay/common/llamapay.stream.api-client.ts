@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Network } from '~types/network.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 export const getTokensQuery = gql`
   query getTokens {
@@ -25,7 +25,7 @@ export type LlamapayTokensResponse = {
 };
 
 export const getStreamsQuery = gql`
-  query StreamAndHistory($id: ID!, $network: String!) {
+  query StreamAndHistory($id: ID!) {
     user(id: $id) {
       streams(orderBy: createdTimestamp, orderDirection: desc, where: { active: true }) {
         streamId
@@ -77,13 +77,43 @@ export type LlamapayStreamsResponse = {
   }[];
 };
 
+export const getVestingEscrowsQuery = gql`
+  query VestingEscrows($id: ID!) {
+    vestingEscrows(where: { recipient: $id }) {
+      id
+      admin
+      recipient
+      token {
+        id
+        symbol
+        name
+        decimals
+      }
+    }
+  }
+`;
+
+export type LlamapayVestingEscrowsResponse = {
+  vestingEscrows: {
+    id: string;
+    admin: string;
+    recipient: string;
+    token: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: number;
+    };
+  }[];
+};
+
 @Injectable()
 export class LlamapayStreamApiClient {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getTokens() {
-    const tokensResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayTokensResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
+  async getTokens(network: string) {
+    const tokensResponse = await gqlFetch<LlamapayTokensResponse>({
+      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-${network}`,
       query: getTokensQuery,
     });
 
@@ -93,13 +123,23 @@ export class LlamapayStreamApiClient {
     }));
   }
 
-  async getStreams(address: string, _network: Network) {
-    const streamsResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayStreamsResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
+  async getStreams(address: string, network: string) {
+    const streamsResponse = await gqlFetch<LlamapayStreamsResponse>({
+      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-${network}`,
       query: getStreamsQuery,
-      variables: { id: address, network: _network },
+      variables: { id: address },
     });
 
     return streamsResponse.user?.streams ?? [];
+  }
+
+  async getVestingEscrows(address: string, network: string) {
+    const vestingEscrowsResponse = await gqlFetch<LlamapayVestingEscrowsResponse>({
+      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-vesting-${network}`,
+      query: getVestingEscrowsQuery,
+      variables: { id: address },
+    });
+
+    return vestingEscrowsResponse.vestingEscrows ?? [];
   }
 }

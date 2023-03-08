@@ -4,3 +4,4 @@
 export { EulerDtokenContract__factory } from './EulerDtokenContract__factory';
 export { EulerEtokenContract__factory } from './EulerEtokenContract__factory';
 export { EulerPtokenContract__factory } from './EulerPtokenContract__factory';
+export { EulerStakingRewardsContract__factory } from './EulerStakingRewardsContract__factory';

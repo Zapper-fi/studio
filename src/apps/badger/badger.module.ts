@@ -1,9 +1,9 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumBadgerClaimableContractPositionFetcher } from './arbitrum/badger.claimable.contract-position-fetcher';
 import { ArbitrumBadgerVaultTokenFetcher } from './arbitrum/badger.vault.token-fetcher';
-import { BadgerAppDefinition, BADGER_DEFINITION } from './badger.definition';
 import { BadgerClaimableRewardsResolver } from './common/badger.claimable.rewards-resolver';
 import { BadgerVaultTokenDefinitionsResolver } from './common/badger.vault.token-definition-resolver';
 import { BadgerContractFactory } from './contracts';
@@ -12,10 +12,8 @@ import { EthereumBadgerVaultTokenFetcher } from './ethereum/badger.vault.token-f
 import { PolygonBadgerClaimableContractPositionFetcher } from './polygon/badger.claimable.contract-position-fetcher';
 import { PolygonBadgerVaultTokenFetcher } from './polygon/badger.vault.token-fetcher';
 
-@Register.AppModule({
-  appId: BADGER_DEFINITION.id,
+@Module({
   providers: [
-    BadgerAppDefinition,
     BadgerContractFactory,
     BadgerVaultTokenDefinitionsResolver,
     BadgerClaimableRewardsResolver,

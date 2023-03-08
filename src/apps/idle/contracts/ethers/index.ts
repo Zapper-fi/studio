@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { IdleController } from './IdleController';
+export type { IdlePerpYieldTranches } from './IdlePerpYieldTranches';
 export type { IdleToken } from './IdleToken';
 export * as factories from './factories';
 export { IdleController__factory } from './factories/IdleController__factory';
+export { IdlePerpYieldTranches__factory } from './factories/IdlePerpYieldTranches__factory';
 export { IdleToken__factory } from './factories/IdleToken__factory';

@@ -44,7 +44,8 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
     const reserveRaw = await contract.getTotalUnderlying();
 
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    return appToken.supply > 0 ? reserve / appToken.supply : 0;
+    const pricePerShare = appToken.supply > 0 ? reserve / appToken.supply : 0;
+    return [pricePerShare];
   }
 
   async getLiquidity({ contract, appToken }: GetDataPropsParams<TarotSupplyVault>) {
@@ -58,9 +59,5 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
     const reserveRaw = await contract.getTotalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

@@ -3,7 +3,6 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { StargateContractFactory, StargateEth } from '../contracts';
 
@@ -29,15 +28,7 @@ export abstract class StargateEthTokenFetcher extends AppTokenTemplatePositionFe
     return [{ address: ZERO_ADDRESS, network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<StargateEth>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<StargateEth>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 }

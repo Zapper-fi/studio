@@ -1,95 +1,52 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory } from '../contracts';
-import LEMMA_FINANCE_DEFINITION from '../lemma-finance.definition';
+import { LemmaFinanceContractFactory, LemmaUsdl } from '../contracts';
 
-const appId = LEMMA_FINANCE_DEFINITION.id;
-const groupId = LEMMA_FINANCE_DEFINITION.groups.usdl.id;
-const network = Network.OPTIMISM_MAINNET;
+@PositionTemplate()
+export class OptimismLemmaFinanceUsdlTokenFetcher extends AppTokenTemplatePositionFetcher<LemmaUsdl> {
+  groupLabel = 'USDL';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismLemmaFinanceUsdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LemmaFinanceContractFactory) private readonly contractFactory: LemmaFinanceContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LemmaFinanceContractFactory) protected readonly contractFactory: LemmaFinanceContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const underlyingTokenAddresses = [
+  getContract(address: string): LemmaUsdl {
+    return this.contractFactory.lemmaUsdl({ address, network: this.network });
+  }
+
+  async getAddresses() {
+    return ['0x96f2539d3684dbde8b3242a51a73b66360a5b541'];
+  }
+
+  async getUnderlyingTokenDefinitions() {
+    return [
       '0x4200000000000000000000000000000000000006', // WETH
-      '0x68f180fcce6836688e9084f035309e29bf0a2095', // Wbtc
-      '0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6', // Link
+      '0x68f180fcce6836688e9084f035309e29bf0a2095', // WBTC
+      '0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6', // LINK
       '0x0994206dfe8de6ec6920ff4d779b0d950605fb53', // CRV
-      '0x9e1028f5f1d5ede59748ffcee5532509976840e0', // Perp
+      '0x9e1028f5f1d5ede59748ffcee5532509976840e0', // PERP
       '0x76fb31fb4af56892a25e32cfc43de717950c9278', // AAVE
-    ];
+    ].map(address => ({ address, network: this.network }));
+  }
 
-    const usdlAddress = '0x96f2539d3684dbde8b3242a51a73b66360a5b541';
+  async getPricePerShare() {
+    return [1]; // @TODO Get reserves to derive PPS
+  }
 
-    const multicall = this.appToolkit.getMulticall(network);
-    const contract = this.contractFactory.usdl({
-      address: usdlAddress,
-      network,
-    });
+  async getPrice() {
+    return 1;
+  }
 
-    const [name, symbol, decimals, supplyRaw] = await Promise.all([
-      multicall.wrap(contract).name(),
-      multicall.wrap(contract).symbol(),
-      multicall.wrap(contract).decimals(),
-      multicall.wrap(contract).totalSupply(),
-    ]);
-
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const tokensRaw = await Promise.all(
-      underlyingTokenAddresses.map(async address => {
-        const underlyingToken = baseTokens.find(x => x.address.toLowerCase() === address);
-        if (!underlyingToken) return null;
-
-        return underlyingToken;
-      }),
-    );
-    const tokens = _.compact(tokensRaw);
-
-    const supply = Number(supplyRaw) / 10 ** decimals;
-    const price = 1;
-    const pricePerShare = 1;
-
-    const label = `${name} (${symbol})`;
-    const images = [getAppAssetImage(appId, 'USDL')];
-    const secondaryLabel = buildDollarDisplayItem(price);
-
-    const token: AppTokenPosition = {
-      type: ContractType.APP_TOKEN,
-      appId,
-      groupId,
-      address: usdlAddress,
-      network,
-      symbol,
-      decimals,
-      supply,
-      tokens,
-      price,
-      pricePerShare,
-      dataProps: {
-        liquidity: supply * price,
-      },
-      displayProps: {
-        label,
-        images,
-        secondaryLabel,
-      },
-    };
-
-    return [token];
+  async getImages({ appToken }: GetDisplayPropsParams<LemmaUsdl>) {
+    return [getAppAssetImage(appToken.appId, appToken.address)];
   }
 }

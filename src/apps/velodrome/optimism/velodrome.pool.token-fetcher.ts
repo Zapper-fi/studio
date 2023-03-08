@@ -1,36 +1,43 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
+import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
 import { VelodromeContractFactory, VelodromePool } from '../contracts';
 
-export interface VelodromeApiPairData {
+export type VelodromePoolTokenDefinition = {
   address: string;
-  gauge_address: string;
-  token0_address: string;
-  token1_address: string;
-  apr: number;
-}
+  apy: number;
+};
 
 @PositionTemplate()
-export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<VelodromePool> {
+export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<
+  VelodromePool,
+  DefaultAppTokenDataProps,
+  VelodromePoolTokenDefinition
+> {
   groupLabel = 'Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(VelodromeContractFactory) private readonly contractFactory: VelodromeContractFactory,
+    @Inject(VelodromeDefinitionsResolver) protected readonly definitionsResolver: VelodromeDefinitionsResolver,
   ) {
     super(appToolkit);
   }
@@ -39,9 +46,12 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     return this.contractFactory.velodromePool({ address, network: this.network });
   }
 
-  async getAddresses() {
-    const { data } = await Axios.get<{ data: VelodromeApiPairData[] }>('https://api.velodrome.finance/api/v1/pairs');
-    return data.data.map(pool => pool.address);
+  async getDefinitions(): Promise<VelodromePoolTokenDefinition[]> {
+    return this.definitionsResolver.getPoolTokenDefinitions();
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams) {
+    return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
@@ -59,20 +69,14 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     return pricePerShare;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<VelodromePool>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<VelodromePool>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy() {
-    return 0;
-  }
-
   async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  }
+
+  async getApy({
+    definition,
+  }: GetDataPropsParams<VelodromePool, DefaultAppTokenDataProps, VelodromePoolTokenDefinition>): Promise<number> {
+    return definition.apy;
   }
 
   async getSecondaryLabel({ appToken }: GetDisplayPropsParams<VelodromePool>) {
@@ -82,11 +86,12 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getStatsItems({ appToken }: GetDisplayPropsParams<VelodromePool>) {
-    const { reserves, liquidity } = appToken.dataProps;
+    const { reserves, liquidity, apy } = appToken.dataProps;
     const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
 
     return [
       { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      { label: 'APY', value: buildPercentageDisplayItem(apy) },
       { label: 'Reserves', value: reservesDisplay },
     ];
   }
