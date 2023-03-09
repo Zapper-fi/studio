@@ -15,12 +15,12 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';
+import { HalofiContractFactory, HalofiAbiV001 } from '../contracts';
 
-import { GoodGhostingGameBalancesApiSource } from './good-ghosting.game.balances.api-source';
-import { GoodGhostingGameGamesApiSource } from './good-ghosting.game.games.api-source';
+import { HalofiGameBalancesApiSource } from './halofi.game.balances.api-source';
+import { HalofiGameGamesApiSource } from './halofi.game.games.api-source';
 
-export type GoodGhostingGameDefinition = {
+export type HalofiGameDefinition = {
   address: string;
   stakedTokenAddress: string;
   rewardTokenAddresses: string[];
@@ -30,33 +30,31 @@ export type GoodGhostingGameDefinition = {
 };
 
 @Injectable()
-export abstract class GoodGhostingGameContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
-  GoodghostingAbiV001,
+export abstract class HalofiGameContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
+  HalofiAbiV001,
   DefaultDataProps,
-  GoodGhostingGameDefinition
+  HalofiGameDefinition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoodGhostingContractFactory) protected readonly contractFactory: GoodGhostingContractFactory,
-    @Inject(GoodGhostingGameGamesApiSource) protected readonly gamesApiSource: GoodGhostingGameGamesApiSource,
-    @Inject(GoodGhostingGameBalancesApiSource) protected readonly balancesApiSource: GoodGhostingGameBalancesApiSource,
+    @Inject(HalofiContractFactory) protected readonly contractFactory: HalofiContractFactory,
+    @Inject(HalofiGameGamesApiSource) protected readonly gamesApiSource: HalofiGameGamesApiSource,
+    @Inject(HalofiGameBalancesApiSource) protected readonly balancesApiSource: HalofiGameBalancesApiSource,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GoodghostingAbiV001 {
-    return this.contractFactory.goodghostingAbiV001({ address, network: this.network });
+  getContract(address: string): HalofiAbiV001 {
+    return this.contractFactory.halofiAbiV001({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<GoodGhostingGameDefinition[]> {
+  async getDefinitions(): Promise<HalofiGameDefinition[]> {
     return this.gamesApiSource.getGameConfigs(this.network!);
   }
 
   async getTokenDefinitions({
     definition,
-  }: GetTokenDefinitionsParams<GoodghostingAbiV001, GoodGhostingGameDefinition>): Promise<
-    UnderlyingTokenDefinition[] | null
-  > {
+  }: GetTokenDefinitionsParams<HalofiAbiV001, HalofiGameDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -71,9 +69,7 @@ export abstract class GoodGhostingGameContractPositionFetcher extends CustomCont
     ];
   }
 
-  async getLabel({
-    definition,
-  }: GetDisplayPropsParams<GoodghostingAbiV001, DefaultDataProps, GoodGhostingGameDefinition>) {
+  async getLabel({ definition }: GetDisplayPropsParams<HalofiAbiV001, DefaultDataProps, HalofiGameDefinition>) {
     return definition.gameName;
   }
 
