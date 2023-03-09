@@ -4,12 +4,12 @@ import axios from 'axios';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network, NETWORK_IDS } from '~types';
 
-import { NetworkId, getGameVersionType, RewardType, BASE_API_URL, GamesResponse } from './good-ghosting.game.constants';
+import { NetworkId, getGameVersionType, RewardType, BASE_API_URL, GamesResponse } from './halofi.game.constants';
 
 @Injectable()
-export class GoodGhostingGameGamesApiSource {
+export class HalofiGameGamesApiSource {
   @CacheOnInterval({
-    key: `studio:good-ghosting:game:addresses`,
+    key: `studio:halofi:game:addresses`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
@@ -46,6 +46,7 @@ export class GoodGhostingGameGamesApiSource {
         incentiveTokenAddress,
         networkId,
         strategyProvider,
+        gameNameShort,
         gameName,
         rewards,
       } = gameConfigs[gameContractAddress];
@@ -84,7 +85,7 @@ export class GoodGhostingGameGamesApiSource {
           rewardTokenAddresses,
           strategyProvider,
           contractVersion,
-          gameName,
+          gameName: gameNameShort ?? gameName,
         });
       }
     }
