@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { GoodghostingAbiV001, GoodghostingAbiV001Interface } from '../GoodghostingAbiV001';
+import type { HalofiAbiV002, HalofiAbiV002Interface } from '../HalofiAbiV002';
 
 const _abi = [
   {
@@ -35,14 +35,14 @@ const _abi = [
         type: 'uint256',
       },
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '_earlyWithdrawalFee',
-        type: 'uint256',
+        type: 'uint8',
       },
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '_customFee',
-        type: 'uint256',
+        type: 'uint8',
       },
       {
         internalType: 'address',
@@ -364,6 +364,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'allowRenouncingOwnership',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
@@ -396,9 +409,9 @@ const _abi = [
     name: 'customFee',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '',
-        type: 'uint256',
+        type: 'uint8',
       },
     ],
     stateMutability: 'view',
@@ -429,9 +442,9 @@ const _abi = [
     name: 'earlyWithdrawalFee',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '',
-        type: 'uint256',
+        type: 'uint8',
       },
     ],
     stateMutability: 'view',
@@ -663,11 +676,6 @@ const _abi = [
     name: 'players',
     outputs: [
       {
-        internalType: 'address',
-        name: 'addr',
-        type: 'address',
-      },
-      {
         internalType: 'bool',
         name: 'withdrawn',
         type: 'bool',
@@ -678,6 +686,16 @@ const _abi = [
         type: 'bool',
       },
       {
+        internalType: 'bool',
+        name: 'isWinner',
+        type: 'bool',
+      },
+      {
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
         name: 'mostRecentSegmentPaid',
         type: 'uint256',
@@ -685,6 +703,11 @@ const _abi = [
       {
         internalType: 'uint256',
         name: 'amountPaid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'winnerIndex',
         type: 'uint256',
       },
     ],
@@ -811,9 +834,29 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'unlockRenounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'unpause',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'winnerCount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -869,12 +912,12 @@ const _abi = [
   },
 ];
 
-export class GoodghostingAbiV001__factory {
+export class HalofiAbiV002__factory {
   static readonly abi = _abi;
-  static createInterface(): GoodghostingAbiV001Interface {
-    return new utils.Interface(_abi) as GoodghostingAbiV001Interface;
+  static createInterface(): HalofiAbiV002Interface {
+    return new utils.Interface(_abi) as HalofiAbiV002Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): GoodghostingAbiV001 {
-    return new Contract(address, _abi, signerOrProvider) as GoodghostingAbiV001;
+  static connect(address: string, signerOrProvider: Signer | Provider): HalofiAbiV002 {
+    return new Contract(address, _abi, signerOrProvider) as HalofiAbiV002;
   }
 }

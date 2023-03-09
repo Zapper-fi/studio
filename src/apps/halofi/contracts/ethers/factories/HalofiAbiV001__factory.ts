@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { GoodghostingAbiV003, GoodghostingAbiV003Interface } from '../GoodghostingAbiV003';
+import type { HalofiAbiV001, HalofiAbiV001Interface } from '../HalofiAbiV001';
 
 const _abi = [
   {
@@ -15,23 +15,8 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract ICurvePool',
-        name: '_pool',
-        type: 'address',
-      },
-      {
-        internalType: 'int128',
-        name: '_inboundTokenIndex',
-        type: 'int128',
-      },
-      {
-        internalType: 'uint64',
-        name: '_poolType',
-        type: 'uint64',
-      },
-      {
-        internalType: 'contract ICurveGauge',
-        name: '_gauge',
+        internalType: 'contract ILendingPoolAddressesProvider',
+        name: '_lendingPoolAddressProvider',
         type: 'address',
       },
       {
@@ -50,14 +35,19 @@ const _abi = [
         type: 'uint256',
       },
       {
-        internalType: 'uint128',
+        internalType: 'uint256',
         name: '_earlyWithdrawalFee',
-        type: 'uint128',
+        type: 'uint256',
       },
       {
-        internalType: 'uint128',
+        internalType: 'uint256',
         name: '_customFee',
-        type: 'uint128',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_dataProvider',
+        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -66,7 +56,12 @@ const _abi = [
       },
       {
         internalType: 'contract IERC20',
-        name: '_curve',
+        name: '_incentiveToken',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_incentiveController',
         type: 'address',
       },
       {
@@ -75,9 +70,9 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract IERC20',
-        name: '_incentiveToken',
-        type: 'address',
+        internalType: 'bytes32',
+        name: '_merkleRoot',
+        type: 'bytes32',
       },
     ],
     stateMutability: 'nonpayable',
@@ -194,12 +189,6 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'curveRewards',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
         name: 'totalIncentiveAmount',
         type: 'uint256',
       },
@@ -308,74 +297,12 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'playerCurveReward',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
         name: 'playerIncentive',
         type: 'uint256',
       },
     ],
     name: 'Withdrawal',
     type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'AAVE_POOL',
-    outputs: [
-      {
-        internalType: 'uint64',
-        name: '',
-        type: 'uint64',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'ATRI_CRYPTO_POOL',
-    outputs: [
-      {
-        internalType: 'uint64',
-        name: '',
-        type: 'uint64',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'NUM_AAVE_TOKENS',
-    outputs: [
-      {
-        internalType: 'uint64',
-        name: '',
-        type: 'uint64',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'NUM_ATRI_CRYPTO_TOKENS',
-    outputs: [
-      {
-        internalType: 'uint64',
-        name: '',
-        type: 'uint64',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -389,7 +316,19 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'adaiToken',
+    outputs: [
+      {
+        internalType: 'contract AToken',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
@@ -403,7 +342,13 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'adminFeeWithdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
@@ -417,39 +362,38 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
-    inputs: [],
-    name: 'allowRenouncingOwnership',
-    outputs: [
+    inputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
       },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'curve',
-    outputs: [
       {
-        internalType: 'contract IERC20',
-        name: '',
+        internalType: 'address',
+        name: 'account',
         type: 'address',
       },
+      {
+        internalType: 'bool',
+        name: 'isValid',
+        type: 'bool',
+      },
+      {
+        internalType: 'bytes32[]',
+        name: 'merkleProof',
+        type: 'bytes32[]',
+      },
     ],
+    name: 'claim',
+    outputs: [],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'curveRewardsPerPlayer',
+    name: 'customFee',
     outputs: [
       {
         internalType: 'uint256',
@@ -459,21 +403,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'customFee',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -487,21 +416,26 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'earlyWithdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
     name: 'earlyWithdrawalFee',
     outputs: [
       {
-        internalType: 'uint128',
+        internalType: 'uint256',
         name: '',
-        type: 'uint128',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -515,25 +449,10 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'gauge',
-    outputs: [
-      {
-        internalType: 'contract ICurveGauge',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'impermanentLossShare',
+    name: 'getCurrentSegment',
     outputs: [
       {
         internalType: 'uint256',
@@ -543,21 +462,32 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'inboundTokenIndex',
+    name: 'getNumberOfPlayers',
     outputs: [
       {
-        internalType: 'int128',
+        internalType: 'uint256',
         name: '',
-        type: 'int128',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'incentiveController',
+    outputs: [
+      {
+        internalType: 'contract IncentiveController',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
@@ -571,7 +501,19 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'isGameCompleted',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
@@ -591,7 +533,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -605,21 +546,39 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'lpToken',
+    name: 'lendingPool',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'contract ILendingPool',
         name: '',
         type: 'address',
       },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'lendingPoolAddressProvider',
+    outputs: [
+      {
+        internalType: 'contract ILendingPoolAddressesProvider',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'makeDeposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
@@ -633,7 +592,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -647,7 +605,19 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'merkleRoot',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
@@ -661,7 +631,13 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'pause',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
@@ -675,7 +651,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [
@@ -688,6 +663,11 @@ const _abi = [
     name: 'players',
     outputs: [
       {
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
+      },
+      {
         internalType: 'bool',
         name: 'withdrawn',
         type: 'bool',
@@ -696,16 +676,6 @@ const _abi = [
         internalType: 'bool',
         name: 'canRejoin',
         type: 'bool',
-      },
-      {
-        internalType: 'bool',
-        name: 'isWinner',
-        type: 'bool',
-      },
-      {
-        internalType: 'address',
-        name: 'addr',
-        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -717,43 +687,16 @@ const _abi = [
         name: 'amountPaid',
         type: 'uint256',
       },
-      {
-        internalType: 'uint256',
-        name: 'winnerIndex',
-        type: 'uint256',
-      },
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'pool',
-    outputs: [
-      {
-        internalType: 'contract ICurvePool',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
+    name: 'redeemFromExternalPool',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'poolType',
-    outputs: [
-      {
-        internalType: 'uint64',
-        name: '',
-        type: 'uint64',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -767,7 +710,13 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
@@ -781,7 +730,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -795,7 +743,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -809,7 +756,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -823,7 +769,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -837,7 +782,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
@@ -851,7 +795,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [
@@ -868,17 +811,10 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'winnerCount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    name: 'unpause',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [
@@ -898,37 +834,16 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    constant: true,
   },
   {
     inputs: [],
-    name: 'pause',
+    name: 'withdraw',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'unpause',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'adminFeeWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
     name: 'joinGame',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -938,118 +853,28 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_minAmount',
+        name: 'index',
         type: 'uint256',
       },
+      {
+        internalType: 'bytes32[]',
+        name: 'merkleProof',
+        type: 'bytes32[]',
+      },
     ],
-    name: 'earlyWithdraw',
+    name: 'joinWhitelistedGame',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'withdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'makeDeposit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'unlockRenounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getNumberOfPlayers',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'redeemFromExternalPool',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getCurrentSegment',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
-  },
-  {
-    inputs: [],
-    name: 'isGameCompleted',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-    constant: true,
   },
 ];
 
-export class GoodghostingAbiV003__factory {
+export class HalofiAbiV001__factory {
   static readonly abi = _abi;
-  static createInterface(): GoodghostingAbiV003Interface {
-    return new utils.Interface(_abi) as GoodghostingAbiV003Interface;
+  static createInterface(): HalofiAbiV001Interface {
+    return new utils.Interface(_abi) as HalofiAbiV001Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): GoodghostingAbiV003 {
-    return new Contract(address, _abi, signerOrProvider) as GoodghostingAbiV003;
+  static connect(address: string, signerOrProvider: Signer | Provider): HalofiAbiV001 {
+    return new Contract(address, _abi, signerOrProvider) as HalofiAbiV001;
   }
 }

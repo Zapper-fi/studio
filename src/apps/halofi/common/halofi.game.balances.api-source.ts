@@ -8,9 +8,9 @@ import {
   PlayerBalance,
   transformRewardArrayToObject,
   RewardType,
-} from './good-ghosting.game.constants';
+} from './halofi.game.constants';
 
-export class GoodGhostingGameBalancesApiSource {
+export class HalofiGameBalancesApiSource {
   async getBalances(address: string, network: Network) {
     const url = `${BASE_API_URL}/players/active-games?networkId=${NETWORK_IDS[network]}&playerAddress=${address}`;
     const response = await axios.get<PlayerResponse[]>(url);
