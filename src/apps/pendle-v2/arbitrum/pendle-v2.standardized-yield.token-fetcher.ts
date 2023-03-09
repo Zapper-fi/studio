@@ -3,4 +3,4 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { PendleV2StandardizedYieldTokenFetcher } from '../common/pendle-v2.standardized-yield.token-fetcher';
 
 @PositionTemplate()
-export class EthereumPendleV2StandardizedYieldTokenFetcher extends PendleV2StandardizedYieldTokenFetcher {}
+export class ArbitrumPendleV2StandardizedYieldTokenFetcher extends PendleV2StandardizedYieldTokenFetcher {}

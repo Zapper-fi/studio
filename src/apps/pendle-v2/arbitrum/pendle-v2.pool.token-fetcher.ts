@@ -2,4 +2,4 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { PendleV2PoolTokenFetcher } from '../common/pendle-v2.pool.token-fetcher';
 
 @PositionTemplate()
-export class EthereumPendleV2PoolTokenFetcher extends PendleV2PoolTokenFetcher {}
+export class ArbitrumPendleV2PoolTokenFetcher extends PendleV2PoolTokenFetcher {}
