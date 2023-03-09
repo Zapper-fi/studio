@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.403.1](https://github.com/Zapper-fi/studio/compare/v0.403.0...v0.403.1) (2023-03-09)
+
+
+### Bug Fixes
+
+* **silo-finance:** Extract external API calls into a resolver ([#2404](https://github.com/Zapper-fi/studio/issues/2404)) ([e5a7c50](https://github.com/Zapper-fi/studio/commit/e5a7c508f374b800db48f89e0264985bb523eeac))
+
 ## [0.403.0](https://github.com/Zapper-fi/studio/compare/v0.402.0...v0.403.0) (2023-03-09)
 
 
