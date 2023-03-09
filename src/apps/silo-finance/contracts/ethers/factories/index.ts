@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { Silo__factory } from './Silo__factory';
 export { SiloLens__factory } from './SiloLens__factory';
+export { SiloMarketAsset__factory } from './SiloMarketAsset__factory';

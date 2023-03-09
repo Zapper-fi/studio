@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.403.1](https://github.com/Zapper-fi/studio/compare/v0.403.0...v0.403.1) (2023-03-09)
+
+
+### Bug Fixes
+
+* **silo-finance:** Extract external API calls into a resolver ([#2404](https://github.com/Zapper-fi/studio/issues/2404)) ([e5a7c50](https://github.com/Zapper-fi/studio/commit/e5a7c508f374b800db48f89e0264985bb523eeac))
+
+## [0.403.0](https://github.com/Zapper-fi/studio/compare/v0.402.0...v0.403.0) (2023-03-09)
+
+
+### Features
+
+* **exactly:** ✨ add optimism support ([#2390](https://github.com/Zapper-fi/studio/issues/2390)) ([b46bae7](https://github.com/Zapper-fi/studio/commit/b46bae705857ccb6e45fb59950f5ece0a5d7104f))
+* rebranding from goodghosting to halofi ([#2401](https://github.com/Zapper-fi/studio/issues/2401)) ([bd56f61](https://github.com/Zapper-fi/studio/commit/bd56f61ec2e388e69858152e2a91a51606d0575c))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Rebrand to HaloFi ([bd56f61](https://github.com/Zapper-fi/studio/commit/bd56f61ec2e388e69858152e2a91a51606d0575c))
+* **robo-vault:** Update endpoint url ([#2397](https://github.com/Zapper-fi/studio/issues/2397)) ([a1c9e52](https://github.com/Zapper-fi/studio/commit/a1c9e5265f903028df34a4dfc8b2c31b427c180e))
+
 ## [0.402.0](https://github.com/Zapper-fi/studio/compare/v0.401.0...v0.402.0) (2023-03-06)
 
 
