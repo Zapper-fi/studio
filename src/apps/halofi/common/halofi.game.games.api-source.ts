@@ -47,6 +47,7 @@ export class HalofiGameGamesApiSource {
         networkId,
         strategyProvider,
         gameNameShort,
+        gameName,
         rewards,
       } = gameConfigs[gameContractAddress];
 
@@ -84,7 +85,7 @@ export class HalofiGameGamesApiSource {
           rewardTokenAddresses,
           strategyProvider,
           contractVersion,
-          gameName: gameNameShort,
+          gameName: gameNameShort ?? gameName,
         });
       }
     }

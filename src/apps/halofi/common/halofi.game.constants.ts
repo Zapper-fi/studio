@@ -79,6 +79,7 @@ export type GamesResponse = Record<
     liquidityToken: string;
     rewardToken?: string;
     incentiveToken?: string;
+    gameName: string;
     gameNameShort: string;
     contractVersion: string;
     isCapped: boolean;
