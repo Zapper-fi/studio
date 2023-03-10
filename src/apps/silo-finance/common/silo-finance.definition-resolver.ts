@@ -13,6 +13,9 @@ type SiloFinanceMarketsResponse = {
 
 type SiloFinanceMarketAssetsResponse = {
   marketAssets: {
+    market: {
+      id: string;
+    };
     sToken: {
       id: string;
     };
@@ -30,12 +33,16 @@ const MARKETS_QUERY = gql`
     markets(orderBy: totalValueLockedUSD, orderDirection: desc, where: { inputToken_: { activeOracle_not: "null" } }) {
       id
       name
+    }
   }
 `;
 
 const MARKETS_ASSETS_QUERY = gql`
   {
     marketAssets {
+      market {
+        id
+      }
       sToken {
         id
       }
@@ -96,13 +103,18 @@ export class SiloFinanceDefinitionResolver {
     return marketsData;
   }
 
-  async getSiloMarketAssetsDefinition(network: Network) {
+  async getMarketAssetTokenDefinition(network: Network) {
     const marketAssetsData = await this.getSiloMarketAssetsDefinitionData(network);
     if (!marketAssetsData) return null;
 
     const marketAssetAddresses = marketAssetsData.marketAssets
       .map(market => {
-        return [market.sToken.id.toLowerCase(), market.spToken.id.toLowerCase(), market.dToken.id.toLowerCase()];
+        return {
+          siloAddress: market.market.id.toLowerCase(),
+          sToken: market.sToken.id.toLowerCase(),
+          spToken: market.spToken.id.toLowerCase(),
+          dToken: market.dToken.id.toLowerCase(),
+        };
       })
       .flat();
 
