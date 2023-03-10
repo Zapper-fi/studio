@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.404.0](https://github.com/Zapper-fi/studio/compare/v0.403.1...v0.404.0) (2023-03-10)
+
+
+### Features
+
+* **pendle-v2:** Add Arbitrum support ([#2398](https://github.com/Zapper-fi/studio/issues/2398)) ([bb2c8ba](https://github.com/Zapper-fi/studio/commit/bb2c8ba6f9e86db2075b3d1896ea578e4663f5e8))
+* **vela:** Add support for VLP, VLP staking, esVELA and VELA staking ([#2395](https://github.com/Zapper-fi/studio/issues/2395)) ([df8f72e](https://github.com/Zapper-fi/studio/commit/df8f72e4985eb570ded99a20a70eef066a6f9bce))
+
+
+### Bug Fixes
+
+* **silo-finance:** Extract s, sp and d app tokens from silos ([#2408](https://github.com/Zapper-fi/studio/issues/2408)) ([cff39df](https://github.com/Zapper-fi/studio/commit/cff39dfec793e8906ff86dd44a80a08670b78201))
+
 ## [0.403.1](https://github.com/Zapper-fi/studio/compare/v0.403.0...v0.403.1) (2023-03-09)
 
 
