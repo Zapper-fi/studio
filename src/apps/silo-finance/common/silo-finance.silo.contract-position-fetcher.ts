@@ -18,7 +18,6 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { Silo, SiloFinanceContractFactory } from '../contracts';
-import { IBaseSilo } from '../contracts/ethers/Silo';
 
 import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
 
@@ -26,17 +25,12 @@ type SiloContractPositionDefinition = {
   address: string;
   name: string;
   assets: string[];
-  tokens: string[][];
-  tokensFlattened: string[];
-  assetStorages: IBaseSilo.AssetStorageStructOutput[];
+  underlyingTokens: string[];
 };
 
 type SiloContractPositionDataProps = DefaultDataProps & {
-  totalUnderlyings: BigNumberish[];
-  totalShares: BigNumberish[];
   supplyApys: BigNumberish[];
   borrowApys: BigNumberish[];
-  tokensFlattened: string[];
 };
 
 export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -69,19 +63,18 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
         const siloContract = this.getContract(siloAddress);
         const assets = await siloContract.getAssets();
         const assetStorages = await Promise.all(assets.map(asset => multicall.wrap(siloContract).assetStorage(asset)));
-        const tokens = assetStorages.map(assetStorage => [
-          assetStorage.collateralToken,
-          assetStorage.collateralOnlyToken,
-          assetStorage.debtToken,
-        ]);
+        const underlyingTokens = assetStorages
+          .map(assetStorage => [
+            assetStorage.collateralToken.toLowerCase(),
+            assetStorage.collateralOnlyToken.toLowerCase(),
+            assetStorage.debtToken.toLowerCase(),
+          ])
+          .flat();
         return {
           address: siloAddress,
           name: market.name,
-          tokens: tokens,
-          tokensFlattened: tokens.flat(),
-          network: this.network,
-          assets: assets,
-          assetStorages: assetStorages,
+          underlyingTokens,
+          assets: assets.map(x => x.toLowerCase()),
         };
       }),
     );
@@ -100,25 +93,6 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
   >): Promise<SiloContractPositionDataProps> {
     const siloLensContract = this.contractFactory.siloLens({ address: this.siloLensAddress, network: this.network });
 
-    const tokenContractsFlattened = definition.tokensFlattened.map(token =>
-      this.contractFactory.erc20({ address: token, network: this.network }),
-    );
-    const totalShares = await Promise.all(
-      tokenContractsFlattened.map(tokenContract => multicall.wrap(tokenContract).totalSupply()),
-    );
-    const totalUnderlyings = await Promise.all(
-      definition.tokens.map(async (_, idx) => {
-        const asset = definition.assets[idx];
-        const assetStorage = definition.assetStorages[idx];
-
-        const [totalDepositWithInterest, totalBorrowsWithInterest] = await Promise.all([
-          multicall.wrap(siloLensContract).totalDepositsWithInterest(contractPosition.address, asset),
-          multicall.wrap(siloLensContract).totalBorrowAmountWithInterest(contractPosition.address, asset),
-        ]);
-
-        return [totalDepositWithInterest, assetStorage.collateralOnlyDeposits, totalBorrowsWithInterest];
-      }),
-    );
     const supplyApys = await Promise.all(
       definition.assets.map(asset => multicall.wrap(siloLensContract).depositAPY(contractPosition.address, asset)),
     );
@@ -127,11 +101,8 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
     );
 
     return {
-      totalUnderlyings: totalUnderlyings.flat(),
-      totalShares: totalShares,
-      supplyApys: supplyApys,
-      borrowApys: borrowApys,
-      tokensFlattened: definition.tokensFlattened,
+      supplyApys,
+      borrowApys,
     };
   }
 
@@ -162,20 +133,21 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
     definition,
   }: GetTokenDefinitionsParams<Silo, SiloContractPositionDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
     return definition.assets
-      .map(asset => {
+      .map((_asset, idx) => {
+        const underlyingTokenId = idx * 3;
         return [
           {
-            address: asset,
+            address: definition.underlyingTokens[underlyingTokenId],
             network: this.network,
             metaType: MetaType.SUPPLIED, // sTOKEN
           },
           {
-            address: asset,
+            address: definition.underlyingTokens[underlyingTokenId + 1],
             network: this.network,
             metaType: MetaType.SUPPLIED, // spTOKEN
           },
           {
-            address: asset,
+            address: definition.underlyingTokens[underlyingTokenId + 2],
             network: this.network,
             metaType: MetaType.BORROWED, // dTOKEN
           },
@@ -193,21 +165,19 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
   getTokenBalancesPerPosition({
     address,
     contractPosition,
+    multicall,
   }: GetTokenBalancesParams<Silo, SiloContractPositionDataProps>): Promise<BigNumberish[]> {
-    const dataProps = contractPosition.dataProps;
-
     return Promise.all(
-      contractPosition.tokens.map(async (_, idx) => {
-        const token = this.contractFactory.erc20({
-          address: dataProps.tokensFlattened[idx],
+      contractPosition.tokens.map(async token => {
+        const underlyingTokenContract = this.contractFactory.siloMarketAsset({
+          address: token.address,
           network: this.network,
         });
-        const tokenBalance = await token.balanceOf(address);
-        const totalSupply = dataProps.totalShares[idx];
-        const totalUnderlying = dataProps.totalUnderlyings[idx];
+
+        const tokenBalance = await multicall.wrap(underlyingTokenContract).balanceOf(address);
         if (tokenBalance.eq(0)) return BigNumber.from(0);
 
-        return tokenBalance.mul(totalUnderlying).div(totalSupply);
+        return tokenBalance;
       }),
     );
   }
