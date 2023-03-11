@@ -11,5 +11,6 @@ export { ConvexCvxStaking__factory } from './ConvexCvxStaking__factory';
 export { ConvexDepositToken__factory } from './ConvexDepositToken__factory';
 export { ConvexDepositor__factory } from './ConvexDepositor__factory';
 export { ConvexSingleStakingRewards__factory } from './ConvexSingleStakingRewards__factory';
+export { ConvexStashTokenWrapped__factory } from './ConvexStashTokenWrapped__factory';
 export { ConvexVirtualBalanceRewardPool__factory } from './ConvexVirtualBalanceRewardPool__factory';
 export { ConvexVotingEscrow__factory } from './ConvexVotingEscrow__factory';
