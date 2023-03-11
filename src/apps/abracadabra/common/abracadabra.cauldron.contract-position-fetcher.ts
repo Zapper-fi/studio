@@ -117,7 +117,10 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
 
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     const suppliedBalanceRaw = await bentoBoxTokenContract.toAmount(suppliedToken.address, collateralShareRaw, false);
-    const borrowedBalanceRaw = borrowPartRaw.mul(totalBorrowRaw.elastic).div(totalBorrowRaw.base);
+    let borrowedBalanceRaw = totalBorrowRaw.base;
+    if (!borrowedBalanceRaw.eq(0)) {
+      borrowedBalanceRaw = borrowPartRaw.mul(totalBorrowRaw.elastic).div(totalBorrowRaw.base);
+    }
 
     return [suppliedBalanceRaw, borrowedBalanceRaw];
   }
