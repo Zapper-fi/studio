@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.404.1](https://github.com/Zapper-fi/studio/compare/v0.404.0...v0.404.1) (2023-03-11)
+
+
+### Bug Fixes
+
+* **convex:** Add stash wrapped tokens ([#2409](https://github.com/Zapper-fi/studio/issues/2409)) ([62aeea8](https://github.com/Zapper-fi/studio/commit/62aeea8a32e59aa134b9d390d378ebc6a16923b9))
+
 ## [0.404.0](https://github.com/Zapper-fi/studio/compare/v0.403.1...v0.404.0) (2023-03-10)
 
 
