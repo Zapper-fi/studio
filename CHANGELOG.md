@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.404.2](https://github.com/Zapper-fi/studio/compare/v0.404.1...v0.404.2) (2023-03-11)
+
+
+### Bug Fixes
+
+* **abracadabra:** Fix division by zero error when cauldrons have no borrows ([#2411](https://github.com/Zapper-fi/studio/issues/2411)) ([09817b6](https://github.com/Zapper-fi/studio/commit/09817b6630f5a32c1cc03d91933281bbf53bcc05))
+
 ## [0.404.1](https://github.com/Zapper-fi/studio/compare/v0.404.0...v0.404.1) (2023-03-11)
 
 
