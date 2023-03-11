@@ -11,6 +11,7 @@ export type { ConvexCvxStaking } from './ConvexCvxStaking';
 export type { ConvexDepositToken } from './ConvexDepositToken';
 export type { ConvexDepositor } from './ConvexDepositor';
 export type { ConvexSingleStakingRewards } from './ConvexSingleStakingRewards';
+export type { ConvexStashTokenWrapped } from './ConvexStashTokenWrapped';
 export type { ConvexVirtualBalanceRewardPool } from './ConvexVirtualBalanceRewardPool';
 export type { ConvexVotingEscrow } from './ConvexVotingEscrow';
 export * as factories from './factories';
@@ -24,5 +25,6 @@ export { ConvexCvxStaking__factory } from './factories/ConvexCvxStaking__factory
 export { ConvexDepositToken__factory } from './factories/ConvexDepositToken__factory';
 export { ConvexDepositor__factory } from './factories/ConvexDepositor__factory';
 export { ConvexSingleStakingRewards__factory } from './factories/ConvexSingleStakingRewards__factory';
+export { ConvexStashTokenWrapped__factory } from './factories/ConvexStashTokenWrapped__factory';
 export { ConvexVirtualBalanceRewardPool__factory } from './factories/ConvexVirtualBalanceRewardPool__factory';
 export { ConvexVotingEscrow__factory } from './factories/ConvexVotingEscrow__factory';

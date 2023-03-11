@@ -15,6 +15,7 @@ import {
   ConvexDepositToken__factory,
   ConvexDepositor__factory,
   ConvexSingleStakingRewards__factory,
+  ConvexStashTokenWrapped__factory,
   ConvexVirtualBalanceRewardPool__factory,
   ConvexVotingEscrow__factory,
 } from './ethers';
@@ -58,6 +59,9 @@ export class ConvexContractFactory extends ContractFactory {
   convexSingleStakingRewards({ address, network }: ContractOpts) {
     return ConvexSingleStakingRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  convexStashTokenWrapped({ address, network }: ContractOpts) {
+    return ConvexStashTokenWrapped__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   convexVirtualBalanceRewardPool({ address, network }: ContractOpts) {
     return ConvexVirtualBalanceRewardPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -76,5 +80,6 @@ export type { ConvexCvxStaking } from './ethers';
 export type { ConvexDepositToken } from './ethers';
 export type { ConvexDepositor } from './ethers';
 export type { ConvexSingleStakingRewards } from './ethers';
+export type { ConvexStashTokenWrapped } from './ethers';
 export type { ConvexVirtualBalanceRewardPool } from './ethers';
 export type { ConvexVotingEscrow } from './ethers';
