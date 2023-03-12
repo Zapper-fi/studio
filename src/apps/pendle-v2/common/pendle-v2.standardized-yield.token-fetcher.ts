@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -29,8 +28,7 @@ export type PendleV2StandardizedYieldTokenDefinition = {
 export type PendleV2StandardizedYieldTokenDataProps = DefaultAppTokenDataProps &
   PendleV2StandardizedYieldTokenDefinition;
 
-@PositionTemplate()
-export class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
+export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   StandardizedYield,
   PendleV2StandardizedYieldTokenDataProps,
   PendleV2StandardizedYieldTokenDefinition

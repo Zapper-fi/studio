@@ -6,7 +6,7 @@ import type { ExactlyMarketDefinition } from '../common/exactly.definitions-reso
 import { type ExactlyMarketProps, ExactlyTokenFetcher } from '../common/exactly.token-fetcher';
 import type { Market } from '../contracts';
 
-export class ExactlyDepositFetcher extends ExactlyTokenFetcher {
+export abstract class ExactlyDepositFetcher extends ExactlyTokenFetcher {
   groupLabel = 'Variable Deposit';
 
   getSupply({ definition }: GetTokenPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {

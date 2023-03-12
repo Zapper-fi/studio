@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -31,8 +30,7 @@ export type PendleV2YieldTokenDefinition = {
 
 export type PendleV2YieldTokenDataProps = DefaultAppTokenDataProps & PendleV2YieldTokenDefinition;
 
-@PositionTemplate()
-export class PendleV2YieldTokenFetcher extends AppTokenTemplatePositionFetcher<
+export abstract class PendleV2YieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleYieldToken,
   PendleV2YieldTokenDataProps,
   PendleV2YieldTokenDefinition

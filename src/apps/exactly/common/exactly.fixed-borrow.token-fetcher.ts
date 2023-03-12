@@ -9,7 +9,7 @@ import { type ExactlyFixedMarketProps, ExactlyFixedPositionFetcher } from '../co
 import type { ExactlyMarketProps } from '../common/exactly.token-fetcher';
 import type { Market } from '../contracts';
 
-export class ExactlyFixedBorrowFetcher extends ExactlyFixedPositionFetcher {
+export abstract class ExactlyFixedBorrowFetcher extends ExactlyFixedPositionFetcher {
   groupLabel = 'Variable Borrow';
   isDebt = true;
 
