@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.404.3](https://github.com/Zapper-fi/studio/compare/v0.404.2...v0.404.3) (2023-03-12)
+
+
+### Bug Fixes
+
+* **exactly:** Remove PositionTemplate decorators on common classes ([6e65f0b](https://github.com/Zapper-fi/studio/commit/6e65f0b051c207cd10eba60c1c88a48611b24348))
+
 ## [0.404.2](https://github.com/Zapper-fi/studio/compare/v0.404.1...v0.404.2) (2023-03-11)
 
 
