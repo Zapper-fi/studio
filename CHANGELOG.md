@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.404.4](https://github.com/Zapper-fi/studio/compare/v0.404.3...v0.404.4) (2023-03-12)
+
+
+### Bug Fixes
+
+* **studio:** Remove PositionTemplate on abstract classes ([8cdd0d9](https://github.com/Zapper-fi/studio/commit/8cdd0d901435782c5226dcecb1dc079db8f55480))
+
 ## [0.404.3](https://github.com/Zapper-fi/studio/compare/v0.404.2...v0.404.3) (2023-03-12)
 
 
