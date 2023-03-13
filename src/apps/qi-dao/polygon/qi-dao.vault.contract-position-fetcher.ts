@@ -115,5 +115,13 @@ export class PolygonQiDaoVaultPositionFetcher extends QiDaoVaultContractPosition
       address: '0x7d75f83f0abe2ece0b9daf41cceddf38cb66146b', // MAI DAI Arrakis Vault
       vaultInfoAddress: '0x7d75f83f0abe2ece0b9daf41cceddf38cb66146b',
     },
+    {
+      address: '0x9a05b116b56304f5f4b3f1d5da4641bffffae6ab', // stMatic Vault
+      vaultInfoAddress: '0x9a05b116b56304f5f4b3f1d5da4641bffffae6ab',
+    },
+    {
+      address: '0xf1104493ec315af2cb52f0c19605443334928d38', // gDAI Vault
+      vaultInfoAddress: '0xf1104493ec315af2cb52f0c19605443334928d38',
+    },
   ];
 }
