@@ -7,4 +7,5 @@ export { QiDaoMasterChef__factory } from './QiDaoMasterChef__factory';
 export { QiDaoMasterChefV3__factory } from './QiDaoMasterChefV3__factory';
 export { QiDaoVaultInfo__factory } from './QiDaoVaultInfo__factory';
 export { QiDaoVaultNft__factory } from './QiDaoVaultNft__factory';
+export { QiDaoWrappedToken__factory } from './QiDaoWrappedToken__factory';
 export { QiDaoYieldToken__factory } from './QiDaoYieldToken__factory';
