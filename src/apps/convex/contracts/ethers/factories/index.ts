@@ -10,6 +10,7 @@ export { ConvexCvxCrvStakingWrapped__factory } from './ConvexCvxCrvStakingWrappe
 export { ConvexCvxStaking__factory } from './ConvexCvxStaking__factory';
 export { ConvexDepositToken__factory } from './ConvexDepositToken__factory';
 export { ConvexDepositor__factory } from './ConvexDepositor__factory';
+export { ConvexRewardPool__factory } from './ConvexRewardPool__factory';
 export { ConvexSingleStakingRewards__factory } from './ConvexSingleStakingRewards__factory';
 export { ConvexStashTokenWrapped__factory } from './ConvexStashTokenWrapped__factory';
 export { ConvexVirtualBalanceRewardPool__factory } from './ConvexVirtualBalanceRewardPool__factory';
