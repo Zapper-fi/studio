@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.405.0](https://github.com/Zapper-fi/studio/compare/v0.404.4...v0.405.0) (2023-03-13)
+
+
+### Features
+
+* **convex:** Add lp farm positions on Polygon ([#2414](https://github.com/Zapper-fi/studio/issues/2414)) ([fe00159](https://github.com/Zapper-fi/studio/commit/fe001596b0735d0832fb06619225d848c90aa09b))
+
+
+### Bug Fixes
+
+* **gmx:** Add size and leverage to perp's dataProps ([#2417](https://github.com/Zapper-fi/studio/issues/2417)) ([21fcf39](https://github.com/Zapper-fi/studio/commit/21fcf39fba79615f87b1185f7dc97bbc9a92e6a3))
+* **qi-dao:** Add vaults, wrapped tokens and support vaults on BSC ([#2419](https://github.com/Zapper-fi/studio/issues/2419)) ([d97ac5e](https://github.com/Zapper-fi/studio/commit/d97ac5eb8fcae51b4658d517d504d34dd520952c))
+
 ## [0.404.4](https://github.com/Zapper-fi/studio/compare/v0.404.3...v0.404.4) (2023-03-12)
 
 
