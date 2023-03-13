@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.406.0](https://github.com/Zapper-fi/studio/compare/v0.405.0...v0.406.0) (2023-03-13)
+
+
+### Features
+
+* **across:** Add Across staking/rewards positions ([#2420](https://github.com/Zapper-fi/studio/issues/2420)) ([9665841](https://github.com/Zapper-fi/studio/commit/96658410d4fe1d3dbad6dc5b09b7697e725a67e7))
+
 ## [0.405.0](https://github.com/Zapper-fi/studio/compare/v0.404.4...v0.405.0) (2023-03-13)
 
 
