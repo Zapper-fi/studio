@@ -49,20 +49,6 @@ type BeaconChainValidator = {
   }[];
 };
 
-type BeaconChainLeaderboard = {
-  status: string;
-  data: {
-    balance: number;
-    performance1d: number;
-    performance31d: number;
-
-    performance365d: number;
-    performance7d: number;
-    rank7d: number;
-    validatorindex: number;
-  }[];
-};
-
 const SUBGRAPH_DEPOSITS_ENDPOINT = `https://api.thegraph.com/subgraphs/name/terryyyyyy/eth2staking`;
 const BEACON_CHAIN_API_ENDPOINT = `https://beaconcha.in/api/v1`;
 
