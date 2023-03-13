@@ -73,7 +73,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
         return {
           address: pool.rewards.toLowerCase(),
           lpTokenAddress: pool.lptoken.toLowerCase(),
-          rewardAddresses,
+          rewardAddresses: [rewardAddresses[0]],
         };
       }),
     );
