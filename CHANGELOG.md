@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.408.0](https://github.com/Zapper-fi/studio/compare/v0.407.0...v0.408.0) (2023-03-14)
+
+
+### Features
+
+* **gains-network:** Add locked gTokens positions on Arbitrum ([#2428](https://github.com/Zapper-fi/studio/issues/2428)) ([d6d4d6b](https://github.com/Zapper-fi/studio/commit/d6d4d6b38556254175261c82913b3fcc83bebb1b))
+
+
+### Bug Fixes
+
+* **aave:** Liting Aave supply token fetcher ([#2429](https://github.com/Zapper-fi/studio/issues/2429)) ([28e3f41](https://github.com/Zapper-fi/studio/commit/28e3f4151c0c509eeb98a6aec5e4cd21b61599a4))
+* **llamapay:** Fix disabled streams ([#2426](https://github.com/Zapper-fi/studio/issues/2426)) ([0dfe784](https://github.com/Zapper-fi/studio/commit/0dfe7848d24de7e5e7c89184f325395bad2c1d4d))
+
 ## [0.407.0](https://github.com/Zapper-fi/studio/compare/v0.406.1...v0.407.0) (2023-03-14)
 
 
