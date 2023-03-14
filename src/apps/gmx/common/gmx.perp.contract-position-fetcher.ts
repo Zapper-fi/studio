@@ -8,7 +8,6 @@ import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
   GetTokenDefinitionsParams,
@@ -16,6 +15,7 @@ import {
   GetDataPropsParams,
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { GmxContractFactory, GmxVault } from '../contracts';
 
@@ -32,7 +32,7 @@ export type GmxOptionContractPositionDataProps = {
 };
 
 @Injectable()
-export abstract class GmxPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class GmxPerpContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   GmxVault,
   GmxOptionContractPositionDataProps,
   GmxOptionContractPositionDefinition
@@ -114,7 +114,12 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
 
   async getBalances(address: string): Promise<ContractPositionBalance<GmxOptionContractPositionDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const contractPositions = await this.getPositionsForBalances();
+    const contractPositions = await this.appToolkit.getAppContractPositions<GmxOptionContractPositionDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
     if (address === ZERO_ADDRESS) return [];
 
     const balances = await Promise.all(
