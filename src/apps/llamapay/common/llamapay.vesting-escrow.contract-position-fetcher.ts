@@ -1,9 +1,14 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
 import { compact, sumBy } from 'lodash';
+import moment, { duration, unix } from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildNumberDisplayItem,
+  buildStringDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps } from '~position/display.interface';
@@ -94,7 +99,15 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
         });
 
         const llamapay = multicall.wrap(llamapayContract);
-        const [lockedBalanceRaw, claimableBalanceRaw] = await Promise.all([llamapay.locked(), llamapay.unclaimed()]);
+
+        const [disabledAt, endTime, cliff] = await Promise.all([
+          llamapay.disabled_at(),
+          llamapay.end_time(),
+          llamapay.cliff_length(),
+        ]);
+        const lockedBalanceRaw = Number(disabledAt) > moment().unix() ? await llamapay.locked() : 0;
+
+        const claimableBalanceRaw = await llamapay.unclaimed();
 
         const token = tokenDependencies.find(t => t.address === vestingEscrow.token.id);
         if (!token) return null;
@@ -106,6 +119,20 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
 
         const balanceUSD = sumBy(tokenBalances, v => v.balanceUSD);
 
+        const formattedEndTime = unix(Number(endTime)).format('LL');
+        const formattedCliff = cliff.toNumber() / duration(1, 'day').asSeconds();
+
+        const statsItems = [
+          {
+            label: 'End Time',
+            value: buildStringDisplayItem(formattedEndTime),
+          },
+          {
+            label: 'Cliff length (in days)',
+            value: buildNumberDisplayItem(formattedCliff),
+          },
+        ];
+
         const position: ContractPositionBalance = {
           type: ContractType.POSITION,
           address: vestingEscrow.id,
@@ -115,12 +142,16 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
           tokens: tokenBalances,
           balanceUSD: balanceUSD,
 
-          dataProps: {},
+          dataProps: {
+            endTime: Number(endTime),
+            cliff: Number(cliff),
+          },
 
           displayProps: {
             label: `Vesting ${token.symbol} on LlamaPay`,
             secondaryLabel: buildDollarDisplayItem(token.price),
             images: getImagesFromToken(token),
+            statsItems,
           },
         };
 
