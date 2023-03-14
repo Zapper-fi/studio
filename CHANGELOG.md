@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.407.0](https://github.com/Zapper-fi/studio/compare/v0.406.1...v0.407.0) (2023-03-14)
+
+
+### Features
+
+* **studio:** Move Bend DAO internally to support NFT staking ([#2424](https://github.com/Zapper-fi/studio/issues/2424)) ([f97a5a6](https://github.com/Zapper-fi/studio/commit/f97a5a6b728ca460bd208db6802e66ad631ccf41))
+
 ## [0.406.1](https://github.com/Zapper-fi/studio/compare/v0.406.0...v0.406.1) (2023-03-14)
 
 
