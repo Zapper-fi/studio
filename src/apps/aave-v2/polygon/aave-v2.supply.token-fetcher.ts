@@ -1,13 +1,13 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
   AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
 } from '../common/aave-v2.lending.token-fetcher';
+import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 
 @PositionTemplate()
 export class PolygonAaveV2SupplyTokenFetcher extends AaveV2LendingTokenFetcher {
