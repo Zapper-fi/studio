@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.406.1](https://github.com/Zapper-fi/studio/compare/v0.406.0...v0.406.1) (2023-03-14)
+
+
+### Bug Fixes
+
+* **gmx:** Overriding getBalances requires a CustomContractPositionTemplatePositionFetcher ([#2422](https://github.com/Zapper-fi/studio/issues/2422)) ([4cc5765](https://github.com/Zapper-fi/studio/commit/4cc5765c631c6b5c6aee4353dd4ef687fb773ca4))
+
 ## [0.406.0](https://github.com/Zapper-fi/studio/compare/v0.405.0...v0.406.0) (2023-03-13)
 
 
