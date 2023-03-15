@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.409.0](https://github.com/Zapper-fi/studio/compare/v0.408.0...v0.409.0) (2023-03-15)
+
+
+### Features
+
+* **uniswap-v3:** Add pools on BSC ([#2430](https://github.com/Zapper-fi/studio/issues/2430)) ([b041926](https://github.com/Zapper-fi/studio/commit/b041926e4acda064dc9b38581cbb042e62667fb4))
+
 ## [0.408.0](https://github.com/Zapper-fi/studio/compare/v0.407.0...v0.408.0) (2023-03-14)
 
 
