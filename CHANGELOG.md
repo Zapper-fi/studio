@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.411.0](https://github.com/Zapper-fi/studio/compare/v0.410.1...v0.411.0) (2023-03-16)
+
+
+### Features
+
+* **solid-lizard:** basic implementation ([#2434](https://github.com/Zapper-fi/studio/issues/2434)) ([611b675](https://github.com/Zapper-fi/studio/commit/611b675fb621da3fce977f8bd77ff75d5c5be347))
+
 ## [0.410.1](https://github.com/Zapper-fi/studio/compare/v0.410.0...v0.410.1) (2023-03-16)
 
 
