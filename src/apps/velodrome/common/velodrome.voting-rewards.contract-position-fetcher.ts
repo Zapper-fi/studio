@@ -7,15 +7,15 @@ import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
 import { VelodromeBribe, VelodromeContractFactory } from '../contracts';
 
 export abstract class VotingRewardsContractPositionFetcher<
   T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<T> {
+> extends CustomContractPositionTemplatePositionFetcher<T> {
   veTokenAddress = '0x9c7305eb78a432ced5c4d14cac27e8ed569a2e26';
 
   constructor(

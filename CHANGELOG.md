@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.410.1](https://github.com/Zapper-fi/studio/compare/v0.410.0...v0.410.1) (2023-03-16)
+
+
+### Bug Fixes
+
+* **beanstalk:** Fix Unripe Asset price per share ([#2435](https://github.com/Zapper-fi/studio/issues/2435)) ([c28b2d4](https://github.com/Zapper-fi/studio/commit/c28b2d436cc499c659b817fa6c50833cbc52061c))
+* **velodrome:** Fix voting rewards template ([#2436](https://github.com/Zapper-fi/studio/issues/2436)) ([2f9c28d](https://github.com/Zapper-fi/studio/commit/2f9c28d3b0c5b57aa8ee795b246784be4d7afdc6))
+
 ## [0.410.0](https://github.com/Zapper-fi/studio/compare/v0.409.0...v0.410.0) (2023-03-16)
 
 
