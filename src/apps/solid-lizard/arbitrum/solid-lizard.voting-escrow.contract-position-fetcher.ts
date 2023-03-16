@@ -48,7 +48,6 @@ export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends Voti
         return Number(balance);
       }),
     );
-    console.warn('a', balances);
 
     return sum(balances);
   }
@@ -67,7 +66,6 @@ export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends Voti
         return Number(balance.amount);
       }),
     );
-    console.warn('b', balances);
 
     return sum(balances);
   }

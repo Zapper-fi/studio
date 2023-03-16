@@ -7,15 +7,15 @@ import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SolidLizardDefinitionsResolver } from '../common/solid-lizard.definitions-resolver';
 import { SolidLizardBribe, SolidLizardContractFactory } from '../contracts';
 
 export abstract class VotingRewardsContractPositionFetcher<
   T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<T> {
+> extends CustomContractPositionTemplatePositionFetcher<T> {
   veTokenAddress = '0x29d3622c78615a1e7459e4be434d816b7de293e4';
 
   constructor(
@@ -69,7 +69,7 @@ export abstract class VotingRewardsContractPositionFetcher<
 
         const tokens = await Promise.all(
           contractPosition.tokens.map(async bribeToken => {
-            const balancesPerBribePromises = veTokenIds.map(async id =>
+            const balancesPerBribePromises = veTokenIds.map(async _ =>
               bribeContract.earned(bribeToken.address, address),
             );
             const balancesPerBribe = await Promise.all(balancesPerBribePromises);
@@ -111,7 +111,7 @@ export abstract class VotingRewardsContractPositionFetcher<
           key: this.appToolkit.getPositionKey(contractPosition),
           tokens: await Promise.all(
             contractPosition.tokens.map(async bribeToken => {
-              const balancesPerBribePromises = veTokenIds.map(async id =>
+              const balancesPerBribePromises = veTokenIds.map(async _ =>
                 bribeContract.earned(bribeToken.address, address),
               );
               const balancesPerBribe = await Promise.all(balancesPerBribePromises);
