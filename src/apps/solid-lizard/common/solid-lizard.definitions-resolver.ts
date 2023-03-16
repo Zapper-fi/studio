@@ -37,10 +37,9 @@ export interface SolidLizardApiPairData {
   }[];
 }
 
-// TODO
 const poolsQuery = gql`
   {
-    pairs(first: 1) {
+    pairs(first: 1000) {
       id
       name
       symbol
