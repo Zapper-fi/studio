@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.410.0](https://github.com/Zapper-fi/studio/compare/v0.409.0...v0.410.0) (2023-03-16)
+
+
+### Features
+
+* **uniswap-v3:** Add Pools on Celo ([#2432](https://github.com/Zapper-fi/studio/issues/2432)) ([4779f60](https://github.com/Zapper-fi/studio/commit/4779f606ab4c420cf13c077ef1fb9e8f4cdc1114))
+
 ## [0.409.0](https://github.com/Zapper-fi/studio/compare/v0.408.0...v0.409.0) (2023-03-15)
 
 
