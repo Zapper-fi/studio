@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.412.0](https://github.com/Zapper-fi/studio/compare/v0.411.0...v0.412.0) (2023-03-17)
+
+
+### Features
+
+* **dopex:** Add SSOV v3 deposits ([#2439](https://github.com/Zapper-fi/studio/issues/2439)) ([737d81c](https://github.com/Zapper-fi/studio/commit/737d81c24b785da1f0ccfa6298b8c6b8518b659c))
+
 ## [0.411.0](https://github.com/Zapper-fi/studio/compare/v0.410.1...v0.411.0) (2023-03-16)
 
 
