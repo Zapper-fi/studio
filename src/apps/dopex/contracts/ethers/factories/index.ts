@@ -9,5 +9,6 @@ export { DopexGmxSsov__factory } from './DopexGmxSsov__factory';
 export { DopexRdpxSsov__factory } from './DopexRdpxSsov__factory';
 export { DopexRewardDistribution__factory } from './DopexRewardDistribution__factory';
 export { DopexSingleRewardStaking__factory } from './DopexSingleRewardStaking__factory';
+export { DopexSsovV3__factory } from './DopexSsovV3__factory';
 export { DopexVotingEscrow__factory } from './DopexVotingEscrow__factory';
 export { DopexVotingEscrowRewards__factory } from './DopexVotingEscrowRewards__factory';
