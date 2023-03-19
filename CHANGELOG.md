@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.412.1](https://github.com/Zapper-fi/studio/compare/v0.412.0...v0.412.1) (2023-03-18)
+
+
+### Bug Fixes
+
+* **llama-airforce:** Add new uFXS pounder and distributor ([#2441](https://github.com/Zapper-fi/studio/issues/2441)) ([079316f](https://github.com/Zapper-fi/studio/commit/079316f92536bd1ef766e2e17f0d8f3ecf83b99e))
+
 ## [0.412.0](https://github.com/Zapper-fi/studio/compare/v0.411.0...v0.412.0) (2023-03-17)
 
 
