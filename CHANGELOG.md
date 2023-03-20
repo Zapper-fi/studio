@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.412.3](https://github.com/Zapper-fi/studio/compare/v0.412.2...v0.412.3) (2023-03-20)
+
+
+### Bug Fixes
+
+* **solace:** Fix xs-locker balances ([#2445](https://github.com/Zapper-fi/studio/issues/2445)) ([385b1cd](https://github.com/Zapper-fi/studio/commit/385b1cdc13fecfd7f17ed980a65ef25444468f9b))
+
 ## [0.412.2](https://github.com/Zapper-fi/studio/compare/v0.412.1...v0.412.2) (2023-03-20)
 
 
