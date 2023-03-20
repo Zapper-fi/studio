@@ -1,14 +1,13 @@
-import { Inject } from '@nestjs/common';
+import { Inject, NotImplementedException } from '@nestjs/common';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { DefaultDataProps } from '~position/display.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import {
-  GetDisplayPropsParams,
-  GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
-} from '~position/template/contract-position.template.types';
+import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { SolaceContractFactory, XsLocker } from '../contracts';
 
@@ -51,32 +50,48 @@ export abstract class SolaceXslockerContractPositionFetcher extends ContractPosi
     return contract.name();
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<XsLocker>) {
+  getTokenBalancesPerPosition(): never {
+    throw new NotImplementedException();
+  }
+
+  async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const stakingRewardContract = this.contractFactory.stakingRewards({
       address: this.stakingRewardAddress,
       network: this.network,
     });
 
-    const numPositionsRaw = await contract.balanceOf(address);
+    const xsLockerContract = this.contractFactory.xsLocker({
+      address: this.xsLockerAddress,
+      network: this.network,
+    });
+
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const numPositionsRaw = await multicall.wrap(xsLockerContract).balanceOf(address);
 
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index => {
-        const lockId = await contract.tokenOfOwnerByIndex(address, index);
+        const lockId = await multicall.wrap(xsLockerContract).tokenOfOwnerByIndex(address, index);
 
-        const lock = await contract.locks(lockId);
+        const lock = await multicall.wrap(xsLockerContract).locks(lockId);
         const rewardAmount = await multicall.wrap(stakingRewardContract).pendingRewardsOfLock(lockId);
 
+        const suppliedAmount = drillBalance(contractPositions[0].tokens[0], lock.amount.toString());
+        const claimableBalance = drillBalance(contractPositions[0].tokens[1], rewardAmount.toString());
+
         return {
-          supplied: lock.amount,
-          claimable: rewardAmount,
+          ...contractPositions[0],
+          tokens: [suppliedAmount, claimableBalance],
+          balanceUSD: suppliedAmount.balanceUSD + claimableBalance.balanceUSD,
         };
       }),
     );
 
-    const supplied = balances.map(x => Number(x.supplied));
-    const claimables = balances.map(x => Number(x.claimable));
-
-    return [supplied, claimables];
+    return balances;
   }
 }
