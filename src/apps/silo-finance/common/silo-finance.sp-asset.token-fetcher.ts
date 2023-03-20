@@ -14,22 +14,22 @@ import { SiloFinanceContractFactory, SiloMarketAsset } from '../contracts';
 
 import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
 
-export type ArbitrumSpTokenDataProps = {
+export type SpTokenDataProps = {
   liquidity: number;
   reserves: number[];
   apy: number;
   siloAddress: string;
 };
 
-export type ArbitrumSpTokenDefinition = {
+export type SpTokenDefinition = {
   address: string;
   siloAddress: string;
 };
 
 export abstract class SiloFinanceSpTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
   SiloMarketAsset,
-  ArbitrumSpTokenDataProps,
-  ArbitrumSpTokenDefinition
+  SpTokenDataProps,
+  SpTokenDefinition
 > {
   isExcludedFromBalances = true;
   isExcludedFromExplore = true;
@@ -48,19 +48,28 @@ export abstract class SiloFinanceSpTokenTokenFetcher extends AppTokenTemplatePos
     return this.contractFactory.siloMarketAsset({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<ArbitrumSpTokenDefinition[]> {
-    const marketAssets = await this.siloDefinitionResolver.getMarketAssetTokenDefinition(this.network);
-    if (!marketAssets) return [];
+  async getDefinitions(): Promise<SpTokenDefinition[]> {
+    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    if (!markets) return [];
 
-    return marketAssets.map(marketAsset => {
-      return {
-        address: marketAsset.spToken,
-        siloAddress: marketAsset.siloAddress,
-      };
-    });
+    const spTokenDefinition = markets
+      .map(market => {
+        const siloAddress = market.siloAddress;
+        const spTokenAddresses = market.marketAssets.map(x => x.spToken);
+
+        return spTokenAddresses.map(address => {
+          return {
+            address,
+            siloAddress,
+          };
+        });
+      })
+      .flat();
+
+    return spTokenDefinition;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<ArbitrumSpTokenDefinition>): Promise<string[]> {
+  async getAddresses({ definitions }: GetAddressesParams<SpTokenDefinition>): Promise<string[]> {
     return definitions.map(x => x.address);
   }
 
@@ -72,7 +81,7 @@ export abstract class SiloFinanceSpTokenTokenFetcher extends AppTokenTemplatePos
     return [1];
   }
 
-  async getDataProps(params: GetDataPropsParams<SiloMarketAsset, ArbitrumSpTokenDataProps, ArbitrumSpTokenDefinition>) {
+  async getDataProps(params: GetDataPropsParams<SiloMarketAsset, SpTokenDataProps, SpTokenDefinition>) {
     const defaultDataProps = await super.getDataProps(params);
     const siloAddress = params.definition.siloAddress;
     return { ...defaultDataProps, siloAddress };
@@ -81,7 +90,7 @@ export abstract class SiloFinanceSpTokenTokenFetcher extends AppTokenTemplatePos
   async getRawBalances(address: string): Promise<RawTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const appTokens = await this.appToolkit.getAppTokenPositions<ArbitrumSpTokenDataProps>({
+    const appTokens = await this.appToolkit.getAppTokenPositions<SpTokenDataProps>({
       appId: this.appId,
       network: this.network,
       groupIds: [this.groupId],

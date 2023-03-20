@@ -8,23 +8,17 @@ type SiloFinanceMarketsResponse = {
   markets: {
     id: string;
     name: string;
-  }[];
-};
-
-type SiloFinanceMarketAssetsResponse = {
-  marketAssets: {
-    market: {
-      id: string;
-    };
-    sToken: {
-      id: string;
-    };
-    spToken: {
-      id: string;
-    };
-    dToken: {
-      id: string;
-    };
+    marketAssets: {
+      sToken: {
+        id: string;
+      };
+      spToken: {
+        id: string;
+      };
+      dToken: {
+        id: string;
+      };
+    }[];
   }[];
 };
 
@@ -33,24 +27,16 @@ const MARKETS_QUERY = gql`
     markets(orderBy: totalValueLockedUSD, orderDirection: desc, where: { inputToken_: { activeOracle_not: "null" } }) {
       id
       name
-    }
-  }
-`;
-
-const MARKETS_ASSETS_QUERY = gql`
-  {
-    marketAssets {
-      market {
-        id
-      }
-      sToken {
-        id
-      }
-      spToken {
-        id
-      }
-      dToken {
-        id
+      marketAssets {
+        sToken {
+          id
+        }
+        spToken {
+          id
+        }
+        dToken {
+          id
+        }
       }
     }
   }
@@ -81,43 +67,29 @@ export class SiloFinanceDefinitionResolver {
   }
 
   async getSiloDefinition(network: Network) {
-    const siloData = await this.getSiloDefinitionData(network);
-    if (!siloData) return null;
+    const siloDefinitionData = await this.getSiloDefinitionData(network);
+    if (!siloDefinitionData) return null;
 
-    return siloData;
-  }
-
-  @Cache({
-    key: network => `studio:silo-finance:${network}:markets-assets-data`,
-    ttl: 15 * 60, // 15 minutes
-  })
-  private async getSiloMarketAssetsDefinitionData(network: Network) {
-    const url = SUBGRAPH_URL[network];
-    if (!url) return null;
-
-    const client = new GraphQLClient(url, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const marketsData = await client.request<SiloFinanceMarketAssetsResponse>(MARKETS_ASSETS_QUERY);
-
-    return marketsData;
-  }
-
-  async getMarketAssetTokenDefinition(network: Network) {
-    const marketAssetsData = await this.getSiloMarketAssetsDefinitionData(network);
-    if (!marketAssetsData) return null;
-
-    const marketAssetAddresses = marketAssetsData.marketAssets
+    const siloDefinitions = siloDefinitionData.markets
       .map(market => {
+        const siloAddress = market.id.toLowerCase();
+        const name = market.name;
+        const marketAssets = market.marketAssets.map(marketAsset => {
+          return {
+            sToken: marketAsset.sToken.id.toLowerCase(),
+            spToken: marketAsset.spToken.id.toLowerCase(),
+            dToken: marketAsset.dToken.id.toLowerCase(),
+          };
+        });
+
         return {
-          siloAddress: market.market.id.toLowerCase(),
-          sToken: market.sToken.id.toLowerCase(),
-          spToken: market.spToken.id.toLowerCase(),
-          dToken: market.dToken.id.toLowerCase(),
+          siloAddress,
+          name,
+          marketAssets,
         };
       })
       .flat();
 
-    return marketAssetAddresses;
+    return siloDefinitions;
   }
 }

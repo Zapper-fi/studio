@@ -1,8 +1,9 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
+import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { RawTokenBalance } from '~position/position-balance.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -14,22 +15,22 @@ import { SiloFinanceContractFactory, SiloMarketAsset } from '../contracts';
 
 import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
 
-export type ArbitrumDTokenDataProps = {
+export type DTokenDataProps = {
   liquidity: number;
   reserves: number[];
   apy: number;
   siloAddress: string;
 };
 
-export type ArbitrumDTokenDefinition = {
+export type DTokenDefinition = {
   address: string;
   siloAddress: string;
 };
 
 export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
   SiloMarketAsset,
-  ArbitrumDTokenDataProps,
-  ArbitrumDTokenDefinition
+  DTokenDataProps,
+  DTokenDefinition
 > {
   isExcludedFromBalances = true;
   isExcludedFromExplore = true;
@@ -50,19 +51,28 @@ export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePosi
     return this.contractFactory.siloMarketAsset({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<ArbitrumDTokenDefinition[]> {
-    const marketAssets = await this.siloDefinitionResolver.getMarketAssetTokenDefinition(this.network);
-    if (!marketAssets) return [];
+  async getDefinitions(): Promise<DTokenDefinition[]> {
+    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    if (!markets) return [];
 
-    return marketAssets.map(marketAsset => {
-      return {
-        address: marketAsset.dToken,
-        siloAddress: marketAsset.siloAddress,
-      };
-    });
+    const dTokenDefinition = markets
+      .map(market => {
+        const siloAddress = market.siloAddress;
+        const dTokenAddresses = market.marketAssets.map(x => x.dToken);
+
+        return dTokenAddresses.map(address => {
+          return {
+            address,
+            siloAddress,
+          };
+        });
+      })
+      .flat();
+
+    return dTokenDefinition;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<ArbitrumDTokenDefinition>): Promise<string[]> {
+  async getAddresses({ definitions }: GetAddressesParams<DTokenDefinition>): Promise<string[]> {
     return definitions.map(x => x.address);
   }
 
@@ -74,7 +84,7 @@ export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePosi
     return [1];
   }
 
-  async getDataProps(params: GetDataPropsParams<SiloMarketAsset, ArbitrumDTokenDataProps, ArbitrumDTokenDefinition>) {
+  async getDataProps(params: GetDataPropsParams<SiloMarketAsset, DTokenDataProps, DTokenDefinition>) {
     const defaultDataProps = await super.getDataProps(params);
     const siloAddress = params.definition.siloAddress;
     return { ...defaultDataProps, siloAddress };
@@ -83,7 +93,7 @@ export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePosi
   async getRawBalances(address: string): Promise<RawTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const appTokens = await this.appToolkit.getAppTokenPositions<ArbitrumDTokenDataProps>({
+    const appTokens = await this.appToolkit.getAppTokenPositions<DTokenDataProps>({
       appId: this.appId,
       network: this.network,
       groupIds: [this.groupId],
@@ -91,22 +101,49 @@ export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePosi
 
     const siloLensContract = this.contractFactory.siloLens({ address: this.siloLensAddress, network: this.network });
 
-    return Promise.all(
-      appTokens.map(async appToken => {
-        const balanceRaw = await multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
-        const totalBorrowWithInterest = await multicall
-          .wrap(siloLensContract)
-          .totalBorrowAmountWithInterest(appToken.dataProps.siloAddress, appToken.tokens[0].address);
+    return (
+      await Promise.all(
+        appTokens.map(async appToken => {
+          const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+          const totalBorrowWithInterest = await multicall
+            .wrap(siloLensContract)
+            .totalBorrowAmountWithInterest(appToken.dataProps.siloAddress, appToken.tokens[0].address);
 
-        const balance = new BigNumber(balanceRaw.toString())
-          .times(totalBorrowWithInterest.toString())
-          .div(appToken.supply * 10 ** appToken.decimals);
+          return [
+            {
+              key: this.appToolkit.getPositionKey(appToken),
+              balance: balanceRaw.toString(),
+            },
+            {
+              key: `${this.appToolkit.getPositionKey(appToken)}-underlying`,
+              balance: totalBorrowWithInterest.toString(),
+            },
+          ];
+        }),
+      )
+    ).flat();
+  }
 
-        return {
-          key: this.appToolkit.getPositionKey(appToken),
-          balance: balance.toString(),
-        };
-      }),
-    );
+  async drillRawBalances(balances: RawTokenBalance[]): Promise<AppTokenPositionBalance<DTokenDataProps>[]> {
+    const appTokens = await this.getPositionsForBalances();
+
+    const appTokenBalances = appTokens.map(token => {
+      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
+      const underlyingTokenBalance = balances.find(
+        b => b.key === `${this.appToolkit.getPositionKey(token)}-underlying`,
+      );
+
+      if (!tokenBalance || !underlyingTokenBalance) return null;
+
+      const result = drillBalance<typeof token, DTokenDataProps>(token, tokenBalance.balance, {
+        isDebt: this.isDebt,
+      });
+
+      const underlyingToken = drillBalance<typeof token, DTokenDataProps>(appTokens[0], underlyingTokenBalance.balance);
+
+      return { ...result, tokens: [underlyingToken] };
+    });
+
+    return _.compact(appTokenBalances);
   }
 }
