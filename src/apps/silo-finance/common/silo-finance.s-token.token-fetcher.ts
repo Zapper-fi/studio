@@ -14,22 +14,22 @@ import { SiloFinanceContractFactory, SiloMarketAsset } from '../contracts';
 
 import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
 
-export type ArbitrumSTokenDataProps = {
+export type STokenDataProps = {
   liquidity: number;
   reserves: number[];
   apy: number;
   siloAddress: string;
 };
 
-export type ArbitrumSTokenDefinition = {
+export type STokenDefinition = {
   address: string;
   siloAddress: string;
 };
 
 export abstract class SiloFinanceSTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
   SiloMarketAsset,
-  ArbitrumSTokenDataProps,
-  ArbitrumSTokenDefinition
+  STokenDataProps,
+  STokenDefinition
 > {
   isExcludedFromBalances = true;
   isExcludedFromExplore = true;
@@ -50,19 +50,28 @@ export abstract class SiloFinanceSTokenTokenFetcher extends AppTokenTemplatePosi
     return this.contractFactory.siloMarketAsset({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<ArbitrumSTokenDefinition[]> {
-    const marketAssets = await this.siloDefinitionResolver.getMarketAssetTokenDefinition(this.network);
-    if (!marketAssets) return [];
+  async getDefinitions(): Promise<STokenDefinition[]> {
+    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    if (!markets) return [];
 
-    return marketAssets.map(marketAsset => {
-      return {
-        address: marketAsset.sToken,
-        siloAddress: marketAsset.siloAddress,
-      };
-    });
+    const sTokenDefinition = markets
+      .map(market => {
+        const siloAddress = market.siloAddress;
+        const sTokenAddresses = market.marketAssets.map(x => x.sToken);
+
+        return sTokenAddresses.map(address => {
+          return {
+            address,
+            siloAddress,
+          };
+        });
+      })
+      .flat();
+
+    return sTokenDefinition;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<ArbitrumSTokenDefinition>): Promise<string[]> {
+  async getAddresses({ definitions }: GetAddressesParams<STokenDefinition>): Promise<string[]> {
     return definitions.map(x => x.address);
   }
 
@@ -74,7 +83,7 @@ export abstract class SiloFinanceSTokenTokenFetcher extends AppTokenTemplatePosi
     return [1];
   }
 
-  async getDataProps(params: GetDataPropsParams<SiloMarketAsset, ArbitrumSTokenDataProps, ArbitrumSTokenDefinition>) {
+  async getDataProps(params: GetDataPropsParams<SiloMarketAsset, STokenDataProps, STokenDefinition>) {
     const defaultDataProps = await super.getDataProps(params);
     const siloAddress = params.definition.siloAddress;
     return { ...defaultDataProps, siloAddress };
@@ -83,7 +92,7 @@ export abstract class SiloFinanceSTokenTokenFetcher extends AppTokenTemplatePosi
   async getRawBalances(address: string): Promise<RawTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const appTokens = await this.appToolkit.getAppTokenPositions<ArbitrumSTokenDataProps>({
+    const appTokens = await this.appToolkit.getAppTokenPositions<STokenDataProps>({
       appId: this.appId,
       network: this.network,
       groupIds: [this.groupId],

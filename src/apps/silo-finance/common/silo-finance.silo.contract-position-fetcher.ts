@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
-import { formatEther } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildPercentageDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -29,8 +28,8 @@ type SiloContractPositionDefinition = {
 };
 
 type SiloContractPositionDataProps = DefaultDataProps & {
-  supplyApys: BigNumberish[];
-  borrowApys: BigNumberish[];
+  supplyApys: number[];
+  borrowApys: number[];
 };
 
 export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -54,12 +53,12 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<SiloContractPositionDefinition[]> {
-    const data = await this.siloDefinitionResolver.getSiloDefinition(this.network);
-    if (!data) return [];
+    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    if (!markets) return [];
 
     const definitions = await Promise.all(
-      data.markets.map(async market => {
-        const siloAddress = market.id;
+      markets.map(async market => {
+        const siloAddress = market.siloAddress;
         const siloContract = this.getContract(siloAddress);
         const assets = await siloContract.getAssets();
         const assetStorages = await Promise.all(assets.map(asset => multicall.wrap(siloContract).assetStorage(asset)));
@@ -93,16 +92,16 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
   >): Promise<SiloContractPositionDataProps> {
     const siloLensContract = this.contractFactory.siloLens({ address: this.siloLensAddress, network: this.network });
 
-    const supplyApys = await Promise.all(
+    const supplyApysRaw = await Promise.all(
       definition.assets.map(asset => multicall.wrap(siloLensContract).depositAPY(contractPosition.address, asset)),
     );
-    const borrowApys = await Promise.all(
+    const borrowApysRaw = await Promise.all(
       definition.assets.map(asset => multicall.wrap(siloLensContract).borrowAPY(contractPosition.address, asset)),
     );
 
     return {
-      supplyApys,
-      borrowApys,
+      supplyApys: supplyApysRaw.map(x => Number(x) / 10 ** 18),
+      borrowApys: borrowApysRaw.map(x => Number(x) / 10 ** 18),
     };
   }
 
@@ -118,11 +117,11 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
         return [
           {
             label: `${tokenLabel} Supply APY`,
-            value: buildPercentageDisplayItem(+formatEther(dataProps.supplyApys[idx]) * 100),
+            value: buildPercentageDisplayItem(dataProps.supplyApys[idx] * 100),
           },
           {
             label: `${tokenLabel} Borrow APY`,
-            value: buildPercentageDisplayItem(+formatEther(dataProps.borrowApys[idx]) * 100),
+            value: buildPercentageDisplayItem(dataProps.borrowApys[idx] * 100),
           },
         ];
       })
