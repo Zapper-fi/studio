@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.412.2](https://github.com/Zapper-fi/studio/compare/v0.412.1...v0.412.2) (2023-03-20)
+
+
+### Bug Fixes
+
+* **silo-finance:** Fix asset token definitions and d-token balances ([#2443](https://github.com/Zapper-fi/studio/issues/2443)) ([d8e9d21](https://github.com/Zapper-fi/studio/commit/d8e9d21f5677d892c65adcb2e220b28961e1fb5d))
+
 ## [0.412.1](https://github.com/Zapper-fi/studio/compare/v0.412.0...v0.412.1) (2023-03-18)
 
 
