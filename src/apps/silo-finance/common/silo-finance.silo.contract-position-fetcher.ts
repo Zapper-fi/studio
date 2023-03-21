@@ -3,7 +3,7 @@ import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildPercentageDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps, StatsItem } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -159,6 +159,14 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
     definition,
   }: GetDisplayPropsParams<Silo, SiloContractPositionDataProps, SiloContractPositionDefinition>): Promise<string> {
     return `${definition.name} Silo`;
+  }
+
+  async getImages({
+    definition,
+  }: GetDisplayPropsParams<Silo, SiloContractPositionDataProps, SiloContractPositionDefinition>): Promise<string[]> {
+    return definition.assets.map(underlyinAssetAddress => {
+      return getTokenImg(underlyinAssetAddress, this.network);
+    });
   }
 
   getTokenBalancesPerPosition({
