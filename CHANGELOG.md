@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.413.1](https://github.com/Zapper-fi/studio/compare/v0.413.0...v0.413.1) (2023-03-21)
+
+
+### Bug Fixes
+
+* **mux:** Fix Mux perp definitions and balances ([#2451](https://github.com/Zapper-fi/studio/issues/2451)) ([8f63d9f](https://github.com/Zapper-fi/studio/commit/8f63d9f34191b2a7a3b65104e0e4271a134ba6a5))
+
 ## [0.413.0](https://github.com/Zapper-fi/studio/compare/v0.412.3...v0.413.0) (2023-03-21)
 
 
