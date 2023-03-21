@@ -4,9 +4,47 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Vaults, VaultsInterface } from '../Vaults';
+import type { OvertimeAmmLp, OvertimeAmmLpInterface } from '../OvertimeAmmLp';
 
 const _abi = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '_whitelistAddress',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: '_flag',
+        type: 'bool',
+      },
+    ],
+    name: 'AddedIntoWhitelist',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: '_whitelistAddress',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: '_flag',
+        type: 'bool',
+      },
+    ],
+    name: 'AddedIntoWhitelistStaker',
+    type: 'event',
+  },
   {
     anonymous: false,
     inputs: [
@@ -32,6 +70,19 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
+        name: 'newProvider',
+        type: 'address',
+      },
+    ],
+    name: 'DefaultLiquidityProviderChanged',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
         name: 'user',
         type: 'address',
       },
@@ -39,6 +90,12 @@ const _abi = [
         indexed: false,
         internalType: 'uint256',
         name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'round',
         type: 'uint256',
       },
     ],
@@ -134,6 +191,25 @@ const _abi = [
     inputs: [
       {
         indexed: false,
+        internalType: 'address',
+        name: 'newMastercopy',
+        type: 'address',
+      },
+    ],
+    name: 'PoolRoundMastercopyChanged',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [],
+    name: 'PoolStarted',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
         internalType: 'uint256',
         name: 'round',
         type: 'uint256',
@@ -167,43 +243,17 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'allocationLimitsPerMarketPerRound',
-        type: 'uint256',
-      },
-    ],
-    name: 'SetAllocationLimits',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'SetMinTradeAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'SetMinTradeAmount',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'priceLowerLimit',
+        name: '_round',
         type: 'uint256',
       },
       {
         indexed: false,
-        internalType: 'uint256',
-        name: 'priceUpperLimit',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'roundPool',
+        type: 'address',
       },
     ],
-    name: 'SetPriceLimits',
+    name: 'RoundPoolCreated',
     type: 'event',
   },
   {
@@ -212,11 +262,11 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'sUSD',
+        name: 'sportAMM',
         type: 'address',
       },
     ],
-    name: 'SetSUSD',
+    name: 'SportAMMChanged',
     type: 'event',
   },
   {
@@ -224,12 +274,12 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'int256',
-        name: 'skewImpact',
-        type: 'int256',
+        internalType: 'uint256',
+        name: '_stakedThalesMultiplier',
+        type: 'uint256',
       },
     ],
-    name: 'SetSkewImpactLimit',
+    name: 'StakedThalesMultiplierChanged',
     type: 'event',
   },
   {
@@ -251,74 +301,11 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'thalesAmm',
-        type: 'address',
-      },
-    ],
-    name: 'ThalesAMMChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'market',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'enum IThalesAMM.Position',
-        name: 'position',
-        type: 'uint8',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'quote',
-        type: 'uint256',
-      },
-    ],
-    name: 'TradeExecuted',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
         name: 'account',
         type: 'address',
       },
     ],
     name: 'Unpaused',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'utilizationRate',
-        type: 'uint256',
-      },
-    ],
-    name: 'UtilizationRateChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [],
-    name: 'VaultStarted',
     type: 'event',
   },
   {
@@ -342,19 +329,6 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'allocationLimitsPerMarketPerRound',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256',
@@ -363,49 +337,6 @@ const _abi = [
       },
     ],
     name: 'allocationPerRound',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'allocationSpentInARound',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'allocationSpentPerRound',
     outputs: [
       {
         internalType: 'uint256',
@@ -454,27 +385,26 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'capPerRound',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    inputs: [],
+    name: 'closeRound',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'closeRound',
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'market',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountToMint',
+        type: 'uint256',
+      },
+    ],
+    name: 'commitTrade',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -523,6 +453,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'defaultLiquidityProvider',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
@@ -536,23 +479,19 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'depositReceipts',
+    inputs: [],
+    name: 'exerciseMarketsReadyToExercised',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'firstRoundStartTime',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'round',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -567,11 +506,30 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'getAvailableAllocationForMarket',
+    name: 'getMarketPool',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'roundPool',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'market',
+        type: 'address',
+      },
+    ],
+    name: 'getMarketRound',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: '_round',
         type: 'uint256',
       },
     ],
@@ -579,12 +537,131 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'getAvailableToDeposit',
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getMaxAvailableDepositForUser',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'returned',
+        name: 'maxDepositForUser',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'availableToDepositForUser',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'stakedThalesForUser',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getNeededStakedThalesToWithdrawForUser',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'neededStaked',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'market',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'optionsAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'enum ISportsAMM.Position',
+        name: 'position',
+        type: 'uint8',
+      },
+    ],
+    name: 'getOptionsForBuy',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'market',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'optionsAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'position',
+        type: 'address',
+      },
+    ],
+    name: 'getOptionsForBuyByAddress',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'market',
+        type: 'address',
+      },
+    ],
+    name: 'getOrCreateMarketPool',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'roundPool',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_round',
+        type: 'uint256',
+      },
+    ],
+    name: 'getRoundEndTime',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -598,13 +675,8 @@ const _abi = [
         name: '_round',
         type: 'uint256',
       },
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
     ],
-    name: 'getBalancesPerRound',
+    name: 'getRoundStartTime',
     outputs: [
       {
         internalType: 'uint256',
@@ -617,12 +689,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'getCurrentRoundEnd',
+    name: 'hasMarketsReadyToBeExercised',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'bool',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -645,8 +717,8 @@ const _abi = [
             type: 'address',
           },
           {
-            internalType: 'contract IThalesAMM',
-            name: '_thalesAmm',
+            internalType: 'contract ISportsAMM',
+            name: '_sportsAmm',
             type: 'address',
           },
           {
@@ -661,32 +733,7 @@ const _abi = [
           },
           {
             internalType: 'uint256',
-            name: '_priceLowerLimit',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_priceUpperLimit',
-            type: 'uint256',
-          },
-          {
-            internalType: 'int256',
-            name: '_skewImpactLimit',
-            type: 'int256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_allocationLimitsPerMarketPerRound',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
             name: '_maxAllowedDeposit',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_utilizationRate',
             type: 'uint256',
           },
           {
@@ -699,13 +746,8 @@ const _abi = [
             name: '_maxAllowedUsers',
             type: 'uint256',
           },
-          {
-            internalType: 'uint256',
-            name: '_minTradeAmount',
-            type: 'uint256',
-          },
         ],
-        internalType: 'struct AmmVault.InitParams',
+        internalType: 'struct SportAMMLiquidityPool.InitParams',
         name: 'params',
         type: 'tuple',
       },
@@ -729,6 +771,49 @@ const _abi = [
       },
     ],
     name: 'isTradingMarketInARound',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'isUserLPing',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: 'isUserInLP',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'marketAlreadyExercisedInRound',
     outputs: [
       {
         internalType: 'bool',
@@ -780,12 +865,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'minTradeAmount',
+    name: 'needsTransformingCollateral',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'bool',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -819,6 +904,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'onlyWhitelistedStakersAllowed',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'owner',
     outputs: [
       {
@@ -845,25 +943,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'priceLowerLimit',
+    name: 'poolRoundMastercopy',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'address',
         name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'priceUpperLimit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -922,12 +1007,12 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'roundStartTime',
+    name: 'roundPools',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'address',
         name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -949,12 +1034,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_allocationLimitsPerMarketPerRound',
-        type: 'uint256',
+        internalType: 'address',
+        name: '_defaultLiquidityProvider',
+        type: 'address',
       },
     ],
-    name: 'setAllocationLimits',
+    name: 'setDefaultLiquidityProvider',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1001,12 +1086,25 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_minTradeAmount',
-        type: 'uint256',
+        internalType: 'bool',
+        name: '_needsTransformingCollateral',
+        type: 'bool',
       },
     ],
-    name: 'setMinTradeAmount',
+    name: 'setNeedsTransformingCollateral',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: 'flagToSet',
+        type: 'bool',
+      },
+    ],
+    name: 'setOnlyWhitelistedStakersAllowed',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1027,17 +1125,25 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_priceLowerLimit',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_priceUpperLimit',
-        type: 'uint256',
+        internalType: 'bool',
+        name: '_setPausing',
+        type: 'bool',
       },
     ],
-    name: 'setPriceLimits',
+    name: 'setPaused',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_poolRoundMastercopy',
+        type: 'address',
+      },
+    ],
+    name: 'setPoolRoundMastercopy',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1058,12 +1164,25 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'int256',
-        name: '_skewImpactLimit',
-        type: 'int256',
+        internalType: 'contract ISportsAMM',
+        name: '_sportAMM',
+        type: 'address',
       },
     ],
-    name: 'setSkewImpactLimit',
+    name: 'setSportAmm',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_stakedThalesMultiplier',
+        type: 'uint256',
+      },
+    ],
+    name: 'setStakedThalesMultiplier',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1084,12 +1203,17 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'contract IThalesAMM',
-        name: '_thalesAMM',
-        type: 'address',
+        internalType: 'address[]',
+        name: '_whitelistedAddresses',
+        type: 'address[]',
+      },
+      {
+        internalType: 'bool',
+        name: '_flag',
+        type: 'bool',
       },
     ],
-    name: 'setThalesAmm',
+    name: 'setWhitelistedAddresses',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1097,24 +1221,42 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_utilizationRate',
-        type: 'uint256',
+        internalType: 'address[]',
+        name: '_whitelistedAddresses',
+        type: 'address[]',
+      },
+      {
+        internalType: 'bool',
+        name: '_flag',
+        type: 'bool',
       },
     ],
-    name: 'setUtilizationRate',
+    name: 'setWhitelistedStakerAddresses',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'skewImpactLimit',
+    name: 'sportsAMM',
     outputs: [
       {
-        internalType: 'int256',
+        internalType: 'contract ISportsAMM',
         name: '',
-        type: 'int256',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'stakedThalesMultiplier',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -1135,79 +1277,32 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'startVault',
+    name: 'start',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'thalesAMM',
+    name: 'started',
     outputs: [
       {
-        internalType: 'contract IThalesAMM',
+        internalType: 'bool',
         name: '',
-        type: 'address',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'market',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'enum IThalesAMM.Position',
-        name: 'position',
-        type: 'uint8',
-      },
-    ],
-    name: 'trade',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'tradingAllocation',
+    name: 'totalDeposited',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'tradingMarketPositionPerRound',
-    outputs: [
-      {
-        internalType: 'enum IThalesAMM.Position',
-        name: '',
-        type: 'uint8',
       },
     ],
     stateMutability: 'view',
@@ -1253,6 +1348,67 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address[]',
+        name: 'tokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'address payable',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'all',
+        type: 'bool',
+      },
+    ],
+    name: 'transferTokens',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
+        name: 'tokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'address payable',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'all',
+        type: 'bool',
+      },
+      {
+        internalType: 'address',
+        name: 'pool',
+        type: 'address',
+      },
+    ],
+    name: 'transferTokensFromLiquidityPool',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
@@ -1276,7 +1432,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'usersCurrentlyInVault',
+    name: 'usersCurrentlyInPool',
     outputs: [
       {
         internalType: 'uint256',
@@ -1312,21 +1468,33 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'utilizationRate',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'whitelistedDeposits',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'bool',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'vaultStarted',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'whitelistedStakers',
     outputs: [
       {
         internalType: 'bool',
@@ -1365,12 +1533,12 @@ const _abi = [
   },
 ];
 
-export class Vaults__factory {
+export class OvertimeAmmLp__factory {
   static readonly abi = _abi;
-  static createInterface(): VaultsInterface {
-    return new utils.Interface(_abi) as VaultsInterface;
+  static createInterface(): OvertimeAmmLpInterface {
+    return new utils.Interface(_abi) as OvertimeAmmLpInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Vaults {
-    return new Contract(address, _abi, signerOrProvider) as Vaults;
+  static connect(address: string, signerOrProvider: Signer | Provider): OvertimeAmmLp {
+    return new Contract(address, _abi, signerOrProvider) as OvertimeAmmLp;
   }
 }

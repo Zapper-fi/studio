@@ -7,6 +7,8 @@ import { OptimismThalesEscrowContractPositionFetcher } from './optimism/thales.e
 import { OptimismThalesPool2ContractPositionFetcher } from './optimism/thales.pool2.contract-position-fetcher';
 import { OptimismThalesStakingContractPositionFetcher } from './optimism/thales.staking.contract-position-fetcher';
 import { OptimismThalesVaultContractPositionFetcher } from './optimism/thales.vault.contract-position-fetcher';
+import { OptimismThalesOvertimeAmmLpContractPositionFetcher } from './optimism/thales.overtime-amm-lp.contract-position-fetcher';
+import { ArbitrumThalesOvertimeAmmLpContractPositionFetcher } from './arbitrum/thales.overtime-amm-lp.contract-position-fetcher';
 
 @Module({
   providers: [
@@ -15,6 +17,8 @@ import { OptimismThalesVaultContractPositionFetcher } from './optimism/thales.va
     OptimismThalesEscrowContractPositionFetcher,
     OptimismThalesPool2ContractPositionFetcher,
     OptimismThalesVaultContractPositionFetcher,
+    OptimismThalesOvertimeAmmLpContractPositionFetcher,
+    ArbitrumThalesOvertimeAmmLpContractPositionFetcher,
   ],
 })
-export class ThalesAppModule extends AbstractApp() {}
+export class ThalesAppModule extends AbstractApp() { }
