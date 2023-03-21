@@ -36,6 +36,8 @@ export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePosi
   isExcludedFromExplore = true;
   isExcludedFromTvl = true;
 
+  isDebt = true;
+
   abstract siloLensAddress: string;
 
   constructor(

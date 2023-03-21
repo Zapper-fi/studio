@@ -1,8 +1,9 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
+import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { RawTokenBalance } from '~position/position-balance.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -100,22 +101,47 @@ export abstract class SiloFinanceSTokenTokenFetcher extends AppTokenTemplatePosi
 
     const siloLensContract = this.contractFactory.siloLens({ address: this.siloLensAddress, network: this.network });
 
-    return Promise.all(
-      appTokens.map(async appToken => {
-        const balanceRaw = await multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
-        const totalDepositWithInterest = await multicall
-          .wrap(siloLensContract)
-          .totalDepositsWithInterest(appToken.dataProps.siloAddress, appToken.tokens[0].address);
+    return (
+      await Promise.all(
+        appTokens.map(async appToken => {
+          const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+          const totalDepositWithInterest = await multicall
+            .wrap(siloLensContract)
+            .totalDepositsWithInterest(appToken.dataProps.siloAddress, appToken.tokens[0].address);
 
-        const balance = new BigNumber(balanceRaw.toString())
-          .times(totalDepositWithInterest.toString())
-          .div(appToken.supply * 10 ** appToken.decimals);
+          return [
+            {
+              key: this.appToolkit.getPositionKey(appToken),
+              balance: balanceRaw.toString(),
+            },
+            {
+              key: `${this.appToolkit.getPositionKey(appToken)}-underlying`,
+              balance: totalDepositWithInterest.toString(),
+            },
+          ];
+        }),
+      )
+    ).flat();
+  }
 
-        return {
-          key: this.appToolkit.getPositionKey(appToken),
-          balance: balance.toString(),
-        };
-      }),
-    );
+  async drillRawBalances(balances: RawTokenBalance[]): Promise<AppTokenPositionBalance<STokenDataProps>[]> {
+    const appTokens = await this.getPositionsForBalances();
+
+    const appTokenBalances = appTokens.map(token => {
+      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
+      const underlyingTokenBalance = balances.find(
+        b => b.key === `${this.appToolkit.getPositionKey(token)}-underlying`,
+      );
+
+      if (!tokenBalance || !underlyingTokenBalance) return null;
+
+      const result = drillBalance<typeof token, STokenDataProps>(token, tokenBalance.balance);
+
+      const underlyingToken = drillBalance<typeof token, STokenDataProps>(appTokens[0], underlyingTokenBalance.balance);
+
+      return { ...result, tokens: [underlyingToken] };
+    });
+
+    return _.compact(appTokenBalances);
   }
 }
