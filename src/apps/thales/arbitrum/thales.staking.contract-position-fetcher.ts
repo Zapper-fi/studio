@@ -2,6 +2,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { ThalesStakingContractPositionFetcher } from '../common/thales.staking.contract-position-fetcher';
 
 @PositionTemplate()
-export class OptimismThalesStakingContractPositionFetcher extends ThalesStakingContractPositionFetcher {
-  contractAddress = '0xc392133eea695603b51a5d5de73655d571c2ce51';
+export class ArbitrumThalesStakingContractPositionFetcher extends ThalesStakingContractPositionFetcher {
+  contractAddress = '0x160ca569999601bca06109d42d561d85d6bb4b57';
 }
