@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
+import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -68,9 +69,6 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
 
     const definitions = collateralTokensList.flatMap(collateralToken => {
       return indexTokenList.flatMap(indexToken => {
-        // Avoid showing the same balance twice
-        if (indexToken.address === collateralToken.address) return [];
-
         const collateralTokenAddress = collateralToken.address;
         const collateralTokenId = collateralToken.muxTokenId;
         const indexTokenAddress = indexToken.address;
@@ -104,31 +102,27 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
       });
     });
 
-    return definitions;
+    return _.compact(definitions);
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<MuxVault, MuxPerpContractPositionDefinition>) {
-    const collateralToken = {
-      metaType: MetaType.SUPPLIED,
-      address: definition.collateralTokenAddress,
-      network: this.network,
-    };
-
-    const indexToken = {
-      metaType: MetaType.SUPPLIED,
-      address: definition.indexTokenAddress,
-      network: this.network,
-    };
-
-    const usdcToken = {
-      metaType: MetaType.SUPPLIED,
-      address: this.usdcAddress,
-      network: this.network,
-    };
-
-    return collateralToken.address === this.usdcAddress || indexToken.address === this.usdcAddress
-      ? [collateralToken, indexToken]
-      : [collateralToken, indexToken, usdcToken];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.collateralTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.indexTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: this.usdcAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getDataProps({
@@ -161,7 +155,7 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
     const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
 
     const subAccountId = encodeSubAccountId(address, collateralTokenId, indexTokenId, isLong);
-    if (!subAccountId) return contractPosition.tokens.map(() => 0);
+    if (!subAccountId) return [0, 0, 0];
 
     const reader = this.contractFactory.muxReader({ address: this.readerAddress, network: this.network });
     const subAccounts = await multicall.wrap(reader).getSubAccounts([subAccountId]);
@@ -181,23 +175,16 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
     const collateralAmountUsd = collateralAmount.times(collateralToken.price);
 
     const hasProfit = pnlUsd.gt(0);
-    const profitToken = isLong ? indexToken : usdcToken ?? indexToken;
+    const profitToken = isLong ? indexToken : usdcToken;
 
-    if (!hasProfit) {
-      const balanceInCollateralToken = collateralAmountUsd.plus(pnlUsd).div(collateralToken.price);
-      const balanceInCollateralTokenRaw = balanceInCollateralToken.shiftedBy(collateralToken.decimals).toFixed(0);
-      return [balanceInCollateralTokenRaw, 0, 0];
-    }
+    const collateralBalanceRaw = hasProfit
+      ? collateralAmount
+      : collateralAmountUsd.plus(pnlUsd).div(collateralToken.price);
+    const collateralBalance = collateralBalanceRaw.shiftedBy(collateralToken.decimals).toFixed(0);
 
-    const balanceInCollateralToken = collateralAmount;
-    const balanceInProfitToken = pnlUsd.div(profitToken.price);
-    const balanceInCollateralTokenRaw = balanceInCollateralToken.shiftedBy(collateralToken.decimals).toFixed(0);
-    const balanceInProfitTokenRaw = balanceInProfitToken.shiftedBy(profitToken.decimals).toFixed(0);
+    const profitTokenBalanceRaw = pnlUsd.div(profitToken.price);
+    const profitTokenBalance = profitTokenBalanceRaw.shiftedBy(profitToken.decimals).toFixed(0);
 
-    if (isLong) return [balanceInCollateralTokenRaw, balanceInProfitTokenRaw];
-
-    return usdcToken
-      ? [balanceInCollateralTokenRaw, 0, balanceInProfitTokenRaw]
-      : [balanceInCollateralTokenRaw, balanceInProfitTokenRaw];
+    return [collateralBalance, 0, profitTokenBalance];
   }
 }
