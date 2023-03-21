@@ -26,7 +26,7 @@ export class OptimismPolynomialPerpContractPositionFetcher extends OptimismSynth
     const mcAccountResolver = multicall.wrap(accountResolver);
     const authorityAccounts = await mcAccountResolver.getAuthorityAccounts(address);
     if (authorityAccounts.length === 0) { return ZERO_ADDRESS; }
-    return authorityAccounts[0];
+    return authorityAccounts[0].toLowerCase();
   }
 
 }
