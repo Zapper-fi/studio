@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.413.0](https://github.com/Zapper-fi/studio/compare/v0.412.3...v0.413.0) (2023-03-21)
+
+
+### Features
+
+* **thales:** overtime AMM LP ([#2447](https://github.com/Zapper-fi/studio/issues/2447)) ([f4f6b02](https://github.com/Zapper-fi/studio/commit/f4f6b0299bb2d5422b9e1138682f68cbad1c2e1a))
+
+
+### Bug Fixes
+
+* **polynomial:** smart account address ([#2448](https://github.com/Zapper-fi/studio/issues/2448)) ([c505885](https://github.com/Zapper-fi/studio/commit/c50588596c34c4e8e6577009f23eee84c5e59673))
+* **silo-finance:** Fix S token balances and images ([#2450](https://github.com/Zapper-fi/studio/issues/2450)) ([819343e](https://github.com/Zapper-fi/studio/commit/819343e8a72b3374f193b15bf8c5f72f94187cc4))
+
 ## [0.412.3](https://github.com/Zapper-fi/studio/compare/v0.412.2...v0.412.3) (2023-03-20)
 
 
