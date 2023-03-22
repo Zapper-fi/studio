@@ -19,7 +19,7 @@ export class RoboVaultApiClient {
     ttl: 30 * 60,
   })
   async getCachedVaults(network: Network) {
-    const endpoint = 'https://api.robo-vault.com/vaults';
+    const endpoint = 'https://api.v2.robo-vault.com/vaults';
     const data = await axios.get<RoboVaultDetails[]>(endpoint).then(v => v.data);
     const chainData = data.filter(({ chain, status }) => chain === network && status === 'active');
     return chainData;
