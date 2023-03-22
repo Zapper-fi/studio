@@ -2,6 +2,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { ThalesEscrowContractPositionFetcher } from '../common/thales.escrow.contract-position-fetcher';
 
 @PositionTemplate()
-export class OptimismThalesEscrowContractPositionFetcher extends ThalesEscrowContractPositionFetcher {
-  veTokenAddress = '0xa25816b9605009aa446d4d597f0aa46fd828f056';
+export class ArbitrumThalesEscrowContractPositionFetcher extends ThalesEscrowContractPositionFetcher {
+  veTokenAddress = '0x391a45f31c1837e3d837c23e05f42a098329d50d';
 }
