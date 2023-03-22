@@ -1,4 +1,3 @@
-
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -10,7 +9,7 @@ import { TeahouseVault, TeahouseContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class OptimismTeahouseVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<TeahouseVault> {
-  groupLabel = 'vault share';
+  groupLabel = 'Vault share';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -51,5 +50,4 @@ export class OptimismTeahouseVaultsTokenFetcher extends AppTokenTemplatePosition
         .toNumber() / 100000000;
     return [pricePerShare];
   }
-
 }

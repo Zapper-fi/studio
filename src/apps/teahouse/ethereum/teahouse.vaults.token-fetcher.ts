@@ -9,7 +9,7 @@ import { TeahouseVault, TeahouseContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class EthereumTeahouseVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<TeahouseVault> {
-  groupLabel = 'vault share';
+  groupLabel = 'Vault share';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
