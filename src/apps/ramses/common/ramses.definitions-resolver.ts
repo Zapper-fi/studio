@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 
-export interface SolidLizardApiPairData {
+export interface RamsesApiPairData {
   pairs: {
     id: string;
     symbol: string;
@@ -74,7 +74,6 @@ const poolsQuery = gql`
           }
         }
       }
-      fee
       gaugebribes {
         id
         bribeTokens {
@@ -89,14 +88,14 @@ const poolsQuery = gql`
 `;
 
 @Injectable()
-export class SolidLizardDefinitionsResolver {
+export class RamsesDefinitionsResolver {
   @Cache({
-    key: `studio:solid-lizard:pool-token-data`,
+    key: `studio:ramses:pool-token-data`,
     ttl: 5 * 60, // 60 minutes
   })
   private async getPoolDefinitionsData() {
-    const response = await gqlFetch<SolidLizardApiPairData>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/solidlizardfinance/sliz',
+    const response = await gqlFetch<RamsesApiPairData>({
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sullivany/ramses',
       query: poolsQuery,
     });
 
