@@ -10,6 +10,7 @@ import {
   DopexEthSsov__factory,
   DopexGOhmSsov__factory,
   DopexGmxSsov__factory,
+  DopexOptionToken__factory,
   DopexRdpxSsov__factory,
   DopexRewardDistribution__factory,
   DopexSingleRewardStaking__factory,
@@ -42,6 +43,9 @@ export class DopexContractFactory extends ContractFactory {
   dopexGmxSsov({ address, network }: ContractOpts) {
     return DopexGmxSsov__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  dopexOptionToken({ address, network }: ContractOpts) {
+    return DopexOptionToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   dopexRdpxSsov({ address, network }: ContractOpts) {
     return DopexRdpxSsov__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -67,6 +71,7 @@ export type { DopexDualRewardStaking } from './ethers';
 export type { DopexEthSsov } from './ethers';
 export type { DopexGOhmSsov } from './ethers';
 export type { DopexGmxSsov } from './ethers';
+export type { DopexOptionToken } from './ethers';
 export type { DopexRdpxSsov } from './ethers';
 export type { DopexRewardDistribution } from './ethers';
 export type { DopexSingleRewardStaking } from './ethers';
