@@ -2,468 +2,468 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
 import type {
   AladdinConcentratorVeRewards,
   AladdinConcentratorVeRewardsInterface,
-} from "../AladdinConcentratorVeRewards";
+} from '../AladdinConcentratorVeRewards';
 
 const _abi = [
   {
-    name: "CommitAdmin",
+    name: 'CommitAdmin',
     inputs: [
       {
-        type: "address",
-        name: "admin",
+        type: 'address',
+        name: 'admin',
         indexed: false,
       },
     ],
     anonymous: false,
-    type: "event",
+    type: 'event',
   },
   {
-    name: "ApplyAdmin",
+    name: 'ApplyAdmin',
     inputs: [
       {
-        type: "address",
-        name: "admin",
+        type: 'address',
+        name: 'admin',
         indexed: false,
       },
     ],
     anonymous: false,
-    type: "event",
+    type: 'event',
   },
   {
-    name: "ToggleAllowCheckpointToken",
+    name: 'ToggleAllowCheckpointToken',
     inputs: [
       {
-        type: "bool",
-        name: "toggle_flag",
+        type: 'bool',
+        name: 'toggle_flag',
         indexed: false,
       },
     ],
     anonymous: false,
-    type: "event",
+    type: 'event',
   },
   {
-    name: "CheckpointToken",
+    name: 'CheckpointToken',
     inputs: [
       {
-        type: "uint256",
-        name: "time",
+        type: 'uint256',
+        name: 'time',
         indexed: false,
       },
       {
-        type: "uint256",
-        name: "tokens",
+        type: 'uint256',
+        name: 'tokens',
         indexed: false,
       },
     ],
     anonymous: false,
-    type: "event",
+    type: 'event',
   },
   {
-    name: "Claimed",
+    name: 'Claimed',
     inputs: [
       {
-        type: "address",
-        name: "recipient",
+        type: 'address',
+        name: 'recipient',
         indexed: true,
       },
       {
-        type: "uint256",
-        name: "amount",
+        type: 'uint256',
+        name: 'amount',
         indexed: false,
       },
       {
-        type: "uint256",
-        name: "claim_epoch",
+        type: 'uint256',
+        name: 'claim_epoch',
         indexed: false,
       },
       {
-        type: "uint256",
-        name: "max_epoch",
+        type: 'uint256',
+        name: 'max_epoch',
         indexed: false,
       },
     ],
     anonymous: false,
-    type: "event",
+    type: 'event',
   },
   {
     outputs: [],
     inputs: [
       {
-        type: "address",
-        name: "_voting_escrow",
+        type: 'address',
+        name: '_voting_escrow',
       },
       {
-        type: "uint256",
-        name: "_start_time",
+        type: 'uint256',
+        name: '_start_time',
       },
       {
-        type: "address",
-        name: "_token",
+        type: 'address',
+        name: '_token',
       },
       {
-        type: "address",
-        name: "_admin",
+        type: 'address',
+        name: '_admin',
       },
       {
-        type: "address",
-        name: "_emergency_return",
+        type: 'address',
+        name: '_emergency_return',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
-    name: "checkpoint_token",
+    name: 'checkpoint_token',
     outputs: [],
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "ve_for_at",
+    name: 've_for_at',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address",
-        name: "_user",
+        type: 'address',
+        name: '_user',
       },
       {
-        type: "uint256",
-        name: "_timestamp",
+        type: 'uint256',
+        name: '_timestamp',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "checkpoint_total_supply",
+    name: 'checkpoint_total_supply',
     outputs: [],
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "claim",
+    name: 'claim',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address",
-        name: "_addr",
+        type: 'address',
+        name: '_addr',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "claim_many",
+    name: 'claim_many',
     outputs: [
       {
-        type: "bool",
-        name: "",
+        type: 'bool',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address[20]",
-        name: "_receivers",
+        type: 'address[20]',
+        name: '_receivers',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "burn",
+    name: 'burn',
     outputs: [
       {
-        type: "bool",
-        name: "",
+        type: 'bool',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address",
-        name: "_coin",
+        type: 'address',
+        name: '_coin',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "commit_admin",
+    name: 'commit_admin',
     outputs: [],
     inputs: [
       {
-        type: "address",
-        name: "_addr",
+        type: 'address',
+        name: '_addr',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "apply_admin",
+    name: 'apply_admin',
     outputs: [],
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "toggle_allow_checkpoint_token",
+    name: 'toggle_allow_checkpoint_token',
     outputs: [],
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "kill_me",
+    name: 'kill_me',
     outputs: [],
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "recover_balance",
+    name: 'recover_balance',
     outputs: [
       {
-        type: "bool",
-        name: "",
+        type: 'bool',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address",
-        name: "_coin",
+        type: 'address',
+        name: '_coin',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
-    name: "start_time",
+    name: 'start_time',
     outputs: [
       {
-        type: "uint256",
-        name: "",
-      },
-    ],
-    inputs: [],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    name: "time_cursor",
-    outputs: [
-      {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "time_cursor_of",
+    name: 'time_cursor',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
+      },
+    ],
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    name: 'time_cursor_of',
+    outputs: [
+      {
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address",
-        name: "arg0",
+        type: 'address',
+        name: 'arg0',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "user_epoch_of",
+    name: 'user_epoch_of',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "address",
-        name: "arg0",
+        type: 'address',
+        name: 'arg0',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "last_token_time",
+    name: 'last_token_time',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "tokens_per_week",
+    name: 'tokens_per_week',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "uint256",
-        name: "arg0",
+        type: 'uint256',
+        name: 'arg0',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "voting_escrow",
+    name: 'voting_escrow',
     outputs: [
       {
-        type: "address",
-        name: "",
-      },
-    ],
-    inputs: [],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    name: "token",
-    outputs: [
-      {
-        type: "address",
-        name: "",
+        type: 'address',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "total_received",
+    name: 'token',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'address',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "token_last_balance",
+    name: 'total_received',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "ve_supply",
+    name: 'token_last_balance',
     outputs: [
       {
-        type: "uint256",
-        name: "",
+        type: 'uint256',
+        name: '',
+      },
+    ],
+    inputs: [],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    name: 've_supply',
+    outputs: [
+      {
+        type: 'uint256',
+        name: '',
       },
     ],
     inputs: [
       {
-        type: "uint256",
-        name: "arg0",
+        type: 'uint256',
+        name: 'arg0',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "admin",
+    name: 'admin',
     outputs: [
       {
-        type: "address",
-        name: "",
+        type: 'address',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "future_admin",
+    name: 'future_admin',
     outputs: [
       {
-        type: "address",
-        name: "",
+        type: 'address',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "can_checkpoint_token",
+    name: 'can_checkpoint_token',
     outputs: [
       {
-        type: "bool",
-        name: "",
+        type: 'bool',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "emergency_return",
+    name: 'emergency_return',
     outputs: [
       {
-        type: "address",
-        name: "",
+        type: 'address',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
-    name: "is_killed",
+    name: 'is_killed',
     outputs: [
       {
-        type: "bool",
-        name: "",
+        type: 'bool',
+        name: '',
       },
     ],
     inputs: [],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ];
 
@@ -472,14 +472,7 @@ export class AladdinConcentratorVeRewards__factory {
   static createInterface(): AladdinConcentratorVeRewardsInterface {
     return new utils.Interface(_abi) as AladdinConcentratorVeRewardsInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): AladdinConcentratorVeRewards {
-    return new Contract(
-      address,
-      _abi,
-      signerOrProvider
-    ) as AladdinConcentratorVeRewards;
+  static connect(address: string, signerOrProvider: Signer | Provider): AladdinConcentratorVeRewards {
+    return new Contract(address, _abi, signerOrProvider) as AladdinConcentratorVeRewards;
   }
 }

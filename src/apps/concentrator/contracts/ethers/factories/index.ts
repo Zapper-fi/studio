@@ -12,3 +12,4 @@ export { AladdinConcentratorVest__factory } from './AladdinConcentratorVest__fac
 export { AladdinCrv__factory } from './AladdinCrv__factory';
 export { AladdinFrxEth__factory } from './AladdinFrxEth__factory';
 export { AladdinFxs__factory } from './AladdinFxs__factory';
+export { AsdCrv__factory } from './AsdCrv__factory';

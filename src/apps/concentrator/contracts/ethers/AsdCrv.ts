@@ -17,7 +17,19 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AladdinFrxEthInterface extends utils.Interface {
+export declare namespace SdCRVLocker {
+  export type LockedBalanceStruct = {
+    amount: PromiseOrValue<BigNumberish>;
+    expireAt: PromiseOrValue<BigNumberish>;
+  };
+
+  export type LockedBalanceStructOutput = [BigNumber, BigNumber] & {
+    amount: BigNumber;
+    expireAt: BigNumber;
+  };
+}
+
+export interface AsdCrvInterface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -29,16 +41,18 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     'decimals()': FunctionFragment;
     'decreaseAllowance(address,uint256)': FunctionFragment;
     'deposit(uint256,address)': FunctionFragment;
+    'depositWithCRV(uint256,address,uint256)': FunctionFragment;
+    'depositWithSdVeCRV(uint256,address)': FunctionFragment;
     'feeInfo()': FunctionFragment;
     'getFeeRate(bytes32,address)': FunctionFragment;
+    'getUserLocks(address)': FunctionFragment;
     'harvest(address,uint256)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(address,address,address,string,string)': FunctionFragment;
+    'initialize(address)': FunctionFragment;
     'maxDeposit(address)': FunctionFragment;
     'maxMint(address)': FunctionFragment;
     'maxRedeem(address)': FunctionFragment;
     'maxWithdraw(address)': FunctionFragment;
-    'migrateStrategy(address)': FunctionFragment;
     'mint(uint256,address)': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
@@ -50,7 +64,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     'renounceOwnership()': FunctionFragment;
     'rewardInfo()': FunctionFragment;
     'setWithdrawFeeForUser(address,uint32)': FunctionFragment;
-    'strategy()': FunctionFragment;
     'symbol()': FunctionFragment;
     'totalAssets()': FunctionFragment;
     'totalSupply()': FunctionFragment;
@@ -58,10 +71,12 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'updateFeeInfo(address,uint32,uint32,uint32)': FunctionFragment;
+    'updateHarvester(address)': FunctionFragment;
     'updateRewardPeriodLength(uint32)': FunctionFragment;
-    'updateRewards(address[])': FunctionFragment;
     'updateZap(address)': FunctionFragment;
     'withdraw(uint256,address,address)': FunctionFragment;
+    'withdrawExpired(address,address)': FunctionFragment;
+    'withdrawLockTime()': FunctionFragment;
     'zap()': FunctionFragment;
   };
 
@@ -77,8 +92,11 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       | 'decimals'
       | 'decreaseAllowance'
       | 'deposit'
+      | 'depositWithCRV'
+      | 'depositWithSdVeCRV'
       | 'feeInfo'
       | 'getFeeRate'
+      | 'getUserLocks'
       | 'harvest'
       | 'increaseAllowance'
       | 'initialize'
@@ -86,7 +104,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       | 'maxMint'
       | 'maxRedeem'
       | 'maxWithdraw'
-      | 'migrateStrategy'
       | 'mint'
       | 'name'
       | 'owner'
@@ -98,7 +115,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       | 'renounceOwnership'
       | 'rewardInfo'
       | 'setWithdrawFeeForUser'
-      | 'strategy'
       | 'symbol'
       | 'totalAssets'
       | 'totalSupply'
@@ -106,10 +122,12 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       | 'transferFrom'
       | 'transferOwnership'
       | 'updateFeeInfo'
+      | 'updateHarvester'
       | 'updateRewardPeriodLength'
-      | 'updateRewards'
       | 'updateZap'
       | 'withdraw'
+      | 'withdrawExpired'
+      | 'withdrawLockTime'
       | 'zap',
   ): FunctionFragment;
 
@@ -132,11 +150,20 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     functionFragment: 'deposit',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithCRV',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithSdVeCRV',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'feeInfo', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'getFeeRate',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'getUserLocks', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'harvest',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
@@ -145,21 +172,11 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'initialize',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-    ],
-  ): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxDeposit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxMint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxRedeem', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxWithdraw', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'migrateStrategy', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
@@ -177,7 +194,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     functionFragment: 'setWithdrawFeeForUser',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'strategy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
@@ -199,13 +215,18 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
     ],
   ): string;
+  encodeFunctionData(functionFragment: 'updateHarvester', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updateRewardPeriodLength', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'updateRewards', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'updateZap', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'withdraw',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawExpired',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawLockTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -218,8 +239,11 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositWithCRV', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositWithSdVeCRV', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'feeInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getFeeRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUserLocks', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
@@ -227,7 +251,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'maxMint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxRedeem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'migrateStrategy', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
@@ -239,7 +262,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setWithdrawFeeForUser', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'strategy', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
@@ -247,10 +269,12 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateFeeInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateHarvester', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateRewardPeriodLength', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateZap', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawExpired', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawLockTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'zap', data: BytesLike): Result;
 
   events: {
@@ -259,13 +283,15 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     'CustomizeFee(bytes32,address,uint256)': EventFragment;
     'Deposit(address,address,uint256,uint256)': EventFragment;
     'Harvest(address,address,uint256,uint256,uint256)': EventFragment;
-    'Migrate(address,address)': EventFragment;
+    'Lock(address,address,uint256,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
     'UpdateFeeInfo(address,uint32,uint32,uint32)': EventFragment;
+    'UpdateHarvester(address)': EventFragment;
     'UpdateRewardPeriodLength(uint256)': EventFragment;
     'UpdateZap(address)': EventFragment;
     'Withdraw(address,address,address,uint256,uint256)': EventFragment;
+    'WithdrawExpired(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
@@ -273,13 +299,15 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'CustomizeFee'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Migrate'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Lock'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateFeeInfo'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateHarvester'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateRewardPeriodLength'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateZap'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'WithdrawExpired'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -329,13 +357,15 @@ export type HarvestEvent = TypedEvent<[string, string, BigNumber, BigNumber, Big
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
 
-export interface MigrateEventObject {
-  _oldStrategy: string;
-  _newStrategy: string;
+export interface LockEventObject {
+  _owner: string;
+  _recipient: string;
+  _amount: BigNumber;
+  _expiredAt: BigNumber;
 }
-export type MigrateEvent = TypedEvent<[string, string], MigrateEventObject>;
+export type LockEvent = TypedEvent<[string, string, BigNumber, BigNumber], LockEventObject>;
 
-export type MigrateEventFilter = TypedEventFilter<MigrateEvent>;
+export type LockEventFilter = TypedEventFilter<LockEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -364,6 +394,13 @@ export type UpdateFeeInfoEvent = TypedEvent<[string, number, number, number], Up
 
 export type UpdateFeeInfoEventFilter = TypedEventFilter<UpdateFeeInfoEvent>;
 
+export interface UpdateHarvesterEventObject {
+  _harvester: string;
+}
+export type UpdateHarvesterEvent = TypedEvent<[string], UpdateHarvesterEventObject>;
+
+export type UpdateHarvesterEventFilter = TypedEventFilter<UpdateHarvesterEvent>;
+
 export interface UpdateRewardPeriodLengthEventObject {
   _length: BigNumber;
 }
@@ -389,12 +426,21 @@ export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface AladdinFrxEth extends BaseContract {
+export interface WithdrawExpiredEventObject {
+  _owner: string;
+  _recipient: string;
+  _amount: BigNumber;
+}
+export type WithdrawExpiredEvent = TypedEvent<[string, string, BigNumber], WithdrawExpiredEventObject>;
+
+export type WithdrawExpiredEventFilter = TypedEventFilter<WithdrawExpiredEvent>;
+
+export interface AsdCrv extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AladdinFrxEthInterface;
+  interface: AsdCrvInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -448,6 +494,19 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    depositWithCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      _minShareOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    depositWithSdVeCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     feeInfo(overrides?: CallOverrides): Promise<
       [string, number, number, number] & {
         platform: string;
@@ -463,6 +522,15 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { rate: BigNumber }>;
 
+    getUserLocks(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<
+      [SdCRVLocker.LockedBalanceStructOutput[]] & {
+        _locks: SdCRVLocker.LockedBalanceStructOutput[];
+      }
+    >;
+
     harvest(
       _recipient: PromiseOrValue<string>,
       _minAssets: PromiseOrValue<BigNumberish>,
@@ -477,10 +545,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     initialize(
       _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
-      _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -491,11 +555,6 @@ export interface AladdinFrxEth extends BaseContract {
     maxRedeem(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxWithdraw(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    migrateStrategy(
-      _newStrategy: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
 
     mint(
       _shares: PromiseOrValue<BigNumberish>,
@@ -539,8 +598,6 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    strategy(overrides?: CallOverrides): Promise<[string]>;
-
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -573,13 +630,13 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateRewardPeriodLength(
-      _length: PromiseOrValue<BigNumberish>,
+    updateHarvester(
+      _harvester: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateRewards(
-      _rewards: PromiseOrValue<string>[],
+    updateRewardPeriodLength(
+      _length: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -594,6 +651,14 @@ export interface AladdinFrxEth extends BaseContract {
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    withdrawExpired(
+      _user: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    withdrawLockTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     zap(overrides?: CallOverrides): Promise<[string]>;
   };
@@ -634,6 +699,19 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  depositWithCRV(
+    _assets: PromiseOrValue<BigNumberish>,
+    _receiver: PromiseOrValue<string>,
+    _minShareOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  depositWithSdVeCRV(
+    _assets: PromiseOrValue<BigNumberish>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   feeInfo(overrides?: CallOverrides): Promise<
     [string, number, number, number] & {
       platform: string;
@@ -649,6 +727,11 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
+  getUserLocks(
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<SdCRVLocker.LockedBalanceStructOutput[]>;
+
   harvest(
     _recipient: PromiseOrValue<string>,
     _minAssets: PromiseOrValue<BigNumberish>,
@@ -663,10 +746,6 @@ export interface AladdinFrxEth extends BaseContract {
 
   initialize(
     _zap: PromiseOrValue<string>,
-    _underlying: PromiseOrValue<string>,
-    _strategy: PromiseOrValue<string>,
-    _name: PromiseOrValue<string>,
-    _symbol: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -677,11 +756,6 @@ export interface AladdinFrxEth extends BaseContract {
   maxRedeem(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxWithdraw(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  migrateStrategy(
-    _newStrategy: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
 
   mint(
     _shares: PromiseOrValue<BigNumberish>,
@@ -725,8 +799,6 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  strategy(overrides?: CallOverrides): Promise<string>;
-
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -759,13 +831,13 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateRewardPeriodLength(
-    _length: PromiseOrValue<BigNumberish>,
+  updateHarvester(
+    _harvester: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateRewards(
-    _rewards: PromiseOrValue<string>[],
+  updateRewardPeriodLength(
+    _length: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -780,6 +852,14 @@ export interface AladdinFrxEth extends BaseContract {
     _owner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  withdrawExpired(
+    _user: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  withdrawLockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   zap(overrides?: CallOverrides): Promise<string>;
 
@@ -820,6 +900,19 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    depositWithCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      _minShareOut: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    depositWithSdVeCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     feeInfo(overrides?: CallOverrides): Promise<
       [string, number, number, number] & {
         platform: string;
@@ -835,6 +928,11 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    getUserLocks(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<SdCRVLocker.LockedBalanceStructOutput[]>;
+
     harvest(
       _recipient: PromiseOrValue<string>,
       _minAssets: PromiseOrValue<BigNumberish>,
@@ -847,14 +945,7 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    initialize(
-      _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
-      _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    initialize(_zap: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -863,8 +954,6 @@ export interface AladdinFrxEth extends BaseContract {
     maxRedeem(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxWithdraw(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    migrateStrategy(_newStrategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     mint(
       _shares: PromiseOrValue<BigNumberish>,
@@ -908,8 +997,6 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    strategy(overrides?: CallOverrides): Promise<string>;
-
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -939,9 +1026,9 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateRewardPeriodLength(_length: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    updateHarvester(_harvester: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateRewards(_rewards: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
+    updateRewardPeriodLength(_length: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     updateZap(_zap: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -951,6 +1038,14 @@ export interface AladdinFrxEth extends BaseContract {
       _owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    withdrawExpired(
+      _user: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    withdrawLockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<string>;
   };
@@ -1001,8 +1096,18 @@ export interface AladdinFrxEth extends BaseContract {
       harvestBounty?: null,
     ): HarvestEventFilter;
 
-    'Migrate(address,address)'(_oldStrategy?: null, _newStrategy?: null): MigrateEventFilter;
-    Migrate(_oldStrategy?: null, _newStrategy?: null): MigrateEventFilter;
+    'Lock(address,address,uint256,uint256)'(
+      _owner?: PromiseOrValue<string> | null,
+      _recipient?: PromiseOrValue<string> | null,
+      _amount?: null,
+      _expiredAt?: null,
+    ): LockEventFilter;
+    Lock(
+      _owner?: PromiseOrValue<string> | null,
+      _recipient?: PromiseOrValue<string> | null,
+      _amount?: null,
+      _expiredAt?: null,
+    ): LockEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
@@ -1037,6 +1142,9 @@ export interface AladdinFrxEth extends BaseContract {
       _repayPercentage?: null,
     ): UpdateFeeInfoEventFilter;
 
+    'UpdateHarvester(address)'(_harvester?: null): UpdateHarvesterEventFilter;
+    UpdateHarvester(_harvester?: null): UpdateHarvesterEventFilter;
+
     'UpdateRewardPeriodLength(uint256)'(_length?: null): UpdateRewardPeriodLengthEventFilter;
     UpdateRewardPeriodLength(_length?: null): UpdateRewardPeriodLengthEventFilter;
 
@@ -1057,6 +1165,17 @@ export interface AladdinFrxEth extends BaseContract {
       assets?: null,
       shares?: null,
     ): WithdrawEventFilter;
+
+    'WithdrawExpired(address,address,uint256)'(
+      _owner?: PromiseOrValue<string> | null,
+      _recipient?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): WithdrawExpiredEventFilter;
+    WithdrawExpired(
+      _owner?: PromiseOrValue<string> | null,
+      _recipient?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): WithdrawExpiredEventFilter;
   };
 
   estimateGas: {
@@ -1096,6 +1215,19 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    depositWithCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      _minShareOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    depositWithSdVeCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     feeInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     getFeeRate(
@@ -1103,6 +1235,8 @@ export interface AladdinFrxEth extends BaseContract {
       _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    getUserLocks(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
       _recipient: PromiseOrValue<string>,
@@ -1118,10 +1252,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     initialize(
       _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
-      _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1132,11 +1262,6 @@ export interface AladdinFrxEth extends BaseContract {
     maxRedeem(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxWithdraw(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    migrateStrategy(
-      _newStrategy: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
 
     mint(
       _shares: PromiseOrValue<BigNumberish>,
@@ -1173,8 +1298,6 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    strategy(overrides?: CallOverrides): Promise<BigNumber>;
-
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1207,13 +1330,13 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateRewardPeriodLength(
-      _length: PromiseOrValue<BigNumberish>,
+    updateHarvester(
+      _harvester: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateRewards(
-      _rewards: PromiseOrValue<string>[],
+    updateRewardPeriodLength(
+      _length: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1228,6 +1351,14 @@ export interface AladdinFrxEth extends BaseContract {
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    withdrawExpired(
+      _user: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    withdrawLockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1269,6 +1400,19 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    depositWithCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      _minShareOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositWithSdVeCRV(
+      _assets: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     feeInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getFeeRate(
@@ -1276,6 +1420,8 @@ export interface AladdinFrxEth extends BaseContract {
       _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    getUserLocks(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
       _recipient: PromiseOrValue<string>,
@@ -1291,10 +1437,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     initialize(
       _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
-      _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1305,11 +1447,6 @@ export interface AladdinFrxEth extends BaseContract {
     maxRedeem(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxWithdraw(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    migrateStrategy(
-      _newStrategy: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
 
     mint(
       _shares: PromiseOrValue<BigNumberish>,
@@ -1346,8 +1483,6 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    strategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1380,13 +1515,13 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateRewardPeriodLength(
-      _length: PromiseOrValue<BigNumberish>,
+    updateHarvester(
+      _harvester: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateRewards(
-      _rewards: PromiseOrValue<string>[],
+    updateRewardPeriodLength(
+      _length: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1401,6 +1536,14 @@ export interface AladdinFrxEth extends BaseContract {
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    withdrawExpired(
+      _user: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    withdrawLockTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

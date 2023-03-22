@@ -16,6 +16,7 @@ import {
   AladdinCrv__factory,
   AladdinFrxEth__factory,
   AladdinFxs__factory,
+  AsdCrv__factory,
 } from './ethers';
 
 // eslint-disable-next-line
@@ -60,6 +61,9 @@ export class ConcentratorContractFactory extends ContractFactory {
   aladdinFxs({ address, network }: ContractOpts) {
     return AladdinFxs__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  asdCrv({ address, network }: ContractOpts) {
+    return AsdCrv__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { AbcCvx } from './ethers';
@@ -73,3 +77,4 @@ export type { AladdinConcentratorVest } from './ethers';
 export type { AladdinCrv } from './ethers';
 export type { AladdinFrxEth } from './ethers';
 export type { AladdinFxs } from './ethers';
+export type { AsdCrv } from './ethers';

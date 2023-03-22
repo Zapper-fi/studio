@@ -12,6 +12,7 @@ export type { AladdinConcentratorVest } from './AladdinConcentratorVest';
 export type { AladdinCrv } from './AladdinCrv';
 export type { AladdinFrxEth } from './AladdinFrxEth';
 export type { AladdinFxs } from './AladdinFxs';
+export type { AsdCrv } from './AsdCrv';
 export * as factories from './factories';
 export { AbcCvx__factory } from './factories/AbcCvx__factory';
 export { AladdinConcentratorAcrvVault__factory } from './factories/AladdinConcentratorAcrvVault__factory';
@@ -24,3 +25,4 @@ export { AladdinConcentratorVest__factory } from './factories/AladdinConcentrato
 export { AladdinCrv__factory } from './factories/AladdinCrv__factory';
 export { AladdinFrxEth__factory } from './factories/AladdinFrxEth__factory';
 export { AladdinFxs__factory } from './factories/AladdinFxs__factory';
+export { AsdCrv__factory } from './factories/AsdCrv__factory';
