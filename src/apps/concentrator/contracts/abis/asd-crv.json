@@ -1,5 +1,16 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -140,19 +151,31 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "_oldStrategy",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_recipient",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "_newStrategy",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_expiredAt",
+        "type": "uint256"
       }
     ],
-    "name": "Migrate",
+    "name": "Lock",
     "type": "event"
   },
   {
@@ -235,6 +258,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "_harvester",
+        "type": "address"
+      }
+    ],
+    "name": "UpdateHarvester",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "_length",
         "type": "uint256"
@@ -291,6 +327,31 @@
       }
     ],
     "name": "Withdraw",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "WithdrawExpired",
     "type": "event"
   },
   {
@@ -351,7 +412,7 @@
         "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -480,6 +541,59 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_assets",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minShareOut",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositWithCRV",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_shares",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_assets",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_receiver",
+        "type": "address"
+      }
+    ],
+    "name": "depositWithSdVeCRV",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_shares",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "feeInfo",
     "outputs": [
@@ -535,6 +649,37 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserLocks",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint128",
+            "name": "amount",
+            "type": "uint128"
+          },
+          {
+            "internalType": "uint128",
+            "name": "expireAt",
+            "type": "uint128"
+          }
+        ],
+        "internalType": "struct SdCRVLocker.LockedBalance[]",
+        "name": "_locks",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_recipient",
         "type": "address"
       },
@@ -548,7 +693,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "assets",
         "type": "uint256"
       }
     ],
@@ -585,26 +730,6 @@
         "internalType": "address",
         "name": "_zap",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_underlying",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_strategy",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_symbol",
-        "type": "string"
       }
     ],
     "name": "initialize",
@@ -686,19 +811,6 @@
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_newStrategy",
-        "type": "address"
-      }
-    ],
-    "name": "migrateStrategy",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -911,19 +1023,6 @@
   },
   {
     "inputs": [],
-    "name": "strategy",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "symbol",
     "outputs": [
       {
@@ -1058,12 +1157,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint32",
-        "name": "_length",
-        "type": "uint32"
+        "internalType": "address",
+        "name": "_harvester",
+        "type": "address"
       }
     ],
-    "name": "updateRewardPeriodLength",
+    "name": "updateHarvester",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1071,12 +1170,12 @@
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "_rewards",
-        "type": "address[]"
+        "internalType": "uint32",
+        "name": "_length",
+        "type": "uint32"
       }
     ],
-    "name": "updateRewards",
+    "name": "updateRewardPeriodLength",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1124,6 +1223,43 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawExpired",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawLockTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "zap",
     "outputs": [
@@ -1135,5 +1271,9 @@
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]
