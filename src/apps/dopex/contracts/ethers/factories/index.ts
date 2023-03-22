@@ -6,6 +6,7 @@ export { DopexDualRewardStaking__factory } from './DopexDualRewardStaking__facto
 export { DopexEthSsov__factory } from './DopexEthSsov__factory';
 export { DopexGOhmSsov__factory } from './DopexGOhmSsov__factory';
 export { DopexGmxSsov__factory } from './DopexGmxSsov__factory';
+export { DopexOptionToken__factory } from './DopexOptionToken__factory';
 export { DopexRdpxSsov__factory } from './DopexRdpxSsov__factory';
 export { DopexRewardDistribution__factory } from './DopexRewardDistribution__factory';
 export { DopexSingleRewardStaking__factory } from './DopexSingleRewardStaking__factory';

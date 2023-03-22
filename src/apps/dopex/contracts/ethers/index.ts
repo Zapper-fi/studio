@@ -6,6 +6,7 @@ export type { DopexDualRewardStaking } from './DopexDualRewardStaking';
 export type { DopexEthSsov } from './DopexEthSsov';
 export type { DopexGOhmSsov } from './DopexGOhmSsov';
 export type { DopexGmxSsov } from './DopexGmxSsov';
+export type { DopexOptionToken } from './DopexOptionToken';
 export type { DopexRdpxSsov } from './DopexRdpxSsov';
 export type { DopexRewardDistribution } from './DopexRewardDistribution';
 export type { DopexSingleRewardStaking } from './DopexSingleRewardStaking';
@@ -18,6 +19,7 @@ export { DopexDualRewardStaking__factory } from './factories/DopexDualRewardStak
 export { DopexEthSsov__factory } from './factories/DopexEthSsov__factory';
 export { DopexGOhmSsov__factory } from './factories/DopexGOhmSsov__factory';
 export { DopexGmxSsov__factory } from './factories/DopexGmxSsov__factory';
+export { DopexOptionToken__factory } from './factories/DopexOptionToken__factory';
 export { DopexRdpxSsov__factory } from './factories/DopexRdpxSsov__factory';
 export { DopexRewardDistribution__factory } from './factories/DopexRewardDistribution__factory';
 export { DopexSingleRewardStaking__factory } from './factories/DopexSingleRewardStaking__factory';
