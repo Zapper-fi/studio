@@ -4,6 +4,17 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.414.0](https://github.com/Zapper-fi/studio/compare/v0.413.1...v0.414.0) (2023-03-22)
+
+
+### Features
+
+* **concentrator:** add asdcrv ([#2457](https://github.com/Zapper-fi/studio/issues/2457)) ([4fadfb1](https://github.com/Zapper-fi/studio/commit/4fadfb169149ec6a5bcc3ffbfe57bc416cfa63b2))
+* **dopex:** Add SSOV v3 options positions ([#2459](https://github.com/Zapper-fi/studio/issues/2459)) ([e2acf70](https://github.com/Zapper-fi/studio/commit/e2acf706552b766434ace981a200864463404e11))
+* **ramses:** add app ([#2456](https://github.com/Zapper-fi/studio/issues/2456)) ([b8c700b](https://github.com/Zapper-fi/studio/commit/b8c700b0509cf6af37b847ecb549c9b2353335d5))
+* **teahouse:** Add token-fetcher for Teahouse Vaults on Ethereum and Optimism ([#2455](https://github.com/Zapper-fi/studio/issues/2455)) ([7c0d32b](https://github.com/Zapper-fi/studio/commit/7c0d32b8784f08eddcb2ab5b232faca9c61d5ab8))
+* **thales:** staking/escrow on arbitrum ([#2453](https://github.com/Zapper-fi/studio/issues/2453)) ([876d77c](https://github.com/Zapper-fi/studio/commit/876d77c5661a3b007dc65c5f376219973e42e520))
+
 ## [0.413.1](https://github.com/Zapper-fi/studio/compare/v0.413.0...v0.413.1) (2023-03-21)
 
 
