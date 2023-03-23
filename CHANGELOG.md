@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.415.0](https://github.com/Zapper-fi/studio/compare/v0.414.0...v0.415.0) (2023-03-23)
+
+
+### Features
+
+* **thales:** Overtime Parlay Discount vault ([#2460](https://github.com/Zapper-fi/studio/issues/2460)) ([00b9dc0](https://github.com/Zapper-fi/studio/commit/00b9dc04ce9795ea315441c50f0ac0b2b8def5ef))
+
+
+### Bug Fixes
+
+* **kwenta:** staking contract label ([#2461](https://github.com/Zapper-fi/studio/issues/2461)) ([04d6a74](https://github.com/Zapper-fi/studio/commit/04d6a74825fd6862c80750149a7664efb9f0326a))
+
 ## [0.414.0](https://github.com/Zapper-fi/studio/compare/v0.413.1...v0.414.0) (2023-03-22)
 
 
