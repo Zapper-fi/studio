@@ -42,6 +42,7 @@ export class OptimismThalesVaultContractPositionFetcher extends ContractPosition
       { address: '0xc922f4cde42dd658a7d3ea852caf7eae47f6cecd', name: 'Overtime Discount' },
       { address: '0xbaac5464bf6e767c9af0e8d4677c01be2065fd5f', name: 'Overtime Degen Discount' },
       { address: '0x43d19841d818b2ccc63a8b44ce8c7def8616d98e', name: 'Overtime Safu Discount' },
+      { address: '0x8285047f33c26c1bf5b387f2b07f21a2af29ace2', name: 'Overtime Parlay Discount' },
     ];
   }
 
