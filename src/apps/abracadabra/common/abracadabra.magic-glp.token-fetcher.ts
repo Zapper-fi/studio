@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts';
 import { isAppToken } from '~position/position.interface';
 import {
@@ -45,6 +46,12 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
 
   async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
     return contract.name();
+  }
+
+  async getImages({
+    appToken,
+  }: GetDisplayPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
+    return [getTokenImg(appToken.address, this.network)];
   }
 
   async getApy({
@@ -105,7 +112,7 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
       const apr = annualUsdRewards.map(annualUsdReward => annualUsdReward / glpSupplyUsd).reduce((a, b) => a + b, 0);
       const apy = Math.pow(1 + apr / magicGlpAnnualHarvests, magicGlpAnnualHarvests) - 1;
       const apyWithFees = apy * (1 - magicGlpFeeProcent);
-      return apyWithFees;
+      return apyWithFees * 100;
     }
   }
 }

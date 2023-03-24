@@ -7,6 +7,7 @@ import { EthereumConcentratorAbcCvxTokenFetcher } from './ethereum/concentrator.
 import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
 import { EthereumConcentratorAfrxethTokenFetcher } from './ethereum/concentrator.afrxeth.token-fetcher';
 import { EthereumConcentratorAfxsTokenFetcher } from './ethereum/concentrator.afxs.token-fetcher';
+import { EthereumConcentratorAsdCrvTokenFetcher } from './ethereum/concentrator.asd.token-fetcher';
 import { EthereumConcentratorAcrvVaultContractPositionFetcher } from './ethereum/concentrator.poolacrv.contract-position-fetcher';
 import { EthereumConcentratorPoolfrxethContractPositionFetcher } from './ethereum/concentrator.poolfrxeth.contract-position-fetcher';
 import { EthereumConcentratorAfxsVaultContractPositionFetcher } from './ethereum/concentrator.poolfxs.contract-position-fetcher';
@@ -17,16 +18,17 @@ import { EthereumConcentratorVestingContractPositionFetcher } from './ethereum/c
 @Module({
   providers: [
     ConcentratorContractFactory,
+    EthereumConcentratorAbcCvxTokenFetcher,
     EthereumConcentratorAcrvTokenFetcher,
     EthereumConcentratorAcrvVaultContractPositionFetcher,
     EthereumConcentratorAfrxethTokenFetcher,
     EthereumConcentratorAfxsTokenFetcher,
     EthereumConcentratorAfxsVaultContractPositionFetcher,
+    EthereumConcentratorAsdCrvTokenFetcher,
     EthereumConcentratorLegacyVaultContractPositionFetcher,
     EthereumConcentratorPoolfrxethContractPositionFetcher,
     EthereumConcentratorVeContractPositionFetcher,
     EthereumConcentratorVestingContractPositionFetcher,
-    EthereumConcentratorAbcCvxTokenFetcher,
   ],
 })
-export class ConcentratorAppModule extends AbstractApp() {}
+export class ConcentratorAppModule extends AbstractApp() { }

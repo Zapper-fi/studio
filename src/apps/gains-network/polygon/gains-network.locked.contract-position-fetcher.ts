@@ -1,93 +1,9 @@
-import { Inject, NotImplementedException } from '@nestjs/common';
-import _, { range } from 'lodash';
-
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps } from '~position/display.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType } from '~position/position.interface';
-import {
-  DefaultContractPositionDefinition,
-  GetDisplayPropsParams,
-} from '~position/template/contract-position.template.types';
-import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { GainsNetworkContractFactory, GainsNetworkGToken } from '../contracts';
+import { GainsNetworkLockedContractPositionFetcher } from '../common/gains-network.locked.contract-position-fetcher';
 
 @PositionTemplate()
-export class PolygonGainsNetworkLockedContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<GainsNetworkGToken> {
-  groupLabel = 'Locked';
-
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
-  ) {
-    super(appToolkit);
-  }
-
-  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0x91993f2101cc758d0deb7279d41e880f7defe827' }];
-  }
-
-  async getTokenDefinitions() {
-    return [
-      {
-        metaType: MetaType.LOCKED,
-        address: '0x91993f2101cc758d0deb7279d41e880f7defe827',
-        network: this.network,
-      },
-    ];
-  }
-
-  getContract(address: string): GainsNetworkGToken {
-    return this.contractFactory.gainsNetworkGToken({ network: this.network, address });
-  }
-
-  async getLabel({ contractPosition }: GetDisplayPropsParams<GainsNetworkGToken>): Promise<string> {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
-  }
-
-  getTokenBalancesPerPosition(): never {
-    throw new NotImplementedException();
-  }
-
-  async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const lockedDepositNftContract = this.contractFactory.gainsNetworkLockedDepositNft({
-      address: '0xdd42aa3920c1d5b5fd95055d852135416369bcc1',
-      network: this.network,
-    });
-
-    const gTokenContract = this.contractFactory.gainsNetworkGToken({
-      address: '0x91993f2101cc758d0deb7279d41e880f7defe827',
-      network: this.network,
-    });
-    const contractPositions = await this.appToolkit.getAppContractPositions({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    const numPositionsRaw = await multicall.wrap(lockedDepositNftContract).balanceOf(address);
-
-    const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index => {
-        const depositId = await multicall.wrap(lockedDepositNftContract).tokenOfOwnerByIndex(address, index);
-
-        const deposit = await multicall.wrap(gTokenContract).lockedDeposits(depositId);
-
-        const depositAmount = drillBalance(contractPositions[0].tokens[0], deposit.shares.toString());
-
-        return {
-          ...contractPositions[0],
-          tokens: [depositAmount],
-          balanceUSD: depositAmount.balanceUSD,
-        };
-      }),
-    );
-
-    return _.compact(balances);
-  }
+export class PolygonGainsNetworkLockedContractPositionFetcher extends GainsNetworkLockedContractPositionFetcher {
+  gTokenAddress = '0x91993f2101cc758d0deb7279d41e880f7defe827';
+  gTokenLockedDepositAddress = '0xdd42aa3920c1d5b5fd95055d852135416369bcc1';
 }

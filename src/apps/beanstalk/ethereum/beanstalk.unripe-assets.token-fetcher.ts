@@ -7,6 +7,7 @@ import {
   GetAddressesParams,
   GetUnderlyingTokensParams,
   DefaultAppTokenDataProps,
+  GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
 import { BeanstalkContractFactory, BeanstalkToken } from '../contracts';
@@ -58,7 +59,15 @@ export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplateP
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getPricePerShare() {
-    return [1];
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<BeanstalkToken>) {
+    const beanstalkContract = this.contractFactory.beanstalk({
+      address: '0xc1e088fc1323b20bcbee9bd1b9fc9546db5624c5',
+      network: this.network,
+    });
+
+    const rateRaw = await multicall.wrap(beanstalkContract).getPercentPenalty(appToken.address);
+    const rate = Number(rateRaw) / 10 ** 6;
+
+    return [rate];
   }
 }

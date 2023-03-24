@@ -26,21 +26,26 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
 @Module({
   providers: [
     AbracadabraContractFactory,
+    // Arbitrum
     ArbitrumAbracadabraCauldronContractPositionFetcher,
     ArbitrumAbracadabraFarmContractPositionFetcher,
     ArbitrumAbracadabraMagicGlpTokenFetcher,
     ArbitrumAbracadabraMspellContractPositionFetcher,
     ArbitrumAbracadabraStakedSpellTokenFetcher,
+    // Avalanche
     AvalancheAbracadabraCauldronContractPositionFetcher,
     AvalancheAbracadabraFarmContractPositionFetcher,
     AvalancheAbracadabraMspellContractPositionFetcher,
     AvalancheAbracadabraStakedSpellTokenFetcher,
+    // Binance-smart-chain
     BinanceSmartChainAbracadabraCauldronContractPositionFetcher,
+    // Ethereum
     EthereumAbracadabraCauldronContractPositionFetcher,
     EthereumAbracadabraFarmContractPositionFetcher,
     EthereumAbracadabraMagicApeTokenFetcher,
     EthereumAbracadabraMspellContractPositionFetcher,
     EthereumAbracadabraStakedSpellTokenFetcher,
+    // Fantom
     FantomAbracadabraCauldronContractPositionFetcher,
     FantomAbracadabraFarmContractPositionFetcher,
     FantomAbracadabraMspellContractPositionFetcher,

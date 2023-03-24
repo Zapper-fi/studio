@@ -9,11 +9,10 @@ import { FantomRoboVaultVaultTokenFetcher } from './fantom/robo-vault.vault.toke
 
 @Module({
   providers: [
-    AvalancheRoboVaultVaultTokenFetcher,
-    FantomRoboVaultVaultTokenFetcher,
-
     RoboVaultContractFactory,
     RoboVaultApiClient,
+    AvalancheRoboVaultVaultTokenFetcher,
+    FantomRoboVaultVaultTokenFetcher,
   ],
 })
 export class RoboVaultAppModule extends AbstractApp() {}
