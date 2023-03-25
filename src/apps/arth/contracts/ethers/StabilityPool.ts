@@ -40,6 +40,7 @@ export interface StabilityPoolInterface extends utils.Interface {
     'deposits(address)': FunctionFragment;
     'epochToScaleToG(uint128,uint128)': FunctionFragment;
     'epochToScaleToSum(uint128,uint128)': FunctionFragment;
+    'fetchPriceFeedPrice()': FunctionFragment;
     'frontEndSnapshots(address)': FunctionFragment;
     'frontEndStakes(address)': FunctionFragment;
     'frontEnds(address)': FunctionFragment;
@@ -64,6 +65,7 @@ export interface StabilityPoolInterface extends utils.Interface {
     'offset(uint256,uint256)': FunctionFragment;
     'owner()': FunctionFragment;
     'provideToSP(uint256,address)': FunctionFragment;
+    'provideToSPFor(address,uint256,address)': FunctionFragment;
     'registerFrontEnd(uint256)': FunctionFragment;
     'setAddresses(address,address,address,address,address,address,address)': FunctionFragment;
     'sortedTroves()': FunctionFragment;
@@ -96,6 +98,7 @@ export interface StabilityPoolInterface extends utils.Interface {
       | 'deposits'
       | 'epochToScaleToG'
       | 'epochToScaleToSum'
+      | 'fetchPriceFeedPrice'
       | 'frontEndSnapshots'
       | 'frontEndStakes'
       | 'frontEnds'
@@ -120,6 +123,7 @@ export interface StabilityPoolInterface extends utils.Interface {
       | 'offset'
       | 'owner'
       | 'provideToSP'
+      | 'provideToSPFor'
       | 'registerFrontEnd'
       | 'setAddresses'
       | 'sortedTroves'
@@ -156,6 +160,7 @@ export interface StabilityPoolInterface extends utils.Interface {
     functionFragment: 'epochToScaleToSum',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'fetchPriceFeedPrice', values?: undefined): string;
   encodeFunctionData(functionFragment: 'frontEndSnapshots', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'frontEndStakes', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'frontEnds', values: [PromiseOrValue<string>]): string;
@@ -185,6 +190,10 @@ export interface StabilityPoolInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'provideToSP',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'provideToSPFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(functionFragment: 'registerFrontEnd', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
@@ -229,6 +238,7 @@ export interface StabilityPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'deposits', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'epochToScaleToG', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'epochToScaleToSum', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fetchPriceFeedPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'frontEndSnapshots', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'frontEndStakes', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'frontEnds', data: BytesLike): Result;
@@ -253,6 +263,7 @@ export interface StabilityPoolInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'offset', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'provideToSP', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'provideToSPFor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'registerFrontEnd', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'sortedTroves', data: BytesLike): Result;
@@ -613,6 +624,8 @@ export interface StabilityPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
+    fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
     frontEndSnapshots(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
@@ -678,6 +691,13 @@ export interface StabilityPool extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     provideToSP(
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    provideToSPFor(
+      _who: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _frontEndTag: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -784,6 +804,8 @@ export interface StabilityPool extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
+  fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
   frontEndSnapshots(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
@@ -849,6 +871,13 @@ export interface StabilityPool extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   provideToSP(
+    _amount: PromiseOrValue<BigNumberish>,
+    _frontEndTag: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  provideToSPFor(
+    _who: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     _frontEndTag: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -955,6 +984,8 @@ export interface StabilityPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    fetchPriceFeedPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
     frontEndSnapshots(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
@@ -1020,6 +1051,13 @@ export interface StabilityPool extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     provideToSP(
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    provideToSPFor(
+      _who: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _frontEndTag: PromiseOrValue<string>,
       overrides?: CallOverrides,
@@ -1246,6 +1284,8 @@ export interface StabilityPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
     frontEndSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1297,6 +1337,13 @@ export interface StabilityPool extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     provideToSP(
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    provideToSPFor(
+      _who: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _frontEndTag: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -1390,6 +1437,8 @@ export interface StabilityPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
     frontEndSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1447,6 +1496,13 @@ export interface StabilityPool extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     provideToSP(
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    provideToSPFor(
+      _who: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _frontEndTag: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
