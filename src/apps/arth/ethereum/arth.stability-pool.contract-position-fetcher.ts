@@ -22,7 +22,6 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
   }
 
   getContract(address: string): StabilityPool {
-    console.log(this.groupId);
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 
