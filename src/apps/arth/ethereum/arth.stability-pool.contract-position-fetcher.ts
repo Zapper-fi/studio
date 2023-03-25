@@ -3,11 +3,10 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { ArthContractFactory, StabilityPool } from '../contracts';
 
@@ -23,11 +22,12 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
   }
 
   getContract(address: string): StabilityPool {
+    console.log(this.groupId);
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 
   async getDefinitions() {
-    return [{ address: '0x910F16455E5eB4605Fe639e2846579c228eeD3B5' }];
+    return [{ address: '0x910f16455e5eb4605fe639e2846579c228eed3b5' }];
   }
 
   async getTokenDefinitions() {
@@ -44,14 +44,14 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: '0x745407c86DF8DB893011912d3aB28e68B62E49B0', // MAHA
+        address: '0x745407c86df8db893011912d3ab28e68b62e49b0', // MAHA
         network: this.network,
       },
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<StabilityPool>): Promise<string> {
-    return `${getLabelFromToken(contractPosition.tokens[0])} Stability Pool`;
+  async getLabel(): Promise<string> {
+    return `ARTH Stability Pool`;
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StabilityPool, DefaultDataProps>) {
