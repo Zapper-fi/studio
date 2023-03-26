@@ -36,6 +36,7 @@ export class ArbitrumRadiantCapitalPositionPresenter extends AaveV2PositionPrese
         ],
       },
       { viewType: 'list', label: 'Platform Fees', groupIds: ['platform-fees'] },
+      { viewType: 'list', label: 'Staking', groupIds: ['staking'] },
     ],
   };
 }
