@@ -13,7 +13,7 @@ import {
 import { GammaStrategiesContractFactory, GammaStrategiesUniOpMasterchef } from '../contracts';
 
 @PositionTemplate()
-export class OptimismGammaUniFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesUniOpMasterchef> {
+export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesUniOpMasterchef> {
   groupLabel = 'Farms';
   chefAddress = '0xc7846d1bc4d8bcf7c45a7c998b77ce9b3c904365';
   rewardRateUnit = RewardRateUnit.SECOND;

@@ -13,7 +13,7 @@ import {
 import { GammaStrategiesContractFactory, GammaStrategiesZyberswapMasterchef } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumGammaZyberFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesZyberswapMasterchef> {
+export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesZyberswapMasterchef> {
   groupLabel = 'Farms';
   chefAddress = '0x9ba666165867e916ee7ed3a3ae6c19415c2fbddd';
   rewardRateUnit = RewardRateUnit.SECOND;

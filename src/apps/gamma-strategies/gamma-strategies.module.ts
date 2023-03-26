@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumGammaStrategiesPoolTokenFetcher } from './arbitrum/gamma-strategies.pool.token-fetcher';
-import { ArbitrumGammaZyberFarmContractPositionFetcher } from './arbitrum/gamma-strategies.zyberswap-chef.contract-position';
+import { ArbitrumGammaStrategiesZyberFarmContractPositionFetcher } from './arbitrum/gamma-strategies.zyber-farm.contract-position-fetcher';
 import { CeloGammaStrategiesPoolTokenFetcher } from './celo/gamma-strategies.pool.token-fetcher';
 import { GammaStrategiesDefinitionResolver } from './common/gamma-strategies.definition-resolver';
 import { GammaStrategiesContractFactory } from './contracts';
@@ -11,29 +11,24 @@ import { EthereumGammaStrategiesPoolTokenFetcher } from './ethereum/gamma-strate
 import { EthereumGammaStrategiesTGammaTokenFetcher } from './ethereum/gamma-strategies.t-gamma.token-fetcher';
 import { EthereumGammaStrategiesXGammaTokenFetcher } from './ethereum/gamma-strategies.x-gamma.token-fetcher';
 import { OptimismGammaStrategiesPoolTokenFetcher } from './optimism/gamma-strategies.pool.token-fetcher';
-import { OptimismGammaUniFarmContractPositionFetcher } from './optimism/gamma-strategies.op-uni-chef.contract-position';
+import { OptimismGammaStrategiesUniFarmContractPositionFetcher } from './optimism/gamma-strategies.uni-farm.contract-position-fetcher';
 import { PolygonGammaStrategiesPoolTokenFetcher } from './polygon/gamma-strategies.pool.token-fetcher';
-import { PolygonGammaQuickSwapFarmContractPositionFetcher } from './polygon/gamma-strategies.quickswap-chef.contract-position';
+import { PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher } from './polygon/gamma-strategies.quickswap-farm.contract-position-fetcher';
 
 @Module({
   providers: [
-    GammaStrategiesContractFactory,
-    GammaStrategiesDefinitionResolver,
-    // Arbitrum
     ArbitrumGammaStrategiesPoolTokenFetcher,
-    ArbitrumGammaZyberFarmContractPositionFetcher,
-    // Celo
+    ArbitrumGammaStrategiesZyberFarmContractPositionFetcher,
     CeloGammaStrategiesPoolTokenFetcher,
-    // Ethereum
     EthereumGammaStrategiesPoolTokenFetcher,
     EthereumGammaStrategiesTGammaTokenFetcher,
     EthereumGammaStrategiesXGammaTokenFetcher,
-    // Optimism
+    GammaStrategiesContractFactory,
+    GammaStrategiesDefinitionResolver,
     OptimismGammaStrategiesPoolTokenFetcher,
-    OptimismGammaUniFarmContractPositionFetcher,
-    // Polygon
+    OptimismGammaStrategiesUniFarmContractPositionFetcher,
     PolygonGammaStrategiesPoolTokenFetcher,
-    PolygonGammaQuickSwapFarmContractPositionFetcher,
+    PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher,
   ],
 })
 export class GammaStrategiesAppModule extends AbstractApp() { }

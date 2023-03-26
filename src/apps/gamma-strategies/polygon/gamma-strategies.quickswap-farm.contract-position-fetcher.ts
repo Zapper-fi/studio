@@ -13,7 +13,7 @@ import {
 import { GammaStrategiesContractFactory, GammaStrategiesQuickswapMasterchef } from '../contracts';
 
 @PositionTemplate()
-export class PolygonGammaQuickSwapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesQuickswapMasterchef> {
+export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesQuickswapMasterchef> {
   groupLabel = 'Farms';
   chefAddress = '0x20ec0d06f447d550fc6edee42121bc8c1817b97d';
   rewardRateUnit = RewardRateUnit.SECOND;
