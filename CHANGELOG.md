@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.416.1](https://github.com/Zapper-fi/studio/compare/v0.416.0...v0.416.1) (2023-03-26)
+
+
+### Bug Fixes
+
+* **radiant-capital:** Add staking position to presenter ([#2465](https://github.com/Zapper-fi/studio/issues/2465)) ([216e4c5](https://github.com/Zapper-fi/studio/commit/216e4c5434bf3fd357ddfde6f92427767e78889c))
+
 ## [0.416.0](https://github.com/Zapper-fi/studio/compare/v0.415.0...v0.416.0) (2023-03-25)
 
 
