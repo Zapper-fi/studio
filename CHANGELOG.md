@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.417.1](https://github.com/Zapper-fi/studio/compare/v0.417.0...v0.417.1) (2023-03-27)
+
+
+### Bug Fixes
+
+* **polynomial:** Linting ([#2469](https://github.com/Zapper-fi/studio/issues/2469)) ([6616212](https://github.com/Zapper-fi/studio/commit/6616212ca2793eb91427266eb75867daaa85b154))
+* **superfluid:** Filter out non Supertoken addresses ([#2470](https://github.com/Zapper-fi/studio/issues/2470)) ([45aced4](https://github.com/Zapper-fi/studio/commit/45aced48ce461314c5d36dad839e0a47897e6264))
+
 ## [0.417.0](https://github.com/Zapper-fi/studio/compare/v0.416.1...v0.417.0) (2023-03-27)
 
 
