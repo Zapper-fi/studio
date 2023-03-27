@@ -9,6 +9,7 @@ import { OptimismThalesPool2ContractPositionFetcher } from './optimism/thales.po
 import { OptimismThalesStakingContractPositionFetcher } from './optimism/thales.staking.contract-position-fetcher';
 import { ArbitrumThalesStakingContractPositionFetcher } from './arbitrum/thales.staking.contract-position-fetcher';
 import { OptimismThalesVaultContractPositionFetcher } from './optimism/thales.vault.contract-position-fetcher';
+import { ArbitrumThalesVaultContractPositionFetcher } from './arbitrum/thales.vault.contract-position-fetcher';
 import { OptimismThalesOvertimeAmmLpContractPositionFetcher } from './optimism/thales.overtime-amm-lp.contract-position-fetcher';
 import { ArbitrumThalesOvertimeAmmLpContractPositionFetcher } from './arbitrum/thales.overtime-amm-lp.contract-position-fetcher';
 
@@ -21,6 +22,7 @@ import { ArbitrumThalesOvertimeAmmLpContractPositionFetcher } from './arbitrum/t
     ArbitrumThalesEscrowContractPositionFetcher,
     OptimismThalesPool2ContractPositionFetcher,
     OptimismThalesVaultContractPositionFetcher,
+    ArbitrumThalesVaultContractPositionFetcher,
     OptimismThalesOvertimeAmmLpContractPositionFetcher,
     ArbitrumThalesOvertimeAmmLpContractPositionFetcher,
   ],
