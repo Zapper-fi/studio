@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.417.0](https://github.com/Zapper-fi/studio/compare/v0.416.1...v0.417.0) (2023-03-27)
+
+
+### Features
+
+* **gamma-strategies:** add some farm contracts ([#2467](https://github.com/Zapper-fi/studio/issues/2467)) ([cfb234e](https://github.com/Zapper-fi/studio/commit/cfb234e8e14c26c8150eff44835d877152b9de04))
+
 ## [0.416.1](https://github.com/Zapper-fi/studio/compare/v0.416.0...v0.416.1) (2023-03-26)
 
 
