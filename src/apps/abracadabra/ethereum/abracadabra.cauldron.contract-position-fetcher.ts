@@ -23,13 +23,9 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
     '0x5db0ebf9feeecfd0ee82a4f27078dbce7b4cd1dc', // sSPELL
     '0xc319eea1e792577c319723b5e60a15da3857e7da', // sSPELL v2 (deprecated)
     '0x3410297d89dcdaf4072b805efc1ef701bb3dd9bf', // sSPELL v3
-    '0x4eaed76c3a388f4a841e9c765560bbe7b3e4b3a0', // cvxTricrypto2
     '0x252dcf1b621cc53bc22c256255d2be5c8c32eae4', // SHIB
     '0x9617b633ef905860d919b88e1d9d9a6191795341', // FTT
     '0xcfc571f3203756319c231d3bc643cee807e74636', // SPELL (DegenBox)
-    '0x806e16ec797c69afa8590a55723ce4cc1b54050e', // cvx3Pool (deprecated)
-    '0x6371efe5cd6e3d2d7c477935b7669401143b7985', // cvx3pool (deprecated)
-    '0x257101f20cb7243e2c7129773ed5dbbcef8b34e0', // cvx3pool
     '0xbc36fde44a7fd8f545d459452ef9539d7a14dd63', // UST V1 (deprecated)
     '0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f', // UST V2 (deprecated)
     '0x390db10e65b5ab920c19149c919d970ad9d18a41', // WETH
@@ -45,5 +41,12 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
     '0x7259e152103756e1616a77ae982353c3751a6a90', // yvCrv3Crypto
     '0x1062eb452f8c7a94276437ec1f4aaca9b1495b72', // Stargate USDT (POF)
     '0x692887e8877c6dd31593cda44c382db5b289b684', // magicAPE
+  ];
+
+  convexCauldrons = [
+    '0x4eaed76c3a388f4a841e9c765560bbe7b3e4b3a0', // cvxTricrypto2
+    '0x806e16ec797c69afa8590a55723ce4cc1b54050e', // cvx3Pool (deprecated)
+    '0x6371efe5cd6e3d2d7c477935b7669401143b7985', // cvx3pool (deprecated)
+    '0x257101f20cb7243e2c7129773ed5dbbcef8b34e0', // cvx3pool
   ];
 }
