@@ -13,8 +13,8 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'contract IWETH',
-        name: '_weth',
+        internalType: 'contract IWETHAlike',
+        name: '_rewardToken',
         type: 'address',
       },
       {
@@ -32,6 +32,11 @@ const _abi = [
         name: '_vault',
         type: 'address',
       },
+      {
+        internalType: 'bool',
+        name: '_useDistributeRewardsFeature',
+        type: 'bool',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -43,7 +48,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'ErrNotWeth',
+    name: 'ErrNotRewardToken',
     type: 'error',
   },
   {
@@ -160,6 +165,19 @@ const _abi = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'asset',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -296,10 +314,28 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'rewardToken',
+    outputs: [
+      {
+        internalType: 'contract IWETHAlike',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
         name: 'minGlp',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'rewardAmount',
         type: 'uint256',
       },
     ],
@@ -395,12 +431,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'vault',
+    name: 'useDistributeRewardsFeature',
     outputs: [
       {
-        internalType: 'contract IMagicGlpRewardHandler',
+        internalType: 'bool',
         name: '',
-        type: 'address',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -408,10 +444,10 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'weth',
+    name: 'vault',
     outputs: [
       {
-        internalType: 'contract IWETH',
+        internalType: 'contract IMagicGlpRewardHandler',
         name: '',
         type: 'address',
       },
