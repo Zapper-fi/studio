@@ -35,7 +35,7 @@ export declare namespace IWrappedTokenUserVaultFactory {
   };
 }
 
-export interface DolomiteMarginIsolationModeTokenInterface extends utils.Interface {
+export interface IsolationModeTokenInterface extends utils.Interface {
   functions: {
     'BORROW_POSITION_PROXY()': FunctionFragment;
     'DOLOMITE_MARGIN()': FunctionFragment;
@@ -338,12 +338,12 @@ export type VaultCreatedEvent = TypedEvent<[string, string], VaultCreatedEventOb
 
 export type VaultCreatedEventFilter = TypedEventFilter<VaultCreatedEvent>;
 
-export interface DolomiteMarginIsolationModeToken extends BaseContract {
+export interface IsolationModeToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: DolomiteMarginIsolationModeTokenInterface;
+  interface: IsolationModeTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

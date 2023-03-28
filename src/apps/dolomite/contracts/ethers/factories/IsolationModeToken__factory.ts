@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
 import type {
-  DolomiteMarginIsolationModeToken,
-  DolomiteMarginIsolationModeTokenInterface,
-} from '../DolomiteMarginIsolationModeToken';
+  IsolationModeToken,
+  IsolationModeTokenInterface,
+} from '../IsolationModeToken';
 
 const _abi = [
   {
@@ -954,12 +954,12 @@ const _abi = [
   },
 ];
 
-export class DolomiteMarginIsolationModeToken__factory {
+export class IsolationModeToken__factory {
   static readonly abi = _abi;
-  static createInterface(): DolomiteMarginIsolationModeTokenInterface {
-    return new utils.Interface(_abi) as DolomiteMarginIsolationModeTokenInterface;
+  static createInterface(): IsolationModeTokenInterface {
+    return new utils.Interface(_abi) as IsolationModeTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): DolomiteMarginIsolationModeToken {
-    return new Contract(address, _abi, signerOrProvider) as DolomiteMarginIsolationModeToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): IsolationModeToken {
+    return new Contract(address, _abi, signerOrProvider) as IsolationModeToken;
   }
 }
