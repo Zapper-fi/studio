@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.418.0](https://github.com/Zapper-fi/studio/compare/v0.417.1...v0.418.0) (2023-03-28)
+
+
+### Features
+
+* **abracadabra:** Add support for OP/USDC Velodrome cauldron on Optimism ([#2472](https://github.com/Zapper-fi/studio/issues/2472)) ([64a81f2](https://github.com/Zapper-fi/studio/commit/64a81f259a6014ddb0a312b65043a375afd8d41d))
+* **synthetix:** sARB logo ([#2474](https://github.com/Zapper-fi/studio/issues/2474)) ([577c13f](https://github.com/Zapper-fi/studio/commit/577c13fbf8be977ef84a1b8c247ff2ff1cafeec4))
+
 ## [0.417.1](https://github.com/Zapper-fi/studio/compare/v0.417.0...v0.417.1) (2023-03-27)
 
 
