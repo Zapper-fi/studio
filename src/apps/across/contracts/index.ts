@@ -4,7 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AcrossHubPoolV2__factory, AcrossPoolV1__factory, AcrossPoolV2__factory } from './ethers';
+import {
+  AcrossHubPoolV2__factory,
+  AcrossPoolV1__factory,
+  AcrossPoolV2__factory,
+  AcrossStaking__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -24,8 +29,12 @@ export class AcrossContractFactory extends ContractFactory {
   acrossPoolV2({ address, network }: ContractOpts) {
     return AcrossPoolV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  acrossStaking({ address, network }: ContractOpts) {
+    return AcrossStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { AcrossHubPoolV2 } from './ethers';
 export type { AcrossPoolV1 } from './ethers';
 export type { AcrossPoolV2 } from './ethers';
+export type { AcrossStaking } from './ethers';

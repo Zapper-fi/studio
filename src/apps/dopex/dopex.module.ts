@@ -9,13 +9,17 @@ import { ArbitrumDopexGmxSsovContractPositionFetcher } from './arbitrum/dopex.gm
 import { ArbitrumDopexGOhmSsovContractPositionFetcher } from './arbitrum/dopex.gohm-ssov.contract-position-fetcher';
 import { ArbitrumDopexLpFarmContractPositionFetcher } from './arbitrum/dopex.lp-farm.contract-position-fetcher';
 import { ArbitrumDopexRdpxSsovContractPositionFetcher } from './arbitrum/dopex.rdpx-ssov.contract-position-fetcher';
+import { ArbitrumDopexSsovV3DepositContractPositionFetcher } from './arbitrum/dopex.ssov-v3-deposit.contract-position-fetcher';
+import { ArbitrumDopexSsovV3OptionTokenFetcher } from './arbitrum/dopex.ssov-v3-option.token-fetcher';
 import { ArbitrumDopexVotingEscrowRewardsContractPositionFetcher } from './arbitrum/dopex.voting-escrow-rewards.contract-position-fetcher';
 import { ArbitrumDopexVotingEscrowContractPositionFetcher } from './arbitrum/dopex.voting-escrow.contract-position-fetcher';
+import { DopexSsovV3DefinitionsResolver } from './common/dopex.ssov-v3.definition-resolver';
 import { DopexContractFactory } from './contracts';
 
 @Module({
   providers: [
     DopexContractFactory,
+    DopexSsovV3DefinitionsResolver,
     // Arbitrum
     ArbitrumDopexFarmContractPositionFetcher,
     ArbitrumDopexLpFarmContractPositionFetcher,
@@ -26,6 +30,8 @@ import { DopexContractFactory } from './contracts';
     ArbitrumDopexGOhmSsovContractPositionFetcher,
     ArbitrumDopexVotingEscrowContractPositionFetcher,
     ArbitrumDopexVotingEscrowRewardsContractPositionFetcher,
+    ArbitrumDopexSsovV3DepositContractPositionFetcher,
+    ArbitrumDopexSsovV3OptionTokenFetcher,
   ],
 })
 export class DopexAppModule extends AbstractApp() {}

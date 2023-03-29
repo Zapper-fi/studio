@@ -75,6 +75,26 @@ export declare namespace Previewer {
     optimalDeposit: BigNumber;
   };
 
+  export type RewardRateStruct = {
+    asset: PromiseOrValue<string>;
+    assetName: PromiseOrValue<string>;
+    assetSymbol: PromiseOrValue<string>;
+    usdPrice: PromiseOrValue<BigNumberish>;
+    borrow: PromiseOrValue<BigNumberish>;
+    floatingDeposit: PromiseOrValue<BigNumberish>;
+    maturities: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type RewardRateStructOutput = [string, string, string, BigNumber, BigNumber, BigNumber, BigNumber[]] & {
+    asset: string;
+    assetName: string;
+    assetSymbol: string;
+    usdPrice: BigNumber;
+    borrow: BigNumber;
+    floatingDeposit: BigNumber;
+    maturities: BigNumber[];
+  };
+
   export type FixedPositionStruct = {
     maturity: PromiseOrValue<BigNumberish>;
     previewValue: PromiseOrValue<BigNumberish>;
@@ -85,6 +105,20 @@ export declare namespace Previewer {
     maturity: BigNumber;
     previewValue: BigNumber;
     position: FixedLib.PositionStructOutput;
+  };
+
+  export type ClaimableRewardStruct = {
+    asset: PromiseOrValue<string>;
+    assetName: PromiseOrValue<string>;
+    assetSymbol: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+  };
+
+  export type ClaimableRewardStructOutput = [string, string, string, BigNumber] & {
+    asset: string;
+    assetName: string;
+    assetSymbol: string;
+    amount: BigNumber;
   };
 
   export type MarketAccountStruct = {
@@ -100,6 +134,7 @@ export declare namespace Previewer {
     adjustFactor: PromiseOrValue<BigNumberish>;
     maxFuturePools: PromiseOrValue<BigNumberish>;
     fixedPools: Previewer.FixedPoolStruct[];
+    rewardRates: Previewer.RewardRateStruct[];
     floatingBorrowRate: PromiseOrValue<BigNumberish>;
     floatingUtilization: PromiseOrValue<BigNumberish>;
     floatingBackupBorrowed: PromiseOrValue<BigNumberish>;
@@ -116,6 +151,7 @@ export declare namespace Previewer {
     floatingDepositAssets: PromiseOrValue<BigNumberish>;
     fixedDepositPositions: Previewer.FixedPositionStruct[];
     fixedBorrowPositions: Previewer.FixedPositionStruct[];
+    claimableRewards: Previewer.ClaimableRewardStruct[];
   };
 
   export type MarketAccountStructOutput = [
@@ -131,6 +167,7 @@ export declare namespace Previewer {
     BigNumber,
     number,
     Previewer.FixedPoolStructOutput[],
+    Previewer.RewardRateStructOutput[],
     BigNumber,
     BigNumber,
     BigNumber,
@@ -147,6 +184,7 @@ export declare namespace Previewer {
     BigNumber,
     Previewer.FixedPositionStructOutput[],
     Previewer.FixedPositionStructOutput[],
+    Previewer.ClaimableRewardStructOutput[],
   ] & {
     market: string;
     symbol: string;
@@ -160,6 +198,7 @@ export declare namespace Previewer {
     adjustFactor: BigNumber;
     maxFuturePools: number;
     fixedPools: Previewer.FixedPoolStructOutput[];
+    rewardRates: Previewer.RewardRateStructOutput[];
     floatingBorrowRate: BigNumber;
     floatingUtilization: BigNumber;
     floatingBackupBorrowed: BigNumber;
@@ -176,6 +215,7 @@ export declare namespace Previewer {
     floatingDepositAssets: BigNumber;
     fixedDepositPositions: Previewer.FixedPositionStructOutput[];
     fixedBorrowPositions: Previewer.FixedPositionStructOutput[];
+    claimableRewards: Previewer.ClaimableRewardStructOutput[];
   };
 
   export type FixedPreviewStruct = {

@@ -15,5 +15,9 @@ export class ArbitrumQiDaoVaultPositionFetcher extends QiDaoVaultContractPositio
       address: '0xb237f4264938f0903f5ec120bb1aa4bee3562fff', // WBTC Vault
       vaultInfoAddress: '0xb237f4264938f0903f5ec120bb1aa4bee3562fff',
     },
+    {
+      address: '0xd371281896f2f5f7a2c65f49d23a2b6ecfd594f3', // gDAI Vault
+      vaultInfoAddress: '0xd371281896f2f5f7a2c65f49d23a2b6ecfd594f3',
+    },
   ];
 }

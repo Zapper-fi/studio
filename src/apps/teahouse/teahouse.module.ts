@@ -3,12 +3,10 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { TeahouseContractFactory } from './contracts';
-import { OptimismTeahouseVaultsContractPositionFetcher } from './optimism/teahouse.vaults.contract-position-fetcher';
+import { EthereumTeahouseVaultsTokenFetcher } from './ethereum/teahouse.vaults.token-fetcher';
+import { OptimismTeahouseVaultsTokenFetcher } from './optimism/teahouse.vaults.token-fetcher';
 
 @Module({
-    providers: [
-        TeahouseContractFactory,
-        OptimismTeahouseVaultsContractPositionFetcher,
-    ],
+  providers: [TeahouseContractFactory, EthereumTeahouseVaultsTokenFetcher, OptimismTeahouseVaultsTokenFetcher],
 })
-export class TeahouseAppModule extends AbstractApp() { }
+export class TeahouseAppModule extends AbstractApp() {}
