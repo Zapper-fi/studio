@@ -64,7 +64,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
   }
   override async getPositions() {
     // copy-paste the original function but allow us to use our own token definition for the call to
-    // `tokenLoader.getMany(underlyingTokenRequests)`
+    // `this.getDolomiteDataProps` to reduce the number of redundant calls
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
