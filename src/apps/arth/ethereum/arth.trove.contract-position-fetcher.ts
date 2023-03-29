@@ -26,7 +26,7 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
   }
 
   async getDefinitions() {
-    return [{ address: '0xf4ed5d0c3c977b57382fabbea441a63faaf843d3' }];
+    return [{ address: '0x8b1da95724b1e376ae49fdb67afe33fe41093af5' }];
   }
 
   async getTokenDefinitions() {

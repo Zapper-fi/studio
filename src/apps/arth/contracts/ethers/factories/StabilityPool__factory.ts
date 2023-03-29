@@ -798,6 +798,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'fetchPriceFeedPrice',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -1188,6 +1201,29 @@ const _abi = [
       },
     ],
     name: 'provideToSP',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_who',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_frontEndTag',
+        type: 'address',
+      },
+    ],
+    name: 'provideToSPFor',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
