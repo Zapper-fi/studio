@@ -48,6 +48,7 @@ export interface TroveManagerInterface extends utils.Interface {
     'decreaseTroveColl(address,uint256)': FunctionFragment;
     'decreaseTroveDebt(address,uint256)': FunctionFragment;
     'defaultPool()': FunctionFragment;
+    'fetchPriceFeedPrice()': FunctionFragment;
     'getBorrowingFee(uint256)': FunctionFragment;
     'getBorrowingFeeFloor()': FunctionFragment;
     'getBorrowingFeeWithDecay(uint256)': FunctionFragment;
@@ -132,6 +133,7 @@ export interface TroveManagerInterface extends utils.Interface {
       | 'decreaseTroveColl'
       | 'decreaseTroveDebt'
       | 'defaultPool'
+      | 'fetchPriceFeedPrice'
       | 'getBorrowingFee'
       | 'getBorrowingFeeFloor'
       | 'getBorrowingFeeWithDecay'
@@ -220,6 +222,7 @@ export interface TroveManagerInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'defaultPool', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'fetchPriceFeedPrice', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBorrowingFee', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getBorrowingFeeFloor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBorrowingFeeWithDecay', values: [PromiseOrValue<BigNumberish>]): string;
@@ -340,6 +343,7 @@ export interface TroveManagerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'decreaseTroveColl', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseTroveDebt', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'defaultPool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fetchPriceFeedPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getBorrowingFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getBorrowingFeeFloor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getBorrowingFeeWithDecay', data: BytesLike): Result;
@@ -752,6 +756,8 @@ export interface TroveManager extends BaseContract {
 
     defaultPool(overrides?: CallOverrides): Promise<[string]>;
 
+    fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
     getBorrowingFee(_ARTHDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getBorrowingFeeFloor(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -1016,6 +1022,8 @@ export interface TroveManager extends BaseContract {
 
   defaultPool(overrides?: CallOverrides): Promise<string>;
 
+  fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
   getBorrowingFee(_ARTHDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getBorrowingFeeFloor(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1267,6 +1275,8 @@ export interface TroveManager extends BaseContract {
     ): Promise<BigNumber>;
 
     defaultPool(overrides?: CallOverrides): Promise<string>;
+
+    fetchPriceFeedPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingFee(_ARTHDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1646,6 +1656,8 @@ export interface TroveManager extends BaseContract {
 
     defaultPool(overrides?: CallOverrides): Promise<BigNumber>;
 
+    fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
     getBorrowingFee(_ARTHDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingFeeFloor(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1887,6 +1899,8 @@ export interface TroveManager extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     defaultPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    fetchPriceFeedPrice(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getBorrowingFee(_ARTHDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
