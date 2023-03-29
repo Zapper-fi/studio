@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.418.1](https://github.com/Zapper-fi/studio/compare/v0.418.0...v0.418.1) (2023-03-29)
+
+
+### Bug Fixes
+
+* **abracadabra:** Update Arbitrum magicGLP harvestor ([#2475](https://github.com/Zapper-fi/studio/issues/2475)) ([04af5a5](https://github.com/Zapper-fi/studio/commit/04af5a5b8342f4d936e0a91cda3a24b25e599e0b))
+
 ## [0.418.0](https://github.com/Zapper-fi/studio/compare/v0.417.1...v0.418.0) (2023-03-28)
 
 
