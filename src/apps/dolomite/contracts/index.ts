@@ -7,6 +7,8 @@ import { Network } from '~types/network.interface';
 import {
   BorrowPositionProxy__factory,
   DepositWithdrawalProxy__factory,
+  DolomiteAmmFactory__factory,
+  DolomiteAmmPair__factory,
   DolomiteMargin__factory,
   IsolationModeToken__factory,
   Token__factory,
@@ -27,6 +29,12 @@ export class DolomiteContractFactory extends ContractFactory {
   depositWithdrawalProxy({ address, network }: ContractOpts) {
     return DepositWithdrawalProxy__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  dolomiteAmmFactory({ address, network }: ContractOpts) {
+    return DolomiteAmmFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  dolomiteAmmPair({ address, network }: ContractOpts) {
+    return DolomiteAmmPair__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   dolomiteMargin({ address, network }: ContractOpts) {
     return DolomiteMargin__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -40,6 +48,8 @@ export class DolomiteContractFactory extends ContractFactory {
 
 export type { BorrowPositionProxy } from './ethers';
 export type { DepositWithdrawalProxy } from './ethers';
+export type { DolomiteAmmFactory } from './ethers';
+export type { DolomiteAmmPair } from './ethers';
 export type { DolomiteMargin } from './ethers';
 export type { IsolationModeToken } from './ethers';
 export type { Token } from './ethers';

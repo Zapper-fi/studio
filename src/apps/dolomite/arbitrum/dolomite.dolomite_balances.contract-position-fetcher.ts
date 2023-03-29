@@ -7,8 +7,8 @@ import { DolomiteContractPositionTemplatePositionFetcher } from '~apps/dolomite/
 import { DolomiteContractFactory } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumDolomiteBorrowPositionsContractPositionFetcher extends DolomiteContractPositionTemplatePositionFetcher {
-  groupLabel = 'Borrow Positions';
+export class ArbitrumDolomiteDolomiteBalancesContractPositionFetcher extends DolomiteContractPositionTemplatePositionFetcher {
+  groupLabel = 'Dolomite Balances';
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,
@@ -18,6 +18,6 @@ export class ArbitrumDolomiteBorrowPositionsContractPositionFetcher extends Dolo
   }
 
   protected isFetchingDolomiteBalances(): boolean {
-    return false;
+    return true;
   }
 }

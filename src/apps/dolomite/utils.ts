@@ -1,16 +1,15 @@
 import { BigNumber, BigNumberish, ethers } from 'ethers';
-import { compact } from 'lodash';
 
 import { DolomiteContractFactory, DolomiteMargin } from '~apps/dolomite/contracts';
 import {
-  chunkArrayForMultiCall,
-  ISOLATION_MODE_MATCHERS,
-  SILO_MODE_MATCHERS,
-  SPECIAL_TOKEN_NAME_MATCHERS,
-} from '~apps/dolomite/dolomite.module';
-import { Erc20__factory } from '~contract/contracts/ethers';
-import { DefaultDataProps, WithMetaType } from '~position/display.interface';
-import { MetaType, Token } from '~position/position.interface';
+  DolomiteAmmFactory__factory,
+  DolomiteAmmPair__factory,
+  IsolationModeToken__factory,
+} from '~apps/dolomite/contracts/ethers';
+import { Erc20__factory, Multicall } from '~contract/contracts/ethers';
+import { IMulticallWrapper } from '~multicall';
+import { DefaultDataProps } from '~position/display.interface';
+import { ContractPosition, MetaType } from '~position/position.interface';
 import {
   GetDataPropsParams,
   GetTokenBalancesParams,
@@ -19,18 +18,33 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
+import CallStruct = Multicall.CallStruct;
+
+export interface AccountStruct {
+  accountOwner: string;
+  accountNumber: string;
+}
+export interface DolomiteContractPosition extends ContractPosition<DolomiteDataProps> {
+  accountStructs: AccountStruct[];
+}
+
 export enum TokenMode {
   NORMAL = 'NORMAL',
   ISOLATION = 'ISOLATION',
   SILO = 'SILO',
 }
 
+export interface ExtraTokenInfo {
+  unwrappedTokenAddress: string;
+  wrappedTokenAddress: string;
+  name: string;
+  mode: TokenMode;
+  marketId: number;
+}
+
 export interface DolomiteDataProps extends DefaultDataProps {
-  [tokenAddress: string]: {
-    wrappedTokenAddress: string;
-    name: string;
-    mode: TokenMode;
-    marketId: number;
+  extraTokenInfo: {
+    [tokenAddress: string]: ExtraTokenInfo;
   };
 }
 
@@ -40,11 +54,48 @@ export interface DolomiteTokenDefinition extends UnderlyingTokenDefinition {
   name: string;
 }
 
+export const CHUNK_SIZE = 32;
+
+export const ISOLATION_MODE_MATCHERS = ['Dolomite Isolation:', 'Dolomite: Fee + Staked GLP'];
+
+export const SILO_MODE_MATCHERS = ['Dolomite Silo:'];
+
+export const SPECIAL_TOKEN_NAME_MATCHERS = [...ISOLATION_MODE_MATCHERS, ...SILO_MODE_MATCHERS];
+
+export const DOLOMITE_MARGIN_ADDRESSES = {
+  [Network.ARBITRUM_MAINNET]: '0x6bd780e7fdf01d77e4d475c821f1e7ae05409072',
+};
+
+export const DOLOMITE_AMM_FACTORY_ADDRESSES = {
+  [Network.ARBITRUM_MAINNET]: '0xd99c21c96103f36bc1fa26dd6448af4da030c1ef',
+};
+
+export const DOLOMITE_GRAPH_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/dolomite-exchange/dolomite-v2-arbitrum';
+
+const ONE_DOLLAR = BigNumber.from('1000000000000000000000000000000000000');
+
+const ONE_INDEX = BigNumber.from('1000000000000000000');
+
+export function chunkArrayForMultiCall<T>(
+  values: T[],
+  getCallData: (value: T, index: number) => { target: string; callData: string },
+): Multicall.CallStruct[][] {
+  const callChunks: Multicall.CallStruct[][] = [];
+  let index = 0;
+  for (let i = 0; i < values.length; i += CHUNK_SIZE) {
+    callChunks[i] = [];
+    for (let j = 0; j < CHUNK_SIZE && index < values.length; j++) {
+      callChunks[i / CHUNK_SIZE].push(getCallData(values[i + j], i + j));
+      index += 1;
+    }
+  }
+  return callChunks;
+}
+
 export async function getTokenDefinitionsLib(
   params: GetTokenDefinitionsParams<DolomiteMargin>,
   dolomiteContractFactory: DolomiteContractFactory,
   network: Network,
-  isPositive: boolean,
 ): Promise<DolomiteTokenDefinition[]> {
   const tokenCount = (await params.contract.getNumMarkets()).toNumber();
 
@@ -88,12 +139,12 @@ export async function getTokenDefinitionsLib(
         : SILO_MODE_MATCHERS.find(matcher => tokenName.includes(matcher))
         ? TokenMode.SILO
         : TokenMode.NORMAL;
-      const tokenAddress = tokenAddresses[i];
       const isolationModeTokenContract = dolomiteContractFactory.isolationModeToken({
-        address: tokenAddress,
+        address: tokenAddresses[i],
         network: network,
       });
       if (tokenName.includes('Fee + Staked GLP')) {
+        // special edge-case for fee + staked GLP token.
         tokenAddresses[i] = '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258';
       } else {
         tokenAddresses[i] = (await isolationModeTokenContract.UNDERLYING_TOKEN()).toLowerCase();
@@ -108,7 +159,7 @@ export async function getTokenDefinitionsLib(
     tokens.push({
       address: tokenAddresses[i],
       network: network,
-      metaType: isPositive ? MetaType.SUPPLIED : MetaType.BORROWED,
+      metaType: MetaType.SUPPLIED,
       name: tokenNames[i],
       mode: modes[i],
       wrappedTokenAddress: wrappedTokenAddresses[i],
@@ -120,71 +171,100 @@ export async function getTokenDefinitionsLib(
 
 export async function mapTokensToDolomiteDataProps(
   params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps>,
-  dolomiteContractFactory: DolomiteContractFactory,
+  tokenDefinitions: DolomiteTokenDefinition[],
+  isFetchingDolomiteBalances: boolean,
   network: Network,
-  isPositive: boolean,
+  multicall: IMulticallWrapper,
 ): Promise<DolomiteDataProps> {
-  const dolomiteTokens = await getTokenDefinitionsLib(params, dolomiteContractFactory, network, isPositive);
-  return dolomiteTokens.reduce<DolomiteDataProps>((memo, token, i) => {
-    memo[token.address.toLowerCase()] = {
-      wrappedTokenAddress: token.wrappedTokenAddress,
-      name: token.name,
-      mode: token.mode,
-      marketId: i,
-    };
-    return memo;
-  }, {});
+  let liquidity: number | undefined = undefined;
+  if (isFetchingDolomiteBalances) {
+    // only get TVL for DolomiteBalances to prevent double counting
+    liquidity = 0;
+    for (let i = 0; i < tokenDefinitions.length; i++) {
+      const contract = multicall.wrap(params.contract);
+      const totalPar = await contract.getMarketTotalPar(i);
+      const index = await contract.getMarketCurrentIndex(i);
+      const totalSupply = totalPar.supply.mul(index.supply).div(ONE_INDEX);
+      const totalBorrow = totalPar.borrow.mul(index.borrow).div(ONE_INDEX);
+      const price = (await contract.getMarketPrice(i)).value;
+      liquidity += totalSupply.sub(totalBorrow).mul(price).div(ONE_DOLLAR.div(100000)).toNumber() / 100000.0;
+    }
+  }
+
+  return {
+    liquidity,
+    extraTokenInfo: tokenDefinitions.reduce<Record<string, ExtraTokenInfo>>((memo, token, i) => {
+      memo[token.wrappedTokenAddress] = {
+        wrappedTokenAddress: token.wrappedTokenAddress,
+        unwrappedTokenAddress: token.address.toLowerCase(),
+        name: token.name,
+        mode: token.mode,
+        marketId: i,
+      };
+      memo[token.address.toLowerCase()] = {
+        wrappedTokenAddress: token.wrappedTokenAddress,
+        unwrappedTokenAddress: token.address.toLowerCase(),
+        name: token.name,
+        mode: token.mode,
+        marketId: i,
+      };
+      return memo;
+    }, {}),
+  };
 }
 
-export async function getTokenBalancesPerPositionLib(
+export async function getTokenBalancesPerAccountStructLib(
   params: GetTokenBalancesParams<DolomiteMargin, DolomiteDataProps>,
-  dolomiteContractFactory: DolomiteContractFactory,
-  network: Network,
-  isPositive: boolean,
-): Promise<BigNumberish[]> {
+  accountStruct: AccountStruct,
+): Promise<Map<string, BigNumberish>> {
   const tokenAddressToAmount = new Map<string, BigNumberish>();
-  for (let i = 0; i < 100; i += 1) {
-    const [, tokenAddresses, , weiAmounts] = await params.contract.getAccountBalances({
-      owner: params.address,
-      number: i,
-    });
-    tokenAddresses.forEach((tokenAddress, i) => {
-      let amount = BigNumber.from(weiAmounts[i].value);
-      if (!weiAmounts[i].sign) {
-        amount = amount.mul(-1);
-      }
-      if (amount.gte(0) && isPositive) {
-        tokenAddressToAmount.set(tokenAddress.toLowerCase(), amount);
-      } else if (amount.lt(0) && !isPositive) {
-        // make the number positive again
-        tokenAddressToAmount.set(tokenAddress.toLowerCase(), amount.mul(-1));
-      }
-    });
-    if (tokenAddresses.length === 0) {
-      break;
+  const [, tokenAddresses, , weiAmounts] = await params.contract.getAccountBalances({
+    owner: accountStruct.accountOwner,
+    number: accountStruct.accountNumber,
+  });
+  tokenAddresses.forEach((tokenAddress, i) => {
+    let amount = BigNumber.from(weiAmounts[i].value);
+    if (!weiAmounts[i].sign) {
+      amount = amount.mul(-1);
     }
-  }
+    tokenAddress = params.contractPosition.dataProps.extraTokenInfo[tokenAddress.toLowerCase()].unwrappedTokenAddress;
+    tokenAddressToAmount.set(tokenAddress, amount);
+  });
 
-  if (isPositive) {
-    // debt balances can't be isolated or siloed
-    for (let i = 0; i < params.contractPosition.tokens.length; i++) {
-      const tokenAddress = params.contractPosition.tokens[i].address;
-      const props = params.contractPosition.dataProps[tokenAddress];
-      if (props.mode === TokenMode.ISOLATION) {
-        const isolationModeTokenContract = dolomiteContractFactory.isolationModeToken({
-          address: props.wrappedTokenAddress,
-          network,
-        });
-        const vaultAddress = await isolationModeTokenContract.getVaultByAccount(params.address);
-        const balanceWei = await params.contract.getAccountWei({ owner: vaultAddress, number: 0 }, props.marketId);
-        if (balanceWei.value.gt(0)) {
-          tokenAddressToAmount.set(tokenAddress, balanceWei.value);
-        }
-      } else if (props.mode === TokenMode.SILO) {
-        // TODO: implement silo mode
+  return tokenAddressToAmount;
+}
+
+export async function getVaultAddresses(
+  account: string,
+  isolationModeTokenAddresses: string[],
+  multicall: Multicall,
+): Promise<string[]> {
+  const calls: CallStruct[] = isolationModeTokenAddresses.map(tokenAddress => {
+    return {
+      target: tokenAddress,
+      callData: IsolationModeToken__factory.createInterface().encodeFunctionData('getVaultByAccount', [account]),
+    };
+  });
+  const results = await multicall.callStatic.aggregate(calls, true);
+  return results.returnData.map(({ data }) => {
+    return ethers.utils.defaultAbiCoder.decode(['address'], data)[0].toLowerCase();
+  });
+}
+
+export async function getAllIsolationModeTokensFromContractPositions(
+  account: string,
+  contractPositions: ContractPosition<DolomiteDataProps>[],
+  multicall: IMulticallWrapper,
+): Promise<string[]> {
+  const isolationModeTokensMap = contractPositions.reduce<Record<string, string>>((memo, position) => {
+    position.tokens.forEach(token => {
+      const extraData = position.dataProps.extraTokenInfo[token.address];
+      if (!memo[token.address] && extraData.mode === TokenMode.ISOLATION) {
+        memo[token.address] = extraData.wrappedTokenAddress;
       }
-    }
-  }
-
-  return params.contractPosition.tokens.map(token => tokenAddressToAmount.get(token.address) || 0);
+    });
+    return memo;
+  }, {});
+  const isolationModeTokens = Object.values(isolationModeTokensMap);
+  return getVaultAddresses(account, isolationModeTokens, multicall.contract);
 }
