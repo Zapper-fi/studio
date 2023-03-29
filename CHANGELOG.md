@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.418.2](https://github.com/Zapper-fi/studio/compare/v0.418.1...v0.418.2) (2023-03-29)
+
+
+### Bug Fixes
+
+* Updated contract addresses for ARTH Loans (Stability Pool + Trove Manager) ([#2338](https://github.com/Zapper-fi/studio/issues/2338)) ([3c81f60](https://github.com/Zapper-fi/studio/commit/3c81f60c411906bb1807adf44ce3585fedeb5514))
+* **vela:** Update VLP APY endpoint ([#2478](https://github.com/Zapper-fi/studio/issues/2478)) ([8b64ea7](https://github.com/Zapper-fi/studio/commit/8b64ea728c03ec09616d467a0226f19e47f90c27))
+
 ## [0.418.1](https://github.com/Zapper-fi/studio/compare/v0.418.0...v0.418.1) (2023-03-29)
 
 
