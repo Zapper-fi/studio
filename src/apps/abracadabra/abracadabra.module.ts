@@ -22,6 +22,8 @@ import { FantomAbracadabraCauldronContractPositionFetcher } from './fantom/abrac
 import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadabra.farm.contract-position-fetcher';
 import { FantomAbracadabraMspellContractPositionFetcher } from './fantom/abracadabra.m-spell.contract-position-fetcher';
 import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.staked-spell.token-fetcher';
+import { OptimismAbracadabraCauldronContractPositionFetcher } from './optimism/abracadabra.cauldron.contract-position-fetcher';
+import { OptimismAbracadabraErc20VaultsTokenFetcher } from './optimism/abracadabra.erc-20-vaults.token-fetcher';
 
 @Module({
   providers: [
@@ -50,6 +52,9 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
     FantomAbracadabraFarmContractPositionFetcher,
     FantomAbracadabraMspellContractPositionFetcher,
     FantomAbracadabraStakedSpellTokenFetcher,
+    // Optimism
+    OptimismAbracadabraErc20VaultsTokenFetcher,
+    OptimismAbracadabraCauldronContractPositionFetcher,
   ],
 })
 export class AbracadabraAppModule extends AbstractApp() {}

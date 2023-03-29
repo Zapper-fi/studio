@@ -4,6 +4,36 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.418.1](https://github.com/Zapper-fi/studio/compare/v0.418.0...v0.418.1) (2023-03-29)
+
+
+### Bug Fixes
+
+* **abracadabra:** Update Arbitrum magicGLP harvestor ([#2475](https://github.com/Zapper-fi/studio/issues/2475)) ([04af5a5](https://github.com/Zapper-fi/studio/commit/04af5a5b8342f4d936e0a91cda3a24b25e599e0b))
+
+## [0.418.0](https://github.com/Zapper-fi/studio/compare/v0.417.1...v0.418.0) (2023-03-28)
+
+
+### Features
+
+* **abracadabra:** Add support for OP/USDC Velodrome cauldron on Optimism ([#2472](https://github.com/Zapper-fi/studio/issues/2472)) ([64a81f2](https://github.com/Zapper-fi/studio/commit/64a81f259a6014ddb0a312b65043a375afd8d41d))
+* **synthetix:** sARB logo ([#2474](https://github.com/Zapper-fi/studio/issues/2474)) ([577c13f](https://github.com/Zapper-fi/studio/commit/577c13fbf8be977ef84a1b8c247ff2ff1cafeec4))
+
+## [0.417.1](https://github.com/Zapper-fi/studio/compare/v0.417.0...v0.417.1) (2023-03-27)
+
+
+### Bug Fixes
+
+* **polynomial:** Linting ([#2469](https://github.com/Zapper-fi/studio/issues/2469)) ([6616212](https://github.com/Zapper-fi/studio/commit/6616212ca2793eb91427266eb75867daaa85b154))
+* **superfluid:** Filter out non Supertoken addresses ([#2470](https://github.com/Zapper-fi/studio/issues/2470)) ([45aced4](https://github.com/Zapper-fi/studio/commit/45aced48ce461314c5d36dad839e0a47897e6264))
+
+## [0.417.0](https://github.com/Zapper-fi/studio/compare/v0.416.1...v0.417.0) (2023-03-27)
+
+
+### Features
+
+* **gamma-strategies:** add some farm contracts ([#2467](https://github.com/Zapper-fi/studio/issues/2467)) ([cfb234e](https://github.com/Zapper-fi/studio/commit/cfb234e8e14c26c8150eff44835d877152b9de04))
+
 ## [0.416.1](https://github.com/Zapper-fi/studio/compare/v0.416.0...v0.416.1) (2023-03-26)
 
 

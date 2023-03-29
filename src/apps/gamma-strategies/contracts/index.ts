@@ -8,6 +8,10 @@ import {
   GammaStrategiesFactory__factory,
   GammaStrategiesHypervisor__factory,
   GammaStrategiesHypervisorFactory__factory,
+  GammaStrategiesQuickswapMasterchef__factory,
+  GammaStrategiesUniOpMasterchef__factory,
+  GammaStrategiesZyberswapMasterchef__factory,
+  GammaStrategiesZyberswapRewarder__factory,
 } from './ethers';
 
 // eslint-disable-next-line
@@ -28,8 +32,24 @@ export class GammaStrategiesContractFactory extends ContractFactory {
   gammaStrategiesHypervisorFactory({ address, network }: ContractOpts) {
     return GammaStrategiesHypervisorFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  gammaStrategiesQuickswapMasterchef({ address, network }: ContractOpts) {
+    return GammaStrategiesQuickswapMasterchef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  gammaStrategiesUniOpMasterchef({ address, network }: ContractOpts) {
+    return GammaStrategiesUniOpMasterchef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  gammaStrategiesZyberswapMasterchef({ address, network }: ContractOpts) {
+    return GammaStrategiesZyberswapMasterchef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  gammaStrategiesZyberswapRewarder({ address, network }: ContractOpts) {
+    return GammaStrategiesZyberswapRewarder__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { GammaStrategiesFactory } from './ethers';
 export type { GammaStrategiesHypervisor } from './ethers';
 export type { GammaStrategiesHypervisorFactory } from './ethers';
+export type { GammaStrategiesQuickswapMasterchef } from './ethers';
+export type { GammaStrategiesUniOpMasterchef } from './ethers';
+export type { GammaStrategiesZyberswapMasterchef } from './ethers';
+export type { GammaStrategiesZyberswapRewarder } from './ethers';

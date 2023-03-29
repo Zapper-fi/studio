@@ -15,6 +15,14 @@ type Pool = {
   };
 };
 
+const dataSources = {
+  [Network.ARBITRUM_MAINNET]: ['/arbitrum', '/zyberswap/arbitrum'],
+  [Network.ETHEREUM_MAINNET]: [''],
+  [Network.OPTIMISM_MAINNET]: ['/optimism'],
+  [Network.POLYGON_MAINNET]: ['/polygon', '/quickswap/polygon'],
+  [Network.CELO_MAINNET]: ['/celo'],
+};
+
 @Injectable()
 export class GammaStrategiesDefinitionResolver {
   @Cache({
@@ -22,11 +30,14 @@ export class GammaStrategiesDefinitionResolver {
     ttl: 30 * 60, // 30 min
   })
   async getPoolDefinitionsData(network: Network) {
-    const url =
-      network == Network.ETHEREUM_MAINNET
-        ? 'https://wire2.gamma.xyz/hypervisors/allData'
-        : `https://gammawire.net/${network}/hypervisors/allData`;
+    const urls = dataSources[network];
+    const data = await Promise.all(
+      urls.map((path: string) => this._getPoolDefinitionsData(`https://wire2.gamma.xyz${path}/hypervisors/allData`)),
+    );
+    return Object.assign({}, ...data) as GammaApiTokensResponse;
+  }
 
+  async _getPoolDefinitionsData(url: string) {
     const { data } = await Axios.get<GammaApiTokensResponse>(url);
     return data;
   }
@@ -39,7 +50,6 @@ export class GammaStrategiesDefinitionResolver {
     const defintionsRaw = definitionsDataRaw.map(([key, value]) => {
       return Number(value.returns.allTime.feeApy) > 0 ? { address: key.toLowerCase() } : null;
     });
-
     return _.compact(defintionsRaw);
   }
 }

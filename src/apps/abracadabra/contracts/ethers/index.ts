@@ -4,6 +4,7 @@
 export type { AbracadabraBentoBoxTokenContract } from './AbracadabraBentoBoxTokenContract';
 export type { AbracadabraCauldron } from './AbracadabraCauldron';
 export type { AbracadabraConvexWrapper } from './AbracadabraConvexWrapper';
+export type { AbracadabraErc20Vault } from './AbracadabraErc20Vault';
 export type { AbracadabraGlpWrapper } from './AbracadabraGlpWrapper';
 export type { AbracadabraGmxSGlp } from './AbracadabraGmxSGlp';
 export type { AbracadabraMagicApe } from './AbracadabraMagicApe';
@@ -18,6 +19,7 @@ export * as factories from './factories';
 export { AbracadabraBentoBoxTokenContract__factory } from './factories/AbracadabraBentoBoxTokenContract__factory';
 export { AbracadabraCauldron__factory } from './factories/AbracadabraCauldron__factory';
 export { AbracadabraConvexWrapper__factory } from './factories/AbracadabraConvexWrapper__factory';
+export { AbracadabraErc20Vault__factory } from './factories/AbracadabraErc20Vault__factory';
 export { AbracadabraGlpWrapper__factory } from './factories/AbracadabraGlpWrapper__factory';
 export { AbracadabraGmxSGlp__factory } from './factories/AbracadabraGmxSGlp__factory';
 export { AbracadabraMagicApeLens__factory } from './factories/AbracadabraMagicApeLens__factory';
