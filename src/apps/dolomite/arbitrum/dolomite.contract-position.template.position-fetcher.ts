@@ -141,14 +141,14 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
   }
 
   async getTokenDefinitions(
-    params: GetTokenDefinitionsParams<DolomiteMargin>,
+    params: GetTokenDefinitionsParams<DolomiteMargin, DolomiteContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return getTokenDefinitionsLib(params, this.dolomiteContractFactory, this.network);
   }
 
   async getDataProps(
     params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps, DolomiteContractPositionDefinition>,
-  ): Promise<DefaultDataProps> {
+  ): Promise<DolomiteDataProps> {
     const multicall = this.appToolkit.getMulticall(this.network);
     return mapTokensToDolomiteDataProps(
       params,

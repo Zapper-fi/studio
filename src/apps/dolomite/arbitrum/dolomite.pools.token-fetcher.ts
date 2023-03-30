@@ -7,6 +7,7 @@ import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DOLOMITE_AMM_FACTORY_ADDRESSES } from '~apps/dolomite/utils';
 import {
   UniswapV2PoolOnChainTemplateTokenFetcher,
@@ -62,7 +63,7 @@ export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTempl
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<DolomiteAmmPair, UniswapV2TokenDataProps>): Promise<string> {
-    const label = await super.getLabel({ appToken });
+    const label = appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
     return label.replace('WETH', 'ETH');
   }
 
