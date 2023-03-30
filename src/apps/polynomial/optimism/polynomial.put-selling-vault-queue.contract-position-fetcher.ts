@@ -14,8 +14,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { PolynomialContractFactory, PolynomialPutSelling } from '../contracts';
-import { isUnderlyingDenominated } from '../helpers/formatters';
-import { PolynomialApiHelper } from '../helpers/polynomial.api';
+import { isUnderlyingDenominated } from '../common/formatters';
+import { PolynomialApiHelper } from '../common/polynomial.api';
 
 @PositionTemplate()
 export class OptimismPolynomialPutSellingVaultQueueContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialPutSelling> {
