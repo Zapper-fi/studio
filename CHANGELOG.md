@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.418.3](https://github.com/Zapper-fi/studio/compare/v0.418.2...v0.418.3) (2023-03-29)
+
+
+### Bug Fixes
+
+* **dopex:** Fix SSOV v3 deposit underlying token ([#2480](https://github.com/Zapper-fi/studio/issues/2480)) ([1d559f7](https://github.com/Zapper-fi/studio/commit/1d559f7dbdf827a807650c26bef0cfab8c2a12c3))
+
 ## [0.418.2](https://github.com/Zapper-fi/studio/compare/v0.418.1...v0.418.2) (2023-03-29)
 
 
