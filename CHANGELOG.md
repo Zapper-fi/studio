@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.420.0](https://github.com/Zapper-fi/studio/compare/v0.419.0...v0.420.0) (2023-03-30)
+
+
+### Features
+
+* **dolomite:** Added Dolomite to Zapper ⛰️  ([#2477](https://github.com/Zapper-fi/studio/issues/2477)) ([d8429e4](https://github.com/Zapper-fi/studio/commit/d8429e44de5400ecf70109a24de8905d082276b5))
+
 ## [0.419.0](https://github.com/Zapper-fi/studio/compare/v0.418.3...v0.419.0) (2023-03-30)
 
 
