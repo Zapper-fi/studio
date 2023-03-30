@@ -12,7 +12,7 @@ import {
   DefaultContractPositionDefinition,
   GetDataPropsParams,
   GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
+  GetTokenDefinitionsParams, UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
@@ -46,7 +46,7 @@ export interface ExtraTokenInfo {
 }
 
 export interface DolomiteDataProps extends DefaultDataProps {
-  liquidity: number;
+  liquidity: number | undefined;
   marketsCount: number;
   marketIdToMarketMap: {
     [marketId: number]:  ExtraTokenInfo
@@ -95,8 +95,8 @@ export async function getTokenDefinitionsLib(
   params: GetTokenDefinitionsParams<DolomiteMargin, DolomiteContractPositionDefinition>,
   dolomiteContractFactory: DolomiteContractFactory,
   network: Network,
-): Promise<DolomiteTokenDefinition[]> {
-  const tokens: DolomiteTokenDefinition[] = [];
+): Promise<UnderlyingTokenDefinition[]> {
+  const tokens: UnderlyingTokenDefinition[] = [];
   for (let i = 0; i < params.definition.marketsCount; i++) {
     tokens.push({
       address: params.definition.marketIdToMarketMap[i].underlyingTokenAddress,
@@ -117,7 +117,7 @@ export async function mapTokensToDolomiteDataProps(
   if (isFetchingDolomiteBalances) {
     // only get TVL for DolomiteBalances to prevent double counting and making unnecessary network calls
     liquidity = 0;
-    for (let i = 0; i < params.definition.marketsCount.length; i++) {
+    for (let i = 0; i < params.definition.marketsCount; i++) {
       const contract = multicall.wrap(params.contract);
       const totalPar = await contract.getMarketTotalPar(i);
       const index = await contract.getMarketCurrentIndex(i);

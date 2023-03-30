@@ -24,7 +24,6 @@ import {
   AccountStruct,
   DolomiteContractPosition,
   DolomiteDataProps,
-  DolomiteTokenDefinition,
   getAllIsolationModeTokensFromContractPositions,
   getTokenBalancesPerAccountStructLib,
   getTokenDefinitionsLib,
@@ -40,13 +39,14 @@ import {
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
+  GetTokenDefinitionsParams, UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 export abstract class DolomiteContractPositionTemplatePositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   DolomiteMargin,
-  DolomiteDataProps
+  DolomiteDataProps,
+  DolomiteContractPositionDefinition
 > {
   protected constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -60,7 +60,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     return this.dolomiteContractFactory.dolomiteMargin({ address, network: this.network });
   }
 
-  async getDefinitions(params: GetDefinitionsParams): Promise<DolomiteContractPositionDefinition>[] {
+  async getDefinitions(params: GetDefinitionsParams): Promise<DolomiteContractPositionDefinition[]> {
     const dolomiteMargin = this.getContract(DOLOMITE_MARGIN_ADDRESSES[this.network]);
     const marketsCount = (await dolomiteMargin.getNumMarkets()).toNumber();
 
@@ -77,7 +77,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
         underlyingTokenAddressCallChunks[i],
         false,
       );
-      returnData.forEach(({ data }): string => {
+      returnData.forEach(({ data }) => {
         const result = ethers.utils.defaultAbiCoder.decode(['address'], data);
         underlyingTokenAddresses.push((result[0] as string).toLowerCase());
       });
@@ -90,7 +90,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     const tokenNames: string[] = [];
     for (let i = 0; i < tokenNameCallChunks.length; i++) {
       const { returnData } = await params.multicall.contract.callStatic.aggregate(tokenNameCallChunks[i], false);
-      returnData.forEach(({ data }): string => {
+      returnData.forEach(({ data }) => {
         const result = ethers.utils.defaultAbiCoder.decode(['string'], data)
         tokenNames.push(result[0] as string);
       });
@@ -142,7 +142,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
 
   async getTokenDefinitions(
     params: GetTokenDefinitionsParams<DolomiteMargin>,
-  ): Promise<DolomiteTokenDefinition[] | null> {
+  ): Promise<UnderlyingTokenDefinition[] | null> {
     return getTokenDefinitionsLib(params, this.dolomiteContractFactory, this.network);
   }
 
