@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { VaultObject } from '../helpers/polynomial.api';
+import { VaultObject } from '../common/polynomial.api';
 
 export const resolveTitle = (title: string) => _.startCase(_.toLower(title));
 export const getVault = (vaults: VaultObject[], address: string) =>

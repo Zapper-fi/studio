@@ -11,8 +11,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
-import { isUnderlyingDenominated } from '../helpers/formatters';
-import { PolynomialApiHelper } from '../helpers/polynomial.api';
+import { isUnderlyingDenominated } from '../common/formatters';
+import { PolynomialApiHelper } from '../common/polynomial.api';
 
 type PolynomialPutSellingVaultTokenDefinition = {
   address: string;
