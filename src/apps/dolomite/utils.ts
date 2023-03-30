@@ -2,8 +2,6 @@ import { BigNumber, BigNumberish, ethers } from 'ethers';
 
 import { DolomiteContractFactory, DolomiteMargin } from '~apps/dolomite/contracts';
 import {
-  DolomiteAmmFactory__factory,
-  DolomiteAmmPair__factory,
   IsolationModeToken__factory,
 } from '~apps/dolomite/contracts/ethers';
 import { Erc20__factory, Multicall } from '~contract/contracts/ethers';
@@ -17,8 +15,6 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
-
-import CallStruct = Multicall.CallStruct;
 
 export interface AccountStruct {
   accountOwner: string;

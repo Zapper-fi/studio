@@ -11,7 +11,7 @@ import { DOLOMITE_AMM_FACTORY_ADDRESSES } from '~apps/dolomite/utils';
 import {
   UniswapV2PoolOnChainTemplateTokenFetcher,
   UniswapV2TokenDataProps,
-} from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher.ts';
+} from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { DolomiteAmmFactory, DolomiteAmmPair, DolomiteContractFactory } from '../contracts';
