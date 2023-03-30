@@ -4,15 +4,15 @@ import { DolomiteContractFactory, DolomiteMargin } from '~apps/dolomite/contract
 import {
   IsolationModeToken__factory,
 } from '~apps/dolomite/contracts/ethers';
-import { Erc20__factory, Multicall } from '~contract/contracts/ethers';
+import { Multicall } from '~contract/contracts/ethers';
 import { IMulticallWrapper } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import {
+  DefaultContractPositionDefinition,
   GetDataPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
-  UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
@@ -24,6 +24,13 @@ export interface DolomiteContractPosition extends ContractPosition<DolomiteDataP
   accountStructs: AccountStruct[];
 }
 
+export interface DolomiteContractPositionDefinition extends DefaultContractPositionDefinition {
+  marketsCount: number;
+  marketIdToMarketMap: {
+    [marketId: number]:  ExtraTokenInfo
+  };
+}
+
 export enum TokenMode {
   NORMAL = 'NORMAL',
   ISOLATION = 'ISOLATION',
@@ -31,7 +38,7 @@ export enum TokenMode {
 }
 
 export interface ExtraTokenInfo {
-  unwrappedTokenAddress: string;
+  underlyingTokenAddress: string;
   wrappedTokenAddress: string;
   name: string;
   mode: TokenMode;
@@ -39,15 +46,11 @@ export interface ExtraTokenInfo {
 }
 
 export interface DolomiteDataProps extends DefaultDataProps {
-  extraTokenInfo: {
-    [tokenAddress: string]: ExtraTokenInfo;
+  liquidity: number;
+  marketsCount: number;
+  marketIdToMarketMap: {
+    [marketId: number]:  ExtraTokenInfo
   };
-}
-
-export interface DolomiteTokenDefinition extends UnderlyingTokenDefinition {
-  wrappedTokenAddress: string;
-  mode: TokenMode;
-  name: string;
 }
 
 export const CHUNK_SIZE = 32;
@@ -89,94 +92,32 @@ export function chunkArrayForMultiCall<T>(
 }
 
 export async function getTokenDefinitionsLib(
-  params: GetTokenDefinitionsParams<DolomiteMargin>,
+  params: GetTokenDefinitionsParams<DolomiteMargin, DolomiteContractPositionDefinition>,
   dolomiteContractFactory: DolomiteContractFactory,
   network: Network,
 ): Promise<DolomiteTokenDefinition[]> {
-  const tokenCount = (await params.contract.getNumMarkets()).toNumber();
-
-  const tokenAddressCallChunks = chunkArrayForMultiCall(
-    Array.from({ length: tokenCount }, (_, i) => i),
-    (_, i) => ({
-      target: params.address,
-      callData: params.contract.interface.encodeFunctionData('getMarketTokenAddress', [i]),
-    }),
-  );
-  let tokenAddresses: string[] = [];
-  for (let i = 0; i < tokenAddressCallChunks.length; i++) {
-    const { returnData } = await params.multicall.contract.callStatic.aggregate(tokenAddressCallChunks[i], false);
-    const rawTokens = returnData.map(({ data }): string => {
-      return (ethers.utils.defaultAbiCoder.decode(['address'], data)[0] as string).toLowerCase();
-    });
-    tokenAddresses = tokenAddresses.concat(...rawTokens);
-  }
-
-  const tokenNameCallChunks = chunkArrayForMultiCall(tokenAddresses, tokenAddress => ({
-    target: tokenAddress,
-    callData: Erc20__factory.createInterface().encodeFunctionData('name'),
-  }));
-  let tokenNames: string[] = [];
-  for (let i = 0; i < tokenNameCallChunks.length; i++) {
-    const { returnData } = await params.multicall.contract.callStatic.aggregate(tokenNameCallChunks[i], false);
-    const rawTokens = returnData.map(({ data }): string => {
-      return ethers.utils.defaultAbiCoder.decode(['string'], data)[0] as string;
-    });
-    tokenNames = tokenNames.concat(...rawTokens);
-  }
-
-  const wrappedTokenAddresses: string[] = [];
-  const modes: TokenMode[] = [];
-  for (let i = 0; i < tokenAddresses.length; i++) {
-    wrappedTokenAddresses.push(tokenAddresses[i]);
-    const tokenName = tokenNames[i];
-    if (SPECIAL_TOKEN_NAME_MATCHERS.some(matcher => tokenName.includes(matcher))) {
-      modes[i] = ISOLATION_MODE_MATCHERS.find(matcher => tokenName.includes(matcher))
-        ? TokenMode.ISOLATION
-        : SILO_MODE_MATCHERS.find(matcher => tokenName.includes(matcher))
-        ? TokenMode.SILO
-        : TokenMode.NORMAL;
-      const isolationModeTokenContract = dolomiteContractFactory.isolationModeToken({
-        address: tokenAddresses[i],
-        network: network,
-      });
-      if (tokenName.includes('Fee + Staked GLP')) {
-        // special edge-case for fee + staked GLP token.
-        tokenAddresses[i] = '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258';
-      } else {
-        tokenAddresses[i] = (await isolationModeTokenContract.UNDERLYING_TOKEN()).toLowerCase();
-      }
-    } else {
-      modes.push(TokenMode.NORMAL);
-    }
-  }
-
   const tokens: DolomiteTokenDefinition[] = [];
-  for (let i = 0; i < tokenAddresses.length; i++) {
+  for (let i = 0; i < params.definition.marketsCount; i++) {
     tokens.push({
-      address: tokenAddresses[i],
+      address: params.definition.marketIdToMarketMap[i].underlyingTokenAddress,
       network: network,
       metaType: MetaType.SUPPLIED,
-      name: tokenNames[i],
-      mode: modes[i],
-      wrappedTokenAddress: wrappedTokenAddresses[i],
     });
   }
-
   return tokens;
 }
 
 export async function mapTokensToDolomiteDataProps(
-  params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps>,
-  tokenDefinitions: DolomiteTokenDefinition[],
+  params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps, DolomiteContractPositionDefinition>,
   isFetchingDolomiteBalances: boolean,
   network: Network,
   multicall: IMulticallWrapper,
 ): Promise<DolomiteDataProps> {
   let liquidity: number | undefined = undefined;
   if (isFetchingDolomiteBalances) {
-    // only get TVL for DolomiteBalances to prevent double counting
+    // only get TVL for DolomiteBalances to prevent double counting and making unnecessary network calls
     liquidity = 0;
-    for (let i = 0; i < tokenDefinitions.length; i++) {
+    for (let i = 0; i < params.definition.marketsCount.length; i++) {
       const contract = multicall.wrap(params.contract);
       const totalPar = await contract.getMarketTotalPar(i);
       const index = await contract.getMarketCurrentIndex(i);
@@ -189,23 +130,8 @@ export async function mapTokensToDolomiteDataProps(
 
   return {
     liquidity,
-    extraTokenInfo: tokenDefinitions.reduce<Record<string, ExtraTokenInfo>>((memo, token, i) => {
-      memo[token.wrappedTokenAddress] = {
-        wrappedTokenAddress: token.wrappedTokenAddress,
-        unwrappedTokenAddress: token.address.toLowerCase(),
-        name: token.name,
-        mode: token.mode,
-        marketId: i,
-      };
-      memo[token.address.toLowerCase()] = {
-        wrappedTokenAddress: token.wrappedTokenAddress,
-        unwrappedTokenAddress: token.address.toLowerCase(),
-        name: token.name,
-        mode: token.mode,
-        marketId: i,
-      };
-      return memo;
-    }, {}),
+    marketsCount: params.definition.marketsCount,
+    marketIdToMarketMap: params.definition.marketIdToMarketMap,
   };
 }
 
@@ -214,7 +140,7 @@ export async function getTokenBalancesPerAccountStructLib(
   accountStruct: AccountStruct,
 ): Promise<Map<string, BigNumberish>> {
   const tokenAddressToAmount = new Map<string, BigNumberish>();
-  const [, tokenAddresses, , weiAmounts] = await params.contract.getAccountBalances({
+  const [marketIds, tokenAddresses, , weiAmounts] = await params.contract.getAccountBalances({
     owner: accountStruct.accountOwner,
     number: accountStruct.accountNumber,
   });
@@ -223,7 +149,8 @@ export async function getTokenBalancesPerAccountStructLib(
     if (!weiAmounts[i].sign) {
       amount = amount.mul(-1);
     }
-    tokenAddress = params.contractPosition.dataProps.extraTokenInfo[tokenAddress.toLowerCase()].unwrappedTokenAddress;
+    const marketId = marketIds[i].toNumber();
+    tokenAddress = params.contractPosition.dataProps.marketIdToMarketMap[marketId].underlyingTokenAddress;
     tokenAddressToAmount.set(tokenAddress, amount);
   });
 
@@ -235,7 +162,7 @@ export async function getVaultAddresses(
   isolationModeTokenAddresses: string[],
   multicall: Multicall,
 ): Promise<string[]> {
-  const calls: CallStruct[] = isolationModeTokenAddresses.map(tokenAddress => {
+  const calls: Multicall.CallStruct[] = isolationModeTokenAddresses.map(tokenAddress => {
     return {
       target: tokenAddress,
       callData: IsolationModeToken__factory.createInterface().encodeFunctionData('getVaultByAccount', [account]),
@@ -253,8 +180,8 @@ export async function getAllIsolationModeTokensFromContractPositions(
   multicall: IMulticallWrapper,
 ): Promise<string[]> {
   const isolationModeTokensMap = contractPositions.reduce<Record<string, string>>((memo, position) => {
-    position.tokens.forEach(token => {
-      const extraData = position.dataProps.extraTokenInfo[token.address];
+    position.tokens.forEach((token, i) => {
+      const extraData = position.dataProps.marketIdToMarketMap[i];
       if (!memo[token.address] && extraData.mode === TokenMode.ISOLATION) {
         memo[token.address] = extraData.wrappedTokenAddress;
       }
