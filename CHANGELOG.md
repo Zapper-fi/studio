@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.421.0](https://github.com/Zapper-fi/studio/compare/v0.420.0...v0.421.0) (2023-04-01)
+
+
+### Features
+
+* **synthetix:** perp refactor ([#2486](https://github.com/Zapper-fi/studio/issues/2486)) ([08c2454](https://github.com/Zapper-fi/studio/commit/08c2454f7e588ce130095889ce2a8217d8515832))
+
+
+### Bug Fixes
+
+* **llama-airforce:** Add new uCRV pounder and distributor ([#2487](https://github.com/Zapper-fi/studio/issues/2487)) ([e85021a](https://github.com/Zapper-fi/studio/commit/e85021a3f975906319357cebfd47d1772c187be2))
+
 ## [0.420.0](https://github.com/Zapper-fi/studio/compare/v0.419.0...v0.420.0) (2023-03-30)
 
 
