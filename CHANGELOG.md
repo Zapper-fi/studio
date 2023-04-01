@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.422.0](https://github.com/Zapper-fi/studio/compare/v0.421.0...v0.422.0) (2023-04-01)
+
+
+### Features
+
+* **defiedge:** bsc and polygon farming ([#2485](https://github.com/Zapper-fi/studio/issues/2485)) ([fff05e1](https://github.com/Zapper-fi/studio/commit/fff05e199bfe88e7174861236ea271492f9bf037))
+
 ## [0.421.0](https://github.com/Zapper-fi/studio/compare/v0.420.0...v0.421.0) (2023-04-01)
 
 
