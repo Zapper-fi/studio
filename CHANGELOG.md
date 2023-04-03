@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.423.0](https://github.com/Zapper-fi/studio/compare/v0.422.0...v0.423.0) (2023-04-03)
+
+
+### Features
+
+* **ramses:** Fix pools, use on-chain requests only ([#2491](https://github.com/Zapper-fi/studio/issues/2491)) ([dc1a899](https://github.com/Zapper-fi/studio/commit/dc1a899455a1d2a6f3f5ccf1d3591f2123689008))
+
 ## [0.422.0](https://github.com/Zapper-fi/studio/compare/v0.421.0...v0.422.0) (2023-04-01)
 
 
