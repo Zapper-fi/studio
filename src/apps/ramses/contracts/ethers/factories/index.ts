@@ -6,3 +6,4 @@ export { RamsesGauge__factory } from './RamsesGauge__factory';
 export { RamsesPool__factory } from './RamsesPool__factory';
 export { RamsesRewards__factory } from './RamsesRewards__factory';
 export { RamsesVe__factory } from './RamsesVe__factory';
+export { RamsesVoter__factory } from './RamsesVoter__factory';
