@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.425.1](https://github.com/Zapper-fi/studio/compare/v0.425.0...v0.425.1) (2023-04-03)
+
+
+### Bug Fixes
+
+* **pool-together-v4:** Fix ticket symbol ([#2498](https://github.com/Zapper-fi/studio/issues/2498)) ([c41d92d](https://github.com/Zapper-fi/studio/commit/c41d92deeaffcdc64cf2112774c337bdcffa3d60))
+
 ## [0.425.0](https://github.com/Zapper-fi/studio/compare/v0.424.0...v0.425.0) (2023-04-03)
 
 
