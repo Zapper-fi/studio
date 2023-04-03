@@ -1,7 +1,10 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -48,10 +51,20 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<YieldProtocolPoolToken>) {
     const poolAddress = await contract.pool();
-    const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
+    if (poolAddress === ZERO_ADDRESS) return [0];
 
-    const [baseReserves, fyTokenReserves, poolTotalSupply] = await Promise.all([
-      multicall.wrap(poolContract).getBaseBalance(),
+    const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
+    const baseReserves = await multicall
+      .wrap(poolContract)
+      .getBaseBalance()
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+        throw err;
+      });
+
+    if (baseReserves.isZero()) return [0];
+
+    const [fyTokenReserves, poolTotalSupply] = await Promise.all([
       multicall.wrap(poolContract).getFYTokenBalance(),
       multicall.wrap(poolContract).totalSupply(),
     ]);
@@ -69,8 +82,9 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     const { contract, multicall } = params;
     const poolAddress = await contract.pool();
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
-    const maturity = await multicall.wrap(poolContract).maturity();
+    if (poolAddress === ZERO_ADDRESS) return { ...defaultDataProps, maturity: 0 };
 
+    const maturity = await multicall.wrap(poolContract).maturity();
     return { ...defaultDataProps, maturity: Number(maturity) };
   }
 
