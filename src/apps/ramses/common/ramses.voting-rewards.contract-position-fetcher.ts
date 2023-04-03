@@ -10,7 +10,6 @@ import { MetaType } from '~position/position.interface';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { RamsesDefinitionsResolver } from '../common/ramses.definitions-resolver';
 import { RamsesBribe, RamsesContractFactory } from '../contracts';
 
 export abstract class VotingRewardsContractPositionFetcher<
@@ -21,7 +20,6 @@ export abstract class VotingRewardsContractPositionFetcher<
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(RamsesContractFactory) protected readonly contractFactory: RamsesContractFactory,
-    @Inject(RamsesDefinitionsResolver) protected readonly definitionsResolver: RamsesDefinitionsResolver,
   ) {
     super(appToolkit);
   }
