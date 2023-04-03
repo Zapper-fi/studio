@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.425.2](https://github.com/Zapper-fi/studio/compare/v0.425.1...v0.425.2) (2023-04-03)
+
+
+### Bug Fixes
+
+* **yield-protocol:** Fix failing positions ([#2500](https://github.com/Zapper-fi/studio/issues/2500)) ([7e57fa5](https://github.com/Zapper-fi/studio/commit/7e57fa58e6d506a78285b35e32926f9a7ed7d0cc))
+
 ## [0.425.1](https://github.com/Zapper-fi/studio/compare/v0.425.0...v0.425.1) (2023-04-03)
 
 
