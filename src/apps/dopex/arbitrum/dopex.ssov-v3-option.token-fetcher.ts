@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -59,16 +60,23 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
         return await Promise.all(
           strikesRaw.map(async strike => {
             const epochStrikeDate = await multicall.wrap(ssovV3Contract).getEpochStrikeData(epoch, strike);
-            return {
-              address: epochStrikeDate.strikeToken.toLowerCase(),
-              collateralTokenAddress: collateralTokenAddressRaw.toLowerCase(),
-            };
+            const strikeTokenAddress = epochStrikeDate.strikeToken.toLowerCase();
+            const collateralTokenAddress = collateralTokenAddressRaw.toLowerCase();
+
+            const strikeToken = this.contractFactory.dopexOptionToken({
+              address: strikeTokenAddress,
+              network: this.network,
+            });
+            const isExpired = await multicall.wrap(strikeToken).hasExpired();
+            if (isExpired) return null;
+
+            return { address: strikeTokenAddress, collateralTokenAddress };
           }),
         );
       }),
     );
 
-    return optionDefinitions.flat();
+    return compact(optionDefinitions.flat());
   }
 
   getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>): string[] | Promise<string[]> {
