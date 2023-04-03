@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
-import { RamsesDefinitionsResolver } from './common/ramses.definitions-resolver';
-import { RamsesContractFactory } from './contracts';
 import { ArbitrumRamsesBribeContractPositionFetcher } from './arbitrum/ramses.bribe.contract-position-fetcher';
 import { ArbitrumRamsesStakingContractPositionFetcher } from './arbitrum/ramses.farm.contract-position-fetcher';
-import { ArbitrumRamsesPoolsTokenFetcher } from './arbitrum/ramses.pool.token-fetcher';
+import { ArbitrumRamsesPoolTokenFetcher } from './arbitrum/ramses.pool.token-fetcher';
 import { ArbitrumRamsesVotingEscrowContractPositionFetcher } from './arbitrum/ramses.voting-escrow.contract-position-fetcher';
+import { RamsesContractFactory } from './contracts';
 
 @Module({
   providers: [
+    UniswapV2ContractFactory,
     RamsesContractFactory,
-    RamsesDefinitionsResolver,
-    ArbitrumRamsesPoolsTokenFetcher,
+    ArbitrumRamsesPoolTokenFetcher,
     ArbitrumRamsesStakingContractPositionFetcher,
     ArbitrumRamsesVotingEscrowContractPositionFetcher,
     ArbitrumRamsesBribeContractPositionFetcher,
   ],
 })
-export class RamsesAppModule extends AbstractApp() { }
+export class RamsesAppModule extends AbstractApp() {}

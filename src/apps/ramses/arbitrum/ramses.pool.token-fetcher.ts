@@ -1,94 +1,69 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
-  buildDollarDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps } from '~position/display.interface';
-import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  DefaultAppTokenDataProps,
-  GetAddressesParams,
-  GetDisplayPropsParams,
-  GetPricePerShareParams,
-  GetUnderlyingTokensParams,
-} from '~position/template/app-token.template.types';
-
-import { RamsesDefinitionsResolver } from '../common/ramses.definitions-resolver';
-import { RamsesContractFactory, RamsesPool } from '../contracts';
-
-export type RamsesPoolTokenDefinition = {
-  address: string;
-};
+  UniswapV2PoolOnChainTemplateTokenFetcher,
+  UniswapV2TokenDataProps,
+} from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
+import { UniswapPair, UniswapFactory, UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
+import { GetDisplayPropsParams, DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
 
 @PositionTemplate()
-export class ArbitrumRamsesPoolsTokenFetcher extends AppTokenTemplatePositionFetcher<
-  RamsesPool,
-  DefaultAppTokenDataProps,
-  RamsesPoolTokenDefinition
+export class ArbitrumRamsesPoolTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
+  UniswapPair,
+  UniswapFactory
 > {
-  groupLabel = 'Pools';
+  factoryAddress = '0xaaa20d08e59f6561f242b08513d36266c5a29415';
+  groupLabel = 'Stable Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RamsesContractFactory) private readonly contractFactory: RamsesContractFactory,
-    @Inject(RamsesDefinitionsResolver) protected readonly definitionsResolver: RamsesDefinitionsResolver,
+    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RamsesPool {
-    return this.contractFactory.ramsesPool({ address, network: this.network });
+  getPoolTokenContract(address: string): UniswapPair {
+    return this.contractFactory.uniswapPair({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<RamsesPoolTokenDefinition[]> {
-    return this.definitionsResolver.getPoolTokenDefinitions();
+  getPoolFactoryContract(_address: string): UniswapFactory {
+    return this.contractFactory.uniswapFactory({ address: this.factoryAddress, network: this.network });
   }
 
-  async getAddresses({ definitions }: GetAddressesParams) {
-    return definitions.map(v => v.address);
+  async getPoolsLength(contract: UniswapFactory): Promise<BigNumberish> {
+    return contract.allPairsLength();
   }
 
-  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<RamsesPool>) {
-    return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
-    ];
+  async getPoolAddress(contract: UniswapFactory, index: number): Promise<string> {
+    return contract.allPairs(index);
   }
 
-  async getPricePerShare({ appToken, contract }: GetPricePerShareParams<RamsesPool, DefaultDataProps>) {
-    const [token0, token1] = appToken.tokens;
-    const [reserve0, reserve1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
-    const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
-    const pricePerShare = reserves.map(r => r / appToken.supply);
-    return pricePerShare;
+  async getPoolToken0(contract: UniswapPair) {
+    return contract.token0();
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<RamsesPool>): Promise<string> {
-    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  async getPoolToken1(contract: UniswapPair) {
+    return contract.token1();
   }
 
-  async getApy(): Promise<number> {
-    return 0; // TODO
+  async getPoolReserves(contract: UniswapPair) {
+    return contract.getReserves();
   }
 
-  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<RamsesPool>) {
-    const { liquidity, reserves } = appToken.dataProps;
-    const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
-    return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
-  }
+  async getTertiaryLabel({
+    appToken,
+  }: GetDisplayPropsParams<UniswapPair, UniswapV2TokenDataProps, DefaultAppTokenDefinition>): Promise<
+    string | number | PercentageDisplayItem | DollarDisplayItem | undefined
+  > {
+    const isCorrelated = appToken.symbol.startsWith('crAMM');
+    const isVolatile = appToken.symbol.startsWith('vrAMM');
 
-  async getStatsItems({ appToken }: GetDisplayPropsParams<RamsesPool>) {
-    const { reserves, liquidity, apy } = appToken.dataProps;
-    const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
-
-    return [
-      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
-      { label: 'APY', value: buildPercentageDisplayItem(apy) },
-      { label: 'Reserves', value: reservesDisplay },
-    ];
+    if (isCorrelated) return 'Correlated';
+    if (isVolatile) return 'Volatile';
+    return '';
   }
 }
