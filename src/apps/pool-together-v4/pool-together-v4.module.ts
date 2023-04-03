@@ -11,13 +11,12 @@ import { PolygonPoolTogetherV4TicketTokenFetcher } from './polygon/pool-together
 
 @Module({
   providers: [
+    PoolTogetherV4ContractFactory,
+    PoolTogetherV4ApiPrizePoolRegistry,
     AvalanchePoolTogetherV4TicketTokenFetcher,
     EthereumPoolTogetherV4TicketTokenFetcher,
     OptimismPoolTogetherV4TicketTokenFetcher,
     PolygonPoolTogetherV4TicketTokenFetcher,
-    PoolTogetherV4ApiPrizePoolRegistry,
-
-    PoolTogetherV4ContractFactory,
   ],
 })
 export class PoolTogetherV4AppModule extends AbstractApp() {}
