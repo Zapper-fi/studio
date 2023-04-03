@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.425.0](https://github.com/Zapper-fi/studio/compare/v0.424.0...v0.425.0) (2023-04-03)
+
+
+### Features
+
+* **dopex:** Filter out expired options ([#2496](https://github.com/Zapper-fi/studio/issues/2496)) ([d478aa9](https://github.com/Zapper-fi/studio/commit/d478aa920bc03f45c9f94d25045284c40031118b))
+
 ## [0.424.0](https://github.com/Zapper-fi/studio/compare/v0.423.0...v0.424.0) (2023-04-03)
 
 
