@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.427.0](https://github.com/Zapper-fi/studio/compare/v0.426.0...v0.427.0) (2023-04-03)
+
+
+### Features
+
+* **silo-finance:** claimable SILO on Arbitrum ([#2492](https://github.com/Zapper-fi/studio/issues/2492)) ([9348fd4](https://github.com/Zapper-fi/studio/commit/9348fd475402fd0eda8362c531439ab2c372690d))
+
 ## [0.426.0](https://github.com/Zapper-fi/studio/compare/v0.425.2...v0.426.0) (2023-04-03)
 
 
