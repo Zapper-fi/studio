@@ -6,6 +6,7 @@ import { ArbitrumDTokenTokenFetcher } from './arbitrum/silo-finance.d-token.toke
 import { ArbitrumSTokenTokenFetcher } from './arbitrum/silo-finance.s-token.token-fetcher';
 import { ArbitrumSiloFinanceSiloContractPositionFetcher } from './arbitrum/silo-finance.silo.contract-position-fetcher';
 import { ArbitrumSPTokenTokenFetcher } from './arbitrum/silo-finance.sp-token.token-fetcher';
+import { ArbitrumSiloFinanceIncentivesContractPositionfetcher } from './arbitrum/silo-finance.incentives.contract-position-fetcher';
 import { SiloFinanceDefinitionResolver } from './common/silo-finance.definition-resolver';
 import { SiloFinanceContractFactory } from './contracts';
 import { EthereumDTokenTokenFetcher } from './ethereum/silo-finance.d-token.token-fetcher';
@@ -22,6 +23,7 @@ import { EthereumSPTokenTokenFetcher } from './ethereum/silo-finance.sp-token.to
     ArbitrumSPTokenTokenFetcher,
     ArbitrumDTokenTokenFetcher,
     ArbitrumSiloFinanceSiloContractPositionFetcher,
+    ArbitrumSiloFinanceIncentivesContractPositionfetcher,
     // Ethereum
     EthereumSTokenTokenFetcher,
     EthereumSPTokenTokenFetcher,
@@ -29,4 +31,4 @@ import { EthereumSPTokenTokenFetcher } from './ethereum/silo-finance.sp-token.to
     EthereumSiloFinanceSiloContractPositionFetcher,
   ],
 })
-export class SiloFinanceAppModule extends AbstractApp() {}
+export class SiloFinanceAppModule extends AbstractApp() { }
