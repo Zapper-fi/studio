@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.426.0](https://github.com/Zapper-fi/studio/compare/v0.425.2...v0.426.0) (2023-04-03)
+
+
+### Features
+
+* **studio:** Update logic for BeethovenX token supplies ([#2502](https://github.com/Zapper-fi/studio/issues/2502)) ([3282728](https://github.com/Zapper-fi/studio/commit/3282728f68be03edb2b163d5dfe5a6843f7f5a89))
+
 ## [0.425.2](https://github.com/Zapper-fi/studio/compare/v0.425.1...v0.425.2) (2023-04-03)
 
 
