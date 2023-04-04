@@ -2,16 +2,33 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { SiloFinanceContractFactory, SiloIncentives } from '../contracts';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-export abstract class SiloFinanceIncentivesContractPositionfetcher extends ContractPositionTemplatePositionFetcher<SiloIncentives>
-{
+import { SiloFinanceContractFactory, SiloIncentives } from '../contracts';
+
+import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
+
+export type SiloFinanceIncentivesContractPositionDefinition = {
+  address: string;
+  sTokenAddresses: string[];
+};
+
+export type SiloFinanceIncentivesContractPositionDataProps = {
+  sTokenAddresses: string[];
+};
+
+export abstract class SiloFinanceIncentivesContractPositionfetcher extends ContractPositionTemplatePositionFetcher<
+  SiloIncentives,
+  SiloFinanceIncentivesContractPositionDataProps,
+  SiloFinanceIncentivesContractPositionDefinition
+> {
   abstract incentivesAddress: string;
 
   constructor(
@@ -27,8 +44,16 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
     return this.contractFactory.siloIncentives({ address, network: this.network });
   }
 
-  async getDefinitions() {
-    return [{ address: this.incentivesAddress }]
+  async getDefinitions(): Promise<SiloFinanceIncentivesContractPositionDefinition[]> {
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: ['s-token'],
+    });
+
+    const sTokenAddresses = appTokens.map(x => x.address);
+
+    return [{ address: this.incentivesAddress, sTokenAddresses }];
   }
 
   async getTokenDefinitions({ contract }) {
@@ -41,18 +66,27 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
     ];
   }
 
-  async getLabel() {
-    return 'Claimable Silo';
+  async getDataProps({
+    definition,
+  }: GetDataPropsParams<
+    SiloIncentives,
+    SiloFinanceIncentivesContractPositionDataProps,
+    SiloFinanceIncentivesContractPositionDefinition
+  >) {
+    return { sTokenAddresses: definition.sTokenAddresses };
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SiloIncentives>): Promise<BigNumberish[]> {
-    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
-    if (!markets) return [];
+  async getLabel({ contractPosition }: GetDisplayPropsParams<SiloIncentives>) {
+    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+  }
 
-    const assets = markets.map(market => {
-      return market.marketAssets.map(marketAsset => { return marketAsset.sToken });
-    }).flat();
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+    contractPosition,
+  }: GetTokenBalancesParams<SiloIncentives, SiloFinanceIncentivesContractPositionDataProps>): Promise<BigNumberish[]> {
+    const sTokenAddresses = contractPosition.dataProps.sTokenAddresses;
 
-    return [await contract.getRewardsBalance(assets, address)];
+    return [await contract.getRewardsBalance(sTokenAddresses, address)];
   }
 }
