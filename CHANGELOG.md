@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.429.0](https://github.com/Zapper-fi/studio/compare/v0.428.0...v0.429.0) (2023-04-04)
+
+
+### Features
+
+* **lyra-avalon:** Add staked Lyra and Options on Arbitrum ([#2511](https://github.com/Zapper-fi/studio/issues/2511)) ([338d96f](https://github.com/Zapper-fi/studio/commit/338d96f00dadb45a77bfbb42bd387c82f7106ac4))
+
 ## [0.428.0](https://github.com/Zapper-fi/studio/compare/v0.427.0...v0.428.0) (2023-04-04)
 
 
