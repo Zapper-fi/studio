@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.430.0](https://github.com/Zapper-fi/studio/compare/v0.429.0...v0.430.0) (2023-04-04)
+
+
+### Features
+
+* **silo-finance:** Add Incentive position on Ethereum ([#2513](https://github.com/Zapper-fi/studio/issues/2513)) ([f0e8a1e](https://github.com/Zapper-fi/studio/commit/f0e8a1e1796899d369fa6149d01eb273fd7c2b0f))
+
 ## [0.429.0](https://github.com/Zapper-fi/studio/compare/v0.428.0...v0.429.0) (2023-04-04)
 
 
