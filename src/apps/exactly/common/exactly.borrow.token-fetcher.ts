@@ -7,7 +7,7 @@ import { type ExactlyMarketProps, ExactlyTokenFetcher } from '../common/exactly.
 import type { Market } from '../contracts';
 
 export abstract class ExactlyBorrowFetcher extends ExactlyTokenFetcher {
-  groupLabel = 'Fixed Borrow';
+  groupLabel = 'Variable Borrow';
   isDebt = true;
 
   getSupply({ definition }: GetTokenPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
