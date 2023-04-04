@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumUniswapV3LiquidityContractPositionFetcher } from './arbitrum/uniswap-v3.liquidity.contract-position-fetcher';
 import { BinanceSmartChainUniswapV3LiquidityContractPositionFetcher } from './binance-smart-chain/uniswap-v3.liquidity.contract-position-fetcher';
+import { CeloUniswapV3LiquidityContractPositionBuilder } from './celo/uniswap-v3.liquidity.contract-position-builder';
 import { CeloUniswapV3LiquidityContractPositionFetcher } from './celo/uniswap-v3.liquidity.contract-position-fetcher';
 import { UniswapV3LiquidityContractPositionBuilder } from './common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3ContractFactory } from './contracts';
@@ -18,6 +19,7 @@ import { PolygonUniswapV3LiquidityContractPositionFetcher } from './polygon/unis
     ArbitrumUniswapV3LiquidityContractPositionFetcher,
     BinanceSmartChainUniswapV3LiquidityContractPositionFetcher,
     CeloUniswapV3LiquidityContractPositionFetcher,
+    CeloUniswapV3LiquidityContractPositionBuilder,
     EthereumUniswapV3LiquidityContractPositionFetcher,
     OptimismUniswapV3LiquidityContractPositionFetcher,
     PolygonUniswapV3LiquidityContractPositionFetcher,
