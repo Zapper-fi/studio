@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.428.0](https://github.com/Zapper-fi/studio/compare/v0.427.0...v0.428.0) (2023-04-04)
+
+
+### Features
+
+* **compound:** Add exchange rate to supply and borrow positions ([#2509](https://github.com/Zapper-fi/studio/issues/2509)) ([4fbfeb1](https://github.com/Zapper-fi/studio/commit/4fbfeb1134cf43707318aa92a6240ad7818984a0))
+
+
+### Bug Fixes
+
+* **exactly:** 🐛 variable borrow label ([#2505](https://github.com/Zapper-fi/studio/issues/2505)) ([f4ec7d7](https://github.com/Zapper-fi/studio/commit/f4ec7d732b9745f430a4afa27de4397225d75032))
+* **studio:** Fixing balance builder for UniV3 positions on Celo ([#2510](https://github.com/Zapper-fi/studio/issues/2510)) ([1730aad](https://github.com/Zapper-fi/studio/commit/1730aadcb747e79056140b5f47c91c16797a29a0))
+
 ## [0.427.0](https://github.com/Zapper-fi/studio/compare/v0.426.0...v0.427.0) (2023-04-03)
 
 
