@@ -16,6 +16,7 @@ import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
 @PositionTemplate()
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
   groupLabel = 'Private TGE Allocation';
+  isExcludedFromExplore = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
