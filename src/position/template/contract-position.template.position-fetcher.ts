@@ -203,7 +203,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return address;
   }
 
-  async getPositionsForBalances() {
+  async getPositionsForBalances(_address: string) {
     return this.appToolkit.getAppContractPositions<V>({
       appId: this.appId,
       network: this.network,
@@ -221,7 +221,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   async getBalances(_address: string): Promise<ContractPositionBalance<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const contractPositions = await this.getPositionsForBalances();
+    const contractPositions = await this.getPositionsForBalances(address);
     if (address === ZERO_ADDRESS) return [];
 
     const balances = await Promise.all(
