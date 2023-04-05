@@ -7,8 +7,8 @@ import { ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher } from './arbitrum/pl
 import { ArbitrumPlutusFarmPlsDpxContractPositionFetcher } from './arbitrum/plutus.farm-pls-dpx.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher } from './arbitrum/plutus.farm-pls-jones-lp.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsJonesContractPositionFetcher } from './arbitrum/plutus.farm-pls-jones.contract-position-fetcher';
-import { ArbitrumPlutusFarmPlsContractPositionFetcher } from './arbitrum/plutus.farm-pls.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlvGlpContractPositionFetcher } from './arbitrum/plutus.farm-plv-glp.contract-position-fetcher';
+import { ArbitrumPlutusFarmContractPositionFetcher } from './arbitrum/plutus.farm.contract-position-fetcher';
 import { ArbitrumPlutusLockContractPositionFetcher } from './arbitrum/plutus.lock.contract-position-fetcher';
 import { ArbitrumPlutusPlsDpxTokenFetcher } from './arbitrum/plutus.pls-dpx.token-fetcher';
 import { ArbitrumPlutusPlsGlpTokenFetcher } from './arbitrum/plutus.pls-glp.token-fetcher';
@@ -19,12 +19,13 @@ import { PlutusContractFactory } from './contracts';
 
 @Module({
   providers: [
+    PlutusContractFactory,
     ArbitrumPlutusFarmPlsDpxLpContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxContractPositionFetcher,
     ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher,
     ArbitrumPlutusFarmPlsJonesContractPositionFetcher,
-    ArbitrumPlutusFarmPlsContractPositionFetcher,
+    ArbitrumPlutusFarmContractPositionFetcher,
     ArbitrumPlutusFarmPlvGlpContractPositionFetcher,
     ArbitrumPlutusLockContractPositionFetcher,
     ArbitrumPlutusPlsDpxTokenFetcher,
@@ -32,8 +33,6 @@ import { PlutusContractFactory } from './contracts';
     ArbitrumPlutusPlsGlpTokenFetcher,
     ArbitrumPlutusPlvGlpTokenFetcher,
     ArbitrumPlutusTgeClaimableContractPositionFetcher,
-
-    PlutusContractFactory,
   ],
 })
 export class PlutusAppModule extends AbstractApp() {}

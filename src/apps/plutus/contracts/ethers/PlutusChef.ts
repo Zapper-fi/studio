@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PlutusFarmPlsInterface extends utils.Interface {
+export interface PlutusChefInterface extends utils.Interface {
   functions: {
     'MONTH_IN_SECONDS()': FunctionFragment;
     'PLS()': FunctionFragment;
@@ -186,12 +186,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawE
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface PlutusFarmPls extends BaseContract {
+export interface PlutusChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PlutusFarmPlsInterface;
+  interface: PlutusChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
