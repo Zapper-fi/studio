@@ -8,11 +8,10 @@ import {
   PlutusChef__factory,
   PlutusEpochStakingRewardsRolling__factory,
   PlutusFarmPlsDpx__factory,
-  PlutusFarmPlsDpxLp__factory,
   PlutusFarmPlsDpxV2__factory,
   PlutusFarmPlsJones__factory,
   PlutusFarmPlsJonesLp__factory,
-  PlutusFarmPlvGlp__factory,
+  PlutusFarmPlsRdnt__factory,
   PlutusLock__factory,
   PlutusPlvGlp__factory,
   PlutusPrivateTge__factory,
@@ -40,9 +39,6 @@ export class PlutusContractFactory extends ContractFactory {
   plutusFarmPlsDpx({ address, network }: ContractOpts) {
     return PlutusFarmPlsDpx__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  plutusFarmPlsDpxLp({ address, network }: ContractOpts) {
-    return PlutusFarmPlsDpxLp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   plutusFarmPlsDpxV2({ address, network }: ContractOpts) {
     return PlutusFarmPlsDpxV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -52,8 +48,8 @@ export class PlutusContractFactory extends ContractFactory {
   plutusFarmPlsJonesLp({ address, network }: ContractOpts) {
     return PlutusFarmPlsJonesLp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  plutusFarmPlvGlp({ address, network }: ContractOpts) {
-    return PlutusFarmPlvGlp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  plutusFarmPlsRdnt({ address, network }: ContractOpts) {
+    return PlutusFarmPlsRdnt__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   plutusLock({ address, network }: ContractOpts) {
     return PlutusLock__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -81,11 +77,10 @@ export class PlutusContractFactory extends ContractFactory {
 export type { PlutusChef } from './ethers';
 export type { PlutusEpochStakingRewardsRolling } from './ethers';
 export type { PlutusFarmPlsDpx } from './ethers';
-export type { PlutusFarmPlsDpxLp } from './ethers';
 export type { PlutusFarmPlsDpxV2 } from './ethers';
 export type { PlutusFarmPlsJones } from './ethers';
 export type { PlutusFarmPlsJonesLp } from './ethers';
-export type { PlutusFarmPlvGlp } from './ethers';
+export type { PlutusFarmPlsRdnt } from './ethers';
 export type { PlutusLock } from './ethers';
 export type { PlutusPlvGlp } from './ethers';
 export type { PlutusPrivateTge } from './ethers';

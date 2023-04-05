@@ -4,11 +4,10 @@
 export { PlutusChef__factory } from './PlutusChef__factory';
 export { PlutusEpochStakingRewardsRolling__factory } from './PlutusEpochStakingRewardsRolling__factory';
 export { PlutusFarmPlsDpx__factory } from './PlutusFarmPlsDpx__factory';
-export { PlutusFarmPlsDpxLp__factory } from './PlutusFarmPlsDpxLp__factory';
 export { PlutusFarmPlsDpxV2__factory } from './PlutusFarmPlsDpxV2__factory';
 export { PlutusFarmPlsJones__factory } from './PlutusFarmPlsJones__factory';
 export { PlutusFarmPlsJonesLp__factory } from './PlutusFarmPlsJonesLp__factory';
-export { PlutusFarmPlvGlp__factory } from './PlutusFarmPlvGlp__factory';
+export { PlutusFarmPlsRdnt__factory } from './PlutusFarmPlsRdnt__factory';
 export { PlutusLock__factory } from './PlutusLock__factory';
 export { PlutusPlvGlp__factory } from './PlutusPlvGlp__factory';
 export { PlutusPrivateTge__factory } from './PlutusPrivateTge__factory';

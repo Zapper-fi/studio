@@ -4,11 +4,10 @@
 export type { PlutusChef } from './PlutusChef';
 export type { PlutusEpochStakingRewardsRolling } from './PlutusEpochStakingRewardsRolling';
 export type { PlutusFarmPlsDpx } from './PlutusFarmPlsDpx';
-export type { PlutusFarmPlsDpxLp } from './PlutusFarmPlsDpxLp';
 export type { PlutusFarmPlsDpxV2 } from './PlutusFarmPlsDpxV2';
 export type { PlutusFarmPlsJones } from './PlutusFarmPlsJones';
 export type { PlutusFarmPlsJonesLp } from './PlutusFarmPlsJonesLp';
-export type { PlutusFarmPlvGlp } from './PlutusFarmPlvGlp';
+export type { PlutusFarmPlsRdnt } from './PlutusFarmPlsRdnt';
 export type { PlutusLock } from './PlutusLock';
 export type { PlutusPlvGlp } from './PlutusPlvGlp';
 export type { PlutusPrivateTge } from './PlutusPrivateTge';
@@ -19,12 +18,11 @@ export type { PlutusRewardsDistroPlsJones } from './PlutusRewardsDistroPlsJones'
 export * as factories from './factories';
 export { PlutusChef__factory } from './factories/PlutusChef__factory';
 export { PlutusEpochStakingRewardsRolling__factory } from './factories/PlutusEpochStakingRewardsRolling__factory';
-export { PlutusFarmPlsDpxLp__factory } from './factories/PlutusFarmPlsDpxLp__factory';
 export { PlutusFarmPlsDpxV2__factory } from './factories/PlutusFarmPlsDpxV2__factory';
 export { PlutusFarmPlsDpx__factory } from './factories/PlutusFarmPlsDpx__factory';
 export { PlutusFarmPlsJonesLp__factory } from './factories/PlutusFarmPlsJonesLp__factory';
 export { PlutusFarmPlsJones__factory } from './factories/PlutusFarmPlsJones__factory';
-export { PlutusFarmPlvGlp__factory } from './factories/PlutusFarmPlvGlp__factory';
+export { PlutusFarmPlsRdnt__factory } from './factories/PlutusFarmPlsRdnt__factory';
 export { PlutusLock__factory } from './factories/PlutusLock__factory';
 export { PlutusPlvGlp__factory } from './factories/PlutusPlvGlp__factory';
 export { PlutusPrivateTgeVester__factory } from './factories/PlutusPrivateTgeVester__factory';
