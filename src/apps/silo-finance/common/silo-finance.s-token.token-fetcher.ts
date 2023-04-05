@@ -6,6 +6,7 @@ import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetUnderlyingTokensParams,
@@ -15,10 +16,7 @@ import { SiloFinanceContractFactory, SiloMarketAsset } from '../contracts';
 
 import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
 
-export type STokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-  apy: number;
+export type STokenDataProps = DefaultAppTokenDataProps & {
   siloAddress: string;
 };
 
