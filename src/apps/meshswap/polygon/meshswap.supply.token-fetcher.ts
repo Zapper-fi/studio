@@ -80,16 +80,10 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   async getDataProps(
     params: GetDataPropsParams<MeshswapSinglePool, MeshswapContractPositionDataProps>,
   ): Promise<MeshswapContractPositionDataProps> {
-    const [liquidity, reserves, apy] = await Promise.all([
-      this.getLiquidity(params),
-      this.getReserves(params),
-      this.getApy(params),
-    ]);
-
+    const defaultDataProps = await super.getDataProps(params);
     const exchangeRateRaw = await params.contract.exchangeRateStored();
     const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
-
-    return { liquidity, reserves, apy, exchangeRate };
+    return { ...defaultDataProps, exchangeRate };
   }
 
   async getStatsItems({ appToken }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<StatsItem[] | undefined> {
