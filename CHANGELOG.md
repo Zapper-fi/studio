@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.431.0](https://github.com/Zapper-fi/studio/compare/v0.430.1...v0.431.0) (2023-04-05)
+
+
+### Features
+
+* **studio:** Pass through isDebt as a data prop ([#2518](https://github.com/Zapper-fi/studio/issues/2518)) ([f45895e](https://github.com/Zapper-fi/studio/commit/f45895ea49b5d454e43180ce5d069a10045bcc25))
+* **studio:** Use address in getPositionsForBalances to filter down where necessary ([#2520](https://github.com/Zapper-fi/studio/issues/2520)) ([70c8bab](https://github.com/Zapper-fi/studio/commit/70c8bab70976704aeb30d6062f4ff632197c089f))
+
 ## [0.430.1](https://github.com/Zapper-fi/studio/compare/v0.430.0...v0.430.1) (2023-04-05)
 
 
