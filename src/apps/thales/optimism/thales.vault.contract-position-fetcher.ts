@@ -1,4 +1,5 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+
 import { ThalesVaultContractPositionFetcher } from '../common/thales.vault.contract-position-fetcher';
 
 @PositionTemplate()
