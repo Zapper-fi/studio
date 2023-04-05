@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.432.0](https://github.com/Zapper-fi/studio/compare/v0.431.0...v0.432.0) (2023-04-05)
+
+
+### Features
+
+* **thales:** Arbitrum Vaults ([#2517](https://github.com/Zapper-fi/studio/issues/2517)) ([cd93a44](https://github.com/Zapper-fi/studio/commit/cd93a44f4c08faf519cb70a17d72c391b7365287))
+
+
+### Bug Fixes
+
+* **convex:** Resolve underlying token from stash token wrappers ([#2523](https://github.com/Zapper-fi/studio/issues/2523)) ([25282d4](https://github.com/Zapper-fi/studio/commit/25282d4cfa2fdf868e8bc281b49094a1b1274686))
+* **plutus:** Fix farms ([#2522](https://github.com/Zapper-fi/studio/issues/2522)) ([62282ac](https://github.com/Zapper-fi/studio/commit/62282ac721bdcb68fea0f1c955db5331afe77ef7))
+
 ## [0.431.0](https://github.com/Zapper-fi/studio/compare/v0.430.1...v0.431.0) (2023-04-05)
 
 
