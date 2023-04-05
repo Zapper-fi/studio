@@ -11,16 +11,14 @@ import {
   GetPricePerShareParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { YieldProtocolContractFactory, YieldProtocolPoolToken } from '../contracts';
 
 import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 
-export type YieldProtocolPoolTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-  apy: number;
+export type YieldProtocolPoolTokenDataProps = DefaultAppTokenDataProps & {
   maturity: number;
 };
 

@@ -5,6 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetUnderlyingTokensParams,
@@ -14,10 +15,7 @@ import { SiloFinanceContractFactory, SiloMarketAsset } from '../contracts';
 
 import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
 
-export type SpTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-  apy: number;
+export type SpTokenDataProps = DefaultAppTokenDataProps & {
   siloAddress: string;
 };
 
