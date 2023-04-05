@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.430.1](https://github.com/Zapper-fi/studio/compare/v0.430.0...v0.430.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Remove staked Lyra claimables position on Arbitrum ([#2515](https://github.com/Zapper-fi/studio/issues/2515)) ([03a4c68](https://github.com/Zapper-fi/studio/commit/03a4c68d4e2e76a3957a2f2e091369347201e55a))
+
 ## [0.430.0](https://github.com/Zapper-fi/studio/compare/v0.429.0...v0.430.0) (2023-04-04)
 
 
