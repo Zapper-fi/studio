@@ -3,6 +3,7 @@
 /* eslint-disable */
 export { PlutusChef__factory } from './PlutusChef__factory';
 export { PlutusEpochStakingRewardsRolling__factory } from './PlutusEpochStakingRewardsRolling__factory';
+export { PlutusFarmPlsArb__factory } from './PlutusFarmPlsArb__factory';
 export { PlutusFarmPlsDpx__factory } from './PlutusFarmPlsDpx__factory';
 export { PlutusFarmPlsDpxV2__factory } from './PlutusFarmPlsDpxV2__factory';
 export { PlutusFarmPlsJones__factory } from './PlutusFarmPlsJones__factory';

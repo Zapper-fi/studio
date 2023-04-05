@@ -1,14 +1,4 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { WrapperTemplateTokenFetcher } from '~position/template/wrapper.template.token-fetcher';
-
-@PositionTemplate()
-export class ArbitrumPlutusPlsJonesTokenFetcher extends WrapperTemplateTokenFetcher {
-  groupLabel = 'plsJONES';
-
-  vaultAddress = '0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44';
-  underlyingTokenAddress = '0xe8ee01ae5959d3231506fcdef2d5f3e85987a39c';
-}
-
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -52,6 +42,10 @@ export class ArbitrumPlutusVaultTokenFetcher extends AppTokenTemplatePositionFet
       {
         address: '0x1605bbdab3b38d10fa23a7ed0d0e8f4fea5bff59', // plsRDNT
         underlyingTokenAddress: '0x3082cc23568ea640225c2467653db90e9250aaa0',
+      },
+      {
+        address: '0x7a5d193fe4ed9098f7eadc99797087c96b002907', // plsARB
+        underlyingTokenAddress: '0x912ce59144191c1204e64559fe8253a0e49e6548',
       },
     ];
   }

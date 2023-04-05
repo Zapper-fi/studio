@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { PlutusChef } from './PlutusChef';
 export type { PlutusEpochStakingRewardsRolling } from './PlutusEpochStakingRewardsRolling';
+export type { PlutusFarmPlsArb } from './PlutusFarmPlsArb';
 export type { PlutusFarmPlsDpx } from './PlutusFarmPlsDpx';
 export type { PlutusFarmPlsDpxV2 } from './PlutusFarmPlsDpxV2';
 export type { PlutusFarmPlsJones } from './PlutusFarmPlsJones';
@@ -18,6 +19,7 @@ export type { PlutusRewardsDistroPlsJones } from './PlutusRewardsDistroPlsJones'
 export * as factories from './factories';
 export { PlutusChef__factory } from './factories/PlutusChef__factory';
 export { PlutusEpochStakingRewardsRolling__factory } from './factories/PlutusEpochStakingRewardsRolling__factory';
+export { PlutusFarmPlsArb__factory } from './factories/PlutusFarmPlsArb__factory';
 export { PlutusFarmPlsDpxV2__factory } from './factories/PlutusFarmPlsDpxV2__factory';
 export { PlutusFarmPlsDpx__factory } from './factories/PlutusFarmPlsDpx__factory';
 export { PlutusFarmPlsJonesLp__factory } from './factories/PlutusFarmPlsJonesLp__factory';

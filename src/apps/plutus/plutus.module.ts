@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumPlutusFarmPlsArbContractPositionFetcher } from './arbitrum/plutus.farm-pls-arb.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher } from './arbitrum/plutus.farm-pls-dpx-v2.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsDpxContractPositionFetcher } from './arbitrum/plutus.farm-pls-dpx.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsJonesContractPositionFetcher } from './arbitrum/plutus.farm-pls-jones.contract-position-fetcher';
@@ -17,6 +18,7 @@ import { PlutusContractFactory } from './contracts';
 @Module({
   providers: [
     PlutusContractFactory,
+    ArbitrumPlutusFarmPlsArbContractPositionFetcher,
     ArbitrumPlutusFarmContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher,

@@ -7,6 +7,7 @@ import { Network } from '~types/network.interface';
 import {
   PlutusChef__factory,
   PlutusEpochStakingRewardsRolling__factory,
+  PlutusFarmPlsArb__factory,
   PlutusFarmPlsDpx__factory,
   PlutusFarmPlsDpxV2__factory,
   PlutusFarmPlsJones__factory,
@@ -35,6 +36,9 @@ export class PlutusContractFactory extends ContractFactory {
   }
   plutusEpochStakingRewardsRolling({ address, network }: ContractOpts) {
     return PlutusEpochStakingRewardsRolling__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  plutusFarmPlsArb({ address, network }: ContractOpts) {
+    return PlutusFarmPlsArb__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   plutusFarmPlsDpx({ address, network }: ContractOpts) {
     return PlutusFarmPlsDpx__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -76,6 +80,7 @@ export class PlutusContractFactory extends ContractFactory {
 
 export type { PlutusChef } from './ethers';
 export type { PlutusEpochStakingRewardsRolling } from './ethers';
+export type { PlutusFarmPlsArb } from './ethers';
 export type { PlutusFarmPlsDpx } from './ethers';
 export type { PlutusFarmPlsDpxV2 } from './ethers';
 export type { PlutusFarmPlsJones } from './ethers';

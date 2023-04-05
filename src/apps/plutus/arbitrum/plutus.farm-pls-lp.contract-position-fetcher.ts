@@ -20,7 +20,11 @@ export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
 };
 
 @PositionTemplate()
-export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlsJonesLp> {
+export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<
+  PlutusFarmPlsJonesLp,
+  SingleStakingFarmDataProps,
+  PlutusFarmDefinition
+> {
   groupLabel = 'Farms';
 
   constructor(
