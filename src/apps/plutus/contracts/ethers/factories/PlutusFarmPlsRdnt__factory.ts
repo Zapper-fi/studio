@@ -4,28 +4,34 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PlutusFarmPlsDpxLp, PlutusFarmPlsDpxLpInterface } from '../PlutusFarmPlsDpxLp';
+import type { PlutusFarmPlsRdnt, PlutusFarmPlsRdntInterface } from '../PlutusFarmPlsRdnt';
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_stakingToken',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_pls',
-        type: 'address',
-      },
-    ],
+    inputs: [],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
     name: 'DEPOSIT_ERROR',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    name: 'FAILED',
     type: 'error',
   },
   {
@@ -37,6 +43,38 @@ const _abi = [
     inputs: [],
     name: 'WITHDRAW_ERROR',
     type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'previousAdmin',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'newAdmin',
+        type: 'address',
+      },
+    ],
+    name: 'AdminChanged',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'beacon',
+        type: 'address',
+      },
+    ],
+    name: 'BeaconUpgraded',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -82,17 +120,49 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: '_user',
+        name: '_handler',
         type: 'address',
       },
       {
         indexed: false,
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
+        internalType: 'bool',
+        name: '_isActive',
+        type: 'bool',
       },
     ],
-    name: 'Harvest',
+    name: 'HandlerUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'version',
+        type: 'uint8',
+      },
+    ],
+    name: 'Initialized',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferStarted',
     type: 'event',
   },
   {
@@ -146,6 +216,19 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'implementation',
+        type: 'address',
+      },
+    ],
+    name: 'Upgraded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: '_user',
         type: 'address',
       },
@@ -161,7 +244,46 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'accPlsPerShare',
+    name: 'PLS',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'REWARD_COUNT',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'STAKING_TOKEN',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acc_dai_PerShare',
     outputs: [
       {
         internalType: 'uint128',
@@ -170,6 +292,78 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acc_pls_PerShare',
+    outputs: [
+      {
+        internalType: 'uint128',
+        name: '',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acc_usdc_PerShare',
+    outputs: [
+      {
+        internalType: 'uint128',
+        name: '',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acc_usdt_PerShare',
+    outputs: [
+      {
+        internalType: 'uint128',
+        name: '',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acc_wbtc_PerShare',
+    outputs: [
+      {
+        internalType: 'uint128',
+        name: '',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acc_weth_PerShare',
+    outputs: [
+      {
+        internalType: 'uint128',
+        name: '',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'acceptOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -193,14 +387,27 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'uint88',
+        internalType: 'uint96',
         name: '_amount',
-        type: 'uint88',
+        type: 'uint96',
       },
     ],
     name: 'depositFor',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'distro',
+    outputs: [
+      {
+        internalType: 'contract IPlsRdntRewardsDistro',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -231,6 +438,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint32',
+        name: '_rewardEmissionStart',
+        type: 'uint32',
+      },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'lastRewardSecond',
     outputs: [
@@ -238,19 +458,6 @@ const _abi = [
         internalType: 'uint32',
         name: '',
         type: 'uint32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'operator',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -283,6 +490,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'pendingOwner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -293,22 +513,41 @@ const _abi = [
     name: 'pendingRewards',
     outputs: [
       {
-        internalType: 'uint256',
-        name: '_pendingPls',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'pls',
-    outputs: [
-      {
-        internalType: 'contract IERC20',
-        name: '',
-        type: 'address',
+        components: [
+          {
+            internalType: 'uint128',
+            name: 'pls',
+            type: 'uint128',
+          },
+          {
+            internalType: 'uint128',
+            name: 'wbtc',
+            type: 'uint128',
+          },
+          {
+            internalType: 'uint128',
+            name: 'usdt',
+            type: 'uint128',
+          },
+          {
+            internalType: 'uint128',
+            name: 'usdc',
+            type: 'uint128',
+          },
+          {
+            internalType: 'uint128',
+            name: 'dai',
+            type: 'uint128',
+          },
+          {
+            internalType: 'uint128',
+            name: 'weth',
+            type: 'uint128',
+          },
+        ],
+        internalType: 'struct PlsRdntPlutusChef.RewardTokens',
+        name: '_pendingRewards',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',
@@ -319,9 +558,22 @@ const _abi = [
     name: 'plsPerSecond',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint128',
         name: '',
-        type: 'uint256',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'proxiableUUID',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
       },
     ],
     stateMutability: 'view',
@@ -356,12 +608,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_plsPerSecond',
-        type: 'uint256',
+        internalType: 'address',
+        name: '_distro',
+        type: 'address',
       },
     ],
-    name: 'setEmission',
+    name: 'setDistro',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -369,12 +621,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_operator',
-        type: 'address',
+        internalType: 'uint128',
+        name: '_plsPerSecond',
+        type: 'uint128',
       },
     ],
-    name: 'setOperator',
+    name: 'setEmission',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -420,12 +672,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'stakingToken',
+    name: 'shares',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'uint96',
         name: '',
-        type: 'address',
+        type: 'uint96',
       },
     ],
     stateMutability: 'view',
@@ -445,10 +697,59 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_handler',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: '_isActive',
+        type: 'bool',
+      },
+    ],
+    name: 'updateHandler',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'updateShares',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newImplementation',
+        type: 'address',
+      },
+    ],
+    name: 'upgradeTo',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newImplementation',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes',
+        name: 'data',
+        type: 'bytes',
+      },
+    ],
+    name: 'upgradeToAndCall',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -469,6 +770,31 @@ const _abi = [
       {
         internalType: 'int128',
         name: 'plsRewardDebt',
+        type: 'int128',
+      },
+      {
+        internalType: 'int128',
+        name: 'wethRewardDebt',
+        type: 'int128',
+      },
+      {
+        internalType: 'int128',
+        name: 'wbtcRewardDebt',
+        type: 'int128',
+      },
+      {
+        internalType: 'int128',
+        name: 'usdcRewardDebt',
+        type: 'int128',
+      },
+      {
+        internalType: 'int128',
+        name: 'usdtRewardDebt',
+        type: 'int128',
+      },
+      {
+        internalType: 'int128',
+        name: 'daiRewardDebt',
         type: 'int128',
       },
     ],
@@ -509,9 +835,9 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'uint88',
+        internalType: 'uint96',
         name: '_amount',
-        type: 'uint88',
+        type: 'uint96',
       },
     ],
     name: 'withdrawFor',
@@ -521,12 +847,12 @@ const _abi = [
   },
 ];
 
-export class PlutusFarmPlsDpxLp__factory {
+export class PlutusFarmPlsRdnt__factory {
   static readonly abi = _abi;
-  static createInterface(): PlutusFarmPlsDpxLpInterface {
-    return new utils.Interface(_abi) as PlutusFarmPlsDpxLpInterface;
+  static createInterface(): PlutusFarmPlsRdntInterface {
+    return new utils.Interface(_abi) as PlutusFarmPlsRdntInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPlsDpxLp {
-    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPlsDpxLp;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPlsRdnt {
+    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPlsRdnt;
   }
 }

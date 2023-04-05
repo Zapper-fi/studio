@@ -4,28 +4,23 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PlutusFarmPlvGlp, PlutusFarmPlvGlpInterface } from '../PlutusFarmPlvGlp';
+import type { PlutusFarmPlsArb, PlutusFarmPlsArbInterface } from '../PlutusFarmPlsArb';
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_stakingToken',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_pls',
-        type: 'address',
-      },
-    ],
+    inputs: [],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
   {
-    inputs: [],
-    name: 'DEPOSIT_ERROR',
+    inputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    name: 'FAILED',
     type: 'error',
   },
   {
@@ -37,6 +32,38 @@ const _abi = [
     inputs: [],
     name: 'WITHDRAW_ERROR',
     type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'previousAdmin',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'newAdmin',
+        type: 'address',
+      },
+    ],
+    name: 'AdminChanged',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'beacon',
+        type: 'address',
+      },
+    ],
+    name: 'BeaconUpgraded',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -82,6 +109,25 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
+        name: '_handler',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: '_isActive',
+        type: 'bool',
+      },
+    ],
+    name: 'HandlerUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: '_user',
         type: 'address',
       },
@@ -93,6 +139,38 @@ const _abi = [
       },
     ],
     name: 'Harvest',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'version',
+        type: 'uint8',
+      },
+    ],
+    name: 'Initialized',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferStarted',
     type: 'event',
   },
   {
@@ -146,6 +224,19 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'implementation',
+        type: 'address',
+      },
+    ],
+    name: 'Upgraded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: '_user',
         type: 'address',
       },
@@ -173,11 +264,18 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'acceptOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
-        internalType: 'uint96',
+        internalType: 'uint128',
         name: '_amount',
-        type: 'uint96',
+        type: 'uint128',
       },
     ],
     name: 'deposit',
@@ -193,9 +291,9 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'uint88',
+        internalType: 'uint128',
         name: '_amount',
-        type: 'uint88',
+        type: 'uint128',
       },
     ],
     name: 'depositFor',
@@ -231,6 +329,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint32',
+        name: '_rewardEmissionStart',
+        type: 'uint32',
+      },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'lastRewardSecond',
     outputs: [
@@ -238,19 +349,6 @@ const _abi = [
         internalType: 'uint32',
         name: '',
         type: 'uint32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'operator',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -277,6 +375,19 @@ const _abi = [
         internalType: 'bool',
         name: '',
         type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pendingOwner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -319,9 +430,22 @@ const _abi = [
     name: 'plsPerSecond',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint128',
         name: '',
-        type: 'uint256',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'proxiableUUID',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
       },
     ],
     stateMutability: 'view',
@@ -356,25 +480,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint128',
         name: '_plsPerSecond',
-        type: 'uint256',
+        type: 'uint128',
       },
     ],
     name: 'setEmission',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_operator',
-        type: 'address',
-      },
-    ],
-    name: 'setOperator',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -445,10 +556,59 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_handler',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: '_isActive',
+        type: 'bool',
+      },
+    ],
+    name: 'updateHandler',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'updateShares',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newImplementation',
+        type: 'address',
+      },
+    ],
+    name: 'upgradeTo',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newImplementation',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes',
+        name: 'data',
+        type: 'bytes',
+      },
+    ],
+    name: 'upgradeToAndCall',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -462,9 +622,9 @@ const _abi = [
     name: 'userInfo',
     outputs: [
       {
-        internalType: 'uint96',
+        internalType: 'uint128',
         name: 'amount',
-        type: 'uint96',
+        type: 'uint128',
       },
       {
         internalType: 'int128',
@@ -491,9 +651,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint96',
+        internalType: 'uint128',
         name: '_amount',
-        type: 'uint96',
+        type: 'uint128',
       },
     ],
     name: 'withdraw',
@@ -509,9 +669,9 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'uint88',
+        internalType: 'uint128',
         name: '_amount',
-        type: 'uint88',
+        type: 'uint128',
       },
     ],
     name: 'withdrawFor',
@@ -521,12 +681,12 @@ const _abi = [
   },
 ];
 
-export class PlutusFarmPlvGlp__factory {
+export class PlutusFarmPlsArb__factory {
   static readonly abi = _abi;
-  static createInterface(): PlutusFarmPlvGlpInterface {
-    return new utils.Interface(_abi) as PlutusFarmPlvGlpInterface;
+  static createInterface(): PlutusFarmPlsArbInterface {
+    return new utils.Interface(_abi) as PlutusFarmPlsArbInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPlvGlp {
-    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPlvGlp;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPlsArb {
+    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPlsArb;
   }
 }

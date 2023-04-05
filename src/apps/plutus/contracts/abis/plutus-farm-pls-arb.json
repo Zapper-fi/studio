@@ -1,15 +1,23 @@
 [
-  {
-    "inputs": [
-      { "internalType": "address", "name": "_stakingToken", "type": "address" },
-      { "internalType": "address", "name": "_pls", "type": "address" }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  { "inputs": [], "name": "DEPOSIT_ERROR", "type": "error" },
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  { "inputs": [{ "internalType": "string", "name": "", "type": "string" }], "name": "FAILED", "type": "error" },
   { "inputs": [], "name": "UNAUTHORIZED", "type": "error" },
   { "inputs": [], "name": "WITHDRAW_ERROR", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "previousAdmin", "type": "address" },
+      { "indexed": false, "internalType": "address", "name": "newAdmin", "type": "address" }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": true, "internalType": "address", "name": "beacon", "type": "address" }],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -31,10 +39,34 @@
   {
     "anonymous": false,
     "inputs": [
+      { "indexed": true, "internalType": "address", "name": "_handler", "type": "address" },
+      { "indexed": false, "internalType": "bool", "name": "_isActive", "type": "bool" }
+    ],
+    "name": "HandlerUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       { "indexed": true, "internalType": "address", "name": "_user", "type": "address" },
       { "indexed": false, "internalType": "uint256", "name": "_amount", "type": "uint256" }
     ],
     "name": "Harvest",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint8", "name": "version", "type": "uint8" }],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferStarted",
     "type": "event"
   },
   {
@@ -60,6 +92,12 @@
   },
   {
     "anonymous": false,
+    "inputs": [{ "indexed": true, "internalType": "address", "name": "implementation", "type": "address" }],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
     "inputs": [
       { "indexed": true, "internalType": "address", "name": "_user", "type": "address" },
       { "indexed": false, "internalType": "uint256", "name": "_amount", "type": "uint256" }
@@ -74,8 +112,9 @@
     "stateMutability": "view",
     "type": "function"
   },
+  { "inputs": [], "name": "acceptOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
-    "inputs": [{ "internalType": "uint96", "name": "_amount", "type": "uint96" }],
+    "inputs": [{ "internalType": "uint128", "name": "_amount", "type": "uint128" }],
     "name": "deposit",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -84,7 +123,7 @@
   {
     "inputs": [
       { "internalType": "address", "name": "_user", "type": "address" },
-      { "internalType": "uint88", "name": "_amount", "type": "uint88" }
+      { "internalType": "uint128", "name": "_amount", "type": "uint128" }
     ],
     "name": "depositFor",
     "outputs": [],
@@ -101,16 +140,16 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "lastRewardSecond",
-    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
-    "stateMutability": "view",
+    "inputs": [{ "internalType": "uint32", "name": "_rewardEmissionStart", "type": "uint32" }],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "operator",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "lastRewardSecond",
+    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -125,6 +164,13 @@
     "inputs": [],
     "name": "paused",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pendingOwner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -145,7 +191,14 @@
   {
     "inputs": [],
     "name": "plsPerSecond",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [{ "internalType": "uint128", "name": "", "type": "uint128" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -158,15 +211,8 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "_plsPerSecond", "type": "uint256" }],
+    "inputs": [{ "internalType": "uint128", "name": "_plsPerSecond", "type": "uint128" }],
     "name": "setEmission",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "_operator", "type": "address" }],
-    "name": "setOperator",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -206,12 +252,39 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_handler", "type": "address" },
+      { "internalType": "bool", "name": "_isActive", "type": "bool" }
+    ],
+    "name": "updateHandler",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
   { "inputs": [], "name": "updateShares", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "newImplementation", "type": "address" }],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newImplementation", "type": "address" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
   {
     "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "userInfo",
     "outputs": [
-      { "internalType": "uint96", "name": "amount", "type": "uint96" },
+      { "internalType": "uint128", "name": "amount", "type": "uint128" },
       { "internalType": "int128", "name": "plsRewardDebt", "type": "int128" }
     ],
     "stateMutability": "view",
@@ -225,7 +298,7 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint96", "name": "_amount", "type": "uint96" }],
+    "inputs": [{ "internalType": "uint128", "name": "_amount", "type": "uint128" }],
     "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -234,7 +307,7 @@
   {
     "inputs": [
       { "internalType": "address", "name": "_user", "type": "address" },
-      { "internalType": "uint88", "name": "_amount", "type": "uint88" }
+      { "internalType": "uint128", "name": "_amount", "type": "uint128" }
     ],
     "name": "withdrawFor",
     "outputs": [],
