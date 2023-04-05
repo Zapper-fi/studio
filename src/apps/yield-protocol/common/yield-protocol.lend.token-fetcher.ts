@@ -55,10 +55,7 @@ type FyTokenDefinition = {
   poolAddress?: string;
 };
 
-type FyTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-  apy: number;
+type FyTokenDataProps = DefaultAppTokenDataProps & {
   maturity: number;
 };
 

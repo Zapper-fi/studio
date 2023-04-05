@@ -21,17 +21,15 @@ import {
   GetPricePerShareParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { CurveContractFactory } from '../contracts';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
-export type CurvePoolTokenDataProps = {
+export type CurvePoolTokenDataProps = DefaultAppTokenDataProps & {
   swapAddress: string;
-  liquidity: number;
-  reserves: number[];
-  apy: number;
   volume: number;
   fee: number;
 };
