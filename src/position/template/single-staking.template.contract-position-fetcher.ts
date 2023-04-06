@@ -83,6 +83,7 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     const rewardRatesRaw = await this.getRewardRates(params).then(v => (isArray(v) ? v : [v]));
+    const isActive = await this.getIsActive(params);
 
     const reserve = await this.getReserve(params);
     const liquidity = reserve * stakedToken.price;
@@ -92,7 +93,6 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     const dailyRewardRateUSD = rewardRatesUSD * 86_400;
     const dailyReturn = liquidity > 0 ? (dailyRewardRateUSD + liquidity) / liquidity - 1 : 0;
     const apy = dailyReturn * 365 * 100;
-    const isActive = apy > 0;
 
     return { liquidity, apy, isActive } as V;
   }
