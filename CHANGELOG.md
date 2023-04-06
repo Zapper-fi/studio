@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.433.1](https://github.com/Zapper-fi/studio/compare/v0.433.0...v0.433.1) (2023-04-06)
+
+
+### Bug Fixes
+
+* **apps:** Remove app integrations on Cronos and Evmos ([#2529](https://github.com/Zapper-fi/studio/issues/2529)) ([b0af1e7](https://github.com/Zapper-fi/studio/commit/b0af1e745470e7c2ecd2ddaf8a0d67606bf29035))
+
 ## [0.433.0](https://github.com/Zapper-fi/studio/compare/v0.432.0...v0.433.0) (2023-04-06)
 
 
