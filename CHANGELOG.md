@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.434.1](https://github.com/Zapper-fi/studio/compare/v0.434.0...v0.434.1) (2023-04-06)
+
+
+### Bug Fixes
+
+* **plutus:** Fix plsRdnt token order ([#2535](https://github.com/Zapper-fi/studio/issues/2535)) ([082b73d](https://github.com/Zapper-fi/studio/commit/082b73d6f9a43d97925592b1dfa2b2b649574e3d))
+
 ## [0.434.0](https://github.com/Zapper-fi/studio/compare/v0.433.1...v0.434.0) (2023-04-06)
 
 
