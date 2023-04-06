@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.433.0](https://github.com/Zapper-fi/studio/compare/v0.432.0...v0.433.0) (2023-04-06)
+
+
+### Features
+
+* **uniswap-v3:** Show min/max ranges and fix sig figs on range ([#2528](https://github.com/Zapper-fi/studio/issues/2528)) ([a341f75](https://github.com/Zapper-fi/studio/commit/a341f75a0bca624357c621d7c06845d668414204))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Fix option decimals on Arbitrum ([#2525](https://github.com/Zapper-fi/studio/issues/2525)) ([2982616](https://github.com/Zapper-fi/studio/commit/2982616c6a7de827de9602662285a21415ad48c0))
+* **thales:** Linting ([#2526](https://github.com/Zapper-fi/studio/issues/2526)) ([6a4a9b3](https://github.com/Zapper-fi/studio/commit/6a4a9b3143dbb00d3c6783e43b836b35e182cd3d))
+
 ## [0.432.0](https://github.com/Zapper-fi/studio/compare/v0.431.0...v0.432.0) (2023-04-05)
 
 
