@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.434.0](https://github.com/Zapper-fi/studio/compare/v0.433.1...v0.434.0) (2023-04-06)
+
+
+### Features
+
+* **exactly:** ✨ add claimable rewards ([#2531](https://github.com/Zapper-fi/studio/issues/2531)) ([cd99062](https://github.com/Zapper-fi/studio/commit/cd99062ea8bf692f82d073f3da687490889fd643))
+
 ## [0.433.1](https://github.com/Zapper-fi/studio/compare/v0.433.0...v0.433.1) (2023-04-06)
 
 
