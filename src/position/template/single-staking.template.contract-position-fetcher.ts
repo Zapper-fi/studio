@@ -40,6 +40,7 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
 
   abstract getFarmDefinitions(params: GetDefinitionsParams): Promise<R[]>;
   abstract getRewardRates(params: GetDataPropsParams<T, V, R>): Promise<BigNumberish | BigNumberish[]>;
+  abstract getIsActive(params: GetDataPropsParams<T, V, R>): Promise<boolean>;
   abstract getStakedTokenBalance(params: GetTokenBalancesParams<T, V>): Promise<BigNumberish>;
   abstract getRewardTokenBalances(
     params: GetTokenBalancesParams<T, SingleStakingFarmDataProps>,

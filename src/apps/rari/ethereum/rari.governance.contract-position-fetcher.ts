@@ -42,6 +42,10 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
     return [0];
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getStakedTokenBalance(_params: GetTokenBalancesParams<RariGovernanceTokenDistributor>) {
     return [0];
   }

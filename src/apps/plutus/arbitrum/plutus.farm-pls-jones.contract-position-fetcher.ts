@@ -65,6 +65,19 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
     return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.jones_];
   }
 
+  async getIsActive({
+    contract,
+  }: GetDataPropsParams<PlutusFarmPlsJones, SingleStakingFarmDataProps, PlutusFarmDefinition>): Promise<boolean> {
+    const rewardsDistro = await contract.rewardsDistro();
+    const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsJones({
+      address: rewardsDistro,
+      network: this.network,
+    });
+
+    const emissions = await rewardsDistroContract.getEmissions();
+    return emissions.pls_.gt(0) || emissions.plsDpx_.gt(0) || emissions.plsJones_.gt(0) || emissions.jones_.gt(0);
+  }
+
   async getLabel({
     definition,
   }: GetDisplayPropsParams<PlutusFarmPlsJones, SingleStakingFarmDataProps, PlutusFarmDefinition>) {

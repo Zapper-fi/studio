@@ -42,6 +42,10 @@ export class OptimismLyraAvalonStakingContractPositionFetcher extends SingleStak
     return contract.rewardRate();
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<LyraLpStaking>) {
+    return (await contract.rewardRate()).gt(0);
+  }
+
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<LyraLpStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }

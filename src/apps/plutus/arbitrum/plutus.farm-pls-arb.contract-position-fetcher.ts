@@ -51,6 +51,10 @@ export class ArbitrumPlutusFarmPlsArbContractPositionFetcher extends SingleStaki
     return [0];
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getLabel({
     definition,
   }: GetDisplayPropsParams<PlutusFarmPlsArb, SingleStakingFarmDataProps, PlutusFarmDefinition>) {

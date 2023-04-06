@@ -44,6 +44,10 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
     return contract.rewardRate();
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking>) {
+    return (await contract.rewardRate()).gt(0);
+  }
+
   getStakedTokenBalance({
     address,
     contract,
