@@ -70,7 +70,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
     return contract.rewardRateJONES();
   }
 
-  getIsFarmActive({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
+  getIsActive({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
     return contract.periodFinish().then(finish => finish.gt(Date.now() / 1000));
   }
 
