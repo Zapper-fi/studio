@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.435.0](https://github.com/Zapper-fi/studio/compare/v0.434.1...v0.435.0) (2023-04-07)
+
+
+### Features
+
+* **studio:** Make resolving is active abstract ([#2534](https://github.com/Zapper-fi/studio/issues/2534)) ([8433ec1](https://github.com/Zapper-fi/studio/commit/8433ec1742b06e5895b1bdcb00500dc10a8683d7))
+
+
+### Bug Fixes
+
+* **studio:** Update KyberSwap SDK to latest version ([#2533](https://github.com/Zapper-fi/studio/issues/2533)) ([11354f2](https://github.com/Zapper-fi/studio/commit/11354f2723674692522d70f9a19504f4ca963b43))
+
 ## [0.434.1](https://github.com/Zapper-fi/studio/compare/v0.434.0...v0.434.1) (2023-04-06)
 
 
