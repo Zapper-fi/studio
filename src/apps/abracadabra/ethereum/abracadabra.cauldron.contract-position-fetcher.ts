@@ -41,6 +41,7 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
     '0x7259e152103756e1616a77ae982353c3751a6a90', // yvCrv3Crypto
     '0x1062eb452f8c7a94276437ec1f4aaca9b1495b72', // Stargate USDT (POF)
     '0x692887e8877c6dd31593cda44c382db5b289b684', // magicAPE
+    '0xedcf198bc94ddcabb21dbeb38ad9f9793208f12a', // Protocol Owned Debt
   ];
 
   convexCauldrons = [

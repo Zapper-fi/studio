@@ -10,6 +10,7 @@ import { ArbitrumAbracadabraStakedSpellTokenFetcher } from './arbitrum/abracadab
 import { AvalancheAbracadabraCauldronContractPositionFetcher } from './avalanche/abracadabra.cauldron.contract-position-fetcher';
 import { AvalancheAbracadabraFarmContractPositionFetcher } from './avalanche/abracadabra.farm.contract-position-fetcher';
 import { AvalancheAbracadabraMspellContractPositionFetcher } from './avalanche/abracadabra.m-spell.contract-position-fetcher';
+import { AvalancheAbracadabraMagicGlpTokenFetcher } from './avalanche/abracadabra.magic-glp.token-fetcher';
 import { AvalancheAbracadabraStakedSpellTokenFetcher } from './avalanche/abracadabra.staked-spell.token-fetcher';
 import { BinanceSmartChainAbracadabraCauldronContractPositionFetcher } from './binance-smart-chain/abracadabra.cauldron.contract-position-fetcher';
 import { AbracadabraContractFactory } from './contracts';
@@ -37,6 +38,7 @@ import { OptimismAbracadabraErc20VaultsTokenFetcher } from './optimism/abracadab
     // Avalanche
     AvalancheAbracadabraCauldronContractPositionFetcher,
     AvalancheAbracadabraFarmContractPositionFetcher,
+    AvalancheAbracadabraMagicGlpTokenFetcher,
     AvalancheAbracadabraMspellContractPositionFetcher,
     AvalancheAbracadabraStakedSpellTokenFetcher,
     // Binance-smart-chain
