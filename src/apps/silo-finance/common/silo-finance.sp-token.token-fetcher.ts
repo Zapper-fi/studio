@@ -47,24 +47,15 @@ export abstract class SiloFinanceSpTokenTokenFetcher extends AppTokenTemplatePos
   }
 
   async getDefinitions(): Promise<SpTokenDefinition[]> {
-    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    const markets = await this.siloDefinitionResolver.getSiloDefinitions(this.network);
     if (!markets) return [];
 
-    const spTokenDefinition = markets
-      .map(market => {
-        const siloAddress = market.siloAddress;
-        const spTokenAddresses = market.marketAssets.map(x => x.spToken);
-
-        return spTokenAddresses.map(address => {
-          return {
-            address,
-            siloAddress,
-          };
-        });
-      })
-      .flat();
-
-    return spTokenDefinition;
+    return markets.flatMap(market =>
+      market.marketAssets.map(marketAsset => ({
+        siloAddress: market.siloAddress,
+        address: marketAsset.spToken,
+      })),
+    );
   }
 
   async getAddresses({ definitions }: GetAddressesParams<SpTokenDefinition>): Promise<string[]> {

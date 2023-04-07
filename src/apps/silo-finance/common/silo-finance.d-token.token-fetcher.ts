@@ -52,7 +52,7 @@ export abstract class SiloFinanceDTokenTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getDefinitions(): Promise<DTokenDefinition[]> {
-    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    const markets = await this.siloDefinitionResolver.getSiloDefinitions(this.network);
     if (!markets) return [];
 
     const dTokenDefinition = markets

@@ -53,7 +53,7 @@ export abstract class SiloFinanceSiloContractPositionFetcher extends ContractPos
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<SiloContractPositionDefinition[]> {
-    const markets = await this.siloDefinitionResolver.getSiloDefinition(this.network);
+    const markets = await this.siloDefinitionResolver.getSiloDefinitions(this.network);
     if (!markets) return [];
 
     const definitions = await Promise.all(
