@@ -45,6 +45,10 @@ export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFar
     return contract.rewardRate();
   }
 
+  getIsActive({ contract }: GetDataPropsParams<DopexSingleRewardStaking>): Promise<boolean> {
+    return contract.rewardRate().then(v => v.gt(0));
+  }
+
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
     return contract.balanceOf(address);
   }

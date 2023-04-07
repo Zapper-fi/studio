@@ -48,4 +48,8 @@ export abstract class FarmContractPositionFetcher extends SingleStakingFarmTempl
   async getRewardRates({ address }: GetDataPropsParams<TenderFarm, SingleStakingFarmDataProps>) {
     return [await this.tokenDefinitionsResolver.getRewardRate(this.network, address)];
   }
+
+  async getIsActive({ address }: GetDataPropsParams<TenderFarm, SingleStakingFarmDataProps>) {
+    return (await this.tokenDefinitionsResolver.getRewardRate(this.network, address)) > 0;
+  }
 }

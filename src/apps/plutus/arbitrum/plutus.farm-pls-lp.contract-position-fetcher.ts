@@ -71,6 +71,10 @@ export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakin
     return contract.plsPerSecond();
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<PlutusFarmPlsJonesLp>) {
+    return contract.plsPerSecond().then(v => v.gt(0));
+  }
+
   async getLabel({
     definition,
   }: GetDisplayPropsParams<PlutusFarmPlsJonesLp, SingleStakingFarmDataProps, PlutusFarmDefinition>) {

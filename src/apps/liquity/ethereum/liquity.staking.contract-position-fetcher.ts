@@ -42,6 +42,10 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
     return [0, 0];
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
     return contract.stakes(address);
   }
