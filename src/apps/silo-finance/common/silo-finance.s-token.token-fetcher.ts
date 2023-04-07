@@ -71,6 +71,8 @@ export abstract class SiloFinanceSTokenTokenFetcher extends AppTokenTemplatePosi
     const reserveRaw = await multicall
       .wrap(siloLensContract)
       .totalDepositsWithInterest(definition.siloAddress, appToken.tokens[0].address);
+    if (reserveRaw.isZero()) return [0];
+
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / Number(appToken.supply);
     return [pricePerShare];
