@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.437.1](https://github.com/Zapper-fi/studio/compare/v0.437.0...v0.437.1) (2023-04-07)
+
+
+### Bug Fixes
+
+* **studio:** Revamping KyberSwap classic pools+farms ([7a3f5aa](https://github.com/Zapper-fi/studio/commit/7a3f5aae5915f66a20c63fec6c34dab67d8eec12))
+* **studio:** Revamping KyberSwap classic pools+farms ([#2542](https://github.com/Zapper-fi/studio/issues/2542)) ([7a3f5aa](https://github.com/Zapper-fi/studio/commit/7a3f5aae5915f66a20c63fec6c34dab67d8eec12))
+
 ## [0.437.0](https://github.com/Zapper-fi/studio/compare/v0.436.0...v0.437.0) (2023-04-07)
 
 
