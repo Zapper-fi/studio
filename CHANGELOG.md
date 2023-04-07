@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.438.1](https://github.com/Zapper-fi/studio/compare/v0.438.0...v0.438.1) (2023-04-07)
+
+
+### Bug Fixes
+
+* **studio:** Fix zero totals case ([#2546](https://github.com/Zapper-fi/studio/issues/2546)) ([a06ac7b](https://github.com/Zapper-fi/studio/commit/a06ac7bf5f00327a7e3ec6d9c6aafc7ff6d090bc))
+
 ## [0.438.0](https://github.com/Zapper-fi/studio/compare/v0.437.1...v0.438.0) (2023-04-07)
 
 
