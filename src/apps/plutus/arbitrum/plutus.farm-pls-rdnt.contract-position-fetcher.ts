@@ -43,11 +43,11 @@ export class ArbitrumPlutusFarmPlsRdntContractPositionFetcher extends SingleStak
         label: 'plsRDNT',
         rewardTokenAddresses: [
           '0x51318b7d00db7acc4026c88c3952b66278b6a67f', // PLS
-          '0x82af49447d8a07e3bd95bd0d56f35241523fbab1', // WETH
           '0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f', // WBTC
-          '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8', // USDC
           '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', // USDT
+          '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8', // USDC
           '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1', // DAI
+          '0x82af49447d8a07e3bd95bd0d56f35241523fbab1', // WETH
         ],
       },
     ];

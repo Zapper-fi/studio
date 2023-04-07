@@ -14,6 +14,7 @@ import { OptimismExactlyDepositFetcher } from './optimism/exactly.deposit.token-
 import { OptimismExactlyFixedBorrowFetcher } from './optimism/exactly.fixed-borrow.token-fetcher';
 import { OptimismExactlyFixedDepositFetcher } from './optimism/exactly.fixed-deposit.token-fetcher';
 import { OptimismExactlyPositionPresenter } from './optimism/exactly.position-presenter';
+import { OptimismExactlyRewardsFetcher } from './optimism/exactly.rewards.contract-position-fetcher';
 
 @Module({
   providers: [
@@ -29,6 +30,7 @@ import { OptimismExactlyPositionPresenter } from './optimism/exactly.position-pr
     OptimismExactlyDepositFetcher,
     OptimismExactlyFixedBorrowFetcher,
     OptimismExactlyFixedDepositFetcher,
+    OptimismExactlyRewardsFetcher,
   ],
 })
 export class ExactlyAppModule extends AbstractApp() {}
