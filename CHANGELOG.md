@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.436.0](https://github.com/Zapper-fi/studio/compare/v0.435.0...v0.436.0) (2023-04-07)
+
+
+### Features
+
+* **main:** add reserve protocol app ([#2508](https://github.com/Zapper-fi/studio/issues/2508)) ([e264165](https://github.com/Zapper-fi/studio/commit/e264165847c42f8966aa4f04a40e414791d575bb))
+
 ## [0.435.0](https://github.com/Zapper-fi/studio/compare/v0.434.1...v0.435.0) (2023-04-07)
 
 
