@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.437.0](https://github.com/Zapper-fi/studio/compare/v0.436.0...v0.437.0) (2023-04-07)
+
+
+### Features
+
+* **abracadabra:** Add magicGLP for Avalanche and protocol debt cauldron ([#2539](https://github.com/Zapper-fi/studio/issues/2539)) ([40f9ad1](https://github.com/Zapper-fi/studio/commit/40f9ad1a718b86be61c0a24d414f244ad3b4ae81))
+
 ## [0.436.0](https://github.com/Zapper-fi/studio/compare/v0.435.0...v0.436.0) (2023-04-07)
 
 
