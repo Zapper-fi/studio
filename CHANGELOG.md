@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.438.0](https://github.com/Zapper-fi/studio/compare/v0.437.1...v0.438.0) (2023-04-07)
+
+
+### Features
+
+* **studio:** Fix Silo Finance everything ([#2544](https://github.com/Zapper-fi/studio/issues/2544)) ([6978ec5](https://github.com/Zapper-fi/studio/commit/6978ec5e800398d2e2f8f8c72b57cfab0ffa6c9a))
+
 ## [0.437.1](https://github.com/Zapper-fi/studio/compare/v0.437.0...v0.437.1) (2023-04-07)
 
 
