@@ -237,9 +237,9 @@ export class ArbitrumLyraAvalonOptionsContractPositionFetcher extends ContractPo
     if (!userPosition) return [];
 
     // Find amount of position
-    const quoteToken = contractPosition.tokens[0];
-    const price = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
-    const amountRaw = ((Number(price) * Number(userPosition.amount)) / 10 ** quoteToken.decimals).toString();
+    const priceRaw = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
+    const price = priceRaw / 10 ** 18;
+    const amountRaw = ((Number(price) * Number(userPosition.amount)) / 10 ** 12).toString();
 
     if (optionType === 0 || optionType === 1) return [amountRaw];
     return [amountRaw, userPosition.collateral];

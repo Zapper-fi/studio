@@ -9,7 +9,6 @@ import { ArbitrumPickleFarmContractPositionFetcher } from './arbitrum/pickle.mas
 import { AuroraPickleJarTokenFetcher } from './aurora/pickle.jar.token-fetcher';
 import { PickleApiJarRegistry } from './common/pickle.api.jar-registry';
 import { PickleContractFactory } from './contracts';
-import { CronosPickleJarTokenFetcher } from './cronos/pickle.jar.token-fetcher';
 import { EthereumUniV3PickleJarTokenFetcher } from './ethereum/pickle.jar-univ3.token-fetcher';
 import { EthereumPickleJarTokenFetcher } from './ethereum/pickle.jar.token-fetcher';
 import { EthereumPickleFarmContractPositionFetcher } from './ethereum/pickle.masterchef-farm.contract-position-fetcher';
@@ -30,7 +29,6 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     ArbitrumPickleFarmContractPositionFetcher,
     ArbitrumPickleJarTokenFetcher,
     AuroraPickleJarTokenFetcher,
-    CronosPickleJarTokenFetcher,
     EthereumPickleFarmContractPositionFetcher,
     EthereumPickleJarTokenFetcher,
     EthereumPickleSingleRewardPositionFetcher,

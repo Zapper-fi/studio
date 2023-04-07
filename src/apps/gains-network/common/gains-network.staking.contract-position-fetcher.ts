@@ -28,6 +28,10 @@ export abstract class GainsNetworkStakingContractPositionFetcher extends SingleS
     return contract.accDaiPerToken();
   }
 
+  getIsActive({ contract }: GetDataPropsParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
+    return contract.accDaiPerToken().then(rate => rate.gt(0));
+  }
+
   async getStakedTokenBalance({
     address,
     contract,

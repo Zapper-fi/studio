@@ -55,6 +55,17 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     return contract.rewardRate();
   }
 
+  async getIsActive({
+    contract,
+  }: GetDataPropsParams<
+    EulerStakingRewardsContract,
+    SingleStakingFarmDataProps,
+    SingleStakingFarmDefinition
+  >): Promise<boolean> {
+    const endTime = await contract.periodFinish();
+    return endTime.gt(Date.now() / 1000);
+  }
+
   getStakedTokenBalance({
     address,
     contract,

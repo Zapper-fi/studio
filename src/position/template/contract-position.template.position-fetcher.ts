@@ -211,6 +211,10 @@ export abstract class ContractPositionTemplatePositionFetcher<
     });
   }
 
+  async filterPositionsForAddress(address: string, positions: ContractPosition<V>[]) {
+    return positions;
+  }
+
   abstract getTokenBalancesPerPosition({
     address,
     contractPosition,
@@ -221,11 +225,13 @@ export abstract class ContractPositionTemplatePositionFetcher<
   async getBalances(_address: string): Promise<ContractPositionBalance<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const contractPositions = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
 
+    const contractPositions = await this.getPositionsForBalances();
+    const filteredPositions = await this.filterPositionsForAddress(address, contractPositions);
+
     const balances = await Promise.all(
-      contractPositions.map(async contractPosition => {
+      filteredPositions.map(async contractPosition => {
         const contract = multicall.wrap(this.getContract(contractPosition.address));
         const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
         const allTokens = contractPosition.tokens.map((cp, idx) =>
@@ -249,8 +255,10 @@ export abstract class ContractPositionTemplatePositionFetcher<
     if (address === ZERO_ADDRESS) return [];
 
     const contractPositions = await this.getPositionsForBalances();
+    const filteredPositions = await this.filterPositionsForAddress(address, contractPositions);
+
     let results: RawContractPositionBalance[] = [];
-    for (const batch of _.chunk(contractPositions, 100).values()) {
+    for (const batch of _.chunk(filteredPositions, 100).values()) {
       results = results.concat(
         await Promise.all(
           batch.map(async contractPosition => {

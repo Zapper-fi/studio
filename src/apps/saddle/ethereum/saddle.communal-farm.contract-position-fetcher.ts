@@ -49,6 +49,17 @@ export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleSta
     ]);
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<SaddleCommunalFarm>): Promise<boolean> {
+    const rewardRates = await Promise.all([
+      contract.rewardRates(0),
+      contract.rewardRates(1),
+      contract.rewardRates(2),
+      contract.rewardRates(3),
+    ]);
+
+    return rewardRates.some(rate => rate.gt(0));
+  }
+
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
     return contract.lockedLiquidityOf(address);
   }

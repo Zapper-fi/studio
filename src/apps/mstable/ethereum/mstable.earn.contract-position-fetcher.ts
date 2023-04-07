@@ -72,6 +72,10 @@ export class EthereumMstableEarnContractPositionFetcher extends SingleStakingFar
     return contract.rewardRate();
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<MstableStaking>) {
+    return (await contract.rewardRate()).gt(0);
+  }
+
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }

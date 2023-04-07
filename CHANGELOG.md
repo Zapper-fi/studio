@@ -4,6 +4,73 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.435.0](https://github.com/Zapper-fi/studio/compare/v0.434.1...v0.435.0) (2023-04-07)
+
+
+### Features
+
+* **studio:** Make resolving is active abstract ([#2534](https://github.com/Zapper-fi/studio/issues/2534)) ([8433ec1](https://github.com/Zapper-fi/studio/commit/8433ec1742b06e5895b1bdcb00500dc10a8683d7))
+
+
+### Bug Fixes
+
+* **studio:** Update KyberSwap SDK to latest version ([#2533](https://github.com/Zapper-fi/studio/issues/2533)) ([11354f2](https://github.com/Zapper-fi/studio/commit/11354f2723674692522d70f9a19504f4ca963b43))
+
+## [0.434.1](https://github.com/Zapper-fi/studio/compare/v0.434.0...v0.434.1) (2023-04-06)
+
+
+### Bug Fixes
+
+* **plutus:** Fix plsRdnt token order ([#2535](https://github.com/Zapper-fi/studio/issues/2535)) ([082b73d](https://github.com/Zapper-fi/studio/commit/082b73d6f9a43d97925592b1dfa2b2b649574e3d))
+
+## [0.434.0](https://github.com/Zapper-fi/studio/compare/v0.433.1...v0.434.0) (2023-04-06)
+
+
+### Features
+
+* **exactly:** ✨ add claimable rewards ([#2531](https://github.com/Zapper-fi/studio/issues/2531)) ([cd99062](https://github.com/Zapper-fi/studio/commit/cd99062ea8bf692f82d073f3da687490889fd643))
+
+## [0.433.1](https://github.com/Zapper-fi/studio/compare/v0.433.0...v0.433.1) (2023-04-06)
+
+
+### Bug Fixes
+
+* **apps:** Remove app integrations on Cronos and Evmos ([#2529](https://github.com/Zapper-fi/studio/issues/2529)) ([b0af1e7](https://github.com/Zapper-fi/studio/commit/b0af1e745470e7c2ecd2ddaf8a0d67606bf29035))
+
+## [0.433.0](https://github.com/Zapper-fi/studio/compare/v0.432.0...v0.433.0) (2023-04-06)
+
+
+### Features
+
+* **uniswap-v3:** Show min/max ranges and fix sig figs on range ([#2528](https://github.com/Zapper-fi/studio/issues/2528)) ([a341f75](https://github.com/Zapper-fi/studio/commit/a341f75a0bca624357c621d7c06845d668414204))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Fix option decimals on Arbitrum ([#2525](https://github.com/Zapper-fi/studio/issues/2525)) ([2982616](https://github.com/Zapper-fi/studio/commit/2982616c6a7de827de9602662285a21415ad48c0))
+* **thales:** Linting ([#2526](https://github.com/Zapper-fi/studio/issues/2526)) ([6a4a9b3](https://github.com/Zapper-fi/studio/commit/6a4a9b3143dbb00d3c6783e43b836b35e182cd3d))
+
+## [0.432.0](https://github.com/Zapper-fi/studio/compare/v0.431.0...v0.432.0) (2023-04-05)
+
+
+### Features
+
+* **thales:** Arbitrum Vaults ([#2517](https://github.com/Zapper-fi/studio/issues/2517)) ([cd93a44](https://github.com/Zapper-fi/studio/commit/cd93a44f4c08faf519cb70a17d72c391b7365287))
+
+
+### Bug Fixes
+
+* **convex:** Resolve underlying token from stash token wrappers ([#2523](https://github.com/Zapper-fi/studio/issues/2523)) ([25282d4](https://github.com/Zapper-fi/studio/commit/25282d4cfa2fdf868e8bc281b49094a1b1274686))
+* **plutus:** Fix farms ([#2522](https://github.com/Zapper-fi/studio/issues/2522)) ([62282ac](https://github.com/Zapper-fi/studio/commit/62282ac721bdcb68fea0f1c955db5331afe77ef7))
+
+## [0.431.0](https://github.com/Zapper-fi/studio/compare/v0.430.1...v0.431.0) (2023-04-05)
+
+
+### Features
+
+* **studio:** Pass through isDebt as a data prop ([#2518](https://github.com/Zapper-fi/studio/issues/2518)) ([f45895e](https://github.com/Zapper-fi/studio/commit/f45895ea49b5d454e43180ce5d069a10045bcc25))
+* **studio:** Use address in getPositionsForBalances to filter down where necessary ([#2520](https://github.com/Zapper-fi/studio/issues/2520)) ([70c8bab](https://github.com/Zapper-fi/studio/commit/70c8bab70976704aeb30d6062f4ff632197c089f))
+
 ## [0.430.1](https://github.com/Zapper-fi/studio/compare/v0.430.0...v0.430.1) (2023-04-05)
 
 

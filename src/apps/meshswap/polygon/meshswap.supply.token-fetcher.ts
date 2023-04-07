@@ -8,6 +8,7 @@ import { StatsItem } from '~position/display.interface';
 import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetUnderlyingTokensParams,
@@ -15,13 +16,15 @@ import {
 
 import { MeshswapContractFactory, MeshswapSinglePool } from '../contracts';
 
-export type MeshswapContractPositionDataProps = {
-  liquidity: number;
+export type MeshswapContractPositionDataProps = DefaultAppTokenDataProps & {
   exchangeRate: number;
 };
 
 @PositionTemplate()
-export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<MeshswapSinglePool> {
+export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<
+  MeshswapSinglePool,
+  MeshswapContractPositionDataProps
+> {
   groupLabel = 'Supply';
 
   constructor(
@@ -74,17 +77,13 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     return borrowAmount + cash;
   }
 
-  async getDataProps(params: GetDataPropsParams<MeshswapSinglePool>) {
-    const [liquidity, reserves, apy] = await Promise.all([
-      this.getLiquidity(params),
-      this.getReserves(params),
-      this.getApy(params),
-    ]);
-
+  async getDataProps(
+    params: GetDataPropsParams<MeshswapSinglePool, MeshswapContractPositionDataProps>,
+  ): Promise<MeshswapContractPositionDataProps> {
+    const defaultDataProps = await super.getDataProps(params);
     const exchangeRateRaw = await params.contract.exchangeRateStored();
     const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
-
-    return { liquidity, reserves, apy, exchangeRate };
+    return { ...defaultDataProps, exchangeRate };
   }
 
   async getStatsItems({ appToken }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<StatsItem[] | undefined> {
