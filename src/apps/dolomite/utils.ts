@@ -1,9 +1,7 @@
 import { BigNumber, BigNumberish, ethers } from 'ethers';
 
 import { DolomiteContractFactory, DolomiteMargin } from '~apps/dolomite/contracts';
-import {
-  IsolationModeToken__factory,
-} from '~apps/dolomite/contracts/ethers';
+import { IsolationModeToken__factory } from '~apps/dolomite/contracts/ethers';
 import { Multicall } from '~contract/contracts/ethers';
 import { IMulticallWrapper } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
@@ -12,7 +10,8 @@ import {
   DefaultContractPositionDefinition,
   GetDataPropsParams,
   GetTokenBalancesParams,
-  GetTokenDefinitionsParams, UnderlyingTokenDefinition,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
@@ -27,7 +26,7 @@ export interface DolomiteContractPosition extends ContractPosition<DolomiteDataP
 export interface DolomiteContractPositionDefinition extends DefaultContractPositionDefinition {
   marketsCount: number;
   marketIdToMarketMap: {
-    [marketId: number]:  ExtraTokenInfo
+    [marketId: number]: ExtraTokenInfo;
   };
 }
 
@@ -49,7 +48,7 @@ export interface DolomiteDataProps extends DefaultDataProps {
   liquidity: number | undefined;
   marketsCount: number;
   marketIdToMarketMap: {
-    [marketId: number]:  ExtraTokenInfo
+    [marketId: number]: ExtraTokenInfo;
   };
 }
 

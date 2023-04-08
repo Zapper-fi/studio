@@ -63,8 +63,7 @@ export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTempl
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<DolomiteAmmPair, UniswapV2TokenDataProps>): Promise<string> {
-    const label = appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
-    return label.replace('WETH', 'ETH');
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
   async getSecondaryLabel(_params: GetDisplayPropsParams<DolomiteAmmPair, UniswapV2TokenDataProps>) {
