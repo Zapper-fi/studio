@@ -1,26 +1,22 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { MetaType } from '~position/position.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { DefaultDataProps } from '~position/display.interface';
-import { buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
+import { DefaultDataProps } from '~position/display.interface';
+import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
   GetTokenDefinitionsParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
-
-import { StakedRsr } from '../contracts/ethers/StakedRsr';
-
 import { ReserveProtocolContractFactory } from '../contracts';
+import { StakedRsr } from '../contracts/ethers/StakedRsr';
 
 import { getRTokens, RTokens } from './reserve-protocol.staked-rsr.queries';
 
@@ -60,10 +56,9 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     });
 
     // Get stRSR token definitions
-    const defs = rTokensData.tokens.map(token => ({
-      address: token.rToken.rewardToken.token.id,
+    return rTokensData.tokens.map(token => ({
+      address: token.rToken.rewardToken.token.id.toLowerCase(),
     }));
-    return defs;
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<StakedRsr>) {
@@ -73,7 +68,6 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
         address: definition.address,
         network: this.network,
       },
-
       {
         metaType: MetaType.CLAIMABLE,
         address: definition.address,
@@ -82,17 +76,17 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     ];
   }
 
-  // TODO: Uncomment once `getTotalDrafts()` is available for the deployed eusdRSR token
-  // async getDataProps(params: GetDataPropsParams<StakedRsr>) {
-  //   const defaultDataProps = await super.getDataProps(params);
-  //   const { contract } = params;
-  //   const inCoolDownTotalBalance = await contract.getTotalDrafts();
-  //   return { ...defaultDataProps, inCoolDownTotalBalance };
-  // }
+  /*TODO: Uncomment once `getTotalDrafts()` is available for the deployed eusdRSR token
+   async getDataProps(params: GetDataPropsParams<StakedRsr>) {
+     const defaultDataProps = await super.getDataProps(params);
+     const { contract } = params;
+     const inCoolDownTotalBalance = await contract.getTotalDrafts();
+     return { ...defaultDataProps, inCoolDownTotalBalance };
+   }
 
-  // async getStatsItems({ contractPosition: { dataProps } }: GetDisplayPropsParams<StakedRsr, StakedRsrDataProps>) {
-  //   return [{ label: 'In Cooldown Total Balance', value: buildNumberDisplayItem(dataProps.inCoolDownTotalBalance) }];
-  // }
+   async getStatsItems({ contractPosition: { dataProps } }: GetDisplayPropsParams<StakedRsr, StakedRsrDataProps>) {
+    return [{ label: 'In Cooldown Total Balance', value: buildNumberDisplayItem(dataProps.inCoolDownTotalBalance) }];
+  }*/
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<StakedRsr>) {
     return getLabelFromToken(contractPosition.tokens[0]);
@@ -104,7 +98,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const facadeRead = multicall.wrap(
       this.contractFactory.facadeRead({
         network: this.network,
-        address: '0x15f06B2907594905D820a4AB3631f4b097a0bE07',
+        address: '0x15f06b2907594905d820a4ab3631f4b097a0be07',
       }),
     );
 

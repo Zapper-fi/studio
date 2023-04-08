@@ -2,10 +2,9 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition, GetPricePerShareParams } from '~position/template/app-token.template.types';
-
-import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 
 import { ReserveProtocolContractFactory } from '../contracts';
 import { StakedRsr } from '../contracts/ethers/StakedRsr';
@@ -43,7 +42,7 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
   }
 
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: '0x320623b8E4fF03373931769A31Fc52A4E78B5d70', network: this.network }]; // RSR
+    return [{ address: '0x320623b8e4ff03373931769a31fc52a4e78b5d70', network: this.network }]; // RSR
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<StakedRsr>) {
