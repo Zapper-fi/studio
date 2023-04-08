@@ -1,4 +1,5 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+
 import { ThalesEscrowContractPositionFetcher } from '../common/thales.escrow.contract-position-fetcher';
 
 @PositionTemplate()

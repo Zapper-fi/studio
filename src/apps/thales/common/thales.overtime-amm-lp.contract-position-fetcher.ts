@@ -4,10 +4,7 @@ import { BigNumberish } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import {
-  GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
-} from '~position/template/contract-position.template.types';
+import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { OvertimeAmmLp, ThalesContractFactory } from '../contracts';
 
@@ -27,9 +24,7 @@ export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends Contrac
   }
 
   async getDefinitions() {
-    return [
-      { address: this.contractAddress },
-    ];
+    return [{ address: this.contractAddress }];
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<OvertimeAmmLp>) {
@@ -46,7 +41,10 @@ export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends Contrac
     return 'Overtime AMM LP';
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<OvertimeAmmLp>): Promise<BigNumberish[]> {
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+  }: GetTokenBalancesParams<OvertimeAmmLp>): Promise<BigNumberish[]> {
     const currentRound = await contract.round();
     const currentBalance = await contract.balancesPerRound(Number(currentRound), address);
     const pendingDeposit = await contract.balancesPerRound(Number(currentRound) + 1, address);

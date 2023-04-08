@@ -1,4 +1,5 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+
 import { ThalesOvertimeAmmLpContractPositionFetcher } from '../common/thales.overtime-amm-lp.contract-position-fetcher';
 
 @PositionTemplate()

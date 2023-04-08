@@ -37,6 +37,10 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
     return contractPosition.tokens.filter(isClaimable).map(() => 0);
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getStakedTokenBalance({ address, contractPosition, multicall }: GetTokenBalancesParams<GmxRewardTracker>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const readerContract = this.contractFactory.gmxRewardReader({ address: this.readerAddress, network: this.network });

@@ -36,6 +36,7 @@ export type DefiedgeStrategyTokenDataProps = DefaultAppTokenDataProps & {
   sinceInception: number;
   sharePrice: number;
   aum: number;
+  unclaimedFees: number;
 };
 
 export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -140,11 +141,23 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     const defaultDataProps = await super.getDataProps(params);
 
     const { contract, appToken } = params;
-    const totalSupplyBN = await contract.totalSupply();
+    const [aumWithFee, totalSupplyBN] = await Promise.all([
+      contract.callStatic.getAUMWithFees(true),
+      contract.totalSupply(),
+    ]);
+    const [token0, token1] = appToken.tokens;
     const sharePrice = appToken.price;
     const liquidity = +formatEther(totalSupplyBN) * appToken.price;
+    const unclaimedFees =
+      +formatEther(aumWithFee.totalFee0) * token0.price + +formatEther(aumWithFee.totalFee1) * token1.price;
 
-    return { ...defaultDataProps, liquidity, sharePrice, sinceInception: sharePrice - 100 };
+    return {
+      ...defaultDataProps,
+      unclaimedFees,
+      liquidity,
+      sharePrice,
+      sinceInception: sharePrice - 100,
+    };
   }
 
   async getLabel({
@@ -162,7 +175,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   async getStatsItems({
     appToken,
   }: GetDisplayPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
-    const { liquidity, apy, reserves, sinceInception } = appToken.dataProps;
+    const { liquidity, apy, reserves, sinceInception, unclaimedFees } = appToken.dataProps;
     const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
 
     return [
@@ -170,6 +183,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
       { label: 'Reserves', value: reservesDisplay },
       { label: 'APY', value: buildPercentageDisplayItem(apy) },
       { label: 'Since inception', value: buildPercentageDisplayItem(sinceInception) },
+      { label: 'Unclaimed Fees', value: buildDollarDisplayItem(unclaimedFees) },
     ];
   }
 }

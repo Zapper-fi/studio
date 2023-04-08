@@ -9,6 +9,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDataPropsParams,
@@ -17,11 +18,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-export type UniswapV2TokenDataProps = {
-  liquidity: number;
-  reserves: number[];
+export type UniswapV2TokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
-  apy: number;
   volume: number;
 };
 

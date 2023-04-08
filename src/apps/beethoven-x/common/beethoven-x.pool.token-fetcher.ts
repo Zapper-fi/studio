@@ -38,8 +38,8 @@ const GET_POOLS_QUERY = gql`
 `;
 
 export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetcher {
-  abstract composablePoolFactory: string;
-  abstract weightedPoolV2Factory: string;
+  abstract composablePoolFactories: string[];
+  abstract weightedPoolV2Factories: string[];
 
   async getDefinitions() {
     const poolsResponse = await gqlFetch<GetPoolsResponse>({
@@ -59,10 +59,11 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
     definition,
     multicall,
   }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>) {
-    // Logic derived from https://github.com/beethovenxfi/beethovenx-backend/blob/89242560f444f6f29ceb09155b905f783fda9481/modules/pool/lib/pool-on-chain-data.service.ts#L154-L163
+    // Logic derived from https://github.com/beethovenxfi/beethovenx-backend/blob/v2-main/modules/pool/lib/pool-on-chain-data.service.ts#L157-L172
+
     if (
-      (definition.poolType === 'PHANTOM_STABLE' && definition.factory === this.composablePoolFactory) ||
-      (definition.poolType === 'WEIGHTED' && definition.factory === this.weightedPoolV2Factory)
+      (definition.poolType === 'PHANTOM_STABLE' && this.composablePoolFactories.includes(definition.factory)) ||
+      (definition.poolType === 'WEIGHTED' && this.weightedPoolV2Factories.includes(definition.factory))
     ) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
       return multicall.wrap(phantomPoolContract).getActualSupply();

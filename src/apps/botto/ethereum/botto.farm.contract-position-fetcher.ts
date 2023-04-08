@@ -6,6 +6,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
@@ -44,6 +45,17 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     ]);
 
     return totalRewards.div(endTime.sub(startTime));
+  }
+
+  async getIsActive({
+    contract,
+  }: GetDataPropsParams<
+    BottoLiquidityMining,
+    SingleStakingFarmDataProps,
+    SingleStakingFarmDefinition
+  >): Promise<boolean> {
+    const endTime = await contract.endTime();
+    return endTime.gt(Date.now() / 1000);
   }
 
   async getStakedTokenBalance({

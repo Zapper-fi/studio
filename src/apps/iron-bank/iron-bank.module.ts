@@ -18,18 +18,20 @@ import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.
 
 @Module({
   providers: [
+    IronBankContractFactory,
+    // Avalanche
     AvalancheIronBankBorrowContractPositionFetcher,
     AvalancheIronBankPositionPresenter,
     AvalancheIronBankSupplyTokenFetcher,
+    // Ethereum
     EthereumIronBankBorrowContractPositionFetcher,
     EthereumIronBankPositionPresenter,
     EthereumIronBankSupplyTokenFetcher,
+    // Fantom
     FantomIronBankBorrowContractPositionFetcher,
     FantomIronBankPositionPresenter,
     FantomIronBankSupplyTokenFetcher,
-
-    IronBankContractFactory,
-    IronBankContractFactory,
+    // Optimism
     OptimismIronBankBorrowContractPositionFetcher,
     OptimismIronBankPositionPresenter,
     OptimismIronBankSupplyTokenFetcher,
