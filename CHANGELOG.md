@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.438.2](https://github.com/Zapper-fi/studio/compare/v0.438.1...v0.438.2) (2023-04-08)
+
+
+### Bug Fixes
+
+* **reserve-protocol:** Linting ([#2549](https://github.com/Zapper-fi/studio/issues/2549)) ([88ccdc2](https://github.com/Zapper-fi/studio/commit/88ccdc2a8c141e8a2b972262f2a15b08b71d3653))
+
 ## [0.438.1](https://github.com/Zapper-fi/studio/compare/v0.438.0...v0.438.1) (2023-04-07)
 
 
