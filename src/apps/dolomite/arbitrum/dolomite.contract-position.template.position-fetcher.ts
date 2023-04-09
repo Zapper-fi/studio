@@ -19,8 +19,6 @@ import {
   SILO_MODE_MATCHERS,
   SPECIAL_TOKEN_NAME_MATCHERS,
   TokenMode,
-} from '~apps/dolomite/utils';
-import {
   AccountStruct,
   DolomiteContractPosition,
   DolomiteDataProps,
@@ -31,7 +29,6 @@ import {
 } from '~apps/dolomite/utils';
 import { Erc20__factory } from '~contract/contracts/ethers';
 import { IMulticallWrapper } from '~multicall';
-import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import {
@@ -39,7 +36,8 @@ import {
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
-  GetTokenDefinitionsParams, UnderlyingTokenDefinition,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
@@ -91,7 +89,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     for (let i = 0; i < tokenNameCallChunks.length; i++) {
       const { returnData } = await params.multicall.contract.callStatic.aggregate(tokenNameCallChunks[i], false);
       returnData.forEach(({ data }) => {
-        const result = ethers.utils.defaultAbiCoder.decode(['string'], data)
+        const result = ethers.utils.defaultAbiCoder.decode(['string'], data);
         tokenNames.push(result[0] as string);
       });
     }
@@ -105,8 +103,8 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
         modes[i] = ISOLATION_MODE_MATCHERS.find(matcher => tokenName.includes(matcher))
           ? TokenMode.ISOLATION
           : SILO_MODE_MATCHERS.find(matcher => tokenName.includes(matcher))
-            ? TokenMode.SILO
-            : TokenMode.NORMAL;
+          ? TokenMode.SILO
+          : TokenMode.NORMAL;
         const isolationModeTokenContract = this.dolomiteContractFactory.isolationModeToken({
           address: underlyingTokenAddresses[i],
           network: this.network,
@@ -122,22 +120,27 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       }
     }
 
-    const marketIdToMarketMap = wrappedTokenAddresses.reduce<Record<number, ExtraTokenInfo>>((memo, wrappedTokenAddress, i) => {
-      memo[i] = {
-        underlyingTokenAddress: underlyingTokenAddresses[i],
+    const marketIdToMarketMap = wrappedTokenAddresses.reduce<Record<number, ExtraTokenInfo>>(
+      (memo, wrappedTokenAddress, i) => {
+        memo[i] = {
+          underlyingTokenAddress: underlyingTokenAddresses[i],
           wrappedTokenAddress,
           mode: modes[i],
           name: tokenNames[i],
           marketId: i,
-      };
-      return memo;
-    }, {})
+        };
+        return memo;
+      },
+      {},
+    );
 
-    return [{
-      address: dolomiteMargin.address,
-      marketsCount: marketsCount,
-      marketIdToMarketMap: marketIdToMarketMap,
-    }];
+    return [
+      {
+        address: dolomiteMargin.address,
+        marketsCount: marketsCount,
+        marketIdToMarketMap: marketIdToMarketMap,
+      },
+    ];
   }
 
   async getTokenDefinitions(
@@ -150,12 +153,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps, DolomiteContractPositionDefinition>,
   ): Promise<DolomiteDataProps> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    return mapTokensToDolomiteDataProps(
-      params,
-      this.isFetchingDolomiteBalances(),
-      this.network,
-      multicall,
-    );
+    return mapTokensToDolomiteDataProps(params, this.isFetchingDolomiteBalances(), this.network, multicall);
   }
 
   async getLabel(params: GetDisplayPropsParams<DolomiteMargin>): Promise<string> {
@@ -253,16 +251,16 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
         multicall,
       );
       const query = gql`
-          query getMarginAccounts($walletAddress: String!) {
-              marginAccounts(
-                  where: { user_contains_nocase: $walletAddress, accountNumber_gt: "100", hasSupplyValue: true }
-              ) {
-                  user {
-                      id
-                  }
-                  accountNumber
-              }
+        query getMarginAccounts($walletAddress: String!) {
+          marginAccounts(
+            where: { user_contains_nocase: $walletAddress, accountNumber_gt: "100", hasSupplyValue: true }
+          ) {
+            user {
+              id
+            }
+            accountNumber
           }
+        }
       `;
       const accountStructs: AccountStruct[] = [];
       const allAccounts = [account, ...isolationModeVaults];
