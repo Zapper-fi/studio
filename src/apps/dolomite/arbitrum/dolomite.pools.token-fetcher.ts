@@ -8,13 +8,13 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DOLOMITE_AMM_FACTORY_ADDRESSES } from '~apps/dolomite/utils';
 import {
   UniswapV2PoolOnChainTemplateTokenFetcher,
   UniswapV2TokenDataProps,
 } from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
+import { DOLOMITE_AMM_FACTORY_ADDRESSES } from '../common/utils';
 import { DolomiteAmmFactory, DolomiteAmmPair, DolomiteContractFactory } from '../contracts';
 
 @PositionTemplate()
