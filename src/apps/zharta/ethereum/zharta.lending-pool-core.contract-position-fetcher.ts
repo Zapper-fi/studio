@@ -24,7 +24,7 @@ interface ZhartaLendingPoolCoreContractPositionDefinition extends DefaultContrac
 }
 
 @PositionTemplate()
-export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
+export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ZhartaLendingPoolCore> {
   groupLabel = 'Deposits';
   contracts = ['0xE3c959Bc97b92973d5367DBF4cE1b7b9660Ee271'];
 
@@ -35,16 +35,15 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
     super(appToolkit);
   }
 
-  getContract(_address: string): Contract {
+  getContract(_address: string): ZhartaLendingPoolCore {
     return this.contractFactory.zhartaLendingPoolCore({ address: _address, network: this.network });
   }
 
-  async getDefinitions() {
-    const regularLendingPoolCoreDefinitions: ZhartaLendingPoolCoreContractPositionDefinition[] = this.contracts.map(address => ({
+  async getDefinitions(): Promise<ZhartaLendingPoolCoreContractPositionDefinition[]> {
+    return this.contracts.map(address => ({
       address,
       type: 'LENDING_POOL_CORE',
     }));
-    return [...regularLendingPoolCoreDefinitions];
   }
 
   async getTokenDefinitions(
