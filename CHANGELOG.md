@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.439.0](https://github.com/Zapper-fi/studio/compare/v0.438.3...v0.439.0) (2023-04-11)
+
+
+### Features
+
+* **redacted-cartel:** add weth rewards ([#2555](https://github.com/Zapper-fi/studio/issues/2555)) ([21b3051](https://github.com/Zapper-fi/studio/commit/21b30519bd5f89a6c9f7c172faf3f16c3f2eb265))
+* **zharta:** deposits ([#2490](https://github.com/Zapper-fi/studio/issues/2490)) ([5df09a1](https://github.com/Zapper-fi/studio/commit/5df09a16f01e5e3f90d9e5e37e72d6f9f9a6c1d5))
+
 ## [0.438.3](https://github.com/Zapper-fi/studio/compare/v0.438.2...v0.438.3) (2023-04-10)
 
 
