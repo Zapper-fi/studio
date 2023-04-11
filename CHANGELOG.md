@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.439.1](https://github.com/Zapper-fi/studio/compare/v0.439.0...v0.439.1) (2023-04-11)
+
+
+### Bug Fixes
+
+* **studio:** Mass revamp of KyberSwap Classic ([#2557](https://github.com/Zapper-fi/studio/issues/2557)) ([929b5ec](https://github.com/Zapper-fi/studio/commit/929b5ec87954c8757248e9b4f010da594f94dba1))
+
 ## [0.439.0](https://github.com/Zapper-fi/studio/compare/v0.438.3...v0.439.0) (2023-04-11)
 
 
