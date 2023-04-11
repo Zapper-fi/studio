@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.438.3](https://github.com/Zapper-fi/studio/compare/v0.438.2...v0.438.3) (2023-04-10)
+
+
+### Bug Fixes
+
+* **dolomite:** Linting and Cleanup ([#2551](https://github.com/Zapper-fi/studio/issues/2551)) ([fc2fda8](https://github.com/Zapper-fi/studio/commit/fc2fda85ad0b04b37cf381667716939854979d36))
+* **lyra-avalon:** Fix Lyra Avalon collateral decimals ([#2552](https://github.com/Zapper-fi/studio/issues/2552)) ([142895f](https://github.com/Zapper-fi/studio/commit/142895f180ba9f9a4d77bc6b949556e75d04c063))
+
 ## [0.438.2](https://github.com/Zapper-fi/studio/compare/v0.438.1...v0.438.2) (2023-04-08)
 
 
