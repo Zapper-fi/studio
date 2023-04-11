@@ -20,7 +20,7 @@ import { FantomKyberSwapClassicKsPoolTokenFetcher } from './fantom/kyberswap-cla
 import { OptimismKyberSwapClassicFarmContractPositionFetcher } from './optimism/kyberswap-classic.farm-v2.contract-position-fetcher';
 import { OptimismKyberSwapClassicKsPoolTokenFetcher } from './optimism/kyberswap-classic.ks-pool.token-fetcher';
 import { PolygonKyberSwapDmmClassicPoolTokenFetcher } from './polygon/kyberswap-classic.dmm-pool.token-fetcher';
-import { PolygonKyberSwapClassicFarmV2ContractPositionFetcher } from './polygon/kyberswap-classic.farm-v2.contract-position-fetched';
+import { PolygonKyberSwapClassicFarmV2ContractPositionFetcher } from './polygon/kyberswap-classic.farm-v2.contract-position-fetcher';
 import { PolygonKyberSwapClassicFarmContractPositionFetcher } from './polygon/kyberswap-classic.farm.contract-position-fetcher';
 import { PolygonKyberSwapKsClassicPoolTokenFetcher } from './polygon/kyberswap-classic.ks-pool.token-fetcher';
 import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './polygon/kyberswap-classic.legacy-farm.contract-position-fetcher';
