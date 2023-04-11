@@ -93,6 +93,10 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
     const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex, multicall).catch(
       err => {
+        console.log('err', err.message);
+        console.log('contract address', contract.address);
+        console.log('poolIndex', definition.poolIndex);
+
         if (isMulticallUnderlyingError(err)) return null;
         throw err;
       },
