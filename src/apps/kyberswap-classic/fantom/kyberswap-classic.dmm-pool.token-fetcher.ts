@@ -3,7 +3,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { KyberSwapClassicPoolTokenFetcher } from '../common/kyberswap-classic.pool.token-fetcher';
 
 @PositionTemplate()
-export class OptimismKyberSwapClassicPoolTokenFetcher extends KyberSwapClassicPoolTokenFetcher {
-  groupLabel = 'Pools';
-  factoryAddress = '0x1c758af0688502e49140230f6b0ebd376d429be5';
+export class FantomKyberSwapClassicDmmPoolTokenFetcher extends KyberSwapClassicPoolTokenFetcher {
+  groupLabel = 'DMM Pools';
+  factoryAddress = '0x78df70615ffc8066cc0887917f2cd72092c86409';
 }

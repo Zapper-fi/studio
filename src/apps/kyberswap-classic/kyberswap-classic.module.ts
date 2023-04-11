@@ -3,17 +3,24 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
-import { ArbitrumKyberSwapClassicPoolTokenFetcher } from './arbitrum/kyberswap-classic.pool.token-fetcher';
-import { AvalancheKyberSwapClassicFarmContractPositionFetcher } from './avalanche/kyberswap-classic.farm.contract-position-fetcher';
-import { AvalancheKyberSwapClassicPoolTokenFetcher } from './avalanche/kyberswap-classic.pool.token-fetcher';
-import { BinanceSmartChainKyberSwapClassicFarmContractPositionFetcher } from './binance-smart-chain/kyberswap-classic.farm.contract-position-fetcher';
-import { BinanceSmartChainKyberSwapClassicPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.pool.token-fetcher';
+import { ArbitrumKyberSwapClassicFarmContractPositionFetcher } from './arbitrum/kyberswap-classic.farm-v2.contract-position-fetcher';
+import { ArbitrumKyberSwapClassicKsPoolTokenFetcher } from './arbitrum/kyberswap-classic.ks-pool.token-fetcher';
+import { AvalancheKyberSwapDmmClassicDmmPoolTokenFetcher } from './avalanche/kyberswap-classic.dmm-pool.token-fetcher';
+import { AvalancheKyberSwapClassicFarmContractPositionFetcher } from './avalanche/kyberswap-classic.farm-v2.contract-position-fetcher';
+import { AvalancheKyberSwapKsClassicKsPoolTokenFetcher } from './avalanche/kyberswap-classic.ks-pool.token-fetcher';
+import { BinanceSmartChainKyberSwapClassicDmmPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.dmm-pool.token-fetcher';
+import { BinanceSmartChainKyberSwapClassicFarmV2ContractPositionFetcher } from './binance-smart-chain/kyberswap-classic.farm-v2.contract-position-fetcher';
+import { BinanceSmartChainKyberSwapClassicKsPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.ks-pool.token-fetcher';
 import { KyberswapClassicContractFactory } from './contracts';
+import { EthereumKyberSwapClassicDmmPoolTokenFetcher } from './ethereum/kyberswap-classic.dmm-pool.token-fetcher';
 import { EthereumKyberSwapClassicFarmContractPositionFetcher } from './ethereum/kyberswap-classic.farm.contract-position-fetcher';
-import { EthereumKyberSwapClassicPoolTokenFetcher } from './ethereum/kyberswap-classic.pool.token-fetcher';
-import { FantomKyberSwapClassicPoolTokenFetcher } from './fantom/kyberswap-classic.pool.token-fetcher';
-import { OptimismKyberSwapClassicPoolTokenFetcher } from './optimism/kyberswap-classic.pool.token-fetcher';
+import { EthereumKyberSwapClassicKsPoolTokenFetcher } from './ethereum/kyberswap-classic.ks-pool.token-fetcher';
+import { FantomKyberSwapClassicDmmPoolTokenFetcher } from './fantom/kyberswap-classic.dmm-pool.token-fetcher';
+import { FantomKyberSwapClassicKsPoolTokenFetcher } from './fantom/kyberswap-classic.ks-pool.token-fetcher';
+import { OptimismKyberSwapClassicFarmContractPositionFetcher } from './optimism/kyberswap-classic.farm-v2.contract-position-fetcher';
+import { OptimismKyberSwapClassicKsPoolTokenFetcher } from './optimism/kyberswap-classic.ks-pool.token-fetcher';
 import { PolygonKyberSwapDmmClassicPoolTokenFetcher } from './polygon/kyberswap-classic.dmm-pool.token-fetcher';
+import { PolygonKyberSwapClassicFarmV2ContractPositionFetcher } from './polygon/kyberswap-classic.farm-v2.contract-position-fetcher';
 import { PolygonKyberSwapClassicFarmContractPositionFetcher } from './polygon/kyberswap-classic.farm.contract-position-fetcher';
 import { PolygonKyberSwapKsClassicPoolTokenFetcher } from './polygon/kyberswap-classic.ks-pool.token-fetcher';
 import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './polygon/kyberswap-classic.legacy-farm.contract-position-fetcher';
@@ -22,19 +29,26 @@ import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './poly
   providers: [
     KyberswapClassicContractFactory,
     UniswapV2ContractFactory,
-    EthereumKyberSwapClassicPoolTokenFetcher,
+    EthereumKyberSwapClassicKsPoolTokenFetcher,
+    EthereumKyberSwapClassicDmmPoolTokenFetcher,
     EthereumKyberSwapClassicFarmContractPositionFetcher,
     PolygonKyberSwapDmmClassicPoolTokenFetcher,
     PolygonKyberSwapKsClassicPoolTokenFetcher,
     PolygonKyberSwapClassicFarmContractPositionFetcher,
     PolygonKyberSwapClassicLegacyFarmContractPositionFetcher,
-    AvalancheKyberSwapClassicPoolTokenFetcher,
+    PolygonKyberSwapClassicFarmV2ContractPositionFetcher,
+    AvalancheKyberSwapKsClassicKsPoolTokenFetcher,
+    AvalancheKyberSwapDmmClassicDmmPoolTokenFetcher,
     AvalancheKyberSwapClassicFarmContractPositionFetcher,
-    FantomKyberSwapClassicPoolTokenFetcher,
-    ArbitrumKyberSwapClassicPoolTokenFetcher,
-    BinanceSmartChainKyberSwapClassicFarmContractPositionFetcher,
-    BinanceSmartChainKyberSwapClassicPoolTokenFetcher,
-    OptimismKyberSwapClassicPoolTokenFetcher,
+    FantomKyberSwapClassicKsPoolTokenFetcher,
+    FantomKyberSwapClassicDmmPoolTokenFetcher,
+    ArbitrumKyberSwapClassicKsPoolTokenFetcher,
+    ArbitrumKyberSwapClassicFarmContractPositionFetcher,
+    BinanceSmartChainKyberSwapClassicFarmV2ContractPositionFetcher,
+    BinanceSmartChainKyberSwapClassicKsPoolTokenFetcher,
+    BinanceSmartChainKyberSwapClassicDmmPoolTokenFetcher,
+    OptimismKyberSwapClassicKsPoolTokenFetcher,
+    OptimismKyberSwapClassicFarmContractPositionFetcher,
   ],
 })
 export class KyberSwapClassicAppModule extends AbstractApp() {}
