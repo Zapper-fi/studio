@@ -4,6 +4,6 @@ import { KyberSwapClassicPoolTokenFetcher } from '../common/kyberswap-classic.po
 
 @PositionTemplate()
 export class AvalancheKyberSwapDmmClassicDmmPoolTokenFetcher extends KyberSwapClassicPoolTokenFetcher {
-  groupLabel = 'Pools';
+  groupLabel = 'DMM Pools';
   factoryAddress = '0x10908c875d865c66f271f5d3949848971c9595c9';
 }

@@ -4,6 +4,6 @@ import { KyberSwapClassicPoolTokenFetcher } from '../common/kyberswap-classic.po
 
 @PositionTemplate()
 export class ArbitrumKyberSwapClassicKsPoolTokenFetcher extends KyberSwapClassicPoolTokenFetcher {
-  groupLabel = 'Pools';
+  groupLabel = 'Static Fee Pools';
   factoryAddress = '0x1c758af0688502e49140230f6b0ebd376d429be5';
 }

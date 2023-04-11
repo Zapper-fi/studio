@@ -4,6 +4,6 @@ import { KyberSwapClassicPoolTokenFetcher } from '../common/kyberswap-classic.po
 
 @PositionTemplate()
 export class EthereumKyberSwapClassicDmmPoolTokenFetcher extends KyberSwapClassicPoolTokenFetcher {
-  groupLabel = 'Pools';
+  groupLabel = 'DMM Pools';
   factoryAddress = '0x833e4083b7ae46cea85695c4f7ed25cdad8886de';
 }
