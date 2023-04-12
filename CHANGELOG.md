@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.440.0](https://github.com/Zapper-fi/studio/compare/v0.439.1...v0.440.0) (2023-04-12)
+
+
+### Features
+
+* **verse:** Adding Verse DEX to Zapper ([#2559](https://github.com/Zapper-fi/studio/issues/2559)) ([1840af2](https://github.com/Zapper-fi/studio/commit/1840af219b033f6ab4ce59eadaf1d97784525702))
+
 ## [0.439.1](https://github.com/Zapper-fi/studio/compare/v0.439.0...v0.439.1) (2023-04-11)
 
 
