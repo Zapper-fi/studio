@@ -4,13 +4,15 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { LyraLiquidityPool__factory } from './ethers';
-import { LyraLiquidityToken__factory } from './ethers';
-import { LyraLpStaking__factory } from './ethers';
-import { LyraOptionMarket__factory } from './ethers';
-import { LyraOptionToken__factory } from './ethers';
-import { LyraRegistry__factory } from './ethers';
-import { LyraStkLyra__factory } from './ethers';
+import {
+  LyraLiquidityPool__factory,
+  LyraLiquidityToken__factory,
+  LyraLpStaking__factory,
+  LyraOptionMarket__factory,
+  LyraOptionToken__factory,
+  LyraRegistry__factory,
+  LyraStkLyra__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

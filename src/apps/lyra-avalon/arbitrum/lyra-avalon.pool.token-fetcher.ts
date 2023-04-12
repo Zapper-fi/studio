@@ -12,7 +12,7 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { LyraNewportContractFactory, LyraLiquidityToken } from '../contracts';
+import { LyraAvalonContractFactory, LyraLiquidityToken } from '../contracts';
 
 // TODO: find better way to determine available markets
 type QueryResponse = {
@@ -39,12 +39,12 @@ const QUERY = gql`
 `;
 
 @PositionTemplate()
-export class ArbitrumLyraNewportPoolTokenFetcher extends AppTokenTemplatePositionFetcher<LyraLiquidityToken> {
+export class ArbitrumLyraAvalonPoolTokenFetcher extends AppTokenTemplatePositionFetcher<LyraLiquidityToken> {
   groupLabel = 'Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LyraNewportContractFactory) protected readonly contractFactory: LyraNewportContractFactory,
+    @Inject(LyraAvalonContractFactory) protected readonly contractFactory: LyraAvalonContractFactory,
   ) {
     super(appToolkit);
   }

@@ -15,6 +15,28 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'bytes32',
+        name: 'contractName',
+        type: 'bytes32',
+      },
+    ],
+    name: 'NonExistentGlobalContract',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'optionMarket',
+        type: 'address',
+      },
+    ],
+    name: 'NonExistentMarket',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'thrower',
         type: 'address',
@@ -52,6 +74,22 @@ const _abi = [
       },
     ],
     name: 'OnlyOwner',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'thrower',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'market',
+        type: 'address',
+      },
+    ],
+    name: 'RemovingInvalidMarket',
     type: 'error',
   },
   {
@@ -103,8 +141,8 @@ const _abi = [
             type: 'address',
           },
           {
-            internalType: 'contract LiquidityTokens',
-            name: 'liquidityTokens',
+            internalType: 'contract LiquidityToken',
+            name: 'liquidityToken',
             type: 'address',
           },
           {
@@ -135,6 +173,11 @@ const _abi = [
           {
             internalType: 'contract ShortCollateral',
             name: 'shortCollateral',
+            type: 'address',
+          },
+          {
+            internalType: 'contract GWAVOracle',
+            name: 'gwavOracle',
             type: 'address',
           },
           {
@@ -206,8 +249,8 @@ const _abi = [
             type: 'address',
           },
           {
-            internalType: 'contract LiquidityTokens',
-            name: 'liquidityTokens',
+            internalType: 'contract LiquidityToken',
+            name: 'liquidityToken',
             type: 'address',
           },
           {
@@ -241,6 +284,11 @@ const _abi = [
             type: 'address',
           },
           {
+            internalType: 'contract GWAVOracle',
+            name: 'gwavOracle',
+            type: 'address',
+          },
+          {
             internalType: 'contract IERC20',
             name: 'quoteAsset',
             type: 'address',
@@ -259,6 +307,101 @@ const _abi = [
     name: 'addMarket',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'contractName',
+        type: 'bytes32',
+      },
+    ],
+    name: 'getGlobalAddress',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'globalContract',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract OptionMarket',
+        name: 'optionMarket',
+        type: 'address',
+      },
+    ],
+    name: 'getMarketAddresses',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'contract LiquidityPool',
+            name: 'liquidityPool',
+            type: 'address',
+          },
+          {
+            internalType: 'contract LiquidityToken',
+            name: 'liquidityToken',
+            type: 'address',
+          },
+          {
+            internalType: 'contract OptionGreekCache',
+            name: 'greekCache',
+            type: 'address',
+          },
+          {
+            internalType: 'contract OptionMarket',
+            name: 'optionMarket',
+            type: 'address',
+          },
+          {
+            internalType: 'contract OptionMarketPricer',
+            name: 'optionMarketPricer',
+            type: 'address',
+          },
+          {
+            internalType: 'contract OptionToken',
+            name: 'optionToken',
+            type: 'address',
+          },
+          {
+            internalType: 'contract PoolHedger',
+            name: 'poolHedger',
+            type: 'address',
+          },
+          {
+            internalType: 'contract ShortCollateral',
+            name: 'shortCollateral',
+            type: 'address',
+          },
+          {
+            internalType: 'contract GWAVOracle',
+            name: 'gwavOracle',
+            type: 'address',
+          },
+          {
+            internalType: 'contract IERC20',
+            name: 'quoteAsset',
+            type: 'address',
+          },
+          {
+            internalType: 'contract IERC20',
+            name: 'baseAsset',
+            type: 'address',
+          },
+        ],
+        internalType: 'struct LyraRegistry.OptionMarketAddresses',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -296,8 +439,8 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract LiquidityTokens',
-        name: 'liquidityTokens',
+        internalType: 'contract LiquidityToken',
+        name: 'liquidityToken',
         type: 'address',
       },
       {
@@ -328,6 +471,11 @@ const _abi = [
       {
         internalType: 'contract ShortCollateral',
         name: 'shortCollateral',
+        type: 'address',
+      },
+      {
+        internalType: 'contract GWAVOracle',
+        name: 'gwavOracle',
         type: 'address',
       },
       {

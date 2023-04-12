@@ -20,13 +20,14 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 export declare namespace LyraRegistry {
   export type OptionMarketAddressesStruct = {
     liquidityPool: PromiseOrValue<string>;
-    liquidityTokens: PromiseOrValue<string>;
+    liquidityToken: PromiseOrValue<string>;
     greekCache: PromiseOrValue<string>;
     optionMarket: PromiseOrValue<string>;
     optionMarketPricer: PromiseOrValue<string>;
     optionToken: PromiseOrValue<string>;
     poolHedger: PromiseOrValue<string>;
     shortCollateral: PromiseOrValue<string>;
+    gwavOracle: PromiseOrValue<string>;
     quoteAsset: PromiseOrValue<string>;
     baseAsset: PromiseOrValue<string>;
   };
@@ -42,15 +43,17 @@ export declare namespace LyraRegistry {
     string,
     string,
     string,
+    string,
   ] & {
     liquidityPool: string;
-    liquidityTokens: string;
+    liquidityToken: string;
     greekCache: string;
     optionMarket: string;
     optionMarketPricer: string;
     optionToken: string;
     poolHedger: string;
     shortCollateral: string;
+    gwavOracle: string;
     quoteAsset: string;
     baseAsset: string;
   };
@@ -59,7 +62,9 @@ export declare namespace LyraRegistry {
 export interface LyraRegistryInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
-    'addMarket((address,address,address,address,address,address,address,address,address,address))': FunctionFragment;
+    'addMarket((address,address,address,address,address,address,address,address,address,address,address))': FunctionFragment;
+    'getGlobalAddress(bytes32)': FunctionFragment;
+    'getMarketAddresses(address)': FunctionFragment;
     'globalAddresses(bytes32)': FunctionFragment;
     'marketAddresses(address)': FunctionFragment;
     'nominateNewOwner(address)': FunctionFragment;
@@ -74,6 +79,8 @@ export interface LyraRegistryInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'acceptOwnership'
       | 'addMarket'
+      | 'getGlobalAddress'
+      | 'getMarketAddresses'
       | 'globalAddresses'
       | 'marketAddresses'
       | 'nominateNewOwner'
@@ -86,6 +93,8 @@ export interface LyraRegistryInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'addMarket', values: [LyraRegistry.OptionMarketAddressesStruct]): string;
+  encodeFunctionData(functionFragment: 'getGlobalAddress', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'getMarketAddresses', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'globalAddresses', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'marketAddresses', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
@@ -100,6 +109,8 @@ export interface LyraRegistryInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getGlobalAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getMarketAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'globalAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'marketAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nominateNewOwner', data: BytesLike): Result;
@@ -195,21 +206,32 @@ export interface LyraRegistry extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    getGlobalAddress(
+      contractName: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { globalContract: string }>;
+
+    getMarketAddresses(
+      optionMarket: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[LyraRegistry.OptionMarketAddressesStructOutput]>;
+
     globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     marketAddresses(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [string, string, string, string, string, string, string, string, string, string] & {
+      [string, string, string, string, string, string, string, string, string, string, string] & {
         liquidityPool: string;
-        liquidityTokens: string;
+        liquidityToken: string;
         greekCache: string;
         optionMarket: string;
         optionMarketPricer: string;
         optionToken: string;
         poolHedger: string;
         shortCollateral: string;
+        gwavOracle: string;
         quoteAsset: string;
         baseAsset: string;
       }
@@ -245,21 +267,29 @@ export interface LyraRegistry extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  getGlobalAddress(contractName: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+  getMarketAddresses(
+    optionMarket: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<LyraRegistry.OptionMarketAddressesStructOutput>;
+
   globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   marketAddresses(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
-    [string, string, string, string, string, string, string, string, string, string] & {
+    [string, string, string, string, string, string, string, string, string, string, string] & {
       liquidityPool: string;
-      liquidityTokens: string;
+      liquidityToken: string;
       greekCache: string;
       optionMarket: string;
       optionMarketPricer: string;
       optionToken: string;
       poolHedger: string;
       shortCollateral: string;
+      gwavOracle: string;
       quoteAsset: string;
       baseAsset: string;
     }
@@ -292,21 +322,29 @@ export interface LyraRegistry extends BaseContract {
 
     addMarket(newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct, overrides?: CallOverrides): Promise<void>;
 
+    getGlobalAddress(contractName: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+    getMarketAddresses(
+      optionMarket: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<LyraRegistry.OptionMarketAddressesStructOutput>;
+
     globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     marketAddresses(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [string, string, string, string, string, string, string, string, string, string] & {
+      [string, string, string, string, string, string, string, string, string, string, string] & {
         liquidityPool: string;
-        liquidityTokens: string;
+        liquidityToken: string;
         greekCache: string;
         optionMarket: string;
         optionMarketPricer: string;
         optionToken: string;
         poolHedger: string;
         shortCollateral: string;
+        gwavOracle: string;
         quoteAsset: string;
         baseAsset: string;
       }
@@ -360,6 +398,10 @@ export interface LyraRegistry extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    getGlobalAddress(contractName: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getMarketAddresses(optionMarket: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     marketAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -394,6 +436,10 @@ export interface LyraRegistry extends BaseContract {
       newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    getGlobalAddress(contractName: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getMarketAddresses(optionMarket: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -128,12 +128,14 @@ export interface LyraLiquidityTokenInterface extends utils.Interface {
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
+    'LiquidityTrackerSet(address)': EventFragment;
     'OwnerChanged(address,address)': EventFragment;
     'OwnerNominated(address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LiquidityTrackerSet'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnerChanged'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnerNominated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
@@ -147,6 +149,13 @@ export interface ApprovalEventObject {
 export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface LiquidityTrackerSetEventObject {
+  liquidityTracker: string;
+}
+export type LiquidityTrackerSetEvent = TypedEvent<[string], LiquidityTrackerSetEventObject>;
+
+export type LiquidityTrackerSetEventFilter = TypedEventFilter<LiquidityTrackerSetEvent>;
 
 export interface OwnerChangedEventObject {
   oldOwner: string;
@@ -212,7 +221,7 @@ export interface LyraLiquidityToken extends BaseContract {
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burn(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
@@ -241,7 +250,7 @@ export interface LyraLiquidityToken extends BaseContract {
     liquidityTracker(overrides?: CallOverrides): Promise<[string]>;
 
     mint(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
@@ -297,7 +306,7 @@ export interface LyraLiquidityToken extends BaseContract {
   balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   burn(
-    owner: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     tokenAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
@@ -326,7 +335,7 @@ export interface LyraLiquidityToken extends BaseContract {
   liquidityTracker(overrides?: CallOverrides): Promise<string>;
 
   mint(
-    owner: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     tokenAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
@@ -382,7 +391,7 @@ export interface LyraLiquidityToken extends BaseContract {
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
@@ -408,7 +417,7 @@ export interface LyraLiquidityToken extends BaseContract {
     liquidityTracker(overrides?: CallOverrides): Promise<string>;
 
     mint(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
@@ -453,6 +462,9 @@ export interface LyraLiquidityToken extends BaseContract {
       value?: null,
     ): ApprovalEventFilter;
 
+    'LiquidityTrackerSet(address)'(liquidityTracker?: null): LiquidityTrackerSetEventFilter;
+    LiquidityTrackerSet(liquidityTracker?: null): LiquidityTrackerSetEventFilter;
+
     'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
 
@@ -489,7 +501,7 @@ export interface LyraLiquidityToken extends BaseContract {
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
@@ -518,7 +530,7 @@ export interface LyraLiquidityToken extends BaseContract {
     liquidityTracker(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
@@ -575,7 +587,7 @@ export interface LyraLiquidityToken extends BaseContract {
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
@@ -604,7 +616,7 @@ export interface LyraLiquidityToken extends BaseContract {
     liquidityTracker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      owner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
