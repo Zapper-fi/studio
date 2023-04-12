@@ -82,7 +82,7 @@ export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePosition
       marketsResponse.markets.map(market => multicall.wrap(registryContract).marketAddresses(market.id)),
     );
 
-    return markets.map(market => market.liquidityTokens);
+    return markets.map(market => market.liquidityToken);
   }
 
   async getUnderlyingTokenDefinitions() {
