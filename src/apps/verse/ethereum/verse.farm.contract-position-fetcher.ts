@@ -20,7 +20,7 @@ import { VerseContractFactory, VerseFarm } from '../contracts';
 
 @PositionTemplate()
 export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VerseFarm> {
-  groupLabel: string;
+  groupLabel = 'Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
