@@ -54,8 +54,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    const endTime = await contract.endTime();
-    return endTime.gt(Date.now() / 1000);
+    return (await contract.endTime()).gt(Math.floor(Date.now() / 1000));
   }
 
   async getStakedTokenBalance({

@@ -62,8 +62,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    const endTime = await contract.periodFinish();
-    return endTime.gt(Date.now() / 1000);
+    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
   }
 
   getStakedTokenBalance({
