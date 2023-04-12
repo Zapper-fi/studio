@@ -34,7 +34,7 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    return [
+    const definitions = [
       { address: '0xded0c22acd80e7a4bd6ec91ced451fc83f04cab2' },
       { address: '0xdd5a9eec299b74b2db2d3430608c1c5a8d9598eb' },
       { address: '0xc5af93687088c28da839371f3249df757b219aa8' },
@@ -44,6 +44,8 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
       { address: '0x17bdceec80d3506e384db09e5d5696edf70605ef' },
       { address: '0x8295e4b84335af685e596dbcd76bbbbadbf88b01' },
     ];
+
+    return definitions;
   }
 
   async getTokenDefinitions({
