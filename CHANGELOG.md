@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.441.0](https://github.com/Zapper-fi/studio/compare/v0.440.0...v0.441.0) (2023-04-12)
+
+
+### Features
+
+* spice finance ([#2556](https://github.com/Zapper-fi/studio/issues/2556)) ([c2f2002](https://github.com/Zapper-fi/studio/commit/c2f2002cd74070e69b91cc3825d989553ffb03b6))
+
+
+### Bug Fixes
+
+* **apps:** Fix getIsActive underflow errors ([#2562](https://github.com/Zapper-fi/studio/issues/2562)) ([ecbcbaa](https://github.com/Zapper-fi/studio/commit/ecbcbaaee5646cea3d0f20bb5c0e8b0b8ace7b18))
+
 ## [0.440.0](https://github.com/Zapper-fi/studio/compare/v0.439.1...v0.440.0) (2023-04-12)
 
 
