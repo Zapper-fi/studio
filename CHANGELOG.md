@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.441.1](https://github.com/Zapper-fi/studio/compare/v0.441.0...v0.441.1) (2023-04-12)
+
+
+### Bug Fixes
+
+* **lyra-newport:** Consolidate Lyra Newport positions into Lyra Avalon ([#2564](https://github.com/Zapper-fi/studio/issues/2564)) ([e48648e](https://github.com/Zapper-fi/studio/commit/e48648ea28bbfba3844f680652fae5b848ed12dc))
+
 ## [0.441.0](https://github.com/Zapper-fi/studio/compare/v0.440.0...v0.441.0) (2023-04-12)
 
 
