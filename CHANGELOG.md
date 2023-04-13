@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.442.1](https://github.com/Zapper-fi/studio/compare/v0.442.0...v0.442.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* **redacted-cartel:** Fix revenue lock WETH claimable balances ([#2567](https://github.com/Zapper-fi/studio/issues/2567)) ([05cec5b](https://github.com/Zapper-fi/studio/commit/05cec5b8015ed7dba67d97399818fe098ef8468f))
+
 ## [0.442.0](https://github.com/Zapper-fi/studio/compare/v0.441.1...v0.442.0) (2023-04-13)
 
 
