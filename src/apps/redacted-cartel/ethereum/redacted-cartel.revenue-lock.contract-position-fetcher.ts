@@ -62,6 +62,11 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
         address: ZERO_ADDRESS,
         network: this.network,
       },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', // WETH
+        network: this.network,
+      },
     ];
   }
 
@@ -78,7 +83,10 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
   }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
     const { total } = await contract.lockedBalances(address);
 
-    const [claimableBTRFLY, claimableETH] = await this.earningsResolver.getClaimableAmount(address, this.network);
-    return [total, claimableBTRFLY, claimableETH];
+    const [claimableBTRFLY, claimableETH, claimableWETH] = await this.earningsResolver.getClaimableAmount(
+      address,
+      this.network,
+    );
+    return [total, claimableBTRFLY, claimableETH, claimableWETH];
   }
 }
