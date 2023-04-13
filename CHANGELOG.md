@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.442.0](https://github.com/Zapper-fi/studio/compare/v0.441.1...v0.442.0) (2023-04-13)
+
+
+### Features
+
+* **zharta:** fixed position values ([#2563](https://github.com/Zapper-fi/studio/issues/2563)) ([20d0354](https://github.com/Zapper-fi/studio/commit/20d035405e2da15e8f4396f2edb451c485199d49))
+
 ## [0.441.1](https://github.com/Zapper-fi/studio/compare/v0.441.0...v0.441.1) (2023-04-12)
 
 
