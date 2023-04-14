@@ -20,15 +20,13 @@ import {
   GetPricePerShareParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { PancakeswapContractFactory } from '../contracts';
 
-export type PancakeswapPoolTokenDataProps = {
+export type PancakeswapPoolTokenDataProps = DefaultAppTokenDataProps & {
   swapAddress: string;
-  liquidity: number;
-  reserves: number[];
-  apy: number;
   fee: number;
 };
 

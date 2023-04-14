@@ -49,6 +49,10 @@ export class ArbitrumMuxFarmContractPositionFetcher extends SingleStakingFarmTem
     return [0, 0];
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getStakedTokenBalance() {
     return 0;
   }

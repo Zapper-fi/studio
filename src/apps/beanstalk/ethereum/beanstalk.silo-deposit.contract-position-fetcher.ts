@@ -95,24 +95,10 @@ export class EthereumBeanstalkSiloDepositContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition({
     address,
     contractPosition,
-    contract,
   }: GetTokenBalancesParams<Beanstalk, DefaultDataProps>): Promise<BigNumberish[]> {
-    const unripeAssets = await this.appToolkit.getAppTokenPositions({
-      appId: this.appId,
-      network: this.network,
-      groupIds: ['unripe-assets'],
-    });
-
-    const unripeTokenAddresses = unripeAssets.map(x => x.address);
     const tokenAddress = contractPosition.tokens[0].address;
     const balanceRaw = await this.beanstalkBalanceResolver.getSiloBalances(address, tokenAddress);
 
-    const rate = unripeTokenAddresses.includes(tokenAddress)
-      ? Number(await contract.getPercentPenalty(tokenAddress)) / 10 ** 6
-      : 1;
-
-    const balance = Math.floor(balanceRaw * rate);
-
-    return [balance];
+    return [balanceRaw];
   }
 }

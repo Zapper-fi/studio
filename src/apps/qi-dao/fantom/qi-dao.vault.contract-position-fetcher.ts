@@ -68,7 +68,7 @@ export class FantomQiDaoVaultPositionFetcher extends QiDaoVaultContractPositionF
       vaultInfoAddress: '0x8e5e4d08485673770ab372c05f95081be0636fa2',
     },
     {
-      address: '0xbf0ff8ac03f3e0dd7d8faa9b571eba999a854146', // mooScreamLINK Vault
+      address: '0xbf0ff8ac03f3e0dd7d8faa9b571eba999a854146', // mooScreamDAI Vault
       vaultInfoAddress: '0xbf0ff8ac03f3e0dd7d8faa9b571eba999a854146',
     },
     {

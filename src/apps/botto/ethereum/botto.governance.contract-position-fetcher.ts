@@ -47,4 +47,8 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
   async getRewardTokenBalances() {
     return [0];
   }
+
+  async getIsActive() {
+    return true;
+  }
 }

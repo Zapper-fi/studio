@@ -11,6 +11,7 @@ export type DefaultAppTokenDataProps = {
   liquidity: number;
   reserves: number[];
   apy: number;
+  isDebt: boolean;
 };
 
 export type UnderlyingTokenDefinition = {

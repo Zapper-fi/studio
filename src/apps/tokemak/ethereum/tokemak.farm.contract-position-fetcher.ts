@@ -43,6 +43,10 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
     return 0;
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<TokemakTokeStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }

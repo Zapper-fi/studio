@@ -7,6 +7,7 @@ export type { QiDaoMasterChef } from './QiDaoMasterChef';
 export type { QiDaoMasterChefV3 } from './QiDaoMasterChefV3';
 export type { QiDaoVaultInfo } from './QiDaoVaultInfo';
 export type { QiDaoVaultNft } from './QiDaoVaultNft';
+export type { QiDaoWrappedToken } from './QiDaoWrappedToken';
 export type { QiDaoYieldToken } from './QiDaoYieldToken';
 export * as factories from './factories';
 export { QiDaoAnchorVault__factory } from './factories/QiDaoAnchorVault__factory';
@@ -15,4 +16,5 @@ export { QiDaoMasterChefV3__factory } from './factories/QiDaoMasterChefV3__facto
 export { QiDaoMasterChef__factory } from './factories/QiDaoMasterChef__factory';
 export { QiDaoVaultInfo__factory } from './factories/QiDaoVaultInfo__factory';
 export { QiDaoVaultNft__factory } from './factories/QiDaoVaultNft__factory';
+export { QiDaoWrappedToken__factory } from './factories/QiDaoWrappedToken__factory';
 export { QiDaoYieldToken__factory } from './factories/QiDaoYieldToken__factory';

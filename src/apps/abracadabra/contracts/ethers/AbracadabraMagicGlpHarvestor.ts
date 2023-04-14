@@ -20,6 +20,7 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 export interface AbracadabraMagicGlpHarvestorInterface extends utils.Interface {
   functions: {
     'BIPS()': FunctionFragment;
+    'asset()': FunctionFragment;
     'claimOwnership()': FunctionFragment;
     'claimable()': FunctionFragment;
     'feeCollector()': FunctionFragment;
@@ -30,19 +31,21 @@ export interface AbracadabraMagicGlpHarvestorInterface extends utils.Interface {
     'owner()': FunctionFragment;
     'pendingOwner()': FunctionFragment;
     'rewardRouterV2()': FunctionFragment;
-    'run(uint256)': FunctionFragment;
+    'rewardToken()': FunctionFragment;
+    'run(uint256,uint256)': FunctionFragment;
     'setFeeParameters(address,uint16)': FunctionFragment;
     'setOperator(address,bool)': FunctionFragment;
     'setRewardRouterV2(address)': FunctionFragment;
     'totalRewardsBalanceAfterClaiming()': FunctionFragment;
     'transferOwnership(address,bool,bool)': FunctionFragment;
+    'useDistributeRewardsFeature()': FunctionFragment;
     'vault()': FunctionFragment;
-    'weth()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'BIPS'
+      | 'asset'
       | 'claimOwnership'
       | 'claimable'
       | 'feeCollector'
@@ -53,17 +56,19 @@ export interface AbracadabraMagicGlpHarvestorInterface extends utils.Interface {
       | 'owner'
       | 'pendingOwner'
       | 'rewardRouterV2'
+      | 'rewardToken'
       | 'run'
       | 'setFeeParameters'
       | 'setOperator'
       | 'setRewardRouterV2'
       | 'totalRewardsBalanceAfterClaiming'
       | 'transferOwnership'
-      | 'vault'
-      | 'weth',
+      | 'useDistributeRewardsFeature'
+      | 'vault',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'BIPS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claimable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeCollector', values?: undefined): string;
@@ -74,7 +79,11 @@ export interface AbracadabraMagicGlpHarvestorInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRouterV2', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'run', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'run',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'setFeeParameters',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
@@ -89,10 +98,11 @@ export interface AbracadabraMagicGlpHarvestorInterface extends utils.Interface {
     functionFragment: 'transferOwnership',
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
   ): string;
+  encodeFunctionData(functionFragment: 'useDistributeRewardsFeature', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'weth', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'BIPS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimable', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'feeCollector', data: BytesLike): Result;
@@ -103,14 +113,15 @@ export interface AbracadabraMagicGlpHarvestorInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardRouterV2', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'run', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setFeeParameters', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setOperator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setRewardRouterV2', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalRewardsBalanceAfterClaiming', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'useDistributeRewardsFeature', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'weth', data: BytesLike): Result;
 
   events: {
     'LogFeeParametersChanged(address,uint16)': EventFragment;
@@ -193,6 +204,8 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
   functions: {
     BIPS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    asset(overrides?: CallOverrides): Promise<[string]>;
+
     claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claimable(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -213,8 +226,11 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
 
     rewardRouterV2(overrides?: CallOverrides): Promise<[string]>;
 
+    rewardToken(overrides?: CallOverrides): Promise<[string]>;
+
     run(
       minGlp: PromiseOrValue<BigNumberish>,
+      rewardAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -244,12 +260,14 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    vault(overrides?: CallOverrides): Promise<[string]>;
+    useDistributeRewardsFeature(overrides?: CallOverrides): Promise<[boolean]>;
 
-    weth(overrides?: CallOverrides): Promise<[string]>;
+    vault(overrides?: CallOverrides): Promise<[string]>;
   };
 
   BIPS(overrides?: CallOverrides): Promise<BigNumber>;
+
+  asset(overrides?: CallOverrides): Promise<string>;
 
   claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -271,8 +289,11 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
 
   rewardRouterV2(overrides?: CallOverrides): Promise<string>;
 
+  rewardToken(overrides?: CallOverrides): Promise<string>;
+
   run(
     minGlp: PromiseOrValue<BigNumberish>,
+    rewardAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -302,12 +323,14 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  vault(overrides?: CallOverrides): Promise<string>;
+  useDistributeRewardsFeature(overrides?: CallOverrides): Promise<boolean>;
 
-  weth(overrides?: CallOverrides): Promise<string>;
+  vault(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     BIPS(overrides?: CallOverrides): Promise<BigNumber>;
+
+    asset(overrides?: CallOverrides): Promise<string>;
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -329,7 +352,13 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
 
     rewardRouterV2(overrides?: CallOverrides): Promise<string>;
 
-    run(minGlp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    rewardToken(overrides?: CallOverrides): Promise<string>;
+
+    run(
+      minGlp: PromiseOrValue<BigNumberish>,
+      rewardAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setFeeParameters(
       _feeCollector: PromiseOrValue<string>,
@@ -354,9 +383,9 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    vault(overrides?: CallOverrides): Promise<string>;
+    useDistributeRewardsFeature(overrides?: CallOverrides): Promise<boolean>;
 
-    weth(overrides?: CallOverrides): Promise<string>;
+    vault(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -397,6 +426,8 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
   estimateGas: {
     BIPS(overrides?: CallOverrides): Promise<BigNumber>;
 
+    asset(overrides?: CallOverrides): Promise<BigNumber>;
+
     claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claimable(overrides?: CallOverrides): Promise<BigNumber>;
@@ -417,8 +448,11 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
 
     rewardRouterV2(overrides?: CallOverrides): Promise<BigNumber>;
 
+    rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
+
     run(
       minGlp: PromiseOrValue<BigNumberish>,
+      rewardAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -448,13 +482,15 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    vault(overrides?: CallOverrides): Promise<BigNumber>;
+    useDistributeRewardsFeature(overrides?: CallOverrides): Promise<BigNumber>;
 
-    weth(overrides?: CallOverrides): Promise<BigNumber>;
+    vault(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     BIPS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
@@ -476,8 +512,11 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
 
     rewardRouterV2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     run(
       minGlp: PromiseOrValue<BigNumberish>,
+      rewardAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -507,8 +546,8 @@ export interface AbracadabraMagicGlpHarvestor extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    useDistributeRewardsFeature(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    weth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

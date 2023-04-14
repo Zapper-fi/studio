@@ -39,5 +39,9 @@ export class OptimismQiDaoVaultPositionFetcher extends QiDaoVaultContractPositio
       address: '0xa478e708a27853848c6bc979668fe6225fee46fa', // Beefy steCRV Vault
       vaultInfoAddress: '0xa478e708a27853848c6bc979668fe6225fee46fa',
     },
+    {
+      address: '0x7198ff382b5798dab7dc72a23c1fec9dc091893b', // Yearn ETH Vault
+      vaultInfoAddress: '0x7198ff382b5798dab7dc72a23c1fec9dc091893b',
+    },
   ];
 }

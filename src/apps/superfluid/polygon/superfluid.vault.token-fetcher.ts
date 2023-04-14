@@ -9,9 +9,9 @@ import { GetUnderlyingTokensParams } from '~position/template/app-token.template
 
 import { SuperfluidContractFactory, VaultToken } from '../contracts';
 
-const ALL_TOKENS_QUERY = gql`
+const ALL_SUPERTOKENS_QUERY = gql`
   {
-    tokens {
+    tokens(where: { isListed: true, isSuperToken: true }) {
       id
       symbol
       underlyingAddress
@@ -31,13 +31,6 @@ type TokensResponse = {
 export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePositionFetcher<VaultToken> {
   groupLabel = 'Vaults';
 
-  readonly brokenAddresses = [
-    '0x263026e7e53dbfdce5ae55ade22493f828922965',
-    '0x3cf4866cd82a527d1a81438a9b132fae7f04732e',
-    '0x73e454ad4526b2bd86c25fa4af756ab63865faef',
-    '0x9f688d6857ebdf924a724180a2f3a2a1c6b47f22',
-  ];
-
   constructor(
     @Inject(SuperfluidContractFactory) private readonly contractFactory: SuperfluidContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -50,13 +43,13 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getAddresses(): Promise<string[]> {
-    const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/superfluid-matic';
+    const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-matic';
     const tokenData = await gqlFetch<TokensResponse>({
       endpoint: subgraphUrl,
-      query: ALL_TOKENS_QUERY,
+      query: ALL_SUPERTOKENS_QUERY,
     });
 
-    return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
+    return tokenData.tokens?.map(v => v.id) ?? [];
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VaultToken>) {

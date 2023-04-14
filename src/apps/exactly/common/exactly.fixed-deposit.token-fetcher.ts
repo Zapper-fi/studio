@@ -1,6 +1,5 @@
 import { constants } from 'ethers';
 
-import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import type { IMulticallWrapper } from '~multicall/multicall.interface';
 import type { AppTokenPosition } from '~position/position.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
@@ -10,8 +9,7 @@ import { type ExactlyFixedMarketProps, ExactlyFixedPositionFetcher } from '../co
 import type { ExactlyMarketProps } from '../common/exactly.token-fetcher';
 import type { Market } from '../contracts';
 
-@PositionTemplate()
-export class ExactlyFixedDepositFetcher extends ExactlyFixedPositionFetcher {
+export abstract class ExactlyFixedDepositFetcher extends ExactlyFixedPositionFetcher {
   groupLabel = 'Fixed Deposit';
 
   getTotalAssets({ definition }: GetTokenPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {

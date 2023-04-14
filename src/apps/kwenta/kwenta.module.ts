@@ -7,6 +7,8 @@ import { SynthetixContractFactory } from '../synthetix/contracts';
 import { KwentaContractFactory } from './contracts';
 import { OptimismKwentaPerpV1CrossMarginContractPositionFetcher } from './optimism/kwenta.perp-v1-cross-margin.contract-position-fetcher';
 import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.staking.contract-position-fetcher';
+import { OptimismKwentaEscrowContractPositionFetcher } from './optimism/kwenta.escrow.contract-position-fetcher';
+
 
 @Module({
   providers: [
@@ -14,6 +16,7 @@ import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.
     SynthetixContractFactory,
     OptimismKwentaPerpV1CrossMarginContractPositionFetcher,
     OptimismKwentaStakingContractPositionFetcher,
+    OptimismKwentaEscrowContractPositionFetcher,
   ],
 })
 export class KwentaAppModule extends AbstractApp() { }

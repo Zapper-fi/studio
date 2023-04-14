@@ -1,18 +1,21 @@
 import { Inject, Injectable } from '@nestjs/common';
-import _, { compact } from 'lodash';
+import { BigNumberish } from 'ethers';
+import _, { compact, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
   GetDataPropsParams,
-  GetTokenBalancesParams,
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { GmxContractFactory, GmxVault } from '../contracts';
 
@@ -29,7 +32,7 @@ export type GmxOptionContractPositionDataProps = {
 };
 
 @Injectable()
-export abstract class GmxPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class GmxPerpContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   GmxVault,
   GmxOptionContractPositionDataProps,
   GmxOptionContractPositionDefinition
@@ -105,32 +108,78 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
     return [indexToken, collateralToken].flatMap(v => getImagesFromToken(v));
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contractPosition,
-    contract,
-  }: GetTokenBalancesParams<GmxVault, GmxOptionContractPositionDataProps>) {
-    const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
-    const isLong = contractPosition.dataProps.isLong;
+  async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
+    throw new Error('Method not implemented.');
+  }
 
-    const position = await contract.getPosition(address, collateralToken.address, indexToken.address, isLong);
-    // non existing position returns size and collateral = 0
-    if (Number(position[0]) == 0 && Number(position[1]) == 0) return [0, 0, 0];
+  async getBalances(address: string): Promise<ContractPositionBalance<GmxOptionContractPositionDataProps>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contractPositions = await this.appToolkit.getAppContractPositions<GmxOptionContractPositionDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
 
-    // const leverage = await contract.getPositionLeverage(address, collateralToken.address, indexToken.address, isLong);
-    const delta = await contract.getPositionDelta(address, collateralToken.address, indexToken.address, isLong);
+    if (address === ZERO_ADDRESS) return [];
 
-    const initialCollateralRaw = position[1];
-    const initialCollateral = Number(initialCollateralRaw) / 10 ** 30;
-    const deltaBalanceRaw = delta[1];
-    const deltaBalance = Number(deltaBalanceRaw) / 10 ** 30;
+    const balances = await Promise.all(
+      contractPositions.map(async contractPosition => {
+        const contract = multicall.wrap(this.getContract(contractPosition.address));
 
-    const hasProfit = delta[0];
-    const balanceUSD = hasProfit == true ? initialCollateral + deltaBalance : initialCollateral - deltaBalance;
+        const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
+        const isLong = contractPosition.dataProps.isLong;
 
-    const profitToken = isLong ? indexToken : usdcToken;
-    const balanceInProfitToken = balanceUSD / profitToken.price;
-    const balanceInProfitTokenRaw = balanceInProfitToken * 10 ** profitToken.decimals;
-    return isLong ? [0, balanceInProfitTokenRaw, 0] : [0, 0, balanceInProfitTokenRaw];
+        const position = await contract.getPosition(address, collateralToken.address, indexToken.address, isLong);
+        // non existing position returns size and collateral = 0
+        if (Number(position[0]) == 0 && Number(position[1]) == 0) return null;
+
+        const [leverageRaw, basisPointDivisor] = await Promise.all([
+          contract.getPositionLeverage(address, collateralToken.address, indexToken.address, isLong),
+          contract.BASIS_POINTS_DIVISOR(),
+        ]);
+        const leverage = (Number(leverageRaw) / Number(basisPointDivisor)).toFixed(2);
+        const size = Number(position[0]) / 10 ** 30;
+
+        const delta = await contract.getPositionDelta(address, collateralToken.address, indexToken.address, isLong);
+
+        const initialCollateralRaw = position[1];
+        const initialCollateral = Number(initialCollateralRaw) / 10 ** 30;
+        const deltaBalanceRaw = delta[1];
+        const deltaBalance = Number(deltaBalanceRaw) / 10 ** 30;
+
+        const hasProfit = delta[0];
+        const balanceUsdPosition =
+          hasProfit == true ? initialCollateral + deltaBalance : initialCollateral - deltaBalance;
+
+        const profitToken = isLong ? indexToken : usdcToken;
+        const balanceInProfitToken = balanceUsdPosition / profitToken.price;
+        const balanceInProfitTokenRaw = balanceInProfitToken * 10 ** profitToken.decimals;
+        const balancesRaw = isLong ? [0, balanceInProfitTokenRaw, 0] : [0, 0, balanceInProfitTokenRaw];
+
+        const dataProps = {
+          ...contractPosition.dataProps,
+          size,
+          leverage: Number(leverage),
+        };
+
+        contractPosition.dataProps = dataProps;
+
+        const allTokens = contractPosition.tokens.map((cp, idx) =>
+          drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
+        );
+
+        const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+
+        const balance: ContractPositionBalance<GmxOptionContractPositionDataProps> = {
+          ...contractPosition,
+          tokens,
+          balanceUSD,
+        };
+        return balance;
+      }),
+    );
+
+    return _.compact(balances);
   }
 }

@@ -9,6 +9,7 @@ import {
   GetAddressesParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
+  GetTokenPropsParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -84,6 +85,10 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
     definition,
   }: GetUnderlyingTokensParams<PoolTogetherV4Ticket, PoolTogetherV4TicketDefinition>) {
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
+  }
+
+  async getSymbol({ appToken }: GetTokenPropsParams<PoolTogetherV4Ticket>): Promise<string> {
+    return `pt${appToken.tokens[0].symbol}`;
   }
 
   async getPricePerShare() {

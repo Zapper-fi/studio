@@ -2,10 +2,14 @@ import { BigNumberish, Contract } from 'ethers';
 
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+  buildStringDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { DisplayProps } from '~position/display.interface';
+import { DisplayProps, StatsItem } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -22,6 +26,8 @@ export type CompoundBorrowTokenDataProps = {
   apy: number;
   liquidity: number;
   isActive: boolean;
+  exchangeRate: number;
+  symbol: string;
 };
 
 export type GetMarketsParams<S> = GetDefinitionsParams & {
@@ -117,7 +123,14 @@ export abstract class CompoundBorrowContractPositionFetcher<
   ): Promise<CompoundBorrowTokenDataProps> {
     const [underlyingToken] = params.contractPosition.tokens;
 
-    const [decimals, supplyRaw, pricePerShare, apy, cashRaw] = await Promise.all([
+    const multicall = params.multicall;
+    const erc20 = this.appToolkit.globalContracts.erc20({
+      address: params.contractPosition.address,
+      network: this.network,
+    });
+    const symbol = await multicall.wrap(erc20).symbol();
+
+    const [decimals, supplyRaw, pricePerShare, apy, cashRaw, exchangeRate] = await Promise.all([
       this.getCTokenDecimals(params),
       this.getCTokenSupply(params),
       this.getPricePerShare(params),
@@ -126,6 +139,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
         if (isMulticallUnderlyingError(e)) return 0;
         throw e;
       }),
+      this.getPricePerShare(params),
     ]);
 
     const supply = Number(supplyRaw) / 10 ** decimals;
@@ -144,8 +158,23 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return {
       liquidity: -borrowLiquidity,
       isActive: Boolean(borrowLiquidity > 0),
+      exchangeRate,
+      symbol,
       apy,
     };
+  }
+
+  async getStatsItems({
+    contractPosition,
+  }: GetDisplayPropsParams<R, CompoundBorrowTokenDataProps>): Promise<StatsItem[] | undefined> {
+    const { apy, liquidity, exchangeRate, symbol } = contractPosition.dataProps;
+    const exchangeRateFormatted = `${(1 / exchangeRate).toFixed(3)} ${symbol} = 1 ${contractPosition.tokens[0].symbol}`;
+
+    return [
+      { label: 'APY', value: buildPercentageDisplayItem(apy) },
+      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      { label: 'Exchange Rate', value: buildStringDisplayItem(exchangeRateFormatted) },
+    ];
   }
 
   async getTokenBalancesPerPosition(params: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>) {

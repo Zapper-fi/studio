@@ -2,7 +2,11 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
@@ -11,9 +15,17 @@ import {
 
 import { PlutusContractFactory, PlutusFarmPlsDpx } from '../contracts';
 
+export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
+  label: string;
+};
+
 @PositionTemplate()
-export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlsDpx> {
-  groupLabel = 'plsDPX Farm';
+export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<
+  PlutusFarmPlsDpx,
+  SingleStakingFarmDataProps,
+  PlutusFarmDefinition
+> {
+  groupLabel = 'Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -26,11 +38,12 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
     return this.contractFactory.plutusFarmPlsDpx({ address, network: this.network });
   }
 
-  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+  async getFarmDefinitions(): Promise<PlutusFarmDefinition[]> {
     return [
       {
         address: '0x20df4953ba19c74b2a46b6873803f28bf640c1b5',
         stakedTokenAddress: '0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1',
+        label: 'plsDPX',
         rewardTokenAddresses: [
           '0x51318b7d00db7acc4026c88c3952b66278b6a67f', // PLS
           '0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1', // plsDPX
@@ -51,6 +64,31 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
 
     const emissions = await rewardsDistroContract.getEmissions();
     return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.dpx_, emissions.rdpx_];
+  }
+
+  async getIsActive({
+    contract,
+  }: GetDataPropsParams<PlutusFarmPlsDpx, SingleStakingFarmDataProps, PlutusFarmDefinition>): Promise<boolean> {
+    const rewardsDistro = await contract.rewardsDistro();
+    const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsDpx({
+      address: rewardsDistro,
+      network: this.network,
+    });
+
+    const emissions = await rewardsDistroContract.getEmissions();
+    return (
+      emissions.pls_.gt(0) ||
+      emissions.plsDpx_.gt(0) ||
+      emissions.plsJones_.gt(0) ||
+      emissions.dpx_.gt(0) ||
+      emissions.rdpx_.gt(0)
+    );
+  }
+
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<PlutusFarmPlsDpx, SingleStakingFarmDataProps, PlutusFarmDefinition>) {
+    return definition.label;
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpx>) {

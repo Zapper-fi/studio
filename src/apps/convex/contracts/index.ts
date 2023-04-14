@@ -14,7 +14,10 @@ import {
   ConvexCvxStaking__factory,
   ConvexDepositToken__factory,
   ConvexDepositor__factory,
+  ConvexRewardPool__factory,
   ConvexSingleStakingRewards__factory,
+  ConvexStashTokenWrapped__factory,
+  ConvexStashTokenWrapper__factory,
   ConvexVirtualBalanceRewardPool__factory,
   ConvexVotingEscrow__factory,
 } from './ethers';
@@ -55,8 +58,17 @@ export class ConvexContractFactory extends ContractFactory {
   convexDepositor({ address, network }: ContractOpts) {
     return ConvexDepositor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  convexRewardPool({ address, network }: ContractOpts) {
+    return ConvexRewardPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   convexSingleStakingRewards({ address, network }: ContractOpts) {
     return ConvexSingleStakingRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  convexStashTokenWrapped({ address, network }: ContractOpts) {
+    return ConvexStashTokenWrapped__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  convexStashTokenWrapper({ address, network }: ContractOpts) {
+    return ConvexStashTokenWrapper__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   convexVirtualBalanceRewardPool({ address, network }: ContractOpts) {
     return ConvexVirtualBalanceRewardPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -75,6 +87,9 @@ export type { ConvexCvxCrvStakingWrapped } from './ethers';
 export type { ConvexCvxStaking } from './ethers';
 export type { ConvexDepositToken } from './ethers';
 export type { ConvexDepositor } from './ethers';
+export type { ConvexRewardPool } from './ethers';
 export type { ConvexSingleStakingRewards } from './ethers';
+export type { ConvexStashTokenWrapped } from './ethers';
+export type { ConvexStashTokenWrapper } from './ethers';
 export type { ConvexVirtualBalanceRewardPool } from './ethers';
 export type { ConvexVotingEscrow } from './ethers';

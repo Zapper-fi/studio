@@ -43,12 +43,12 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
   async getDefinitions(): Promise<LlamaAirforceAirdropDefinition[]> {
     return [
       {
-        address: '0x0ed7d0497194fc029ae02223fec6d4d567696f17',
-        rewardTokenAddress: '0x4ebad8dbd4edbd74db0278714fbd67ebc76b89b7', // uCRV
+        address: '0x2c5e808fca6d8299ce194e12ed728f0fdbbf06c8',
+        rewardTokenAddress: '0xde2bef0a01845257b4aef2a2eaa48f6eaeafa8b7', // uCRV
       },
       {
-        address: '0x11fe17c5ab68cc4cc6d3c281feddfff80bc1d4c7',
-        rewardTokenAddress: '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
+        address: '0x5682a28919389b528ae74dd627e0d632ca7e398c',
+        rewardTokenAddress: '0x3a886455e5b33300a31c5e77bac01e76c0c7b29c', // uFXS
       },
 
       {

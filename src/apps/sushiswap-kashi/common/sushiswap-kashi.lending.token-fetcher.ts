@@ -13,6 +13,7 @@ import {
   GetDataPropsParams,
   GetUnderlyingTokensParams,
   GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { SushiswapKashiContractFactory, SushiswapKashiLendingToken } from '../contracts';
@@ -25,10 +26,7 @@ type SushiswapKashiLendingTokenDefinition = {
   borrowAPR: string;
 };
 
-type SushiswapKashiLendingTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-  apy: number;
+type SushiswapKashiLendingTokenDataProps = DefaultAppTokenDataProps & {
   supplyApr: number;
   borrowApr: number;
 };

@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { gql } from 'graphql-request';
 import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -54,10 +55,7 @@ type FyTokenDefinition = {
   poolAddress?: string;
 };
 
-type FyTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-  apy: number;
+type FyTokenDataProps = DefaultAppTokenDataProps & {
   maturity: number;
 };
 
@@ -131,11 +129,19 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
   }: GetPricePerShareParams<YieldProtocolLendToken, DefaultAppTokenDataProps, FyTokenDefinition>) {
     if (!definition.poolAddress) return [1];
 
+    const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
+    const poolBalance = await multicall
+      .wrap(pool)
+      .getBaseBalance()
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+        throw err;
+      });
+    if (poolBalance.isZero()) return [0];
+
     const maturity = await contract.maturity();
     const isMatured = Math.floor(new Date().getTime() / 1000) > Number(maturity);
     if (isMatured) return [1];
-
-    const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
 
     // use smaller unit for weth
     const estimateRaw =
