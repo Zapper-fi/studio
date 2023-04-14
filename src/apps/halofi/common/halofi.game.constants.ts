@@ -36,9 +36,18 @@ export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
   return playerReward;
 };
 
-const ContractVersions = ['2.0.0', '2.0.1', '2.0.2', '2.0.3'];
+const ContractVersions = ['2.0.0', '2.0.1', '2.0.2', '2.0.3', '2.0.4'];
 
-export const getGameVersionType = (contractVersion: string) => ContractVersions.includes(contractVersion);
+export const getGameVersionType = (contractVersion: string) => {
+  if (ContractVersions.includes(contractVersion)) {
+    return true;
+  }
+  const [derivedContractVersion] = contractVersion.split('-');
+  if (ContractVersions.includes(derivedContractVersion)) {
+    return true;
+  }
+  return false;
+};
 
 export type PlayerResponse = {
   gameId: string;
