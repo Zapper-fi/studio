@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.442.2](https://github.com/Zapper-fi/studio/compare/v0.442.1...v0.442.2) (2023-04-15)
+
+
+### Bug Fixes
+
+* **dolomite:** Rename dolomite positions ([#2569](https://github.com/Zapper-fi/studio/issues/2569)) ([5e57191](https://github.com/Zapper-fi/studio/commit/5e5719105b90b904a2e6ff52aa6168b4158f4517))
+
 ## [0.442.1](https://github.com/Zapper-fi/studio/compare/v0.442.0...v0.442.1) (2023-04-13)
 
 
