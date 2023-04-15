@@ -8,7 +8,7 @@ import { DolomiteContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class ArbitrumDolomiteDolomiteContractPositionFetcher extends DolomiteContractPositionTemplatePositionFetcher {
-  groupLabel = 'Dolomite';
+  groupLabel = 'Dolomite Balances';
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,
