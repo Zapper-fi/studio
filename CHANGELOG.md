@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.443.0](https://github.com/Zapper-fi/studio/compare/v0.442.2...v0.443.0) (2023-04-16)
+
+
+### Features
+
+* add arbitrum airdrop claimable position ([#2571](https://github.com/Zapper-fi/studio/issues/2571)) ([9374349](https://github.com/Zapper-fi/studio/commit/9374349aee505eb833e30436606aa75794421c80))
+
 ## [0.442.2](https://github.com/Zapper-fi/studio/compare/v0.442.1...v0.442.2) (2023-04-15)
 
 
