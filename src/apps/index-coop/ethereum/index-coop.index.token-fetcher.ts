@@ -1,12 +1,11 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  GetDataPropsParams,
   GetDisplayPropsParams,
-  GetPriceParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -49,27 +48,15 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
     return (await contract.getComponents()).map(address => ({ address, network: this.network }));
   }
 
-  async getPrice({ contract, appToken }: GetPriceParams<IndexCoopToken>) {
-    const tokensWithLiquidityRaw = await Promise.all(
+  async getPricePerShare({ appToken, contract }: GetDataPropsParams<IndexCoopToken>) {
+    const pricePerShare = await Promise.all(
       appToken.tokens.map(async underlyingToken => {
-        const balanceOfRaw = await contract.getTotalComponentRealUnits(underlyingToken.address);
-        const balanceOf = Number(balanceOfRaw) / 10 ** underlyingToken.decimals;
-
-        return {
-          liquidity: balanceOf * underlyingToken.price,
-          baseToken: underlyingToken,
-        };
+        const ratio = await contract.getTotalComponentRealUnits(underlyingToken.address);
+        return Number(ratio) / 10 ** underlyingToken.decimals;
       }),
     );
 
-    const tokensWithLiquidity = _.compact(tokensWithLiquidityRaw);
-    const liquidityPerToken = tokensWithLiquidity.map(x => x.liquidity);
-
-    return _.sum(liquidityPerToken);
-  }
-
-  async getPricePerShare() {
-    return [1];
+    return pricePerShare;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<IndexCoopToken>) {
