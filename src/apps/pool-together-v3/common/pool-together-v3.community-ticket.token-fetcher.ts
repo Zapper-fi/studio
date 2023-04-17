@@ -42,6 +42,8 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
     super(appToolkit);
   }
 
+  abstract TICKET_ADDRESS_RETURNED_BY_API: string[];
+
   extraDefinitions: PoolTogetherV3CommunityTicketDefinition[] = [];
 
   private BLOCKED_TICKET_ADDRESSES = [
@@ -104,8 +106,11 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
       ),
     );
 
-    const allDefinitions = [...definitions, ...this.extraDefinitions];
-    return allDefinitions.filter(def => !this.BLOCKED_TICKET_ADDRESSES.includes(def.address));
+    const allDefinitionsRaw = [...definitions, ...this.extraDefinitions];
+
+    const allDefinitions = allDefinitionsRaw.filter(def => !this.BLOCKED_TICKET_ADDRESSES.includes(def.address));
+
+    return allDefinitions.filter(x => !this.TICKET_ADDRESS_RETURNED_BY_API.includes(x.address));
   }
 
   async getLabel({
