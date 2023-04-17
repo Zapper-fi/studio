@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.443.1](https://github.com/Zapper-fi/studio/compare/v0.443.0...v0.443.1) (2023-04-17)
+
+
+### Bug Fixes
+
+* **pool-together-v3:** Filter out ticket addresses returned by API from community tickets ([#2573](https://github.com/Zapper-fi/studio/issues/2573)) ([322826b](https://github.com/Zapper-fi/studio/commit/322826b21df6f1c8a55bd8fa048a29e1f962c44d))
+
 ## [0.443.0](https://github.com/Zapper-fi/studio/compare/v0.442.2...v0.443.0) (2023-04-16)
 
 
