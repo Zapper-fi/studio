@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.444.0](https://github.com/Zapper-fi/studio/compare/v0.443.1...v0.444.0) (2023-04-17)
+
+
+### Features
+
+* **apps:** Fix pricePerShare ([#2577](https://github.com/Zapper-fi/studio/issues/2577)) ([5e6e3d0](https://github.com/Zapper-fi/studio/commit/5e6e3d0c52e82fc3a2962d7ebaf53b93edee2993))
+
+
+### Bug Fixes
+
+* **index-coop:** Fix Index price per share ([#2575](https://github.com/Zapper-fi/studio/issues/2575)) ([8f2bbf7](https://github.com/Zapper-fi/studio/commit/8f2bbf7f6d5e18d8713048785106edd7f9cd6b4b))
+
 ## [0.443.1](https://github.com/Zapper-fi/studio/compare/v0.443.0...v0.443.1) (2023-04-17)
 
 
