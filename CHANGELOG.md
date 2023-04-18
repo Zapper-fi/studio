@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.445.0](https://github.com/Zapper-fi/studio/compare/v0.444.0...v0.445.0) (2023-04-18)
+
+
+### Features
+
+* **wombat-exchange:** Add pools and voting escrow position on Arbitrum ([#2581](https://github.com/Zapper-fi/studio/issues/2581)) ([7289985](https://github.com/Zapper-fi/studio/commit/7289985c7b3ff54c78e94ba92bb3e07914016f42))
+
+
+### Bug Fixes
+
+* **vela:** Make PPS and APY zero for beta VLP ([#2578](https://github.com/Zapper-fi/studio/issues/2578)) ([6dc0095](https://github.com/Zapper-fi/studio/commit/6dc00958afb580c1c7d37ecfbd1d02ffb059f717))
+* **wombat-exchange:** Add pool token addresses ([#2580](https://github.com/Zapper-fi/studio/issues/2580)) ([76af3e8](https://github.com/Zapper-fi/studio/commit/76af3e8fd5b6171e144872d9fa3f1b239bccae23))
+
 ## [0.444.0](https://github.com/Zapper-fi/studio/compare/v0.443.1...v0.444.0) (2023-04-17)
 
 
