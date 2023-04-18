@@ -1,6 +1,10 @@
+import BigNumber from 'bignumber.js';
+
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { WombatExchangePoolTokenFetcher } from '../common/wombat-exchange.pool.token-fetcher';
+import { WombatExchangePoolToken } from '../contracts';
 
 @PositionTemplate()
 export class BinanceSmartChainWombatExchangePoolTokenFetcher extends WombatExchangePoolTokenFetcher {
@@ -23,4 +27,16 @@ export class BinanceSmartChainWombatExchangePoolTokenFetcher extends WombatExcha
     '0xea6cdd9e8819bbf7f8791e7d084d9f0a6afa7892', // BOB Pool
     '0x9498563e47d7cfdfa22b818bb8112781036c201c', // Overnight Pool
   ];
+
+  async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<WombatExchangePoolToken>) {
+    const poolAddress = await contract.pool();
+    const _pool = this.contractFactory.wombatExchangePool({ address: poolAddress, network: this.network });
+    const pool = multicall.wrap(_pool);
+
+    const amount = new BigNumber(10).pow(appToken.tokens[0].decimals).toFixed(0);
+
+    const pricePerShareRaw = await pool.quotePotentialWithdraw(appToken.tokens[0].address, amount);
+    const pricePerShare = Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
+    return [pricePerShare];
+  }
 }
