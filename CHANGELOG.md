@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.446.0](https://github.com/Zapper-fi/studio/compare/v0.445.1...v0.446.0) (2023-04-20)
+
+
+### Features
+
+* **kwenta:** smart margin ([#2585](https://github.com/Zapper-fi/studio/issues/2585)) ([dc967a6](https://github.com/Zapper-fi/studio/commit/dc967a6bc69ca030f88af389ce4a6117921f447b))
+
+
+### Bug Fixes
+
+* **rocket-pool:** Fix minipool balances ([#2583](https://github.com/Zapper-fi/studio/issues/2583)) ([53be6cb](https://github.com/Zapper-fi/studio/commit/53be6cb6ca0487041479abdbf3c82a21ae51ac96))
+
 ## [0.445.1](https://github.com/Zapper-fi/studio/compare/v0.445.0...v0.445.1) (2023-04-20)
 
 
