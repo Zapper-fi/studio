@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.446.2](https://github.com/Zapper-fi/studio/compare/v0.446.1...v0.446.2) (2023-04-20)
+
+
+### Bug Fixes
+
+* **convex:** Fix underlying lp token addresses ([#2591](https://github.com/Zapper-fi/studio/issues/2591)) ([cce467e](https://github.com/Zapper-fi/studio/commit/cce467ea65b923295ef12110a73d840dc4bbe942))
+* **shapeshift:** update fox farms ([#2590](https://github.com/Zapper-fi/studio/issues/2590)) ([25a8236](https://github.com/Zapper-fi/studio/commit/25a8236e81937826afa57ebb4f0c07d05e358e69))
+
 ## [0.446.1](https://github.com/Zapper-fi/studio/compare/v0.446.0...v0.446.1) (2023-04-20)
 
 
