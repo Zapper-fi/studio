@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.446.1](https://github.com/Zapper-fi/studio/compare/v0.446.0...v0.446.1) (2023-04-20)
+
+
+### Bug Fixes
+
+* **shapeshift:** Move to studio ([#2587](https://github.com/Zapper-fi/studio/issues/2587)) ([426d9e9](https://github.com/Zapper-fi/studio/commit/426d9e9a97e1c59ee6d603ea6343d20c13c72158))
+
 ## [0.446.0](https://github.com/Zapper-fi/studio/compare/v0.445.1...v0.446.0) (2023-04-20)
 
 
