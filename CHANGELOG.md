@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.445.1](https://github.com/Zapper-fi/studio/compare/v0.445.0...v0.445.1) (2023-04-20)
+
+
+### Bug Fixes
+
+* **spice-finance:** Fix balances ([5d6fb49](https://github.com/Zapper-fi/studio/commit/5d6fb49a95bade532a7aa3b488aada38ed8e892e))
+* **spice-finance:** update get balance per token ([#2582](https://github.com/Zapper-fi/studio/issues/2582)) ([5d6fb49](https://github.com/Zapper-fi/studio/commit/5d6fb49a95bade532a7aa3b488aada38ed8e892e))
+
 ## [0.445.0](https://github.com/Zapper-fi/studio/compare/v0.444.0...v0.445.0) (2023-04-18)
 
 
