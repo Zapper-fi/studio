@@ -50,7 +50,7 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
     return [1];
   }
 
-  async getApy({ appToken }: GetDataPropsParams<EnsuroEtoken>) {
+  async getApy({ appToken }) {
     return (await this.ensuroRegistry.getETokenApy({ network: this.network, address: appToken.address })) * 100;
   }
 }
