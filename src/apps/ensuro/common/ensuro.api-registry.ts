@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { Network } from '~types/network.interface';
 
 export type ETokenDetails = {
   url: string;
@@ -27,19 +26,19 @@ export class EnsuroApiRegistry {
   })
   private async getETokenDefinitionsData() {
     const apyUrl = 'https://offchain-v2.ensuro.co/api/etokens/';
-    const data = await Axios.get<ETokenDetails[]>(apyUrl).then(v => v.data);
+    const { data } = await Axios.get<ETokenDetails[]>(apyUrl);
     return data;
   }
 
-  async getETokenDefinitions(opts: { network: Network }) {
+  async getETokenDefinitions() {
     const definitionsData = await this.getETokenDefinitionsData();
 
-    return definitionsData;
+    return definitionsData.map(x => x.address.toLowerCase());
   }
 
-  async getETokenApy(opts: { network: Network, address: string }) {
-    const apyUrl = `https://offchain-v2.ensuro.co/api/etokens/${opts.address}/apr/?days_from=7`;
-    const data = await Axios.get<ETokenAPRDetails>(apyUrl).then(v => v.data);
+  async getETokenApy(address: string) {
+    const apyUrl = `https://offchain-v2.ensuro.co/api/etokens/${address}/apr/?days_from=7`;
+    const { data } = await Axios.get<ETokenAPRDetails>(apyUrl);
     return data.apy;
   }
 }

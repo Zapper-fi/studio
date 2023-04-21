@@ -12,14 +12,14 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { EnsuroContractFactory, EnsuroEtoken } from '../contracts';
 import { EnsuroApiRegistry } from '../common/ensuro.api-registry';
+import { EnsuroContractFactory, EnsuroEtoken } from '../contracts';
 
-const USDC = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
+const USDC = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174';
 
 @PositionTemplate()
 export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFetcher<EnsuroEtoken> {
-  groupLabel = "eTokens";
+  groupLabel = 'eTokens';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -34,8 +34,7 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
-    const eTokens = await this.ensuroRegistry.getETokenDefinitions({ network: this.network });
-    return eTokens.map(etk => etk.address);
+    return this.ensuroRegistry.getETokenDefinitions();
   }
 
   async getUnderlyingTokenDefinitions(
@@ -51,6 +50,6 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getApy({ appToken }) {
-    return (await this.ensuroRegistry.getETokenApy({ network: this.network, address: appToken.address })) * 100;
+    return (await this.ensuroRegistry.getETokenApy(appToken.address)) * 100;
   }
 }
