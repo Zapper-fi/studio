@@ -22,7 +22,7 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
   groupLabel = "eTokens";
 
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EnsuroApiRegistry) protected readonly ensuroRegistry: EnsuroApiRegistry,
     @Inject(EnsuroContractFactory) private readonly ensuroContractFactory: EnsuroContractFactory,
   ) {
