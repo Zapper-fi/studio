@@ -19,7 +19,7 @@ export type ETokenAPRDetails = {
 };
 
 @Injectable()
-export class EnsuroApiJarRegistry {
+export class EnsuroApiRegistry {
   @CacheOnInterval({
     key: `studio:ensuro:etokens:etokens-definitions-data`,
     timeout: 5 * 60 * 1000,

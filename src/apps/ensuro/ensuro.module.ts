@@ -6,9 +6,9 @@ import { EnsuroContractFactory } from './contracts';
 import {
   PolygonEnsuroETokenTokenFetcher,
 } from './polygon/ensuro.etoken.token-fetcher';
-import { EnsuroApiJarRegistry } from './polygon/ensuro.api.jar-registry';
+import { EnsuroApiRegistry } from './common/ensuro.api-registry';
 
 @Module({
-  providers: [EnsuroContractFactory, EnsuroApiJarRegistry, PolygonEnsuroETokenTokenFetcher],
+  providers: [EnsuroContractFactory, EnsuroApiRegistry, PolygonEnsuroETokenTokenFetcher],
 })
 export class EnsuroAppModule extends AbstractApp() {}
