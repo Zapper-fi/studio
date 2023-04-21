@@ -12,5 +12,6 @@ export class OptimismThalesVaultContractPositionFetcher extends ThalesVaultContr
     { address: '0xbaac5464bf6e767c9af0e8d4677c01be2065fd5f', name: 'Overtime Degen Discount' },
     { address: '0x43d19841d818b2ccc63a8b44ce8c7def8616d98e', name: 'Overtime Safu Discount' },
     { address: '0x8285047f33c26c1bf5b387f2b07f21a2af29ace2', name: 'Overtime Parlay Discount' },
+    { address: '0x5e2b49c68f1fd68af1354c377eacec2f05632d3f', name: 'Overtime Upsettoor' },
   ];
 }
