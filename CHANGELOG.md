@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.447.0](https://github.com/Zapper-fi/studio/compare/v0.446.2...v0.447.0) (2023-04-21)
+
+
+### Features
+
+* **thales:** upsettoor vault ([#2594](https://github.com/Zapper-fi/studio/issues/2594)) ([a3afe72](https://github.com/Zapper-fi/studio/commit/a3afe72f40361657a7cdda0b901ec0e50bf1e06d))
+
 ## [0.446.2](https://github.com/Zapper-fi/studio/compare/v0.446.1...v0.446.2) (2023-04-20)
 
 
