@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.448.0](https://github.com/Zapper-fi/studio/compare/v0.447.0...v0.448.0) (2023-04-21)
+
+
+### Features
+
+* **ensuro:** Adds Ensuro (https://ensuro.co) app ([#2592](https://github.com/Zapper-fi/studio/issues/2592)) ([5e94a5f](https://github.com/Zapper-fi/studio/commit/5e94a5f095f4bdd910d7aa0f60e64c335271d44b))
+
+
+### Bug Fixes
+
+* **ensuo:** Linting ([#2599](https://github.com/Zapper-fi/studio/issues/2599)) ([5808f6d](https://github.com/Zapper-fi/studio/commit/5808f6d1ba7e14662323f003910f897761d836f3))
+* **rocket-pool:** Fix minipool raw balances ([#2597](https://github.com/Zapper-fi/studio/issues/2597)) ([d3050a5](https://github.com/Zapper-fi/studio/commit/d3050a5cffe8807ea7b063c04fd3c26982e838d0))
+
 ## [0.447.0](https://github.com/Zapper-fi/studio/compare/v0.446.2...v0.447.0) (2023-04-21)
 
 
