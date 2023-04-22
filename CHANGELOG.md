@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.449.0](https://github.com/Zapper-fi/studio/compare/v0.448.0...v0.449.0) (2023-04-22)
+
+
+### Features
+
+* **polynomial:** Add trade tvl ([#2600](https://github.com/Zapper-fi/studio/issues/2600)) ([36d9d7b](https://github.com/Zapper-fi/studio/commit/36d9d7b0472bcd8261c1ca8edda2755ea3a55e8e))
+
+
+### Bug Fixes
+
+* **rocket-pool:** Fix Minipool raw balances ([#2601](https://github.com/Zapper-fi/studio/issues/2601)) ([380c6d2](https://github.com/Zapper-fi/studio/commit/380c6d2e628965da8a7e0833ece61ef0f19b930b))
+
 ## [0.448.0](https://github.com/Zapper-fi/studio/compare/v0.447.0...v0.448.0) (2023-04-21)
 
 
