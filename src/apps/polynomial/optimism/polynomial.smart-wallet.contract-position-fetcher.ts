@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -11,6 +12,10 @@ import {
 } from '~position/template/contract-position.template.types';
 import { MetaType } from '~position/position.interface';
 import { PolynomialAccountResolver } from '../common/polynomial.account-resolver';
+
+export type PolynomialSmartWalletDataProp = {
+  liquidity: number;
+};
 
 @PositionTemplate()
 export class OptimismPolynomialSmartWalletContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Erc20>{
@@ -52,6 +57,13 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Erc20>) {
     return [await contract.balanceOf(address)];
+  }
+
+  async getDataProps(): Promise<PolynomialSmartWalletDataProp> {
+    const { data } = await Axios.get<{ tvl: number }>('https://perps-api-experimental.polynomial.fi/snx-perps/tvl');
+    return {
+      liquidity: data.tvl
+    };
   }
 
 }
