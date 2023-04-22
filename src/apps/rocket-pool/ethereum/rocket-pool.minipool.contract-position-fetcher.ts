@@ -95,17 +95,6 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractP
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const minipoolManagerContract = this.contractFactory.rocketMinipoolManager({
-      address: this.minipoolManagerAddress,
-      network: this.network,
-    });
-    const mcMinipoolManager = multicall.wrap(minipoolManagerContract);
-    const minipoolCount = Number(await mcMinipoolManager.getNodeMinipoolCount(address));
-    const minipoolAddresses = await Promise.all(
-      range(minipoolCount).map(async i => mcMinipoolManager.getNodeMinipoolAt(address, i)),
-    );
-    if (minipoolAddresses.length === 0) return [];
-
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,
@@ -115,22 +104,40 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractP
     const contractPosition = contractPositions[0];
     if (!contractPosition) return [];
 
-    return Promise.all(
-      minipoolAddresses.map(async address => {
-        const minipoolContract = this.contractFactory.rocketMinipool({ address, network: this.network });
-        const nodeDepositBalance = await multicall.wrap(minipoolContract).getNodeDepositBalance();
+    const minipoolManagerContract = this.contractFactory.rocketMinipoolManager({
+      address: this.minipoolManagerAddress,
+      network: this.network,
+    });
+    const minipoolCount = await multicall.wrap(minipoolManagerContract).getNodeMinipoolCount(address);
 
-        const balance: RawContractPositionBalance = {
-          key: this.appToolkit.getPositionKey(contractPosition),
-          tokens: [
-            {
-              key: this.appToolkit.getPositionKey(contractPosition.tokens[0]),
-              balance: nodeDepositBalance.toString(),
-            },
-          ],
-        };
-        return balance;
-      }),
+    const minipoolAddresses = await Promise.all(
+      range(0, minipoolCount.toNumber()).map(async i =>
+        multicall.wrap(minipoolManagerContract).getNodeMinipoolAt(address, i),
+      ),
     );
+    if (minipoolAddresses.length === 0) return [];
+
+    return (
+      await Promise.all(
+        minipoolAddresses
+          .map(async address => {
+            const minipoolContract = this.contractFactory.rocketMinipool({ address, network: this.network });
+            const nodeDepositBalance = await multicall.wrap(minipoolContract).getNodeDepositBalance();
+
+            return [
+              {
+                key: this.appToolkit.getPositionKey(contractPosition),
+                tokens: [
+                  {
+                    key: this.appToolkit.getPositionKey(contractPosition.tokens[0]),
+                    balance: nodeDepositBalance.toString(),
+                  },
+                ],
+              },
+            ];
+          })
+          .flat(),
+      )
+    ).flat();
   }
 }
