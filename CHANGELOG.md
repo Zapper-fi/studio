@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.449.1](https://github.com/Zapper-fi/studio/compare/v0.449.0...v0.449.1) (2023-04-23)
+
+
+### Bug Fixes
+
+* **apps:** Remove unnecessary imports ([#2603](https://github.com/Zapper-fi/studio/issues/2603)) ([cf9ba2c](https://github.com/Zapper-fi/studio/commit/cf9ba2c859464449436ff51f374e0942a567bf1e))
+
 ## [0.449.0](https://github.com/Zapper-fi/studio/compare/v0.448.0...v0.449.0) (2023-04-22)
 
 
