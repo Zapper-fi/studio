@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
-import moment from 'moment';
+import { unix } from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -160,6 +160,6 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     string | number | DollarDisplayItem | PercentageDisplayItem | undefined
   > {
     const { expiry } = appToken.dataProps;
-    return `Expires ${moment.unix(expiry).format('LL')}`;
+    return `Expires ${unix(expiry).format('LL')}`;
   }
 }

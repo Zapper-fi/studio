@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import axios from 'axios';
-import { ethers } from 'ethers';
-import { BigNumberish } from 'ethers';
+import { ethers, BigNumberish } from 'ethers';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import moment from 'moment';
+import { unix } from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -50,6 +50,6 @@ export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFet
     const poolAddress = await contract.pool();
     const pool = this.contractFactory.tempusPool({ address: poolAddress, network: this.network });
     const maturity = await multicall.wrap(pool).maturityTime();
-    return `${getLabelFromToken(appToken.tokens[0])} ${kindLabel} Share - ${moment.unix(Number(maturity)).format('L')}`;
+    return `${getLabelFromToken(appToken.tokens[0])} ${kindLabel} Share - ${unix(Number(maturity)).format('L')}`;
   }
 }
