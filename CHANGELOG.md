@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.450.1](https://github.com/Zapper-fi/studio/compare/v0.450.0...v0.450.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* **rocket-pool:** Extend the custom contract position ([#2609](https://github.com/Zapper-fi/studio/issues/2609)) ([9040f1c](https://github.com/Zapper-fi/studio/commit/9040f1cb9e949f635f641459eb694c86bf59a4c0))
+
 ## [0.450.0](https://github.com/Zapper-fi/studio/compare/v0.449.1...v0.450.0) (2023-04-24)
 
 
