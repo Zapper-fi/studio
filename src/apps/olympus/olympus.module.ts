@@ -7,8 +7,8 @@ import { ArbitrumOlympusWsOhmV1TokenFetcher } from './arbitrum/olympus.ws-ohm-v1
 import { AvalancheOlympusGOhmTokenFetcher } from './avalanche/olympus.g-ohm.token-fetcher';
 import { AvalancheOlympusWsOhmV1TokenFetcher } from './avalanche/olympus.ws-ohm-v1.token-fetcher';
 import { OlympusContractFactory } from './contracts';
-import { EthereumOlympusBleContractPositionFetcher } from './ethereum/olympus.ble.contract-position-fetcher';
 import { EthereumOlympusBondContractPositionFetcher } from './ethereum/olympus.bond.contract-position-fetcher';
+import { EthereumOlympusBleContractPositionFetcher } from './ethereum/olympus.boosted-liquidity.contract-position-fetcher';
 import { EthereumOlympusGOhmTokenFetcher } from './ethereum/olympus.g-ohm.token-fetcher';
 import { EthereumOlympusSOhmV1TokenFetcher } from './ethereum/olympus.s-ohm-v1.token-fetcher';
 import { EthereumOlympusSOhmTokenFetcher } from './ethereum/olympus.s-ohm.token-fetcher';
