@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.450.0](https://github.com/Zapper-fi/studio/compare/v0.449.1...v0.450.0) (2023-04-24)
+
+
+### Features
+
+* **abracadabra:** Add support for the CRV V2 cauldron ([#2607](https://github.com/Zapper-fi/studio/issues/2607)) ([b710a89](https://github.com/Zapper-fi/studio/commit/b710a892e9cdd96789d4cd5e7488feec1223b014))
+* **synthetix:** display perp position side ([#2605](https://github.com/Zapper-fi/studio/issues/2605)) ([55917cf](https://github.com/Zapper-fi/studio/commit/55917cf9f702d0dea46ae274ef1393d75964d40c))
+
 ## [0.449.1](https://github.com/Zapper-fi/studio/compare/v0.449.0...v0.449.1) (2023-04-23)
 
 
