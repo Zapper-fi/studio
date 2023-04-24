@@ -7,8 +7,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { DefaultDataProps } from '~position/display.interface';
 import {
-  DefaultContractPositionDefinition,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
@@ -31,6 +31,11 @@ export const getContractsQuery = gql`
   }
 `;
 
+export type PerpPositionDefinition = {
+  address: string;
+  side: string;
+};
+
 export abstract class OptimismSynthetixPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SynthetixPerp> {
   extraLabel = '';
   constructor(
@@ -52,15 +57,24 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     return marketKeyString.includes('PERP');
   }
 
-  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+  async getDefinitions(): Promise<PerpPositionDefinition[]> {
     const contractsFromSubgraph = await gqlFetch<GetContracts>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps',
       query: getContractsQuery,
     });
 
-    return contractsFromSubgraph.futuresMarkets
-      .filter(market => this.marketFilter(market))
-      .map(futuresMarket => ({ address: futuresMarket.id }));
+    const markets = contractsFromSubgraph.futuresMarkets
+      .filter(market => this.marketFilter(market));
+
+    const longMarkets = this.getMarketsDefinitions(markets, 'LONG');
+    const shortMarkets = this.getMarketsDefinitions(markets, 'SHORT');
+    const neutralMarkets = this.getMarketsDefinitions(markets, 'NEUTRAL');
+
+    return longMarkets.concat(shortMarkets, neutralMarkets);
+  }
+
+  getMarketsDefinitions(markets, side: string) {
+    return markets.map(futuresMarket => ({ address: futuresMarket.id, side: side }));
   }
 
   async getTokenDefinitions() {
@@ -85,9 +99,13 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     return baseAsset;
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>): Promise<string> {
+  async getLabel({ contractPosition, definition }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, PerpPositionDefinition>): Promise<string> {
     const baseAsset = await this.getBaseAsset({ contractPosition });
-    return `${baseAsset}-PERP${this.extraLabel}`;
+    return `${baseAsset}-PERP ${definition.side} ${this.extraLabel}`;
+  }
+
+  async getDataProps({ definition }) {
+    return { side: definition.side };
   }
 
   async getImages({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>) {
@@ -95,8 +113,18 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     return [getAppAssetImage('synthetix', `s${baseAsset}`)];
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerp>) {
+  async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<SynthetixPerp>) {
     const remainingMargin = await contract.remainingMargin(address);
-    return [remainingMargin.marginRemaining];
+    const marginRemaining = remainingMargin.marginRemaining;
+    if (Number(marginRemaining) === 0) {
+      return [];
+    }
+    const position = await contract.positions(address);
+    const side = contractPosition.dataProps.side;
+    const isLong = Number(position.size) > 0;
+    const isShort = Number(position.size) < 0;
+    const isNeutral = !isLong && !isShort;
+    const matchesSide = (isLong && side === 'LONG') || (isShort && side === 'SHORT') || (isNeutral && side === 'NEUTRAL');
+    return matchesSide ? [marginRemaining] : [];
   }
 }
