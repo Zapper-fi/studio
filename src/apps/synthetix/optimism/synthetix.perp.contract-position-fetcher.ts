@@ -1,17 +1,14 @@
 import { Inject } from '@nestjs/common';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { DefaultDataProps } from '~position/display.interface';
-import {
-  GetDisplayPropsParams,
-  GetTokenBalancesParams,
-} from '~position/template/contract-position.template.types';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { SynthetixContractFactory, SynthetixPerp } from '../contracts';
 
@@ -63,8 +60,7 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
       query: getContractsQuery,
     });
 
-    const markets = contractsFromSubgraph.futuresMarkets
-      .filter(market => this.marketFilter(market));
+    const markets = contractsFromSubgraph.futuresMarkets.filter(market => this.marketFilter(market));
 
     const longMarkets = this.getMarketsDefinitions(markets, 'LONG');
     const shortMarkets = this.getMarketsDefinitions(markets, 'SHORT');
@@ -99,7 +95,10 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     return baseAsset;
   }
 
-  async getLabel({ contractPosition, definition }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, PerpPositionDefinition>): Promise<string> {
+  async getLabel({
+    contractPosition,
+    definition,
+  }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, PerpPositionDefinition>): Promise<string> {
     const baseAsset = await this.getBaseAsset({ contractPosition });
     return `${baseAsset}-PERP ${definition.side} ${this.extraLabel}`;
   }
@@ -124,7 +123,8 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     const isLong = Number(position.size) > 0;
     const isShort = Number(position.size) < 0;
     const isNeutral = !isLong && !isShort;
-    const matchesSide = (isLong && side === 'LONG') || (isShort && side === 'SHORT') || (isNeutral && side === 'NEUTRAL');
+    const matchesSide =
+      (isLong && side === 'LONG') || (isShort && side === 'SHORT') || (isNeutral && side === 'NEUTRAL');
     return matchesSide ? [marginRemaining] : [];
   }
 }
