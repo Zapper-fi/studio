@@ -7,6 +7,7 @@ import { ArbitrumOlympusWsOhmV1TokenFetcher } from './arbitrum/olympus.ws-ohm-v1
 import { AvalancheOlympusGOhmTokenFetcher } from './avalanche/olympus.g-ohm.token-fetcher';
 import { AvalancheOlympusWsOhmV1TokenFetcher } from './avalanche/olympus.ws-ohm-v1.token-fetcher';
 import { OlympusContractFactory } from './contracts';
+import { EthereumOlympusBleContractPositionFetcher } from './ethereum/olympus.ble.contract-position-fetcher';
 import { EthereumOlympusBondContractPositionFetcher } from './ethereum/olympus.bond.contract-position-fetcher';
 import { EthereumOlympusGOhmTokenFetcher } from './ethereum/olympus.g-ohm.token-fetcher';
 import { EthereumOlympusSOhmV1TokenFetcher } from './ethereum/olympus.s-ohm-v1.token-fetcher';
@@ -17,17 +18,18 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
 
 @Module({
   providers: [
-    OlympusContractFactory,
     ArbitrumOlympusGOhmTokenFetcher,
     ArbitrumOlympusWsOhmV1TokenFetcher,
     AvalancheOlympusGOhmTokenFetcher,
     AvalancheOlympusWsOhmV1TokenFetcher,
+    EthereumOlympusBleContractPositionFetcher,
     EthereumOlympusBondContractPositionFetcher,
+    EthereumOlympusGOhmTokenFetcher,
     EthereumOlympusSOhmTokenFetcher,
     EthereumOlympusSOhmV1TokenFetcher,
-    EthereumOlympusGOhmTokenFetcher,
     EthereumOlympusWsOhmV1TokenFetcher,
     FantomOlympusGOhmTokenFetcher,
+    OlympusContractFactory,
     PolygonOlympusGOhmTokenFetcher,
   ],
 })
