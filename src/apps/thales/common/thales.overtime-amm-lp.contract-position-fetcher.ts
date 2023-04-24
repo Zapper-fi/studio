@@ -8,6 +8,10 @@ import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/tem
 
 import { OvertimeAmmLp, ThalesContractFactory } from '../contracts';
 
+export type ThalesAMMDataProp = {
+  liquidity: number;
+};
+
 export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<OvertimeAmmLp> {
   groupLabel = 'Overtime AMM LP';
   abstract contractAddress: string;
@@ -39,6 +43,16 @@ export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends Contrac
 
   async getLabel() {
     return 'Overtime AMM LP';
+  }
+
+  async getDataProps({ contract, multicall }): Promise<ThalesAMMDataProp> {
+    const liquidityRaw = await contract.totalDeposited();
+    const underlyingTokenAddress = await contract.sUSD();
+    const underlyingTokenContract = this.appToolkit.globalContracts.erc20({ address: underlyingTokenAddress, network: this.network });
+    const decimals = await multicall.wrap(underlyingTokenContract).decimals()
+    return {
+      liquidity: Number(liquidityRaw) / 10 ** decimals
+    };
   }
 
   async getTokenBalancesPerPosition({

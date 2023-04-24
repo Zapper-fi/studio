@@ -18,6 +18,10 @@ export type ThalesVaultDefinition = {
   name: string;
 };
 
+export type ThalesVaultDataProp = {
+  liquidity: number;
+};
+
 export abstract class ThalesVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Vaults> {
   groupLabel = 'Vault';
   abstract vaultDefinitions: ThalesVaultDefinition[];
@@ -49,6 +53,17 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
 
   async getLabel({ definition }: GetDisplayPropsParams<Vaults, DefaultDataProps, ThalesVaultDefinition>) {
     return `${definition.name}`;
+  }
+
+  async getDataProps({ contract, multicall }): Promise<ThalesVaultDataProp> {
+    const currentRound = await contract.round();
+    const liquidityRaw = await contract.allocationPerRound(currentRound);
+    const underlyingTokenAddress = await contract.sUSD();
+    const underlyingTokenContract = this.appToolkit.globalContracts.erc20({ address: underlyingTokenAddress, network: this.network });
+    const decimals = await multicall.wrap(underlyingTokenContract).decimals()
+    return {
+      liquidity: Number(liquidityRaw) / 10 ** decimals
+    };
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Vaults>): Promise<BigNumberish[]> {
