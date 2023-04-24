@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.450.2](https://github.com/Zapper-fi/studio/compare/v0.450.1...v0.450.2) (2023-04-24)
+
+
+### Bug Fixes
+
+* **studio:** KyberSwap elastic failing on Polygon ([#2608](https://github.com/Zapper-fi/studio/issues/2608)) ([497e618](https://github.com/Zapper-fi/studio/commit/497e618b24136a0e425e0ad430611954914d9ef7))
+
 ## [0.450.1](https://github.com/Zapper-fi/studio/compare/v0.450.0...v0.450.1) (2023-04-24)
 
 
