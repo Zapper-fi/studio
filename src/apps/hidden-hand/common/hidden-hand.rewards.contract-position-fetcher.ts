@@ -20,13 +20,11 @@ import { MetaType } from '~position/position.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { NETWORK_IDS } from '~types';
 
-export class HiddenHandRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
+export abstract class HiddenHandRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   HiddenHandRewardDistributor,
   DefaultDataProps,
   HiddenHandRewardsDefinition
 > {
-  groupLabel: string = 'Rewards';
-
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(HiddenHandContractFactory) protected readonly contractFactory: HiddenHandContractFactory,
@@ -36,8 +34,7 @@ export class HiddenHandRewardsContractPositionFetcher extends CustomContractPosi
   }
 
   getContract(address: string): HiddenHandRewardDistributor {
-    const a_ = REWARD_DISTRIBUTOR[this.network] || '';
-    return this.contractFactory.hiddenHandRewardDistributor({ address: a_, network: this.network });
+    return this.contractFactory.hiddenHandRewardDistributor({ address, network: this.network });
   }
 
   async getDefinitions() {
