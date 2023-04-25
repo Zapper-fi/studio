@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.451.0](https://github.com/Zapper-fi/studio/compare/v0.450.2...v0.451.0) (2023-04-25)
+
+
+### Features
+
+* **olympus:** Add support for boosted liquidity vaults ([#2614](https://github.com/Zapper-fi/studio/issues/2614)) ([5d19c89](https://github.com/Zapper-fi/studio/commit/5d19c89550670eaaf4456a6bef3758c55c926bcc))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2612](https://github.com/Zapper-fi/studio/issues/2612)) ([9b74085](https://github.com/Zapper-fi/studio/commit/9b74085d55a2690474f3d394d212472cf1afa15b))
+* **synthetix:** Revert Perp sides ([#2615](https://github.com/Zapper-fi/studio/issues/2615)) ([3b6ecdd](https://github.com/Zapper-fi/studio/commit/3b6ecdd39691e39e53d6ce24554c838769504972))
+
 ## [0.450.2](https://github.com/Zapper-fi/studio/compare/v0.450.1...v0.450.2) (2023-04-24)
 
 
