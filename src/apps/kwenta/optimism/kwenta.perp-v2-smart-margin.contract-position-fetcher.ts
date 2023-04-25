@@ -1,15 +1,17 @@
 import { Inject } from '@nestjs/common';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { OptimismSynthetixPerpV2ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v2.contract-position-fetcher';
+
 import { SynthetixContractFactory } from '../../synthetix/contracts';
+import { OptimismSynthetixPerpV2ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v2.contract-position-fetcher';
 import { KwentaContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class OptimismKwentaPerpV2SmartMarginContractPositionFetcher extends OptimismSynthetixPerpV2ContractPositionFetcher {
   groupLabel = 'PerpV2 smart-margin';
-  extraLabel = '(v2 smart-margin)'
+  extraLabel = ' (v2 smart-margin)';
   kwentaAccountResolverAddress = '0x8234f990b149ae59416dc260305e565e5dafeb54';
 
   constructor(

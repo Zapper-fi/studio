@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+
 import { OptimismSynthetixPerpV1ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v1.contract-position-fetcher';
 
 type GetCrossMarginAccounts = {
@@ -22,7 +23,7 @@ const getCrossMarginAccountsQuery = gql`
 @PositionTemplate()
 export class OptimismKwentaPerpV1CrossMarginContractPositionFetcher extends OptimismSynthetixPerpV1ContractPositionFetcher {
   groupLabel = 'PerpV1 cross-margin';
-  extraLabel = '(v1 cross-margin)'
+  extraLabel = ' (v1 cross-margin)';
 
   async getAccountAddress(address: string): Promise<string> {
     const crossMarginAccountsFromSubgraph = await gqlFetch<GetCrossMarginAccounts>({
