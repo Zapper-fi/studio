@@ -10,9 +10,9 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
 import { isUnderlyingDenominated } from '../common/formatters';
 import { PolynomialApiHelper } from '../common/polynomial.api';
+import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
 
 type PolynomialCallSellingVaultTokenDefinition = {
   address: string;

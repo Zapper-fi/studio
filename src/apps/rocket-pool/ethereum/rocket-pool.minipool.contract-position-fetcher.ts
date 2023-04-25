@@ -9,13 +9,13 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RocketNodeDeposit, RocketPoolContractFactory } from '../contracts';
 
 @PositionTemplate()
-export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketNodeDeposit> {
+export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RocketNodeDeposit> {
   groupLabel = 'Minipools';
 
   minipoolManagerAddress = '0x6293b8abc1f36afb22406be5f96d893072a8cf3a';

@@ -22,7 +22,7 @@ const getCrossMarginAccountsQuery = gql`
 @PositionTemplate()
 export class OptimismKwentaPerpV1CrossMarginContractPositionFetcher extends OptimismSynthetixPerpV1ContractPositionFetcher {
   groupLabel = 'PerpV1 cross-margin';
-  extraLabel = ' (v1 cross-margin)'
+  extraLabel = '(v1 cross-margin)'
 
   async getAccountAddress(address: string): Promise<string> {
     const crossMarginAccountsFromSubgraph = await gqlFetch<GetCrossMarginAccounts>({

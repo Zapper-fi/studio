@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { PolynomialContractFactory } from '../contracts';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Network } from '~types';
+
+import { PolynomialContractFactory } from '../contracts';
 
 @Injectable()
 export class PolynomialAccountResolver {
@@ -12,9 +13,8 @@ export class PolynomialAccountResolver {
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PolynomialContractFactory) protected readonly polynomialContractFactory: PolynomialContractFactory
-  ) {
-  }
+    @Inject(PolynomialContractFactory) protected readonly polynomialContractFactory: PolynomialContractFactory,
+  ) {}
 
   async getSmartWalletAddress(address: string): Promise<string> {
     const multicall = this.appToolkit.getMulticall(this.network);
