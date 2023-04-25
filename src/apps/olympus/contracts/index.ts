@@ -4,13 +4,17 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { OlympusGOhmToken__factory } from './ethers';
-import { OlympusSOhmToken__factory } from './ethers';
-import { OlympusSOhmV1Token__factory } from './ethers';
-import { OlympusV1BondDepository__factory } from './ethers';
-import { OlympusV2BondDepository__factory } from './ethers';
-import { OlympusWsOhmV1Token__factory } from './ethers';
-import { OlympusZapperZap__factory } from './ethers';
+import {
+  OlympusBoostedLiquidityManager__factory,
+  OlympusGOhmToken__factory,
+  OlympusLiquidityRegistry__factory,
+  OlympusSOhmToken__factory,
+  OlympusSOhmV1Token__factory,
+  OlympusV1BondDepository__factory,
+  OlympusV2BondDepository__factory,
+  OlympusWsOhmV1Token__factory,
+  OlympusZapperZap__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -21,8 +25,14 @@ export class OlympusContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  olympusBoostedLiquidityManager({ address, network }: ContractOpts) {
+    return OlympusBoostedLiquidityManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   olympusGOhmToken({ address, network }: ContractOpts) {
     return OlympusGOhmToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  olympusLiquidityRegistry({ address, network }: ContractOpts) {
+    return OlympusLiquidityRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   olympusSOhmToken({ address, network }: ContractOpts) {
     return OlympusSOhmToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -44,7 +54,9 @@ export class OlympusContractFactory extends ContractFactory {
   }
 }
 
+export type { OlympusBoostedLiquidityManager } from './ethers';
 export type { OlympusGOhmToken } from './ethers';
+export type { OlympusLiquidityRegistry } from './ethers';
 export type { OlympusSOhmToken } from './ethers';
 export type { OlympusSOhmV1Token } from './ethers';
 export type { OlympusV1BondDepository } from './ethers';
