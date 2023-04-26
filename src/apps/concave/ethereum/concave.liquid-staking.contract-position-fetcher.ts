@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 import { getAddress } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
 import { sumBy } from 'lodash';
-import moment from 'moment';
+import { unix } from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -118,7 +118,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
     const positions = await Promise.all(
       lockData.logStakingV1_Lock.map(async event => {
         const positionId = event.positionID;
-        const unlockDate = moment.unix(event.maturity).format('LL');
+        const unlockDate = unix(event.maturity).format('LL');
         const label = `Liquid Staking (#${positionId}) - Unlock: ${unlockDate}`;
 
         const [positionInfo, positionRewardInfo] = await Promise.all([

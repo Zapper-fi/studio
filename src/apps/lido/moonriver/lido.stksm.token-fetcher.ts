@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
-import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
