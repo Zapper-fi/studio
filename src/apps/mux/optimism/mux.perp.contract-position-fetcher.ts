@@ -5,9 +5,9 @@ import { Network } from '~types';
 import { MuxPerpContractPositionFetcher } from '../common/mux.perp.contract-position-fetcher';
 
 @PositionTemplate()
-export class FantomMuxPerpContractPositionFetcher extends MuxPerpContractPositionFetcher {
+export class OptimismMuxPerpContractPositionFetcher extends MuxPerpContractPositionFetcher {
   groupLabel = 'Perpetuals';
-  readerAddress = READER_ADDRESS[Network.FANTOM_OPERA_MAINNET];
-  usdcAddress = USDC_ADDRESS[Network.FANTOM_OPERA_MAINNET];
-  vaultAddress = VAULT_ADDRESS[Network.FANTOM_OPERA_MAINNET];
+  readerAddress = READER_ADDRESS[Network.OPTIMISM_MAINNET];
+  usdcAddress = USDC_ADDRESS[Network.OPTIMISM_MAINNET];
+  vaultAddress = VAULT_ADDRESS[Network.OPTIMISM_MAINNET];
 }

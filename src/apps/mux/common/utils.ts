@@ -4,6 +4,17 @@ import _ from 'lodash';
 
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import {
+  RATIO_DECIMALS,
+  DECIMALS,
+  READER_ADDRESS,
+  ASSET_IS_STABLE,
+  ASSET_IS_TRADABLE,
+  ASSET_IS_OPENABLE,
+  ASSET_USE_STABLE_TOKEN_FOR_PROFIT,
+  ASSET_IS_ENABLED,
+  _0,
+} from '~apps/mux/common/constants';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
@@ -30,25 +41,6 @@ interface BaseTokenWithMuxTokenId {
 }
 
 type MuxBaseToken = BaseToken & BaseTokenWithMuxTokenId;
-
-export const _0: BigNumber = new BigNumber('0');
-export const DECIMALS = 18;
-export const RATIO_DECIMALS = 5;
-export const ASSET_IS_STABLE = 0x00000000000001; // is a usdt, usdc, ...
-export const ASSET_CAN_ADD_REMOVE_LIQUIDITY = 0x00000000000002; // can call addLiquidity and removeLiquidity with this token
-export const ASSET_IS_TRADABLE = 0x00000000000100; // allowed to be assetId
-export const ASSET_IS_OPENABLE = 0x00000000010000; // can open position
-export const ASSET_IS_SHORTABLE = 0x00000001000000; // allow shorting this asset
-export const ASSET_USE_STABLE_TOKEN_FOR_PROFIT = 0x00000100000000; // take profit will get stable coin
-export const ASSET_IS_ENABLED = 0x00010000000000; // allowed to be assetId and collateralId
-export const ASSET_IS_STRICT_STABLE = 0x01000000000000; // assetPrice is always 1 unless volatility exceeds strictStableDeviation
-
-export const READER_ADDRESS = {
-  [Network.ARBITRUM_MAINNET]: '0x6e29c4e8095b2885b8d30b17790924f33ecd7b33',
-  [Network.BINANCE_SMART_CHAIN_MAINNET]: '0xeab5b06a1ea173674601dd54c612542b563beca1',
-  [Network.AVALANCHE_MAINNET]: '0x5996d4545ee59d96cb1fe8661a028bef0f4744b0',
-  [Network.FANTOM_OPERA_MAINNET]: '0x29f4dc996a0219838afecf868362e4df28a70a7b',
-};
 
 export function formatMetaBaseData(cols: Array<any>, rows: Array<Array<any>>) {
   const keys = cols.map(col => {
