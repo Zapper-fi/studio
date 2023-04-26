@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {

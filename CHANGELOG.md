@@ -4,6 +4,41 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.451.0](https://github.com/Zapper-fi/studio/compare/v0.450.2...v0.451.0) (2023-04-25)
+
+
+### Features
+
+* **olympus:** Add support for boosted liquidity vaults ([#2614](https://github.com/Zapper-fi/studio/issues/2614)) ([5d19c89](https://github.com/Zapper-fi/studio/commit/5d19c89550670eaaf4456a6bef3758c55c926bcc))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2612](https://github.com/Zapper-fi/studio/issues/2612)) ([9b74085](https://github.com/Zapper-fi/studio/commit/9b74085d55a2690474f3d394d212472cf1afa15b))
+* **synthetix:** Revert Perp sides ([#2615](https://github.com/Zapper-fi/studio/issues/2615)) ([3b6ecdd](https://github.com/Zapper-fi/studio/commit/3b6ecdd39691e39e53d6ce24554c838769504972))
+
+## [0.450.2](https://github.com/Zapper-fi/studio/compare/v0.450.1...v0.450.2) (2023-04-24)
+
+
+### Bug Fixes
+
+* **studio:** KyberSwap elastic failing on Polygon ([#2608](https://github.com/Zapper-fi/studio/issues/2608)) ([497e618](https://github.com/Zapper-fi/studio/commit/497e618b24136a0e425e0ad430611954914d9ef7))
+
+## [0.450.1](https://github.com/Zapper-fi/studio/compare/v0.450.0...v0.450.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* **rocket-pool:** Extend the custom contract position ([#2609](https://github.com/Zapper-fi/studio/issues/2609)) ([9040f1c](https://github.com/Zapper-fi/studio/commit/9040f1cb9e949f635f641459eb694c86bf59a4c0))
+
+## [0.450.0](https://github.com/Zapper-fi/studio/compare/v0.449.1...v0.450.0) (2023-04-24)
+
+
+### Features
+
+* **abracadabra:** Add support for the CRV V2 cauldron ([#2607](https://github.com/Zapper-fi/studio/issues/2607)) ([b710a89](https://github.com/Zapper-fi/studio/commit/b710a892e9cdd96789d4cd5e7488feec1223b014))
+* **synthetix:** display perp position side ([#2605](https://github.com/Zapper-fi/studio/issues/2605)) ([55917cf](https://github.com/Zapper-fi/studio/commit/55917cf9f702d0dea46ae274ef1393d75964d40c))
+
 ## [0.449.1](https://github.com/Zapper-fi/studio/compare/v0.449.0...v0.449.1) (2023-04-23)
 
 
