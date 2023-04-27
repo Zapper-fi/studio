@@ -27,7 +27,6 @@ export type GetDefinitionsParams = {
 };
 
 export type GetAddressesParams<R = DefaultAppTokenDefinition> = {
-  address(address: any): unknown;
   definitions: R[];
   multicall: IMulticallWrapper;
 };

@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
-
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
@@ -37,7 +36,7 @@ export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getAddresses(params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
-    const contract = this.getContract(String(params.address));
+    const contract = this.getContract(String(params));
     const allPairsLength = await this.getPoolLength(contract);
     
     const poolAddresses: string[] = [];
