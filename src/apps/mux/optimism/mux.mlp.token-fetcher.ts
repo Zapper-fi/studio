@@ -5,9 +5,9 @@ import { Network } from '~types';
 import { MuxMlpTokenFetcher } from '../common/mux.mlp.token-fetcher';
 
 @PositionTemplate()
-export class BinanceSmartChainMuxMlpTokenFetcher extends MuxMlpTokenFetcher {
+export class OptimismMuxMlpTokenFetcher extends MuxMlpTokenFetcher {
   groupLabel = 'MUX LP';
-  mlpAddress = MUXLP_ADDRESS[Network.BINANCE_SMART_CHAIN_MAINNET];
-  poolAddress = POOL_ADDRESS[Network.BINANCE_SMART_CHAIN_MAINNET];
-  subgraphUrl = GRAPH_URL[Network.BINANCE_SMART_CHAIN_MAINNET];
+  mlpAddress = MUXLP_ADDRESS[Network.OPTIMISM_MAINNET];
+  poolAddress = POOL_ADDRESS[Network.OPTIMISM_MAINNET];
+  subgraphUrl = GRAPH_URL[Network.OPTIMISM_MAINNET];
 }
