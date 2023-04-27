@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.452.0](https://github.com/Zapper-fi/studio/compare/v0.451.0...v0.452.0) (2023-04-26)
+
+
+### Features
+
+* **hidden-hand:** Add Hidden Hand app ([#2616](https://github.com/Zapper-fi/studio/issues/2616)) ([c120c9a](https://github.com/Zapper-fi/studio/commit/c120c9aa4518da2ff1dec0fdaa6c4b463f6a1eeb))
+* **thales:** Vaults and AMM liquidity ([#2617](https://github.com/Zapper-fi/studio/issues/2617)) ([7a99024](https://github.com/Zapper-fi/studio/commit/7a99024f07ae192e5072f2a57fa55ae973daf82e))
+
+
+### Bug Fixes
+
+* **synthetix:** OP position presenter ([#2620](https://github.com/Zapper-fi/studio/issues/2620)) ([ba8fa57](https://github.com/Zapper-fi/studio/commit/ba8fa57b819c2a727be8437ed0fa34b766e718d2))
+
 ## [0.451.0](https://github.com/Zapper-fi/studio/compare/v0.450.2...v0.451.0) (2023-04-25)
 
 
