@@ -47,6 +47,8 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
   DefaultDataProps,
   SynthetixPerpPositionDefinition
 > {
+  useCustomMarketLogos = false;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
@@ -110,7 +112,7 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
   async getImages({
     definition,
   }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, SynthetixPerpPositionDefinition>) {
-    return [getAppAssetImage(this.appId, `s${definition.asset}`)];
+    return [getAppAssetImage(this.useCustomMarketLogos ? this.appId : 'synthetix', `s${definition.asset}`)];
   }
 
   async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
