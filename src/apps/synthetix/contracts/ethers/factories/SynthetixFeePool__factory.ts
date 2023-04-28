@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { SynthetixSynthToken, SynthetixSynthTokenInterface } from '../SynthetixSynthToken';
+import type { SynthetixFeePool, SynthetixFeePoolInterface } from '../SynthetixFeePool';
 
 const _abi = [
   {
@@ -15,34 +15,9 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract TokenState',
-        name: '_tokenState',
-        type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: '_tokenName',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_tokenSymbol',
-        type: 'string',
-      },
-      {
         internalType: 'address',
         name: '_owner',
         type: 'address',
-      },
-      {
-        internalType: 'bytes32',
-        name: '_currencyKey',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'uint256',
-        name: '_totalSupply',
-        type: 'uint256',
       },
       {
         internalType: 'address',
@@ -53,50 +28,6 @@ const _abi = [
     payable: false,
     stateMutability: 'nonpayable',
     type: 'constructor',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'Approval',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'Burned',
-    type: 'event',
   },
   {
     anonymous: false,
@@ -121,7 +52,20 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
+        internalType: 'uint256',
+        name: 'feePeriodId',
+        type: 'uint256',
+      },
+    ],
+    name: 'FeePeriodClosed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
         internalType: 'address',
         name: 'account',
         type: 'address',
@@ -129,11 +73,17 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'value',
+        name: 'sUSDAmount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'snxRewards',
         type: 'uint256',
       },
     ],
-    name: 'Issued',
+    name: 'FeesClaimed',
     type: 'event',
   },
   {
@@ -182,44 +132,6 @@ const _abi = [
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newTokenState',
-        type: 'address',
-      },
-    ],
-    name: 'TokenStateUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'Transfer',
-    type: 'event',
-  },
-  {
     constant: true,
     inputs: [],
     name: 'CONTRACT_NAME',
@@ -228,21 +140,6 @@ const _abi = [
         internalType: 'bytes32',
         name: '',
         type: 'bytes32',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: 'DECIMALS',
-    outputs: [
-      {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
       },
     ],
     payable: false,
@@ -265,6 +162,21 @@ const _abi = [
     type: 'function',
   },
   {
+    constant: true,
+    inputs: [],
+    name: 'FEE_PERIOD_LENGTH',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     constant: false,
     inputs: [],
     name: 'acceptOwnership',
@@ -275,23 +187,37 @@ const _abi = [
   },
   {
     constant: true,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-    ],
-    name: 'allowance',
+    inputs: [],
+    name: 'allNetworksDebtSharesSupply',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'sharesSupply',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'updatedAt',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'allNetworksSnxBackedDebt',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'debt',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'updatedAt',
         type: 'uint256',
       },
     ],
@@ -301,19 +227,8 @@ const _abi = [
   },
   {
     constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'approve',
+    inputs: [],
+    name: 'claimFees',
     outputs: [
       {
         internalType: 'bool',
@@ -326,6 +241,97 @@ const _abi = [
     type: 'function',
   },
   {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'claimingForAddress',
+        type: 'address',
+      },
+    ],
+    name: 'claimOnBehalf',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [],
+    name: 'closeCurrentFeePeriod',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'allNetworksSnxBackedDebt',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'allNetworksDebtSharesSupply',
+        type: 'uint256',
+      },
+    ],
+    name: 'closeSecondary',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'period',
+        type: 'uint256',
+      },
+    ],
+    name: 'effectiveDebtRatioForPeriod',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'feePeriodDuration',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     constant: true,
     inputs: [
       {
@@ -334,7 +340,111 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'balanceOf',
+    name: 'feesAvailable',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'feesBurned',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'feesByPeriod',
+    outputs: [
+      {
+        internalType: 'uint256[2][2]',
+        name: 'results',
+        type: 'uint256[2][2]',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'feesToBurn',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'feesFromPeriod',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_claimingAddress',
+        type: 'address',
+      },
+    ],
+    name: 'getLastFeeWithdrawal',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'getPenaltyThresholdRatio',
     outputs: [
       {
         internalType: 'uint256',
@@ -350,17 +460,42 @@ const _abi = [
     constant: false,
     inputs: [
       {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'feePeriodIndex',
+        type: 'uint256',
       },
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: 'feePeriodId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'startTime',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feesToDistribute',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feesClaimed',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'rewardsToDistribute',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'rewardsClaimed',
         type: 'uint256',
       },
     ],
-    name: 'burn',
+    name: 'importFeePeriod',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -368,28 +503,19 @@ const _abi = [
   },
   {
     constant: true,
-    inputs: [],
-    name: 'currencyKey',
-    outputs: [
+    inputs: [
       {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
     ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: 'decimals',
+    name: 'isFeesClaimable',
     outputs: [
       {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
+        internalType: 'bool',
+        name: 'feesClaimable',
+        type: 'bool',
       },
     ],
     payable: false,
@@ -412,23 +538,18 @@ const _abi = [
     type: 'function',
   },
   {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
+    constant: true,
+    inputs: [],
+    name: 'issuanceRatio',
+    outputs: [
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'issue',
-    outputs: [],
     payable: false,
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -440,21 +561,6 @@ const _abi = [
         internalType: 'address',
         name: '',
         type: 'address',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: 'name',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
       },
     ],
     payable: false,
@@ -532,6 +638,72 @@ const _abi = [
   },
   {
     constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'recentFeePeriods',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: 'feePeriodId',
+        type: 'uint64',
+      },
+      {
+        internalType: 'uint64',
+        name: 'unused',
+        type: 'uint64',
+      },
+      {
+        internalType: 'uint64',
+        name: 'startTime',
+        type: 'uint64',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feesToDistribute',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feesClaimed',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'rewardsToDistribute',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'rewardsClaimed',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'recordFeePaid',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: true,
     inputs: [],
     name: 'resolver',
     outputs: [
@@ -594,27 +766,12 @@ const _abi = [
     constant: false,
     inputs: [
       {
-        internalType: 'contract TokenState',
-        name: '_tokenState',
-        type: 'address',
-      },
-    ],
-    name: 'setTokenState',
-    outputs: [],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [
-      {
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
       },
     ],
-    name: 'setTotalSupply',
+    name: 'setRewardsToDistribute',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
@@ -623,12 +780,12 @@ const _abi = [
   {
     constant: true,
     inputs: [],
-    name: 'symbol',
+    name: 'setupExpiryTime',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'uint256',
         name: '',
-        type: 'string',
+        type: 'uint256',
       },
     ],
     payable: false,
@@ -638,12 +795,12 @@ const _abi = [
   {
     constant: true,
     inputs: [],
-    name: 'tokenState',
+    name: 'targetThreshold',
     outputs: [
       {
-        internalType: 'contract TokenState',
+        internalType: 'uint256',
         name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
     payable: false,
@@ -653,7 +810,7 @@ const _abi = [
   {
     constant: true,
     inputs: [],
-    name: 'totalSupply',
+    name: 'totalFeesAvailable',
     outputs: [
       {
         internalType: 'uint256',
@@ -666,129 +823,24 @@ const _abi = [
     type: 'function',
   },
   {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
+    constant: true,
+    inputs: [],
+    name: 'totalFeesBurned',
+    outputs: [
       {
         internalType: 'uint256',
-        name: 'value',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'transfer',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
     payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferAndSettle',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferFrom',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferFromAndSettle',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    payable: false,
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     constant: true,
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'transferableSynths',
+    inputs: [],
+    name: 'totalRewardsAvailable',
     outputs: [
       {
         internalType: 'uint256',
@@ -802,12 +854,12 @@ const _abi = [
   },
 ] as const;
 
-export class SynthetixSynthToken__factory {
+export class SynthetixFeePool__factory {
   static readonly abi = _abi;
-  static createInterface(): SynthetixSynthTokenInterface {
-    return new utils.Interface(_abi) as SynthetixSynthTokenInterface;
+  static createInterface(): SynthetixFeePoolInterface {
+    return new utils.Interface(_abi) as SynthetixFeePoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): SynthetixSynthToken {
-    return new Contract(address, _abi, signerOrProvider) as SynthetixSynthToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): SynthetixFeePool {
+    return new Contract(address, _abi, signerOrProvider) as SynthetixFeePool;
   }
 }

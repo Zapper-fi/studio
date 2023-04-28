@@ -1389,7 +1389,7 @@ const _abi = [
     name: 'OwnerChanged',
     type: 'event',
   },
-];
+] as const;
 
 export class SynthetixNetworkToken__factory {
   static readonly abi = _abi;
