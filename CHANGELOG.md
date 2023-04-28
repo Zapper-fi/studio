@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.453.0](https://github.com/Zapper-fi/studio/compare/v0.452.0...v0.453.0) (2023-04-28)
+
+
+### Features
+
+* **synthetix:** claimable staking rewards ([#2624](https://github.com/Zapper-fi/studio/issues/2624)) ([3d8e0b6](https://github.com/Zapper-fi/studio/commit/3d8e0b6a596833cdd1874487e45d49a8eccb7cc3))
+
+
+### Bug Fixes
+
+* **homora-v2:** Added early return conditions when no positions are returned ([#2625](https://github.com/Zapper-fi/studio/issues/2625)) ([0a195b8](https://github.com/Zapper-fi/studio/commit/0a195b89123c3059d89cd925eb3c80bf8d892cca))
+
 ## [0.452.0](https://github.com/Zapper-fi/studio/compare/v0.451.0...v0.452.0) (2023-04-26)
 
 
