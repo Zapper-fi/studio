@@ -21,7 +21,7 @@
         "name": "governance",
         "type": "address"
       }
-    ], 
+    ],
     "name": "GovernanceUpdated",
     "type": "event"
   },
