@@ -5,3 +5,4 @@ export { UniswapPairV2__factory } from './UniswapPairV2__factory';
 export { XcaliburPool__factory } from './XcaliburPool__factory';
 export { XcaliburRouter__factory } from './XcaliburRouter__factory';
 export { XcaliburSwapFactory__factory } from './XcaliburSwapFactory__factory';
+export { XcaliburToken__factory } from './XcaliburToken__factory';

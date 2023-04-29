@@ -13,21 +13,25 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { XcaliburContractFactory, XcaliburSwapFactory, XcaliburRouter, UniswapPairV2} from '../contracts';
+import { XcaliburContractFactory, XcaliburSwapFactory, XcaliburRouter, UniswapPairV2, XcaliburToken} from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFetcher<XcaliburSwapFactory> {
-  groupLabel: string;
+export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFetcher<XcaliburToken> {
+  groupLabel: string = 'Your Group Label';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit, // Changed 'private' to 'protected'
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(XcaliburContractFactory) private readonly caliburContractFactory: XcaliburContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): XcaliburSwapFactory {
+  getSwapFactory(address: string): XcaliburSwapFactory {
     return this.caliburContractFactory.xcaliburSwapFactory({ address, network: this.network });
+  }
+  
+  getContract(address: string): XcaliburToken {
+    return this.caliburContractFactory.xcaliburToken({ address, network: this.network });
   }
 
     // 57 lps
@@ -36,7 +40,7 @@ export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getAddresses(params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
-    const contract = this.getContract(String(params));
+    const contract = this.getSwapFactory(String(params));
     const allPairsLength = await this.getPoolLength(contract);
     
     const poolAddresses: string[] = [];
@@ -47,8 +51,8 @@ export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFe
     return poolAddresses;
   }
 
-  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<XcaliburSwapFactory, DefaultAppTokenDefinition>): Promise<UnderlyingTokenDefinition[]> {
-    const address = _params.contract.address; // Assuming the 'address' property exists in the contract object
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<XcaliburToken, DefaultAppTokenDefinition>): Promise<UnderlyingTokenDefinition[]> {
+    const address = _params.contract.address;
     const pairContract = this.caliburContractFactory.uniswapPairV2({ address, network: this.network });
   
     const token0 = await pairContract.token0();
@@ -72,7 +76,7 @@ export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFe
   
 
   async getPricePerShare(
-    _params: GetPricePerShareParams<XcaliburSwapFactory, DefaultAppTokenDataProps, DefaultAppTokenDefinition>,
+    _params: GetPricePerShareParams<XcaliburToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>,
   ): Promise<number[]> {
     const address = _params.contract.address;
     const pairContract = this.caliburContractFactory.uniswapPairV2({ address, network: this.network });

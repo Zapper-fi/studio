@@ -9,6 +9,7 @@ import {
   XcaliburPool__factory,
   XcaliburRouter__factory,
   XcaliburSwapFactory__factory,
+  XcaliburToken__factory,
 } from './ethers';
 
 // eslint-disable-next-line
@@ -32,9 +33,13 @@ export class XcaliburContractFactory extends ContractFactory {
   xcaliburSwapFactory({ address, network }: ContractOpts) {
     return XcaliburSwapFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  xcaliburToken({ address, network }: ContractOpts) {
+    return XcaliburToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { UniswapPairV2 } from './ethers';
 export type { XcaliburPool } from './ethers';
 export type { XcaliburRouter } from './ethers';
 export type { XcaliburSwapFactory } from './ethers';
+export type { XcaliburToken } from './ethers';
