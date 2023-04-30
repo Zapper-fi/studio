@@ -4,11 +4,12 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Alp, AlpInterface } from '../Alp';
+import type { Apx, ApxInterface } from '../Apx';
 
 const _abi = [
   {
     inputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
@@ -16,19 +17,13 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'address',
-        name: 'previousAdmin',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newAdmin',
+        name: 'account',
         type: 'address',
       },
     ],
-    name: 'AdminChanged',
+    name: 'AddReceiver',
     type: 'event',
   },
   {
@@ -60,26 +55,19 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'beacon',
-        type: 'address',
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldBurnRate',
+        type: 'uint256',
       },
-    ],
-    name: 'BeaconUpgraded',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: false,
-        internalType: 'uint8',
-        name: 'version',
-        type: 'uint8',
+        internalType: 'uint256',
+        name: 'newBurnRate',
+        type: 'uint256',
       },
     ],
-    name: 'Initialized',
+    name: 'NewBurnRate',
     type: 'event',
   },
   {
@@ -88,11 +76,36 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'account',
+        name: 'oldDaoAddress',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'newDaoAddress',
         type: 'address',
       },
     ],
-    name: 'Paused',
+    name: 'NewDaoAddress',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldDaoRate',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newDaoRate',
+        type: 'uint256',
+      },
+    ],
+    name: 'NewDaoRate',
     type: 'event',
   },
   {
@@ -100,24 +113,18 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
       },
       {
         indexed: true,
-        internalType: 'bytes32',
-        name: 'previousAdminRole',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'newAdminRole',
-        type: 'bytes32',
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: 'RoleAdminChanged',
+    name: 'OwnershipTransferred',
     type: 'event',
   },
   {
@@ -125,49 +132,12 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
         internalType: 'address',
         name: 'account',
         type: 'address',
       },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
     ],
-    name: 'RoleGranted',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-    ],
-    name: 'RoleRevoked',
+    name: 'RemoveReceiver',
     type: 'event',
   },
   {
@@ -196,84 +166,7 @@ const _abi = [
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'Unpaused',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'implementation',
-        type: 'address',
-      },
-    ],
-    name: 'Upgraded',
-    type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'ADMIN_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'DEFAULT_ADMIN_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MINTER_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'UPGRADER_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -281,25 +174,14 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'addFromWhiteList',
+    name: 'addWhitelist',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'addToWhiteList',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -320,10 +202,12 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -344,10 +228,12 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -363,41 +249,102 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
+    constant: true,
+    inputs: [],
+    name: 'burnRate',
+    outputs: [
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'burn',
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'newBurnRate',
+        type: 'uint256',
+      },
+    ],
+    name: 'changeBurnRate',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: 'newDaoAddress',
         type: 'address',
       },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
     ],
-    name: 'burnFrom',
+    name: 'changeDaoAddress',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'newDaoRate',
+        type: 'uint256',
+      },
+    ],
+    name: 'changeDaoRate',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'daoAddress',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'daoRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
     inputs: [],
     name: 'decimals',
     outputs: [
@@ -407,10 +354,12 @@ const _abi = [
         type: 'uint8',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -431,90 +380,27 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
+    constant: true,
+    inputs: [],
+    name: 'getOwner',
+    outputs: [
       {
         internalType: 'address',
         name: '',
         type: 'address',
       },
     ],
-    name: 'fromWhiteList',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRoleAdmin',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'grantRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'hasRole',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -535,41 +421,27 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
+    constant: true,
+    inputs: [],
+    name: 'isOwner',
+    outputs: [
       {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    name: 'initialize',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    payable: false,
+    stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'mint',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
+    constant: true,
     inputs: [],
     name: 'name',
     outputs: [
@@ -579,19 +451,35 @@ const _abi = [
         type: 'string',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [],
-    name: 'pause',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'paused',
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'recipientWhitelist',
     outputs: [
       {
         internalType: 'bool',
@@ -599,104 +487,36 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'removeWhitelist',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
     inputs: [],
-    name: 'proxiableUUID',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'removeFromWhiteList',
+    name: 'renounceOwnership',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'removeToWhiteList',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'renounceRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'revokeRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes4',
-        name: 'interfaceId',
-        type: 'bytes4',
-      },
-    ],
-    name: 'supportsInterface',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: true,
     inputs: [],
     name: 'symbol',
     outputs: [
@@ -706,29 +526,12 @@ const _abi = [
         type: 'string',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'toWhiteList',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: true,
     inputs: [],
     name: 'totalSupply',
     outputs: [
@@ -738,14 +541,16 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
-        name: 'to',
+        name: 'recipient',
         type: 'address',
       },
       {
@@ -762,19 +567,21 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
-        name: 'from',
+        name: 'sender',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: 'to',
+        name: 'recipient',
         type: 'address',
       },
       {
@@ -791,55 +598,33 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'unpause',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
-        name: 'newImplementation',
+        name: 'newOwner',
         type: 'address',
       },
     ],
-    name: 'upgradeTo',
+    name: 'transferOwnership',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newImplementation',
-        type: 'address',
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
-    ],
-    name: 'upgradeToAndCall',
-    outputs: [],
-    stateMutability: 'payable',
     type: 'function',
   },
 ];
 
-export class Alp__factory {
+export class Apx__factory {
   static readonly abi = _abi;
-  static createInterface(): AlpInterface {
-    return new utils.Interface(_abi) as AlpInterface;
+  static createInterface(): ApxInterface {
+    return new utils.Interface(_abi) as ApxInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Alp {
-    return new Contract(address, _abi, signerOrProvider) as Alp;
+  static connect(address: string, signerOrProvider: Signer | Provider): Apx {
+    return new Contract(address, _abi, signerOrProvider) as Apx;
   }
 }

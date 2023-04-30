@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Alp } from './Alp';
+export type { Apx } from './Apx';
 export * as factories from './factories';
 export { Alp__factory } from './factories/Alp__factory';
+export { Apx__factory } from './factories/Apx__factory';

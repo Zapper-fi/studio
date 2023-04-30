@@ -20,354 +20,138 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 
 export interface AlpInterface extends utils.Interface {
   functions: {
-    '_antiWhaleProtection()': FunctionFragment;
-    '_bountyDrawCount()': FunctionFragment;
-    '_dEaD()': FunctionFragment;
-    '_div()': FunctionFragment;
-    '_isBlacklisted(address)': FunctionFragment;
-    '_isMerchant(address)': FunctionFragment;
-    '_launchedAt()': FunctionFragment;
-    '_lockableAccountsProtection()': FunctionFragment;
-    '_maxTxAmount()': FunctionFragment;
-    '_maxWallet()': FunctionFragment;
-    '_maxWhaleTxAmount()': FunctionFragment;
-    '_merchantSellFee(address)': FunctionFragment;
-    '_tradingEnabled()': FunctionFragment;
+    'ADMIN_ROLE()': FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
+    'MINTER_ROLE()': FunctionFragment;
+    'UPGRADER_ROLE()': FunctionFragment;
+    'addFromWhiteList(address)': FunctionFragment;
+    'addToWhiteList(address)': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
-    'authorizeLola(address)': FunctionFragment;
-    'authorizePos(address)': FunctionFragment;
-    'authorizeService(address)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'blacklistAddress(address,bool)': FunctionFragment;
-    'circulatingSupply()': FunctionFragment;
-    'clearStuckBalance(uint256)': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
+    'burnFrom(address,uint256)': FunctionFragment;
     'decimals()': FunctionFragment;
     'decreaseAllowance(address,uint256)': FunctionFragment;
-    'enableMessaging(bool)': FunctionFragment;
-    'excludeFromFee(address)': FunctionFragment;
-    'excludeFromReward(address)': FunctionFragment;
-    'includeInFee(address)': FunctionFragment;
-    'includeInReward(address)': FunctionFragment;
+    'fromWhiteList(address)': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'increaseLockTime(address,uint256)': FunctionFragment;
-    'initialize()': FunctionFragment;
-    'isAuthorized(address)': FunctionFragment;
-    'isBlackListed(address)': FunctionFragment;
-    'isExcludedFromFee(address)': FunctionFragment;
-    'isExcludedFromReward(address)': FunctionFragment;
-    'isKycEnabled()': FunctionFragment;
-    'isLola(address)': FunctionFragment;
-    'isMessagingEnabled()': FunctionFragment;
-    'isPos(address)': FunctionFragment;
-    'isService(address)': FunctionFragment;
-    'lockedAccountDetails(address)': FunctionFragment;
-    'lola()': FunctionFragment;
-    'lolaAddressChange(address)': FunctionFragment;
-    'lolaMintSwap(uint256,address)': FunctionFragment;
-    'manualSwap(uint256)': FunctionFragment;
-    'maxSupply()': FunctionFragment;
-    'merchantDetails(address)': FunctionFragment;
-    'merchantDisable(address)': FunctionFragment;
-    'minSalTokens()': FunctionFragment;
-    'mint(uint256)': FunctionFragment;
-    'mintDrop(address[],uint256[])': FunctionFragment;
-    'multiBlacklist(address[],bool)': FunctionFragment;
-    'multiLock(address[],bool)': FunctionFragment;
+    'initialize(address)': FunctionFragment;
+    'mint(address,uint256)': FunctionFragment;
     'name()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'pos()': FunctionFragment;
-    'posAddressChange(address)': FunctionFragment;
-    'posGetAnubits(address,uint256)': FunctionFragment;
-    'posMerchantDistribute(address,address[],uint256[],bool[],uint256)': FunctionFragment;
-    'posTransaction(address,address,address,uint256,bool,uint256,uint256,uint256,bool)': FunctionFragment;
+    'pause()': FunctionFragment;
+    'paused()': FunctionFragment;
     'proxiableUUID()': FunctionFragment;
-    'reflectionFromToken(uint256,bool)': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'sellFees()': FunctionFragment;
-    'service()': FunctionFragment;
-    'setAntiWhaleProtection(bool)': FunctionFragment;
-    'setIsWhaleExempt(address,bool)': FunctionFragment;
-    'setKycStatus(bool)': FunctionFragment;
-    'setLockableAccountsProtection(bool)': FunctionFragment;
-    'setMaxTx(uint256)': FunctionFragment;
-    'setMaxTxPercent(uint256)': FunctionFragment;
-    'setMaxWalletAmount(uint256)': FunctionFragment;
-    'setMaxWhaleTxAmount(uint256)': FunctionFragment;
-    'setMerchant(address[])': FunctionFragment;
-    'setMessageId(address,uint256)': FunctionFragment;
-    'setSalMin(uint256)': FunctionFragment;
-    'setSwapAndLiquifyEnabled(bool)': FunctionFragment;
-    'setTrading(bool)': FunctionFragment;
-    'swapAndLiquifyEnabled()': FunctionFragment;
+    'removeFromWhiteList(address)': FunctionFragment;
+    'removeToWhiteList(address)': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
-    'timelock(address,uint256)': FunctionFragment;
-    'tokenFromReflection(uint256)': FunctionFragment;
-    'totalFees()': FunctionFragment;
+    'toWhiteList(address)': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'unauthorize(address)': FunctionFragment;
-    'uniswapV2Pair()': FunctionFragment;
-    'uniswapV2Router()': FunctionFragment;
-    'unlock(address)': FunctionFragment;
-    'updateUniswapV2Router(address)': FunctionFragment;
+    'unpause()': FunctionFragment;
     'upgradeTo(address)': FunctionFragment;
     'upgradeToAndCall(address,bytes)': FunctionFragment;
-    'version()': FunctionFragment;
-    'whaleSellTimeLimit(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | '_antiWhaleProtection'
-      | '_bountyDrawCount'
-      | '_dEaD'
-      | '_div'
-      | '_isBlacklisted'
-      | '_isMerchant'
-      | '_launchedAt'
-      | '_lockableAccountsProtection'
-      | '_maxTxAmount'
-      | '_maxWallet'
-      | '_maxWhaleTxAmount'
-      | '_merchantSellFee'
-      | '_tradingEnabled'
+      | 'ADMIN_ROLE'
+      | 'DEFAULT_ADMIN_ROLE'
+      | 'MINTER_ROLE'
+      | 'UPGRADER_ROLE'
+      | 'addFromWhiteList'
+      | 'addToWhiteList'
       | 'allowance'
       | 'approve'
-      | 'authorizeLola'
-      | 'authorizePos'
-      | 'authorizeService'
       | 'balanceOf'
-      | 'blacklistAddress'
-      | 'circulatingSupply'
-      | 'clearStuckBalance'
+      | 'burn'
+      | 'burnFrom'
       | 'decimals'
       | 'decreaseAllowance'
-      | 'enableMessaging'
-      | 'excludeFromFee'
-      | 'excludeFromReward'
-      | 'includeInFee'
-      | 'includeInReward'
+      | 'fromWhiteList'
+      | 'getRoleAdmin'
+      | 'grantRole'
+      | 'hasRole'
       | 'increaseAllowance'
-      | 'increaseLockTime'
       | 'initialize'
-      | 'isAuthorized'
-      | 'isBlackListed'
-      | 'isExcludedFromFee'
-      | 'isExcludedFromReward'
-      | 'isKycEnabled'
-      | 'isLola'
-      | 'isMessagingEnabled'
-      | 'isPos'
-      | 'isService'
-      | 'lockedAccountDetails'
-      | 'lola'
-      | 'lolaAddressChange'
-      | 'lolaMintSwap'
-      | 'manualSwap'
-      | 'maxSupply'
-      | 'merchantDetails'
-      | 'merchantDisable'
-      | 'minSalTokens'
       | 'mint'
-      | 'mintDrop'
-      | 'multiBlacklist'
-      | 'multiLock'
       | 'name'
-      | 'owner'
-      | 'pos'
-      | 'posAddressChange'
-      | 'posGetAnubits'
-      | 'posMerchantDistribute'
-      | 'posTransaction'
+      | 'pause'
+      | 'paused'
       | 'proxiableUUID'
-      | 'reflectionFromToken'
-      | 'renounceOwnership'
-      | 'sellFees'
-      | 'service'
-      | 'setAntiWhaleProtection'
-      | 'setIsWhaleExempt'
-      | 'setKycStatus'
-      | 'setLockableAccountsProtection'
-      | 'setMaxTx'
-      | 'setMaxTxPercent'
-      | 'setMaxWalletAmount'
-      | 'setMaxWhaleTxAmount'
-      | 'setMerchant'
-      | 'setMessageId'
-      | 'setSalMin'
-      | 'setSwapAndLiquifyEnabled'
-      | 'setTrading'
-      | 'swapAndLiquifyEnabled'
+      | 'removeFromWhiteList'
+      | 'removeToWhiteList'
+      | 'renounceRole'
+      | 'revokeRole'
+      | 'supportsInterface'
       | 'symbol'
-      | 'timelock'
-      | 'tokenFromReflection'
-      | 'totalFees'
+      | 'toWhiteList'
       | 'totalSupply'
       | 'transfer'
       | 'transferFrom'
-      | 'transferOwnership'
-      | 'unauthorize'
-      | 'uniswapV2Pair'
-      | 'uniswapV2Router'
-      | 'unlock'
-      | 'updateUniswapV2Router'
+      | 'unpause'
       | 'upgradeTo'
-      | 'upgradeToAndCall'
-      | 'version'
-      | 'whaleSellTimeLimit',
+      | 'upgradeToAndCall',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: '_antiWhaleProtection', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_bountyDrawCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_dEaD', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_div', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_isBlacklisted', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: '_isMerchant', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: '_launchedAt', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_lockableAccountsProtection', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_maxTxAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_maxWallet', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_maxWhaleTxAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_merchantSellFee', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: '_tradingEnabled', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'ADMIN_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MINTER_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'UPGRADER_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'addFromWhiteList', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addToWhiteList', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'approve',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'authorizeLola', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'authorizePos', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'authorizeService', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'blacklistAddress',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+    functionFragment: 'burnFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'circulatingSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'clearStuckBalance', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'decreaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'enableMessaging', values: [PromiseOrValue<boolean>]): string;
-  encodeFunctionData(functionFragment: 'excludeFromFee', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'excludeFromReward', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'includeInFee', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'includeInReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'fromWhiteList', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'increaseLockTime',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isAuthorized', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isBlackListed', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isExcludedFromFee', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isExcludedFromReward', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isKycEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isLola', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isMessagingEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isPos', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isService', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'lockedAccountDetails', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'lola', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lolaAddressChange', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'lolaMintSwap',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'manualSwap', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'maxSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'merchantDetails', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'merchantDisable', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'minSalTokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(
-    functionFragment: 'mintDrop',
-    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'multiBlacklist',
-    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'multiLock',
-    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
-  ): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pos', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'posAddressChange', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'posGetAnubits',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'posMerchantDistribute',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<boolean>[],
-      PromiseOrValue<BigNumberish>,
-    ],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'posTransaction',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-    ],
-  ): string;
+  encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'removeFromWhiteList', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'removeToWhiteList', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'reflectionFromToken',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sellFees', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'service', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAntiWhaleProtection', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
-    functionFragment: 'setIsWhaleExempt',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'setKycStatus', values: [PromiseOrValue<boolean>]): string;
-  encodeFunctionData(functionFragment: 'setLockableAccountsProtection', values: [PromiseOrValue<boolean>]): string;
-  encodeFunctionData(functionFragment: 'setMaxTx', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setMaxTxPercent', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setMaxWalletAmount', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setMaxWhaleTxAmount', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setMerchant', values: [PromiseOrValue<string>[]]): string;
-  encodeFunctionData(
-    functionFragment: 'setMessageId',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'setSalMin', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setSwapAndLiquifyEnabled', values: [PromiseOrValue<boolean>]): string;
-  encodeFunctionData(functionFragment: 'setTrading', values: [PromiseOrValue<boolean>]): string;
-  encodeFunctionData(functionFragment: 'swapAndLiquifyEnabled', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'timelock',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'tokenFromReflection', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'totalFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'toWhiteList', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transfer',
@@ -377,148 +161,75 @@ export interface AlpInterface extends utils.Interface {
     functionFragment: 'transferFrom',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'unauthorize', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'uniswapV2Pair', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'uniswapV2Router', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unlock', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'updateUniswapV2Router', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'upgradeToAndCall',
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: 'version', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whaleSellTimeLimit', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(functionFragment: '_antiWhaleProtection', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_bountyDrawCount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_dEaD', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_div', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_isBlacklisted', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_isMerchant', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_launchedAt', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_lockableAccountsProtection', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_maxTxAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_maxWallet', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_maxWhaleTxAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_merchantSellFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_tradingEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ADMIN_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MINTER_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'UPGRADER_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addFromWhiteList', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addToWhiteList', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'authorizeLola', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'authorizePos', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'authorizeService', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'blacklistAddress', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'circulatingSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'clearStuckBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burnFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'enableMessaging', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'excludeFromFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'excludeFromReward', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'includeInFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'includeInReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fromWhiteList', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'increaseLockTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isAuthorized', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isBlackListed', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isExcludedFromFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isExcludedFromReward', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isKycEnabled', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isLola', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isMessagingEnabled', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isPos', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isService', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lockedAccountDetails', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lola', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lolaAddressChange', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lolaMintSwap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'manualSwap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'merchantDetails', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'merchantDisable', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'minSalTokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mintDrop', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'multiBlacklist', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'multiLock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pos', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'posAddressChange', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'posGetAnubits', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'posMerchantDistribute', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'posTransaction', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'proxiableUUID', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'reflectionFromToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'sellFees', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'service', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setAntiWhaleProtection', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setIsWhaleExempt', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setKycStatus', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setLockableAccountsProtection', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMaxTx', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMaxTxPercent', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMaxWalletAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMaxWhaleTxAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMerchant', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMessageId', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setSalMin', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setSwapAndLiquifyEnabled', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setTrading', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'swapAndLiquifyEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeFromWhiteList', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeToWhiteList', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'timelock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenFromReflection', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'toWhiteList', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unauthorize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'uniswapV2Pair', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'uniswapV2Router', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unlock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateUniswapV2Router', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'version', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'whaleSellTimeLimit', data: BytesLike): Result;
 
   events: {
     'AdminChanged(address,address)': EventFragment;
     'Approval(address,address,uint256)': EventFragment;
     'BeaconUpgraded(address)': EventFragment;
-    'DrawBounty(uint256,uint256)': EventFragment;
-    'GetAnubits(address,uint256)': EventFragment;
     'Initialized(uint8)': EventFragment;
-    'MessageSet(address,uint256)': EventFragment;
-    'MintDrop(address,uint256)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'PosTx(address,address,address,uint256,bool,uint256,uint256,uint256,bool)': EventFragment;
-    'SwapAndLiquify(uint256,uint256,uint256)': EventFragment;
-    'SwapAndLiquifyEnabledUpdated(bool)': EventFragment;
+    'Paused(address)': EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
+    'Unpaused(address)': EventFragment;
     'Upgraded(address)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'DrawBounty'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'GetAnubits'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'MessageSet'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'MintDrop'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PosTx'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SwapAndLiquify'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SwapAndLiquifyEnabledUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
 }
 
@@ -546,22 +257,6 @@ export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject
 
 export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
 
-export interface DrawBountyEventObject {
-  amount: BigNumber;
-  _bountyDrawCount: BigNumber;
-}
-export type DrawBountyEvent = TypedEvent<[BigNumber, BigNumber], DrawBountyEventObject>;
-
-export type DrawBountyEventFilter = TypedEventFilter<DrawBountyEvent>;
-
-export interface GetAnubitsEventObject {
-  recipient: string;
-  amount: BigNumber;
-}
-export type GetAnubitsEvent = TypedEvent<[string, BigNumber], GetAnubitsEventObject>;
-
-export type GetAnubitsEventFilter = TypedEventFilter<GetAnubitsEvent>;
-
 export interface InitializedEventObject {
   version: number;
 }
@@ -569,63 +264,39 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface MessageSetEventObject {
-  _address: string;
-  msgID: BigNumber;
+export interface PausedEventObject {
+  account: string;
 }
-export type MessageSetEvent = TypedEvent<[string, BigNumber], MessageSetEventObject>;
+export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
-export type MessageSetEventFilter = TypedEventFilter<MessageSetEvent>;
+export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
-export interface MintDropEventObject {
-  adr: string;
-  amount: BigNumber;
+export interface RoleAdminChangedEventObject {
+  role: string;
+  previousAdminRole: string;
+  newAdminRole: string;
 }
-export type MintDropEvent = TypedEvent<[string, BigNumber], MintDropEventObject>;
+export type RoleAdminChangedEvent = TypedEvent<[string, string, string], RoleAdminChangedEventObject>;
 
-export type MintDropEventFilter = TypedEventFilter<MintDropEvent>;
+export type RoleAdminChangedEventFilter = TypedEventFilter<RoleAdminChangedEvent>;
 
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
+export interface RoleGrantedEventObject {
+  role: string;
+  account: string;
+  sender: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
+export type RoleGrantedEvent = TypedEvent<[string, string, string], RoleGrantedEventObject>;
 
-export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
 
-export interface PosTxEventObject {
-  merchantAddress: string;
-  customerAddress: string;
-  gratAddress: string;
-  txAmount: BigNumber;
-  hasGratuity: boolean;
-  gratAmount: BigNumber;
-  gasFee: BigNumber;
-  transactionID: BigNumber;
-  takeFees: boolean;
+export interface RoleRevokedEventObject {
+  role: string;
+  account: string;
+  sender: string;
 }
-export type PosTxEvent = TypedEvent<
-  [string, string, string, BigNumber, boolean, BigNumber, BigNumber, BigNumber, boolean],
-  PosTxEventObject
->;
+export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedEventObject>;
 
-export type PosTxEventFilter = TypedEventFilter<PosTxEvent>;
-
-export interface SwapAndLiquifyEventObject {
-  tokensSwapped: BigNumber;
-  ethReceived: BigNumber;
-  tokensIntoLiqudity: BigNumber;
-}
-export type SwapAndLiquifyEvent = TypedEvent<[BigNumber, BigNumber, BigNumber], SwapAndLiquifyEventObject>;
-
-export type SwapAndLiquifyEventFilter = TypedEventFilter<SwapAndLiquifyEvent>;
-
-export interface SwapAndLiquifyEnabledUpdatedEventObject {
-  enabled: boolean;
-}
-export type SwapAndLiquifyEnabledUpdatedEvent = TypedEvent<[boolean], SwapAndLiquifyEnabledUpdatedEventObject>;
-
-export type SwapAndLiquifyEnabledUpdatedEventFilter = TypedEventFilter<SwapAndLiquifyEnabledUpdatedEvent>;
+export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -635,6 +306,13 @@ export interface TransferEventObject {
 export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
+
+export interface UnpausedEventObject {
+  account: string;
+}
+export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
+
+export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
 export interface UpgradedEventObject {
   implementation: string;
@@ -666,31 +344,23 @@ export interface Alp extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    _antiWhaleProtection(overrides?: CallOverrides): Promise<[boolean]>;
+    ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    _bountyDrawCount(overrides?: CallOverrides): Promise<[BigNumber]>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    _dEaD(overrides?: CallOverrides): Promise<[string]>;
+    MINTER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    _div(overrides?: CallOverrides): Promise<[number]>;
+    UPGRADER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    _isBlacklisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+    addFromWhiteList(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    _isMerchant(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    _launchedAt(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _lockableAccountsProtection(overrides?: CallOverrides): Promise<[boolean]>;
-
-    _maxTxAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _maxWallet(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _maxWhaleTxAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _merchantSellFee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    _tradingEnabled(overrides?: CallOverrides): Promise<[boolean]>;
+    addToWhiteList(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     allowance(
       owner: PromiseOrValue<string>,
@@ -704,33 +374,16 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    authorizeLola(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    authorizePos(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    authorizeService(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    blacklistAddress(
-      _address: PromiseOrValue<string>,
-      _value: PromiseOrValue<boolean>,
+    burn(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    circulatingSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    clearStuckBalance(
-      amountPercentage: PromiseOrValue<BigNumberish>,
+    burnFrom(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -742,30 +395,21 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    enableMessaging(
-      _enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    fromWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    excludeFromFee(
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    excludeFromReward(
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    includeInFee(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    includeInReward(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -773,263 +417,69 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    increaseLockTime(
-      _lockAccount: PromiseOrValue<string>,
-      _secondsToIncrease: PromiseOrValue<BigNumberish>,
+    initialize(
+      owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    isAuthorized(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isBlackListed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isExcludedFromFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isExcludedFromReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isKycEnabled(overrides?: CallOverrides): Promise<[boolean]>;
-
-    isLola(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isMessagingEnabled(overrides?: CallOverrides): Promise<[boolean]>;
-
-    isPos(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isService(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    lockedAccountDetails(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber, boolean]>;
-
-    lola(overrides?: CallOverrides): Promise<[string]>;
-
-    lolaAddressChange(
-      lolaAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    lolaMintSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      bnbRecipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    manualSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    maxSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    merchantDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean, boolean, number]>;
-
-    merchantDisable(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    minSalTokens(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mint(
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    mintDrop(
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    multiBlacklist(
-      wallets: PromiseOrValue<string>[],
-      status: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    multiLock(
-      wallets: PromiseOrValue<string>[],
-      lockWallet: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    pos(overrides?: CallOverrides): Promise<[string]>;
-
-    posAddressChange(
-      posAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    posGetAnubits(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    posMerchantDistribute(
-      merchantAddress: PromiseOrValue<string>,
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      takeFees: PromiseOrValue<boolean>[],
-      gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    posTransaction(
-      merchantAddress: PromiseOrValue<string>,
-      customerAddress: PromiseOrValue<string>,
-      gratAddress: PromiseOrValue<string>,
-      txAmount: PromiseOrValue<BigNumberish>,
-      hasGratuity: PromiseOrValue<boolean>,
-      gratAmount: PromiseOrValue<BigNumberish>,
-      gasFee: PromiseOrValue<BigNumberish>,
-      transactionID: PromiseOrValue<BigNumberish>,
-      takeFees: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
 
-    reflectionFromToken(
-      tAmount: PromiseOrValue<BigNumberish>,
-      deductTransferFee: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    sellFees(
-      overrides?: CallOverrides,
-    ): Promise<[number, number, number] & { refl: number; liq: number; bounty: number }>;
-
-    service(overrides?: CallOverrides): Promise<[string]>;
-
-    setAntiWhaleProtection(
-      _enabled: PromiseOrValue<boolean>,
+    removeFromWhiteList(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setIsWhaleExempt(
-      adr: PromiseOrValue<string>,
-      exempt: PromiseOrValue<boolean>,
+    removeToWhiteList(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setKycStatus(
-      _enabled: PromiseOrValue<boolean>,
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setLockableAccountsProtection(
-      _enabled: PromiseOrValue<boolean>,
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setMaxTx(
-      maxTxAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setMaxTxPercent(
-      maxTxPercent: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setMaxWalletAmount(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setMaxWhaleTxAmount(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setMerchant(
-      wallets: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setMessageId(
-      _address: PromiseOrValue<string>,
-      msgID: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setSalMin(
-      _minSalTokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setSwapAndLiquifyEnabled(
-      _enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setTrading(
-      enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    swapAndLiquifyEnabled(overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    timelock(
-      _lockAccount: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    tokenFromReflection(rAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    totalFees(overrides?: CallOverrides): Promise<[BigNumber]>;
+    toWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    unauthorize(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    uniswapV2Pair(overrides?: CallOverrides): Promise<[string]>;
-
-    uniswapV2Router(overrides?: CallOverrides): Promise<[string]>;
-
-    unlock(
-      _lockAccount: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    updateUniswapV2Router(
-      newAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     upgradeTo(
       newImplementation: PromiseOrValue<string>,
@@ -1041,40 +491,25 @@ export interface Alp extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    version(overrides?: CallOverrides): Promise<[string]>;
-
-    whaleSellTimeLimit(
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
   };
 
-  _antiWhaleProtection(overrides?: CallOverrides): Promise<boolean>;
+  ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  _bountyDrawCount(overrides?: CallOverrides): Promise<BigNumber>;
+  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  _dEaD(overrides?: CallOverrides): Promise<string>;
+  MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  _div(overrides?: CallOverrides): Promise<number>;
+  UPGRADER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  _isBlacklisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+  addFromWhiteList(
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  _isMerchant(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  _launchedAt(overrides?: CallOverrides): Promise<BigNumber>;
-
-  _lockableAccountsProtection(overrides?: CallOverrides): Promise<boolean>;
-
-  _maxTxAmount(overrides?: CallOverrides): Promise<BigNumber>;
-
-  _maxWallet(overrides?: CallOverrides): Promise<BigNumber>;
-
-  _maxWhaleTxAmount(overrides?: CallOverrides): Promise<BigNumber>;
-
-  _merchantSellFee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  _tradingEnabled(overrides?: CallOverrides): Promise<boolean>;
+  addToWhiteList(
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   allowance(
     owner: PromiseOrValue<string>,
@@ -1088,33 +523,16 @@ export interface Alp extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  authorizeLola(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  authorizePos(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  authorizeService(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
   balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  blacklistAddress(
-    _address: PromiseOrValue<string>,
-    _value: PromiseOrValue<boolean>,
+  burn(
+    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  circulatingSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  clearStuckBalance(
-    amountPercentage: PromiseOrValue<BigNumberish>,
+  burnFrom(
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -1126,30 +544,21 @@ export interface Alp extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  enableMessaging(
-    _enabled: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  fromWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  excludeFromFee(
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+  grantRole(
+    role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  excludeFromReward(
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  includeInFee(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  includeInReward(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   increaseAllowance(
     spender: PromiseOrValue<string>,
@@ -1157,263 +566,69 @@ export interface Alp extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  increaseLockTime(
-    _lockAccount: PromiseOrValue<string>,
-    _secondsToIncrease: PromiseOrValue<BigNumberish>,
+  initialize(
+    owner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  isAuthorized(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isBlackListed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isExcludedFromFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isExcludedFromReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isKycEnabled(overrides?: CallOverrides): Promise<boolean>;
-
-  isLola(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isMessagingEnabled(overrides?: CallOverrides): Promise<boolean>;
-
-  isPos(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isService(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  lockedAccountDetails(
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<[BigNumber, BigNumber, boolean]>;
-
-  lola(overrides?: CallOverrides): Promise<string>;
-
-  lolaAddressChange(
-    lolaAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  lolaMintSwap(
-    amount: PromiseOrValue<BigNumberish>,
-    bnbRecipient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  manualSwap(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  merchantDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean, boolean, number]>;
-
-  merchantDisable(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  minSalTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
   mint(
+    to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  mintDrop(
-    wallets: PromiseOrValue<string>[],
-    amountsInTokens: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  multiBlacklist(
-    wallets: PromiseOrValue<string>[],
-    status: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  multiLock(
-    wallets: PromiseOrValue<string>[],
-    lockWallet: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  pos(overrides?: CallOverrides): Promise<string>;
-
-  posAddressChange(
-    posAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  posGetAnubits(
-    recipient: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  posMerchantDistribute(
-    merchantAddress: PromiseOrValue<string>,
-    wallets: PromiseOrValue<string>[],
-    amountsInTokens: PromiseOrValue<BigNumberish>[],
-    takeFees: PromiseOrValue<boolean>[],
-    gasFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  posTransaction(
-    merchantAddress: PromiseOrValue<string>,
-    customerAddress: PromiseOrValue<string>,
-    gratAddress: PromiseOrValue<string>,
-    txAmount: PromiseOrValue<BigNumberish>,
-    hasGratuity: PromiseOrValue<boolean>,
-    gratAmount: PromiseOrValue<BigNumberish>,
-    gasFee: PromiseOrValue<BigNumberish>,
-    transactionID: PromiseOrValue<BigNumberish>,
-    takeFees: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  paused(overrides?: CallOverrides): Promise<boolean>;
 
   proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
-  reflectionFromToken(
-    tAmount: PromiseOrValue<BigNumberish>,
-    deductTransferFee: PromiseOrValue<boolean>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  sellFees(
-    overrides?: CallOverrides,
-  ): Promise<[number, number, number] & { refl: number; liq: number; bounty: number }>;
-
-  service(overrides?: CallOverrides): Promise<string>;
-
-  setAntiWhaleProtection(
-    _enabled: PromiseOrValue<boolean>,
+  removeFromWhiteList(
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setIsWhaleExempt(
-    adr: PromiseOrValue<string>,
-    exempt: PromiseOrValue<boolean>,
+  removeToWhiteList(
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setKycStatus(
-    _enabled: PromiseOrValue<boolean>,
+  renounceRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setLockableAccountsProtection(
-    _enabled: PromiseOrValue<boolean>,
+  revokeRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setMaxTx(
-    maxTxAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setMaxTxPercent(
-    maxTxPercent: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setMaxWalletAmount(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setMaxWhaleTxAmount(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setMerchant(
-    wallets: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setMessageId(
-    _address: PromiseOrValue<string>,
-    msgID: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setSalMin(
-    _minSalTokens: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setSwapAndLiquifyEnabled(
-    _enabled: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setTrading(
-    enabled: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  swapAndLiquifyEnabled(overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  timelock(
-    _lockAccount: PromiseOrValue<string>,
-    time: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  tokenFromReflection(rAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  totalFees(overrides?: CallOverrides): Promise<BigNumber>;
+  toWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  unauthorize(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  uniswapV2Pair(overrides?: CallOverrides): Promise<string>;
-
-  uniswapV2Router(overrides?: CallOverrides): Promise<string>;
-
-  unlock(
-    _lockAccount: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  updateUniswapV2Router(
-    newAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   upgradeTo(
     newImplementation: PromiseOrValue<string>,
@@ -1426,39 +641,18 @@ export interface Alp extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  version(overrides?: CallOverrides): Promise<string>;
-
-  whaleSellTimeLimit(
-    time: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
   callStatic: {
-    _antiWhaleProtection(overrides?: CallOverrides): Promise<boolean>;
+    ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    _bountyDrawCount(overrides?: CallOverrides): Promise<BigNumber>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    _dEaD(overrides?: CallOverrides): Promise<string>;
+    MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    _div(overrides?: CallOverrides): Promise<number>;
+    UPGRADER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    _isBlacklisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+    addFromWhiteList(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    _isMerchant(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    _launchedAt(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _lockableAccountsProtection(overrides?: CallOverrides): Promise<boolean>;
-
-    _maxTxAmount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _maxWallet(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _maxWhaleTxAmount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _merchantSellFee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    _tradingEnabled(overrides?: CallOverrides): Promise<boolean>;
+    addToWhiteList(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     allowance(
       owner: PromiseOrValue<string>,
@@ -1472,23 +666,15 @@ export interface Alp extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    authorizeLola(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    authorizePos(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    authorizeService(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    blacklistAddress(
-      _address: PromiseOrValue<string>,
-      _value: PromiseOrValue<boolean>,
+    burn(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    burnFrom(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
-
-    circulatingSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    clearStuckBalance(amountPercentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -1498,15 +684,21 @@ export interface Alp extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    enableMessaging(_enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+    fromWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    excludeFromFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    excludeFromReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    includeInFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    includeInReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -1514,203 +706,56 @@ export interface Alp extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    increaseLockTime(
-      _lockAccount: PromiseOrValue<string>,
-      _secondsToIncrease: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    initialize(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    initialize(overrides?: CallOverrides): Promise<void>;
-
-    isAuthorized(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isBlackListed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isExcludedFromFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isExcludedFromReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isKycEnabled(overrides?: CallOverrides): Promise<boolean>;
-
-    isLola(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isMessagingEnabled(overrides?: CallOverrides): Promise<boolean>;
-
-    isPos(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isService(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    lockedAccountDetails(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber, boolean]>;
-
-    lola(overrides?: CallOverrides): Promise<string>;
-
-    lolaAddressChange(lolaAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    lolaMintSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      bnbRecipient: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    manualSwap(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    merchantDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean, boolean, number]>;
-
-    merchantDisable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    minSalTokens(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mint(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    mintDrop(
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    multiBlacklist(
-      wallets: PromiseOrValue<string>[],
-      status: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    multiLock(
-      wallets: PromiseOrValue<string>[],
-      lockWallet: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    mint(to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
+    pause(overrides?: CallOverrides): Promise<void>;
 
-    pos(overrides?: CallOverrides): Promise<string>;
-
-    posAddressChange(posAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    posGetAnubits(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    posMerchantDistribute(
-      merchantAddress: PromiseOrValue<string>,
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      takeFees: PromiseOrValue<boolean>[],
-      gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    posTransaction(
-      merchantAddress: PromiseOrValue<string>,
-      customerAddress: PromiseOrValue<string>,
-      gratAddress: PromiseOrValue<string>,
-      txAmount: PromiseOrValue<BigNumberish>,
-      hasGratuity: PromiseOrValue<boolean>,
-      gratAmount: PromiseOrValue<BigNumberish>,
-      gasFee: PromiseOrValue<BigNumberish>,
-      transactionID: PromiseOrValue<BigNumberish>,
-      takeFees: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    paused(overrides?: CallOverrides): Promise<boolean>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
-    reflectionFromToken(
-      tAmount: PromiseOrValue<BigNumberish>,
-      deductTransferFee: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    removeFromWhiteList(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+    removeToWhiteList(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    sellFees(
-      overrides?: CallOverrides,
-    ): Promise<[number, number, number] & { refl: number; liq: number; bounty: number }>;
-
-    service(overrides?: CallOverrides): Promise<string>;
-
-    setAntiWhaleProtection(_enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
-
-    setIsWhaleExempt(
-      adr: PromiseOrValue<string>,
-      exempt: PromiseOrValue<boolean>,
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setKycStatus(_enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
-
-    setLockableAccountsProtection(_enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
-
-    setMaxTx(maxTxAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setMaxTxPercent(maxTxPercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setMaxWalletAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setMaxWhaleTxAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setMerchant(wallets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
-
-    setMessageId(
-      _address: PromiseOrValue<string>,
-      msgID: PromiseOrValue<BigNumberish>,
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setSalMin(_minSalTokens: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setSwapAndLiquifyEnabled(_enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
-
-    setTrading(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
-
-    swapAndLiquifyEnabled(overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    timelock(
-      _lockAccount: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    tokenFromReflection(rAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalFees(overrides?: CallOverrides): Promise<BigNumber>;
+    toWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    unauthorize(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    uniswapV2Pair(overrides?: CallOverrides): Promise<string>;
-
-    uniswapV2Router(overrides?: CallOverrides): Promise<string>;
-
-    unlock(_lockAccount: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    updateUniswapV2Router(newAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    unpause(overrides?: CallOverrides): Promise<void>;
 
     upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -1719,10 +764,6 @@ export interface Alp extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
-
-    version(overrides?: CallOverrides): Promise<string>;
-
-    whaleSellTimeLimit(time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -1743,62 +784,44 @@ export interface Alp extends BaseContract {
     'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
     BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
 
-    'DrawBounty(uint256,uint256)'(amount?: null, _bountyDrawCount?: null): DrawBountyEventFilter;
-    DrawBounty(amount?: null, _bountyDrawCount?: null): DrawBountyEventFilter;
-
-    'GetAnubits(address,uint256)'(recipient?: null, amount?: null): GetAnubitsEventFilter;
-    GetAnubits(recipient?: null, amount?: null): GetAnubitsEventFilter;
-
     'Initialized(uint8)'(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    'MessageSet(address,uint256)'(_address?: null, msgID?: null): MessageSetEventFilter;
-    MessageSet(_address?: null, msgID?: null): MessageSetEventFilter;
+    'Paused(address)'(account?: null): PausedEventFilter;
+    Paused(account?: null): PausedEventFilter;
 
-    'MintDrop(address,uint256)'(adr?: null, amount?: null): MintDropEventFilter;
-    MintDrop(adr?: null, amount?: null): MintDropEventFilter;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
+    ): RoleAdminChangedEventFilter;
+    RoleAdminChanged(
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
+    ): RoleAdminChangedEventFilter;
 
-    'OwnershipTransferred(address,address)'(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnershipTransferredEventFilter;
+    'RoleGranted(bytes32,address,address)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
-    'PosTx(address,address,address,uint256,bool,uint256,uint256,uint256,bool)'(
-      merchantAddress?: null,
-      customerAddress?: null,
-      gratAddress?: null,
-      txAmount?: null,
-      hasGratuity?: null,
-      gratAmount?: null,
-      gasFee?: null,
-      transactionID?: null,
-      takeFees?: null,
-    ): PosTxEventFilter;
-    PosTx(
-      merchantAddress?: null,
-      customerAddress?: null,
-      gratAddress?: null,
-      txAmount?: null,
-      hasGratuity?: null,
-      gratAmount?: null,
-      gasFee?: null,
-      transactionID?: null,
-      takeFees?: null,
-    ): PosTxEventFilter;
-
-    'SwapAndLiquify(uint256,uint256,uint256)'(
-      tokensSwapped?: null,
-      ethReceived?: null,
-      tokensIntoLiqudity?: null,
-    ): SwapAndLiquifyEventFilter;
-    SwapAndLiquify(tokensSwapped?: null, ethReceived?: null, tokensIntoLiqudity?: null): SwapAndLiquifyEventFilter;
-
-    'SwapAndLiquifyEnabledUpdated(bool)'(enabled?: null): SwapAndLiquifyEnabledUpdatedEventFilter;
-    SwapAndLiquifyEnabledUpdated(enabled?: null): SwapAndLiquifyEnabledUpdatedEventFilter;
+    'RoleRevoked(bytes32,address,address)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
@@ -1811,36 +834,31 @@ export interface Alp extends BaseContract {
       value?: null,
     ): TransferEventFilter;
 
+    'Unpaused(address)'(account?: null): UnpausedEventFilter;
+    Unpaused(account?: null): UnpausedEventFilter;
+
     'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
     Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
   };
 
   estimateGas: {
-    _antiWhaleProtection(overrides?: CallOverrides): Promise<BigNumber>;
+    ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _bountyDrawCount(overrides?: CallOverrides): Promise<BigNumber>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _dEaD(overrides?: CallOverrides): Promise<BigNumber>;
+    MINTER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _div(overrides?: CallOverrides): Promise<BigNumber>;
+    UPGRADER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _isBlacklisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    addFromWhiteList(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    _isMerchant(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _launchedAt(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _lockableAccountsProtection(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _maxTxAmount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _maxWallet(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _maxWhaleTxAmount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _merchantSellFee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _tradingEnabled(overrides?: CallOverrides): Promise<BigNumber>;
+    addToWhiteList(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     allowance(
       owner: PromiseOrValue<string>,
@@ -1854,33 +872,16 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    authorizeLola(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    authorizePos(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    authorizeService(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    blacklistAddress(
-      _address: PromiseOrValue<string>,
-      _value: PromiseOrValue<boolean>,
+    burn(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    circulatingSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    clearStuckBalance(
-      amountPercentage: PromiseOrValue<BigNumberish>,
+    burnFrom(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1892,29 +893,20 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    enableMessaging(
-      _enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    fromWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    excludeFromFee(
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    excludeFromReward(
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    includeInFee(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    includeInReward(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     increaseAllowance(
@@ -1923,258 +915,69 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    increaseLockTime(
-      _lockAccount: PromiseOrValue<string>,
-      _secondsToIncrease: PromiseOrValue<BigNumberish>,
+    initialize(
+      owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    isAuthorized(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isBlackListed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isExcludedFromFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isExcludedFromReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isKycEnabled(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isLola(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isMessagingEnabled(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isPos(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isService(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockedAccountDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    lola(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lolaAddressChange(
-      lolaAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    lolaMintSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      bnbRecipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    manualSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    merchantDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    merchantDisable(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    minSalTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    mintDrop(
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    multiBlacklist(
-      wallets: PromiseOrValue<string>[],
-      status: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    multiLock(
-      wallets: PromiseOrValue<string>[],
-      lockWallet: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    pos(overrides?: CallOverrides): Promise<BigNumber>;
-
-    posAddressChange(
-      posAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    posGetAnubits(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    posMerchantDistribute(
-      merchantAddress: PromiseOrValue<string>,
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      takeFees: PromiseOrValue<boolean>[],
-      gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    posTransaction(
-      merchantAddress: PromiseOrValue<string>,
-      customerAddress: PromiseOrValue<string>,
-      gratAddress: PromiseOrValue<string>,
-      txAmount: PromiseOrValue<BigNumberish>,
-      hasGratuity: PromiseOrValue<boolean>,
-      gratAmount: PromiseOrValue<BigNumberish>,
-      gasFee: PromiseOrValue<BigNumberish>,
-      transactionID: PromiseOrValue<BigNumberish>,
-      takeFees: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reflectionFromToken(
-      tAmount: PromiseOrValue<BigNumberish>,
-      deductTransferFee: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    sellFees(overrides?: CallOverrides): Promise<BigNumber>;
-
-    service(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setAntiWhaleProtection(
-      _enabled: PromiseOrValue<boolean>,
+    removeFromWhiteList(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setIsWhaleExempt(
-      adr: PromiseOrValue<string>,
-      exempt: PromiseOrValue<boolean>,
+    removeToWhiteList(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setKycStatus(
-      _enabled: PromiseOrValue<boolean>,
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setLockableAccountsProtection(
-      _enabled: PromiseOrValue<boolean>,
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setMaxTx(
-      maxTxAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setMaxTxPercent(
-      maxTxPercent: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setMaxWalletAmount(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setMaxWhaleTxAmount(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setMerchant(
-      wallets: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setMessageId(
-      _address: PromiseOrValue<string>,
-      msgID: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setSalMin(
-      _minSalTokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setSwapAndLiquifyEnabled(
-      _enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setTrading(
-      enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    swapAndLiquifyEnabled(overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    timelock(
-      _lockAccount: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    tokenFromReflection(rAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalFees(overrides?: CallOverrides): Promise<BigNumber>;
+    toWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    unauthorize(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    uniswapV2Pair(overrides?: CallOverrides): Promise<BigNumber>;
-
-    uniswapV2Router(overrides?: CallOverrides): Promise<BigNumber>;
-
-    unlock(
-      _lockAccount: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    updateUniswapV2Router(
-      newAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     upgradeTo(
       newImplementation: PromiseOrValue<string>,
@@ -2186,41 +989,26 @@ export interface Alp extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    version(overrides?: CallOverrides): Promise<BigNumber>;
-
-    whaleSellTimeLimit(
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    _antiWhaleProtection(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _bountyDrawCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _dEaD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    MINTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _div(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    UPGRADER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _isBlacklisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addFromWhiteList(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    _isMerchant(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _launchedAt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _lockableAccountsProtection(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _maxTxAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _maxWallet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _maxWhaleTxAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _merchantSellFee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _tradingEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addToWhiteList(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     allowance(
       owner: PromiseOrValue<string>,
@@ -2234,33 +1022,16 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    authorizeLola(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    authorizePos(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    authorizeService(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    blacklistAddress(
-      _address: PromiseOrValue<string>,
-      _value: PromiseOrValue<boolean>,
+    burn(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    circulatingSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    clearStuckBalance(
-      amountPercentage: PromiseOrValue<BigNumberish>,
+    burnFrom(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -2272,29 +1043,20 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    enableMessaging(
-      _enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    fromWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    excludeFromFee(
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    excludeFromReward(
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    includeInFee(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    includeInReward(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
@@ -2303,261 +1065,69 @@ export interface Alp extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    increaseLockTime(
-      _lockAccount: PromiseOrValue<string>,
-      _secondsToIncrease: PromiseOrValue<BigNumberish>,
+    initialize(
+      owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    isAuthorized(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isBlackListed(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isExcludedFromFee(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isExcludedFromReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isKycEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isLola(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isMessagingEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isPos(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isService(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lockedAccountDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lola(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lolaAddressChange(
-      lolaAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    lolaMintSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      bnbRecipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    manualSwap(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    maxSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    merchantDetails(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    merchantDisable(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    minSalTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    mintDrop(
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    multiBlacklist(
-      wallets: PromiseOrValue<string>[],
-      status: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    multiLock(
-      wallets: PromiseOrValue<string>[],
-      lockWallet: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    pos(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    posAddressChange(
-      posAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    posGetAnubits(
-      recipient: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    posMerchantDistribute(
-      merchantAddress: PromiseOrValue<string>,
-      wallets: PromiseOrValue<string>[],
-      amountsInTokens: PromiseOrValue<BigNumberish>[],
-      takeFees: PromiseOrValue<boolean>[],
-      gasFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    posTransaction(
-      merchantAddress: PromiseOrValue<string>,
-      customerAddress: PromiseOrValue<string>,
-      gratAddress: PromiseOrValue<string>,
-      txAmount: PromiseOrValue<BigNumberish>,
-      hasGratuity: PromiseOrValue<boolean>,
-      gratAmount: PromiseOrValue<BigNumberish>,
-      gasFee: PromiseOrValue<BigNumberish>,
-      transactionID: PromiseOrValue<BigNumberish>,
-      takeFees: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reflectionFromToken(
-      tAmount: PromiseOrValue<BigNumberish>,
-      deductTransferFee: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    sellFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    service(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setAntiWhaleProtection(
-      _enabled: PromiseOrValue<boolean>,
+    removeFromWhiteList(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setIsWhaleExempt(
-      adr: PromiseOrValue<string>,
-      exempt: PromiseOrValue<boolean>,
+    removeToWhiteList(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setKycStatus(
-      _enabled: PromiseOrValue<boolean>,
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setLockableAccountsProtection(
-      _enabled: PromiseOrValue<boolean>,
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setMaxTx(
-      maxTxAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setMaxTxPercent(
-      maxTxPercent: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setMaxWalletAmount(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setMaxWhaleTxAmount(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setMerchant(
-      wallets: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setMessageId(
-      _address: PromiseOrValue<string>,
-      msgID: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setSalMin(
-      _minSalTokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setSwapAndLiquifyEnabled(
-      _enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setTrading(
-      enabled: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    swapAndLiquifyEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    timelock(
-      _lockAccount: PromiseOrValue<string>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    tokenFromReflection(
-      rAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    totalFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    toWhiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    unauthorize(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    uniswapV2Pair(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    uniswapV2Router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    unlock(
-      _lockAccount: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    updateUniswapV2Router(
-      newAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     upgradeTo(
       newImplementation: PromiseOrValue<string>,
@@ -2568,13 +1138,6 @@ export interface Alp extends BaseContract {
       newImplementation: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    whaleSellTimeLimit(
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
