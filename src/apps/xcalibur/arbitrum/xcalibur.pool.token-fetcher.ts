@@ -17,7 +17,7 @@ import { XcaliburContractFactory, XcaliburSwapFactory, XcaliburRouter, UniswapPa
 
 @PositionTemplate()
 export class ArbitrumXcaliburPoolTokenFetcher extends AppTokenTemplatePositionFetcher<XcaliburToken> {
-  groupLabel: string = 'Your Group Label';
+  groupLabel: string = 'Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
