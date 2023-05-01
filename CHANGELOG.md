@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.454.0](https://github.com/Zapper-fi/studio/compare/v0.453.0...v0.454.0) (2023-05-01)
+
+
+### Features
+
+* **synthetix:** display perp position side ([#2621](https://github.com/Zapper-fi/studio/issues/2621)) ([c8917fb](https://github.com/Zapper-fi/studio/commit/c8917fb08fda7fcb2ecad7b9d21e57c17821e4a7))
+
+
+### Bug Fixes
+
+* **olympus:** Outstanding Reward Positions ([#2628](https://github.com/Zapper-fi/studio/issues/2628)) ([b472465](https://github.com/Zapper-fi/studio/commit/b4724651cf22b2082048d1311ffc69137cae9aa6))
+
 ## [0.453.0](https://github.com/Zapper-fi/studio/compare/v0.452.0...v0.453.0) (2023-04-28)
 
 
