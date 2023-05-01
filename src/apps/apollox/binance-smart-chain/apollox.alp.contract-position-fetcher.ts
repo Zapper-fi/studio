@@ -17,6 +17,7 @@ import {
 import { Alp, ApolloxContractFactory } from '../contracts';
 
 const ALP_PROXY_CONTRACT = '0x4e47057f45adf24ba41375a175da0357cb3480e5';
+
 @PositionTemplate()
 export class BinanceSmartChainApolloxAlpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Alp> {
   groupLabel = 'Liquidity Pool';
@@ -40,7 +41,7 @@ export class BinanceSmartChainApolloxAlpContractPositionFetcher extends Contract
   async getTokenDefinitions(
     params: GetTokenDefinitionsParams<Alp, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: params.contract.address, network: this.network, metaType: MetaType.SUPPLIED }];
+    return [{ address: await params.contract.address, network: this.network, metaType: MetaType.SUPPLIED }];
   }
 
   async getLabel(
