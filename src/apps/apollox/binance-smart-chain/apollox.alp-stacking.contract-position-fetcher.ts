@@ -71,6 +71,6 @@ export class BinanceSmartChainApolloxAlpStakingContractPositionFetcher extends C
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<AlpStaking, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    return [await params.contract.stakeOf(params.address)];
+    return [await params.contract.stakeOf(params.address), 0];
   }
 }
