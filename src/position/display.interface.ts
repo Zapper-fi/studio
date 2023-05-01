@@ -26,7 +26,7 @@ export type PercentageDisplayItem = {
   value: number;
 };
 
-export type MetadataItem =
+export type AnyDisplayItem =
   | StringDisplayItem
   | NumberDisplayItem
   | DollarDisplayItem
@@ -35,14 +35,7 @@ export type MetadataItem =
 
 export type StatsItem = {
   label: string | TranslationDisplayItem;
-  value:
-    | string // @TODO Remove
-    | number // @TODO Remove
-    | StringDisplayItem
-    | NumberDisplayItem
-    | TranslationDisplayItem
-    | DollarDisplayItem
-    | PercentageDisplayItem;
+  value: AnyDisplayItem;
 };
 
 export enum BalanceDisplayMode {
