@@ -6,7 +6,6 @@ import { range, sumBy } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import {
   CHUNK_SIZE,
   chunkArrayForMultiCall,
@@ -149,9 +148,8 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     return mapTokensToDolomiteDataProps(params, this.isFetchingDolomiteBalances(), multicall);
   }
 
-  async getLabel(params: GetDisplayPropsParams<DolomiteMargin>): Promise<string> {
-    const label = getLabelFromToken(params.contractPosition.tokens[0]);
-    return label.replace('WETH', 'ETH');
+  async getLabel(_params: GetDisplayPropsParams<DolomiteMargin>): Promise<string> {
+    return '';
   }
   async getBalances(address: string): Promise<ContractPositionBalance<DolomiteDataProps>[]> {
     if (address === ZERO_ADDRESS) {

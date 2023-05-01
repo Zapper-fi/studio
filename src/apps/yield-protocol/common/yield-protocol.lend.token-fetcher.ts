@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, ethers } from 'ethers';
 import { gql } from 'graphql-request';
-import moment from 'moment';
+import moment, { unix } from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -21,7 +21,7 @@ import { YieldProtocolContractFactory } from '../contracts';
 import { YieldProtocolLendToken } from '../contracts/ethers/YieldProtocolLendToken';
 
 export const formatMaturity = (maturity: number) => {
-  return moment(moment.unix(maturity)).format('MMMM D, yyyy');
+  return moment(unix(maturity)).format('MMMM D, yyyy');
 };
 
 type YieldPoolDetails = {

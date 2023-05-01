@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
+import { OptimismMuxMlpTokenFetcher } from '~apps/mux/optimism/mux.mlp.token-fetcher';
+import { OptimismMuxPerpContractPositionFetcher } from '~apps/mux/optimism/mux.perp.contract-position-fetcher';
 
 import { ArbitrumMuxFarmContractPositionFetcher } from './arbitrum/mux.farm.contract-position-fetcher';
 import { ArbitrumMuxMlpTokenFetcher } from './arbitrum/mux.mlp.token-fetcher';
@@ -31,6 +33,9 @@ import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract
     // Fantom
     FantomMuxPerpContractPositionFetcher,
     FantomMuxMlpTokenFetcher,
+    // Optimism
+    OptimismMuxMlpTokenFetcher,
+    OptimismMuxPerpContractPositionFetcher,
   ],
 })
 export class MuxAppModule extends AbstractApp() {}

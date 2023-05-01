@@ -1,5 +1,3 @@
-import 'moment-duration-format';
-
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { MeanFinanceDcaPositionContractPositionFetcher } from '../common/mean-finance.dca-position.contract-position-fetcher';

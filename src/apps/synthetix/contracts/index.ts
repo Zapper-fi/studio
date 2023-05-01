@@ -7,6 +7,7 @@ import { Network } from '~types/network.interface';
 import {
   SynthetixAddressResolver__factory,
   SynthetixExchangeRates__factory,
+  SynthetixFeePool__factory,
   SynthetixLoan__factory,
   SynthetixNetworkToken__factory,
   SynthetixPerp__factory,
@@ -30,6 +31,9 @@ export class SynthetixContractFactory extends ContractFactory {
   synthetixExchangeRates({ address, network }: ContractOpts) {
     return SynthetixExchangeRates__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  synthetixFeePool({ address, network }: ContractOpts) {
+    return SynthetixFeePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   synthetixLoan({ address, network }: ContractOpts) {
     return SynthetixLoan__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -52,6 +56,7 @@ export class SynthetixContractFactory extends ContractFactory {
 
 export type { SynthetixAddressResolver } from './ethers';
 export type { SynthetixExchangeRates } from './ethers';
+export type { SynthetixFeePool } from './ethers';
 export type { SynthetixLoan } from './ethers';
 export type { SynthetixNetworkToken } from './ethers';
 export type { SynthetixPerp } from './ethers';

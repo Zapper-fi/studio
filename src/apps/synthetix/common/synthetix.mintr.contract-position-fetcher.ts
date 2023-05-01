@@ -26,6 +26,7 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
 > {
   abstract snxAddress: string;
   abstract sUSDAddress: string;
+  abstract feePoolAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -55,6 +56,11 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
         address: this.sUSDAddress,
         network: this.network,
       },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.snxAddress,
+        network: this.network,
+      },
     ];
   }
 
@@ -82,7 +88,14 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
       multicall.wrap(contract).debtBalanceOf(address, formatBytes32String('sUSD')),
     ]);
 
+    const feePool = this.contractFactory.synthetixFeePool({
+      address: this.feePoolAddress,
+      network: this.network,
+    });
+
+    const userFees = await multicall.wrap(feePool).feesByPeriod(address);
+
     const collateralBalanceRaw = new BigNumber(collateralRaw.toString()).minus(transferableRaw.toString()).toFixed(0);
-    return [collateralBalanceRaw, debtBalanceRaw.toString()];
+    return [collateralBalanceRaw, debtBalanceRaw.toString(), userFees[1][1]];
   }
 }

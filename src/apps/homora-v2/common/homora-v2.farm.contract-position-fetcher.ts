@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { compact, sumBy } from 'lodash';
+import _, { compact, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -155,6 +155,8 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
 
   async getBalances(address: string) {
     const data = await this.getPositionsData(this.network);
+    if (_.isEmpty(data)) return [];
+
     const userPositions = data.filter(v => v.owner === address);
     if (!userPositions.length) return [];
 

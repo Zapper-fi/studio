@@ -1,5 +1,3 @@
-import 'moment-duration-format';
-
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { AcrossPoolV2TokenFetcher } from '../common/across.pool-v2.token-fetcher';

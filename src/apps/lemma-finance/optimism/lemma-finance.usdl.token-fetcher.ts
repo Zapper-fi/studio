@@ -39,7 +39,7 @@ export class OptimismLemmaFinanceUsdlTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getPricePerShare() {
-    return [1]; // @TODO Get reserves to derive PPS
+    return [1, 1, 1, 1, 1, 1]; // @TODO Get reserves to derive PPS
   }
 
   async getPrice() {

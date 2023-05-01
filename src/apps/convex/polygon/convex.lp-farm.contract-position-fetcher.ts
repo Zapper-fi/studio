@@ -83,7 +83,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: '0xa73edcf18421b56d9af1ce08a34e102e23b2c4b6',
+        address: definition.lpTokenAddress,
         network: this.network,
       },
       ...definition.rewardAddresses.map(address => ({

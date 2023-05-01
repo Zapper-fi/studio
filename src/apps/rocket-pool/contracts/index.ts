@@ -4,10 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { RocketDaoNodeTrusted__factory } from './ethers';
-import { RocketMinipoolManager__factory } from './ethers';
-import { RocketNodeDeposit__factory } from './ethers';
-import { RocketNodeStaking__factory } from './ethers';
+import {
+  RocketDaoNodeTrusted__factory,
+  RocketMinipool__factory,
+  RocketMinipoolManager__factory,
+  RocketNodeDeposit__factory,
+  RocketNodeStaking__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -21,6 +24,9 @@ export class RocketPoolContractFactory extends ContractFactory {
   rocketDaoNodeTrusted({ address, network }: ContractOpts) {
     return RocketDaoNodeTrusted__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  rocketMinipool({ address, network }: ContractOpts) {
+    return RocketMinipool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   rocketMinipoolManager({ address, network }: ContractOpts) {
     return RocketMinipoolManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -33,6 +39,7 @@ export class RocketPoolContractFactory extends ContractFactory {
 }
 
 export type { RocketDaoNodeTrusted } from './ethers';
+export type { RocketMinipool } from './ethers';
 export type { RocketMinipoolManager } from './ethers';
 export type { RocketNodeDeposit } from './ethers';
 export type { RocketNodeStaking } from './ethers';

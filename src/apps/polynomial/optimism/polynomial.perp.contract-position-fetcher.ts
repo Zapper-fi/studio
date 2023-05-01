@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 
 import { SynthetixContractFactory } from '../../synthetix/contracts';
 import { OptimismSynthetixPerpV2ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v2.contract-position-fetcher';
-import { PolynomialContractFactory } from '../contracts';
 import { PolynomialAccountResolver } from '../common/polynomial.account-resolver';
+import { PolynomialContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class OptimismPolynomialPerpContractPositionFetcher extends OptimismSynthetixPerpV2ContractPositionFetcher {

@@ -1,0 +1,591 @@
+[
+  {
+    "inputs": [{ "internalType": "contract IPolicyPool", "name": "policyPool_", "type": "address" }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "previousAdmin", "type": "address" },
+      { "indexed": false, "internalType": "address", "name": "newAdmin", "type": "address" }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "spender", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": true, "internalType": "address", "name": "beacon", "type": "address" }],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "enum IAccessManager.GovernanceActions", "name": "action", "type": "uint8" },
+      { "indexed": false, "internalType": "address", "name": "value", "type": "address" }
+    ],
+    "name": "ComponentChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "enum IAccessManager.GovernanceActions", "name": "action", "type": "uint8" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "GovernanceAction",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint8", "name": "version", "type": "uint8" }],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": true, "internalType": "address", "name": "borrower", "type": "address" }],
+    "name": "InternalBorrowerAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "borrower", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "defaultedDebt", "type": "uint256" }
+    ],
+    "name": "InternalBorrowerRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "borrower", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "amountAsked", "type": "uint256" }
+    ],
+    "name": "InternalLoan",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "borrower", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "InternalLoanRepaid",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "uint256", "name": "interestRate", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "SCRLocked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "uint256", "name": "interestRate", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "SCRUnlocked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "from", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "to", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "Unpaused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": true, "internalType": "address", "name": "implementation", "type": "address" }],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "GUARDIAN_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "LEVEL1_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "LEVEL2_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "LEVEL3_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TWEAK_EXPIRATION",
+    "outputs": [{ "internalType": "uint40", "name": "", "type": "uint40" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "borrower", "type": "address" }],
+    "name": "addBorrower",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "address", "name": "spender", "type": "address" }
+    ],
+    "name": "allowance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "approve",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "assetManager",
+    "outputs": [{ "internalType": "contract IAssetManager", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "balanceOf",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "checkpoint", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "currency",
+    "outputs": [{ "internalType": "contract IERC20Metadata", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "subtractedValue", "type": "uint256" }
+    ],
+    "name": "decreaseAllowance",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "provider", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "deposit",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes", "name": "functionCall", "type": "bytes" }],
+    "name": "forwardToAssetManager",
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fundsAvailable",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fundsAvailableToLock",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bool", "name": "updated", "type": "bool" }],
+    "name": "getCurrentScale",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "borrower", "type": "address" }],
+    "name": "getLoan",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getScaledUserBalanceAndSupply",
+    "outputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "addedValue", "type": "uint256" }
+    ],
+    "name": "increaseAllowance",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "name_", "type": "string" },
+      { "internalType": "string", "name": "symbol_", "type": "string" },
+      { "internalType": "uint256", "name": "maxUtilizationRate_", "type": "uint256" },
+      { "internalType": "uint256", "name": "internalLoanInterestRate_", "type": "uint256" }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "address", "name": "receiver", "type": "address" }
+    ],
+    "name": "internalLoan",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "internalLoanInterestRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastTweak",
+    "outputs": [
+      { "internalType": "uint40", "name": "", "type": "uint40" },
+      { "internalType": "uint56", "name": "", "type": "uint56" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "liquidityRequirement",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "scrAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "policyInterestRate", "type": "uint256" }
+    ],
+    "name": "lockScr",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxNegativeAdjustment",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxUtilizationRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minUtilizationRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "policyPool",
+    "outputs": [{ "internalType": "contract IPolicyPool", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "rebalance", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [], "name": "recordEarnings", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "borrower", "type": "address" }],
+    "name": "removeBorrower",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "address", "name": "onBehalfOf", "type": "address" }
+    ],
+    "name": "repayLoan",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "scaledBalanceOf",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "scaledTotalSupply",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "scr",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "scrInterestRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "contract IAssetManager", "name": "newAM", "type": "address" },
+      { "internalType": "bool", "name": "force", "type": "bool" }
+    ],
+    "name": "setAssetManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "enum IEToken.Parameter", "name": "param", "type": "uint8" },
+      { "internalType": "uint256", "name": "newValue", "type": "uint256" }
+    ],
+    "name": "setParam",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "contract ILPWhitelist", "name": "lpWhitelist_", "type": "address" }],
+    "name": "setWhitelist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }],
+    "name": "supportsInterface",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "tokenInterestRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalWithdrawable",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "recipient", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transfer",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "sender", "type": "address" },
+      { "internalType": "address", "name": "recipient", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transferFrom",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "scrAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "policyInterestRate", "type": "uint256" },
+      { "internalType": "int256", "name": "adjustment", "type": "int256" }
+    ],
+    "name": "unlockScr",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "newImplementation", "type": "address" }],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newImplementation", "type": "address" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "utilizationRate",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "whitelist",
+    "outputs": [{ "internalType": "contract ILPWhitelist", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "provider", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "withdraw",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

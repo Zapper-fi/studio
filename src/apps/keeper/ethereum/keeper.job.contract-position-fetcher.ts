@@ -1,5 +1,3 @@
-import 'moment-duration-format';
-
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { KeeperJobContractPositionFetcher } from '../common/keeper.job.contract-position-fetcher';
