@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -95,8 +95,15 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
     const balance = await _params.contract.getUserPairShare(_params.address);
     const ohmPrice = (await _params.contract.getOhmTknPoolPrice()).div(1e9);
     const ohmBalance = balance.mul(ohmPrice).div(1e9);
-    const rewards = await _params.contract.getOutstandingRewards(_params.address);
-    const rewardBalances = rewards.map(reward => reward[1]);
+    const rewardTokens = await _params.contract.getRewardTokens();
+    const rewardBalances = await Promise.all(
+      rewardTokens.map(async token => {
+        const rewards = await _params.contract.getOutstandingRewards(_params.address);
+        const rewardBalances =
+          rewards.find(address => address.rewardToken === token)?.outstandingRewards || BigNumber.from('0');
+        return rewardBalances;
+      }),
+    );
     return [balance, ohmBalance, ohmBalance, ...rewardBalances];
   }
 }
