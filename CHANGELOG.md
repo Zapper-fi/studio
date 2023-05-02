@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.455.0](https://github.com/Zapper-fi/studio/compare/v0.454.1...v0.455.0) (2023-05-02)
+
+
+### Features
+
+* **kwenta:** use new assets logos ([#2633](https://github.com/Zapper-fi/studio/issues/2633)) ([d937655](https://github.com/Zapper-fi/studio/commit/d93765541b300647808477d62bfb9a6e69211b86))
+
 ## [0.454.1](https://github.com/Zapper-fi/studio/compare/v0.454.0...v0.454.1) (2023-05-02)
 
 
