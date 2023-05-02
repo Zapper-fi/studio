@@ -6,7 +6,7 @@ import { OptimismSynthetixPerpContractPositionFetcher } from './synthetix.perp.c
 export class OptimismSynthetixPerpV2ContractPositionFetcher extends OptimismSynthetixPerpContractPositionFetcher {
   groupLabel = 'PerpV2';
 
-  marketFilter(market) {
-    return this.isV2Market(market);
+  marketFilter(marketKey: string) {
+    return this.isV2Market(marketKey);
   }
 }
