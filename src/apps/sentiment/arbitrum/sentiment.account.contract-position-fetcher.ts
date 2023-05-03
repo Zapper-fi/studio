@@ -20,7 +20,7 @@ import {
 
 import { SentimentAccount, SentimentContractFactory, SentimentRegistry } from '../contracts';
 
-import { SENTIMENT_REGISTRY_ADDRESS, SENTIMENT_REGISTRY_IMPL_ADDRESS } from './sentiment.constants';
+import { SENTIMENT_REGISTRY_ADDRESS } from './sentiment.constants';
 
 type GetLendingMarketsResponse = {
   markets: {
@@ -141,14 +141,7 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<SentimentAccountDefinition[]> {
-    const sentimentAccountsRaw = await multicall
-      .wrap(
-        this.sentimentContractFactory.sentimentRegistry({
-          address: SENTIMENT_REGISTRY_IMPL_ADDRESS,
-          network: this.network,
-        }),
-      )
-      .getAllAccounts();
+    const sentimentAccountsRaw = await multicall.wrap(this.registry).getAllAccounts();
     console.log('accounts : ', sentimentAccountsRaw);
     // sentimentAccountsRaw.push('0x03e2db735e111b2fc6c050f720c5a53a172b66d6');
     // const sentimentAccounts = await Promise.all(
@@ -216,61 +209,4 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
     console.log('getTokenBalancesPerPosition');
     return ['0'];
   }
-
-  // async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-  //   // const accounts = await this.getUserAccountsFromSubgraph(address);
-  //   const accounts = await this.sentimentContractFactory
-  //     .sentimentRegistry({
-  //       address: SENTIMENT_REGISTRY_ADDRESS,
-  //       network: this.network,
-  //     })
-  //     .accountsOwnedBy(address.toString());
-  //   console.log('accounts : ', accounts);
-
-  //   const [allAssets, lendingMarkets] = await Promise.all([
-  //     this.getAssetsFromSubgraph(),
-  //     this.getLendingMarketsFromSubgraph(),
-  //   ]);
-  //   console.log('contracts : ', contractPositions);
-
-  //   const allBalances: number[] = [];
-  //   await Promise.all(
-  //     accounts.map(async account => {
-  //       // const positionsTest = this.getTokenBalancesPerPosition(account)
-  //       const accountContract = this.getContract(account);
-  //       const accountAssets = await accountContract.getAssets();
-  //       console.log('assets', accountAssets);
-  //       const assetsBalances: { asset: string; balance: number }[] = await Promise.all(
-  //         accountAssets.map(async address => {
-  //           const assetContract = this.sentimentContractFactory.erc20({ address, network: this.network });
-  //           const balanceRaw = await assetContract.balanceOf(account);
-  //           console.log('asset : ', address);
-  //           const balance = Number(balanceRaw);
-  //           console.log('balance : ', balance);
-  //           if (balance === 0) return;
-  //           return { address, balance };
-  //         }),
-  //       );
-  //       const accountAssetsBalances = await Promise.all(
-  //         assetsBalances.map(async assetBalance => {
-  //           const assetInfos = await this.appToolkit.getBaseTokenPrice({
-  //             address: assetBalance.asset,
-  //             network: this.network,
-  //           });
-  //           return merge({}, assetBalance, {
-  //             balanceUSD: uniV3Token.balanceUSD,
-  //             tokens: [{ ...assetInfos }],
-  //             displayProps: {
-  //               label: `Compounding ${uniV3Token.displayProps.label}`,
-  //               images: uniV3Token.displayProps.images,
-  //               statsItems: [],
-  //             },
-  //           });
-  //         }),
-  //       );
-  //     }),
-  //   );
-
-  //   return [allBalances];
-  // }
 }
