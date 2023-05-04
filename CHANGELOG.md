@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.455.2](https://github.com/Zapper-fi/studio/compare/v0.455.1...v0.455.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* **kwenta:** asset logo background ([#2640](https://github.com/Zapper-fi/studio/issues/2640)) ([5837c7c](https://github.com/Zapper-fi/studio/commit/5837c7c7f8123e1cbdb4aca0db0da871b61e4898))
+
 ## [0.455.1](https://github.com/Zapper-fi/studio/compare/v0.455.0...v0.455.1) (2023-05-03)
 
 
