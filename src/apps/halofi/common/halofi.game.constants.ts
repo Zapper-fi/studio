@@ -165,4 +165,4 @@ export type GamesResponse = Record<
   }
 >;
 
-export const BASE_API_URL = 'https://staging.goodghosting-api.com';
+export const BASE_API_URL = 'https://staging.goodghosting-api.com/v1';
