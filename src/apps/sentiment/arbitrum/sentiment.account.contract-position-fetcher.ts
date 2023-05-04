@@ -22,8 +22,6 @@ import { SentimentAccount, SentimentContractFactory, SentimentRegistry } from '.
 
 import { SENTIMENT_REGISTRY_ADDRESS } from './sentiment.constants';
 
-const GRAPHQL_LIST_LIMIT = 100;
-
 type GetLendingMarketsResponse = {
   markets: {
     asset: {
@@ -73,7 +71,7 @@ const GET_ASSETS_QUERY = gql`
 
 const GET_ALL_ACCOUNTS_QUERY = gql`
   query getFirstAccounts($first: Int!, $lastId: String) {
-    accounts(first: $first, id_gt: $lastId, orderBy: blockNumber) {
+    accounts(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
       id
       blockNumber
       owner {
@@ -128,23 +126,17 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
     return response.assets.map(asset => asset.id);
   }
 
-  // @Cache({
-  //   key: `studio:sentiment:accs`,
-  //   ttl: 5 * 60, // 60 minutes
-  // })
-  async getAccountsFromSubgraph(): Promise<{ address: string; owner: string }[]> {
-    // FIXME: This call works in principle, but I think the function can be optimized
-    // by using the a skip: 1000 * i ( i being the fetchAll loop index )
-    // instead of IDs as IDs can be anything
+  @Cache({
+    key: `studio:sentiment:accounts`,
+    ttl: 5 * 60, // 60 minutes
+  })
+  async getAccountsFromSubgraph(): Promise<SentimentAccountDefinition[]> {
     const response = await gqlFetchAll<GetAccountsResponse>({
       query: GET_ALL_ACCOUNTS_QUERY,
       endpoint: this.subgraphUrl,
       variables: undefined,
       dataToSearch: 'accounts',
     });
-
-    console.log('length all : ', response.accounts.length);
-
     return response.accounts.map(account => ({
       address: account.id,
       owner: account.owner.id,
@@ -167,7 +159,6 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    // TODO: cache should do its job here to prevent refetching, double check that
     const [investableAssets, borrowableAssets] = await Promise.all([
       this.getAssetsFromSubgraph(),
       this.getLendingMarketsFromSubgraph(),
