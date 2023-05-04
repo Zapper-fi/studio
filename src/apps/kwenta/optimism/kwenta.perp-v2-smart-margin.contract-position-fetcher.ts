@@ -11,7 +11,7 @@ import { KwentaContractFactory } from '../contracts';
 @PositionTemplate()
 export class OptimismKwentaPerpV2SmartMarginContractPositionFetcher extends OptimismSynthetixPerpV2ContractPositionFetcher {
   groupLabel = 'PerpV2 smart-margin';
-  extraLabel = ' (v2 smart-margin)';
+  useCustomMarketLogos = true;
   kwentaAccountResolverAddress = '0x8234f990b149ae59416dc260305e565e5dafeb54';
 
   constructor(

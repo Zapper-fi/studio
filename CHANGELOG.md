@@ -4,6 +4,54 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.455.3](https://github.com/Zapper-fi/studio/compare/v0.455.2...v0.455.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* **synthetix:** custom perp market logos ([#2643](https://github.com/Zapper-fi/studio/issues/2643)) ([e2cbd6e](https://github.com/Zapper-fi/studio/commit/e2cbd6ec1e06a7980151166766709317575e0eb9))
+
+## [0.455.2](https://github.com/Zapper-fi/studio/compare/v0.455.1...v0.455.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* **kwenta:** asset logo background ([#2640](https://github.com/Zapper-fi/studio/issues/2640)) ([5837c7c](https://github.com/Zapper-fi/studio/commit/5837c7c7f8123e1cbdb4aca0db0da871b61e4898))
+
+## [0.455.1](https://github.com/Zapper-fi/studio/compare/v0.455.0...v0.455.1) (2023-05-03)
+
+
+### Bug Fixes
+
+* **readme:** Remove create-group command from docs ([#2638](https://github.com/Zapper-fi/studio/issues/2638)) ([34600f6](https://github.com/Zapper-fi/studio/commit/34600f6760c4096a47226de65cec82e3c3544437))
+* **synthetix:** Revert Synthetix PERP balance updates ([#2641](https://github.com/Zapper-fi/studio/issues/2641)) ([40b4623](https://github.com/Zapper-fi/studio/commit/40b4623668d88f537935897662aa83443eb31791))
+
+## [0.455.0](https://github.com/Zapper-fi/studio/compare/v0.454.1...v0.455.0) (2023-05-02)
+
+
+### Features
+
+* **kwenta:** use new assets logos ([#2633](https://github.com/Zapper-fi/studio/issues/2633)) ([d937655](https://github.com/Zapper-fi/studio/commit/d93765541b300647808477d62bfb9a6e69211b86))
+
+## [0.454.1](https://github.com/Zapper-fi/studio/compare/v0.454.0...v0.454.1) (2023-05-02)
+
+
+### Bug Fixes
+
+* **synthetix:** Fix Perp balances and smol refactor ([#2631](https://github.com/Zapper-fi/studio/issues/2631)) ([087eb6f](https://github.com/Zapper-fi/studio/commit/087eb6fa1f32b6e5b4c6008064ebd502f3e33540))
+
+## [0.454.0](https://github.com/Zapper-fi/studio/compare/v0.453.0...v0.454.0) (2023-05-01)
+
+
+### Features
+
+* **synthetix:** display perp position side ([#2621](https://github.com/Zapper-fi/studio/issues/2621)) ([c8917fb](https://github.com/Zapper-fi/studio/commit/c8917fb08fda7fcb2ecad7b9d21e57c17821e4a7))
+
+
+### Bug Fixes
+
+* **olympus:** Outstanding Reward Positions ([#2628](https://github.com/Zapper-fi/studio/issues/2628)) ([b472465](https://github.com/Zapper-fi/studio/commit/b4724651cf22b2082048d1311ffc69137cae9aa6))
+
 ## [0.453.0](https://github.com/Zapper-fi/studio/compare/v0.452.0...v0.453.0) (2023-04-28)
 
 
