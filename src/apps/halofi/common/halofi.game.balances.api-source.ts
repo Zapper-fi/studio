@@ -7,13 +7,19 @@ import {
   PlayerResponse,
   PlayerBalance,
   transformRewardArrayToObject,
+  retry,
+  sendRequestWithThrottle,
   RewardType,
 } from './halofi.game.constants';
 
 export class HalofiGameBalancesApiSource {
-  async getBalances(address: string, network: Network) {
+  async getPlayerGames(network: Network, address: string) {
     const url = `${BASE_API_URL}/players/active-games?networkId=${NETWORK_IDS[network]}&playerAddress=${address}`;
-    const response = await axios.get<PlayerResponse[]>(url);
+    return sendRequestWithThrottle(axios.get<PlayerResponse[]>(url));
+  }
+  async getBalances(address: string, network: Network) {
+    const args = [network, address];
+    const response = await retry(this.getPlayerGames, args);
 
     const player = response.data;
     const balances: Record<string, PlayerBalance> = {};
