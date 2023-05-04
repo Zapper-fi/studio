@@ -4,7 +4,7 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+import { gqlFetch, gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
@@ -21,6 +21,8 @@ import {
 import { SentimentAccount, SentimentContractFactory, SentimentRegistry } from '../contracts';
 
 import { SENTIMENT_REGISTRY_ADDRESS } from './sentiment.constants';
+
+const GRAPHQL_LIST_LIMIT = 100;
 
 type GetLendingMarketsResponse = {
   markets: {
@@ -39,6 +41,7 @@ type GetAssetsResponse = {
 type GetAccountsResponse = {
   accounts: {
     id: string;
+    blockNumber: string;
     owner: {
       id: string;
     };
@@ -68,10 +71,11 @@ const GET_ASSETS_QUERY = gql`
   }
 `;
 
-const GET_ACCOUNTS_QUERY = gql`
-  query getAccounts {
-    accounts {
+const GET_ALL_ACCOUNTS_QUERY = gql`
+  query getFirstAccounts($first: Int!, $lastId: String) {
+    accounts(first: $first, id_gt: $lastId, orderBy: blockNumber) {
       id
+      blockNumber
       owner {
         id
       }
@@ -124,15 +128,22 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
     return response.assets.map(asset => asset.id);
   }
 
-  @Cache({
-    key: `studio:sentiment:accounts`,
-    ttl: 5 * 60, // 60 minutes
-  })
+  // @Cache({
+  //   key: `studio:sentiment:accs`,
+  //   ttl: 5 * 60, // 60 minutes
+  // })
   async getAccountsFromSubgraph(): Promise<{ address: string; owner: string }[]> {
-    const response = await gqlFetch<GetAccountsResponse>({
+    // FIXME: This call works in principle, but I think the function can be optimized
+    // by using the a skip: 1000 * i ( i being the fetchAll loop index )
+    // instead of IDs as IDs can be anything
+    const response = await gqlFetchAll<GetAccountsResponse>({
+      query: GET_ALL_ACCOUNTS_QUERY,
       endpoint: this.subgraphUrl,
-      query: GET_ACCOUNTS_QUERY,
+      variables: undefined,
+      dataToSearch: 'accounts',
     });
+
+    console.log('length all : ', response.accounts.length);
 
     return response.accounts.map(account => ({
       address: account.id,
@@ -140,31 +151,10 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
     }));
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<SentimentAccountDefinition[]> {
-    const sentimentAccountsRaw = await multicall.wrap(this.registry).getAllAccounts();
-    console.log('accounts : ', sentimentAccountsRaw);
-    // sentimentAccountsRaw.push('0x03e2db735e111b2fc6c050f720c5a53a172b66d6');
-    // const sentimentAccounts = await Promise.all(
-    //   sentimentAccountsRaw.map(async address => {
-    //     const owner = await this.sentimentContractFactory
-    //       .sentimentRegistry({
-    //         address: SENTIMENT_REGISTRY_ADDRESS,
-    //         network: this.network,
-    //       })
-    //       .ownerFor(address);
-    //     console.log('owner :', owner);
-    //     return {
-    //       address,
-    //       owner,
-    //     };
-    //   }),
-    // );
-    return [
-      {
-        address: '0x03e2db735e111b2fc6c050f720c5a53a172b66d6',
-        owner: '0xdbf01a7705451170e1191d354ee9eb84245f4861',
-      },
-    ];
+  async getDefinitions(_params: GetDefinitionsParams): Promise<SentimentAccountDefinition[]> {
+    const sentimentAccounts = await this.getAccountsFromSubgraph();
+
+    return sentimentAccounts;
   }
 
   getContract(_address: string): Contract {
@@ -177,13 +167,11 @@ export class ArbitrumSentimentAccountContractPositionFetcher extends ContractPos
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const [allAssets, lendingMarkets] = await Promise.all([
+    // TODO: cache should do its job here to prevent refetching, double check that
+    const [investableAssets, borrowableAssets] = await Promise.all([
       this.getAssetsFromSubgraph(),
       this.getLendingMarketsFromSubgraph(),
     ]);
-
-    const investableAssets = [...allAssets];
-    const borrowableAssets = [...lendingMarkets];
 
     return [
       ...investableAssets.map(address => ({
