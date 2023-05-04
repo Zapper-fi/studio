@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.455.3](https://github.com/Zapper-fi/studio/compare/v0.455.2...v0.455.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* **synthetix:** custom perp market logos ([#2643](https://github.com/Zapper-fi/studio/issues/2643)) ([e2cbd6e](https://github.com/Zapper-fi/studio/commit/e2cbd6ec1e06a7980151166766709317575e0eb9))
+
 ## [0.455.2](https://github.com/Zapper-fi/studio/compare/v0.455.1...v0.455.2) (2023-05-04)
 
 
