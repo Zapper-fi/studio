@@ -39,12 +39,12 @@ export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
 };
 
 /**
- * queue request and send with throttling
+ * queue request and send request with support for throttling
  * @param {any} request The given request to send
  * @returns {Promise} A fulfilled promise after the request is processed
  */
+const queue = new PQueue({ concurrency: 1, interval: 1000 });
 export async function sendRequestWithThrottle(request: any) {
-  const queue = new PQueue({ concurrency: 1, interval: 1000 });
   return queue.add(() => request);
 }
 
@@ -165,5 +165,4 @@ export type GamesResponse = Record<
   }
 >;
 
-// export const BASE_API_URL = 'https://goodghosting-api.com/v1';
-export const BASE_API_URL = 'http://localhost:3000/v1';
+export const BASE_API_URL = 'https://staging.goodghosting-api.com';
