@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.455.1](https://github.com/Zapper-fi/studio/compare/v0.455.0...v0.455.1) (2023-05-03)
+
+
+### Bug Fixes
+
+* **readme:** Remove create-group command from docs ([#2638](https://github.com/Zapper-fi/studio/issues/2638)) ([34600f6](https://github.com/Zapper-fi/studio/commit/34600f6760c4096a47226de65cec82e3c3544437))
+* **synthetix:** Revert Synthetix PERP balance updates ([#2641](https://github.com/Zapper-fi/studio/issues/2641)) ([40b4623](https://github.com/Zapper-fi/studio/commit/40b4623668d88f537935897662aa83443eb31791))
+
 ## [0.455.0](https://github.com/Zapper-fi/studio/compare/v0.454.1...v0.455.0) (2023-05-02)
 
 
