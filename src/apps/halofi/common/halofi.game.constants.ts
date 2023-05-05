@@ -43,7 +43,7 @@ export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
  * @param {any} request The given request to send
  * @returns {Promise} A fulfilled promise after the request is processed
  */
-const queue = new PQueue({ concurrency: 1, interval: 1000 });
+const queue = new PQueue({ interval: 1000, intervalCap: 4 });
 export async function sendRequestWithThrottle(request: any) {
   return queue.add(() => request);
 }
@@ -65,10 +65,9 @@ function waitFor(milliseconds: number): Promise<any> {
  * @returns {Promise} The result of the given promise passed in
  */
 export async function retry(onRetry: (...args: any[]) => any, args: any[], maxRetries = 4): Promise<any> {
-  async function retryWithBackoff(retries: number, retryAfter = 1) {
+  async function retryWithBackoff(retries: number, timeToWait = 0) {
     try {
       if (retries > 0) {
-        const timeToWait = 2 ** retries * retryAfter * 1000;
         await waitFor(timeToWait);
       }
       return await onRetry(...args);
@@ -76,12 +75,14 @@ export async function retry(onRetry: (...args: any[]) => any, args: any[], maxRe
       if (retries < maxRetries) {
         const retryAfter = e.response?.headers['retry-after'];
         if (!retryAfter) {
-          return retryWithBackoff(retries + 1);
+          const timeToWait = 1 * retries * 1000;
+          return retryWithBackoff(retries + 1, timeToWait);
         }
 
-        return retryWithBackoff(retries + 1, retryAfter);
+        const timeToWait = parseInt(retryAfter) * 1000;
+        return retryWithBackoff(retries + 1, timeToWait);
       } else {
-        console.warn('Max retries reached. Bubbling the error up');
+        console.warn('Max retries reached. Bringing up the error');
         throw e;
       }
     }
