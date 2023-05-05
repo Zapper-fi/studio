@@ -65,9 +65,15 @@ function waitFor(milliseconds: number): Promise<any> {
  * @returns {Promise} The result of the given promise passed in
  */
 export async function retry(onRetry: (...args: any[]) => any, args: any[], maxRetries = 4): Promise<any> {
-  async function retryWithBackoff(retries: number, timeToWait = 0) {
+  async function retryWithBackoff(retries: number, retryAfter?: number) {
     try {
       if (retries > 0) {
+        let timeToWait = 0;
+        if (retryAfter) {
+          timeToWait = retryAfter * 1000;
+        } else {
+          timeToWait = 1 * retries * 1000;
+        }
         await waitFor(timeToWait);
       }
       return await onRetry(...args);
@@ -75,14 +81,12 @@ export async function retry(onRetry: (...args: any[]) => any, args: any[], maxRe
       if (retries < maxRetries) {
         const retryAfter = e.response?.headers['retry-after'];
         if (!retryAfter) {
-          const timeToWait = 1 * retries * 1000;
-          return retryWithBackoff(retries + 1, timeToWait);
+          return retryWithBackoff(retries + 1);
         }
 
-        const timeToWait = parseInt(retryAfter) * 1000;
-        return retryWithBackoff(retries + 1, timeToWait);
+        return retryWithBackoff(retries + 1, retryAfter);
       } else {
-        console.warn('Max retries reached. Bringing up the error');
+        console.warn('Max retries reached. Bubbling the error up');
         throw e;
       }
     }
