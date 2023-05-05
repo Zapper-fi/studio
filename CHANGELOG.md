@@ -4,6 +4,28 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.455.3](https://github.com/Zapper-fi/studio/compare/v0.455.2...v0.455.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* **synthetix:** custom perp market logos ([#2643](https://github.com/Zapper-fi/studio/issues/2643)) ([e2cbd6e](https://github.com/Zapper-fi/studio/commit/e2cbd6ec1e06a7980151166766709317575e0eb9))
+
+## [0.455.2](https://github.com/Zapper-fi/studio/compare/v0.455.1...v0.455.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* **kwenta:** asset logo background ([#2640](https://github.com/Zapper-fi/studio/issues/2640)) ([5837c7c](https://github.com/Zapper-fi/studio/commit/5837c7c7f8123e1cbdb4aca0db0da871b61e4898))
+
+## [0.455.1](https://github.com/Zapper-fi/studio/compare/v0.455.0...v0.455.1) (2023-05-03)
+
+
+### Bug Fixes
+
+* **readme:** Remove create-group command from docs ([#2638](https://github.com/Zapper-fi/studio/issues/2638)) ([34600f6](https://github.com/Zapper-fi/studio/commit/34600f6760c4096a47226de65cec82e3c3544437))
+* **synthetix:** Revert Synthetix PERP balance updates ([#2641](https://github.com/Zapper-fi/studio/issues/2641)) ([40b4623](https://github.com/Zapper-fi/studio/commit/40b4623668d88f537935897662aa83443eb31791))
+
 ## [0.455.0](https://github.com/Zapper-fi/studio/compare/v0.454.1...v0.455.0) (2023-05-02)
 
 
