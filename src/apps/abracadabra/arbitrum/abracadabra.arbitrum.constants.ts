@@ -1,11 +1,10 @@
+import { AbracadabraCauldronContractPositionDefinition } from '../common/abracadabra.cauldron.contract-position-fetcher';
 import { HOURS_PER_YEAR } from '../common/abracadabra.common.constants';
 
-export const ARBITRUM_GLP_CAULDRONS = [
-  '0x5698135ca439f21a57bddbe8b582c62f090406d5', // GLP
-];
-export const ARBITRUM_CAULDRONS = [
-  '0xc89958b03a55b5de2221acb25b58b89a000215e6', // wETH
-  '0x726413d7402ff180609d0ebc79506df8633701b1', // magicGLP
+export const ARBITRUM_CAULDRONS: AbracadabraCauldronContractPositionDefinition[] = [
+  { version: 'V2', type: 'REGULAR', address: '0xc89958b03a55b5de2221acb25b58b89a000215e6' }, // wETH
+  { version: 'V4', type: 'GLP', address: '0x5698135ca439f21a57bddbe8b582c62f090406d5' }, // GLP
+  { version: 'V4', type: 'REGULAR', address: '0x726413d7402ff180609d0ebc79506df8633701b1' }, // magicGLP
 ];
 
 export const CURVE_MIM_3POOL_FARM = '0x839de324a1ab773f76a53900d70ac1b913d2b387';

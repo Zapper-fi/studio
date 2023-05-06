@@ -36,7 +36,7 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
 
   getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>): string[] | Promise<string[]> {
     return Promise.all(
-      OPTIMISM_ERC20_VAULT_CAULDRONS.map(cauldronAddress => {
+      OPTIMISM_ERC20_VAULT_CAULDRONS.map(({ address: cauldronAddress }) => {
         const cauldron = multicall.wrap(
           this.contractFactory.abracadabraCauldron({
             address: cauldronAddress,

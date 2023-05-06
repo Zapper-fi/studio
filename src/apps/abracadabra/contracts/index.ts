@@ -14,6 +14,7 @@ import {
   AbracadabraMagicApe__factory,
   AbracadabraMagicApeLens__factory,
   AbracadabraMagicGlpHarvestor__factory,
+  AbracadabraMarketLens__factory,
   AbracadabraMspell__factory,
   AbracadabraStakedSpell__factory,
   GmxRewardTracker__factory,
@@ -57,6 +58,9 @@ export class AbracadabraContractFactory extends ContractFactory {
   abracadabraMagicGlpHarvestor({ address, network }: ContractOpts) {
     return AbracadabraMagicGlpHarvestor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  abracadabraMarketLens({ address, network }: ContractOpts) {
+    return AbracadabraMarketLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   abracadabraMspell({ address, network }: ContractOpts) {
     return AbracadabraMspell__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -83,6 +87,7 @@ export type { AbracadabraGmxSGlp } from './ethers';
 export type { AbracadabraMagicApe } from './ethers';
 export type { AbracadabraMagicApeLens } from './ethers';
 export type { AbracadabraMagicGlpHarvestor } from './ethers';
+export type { AbracadabraMarketLens } from './ethers';
 export type { AbracadabraMspell } from './ethers';
 export type { AbracadabraStakedSpell } from './ethers';
 export type { GmxRewardTracker } from './ethers';
