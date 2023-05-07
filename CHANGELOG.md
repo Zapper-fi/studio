@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.457.0](https://github.com/Zapper-fi/studio/compare/v0.456.0...v0.457.0) (2023-05-07)
+
+
+### Features
+
+* **pods:** Added new Pods Yield Vault ([#2636](https://github.com/Zapper-fi/studio/issues/2636)) ([f46bc53](https://github.com/Zapper-fi/studio/commit/f46bc53f40c3f600d89916da7c649b6ab0d20690))
+
 ## [0.456.0](https://github.com/Zapper-fi/studio/compare/v0.455.3...v0.456.0) (2023-05-07)
 
 
