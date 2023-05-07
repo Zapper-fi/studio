@@ -1,32 +1,85 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import {
+  buildDollarDisplayItem,
+  buildNumberDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps } from '~position/display.interface';
+import { DefaultDataProps, StatsItem } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
-import { isSupplied } from '~position/position.utils';
+import { isBorrowed, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
+  GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AbracadabraContractFactory, AbracadabraCauldron } from '../contracts';
+import { AbracadabraContractFactory, AbracadabraCauldron, AbracadabraMarketLens } from '../contracts';
+import { MarketLens } from '../contracts/ethers/AbracadabraMarketLens';
 
-interface AbracadabraCauldronContractPositionDefinition extends DefaultContractPositionDefinition {
+import { CAULDRON_V1_RISK_CONSTANTS, MARKET_LENS_ADDRESS } from './abracadabra.common.constants';
+
+interface AbracadabraCommonCauldronContractPositionDefinition extends DefaultContractPositionDefinition {
   type: 'REGULAR' | 'CONVEX' | 'GLP';
+}
+
+interface AbracadabraCauldronV1ContractPositionDefinition extends AbracadabraCommonCauldronContractPositionDefinition {
+  version: 'V1';
+  risk: 'MEDIUM' | 'LOW';
+}
+
+interface AbracadabraCauldronV2ContractPositionDefinition extends AbracadabraCommonCauldronContractPositionDefinition {
+  version: 'V2';
+}
+
+interface AbracadabraCauldronV3ContractPositionDefinition extends AbracadabraCommonCauldronContractPositionDefinition {
+  version: 'V3';
+}
+
+interface AbracadabraCauldronV4ContractPositionDefinition extends AbracadabraCommonCauldronContractPositionDefinition {
+  version: 'V4';
+}
+
+interface AbracadabraCauldronProtocolOwnedDebtContractPositionDefinition
+  extends AbracadabraCommonCauldronContractPositionDefinition {
+  version: 'POD';
+}
+
+export type AbracadabraCauldronContractPositionDefinition =
+  | AbracadabraCauldronV1ContractPositionDefinition
+  | AbracadabraCauldronV2ContractPositionDefinition
+  | AbracadabraCauldronV3ContractPositionDefinition
+  | AbracadabraCauldronV4ContractPositionDefinition
+  | AbracadabraCauldronProtocolOwnedDebtContractPositionDefinition;
+
+type AbracadabraCauldronV3PlusContractPositionDefinition =
+  | AbracadabraCauldronV3ContractPositionDefinition
+  | AbracadabraCauldronV4ContractPositionDefinition;
+
+export interface AbracadabraCauldronDataProps extends DefaultDataProps {
+  supply: number;
+  supplyUSD: number;
+  borrow: number;
+  borrowUSD: number;
+  availableBorrow: number;
+  borrowApy: number;
+  borrowFee?: number;
+  maxLTV?: number;
+  liquidationFee?: number;
 }
 
 export abstract class AbracadabraCauldronContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   AbracadabraCauldron,
-  DefaultDataProps,
+  AbracadabraCauldronDataProps,
   AbracadabraCauldronContractPositionDefinition
 > {
-  cauldrons: string[] = [];
-  convexCauldrons: string[] = [];
-  glpCauldrons: string[] = [];
+  marketLensAddress: string = MARKET_LENS_ADDRESS;
+  cauldrons: AbracadabraCauldronContractPositionDefinition[];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -40,21 +93,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
   }
 
   async getDefinitions() {
-    const regularCauldronDefinitions: AbracadabraCauldronContractPositionDefinition[] = this.cauldrons.map(address => ({
-      address,
-      type: 'REGULAR',
-    }));
-    const convexCauldronDefinitions: AbracadabraCauldronContractPositionDefinition[] = this.convexCauldrons.map(
-      address => ({
-        address,
-        type: 'CONVEX',
-      }),
-    );
-    const glpCauldronDefinitions: AbracadabraCauldronContractPositionDefinition[] = this.glpCauldrons.map(address => ({
-      address,
-      type: 'GLP',
-    }));
-    return [...regularCauldronDefinitions, ...convexCauldronDefinitions, ...glpCauldronDefinitions];
+    return this.cauldrons;
   }
 
   async getTokenDefinitions(
@@ -168,9 +207,227 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     ];
   }
 
+  private async getMarketInfoCauldronV1({
+    contract: cauldron,
+    multicall,
+    definition: { address: cauldronAddress, risk: cauldronRisk },
+  }: GetDataPropsParams<
+    AbracadabraCauldron,
+    AbracadabraCauldronDataProps,
+    AbracadabraCauldronV1ContractPositionDefinition
+  >) {
+    const marketLens = multicall.wrap(
+      this.contractFactory.abracadabraMarketLens({
+        address: this.marketLensAddress,
+        network: this.network,
+      }),
+    );
+
+    const [supplyRaw, borrowRaw, availableBorrowRaw] = await Promise.all([
+      marketLens.getTotalCollateral(cauldronAddress).then(totalCollateral => totalCollateral.amount),
+      cauldron.totalBorrow().then(totalBorrow => totalBorrow.elastic),
+      marketLens.getMaxMarketBorrowForCauldronV2(cauldronAddress),
+    ]);
+
+    const {
+      interestPerYear: borrowApyBips,
+      borrowFee: borrowFeeBips,
+      maximumCollateralRatio: maxLTVBips,
+      liquidationFee: liquidationFeeBips,
+    } = CAULDRON_V1_RISK_CONSTANTS[cauldronRisk];
+
+    return {
+      supplyRaw,
+      borrowRaw,
+      availableBorrowRaw,
+      borrowApyBips,
+      borrowFeeBips,
+      maxLTVBips,
+      liquidationFeeBips,
+    };
+  }
+
+  private async getMarketInfoMarketLens(
+    marketLensCall: (
+      marketLens: AbracadabraMarketLens,
+      cauldronAddress: string,
+    ) => Promise<MarketLens.MarketInfoStructOutput>,
+    {
+      multicall,
+      definition: { address: cauldronAddress },
+    }: GetDataPropsParams<
+      AbracadabraCauldron,
+      AbracadabraCauldronDataProps,
+      AbracadabraCauldronContractPositionDefinition
+    >,
+  ) {
+    const marketLens = multicall.wrap(
+      this.contractFactory.abracadabraMarketLens({
+        address: this.marketLensAddress,
+        network: this.network,
+      }),
+    );
+    const marketInfo = await marketLensCall(marketLens, cauldronAddress);
+
+    return {
+      supplyRaw: marketInfo.totalCollateral.amount,
+      borrowRaw: marketInfo.totalBorrowed,
+      availableBorrowRaw: marketInfo.marketMaxBorrow,
+      borrowApyBips: marketInfo.interestPerYear,
+      borrowFeeBips: marketInfo.borrowFee,
+      maxLTVBips: marketInfo.maximumCollateralRatio,
+      liquidationFeeBips: marketInfo.liquidationFee,
+    };
+  }
+
+  private async getMarketInfoCauldronV2(
+    params: GetDataPropsParams<
+      AbracadabraCauldron,
+      AbracadabraCauldronDataProps,
+      AbracadabraCauldronV2ContractPositionDefinition
+    >,
+  ) {
+    return this.getMarketInfoMarketLens(
+      (marketLens, cauldronAddress) => marketLens.getMarketInfoCauldronV2(cauldronAddress),
+      params,
+    );
+  }
+
+  private async getMarketInfoCauldronV3Plus(
+    params: GetDataPropsParams<
+      AbracadabraCauldron,
+      AbracadabraCauldronDataProps,
+      AbracadabraCauldronV3PlusContractPositionDefinition
+    >,
+  ) {
+    return this.getMarketInfoMarketLens(
+      (marketLens, cauldronAddress) => marketLens.getMarketInfoCauldronV2(cauldronAddress),
+      params,
+    );
+  }
+
+  private async getMarketInfoProtocolOwnedDebt({
+    contract: cauldron,
+  }: GetDataPropsParams<
+    AbracadabraCauldron,
+    AbracadabraCauldronDataProps,
+    AbracadabraCauldronProtocolOwnedDebtContractPositionDefinition
+  >) {
+    const borrowRaw = await cauldron.totalBorrow().then(totalBorrow => totalBorrow.elastic);
+
+    return {
+      supplyRaw: 0,
+      borrowRaw,
+      availableBorrowRaw: 0,
+      borrowApyBips: 0,
+      borrowFeeBips: undefined,
+      maxLTVBips: undefined,
+      liquidationFeeBips: undefined,
+    };
+  }
+
+  private async getMarketInfo(
+    params: GetDataPropsParams<
+      AbracadabraCauldron,
+      AbracadabraCauldronDataProps,
+      AbracadabraCauldronContractPositionDefinition
+    >,
+  ) {
+    const { definition } = params;
+    switch (definition.version) {
+      case 'V1':
+        return this.getMarketInfoCauldronV1({ ...params, definition });
+      case 'V2':
+        return this.getMarketInfoCauldronV2({ ...params, definition });
+      case 'V3':
+        return this.getMarketInfoCauldronV3Plus({ ...params, definition });
+      case 'V4':
+        return this.getMarketInfoCauldronV3Plus({ ...params, definition });
+      case 'POD':
+        return this.getMarketInfoProtocolOwnedDebt({ ...params, definition });
+    }
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<
+      AbracadabraCauldron,
+      AbracadabraCauldronDataProps,
+      AbracadabraCauldronContractPositionDefinition
+    >,
+  ): Promise<AbracadabraCauldronDataProps> {
+    const marketInfo = await this.getMarketInfo(params);
+
+    const { contractPosition } = params;
+    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+    const borrowedToken = contractPosition.tokens.find(isBorrowed)!;
+
+    const supply = Number(marketInfo.supplyRaw) / 10 ** suppliedToken.decimals;
+    const borrow = Number(marketInfo.borrowRaw) / 10 ** borrowedToken.decimals;
+    const dataProps: AbracadabraCauldronDataProps = {
+      supply,
+      supplyUSD: supply * suppliedToken.price,
+      borrow,
+      borrowUSD: borrow * borrowedToken.price,
+      availableBorrow: Number(marketInfo.availableBorrowRaw) / 10 ** borrowedToken.decimals,
+      borrowApy: Number(marketInfo.borrowApyBips) / 100,
+    };
+    if (marketInfo.borrowFeeBips) {
+      dataProps.borrowFee = Number(marketInfo.borrowFeeBips) / 100;
+    }
+    if (marketInfo.maxLTVBips) {
+      dataProps.maxLTV = Number(marketInfo.maxLTVBips) / 100;
+    }
+    if (marketInfo.liquidationFeeBips) {
+      dataProps.liquidationFee = Number(marketInfo.liquidationFeeBips) / 100;
+    }
+
+    return dataProps;
+  }
+
   async getLabel({ contractPosition }: GetDisplayPropsParams<AbracadabraCauldron>) {
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     return `${getLabelFromToken(suppliedToken)} Cauldron`;
+  }
+
+  async getStatsItems({
+    contractPosition: {
+      dataProps: {
+        supply,
+        supplyUSD,
+        borrow,
+        borrowUSD,
+        availableBorrow,
+        borrowApy,
+        borrowFee,
+        maxLTV,
+        liquidationFee,
+      },
+    },
+  }: GetDisplayPropsParams<
+    AbracadabraCauldron,
+    AbracadabraCauldronDataProps,
+    DefaultContractPositionDefinition
+  >): Promise<StatsItem[] | undefined> {
+    const statsItems = [
+      { label: 'Total Supply', value: buildNumberDisplayItem(supply) },
+      { label: 'Total Supply USD', value: buildDollarDisplayItem(supplyUSD) },
+      { label: 'Total Borrow', value: buildNumberDisplayItem(borrow) },
+      { label: 'Total Borrow USD', value: buildDollarDisplayItem(borrowUSD) },
+      { label: 'Available Borrow', value: buildNumberDisplayItem(availableBorrow) },
+      { label: 'Borrow APY', value: buildPercentageDisplayItem(borrowApy) },
+    ];
+
+    if (borrowFee) {
+      statsItems.push({ label: 'Borrow Fee', value: buildPercentageDisplayItem(borrowFee) });
+    }
+    if (maxLTV) {
+      statsItems.push({ label: 'Maximum Collateralization Ratio', value: buildPercentageDisplayItem(maxLTV) });
+    }
+    if (liquidationFee) {
+      statsItems.push({ label: 'Liquidation Fee', value: buildPercentageDisplayItem(liquidationFee) });
+    }
+
+    return statsItems;
   }
 
   async getTokenBalancesPerPosition({
