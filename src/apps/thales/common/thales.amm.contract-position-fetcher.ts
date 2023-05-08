@@ -4,17 +4,23 @@ import { BigNumberish } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { GetTokenBalancesParams, GetTokenDefinitionsParams, GetDisplayPropsParams } from '~position/template/contract-position.template.types';
+import { DefaultDataProps } from '~position/display.interface';
 
-import { OvertimeAmmLp, ThalesContractFactory } from '../contracts';
+import { Amm, ThalesContractFactory } from '../contracts';
+
+export type ThalesAmmDefinition = {
+  address: string;
+  name: string;
+};
 
 export type ThalesAMMDataProp = {
   liquidity: number;
 };
 
-export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<OvertimeAmmLp> {
-  groupLabel = 'Overtime AMM LP';
-  abstract contractAddress: string;
+export abstract class ThalesAmmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Amm> {
+  groupLabel = 'AMM LP';
+  abstract ammDefinitions: ThalesAmmDefinition[];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -23,15 +29,15 @@ export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): OvertimeAmmLp {
-    return this.contractFactory.overtimeAmmLp({ network: this.network, address });
+  getContract(address: string): Amm {
+    return this.contractFactory.amm({ network: this.network, address });
   }
 
-  async getDefinitions() {
-    return [{ address: this.contractAddress }];
+  async getDefinitions(): Promise<ThalesAmmDefinition[]> {
+    return this.ammDefinitions;
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<OvertimeAmmLp>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Amm>) {
     return [
       {
         address: await contract.sUSD(),
@@ -41,8 +47,8 @@ export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends Contrac
     ];
   }
 
-  async getLabel() {
-    return 'Overtime AMM LP';
+  async getLabel({ definition }: GetDisplayPropsParams<Amm, DefaultDataProps, ThalesAmmDefinition>) {
+    return `${definition.name}`;
   }
 
   async getDataProps({ contract, multicall }): Promise<ThalesAMMDataProp> {
@@ -58,7 +64,7 @@ export abstract class ThalesOvertimeAmmLpContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<OvertimeAmmLp>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<Amm>): Promise<BigNumberish[]> {
     const currentRound = await contract.round();
     const currentBalance = await contract.balancesPerRound(Number(currentRound), address);
     const pendingDeposit = await contract.balancesPerRound(Number(currentRound) + 1, address);
