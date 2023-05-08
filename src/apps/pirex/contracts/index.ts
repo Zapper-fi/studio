@@ -4,7 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { ApxGlp__factory, ApxGmx__factory, PirexPxCvx__factory } from './ethers';
+import { ApxBtrfly__factory, ApxGlp__factory, ApxGmx__factory, PirexPxCvx__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -15,6 +15,9 @@ export class PirexContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  apxBtrfly({ address, network }: ContractOpts) {
+    return ApxBtrfly__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   apxGlp({ address, network }: ContractOpts) {
     return ApxGlp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -26,6 +29,7 @@ export class PirexContractFactory extends ContractFactory {
   }
 }
 
+export type { ApxBtrfly } from './ethers';
 export type { ApxGlp } from './ethers';
 export type { ApxGmx } from './ethers';
 export type { PirexPxCvx } from './ethers';

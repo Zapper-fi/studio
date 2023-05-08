@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.457.0](https://github.com/Zapper-fi/studio/compare/v0.456.0...v0.457.0) (2023-05-07)
+
+
+### Features
+
+* **pods:** Added new Pods Yield Vault ([#2636](https://github.com/Zapper-fi/studio/issues/2636)) ([f46bc53](https://github.com/Zapper-fi/studio/commit/f46bc53f40c3f600d89916da7c649b6ab0d20690))
+
+## [0.456.0](https://github.com/Zapper-fi/studio/compare/v0.455.3...v0.456.0) (2023-05-07)
+
+
+### Features
+
+* **abracadabra:** Add statsitems to cauldrons ([#2649](https://github.com/Zapper-fi/studio/issues/2649)) ([f62431f](https://github.com/Zapper-fi/studio/commit/f62431f7336343a442efa1868d38ea627c4c6519))
+* **pirex:** apxbtrfly pxbtrfly tokens fetcher ([#2647](https://github.com/Zapper-fi/studio/issues/2647)) ([d606965](https://github.com/Zapper-fi/studio/commit/d6069651f23315b94830989e6e130417de1bcdac))
+* **swell:** added Swell app and swETH token fetcher ([#2646](https://github.com/Zapper-fi/studio/issues/2646)) ([082985c](https://github.com/Zapper-fi/studio/commit/082985ca8301b66565bf884aa9a9a61cbe75653b))
+
 ## [0.455.3](https://github.com/Zapper-fi/studio/compare/v0.455.2...v0.455.3) (2023-05-04)
 
 

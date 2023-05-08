@@ -10,6 +10,7 @@ export type { AbracadabraGmxSGlp } from './AbracadabraGmxSGlp';
 export type { AbracadabraMagicApe } from './AbracadabraMagicApe';
 export type { AbracadabraMagicApeLens } from './AbracadabraMagicApeLens';
 export type { AbracadabraMagicGlpHarvestor } from './AbracadabraMagicGlpHarvestor';
+export type { AbracadabraMarketLens } from './AbracadabraMarketLens';
 export type { AbracadabraMspell } from './AbracadabraMspell';
 export type { AbracadabraStakedSpell } from './AbracadabraStakedSpell';
 export type { GmxRewardTracker } from './GmxRewardTracker';
@@ -25,6 +26,7 @@ export { AbracadabraGmxSGlp__factory } from './factories/AbracadabraGmxSGlp__fac
 export { AbracadabraMagicApeLens__factory } from './factories/AbracadabraMagicApeLens__factory';
 export { AbracadabraMagicApe__factory } from './factories/AbracadabraMagicApe__factory';
 export { AbracadabraMagicGlpHarvestor__factory } from './factories/AbracadabraMagicGlpHarvestor__factory';
+export { AbracadabraMarketLens__factory } from './factories/AbracadabraMarketLens__factory';
 export { AbracadabraMspell__factory } from './factories/AbracadabraMspell__factory';
 export { AbracadabraStakedSpell__factory } from './factories/AbracadabraStakedSpell__factory';
 export { GmxRewardTracker__factory } from './factories/GmxRewardTracker__factory';
