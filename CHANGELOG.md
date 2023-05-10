@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.458.0](https://github.com/Zapper-fi/studio/compare/v0.457.0...v0.458.0) (2023-05-10)
+
+
+### Features
+
+* **thales:** thales AMM LP ([#2652](https://github.com/Zapper-fi/studio/issues/2652)) ([5779fa5](https://github.com/Zapper-fi/studio/commit/5779fa5278b54749bbfd7d2d4ac72c2982331463))
+
 ## [0.457.0](https://github.com/Zapper-fi/studio/compare/v0.456.0...v0.457.0) (2023-05-07)
 
 
