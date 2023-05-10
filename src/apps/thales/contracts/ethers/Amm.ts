@@ -39,7 +39,7 @@ export declare namespace SportAMMLiquidityPool {
   };
 }
 
-export interface OvertimeAmmLpInterface extends utils.Interface {
+export interface AmmInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'allocationPerRound(uint256)': FunctionFragment;
@@ -596,12 +596,12 @@ export type WithdrawalRequestedEvent = TypedEvent<[string], WithdrawalRequestedE
 
 export type WithdrawalRequestedEventFilter = TypedEventFilter<WithdrawalRequestedEvent>;
 
-export interface OvertimeAmmLp extends BaseContract {
+export interface Amm extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: OvertimeAmmLpInterface;
+  interface: AmmInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

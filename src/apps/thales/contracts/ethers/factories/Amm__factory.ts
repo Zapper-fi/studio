@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { OvertimeAmmLp, OvertimeAmmLpInterface } from '../OvertimeAmmLp';
+import type { Amm, AmmInterface } from '../Amm';
 
 const _abi = [
   {
@@ -1533,12 +1533,12 @@ const _abi = [
   },
 ];
 
-export class OvertimeAmmLp__factory {
+export class Amm__factory {
   static readonly abi = _abi;
-  static createInterface(): OvertimeAmmLpInterface {
-    return new utils.Interface(_abi) as OvertimeAmmLpInterface;
+  static createInterface(): AmmInterface {
+    return new utils.Interface(_abi) as AmmInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): OvertimeAmmLp {
-    return new Contract(address, _abi, signerOrProvider) as OvertimeAmmLp;
+  static connect(address: string, signerOrProvider: Signer | Provider): Amm {
+    return new Contract(address, _abi, signerOrProvider) as Amm;
   }
 }
