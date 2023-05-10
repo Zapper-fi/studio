@@ -4,18 +4,30 @@ import axios from 'axios';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network, NETWORK_IDS } from '~types';
 
-import { NetworkId, getGameVersionType, RewardType, BASE_API_URL, GamesResponse } from './halofi.game.constants';
+import {
+  NetworkId,
+  getGameVersionType,
+  RewardType,
+  BASE_API_URL,
+  GamesResponse,
+  retry,
+  sendRequestWithThrottle,
+} from './halofi.game.constants';
 
 @Injectable()
 export class HalofiGameGamesApiSource {
+  async getGames() {
+    const url = `${BASE_API_URL}/games`;
+    return sendRequestWithThrottle(axios.get<GamesResponse>(url));
+  }
+
   @CacheOnInterval({
     key: `studio:halofi:game:addresses`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
   async getCachedGameConfigsData() {
-    const url = `${BASE_API_URL}/games`;
-    const response = await axios.get<GamesResponse>(url);
+    const response = await retry(this.getGames, []);
     return response.data;
   }
 
