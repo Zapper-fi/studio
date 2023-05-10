@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.459.0](https://github.com/Zapper-fi/studio/compare/v0.458.0...v0.459.0) (2023-05-10)
+
+
+### Features
+
+* performance improvements ([#2645](https://github.com/Zapper-fi/studio/issues/2645)) ([77cf55d](https://github.com/Zapper-fi/studio/commit/77cf55dfd65044237e135ef7c706b62f598d8489))
+
 ## [0.458.0](https://github.com/Zapper-fi/studio/compare/v0.457.0...v0.458.0) (2023-05-10)
 
 
