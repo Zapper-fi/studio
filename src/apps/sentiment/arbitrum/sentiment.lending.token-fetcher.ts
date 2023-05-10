@@ -49,7 +49,7 @@ export class ArbitrumSentimentLendingTokenFetcher extends AppTokenTemplatePositi
   async getUnderlyingTokenDefinitions(
     _params: GetUnderlyingTokensParams<Erc4626, DefaultAppTokenDefinition>,
   ): Promise<UnderlyingTokenDefinition[]> {
-    const underlyingAsset = await _params.contract.asset();
+    const underlyingAsset = await _params.multicall.wrap(_params.contract).asset();
     return [
       {
         address: underlyingAsset.toLowerCase(),
