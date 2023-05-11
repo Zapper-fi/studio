@@ -4,15 +4,19 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AuraBalToken__factory } from './ethers';
-import { AuraBalancerHelpers__factory } from './ethers';
-import { AuraBaseRewardPool__factory } from './ethers';
-import { AuraBooster__factory } from './ethers';
-import { AuraDepositToken__factory } from './ethers';
-import { AuraLocker__factory } from './ethers';
-import { AuraMasterchef__factory } from './ethers';
-import { AuraToken__factory } from './ethers';
-import { AuraVirtualBalanceRewardPool__factory } from './ethers';
+import {
+  AuraBalStakingToken__factory,
+  AuraBalToken__factory,
+  AuraBalVirtualRewardPool__factory,
+  AuraBalancerHelpers__factory,
+  AuraBaseRewardPool__factory,
+  AuraBooster__factory,
+  AuraDepositToken__factory,
+  AuraLocker__factory,
+  AuraMasterchef__factory,
+  AuraToken__factory,
+  AuraVirtualBalanceRewardPool__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -23,8 +27,14 @@ export class AuraContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  auraBalStakingToken({ address, network }: ContractOpts) {
+    return AuraBalStakingToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   auraBalToken({ address, network }: ContractOpts) {
     return AuraBalToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  auraBalVirtualRewardPool({ address, network }: ContractOpts) {
+    return AuraBalVirtualRewardPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   auraBalancerHelpers({ address, network }: ContractOpts) {
     return AuraBalancerHelpers__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -52,7 +62,9 @@ export class AuraContractFactory extends ContractFactory {
   }
 }
 
+export type { AuraBalStakingToken } from './ethers';
 export type { AuraBalToken } from './ethers';
+export type { AuraBalVirtualRewardPool } from './ethers';
 export type { AuraBalancerHelpers } from './ethers';
 export type { AuraBaseRewardPool } from './ethers';
 export type { AuraBooster } from './ethers';
