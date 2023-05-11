@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.460.0](https://github.com/Zapper-fi/studio/compare/v0.459.0...v0.460.0) (2023-05-11)
+
+
+### Features
+
+* **aura:** Add AuraBal Compounder position ([#2655](https://github.com/Zapper-fi/studio/issues/2655)) ([8eb919a](https://github.com/Zapper-fi/studio/commit/8eb919a8bc4f24b1ab2071aca4d74c3ee88cae57))
+
 ## [0.459.0](https://github.com/Zapper-fi/studio/compare/v0.458.0...v0.459.0) (2023-05-10)
 
 
