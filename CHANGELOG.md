@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.462.0](https://github.com/Zapper-fi/studio/compare/v0.461.0...v0.462.0) (2023-05-13)
+
+
+### Features
+
+* **abracadabra:** Add support for claimable tokens on convex cauldrons ([#2657](https://github.com/Zapper-fi/studio/issues/2657)) ([7d99a2c](https://github.com/Zapper-fi/studio/commit/7d99a2c5ecdc462c925c82affb11c40156997100))
+
 ## [0.461.0](https://github.com/Zapper-fi/studio/compare/v0.460.0...v0.461.0) (2023-05-13)
 
 
