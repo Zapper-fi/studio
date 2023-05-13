@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.461.0](https://github.com/Zapper-fi/studio/compare/v0.460.0...v0.461.0) (2023-05-13)
+
+
+### Features
+
+* **lodestar:** Add Lodestar lending markets ([#2658](https://github.com/Zapper-fi/studio/issues/2658)) ([2b0dc65](https://github.com/Zapper-fi/studio/commit/2b0dc6560acdf9d1ce212c157e706342fff4e95d))
+
 ## [0.460.0](https://github.com/Zapper-fi/studio/compare/v0.459.0...v0.460.0) (2023-05-11)
 
 
