@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.463.0](https://github.com/Zapper-fi/studio/compare/v0.462.0...v0.463.0) (2023-05-14)
+
+
+### Features
+
+* **excalibur:** Add pools ([#2661](https://github.com/Zapper-fi/studio/issues/2661)) ([dcdfd49](https://github.com/Zapper-fi/studio/commit/dcdfd4916b6ef87d4c3aa1d7e6f7ba8455bb4859))
+
 ## [0.462.0](https://github.com/Zapper-fi/studio/compare/v0.461.0...v0.462.0) (2023-05-13)
 
 
