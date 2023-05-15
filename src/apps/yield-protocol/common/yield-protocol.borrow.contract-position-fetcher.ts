@@ -304,6 +304,8 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
           },
         };
 
+        positionBalance.key = this.appToolkit.getPositionKey(positionBalance);
+
         return positionBalance;
       }),
     );
