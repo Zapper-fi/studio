@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.464.0](https://github.com/Zapper-fi/studio/compare/v0.463.0...v0.464.0) (2023-05-16)
+
+
+### Features
+
+* **kwenta:** new market icons ([#2666](https://github.com/Zapper-fi/studio/issues/2666)) ([55baec4](https://github.com/Zapper-fi/studio/commit/55baec49a6cd39c8001ed0348fbbd84b9bc76532))
+* **sentiment:** Add lending markets ([#2664](https://github.com/Zapper-fi/studio/issues/2664)) ([1182f0b](https://github.com/Zapper-fi/studio/commit/1182f0b4876d0b2ff12ee376bedfec4f300c7614))
+
+
+### Bug Fixes
+
+* **apps:** Add  field to app balances ([#2663](https://github.com/Zapper-fi/studio/issues/2663)) ([4a261ca](https://github.com/Zapper-fi/studio/commit/4a261ca6f1a5a28f264158c8ebf18ab300ca3f65))
+
 ## [0.463.0](https://github.com/Zapper-fi/studio/compare/v0.462.0...v0.463.0) (2023-05-14)
 
 
