@@ -8,7 +8,7 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 import { ConcentratorContractFactory, AladdinConcentratorVe, AladdinConcentratorVeRewards } from '../contracts';
 
 @PositionTemplate()
-export class EthereumConcentratorVeContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
+export class EthereumConcentratorVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
   AladdinConcentratorVe,
   AladdinConcentratorVeRewards
 > {

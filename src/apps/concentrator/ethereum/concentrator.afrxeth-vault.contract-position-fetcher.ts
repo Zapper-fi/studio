@@ -12,7 +12,7 @@ import {
 import { ConcentratorContractFactory, AladdinConcentratorAfrxEthVault } from '../contracts';
 
 @PositionTemplate()
-export class EthereumConcentratorPoolfrxethContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorAfrxEthVault> {
+export class EthereumConcentratorAfrxethVaultContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorAfrxEthVault> {
   groupLabel = 'afrxETH Vaults';
 
   chefAddress = '0x50b47c4a642231dbe0b411a0b2fbc1ebd129346d';
