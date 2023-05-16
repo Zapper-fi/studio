@@ -144,6 +144,8 @@ export class UniswapV3LiquidityContractPositionBuilder {
       balanceUSD,
     };
 
+    balance.key = this.appToolkit.getPositionKey(balance);
+
     return balance;
   }
 }

@@ -135,11 +135,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
         const balanceUSD = sumBy(tokens, v => v.balanceUSD);
 
         const position: ContractPositionBalance<ConcaveLsdcnvContractPositionDataProps> = {
-          type: ContractType.POSITION,
-          address: lsdCnv.address,
-          appId: lsdCnv.appId,
-          groupId: lsdCnv.groupId,
-          network: lsdCnv.network,
+          ...lsdCnv,
           tokens,
           balanceUSD,
           dataProps: {

@@ -193,11 +193,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
             const secondaryLabel = `C-Ratio: ${(cRatio * 100).toFixed(2)}%`;
 
             const positionBalance: ContractPositionBalance<MakerVaultDataProps> = {
-              type: ContractType.POSITION,
-              address: position.address,
-              appId: position.appId,
-              groupId: position.groupId,
-              network: position.network,
+              ...position,
               tokens,
               balanceUSD,
 

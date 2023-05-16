@@ -185,8 +185,7 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
       // Display Properties
       const foundJob = find(filteredData, { address: userJob.id.toLowerCase() });
       const label = (foundJob && `${foundJob.name} Keep3r Job`) || 'Keep3r Job';
-      const secondaryLabel = '';
-      const displayProps = { label, secondaryLabel };
+      const displayProps = { label };
 
       const positionBalance = merge({}, position, {
         tokens,

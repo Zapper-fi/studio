@@ -158,6 +158,8 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
           },
         };
 
+        position.key = this.appToolkit.getPositionKey(position);
+
         return position;
       }),
     );
