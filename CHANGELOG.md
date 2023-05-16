@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.464.1](https://github.com/Zapper-fi/studio/compare/v0.464.0...v0.464.1) (2023-05-16)
+
+
+### Bug Fixes
+
+* **concentrator:** Cleanup ([#2668](https://github.com/Zapper-fi/studio/issues/2668)) ([a210c55](https://github.com/Zapper-fi/studio/commit/a210c557c6aa25882c4323d39743b7a6302ac998))
+
 ## [0.464.0](https://github.com/Zapper-fi/studio/compare/v0.463.0...v0.464.0) (2023-05-16)
 
 
