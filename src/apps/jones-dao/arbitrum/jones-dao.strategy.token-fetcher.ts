@@ -62,8 +62,8 @@ export class ArbitrumJonesDaoStrategyTokenFetcher extends AppTokenTemplatePositi
       network: this.network,
     });
     const oneUnit = ethers.BigNumber.from(10).pow(18);
-    const pricePerShareWar = await multicall.wrap(glpVaultContract).convertToAssets(oneUnit);
-    const pricePerShare = Number(pricePerShareWar) / 10 ** appToken.tokens[0].decimals;
+    const pricePerShareRaw = await multicall.wrap(glpVaultContract).convertToAssets(oneUnit);
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
 
     return [pricePerShare];
   }
