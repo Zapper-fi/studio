@@ -17,23 +17,28 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AladdinFrxEthInterface extends utils.Interface {
+export interface AladdinConcentratorCompounderInterface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'asset()': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'checkpoint()': FunctionFragment;
+    'balanceOfUnderlying(address)': FunctionFragment;
     'convertToAssets(uint256)': FunctionFragment;
     'convertToShares(uint256)': FunctionFragment;
     'decimals()': FunctionFragment;
     'decreaseAllowance(address,uint256)': FunctionFragment;
+    'deposit(address,uint256)': FunctionFragment;
     'deposit(uint256,address)': FunctionFragment;
-    'feeInfo()': FunctionFragment;
+    'depositAll(address)': FunctionFragment;
+    'depositAllWithCRV(address)': FunctionFragment;
+    'depositWithCRV(address,uint256)': FunctionFragment;
+    'depositWithWrapper(address,uint256)': FunctionFragment;
     'getFeeRate(bytes32,address)': FunctionFragment;
     'harvest(address,uint256)': FunctionFragment;
+    'harvestBountyPercentage()': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(address,address,address,string,string)': FunctionFragment;
+    'initializeV2(address)': FunctionFragment;
     'maxDeposit(address)': FunctionFragment;
     'maxMint(address)': FunctionFragment;
     'maxRedeem(address)': FunctionFragment;
@@ -42,26 +47,33 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     'mint(uint256,address)': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
+    'platform()': FunctionFragment;
+    'platformFeePercentage()': FunctionFragment;
     'previewDeposit(uint256)': FunctionFragment;
     'previewMint(uint256)': FunctionFragment;
     'previewRedeem(uint256)': FunctionFragment;
     'previewWithdraw(uint256)': FunctionFragment;
     'redeem(uint256,address,address)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
-    'rewardInfo()': FunctionFragment;
     'setWithdrawFeeForUser(address,uint32)': FunctionFragment;
     'strategy()': FunctionFragment;
     'symbol()': FunctionFragment;
     'totalAssets()': FunctionFragment;
     'totalSupply()': FunctionFragment;
+    'totalUnderlying()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'updateFeeInfo(address,uint32,uint32,uint32)': FunctionFragment;
-    'updateRewardPeriodLength(uint32)': FunctionFragment;
-    'updateRewards(address[])': FunctionFragment;
+    'updateHarvestBountyPercentage(uint256)': FunctionFragment;
+    'updateHarvester(address)': FunctionFragment;
+    'updatePlatform(address)': FunctionFragment;
+    'updatePlatformFeePercentage(uint256)': FunctionFragment;
+    'updateWithdrawFeePercentage(uint256)': FunctionFragment;
     'updateZap(address)': FunctionFragment;
+    'withdraw(address,uint256,uint256,uint8)': FunctionFragment;
     'withdraw(uint256,address,address)': FunctionFragment;
+    'withdrawAll(address,uint256,uint8)': FunctionFragment;
+    'withdrawFeePercentage()': FunctionFragment;
     'zap()': FunctionFragment;
   };
 
@@ -71,17 +83,22 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       | 'approve'
       | 'asset'
       | 'balanceOf'
-      | 'checkpoint'
+      | 'balanceOfUnderlying'
       | 'convertToAssets'
       | 'convertToShares'
       | 'decimals'
       | 'decreaseAllowance'
-      | 'deposit'
-      | 'feeInfo'
+      | 'deposit(address,uint256)'
+      | 'deposit(uint256,address)'
+      | 'depositAll'
+      | 'depositAllWithCRV'
+      | 'depositWithCRV'
+      | 'depositWithWrapper'
       | 'getFeeRate'
       | 'harvest'
+      | 'harvestBountyPercentage'
       | 'increaseAllowance'
-      | 'initialize'
+      | 'initializeV2'
       | 'maxDeposit'
       | 'maxMint'
       | 'maxRedeem'
@@ -90,26 +107,33 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       | 'mint'
       | 'name'
       | 'owner'
+      | 'platform'
+      | 'platformFeePercentage'
       | 'previewDeposit'
       | 'previewMint'
       | 'previewRedeem'
       | 'previewWithdraw'
       | 'redeem'
       | 'renounceOwnership'
-      | 'rewardInfo'
       | 'setWithdrawFeeForUser'
       | 'strategy'
       | 'symbol'
       | 'totalAssets'
       | 'totalSupply'
+      | 'totalUnderlying'
       | 'transfer'
       | 'transferFrom'
       | 'transferOwnership'
-      | 'updateFeeInfo'
-      | 'updateRewardPeriodLength'
-      | 'updateRewards'
+      | 'updateHarvestBountyPercentage'
+      | 'updateHarvester'
+      | 'updatePlatform'
+      | 'updatePlatformFeePercentage'
+      | 'updateWithdrawFeePercentage'
       | 'updateZap'
-      | 'withdraw'
+      | 'withdraw(address,uint256,uint256,uint8)'
+      | 'withdraw(uint256,address,address)'
+      | 'withdrawAll'
+      | 'withdrawFeePercentage'
       | 'zap',
   ): FunctionFragment;
 
@@ -120,7 +144,7 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'checkpoint', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'balanceOfUnderlying', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
@@ -129,10 +153,23 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'deposit',
+    functionFragment: 'deposit(address,uint256)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit(uint256,address)',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'feeInfo', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'depositAll', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'depositAllWithCRV', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithCRV',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithWrapper',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'getFeeRate',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
@@ -141,20 +178,12 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     functionFragment: 'harvest',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'harvestBountyPercentage', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'initialize',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-    ],
-  ): string;
+  encodeFunctionData(functionFragment: 'initializeV2', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxDeposit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxMint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxRedeem', values: [PromiseOrValue<string>]): string;
@@ -163,6 +192,8 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'platform', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'platformFeePercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'previewDeposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'previewMint', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'previewRedeem', values: [PromiseOrValue<BigNumberish>]): string;
@@ -172,7 +203,6 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardInfo', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setWithdrawFeeForUser',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
@@ -181,6 +211,7 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalUnderlying', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transfer',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
@@ -190,8 +221,14 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateHarvestBountyPercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateHarvester', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePlatform', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePlatformFeePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateWithdrawFeePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateZap', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'updateFeeInfo',
+    functionFragment: 'withdraw(address,uint256,uint256,uint8)',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
@@ -199,30 +236,37 @@ export interface AladdinFrxEthInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'updateRewardPeriodLength', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'updateRewards', values: [PromiseOrValue<string>[]]): string;
-  encodeFunctionData(functionFragment: 'updateZap', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'withdraw',
+    functionFragment: 'withdraw(uint256,address,address)',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawFeePercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'checkpoint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOfUnderlying', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'feeInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit(address,uint256)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit(uint256,address)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAllWithCRV', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositWithCRV', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositWithWrapper', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getFeeRate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'harvestBountyPercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initializeV2', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxDeposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxMint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxRedeem', data: BytesLike): Result;
@@ -231,26 +275,33 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'platform', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'platformFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'previewDeposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'previewMint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'previewRedeem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'previewWithdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setWithdrawFeeForUser', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'strategy', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalUnderlying', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateFeeInfo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateRewardPeriodLength', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateHarvestBountyPercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateHarvester', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updatePlatform', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updatePlatformFeePercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateWithdrawFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateZap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw(address,uint256,uint256,uint8)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw(uint256,address,address)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'zap', data: BytesLike): Result;
 
   events: {
@@ -259,11 +310,14 @@ export interface AladdinFrxEthInterface extends utils.Interface {
     'CustomizeFee(bytes32,address,uint256)': EventFragment;
     'Deposit(address,address,uint256,uint256)': EventFragment;
     'Harvest(address,address,uint256,uint256,uint256)': EventFragment;
-    'Migrate(address,address)': EventFragment;
+    'MigrateStrategy(address,address)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
-    'UpdateFeeInfo(address,uint32,uint32,uint32)': EventFragment;
-    'UpdateRewardPeriodLength(uint256)': EventFragment;
+    'UpdateHarvestBountyPercentage(uint256)': EventFragment;
+    'UpdateHarvester(address)': EventFragment;
+    'UpdatePlatform(address)': EventFragment;
+    'UpdatePlatformFeePercentage(uint256)': EventFragment;
+    'UpdateWithdrawalFeePercentage(uint256)': EventFragment;
     'UpdateZap(address)': EventFragment;
     'Withdraw(address,address,address,uint256,uint256)': EventFragment;
   };
@@ -273,11 +327,14 @@ export interface AladdinFrxEthInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'CustomizeFee'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Migrate'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MigrateStrategy'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UpdateFeeInfo'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UpdateRewardPeriodLength'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateHarvestBountyPercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateHarvester'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdatePlatform'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdatePlatformFeePercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateWithdrawalFeePercentage'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateZap'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
@@ -329,13 +386,13 @@ export type HarvestEvent = TypedEvent<[string, string, BigNumber, BigNumber, Big
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
 
-export interface MigrateEventObject {
+export interface MigrateStrategyEventObject {
   _oldStrategy: string;
   _newStrategy: string;
 }
-export type MigrateEvent = TypedEvent<[string, string], MigrateEventObject>;
+export type MigrateStrategyEvent = TypedEvent<[string, string], MigrateStrategyEventObject>;
 
-export type MigrateEventFilter = TypedEventFilter<MigrateEvent>;
+export type MigrateStrategyEventFilter = TypedEventFilter<MigrateStrategyEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -354,22 +411,40 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface UpdateFeeInfoEventObject {
+export interface UpdateHarvestBountyPercentageEventObject {
+  _percentage: BigNumber;
+}
+export type UpdateHarvestBountyPercentageEvent = TypedEvent<[BigNumber], UpdateHarvestBountyPercentageEventObject>;
+
+export type UpdateHarvestBountyPercentageEventFilter = TypedEventFilter<UpdateHarvestBountyPercentageEvent>;
+
+export interface UpdateHarvesterEventObject {
+  _harvester: string;
+}
+export type UpdateHarvesterEvent = TypedEvent<[string], UpdateHarvesterEventObject>;
+
+export type UpdateHarvesterEventFilter = TypedEventFilter<UpdateHarvesterEvent>;
+
+export interface UpdatePlatformEventObject {
   _platform: string;
-  _platformPercentage: number;
-  _bountyPercentage: number;
-  _repayPercentage: number;
 }
-export type UpdateFeeInfoEvent = TypedEvent<[string, number, number, number], UpdateFeeInfoEventObject>;
+export type UpdatePlatformEvent = TypedEvent<[string], UpdatePlatformEventObject>;
 
-export type UpdateFeeInfoEventFilter = TypedEventFilter<UpdateFeeInfoEvent>;
+export type UpdatePlatformEventFilter = TypedEventFilter<UpdatePlatformEvent>;
 
-export interface UpdateRewardPeriodLengthEventObject {
-  _length: BigNumber;
+export interface UpdatePlatformFeePercentageEventObject {
+  _feePercentage: BigNumber;
 }
-export type UpdateRewardPeriodLengthEvent = TypedEvent<[BigNumber], UpdateRewardPeriodLengthEventObject>;
+export type UpdatePlatformFeePercentageEvent = TypedEvent<[BigNumber], UpdatePlatformFeePercentageEventObject>;
 
-export type UpdateRewardPeriodLengthEventFilter = TypedEventFilter<UpdateRewardPeriodLengthEvent>;
+export type UpdatePlatformFeePercentageEventFilter = TypedEventFilter<UpdatePlatformFeePercentageEvent>;
+
+export interface UpdateWithdrawalFeePercentageEventObject {
+  _feePercentage: BigNumber;
+}
+export type UpdateWithdrawalFeePercentageEvent = TypedEvent<[BigNumber], UpdateWithdrawalFeePercentageEventObject>;
+
+export type UpdateWithdrawalFeePercentageEventFilter = TypedEventFilter<UpdateWithdrawalFeePercentageEvent>;
 
 export interface UpdateZapEventObject {
   _zap: string;
@@ -389,12 +464,12 @@ export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface AladdinFrxEth extends BaseContract {
+export interface AladdinConcentratorCompounder extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AladdinFrxEthInterface;
+  interface: AladdinConcentratorCompounderInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -428,11 +503,14 @@ export interface AladdinFrxEth extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    balanceOfUnderlying(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     convertToAssets(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    convertToShares(_assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    convertToShares(
+      _assets: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares: BigNumber }>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
@@ -442,20 +520,39 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    deposit(
+    'deposit(address,uint256)'(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    'deposit(uint256,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    feeInfo(overrides?: CallOverrides): Promise<
-      [string, number, number, number] & {
-        platform: string;
-        platformPercentage: number;
-        bountyPercentage: number;
-        withdrawPercentage: number;
-      }
-    >;
+    depositAll(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    depositAllWithCRV(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    depositWithCRV(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    depositWithWrapper(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     getFeeRate(
       _feeType: PromiseOrValue<BytesLike>,
@@ -465,9 +562,11 @@ export interface AladdinFrxEth extends BaseContract {
 
     harvest(
       _recipient: PromiseOrValue<string>,
-      _minAssets: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    harvestBountyPercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -475,12 +574,8 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initialize(
-      _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
+    initializeV2(
       _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -507,6 +602,10 @@ export interface AladdinFrxEth extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    platform(overrides?: CallOverrides): Promise<[string]>;
+
+    platformFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     previewDeposit(_assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     previewMint(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -524,15 +623,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    rewardInfo(overrides?: CallOverrides): Promise<
-      [BigNumber, number, number, number] & {
-        rate: BigNumber;
-        periodLength: number;
-        lastUpdate: number;
-        finishAt: number;
-      }
-    >;
-
     setWithdrawFeeForUser(
       _user: PromiseOrValue<string>,
       _percentage: PromiseOrValue<BigNumberish>,
@@ -546,6 +636,8 @@ export interface AladdinFrxEth extends BaseContract {
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalUnderlying(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
       recipient: PromiseOrValue<string>,
@@ -565,21 +657,28 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateFeeInfo(
+    updateHarvestBountyPercentage(
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    updateHarvester(
+      _harvester: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    updatePlatform(
       _platform: PromiseOrValue<string>,
-      _platformPercentage: PromiseOrValue<BigNumberish>,
-      _bountyPercentage: PromiseOrValue<BigNumberish>,
-      _withdrawPercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateRewardPeriodLength(
-      _length: PromiseOrValue<BigNumberish>,
+    updatePlatformFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateRewards(
-      _rewards: PromiseOrValue<string>[],
+    updateWithdrawFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -588,12 +687,29 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdraw(
+    'withdraw(address,uint256,uint256,uint8)'(
+      _recipient: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    'withdraw(uint256,address,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    withdrawAll(
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    withdrawFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     zap(overrides?: CallOverrides): Promise<[string]>;
   };
@@ -614,7 +730,7 @@ export interface AladdinFrxEth extends BaseContract {
 
   balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  balanceOfUnderlying(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   convertToAssets(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -628,20 +744,39 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  deposit(
+  'deposit(address,uint256)'(
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  'deposit(uint256,address)'(
     _assets: PromiseOrValue<BigNumberish>,
     _receiver: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  feeInfo(overrides?: CallOverrides): Promise<
-    [string, number, number, number] & {
-      platform: string;
-      platformPercentage: number;
-      bountyPercentage: number;
-      withdrawPercentage: number;
-    }
-  >;
+  depositAll(
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  depositAllWithCRV(
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  depositWithCRV(
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  depositWithWrapper(
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   getFeeRate(
     _feeType: PromiseOrValue<BytesLike>,
@@ -651,9 +786,11 @@ export interface AladdinFrxEth extends BaseContract {
 
   harvest(
     _recipient: PromiseOrValue<string>,
-    _minAssets: PromiseOrValue<BigNumberish>,
+    _minimumOut: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
     spender: PromiseOrValue<string>,
@@ -661,12 +798,8 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initialize(
-    _zap: PromiseOrValue<string>,
-    _underlying: PromiseOrValue<string>,
+  initializeV2(
     _strategy: PromiseOrValue<string>,
-    _name: PromiseOrValue<string>,
-    _symbol: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -693,6 +826,10 @@ export interface AladdinFrxEth extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  platform(overrides?: CallOverrides): Promise<string>;
+
+  platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
+
   previewDeposit(_assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   previewMint(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -710,15 +847,6 @@ export interface AladdinFrxEth extends BaseContract {
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  rewardInfo(overrides?: CallOverrides): Promise<
-    [BigNumber, number, number, number] & {
-      rate: BigNumber;
-      periodLength: number;
-      lastUpdate: number;
-      finishAt: number;
-    }
-  >;
-
   setWithdrawFeeForUser(
     _user: PromiseOrValue<string>,
     _percentage: PromiseOrValue<BigNumberish>,
@@ -732,6 +860,8 @@ export interface AladdinFrxEth extends BaseContract {
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalUnderlying(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
     recipient: PromiseOrValue<string>,
@@ -751,21 +881,28 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateFeeInfo(
+  updateHarvestBountyPercentage(
+    _percentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  updateHarvester(
+    _harvester: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  updatePlatform(
     _platform: PromiseOrValue<string>,
-    _platformPercentage: PromiseOrValue<BigNumberish>,
-    _bountyPercentage: PromiseOrValue<BigNumberish>,
-    _withdrawPercentage: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateRewardPeriodLength(
-    _length: PromiseOrValue<BigNumberish>,
+  updatePlatformFeePercentage(
+    _feePercentage: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateRewards(
-    _rewards: PromiseOrValue<string>[],
+  updateWithdrawFeePercentage(
+    _feePercentage: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -774,12 +911,29 @@ export interface AladdinFrxEth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdraw(
+  'withdraw(address,uint256,uint256,uint8)'(
+    _recipient: PromiseOrValue<string>,
+    _shares: PromiseOrValue<BigNumberish>,
+    _minimumOut: PromiseOrValue<BigNumberish>,
+    _option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  'withdraw(uint256,address,address)'(
     _assets: PromiseOrValue<BigNumberish>,
     _receiver: PromiseOrValue<string>,
     _owner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  withdrawAll(
+    _recipient: PromiseOrValue<string>,
+    _minimumOut: PromiseOrValue<BigNumberish>,
+    _option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  withdrawFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
   zap(overrides?: CallOverrides): Promise<string>;
 
@@ -800,7 +954,7 @@ export interface AladdinFrxEth extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkpoint(overrides?: CallOverrides): Promise<void>;
+    balanceOfUnderlying(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     convertToAssets(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -814,20 +968,33 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    deposit(
+    'deposit(address,uint256)'(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'deposit(uint256,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    feeInfo(overrides?: CallOverrides): Promise<
-      [string, number, number, number] & {
-        platform: string;
-        platformPercentage: number;
-        bountyPercentage: number;
-        withdrawPercentage: number;
-      }
-    >;
+    depositAll(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    depositAllWithCRV(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    depositWithCRV(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    depositWithWrapper(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getFeeRate(
       _feeType: PromiseOrValue<BytesLike>,
@@ -837,9 +1004,11 @@ export interface AladdinFrxEth extends BaseContract {
 
     harvest(
       _recipient: PromiseOrValue<string>,
-      _minAssets: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -847,14 +1016,7 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    initialize(
-      _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
-      _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    initializeV2(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -876,6 +1038,10 @@ export interface AladdinFrxEth extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    platform(overrides?: CallOverrides): Promise<string>;
+
+    platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
+
     previewDeposit(_assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     previewMint(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -893,15 +1059,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rewardInfo(overrides?: CallOverrides): Promise<
-      [BigNumber, number, number, number] & {
-        rate: BigNumber;
-        periodLength: number;
-        lastUpdate: number;
-        finishAt: number;
-      }
-    >;
-
     setWithdrawFeeForUser(
       _user: PromiseOrValue<string>,
       _percentage: PromiseOrValue<BigNumberish>,
@@ -915,6 +1072,8 @@ export interface AladdinFrxEth extends BaseContract {
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalUnderlying(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       recipient: PromiseOrValue<string>,
@@ -931,26 +1090,41 @@ export interface AladdinFrxEth extends BaseContract {
 
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateFeeInfo(
-      _platform: PromiseOrValue<string>,
-      _platformPercentage: PromiseOrValue<BigNumberish>,
-      _bountyPercentage: PromiseOrValue<BigNumberish>,
-      _withdrawPercentage: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    updateHarvestBountyPercentage(_percentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateRewardPeriodLength(_length: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    updateHarvester(_harvester: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateRewards(_rewards: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
+    updatePlatform(_platform: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    updatePlatformFeePercentage(_feePercentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    updateWithdrawFeePercentage(_feePercentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     updateZap(_zap: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(
+    'withdraw(address,uint256,uint256,uint8)'(
+      _recipient: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'withdraw(uint256,address,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       _owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    withdrawAll(
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    withdrawFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<string>;
   };
@@ -1001,8 +1175,8 @@ export interface AladdinFrxEth extends BaseContract {
       harvestBounty?: null,
     ): HarvestEventFilter;
 
-    'Migrate(address,address)'(_oldStrategy?: null, _newStrategy?: null): MigrateEventFilter;
-    Migrate(_oldStrategy?: null, _newStrategy?: null): MigrateEventFilter;
+    'MigrateStrategy(address,address)'(_oldStrategy?: null, _newStrategy?: null): MigrateStrategyEventFilter;
+    MigrateStrategy(_oldStrategy?: null, _newStrategy?: null): MigrateStrategyEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
@@ -1024,21 +1198,20 @@ export interface AladdinFrxEth extends BaseContract {
       value?: null,
     ): TransferEventFilter;
 
-    'UpdateFeeInfo(address,uint32,uint32,uint32)'(
-      _platform?: PromiseOrValue<string> | null,
-      _platformPercentage?: null,
-      _bountyPercentage?: null,
-      _repayPercentage?: null,
-    ): UpdateFeeInfoEventFilter;
-    UpdateFeeInfo(
-      _platform?: PromiseOrValue<string> | null,
-      _platformPercentage?: null,
-      _bountyPercentage?: null,
-      _repayPercentage?: null,
-    ): UpdateFeeInfoEventFilter;
+    'UpdateHarvestBountyPercentage(uint256)'(_percentage?: null): UpdateHarvestBountyPercentageEventFilter;
+    UpdateHarvestBountyPercentage(_percentage?: null): UpdateHarvestBountyPercentageEventFilter;
 
-    'UpdateRewardPeriodLength(uint256)'(_length?: null): UpdateRewardPeriodLengthEventFilter;
-    UpdateRewardPeriodLength(_length?: null): UpdateRewardPeriodLengthEventFilter;
+    'UpdateHarvester(address)'(_harvester?: null): UpdateHarvesterEventFilter;
+    UpdateHarvester(_harvester?: null): UpdateHarvesterEventFilter;
+
+    'UpdatePlatform(address)'(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
+    UpdatePlatform(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
+
+    'UpdatePlatformFeePercentage(uint256)'(_feePercentage?: null): UpdatePlatformFeePercentageEventFilter;
+    UpdatePlatformFeePercentage(_feePercentage?: null): UpdatePlatformFeePercentageEventFilter;
+
+    'UpdateWithdrawalFeePercentage(uint256)'(_feePercentage?: null): UpdateWithdrawalFeePercentageEventFilter;
+    UpdateWithdrawalFeePercentage(_feePercentage?: null): UpdateWithdrawalFeePercentageEventFilter;
 
     'UpdateZap(address)'(_zap?: null): UpdateZapEventFilter;
     UpdateZap(_zap?: null): UpdateZapEventFilter;
@@ -1076,7 +1249,7 @@ export interface AladdinFrxEth extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    balanceOfUnderlying(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     convertToAssets(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1090,13 +1263,39 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(
+    'deposit(address,uint256)'(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    'deposit(uint256,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    feeInfo(overrides?: CallOverrides): Promise<BigNumber>;
+    depositAll(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    depositAllWithCRV(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    depositWithCRV(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    depositWithWrapper(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     getFeeRate(
       _feeType: PromiseOrValue<BytesLike>,
@@ -1106,9 +1305,11 @@ export interface AladdinFrxEth extends BaseContract {
 
     harvest(
       _recipient: PromiseOrValue<string>,
-      _minAssets: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -1116,12 +1317,8 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    initialize(
-      _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
+    initializeV2(
       _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1148,6 +1345,10 @@ export interface AladdinFrxEth extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    platform(overrides?: CallOverrides): Promise<BigNumber>;
+
+    platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
+
     previewDeposit(_assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     previewMint(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1165,8 +1366,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    rewardInfo(overrides?: CallOverrides): Promise<BigNumber>;
-
     setWithdrawFeeForUser(
       _user: PromiseOrValue<string>,
       _percentage: PromiseOrValue<BigNumberish>,
@@ -1180,6 +1379,8 @@ export interface AladdinFrxEth extends BaseContract {
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalUnderlying(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       recipient: PromiseOrValue<string>,
@@ -1199,21 +1400,28 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateFeeInfo(
+    updateHarvestBountyPercentage(
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updateHarvester(
+      _harvester: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updatePlatform(
       _platform: PromiseOrValue<string>,
-      _platformPercentage: PromiseOrValue<BigNumberish>,
-      _bountyPercentage: PromiseOrValue<BigNumberish>,
-      _withdrawPercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateRewardPeriodLength(
-      _length: PromiseOrValue<BigNumberish>,
+    updatePlatformFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateRewards(
-      _rewards: PromiseOrValue<string>[],
+    updateWithdrawFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1222,12 +1430,29 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(
+    'withdraw(address,uint256,uint256,uint8)'(
+      _recipient: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    'withdraw(uint256,address,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    withdrawAll(
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    withdrawFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1249,7 +1474,7 @@ export interface AladdinFrxEth extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    balanceOfUnderlying(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     convertToAssets(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1263,13 +1488,39 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    deposit(
+    'deposit(address,uint256)'(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'deposit(uint256,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    feeInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    depositAll(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositAllWithCRV(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositWithCRV(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositWithWrapper(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     getFeeRate(
       _feeType: PromiseOrValue<BytesLike>,
@@ -1279,9 +1530,11 @@ export interface AladdinFrxEth extends BaseContract {
 
     harvest(
       _recipient: PromiseOrValue<string>,
-      _minAssets: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    harvestBountyPercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -1289,12 +1542,8 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initialize(
-      _zap: PromiseOrValue<string>,
-      _underlying: PromiseOrValue<string>,
+    initializeV2(
       _strategy: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1321,6 +1570,10 @@ export interface AladdinFrxEth extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    platform(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    platformFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     previewDeposit(_assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     previewMint(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1338,8 +1591,6 @@ export interface AladdinFrxEth extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    rewardInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     setWithdrawFeeForUser(
       _user: PromiseOrValue<string>,
       _percentage: PromiseOrValue<BigNumberish>,
@@ -1353,6 +1604,8 @@ export interface AladdinFrxEth extends BaseContract {
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalUnderlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
       recipient: PromiseOrValue<string>,
@@ -1372,21 +1625,28 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateFeeInfo(
+    updateHarvestBountyPercentage(
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateHarvester(
+      _harvester: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updatePlatform(
       _platform: PromiseOrValue<string>,
-      _platformPercentage: PromiseOrValue<BigNumberish>,
-      _bountyPercentage: PromiseOrValue<BigNumberish>,
-      _withdrawPercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateRewardPeriodLength(
-      _length: PromiseOrValue<BigNumberish>,
+    updatePlatformFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateRewards(
-      _rewards: PromiseOrValue<string>[],
+    updateWithdrawFeePercentage(
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1395,12 +1655,29 @@ export interface AladdinFrxEth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdraw(
+    'withdraw(address,uint256,uint256,uint8)'(
+      _recipient: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'withdraw(uint256,address,address)'(
       _assets: PromiseOrValue<BigNumberish>,
       _receiver: PromiseOrValue<string>,
       _owner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    withdrawAll(
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    withdrawFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
