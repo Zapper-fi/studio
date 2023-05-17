@@ -2,9 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { gqlFetch, gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
-import { Network } from '~types/network.interface';
 
 type GetAccountsResponse = {
   accounts: {
@@ -47,7 +46,7 @@ export class SentimentAccountsResolver {
     return data.accounts;
   }
 
-  async getAccountOfOwner(address: string) {
+  async getAccountsOfOwner(address: string) {
     const accountsData = await this.getAllAccountsData();
 
     const accountOfOwner = accountsData.filter(x => x.owner.id == address).map(x => x.id);
