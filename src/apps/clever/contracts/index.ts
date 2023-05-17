@@ -5,11 +5,13 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import {
+  CleverFeeDistributor__factory,
   CleverFurnace__factory,
   CleverGauge__factory,
   CleverGaugeController__factory,
   CleverLocker__factory,
   CleverVesting__factory,
+  CleverVotingEscrow__factory,
 } from './ethers';
 
 // eslint-disable-next-line
@@ -21,6 +23,9 @@ export class CleverContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  cleverFeeDistributor({ address, network }: ContractOpts) {
+    return CleverFeeDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   cleverFurnace({ address, network }: ContractOpts) {
     return CleverFurnace__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -36,10 +41,15 @@ export class CleverContractFactory extends ContractFactory {
   cleverVesting({ address, network }: ContractOpts) {
     return CleverVesting__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  cleverVotingEscrow({ address, network }: ContractOpts) {
+    return CleverVotingEscrow__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
+export type { CleverFeeDistributor } from './ethers';
 export type { CleverFurnace } from './ethers';
 export type { CleverGauge } from './ethers';
 export type { CleverGaugeController } from './ethers';
 export type { CleverLocker } from './ethers';
 export type { CleverVesting } from './ethers';
+export type { CleverVotingEscrow } from './ethers';

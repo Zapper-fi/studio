@@ -12,7 +12,7 @@ import { CVX, CLEVCVX } from './addresses';
 
 @PositionTemplate()
 export class EthereumCleverLockContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CleverLocker> {
-  groupLabel = 'Lock';
+  groupLabel = 'CLever';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
