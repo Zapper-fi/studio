@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.465.0](https://github.com/Zapper-fi/studio/compare/v0.464.1...v0.465.0) (2023-05-17)
+
+
+### Features
+
+* **clever:** Add veClev and platform fee positions and fix furnace and farms labels ([#2670](https://github.com/Zapper-fi/studio/issues/2670)) ([7dc3e75](https://github.com/Zapper-fi/studio/commit/7dc3e75d8cf8457b490b26bd00934cb7efe03875))
+
 ## [0.464.1](https://github.com/Zapper-fi/studio/compare/v0.464.0...v0.464.1) (2023-05-16)
 
 
