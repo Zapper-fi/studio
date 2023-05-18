@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.465.1](https://github.com/Zapper-fi/studio/compare/v0.465.0...v0.465.1) (2023-05-18)
+
+
+### Bug Fixes
+
+* **rocket-pool:** Filter out finalized minipool balances ([#2673](https://github.com/Zapper-fi/studio/issues/2673)) ([f38e55d](https://github.com/Zapper-fi/studio/commit/f38e55d0bf62ce766c154034d7c14c8e30a0b77b))
+
 ## [0.465.0](https://github.com/Zapper-fi/studio/compare/v0.464.1...v0.465.0) (2023-05-17)
 
 
