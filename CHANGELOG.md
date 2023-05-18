@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.465.2](https://github.com/Zapper-fi/studio/compare/v0.465.1...v0.465.2) (2023-05-18)
+
+
+### Bug Fixes
+
+* **lido:** Wrapped staked ETH should not count towards TIV ([#2675](https://github.com/Zapper-fi/studio/issues/2675)) ([57c89ab](https://github.com/Zapper-fi/studio/commit/57c89abb8e1a1be8ed8177e7118cd444767c258e))
+
 ## [0.465.1](https://github.com/Zapper-fi/studio/compare/v0.465.0...v0.465.1) (2023-05-18)
 
 
