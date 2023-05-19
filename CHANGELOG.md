@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.466.0](https://github.com/Zapper-fi/studio/compare/v0.465.3...v0.466.0) (2023-05-19)
+
+
+### Features
+
+* **yearn:** Add v2 vaults on Optimism ([#2678](https://github.com/Zapper-fi/studio/issues/2678)) ([7c7ca52](https://github.com/Zapper-fi/studio/commit/7c7ca52ade01f38f16debab1d42dd9be8db5471d))
+
 ## [0.465.3](https://github.com/Zapper-fi/studio/compare/v0.465.2...v0.465.3) (2023-05-19)
 
 
