@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import _, { range } from 'lodash';
+import _, { compact, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -77,8 +77,10 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
           network: this.network,
         });
 
-        const depositAmountRaw = await multicall.wrap(miniPoolContract).getNodeDepositBalance();
+        const isFinalized = await multicall.wrap(miniPoolContract).getFinalised();
+        if (isFinalized) return null;
 
+        const depositAmountRaw = await multicall.wrap(miniPoolContract).getNodeDepositBalance();
         const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());
 
         return {
@@ -117,11 +119,15 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
     );
     if (minipoolAddresses.length === 0) return [];
 
-    return (
+    return compact(
       await Promise.all(
         minipoolAddresses
           .map(async address => {
             const minipoolContract = this.contractFactory.rocketMinipool({ address, network: this.network });
+
+            const isFinalized = await multicall.wrap(minipoolContract).getFinalised();
+            if (isFinalized) return null;
+
             const nodeDepositBalance = await multicall.wrap(minipoolContract).getNodeDepositBalance();
 
             return [
@@ -137,7 +143,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
             ];
           })
           .flat(),
-      )
+      ),
     ).flat();
   }
 }
