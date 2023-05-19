@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.465.3](https://github.com/Zapper-fi/studio/compare/v0.465.2...v0.465.3) (2023-05-19)
+
+
+### Bug Fixes
+
+* **sentiment:** fix balances and deposit in borrow market ([#2672](https://github.com/Zapper-fi/studio/issues/2672)) ([10ac700](https://github.com/Zapper-fi/studio/commit/10ac7007af67e11a48a20a16945783b5061e8d8e))
+
 ## [0.465.2](https://github.com/Zapper-fi/studio/compare/v0.465.1...v0.465.2) (2023-05-18)
 
 
