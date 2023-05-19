@@ -1,19 +1,18 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import _ from 'lodash';
-import { compact, merge, sumBy } from 'lodash';
+import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
-import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
-import { SentimentAccountsResolver } from '../common/sentiment.accounts-resolver';
 
+import { SentimentAccountsResolver } from '../common/sentiment.accounts-resolver';
 import { SentimentContractFactory, SentimentLToken } from '../contracts';
 
 export type SentimentSupplyAppTokenDefinition = {
@@ -92,22 +91,31 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
           network: this.network,
         });
 
-        const accountAddresses = await this.accountResolver.getAccountOfOwner(address);
+        const [accountAddresses, underlyingTokenAddress] = await Promise.all([
+          this.accountResolver.getAccountsOfOwner(address),
+          multicall.wrap(supplyTokenContract).asset(),
+        ]);
 
         const borrowRaw = await Promise.all(
           accountAddresses.map(address => multicall.wrap(supplyTokenContract).getBorrowBalance(address)),
         );
-
+        const supplyRaw = await Promise.all(
+          accountAddresses.map(address =>
+            multicall
+              .wrap(this.contractFactory.erc20({ address: underlyingTokenAddress, network: this.network }))
+              .balanceOf(address),
+          ),
+        );
+        const depositedAmountRaw = _.sum(supplyRaw);
         const borrowedAmountRaw = _.sum(borrowRaw);
 
-        if (borrowedAmountRaw == 0) return null;
-
-        const borrowedBalance = drillBalance(position.tokens[0], borrowedAmountRaw.toString());
+        const depositedBalance = drillBalance(position.tokens[0], depositedAmountRaw.toString());
+        const borrowedBalance = drillBalance(position.tokens[1], borrowedAmountRaw.toString());
 
         return {
           ...position,
-          tokens: [borrowedBalance],
-          balanceUSD: borrowedBalance.balanceUSD,
+          tokens: [depositedBalance, borrowedBalance],
+          balanceUSD: depositedBalance.balanceUSD - borrowedBalance.balanceUSD,
         };
       }),
     );
