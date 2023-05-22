@@ -54,7 +54,7 @@ const SUBGRAPH_URL = {
 export class SiloFinanceDefinitionResolver {
   @Cache({
     key: network => `studio:silo-finance:${network}:silo-data`,
-    ttl: moment.duration('15', 'minutes').asSeconds(),
+    ttl: moment.duration('60', 'minutes').asSeconds(),
   })
   private async getSiloDefinitionData(network: Network) {
     return gqlFetch<SiloFinanceMarketsResponse>({ endpoint: SUBGRAPH_URL[network], query: MARKETS_QUERY });

@@ -54,7 +54,7 @@ export class TenderizeTokenDefinitionsResolver {
 
   @Cache({
     key: network => `studio:tenderize:${network}:token-data`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
     const data = await gqlFetch<TenderTokenFetcherResponse>({
@@ -83,7 +83,7 @@ export class TenderizeTokenDefinitionsResolver {
 
   @Cache({
     key: `studio:tenderize:token-apy-data`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   private async getTokenApyData() {
     const { data } = await Axios.get<TokenApyResponse>('https://www.tenderize.me/api/apy');
@@ -101,7 +101,7 @@ export class TenderizeTokenDefinitionsResolver {
 
   @Cache({
     key: (network, tenderFarm) => `studio:tenderize:${network}:${tenderFarm}-reward-data`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   private async getRewardRateData(network: Network, tenderFarm: string) {
     return gqlFetch<RewardRateFetcherResponse>({
