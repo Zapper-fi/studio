@@ -92,7 +92,7 @@ export class AuraBalancerPoolResolver {
 
   @Cache({
     key: (poolId: string) => `studio:aura:balancer-pools-${poolId}`,
-    ttl: 60 * 60,
+    ttl: 15 * 60,
   })
   private async getBalancerPoolData(poolId: string) {
     const endpoint = `https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2`;

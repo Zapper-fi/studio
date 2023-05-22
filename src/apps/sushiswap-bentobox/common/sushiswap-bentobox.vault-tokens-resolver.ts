@@ -38,7 +38,7 @@ export class SushiswapBentoboxVaultTokensResolver {
 
   @Cache({
     key: (_, network) => `studio:sushiswap-bentobox:${network}:vault-data`,
-    ttl: 60 * 60, // 5 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getVaultTokensData(subgraphUrl: string, _network: Network) {
     const data = await gqlFetch<TokensResponse>({
