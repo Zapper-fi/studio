@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.466.2](https://github.com/Zapper-fi/studio/compare/v0.466.1...v0.466.2) (2023-05-22)
+
+
+### Bug Fixes
+
+* **subgraph:** Bump cached data ttl to an hour ([#2682](https://github.com/Zapper-fi/studio/issues/2682)) ([202d2c5](https://github.com/Zapper-fi/studio/commit/202d2c5400763c0ce17e560ba2d28dc53685b4f4))
+
 ## [0.466.1](https://github.com/Zapper-fi/studio/compare/v0.466.0...v0.466.1) (2023-05-22)
 
 
