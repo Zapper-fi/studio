@@ -27,7 +27,7 @@ export class RubiconBathTokenDefinitionResolver {
 
   @Cache({
     key: `studio:rubicon:optimism:pool-data`,
-    ttl: 60 * 60, // 5 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getPoolDefinitionsData() {
     const data = await gqlFetch<RubiconPoolFetcherResponse>({
