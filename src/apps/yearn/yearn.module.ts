@@ -11,12 +11,15 @@ import { EthereumYearnV2VaultTokenFetcher } from './ethereum/yearn.v2-vault.toke
 import { EthereumYearnYCrvTokenTokenFetcher } from './ethereum/yearn.y-crv.token-fetcher';
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fetcher';
+import { OptimismYearnV2VaultTokenFetcher } from './optimism/yearn.v2-vault.token-fetcher';
 
 @Module({
   providers: [
     YearnContractFactory,
     // Helpers
     YearnVaultTokenDefinitionsResolver,
+    // Arbitrum
+    ArbitrumYearnV2VaultTokenFetcher,
     // Ethereum
     EthereumYearnGovernanceContractPositionFetcher,
     EthereumYearnV1VaultTokenFetcher,
@@ -25,8 +28,8 @@ import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fe
     EthereumYearnYCrvTokenTokenFetcher,
     // Fantom
     FantomYearnV2VaultTokenFetcher,
-    // Arbitrum
-    ArbitrumYearnV2VaultTokenFetcher,
+    // Optimism
+    OptimismYearnV2VaultTokenFetcher,
   ],
 })
 export class YearnAppModule extends AbstractApp() {}

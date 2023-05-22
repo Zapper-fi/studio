@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.466.2](https://github.com/Zapper-fi/studio/compare/v0.466.1...v0.466.2) (2023-05-22)
+
+
+### Bug Fixes
+
+* **subgraph:** Bump cached data ttl to an hour ([#2682](https://github.com/Zapper-fi/studio/issues/2682)) ([202d2c5](https://github.com/Zapper-fi/studio/commit/202d2c5400763c0ce17e560ba2d28dc53685b4f4))
+
+## [0.466.1](https://github.com/Zapper-fi/studio/compare/v0.466.0...v0.466.1) (2023-05-22)
+
+
+### Bug Fixes
+
+* **subgraph:** Bump cached data ttl to an hour ([#2680](https://github.com/Zapper-fi/studio/issues/2680)) ([2053d92](https://github.com/Zapper-fi/studio/commit/2053d92059bc5d97f54c7aad2042dfc4f5da0c9e))
+
+## [0.466.0](https://github.com/Zapper-fi/studio/compare/v0.465.3...v0.466.0) (2023-05-19)
+
+
+### Features
+
+* **yearn:** Add v2 vaults on Optimism ([#2678](https://github.com/Zapper-fi/studio/issues/2678)) ([7c7ca52](https://github.com/Zapper-fi/studio/commit/7c7ca52ade01f38f16debab1d42dd9be8db5471d))
+
 ## [0.465.3](https://github.com/Zapper-fi/studio/compare/v0.465.2...v0.465.3) (2023-05-19)
 
 
