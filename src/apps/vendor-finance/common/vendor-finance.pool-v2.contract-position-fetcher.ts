@@ -12,33 +12,22 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { VendorFinanceContractFactory, VendorFinancePoolV2 } from '../contracts';
-import { LENDING_POOLS_V2_QUERY, VendorLendingPoolsV2GraphResponse } from './getLendingPoolsQuery';
+import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { MetaType } from '~position/position.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { VendorBorrowerV2GraphResponse, borrowerV2InfosQuery } from './getBorrowerInfosQuery';
+import { borrowerV2InfosQuery } from './getBorrowerInfosQuery';
 import { isBorrowed } from '~position/position.utils';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-
-export type VendorFinancePoolV2Definition = {
-  address: string;
-  deployer: string;
-  mintRatio: string;
-  colToken: string;
-  lendToken: string;
-  expiry: string;
-  feeRate: string;
-  lendBalance: string;
-  totalBorrowed: string;
-};
-
-type VendorFinancePoolDataProps = DefaultDataProps & {
-  deployer: string;
-  totalDeposited: number;
-};
+import {
+  VendorBorrowerV2GraphResponse,
+  VendorFinancePoolDataProps,
+  VendorFinancePoolV2Definition,
+  VendorLendingPoolsV2GraphResponse,
+} from './vendor-finance.pool.types';
 
 export abstract class VendorFinancePoolV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePoolV2> {
   abstract subgraphUrl: string;
