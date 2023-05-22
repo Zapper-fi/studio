@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { VendorFinancePool__factory } from './VendorFinancePool__factory';
+export { VendorFinancePoolV2__factory } from './VendorFinancePoolV2__factory';

@@ -15,8 +15,27 @@ type VendorLendingPool = {
   _paused: boolean;
 };
 
+type VendorLendingPoolV2 = {
+  id: string;
+  deployer: string;
+  mintRatio: string;
+  colToken: string;
+  lendToken: string;
+  borrowers: string;
+  expiry: string;
+  startRate: string;
+  colBalance: string;
+  lendBalance: string;
+  totalBorrowed: string;
+  paused: boolean;
+};
+
 export type VendorLendingPoolsGraphResponse = {
   pools: Array<VendorLendingPool>;
+};
+
+export type VendorLendingPoolsV2GraphResponse = {
+  pools: Array<VendorLendingPoolV2>;
 };
 
 export const LENDING_POOLS_QUERY = gql`
@@ -34,6 +53,25 @@ export const LENDING_POOLS_QUERY = gql`
       _lendBalance
       _totalBorrowed
       _paused
+    }
+  }
+`;
+
+export const LENDING_POOLS_V2_QUERY = gql`
+  query getPoolsList {
+    pools(first: 1000, where: { expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
+      id
+      deployer
+      mintRatio
+      colToken
+      lendToken
+      borrowers
+      expiry
+      startRate
+      colBalance
+      lendBalance
+      totalBorrowed
+      paused
     }
   }
 `;
