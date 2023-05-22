@@ -6,7 +6,6 @@ import { Network, NETWORK_IDS } from '~types';
 
 import {
   getGameVersionType,
-  RewardType,
   BASE_API_URL,
   GamesResponse,
   retry,
@@ -46,19 +45,10 @@ export class HalofiGameGamesApiSource {
 
     for (let i = 0; i < gameContractAddresses.length; i += 1) {
       const gameContractAddress = gameContractAddresses[i];
-      let rewardTokenAddresses: string[] = [];
-      const rewardTokens: Record<string, string> = {};
 
       const { depositTokenAddress, id, contractVersion, networkId, strategyProvider, gameNameShort, gameName } =
         gameConfigs[gameContractAddress];
-
       const isV2Game = getGameVersionType(contractVersion);
-
-      if (isV2Game) {
-        rewardTokens[RewardType.Deposit] = depositTokenAddress;
-        const rewardTokenAddress = Object.values(rewardTokens);
-        rewardTokenAddresses = [...rewardTokenAddress];
-      }
 
       if (
         depositTokenAddress &&
@@ -71,7 +61,7 @@ export class HalofiGameGamesApiSource {
         farms.push({
           address: id,
           stakedTokenAddress: depositTokenAddress,
-          rewardTokenAddresses,
+          rewardTokenAddresses: [],
           strategyProvider,
           contractVersion,
           gameName: gameNameShort ?? gameName,

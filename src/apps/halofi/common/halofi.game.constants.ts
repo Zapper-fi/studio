@@ -9,12 +9,6 @@ export enum NetworkId {
   CeloAlfajores = '44787',
 }
 
-export enum RewardType {
-  Reward = 'reward',
-  Incentive = 'incentive',
-  Deposit = 'deposit',
-}
-
 type Reward = {
   tokenId: string;
   address: string;
