@@ -92,7 +92,7 @@ const poolsQuery = gql`
 export class SolidLizardDefinitionsResolver {
   @Cache({
     key: `studio:solid-lizard:pool-token-data`,
-    ttl: 5 * 60, // 60 minutes
+    ttl: 60 * 60, // 60 minutes
   })
   private async getPoolDefinitionsData() {
     const response = await gqlFetch<SolidLizardApiPairData>({

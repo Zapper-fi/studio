@@ -44,7 +44,7 @@ export class ArrakisPoolDefinitionsResolver {
 
   @Cache({
     key: network => `studio:arrakis:${network}:pool-data`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   private async getPoolDefinitionsData(network: Network) {
     const data = await gqlFetch<ArrakisPoolFetcherResponse>({

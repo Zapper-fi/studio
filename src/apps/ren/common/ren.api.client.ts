@@ -13,7 +13,7 @@ export class RenApiClient {
   @Cache({
     instance: 'business',
     key: () => `studio:ren:darknode:assets`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   async getDarknodeAssets() {
     const data = await gqlFetch<GetAssetsResponse>({
@@ -27,7 +27,7 @@ export class RenApiClient {
   @Cache({
     instance: 'user',
     key: (address: string) => `studio:ren:darknode:${address}:darknodes`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   async getDarknodeBalance(address: string) {
     const data = await gqlFetch<GetDarknodesResponse>({

@@ -33,7 +33,7 @@ export class SentimentAccountsResolver {
 
   @Cache({
     key: network => `studio:sentiment:${network}:accounts`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 60 * 60, // 5 minutes
   })
   private async getAllAccountsData() {
     const data = await gqlFetchAll<GetAccountsResponse>({
