@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.468.0](https://github.com/Zapper-fi/studio/compare/v0.467.0...v0.468.0) (2023-05-23)
+
+
+### Features
+
+* get player balances on chain ([#2684](https://github.com/Zapper-fi/studio/issues/2684)) ([f80ffbe](https://github.com/Zapper-fi/studio/commit/f80ffbe5fc93a7338665e98a51f625f275bf25f7))
+
 ## [0.467.0](https://github.com/Zapper-fi/studio/compare/v0.466.2...v0.467.0) (2023-05-23)
 
 
