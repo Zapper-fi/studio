@@ -7,7 +7,7 @@ import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { isClaimable, isSupplied } from '~position/position.utils';
+import { isSupplied } from '~position/position.utils';
 import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
@@ -15,9 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { HalofiContractFactory, HalofiAbiV001 } from '../contracts';
+import { HalofiContractFactory, HalofiAbi } from '../contracts';
 
-import { HalofiGameBalancesApiSource } from './halofi.game.balances.api-source';
 import { HalofiGameGamesApiSource } from './halofi.game.games.api-source';
 
 export type HalofiGameDefinition = {
@@ -31,7 +30,7 @@ export type HalofiGameDefinition = {
 
 @Injectable()
 export abstract class HalofiGameContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
-  HalofiAbiV001,
+  HalofiAbi,
   DefaultDataProps,
   HalofiGameDefinition
 > {
@@ -39,13 +38,12 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(HalofiContractFactory) protected readonly contractFactory: HalofiContractFactory,
     @Inject(HalofiGameGamesApiSource) protected readonly gamesApiSource: HalofiGameGamesApiSource,
-    @Inject(HalofiGameBalancesApiSource) protected readonly balancesApiSource: HalofiGameBalancesApiSource,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): HalofiAbiV001 {
-    return this.contractFactory.halofiAbiV001({ address, network: this.network });
+  getContract(address: string): HalofiAbi {
+    return this.contractFactory.halofiAbi({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<HalofiGameDefinition[]> {
@@ -54,7 +52,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
 
   async getTokenDefinitions({
     definition,
-  }: GetTokenDefinitionsParams<HalofiAbiV001, HalofiGameDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
+  }: GetTokenDefinitionsParams<HalofiAbi, HalofiGameDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -69,7 +67,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
     ];
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<HalofiAbiV001, DefaultDataProps, HalofiGameDefinition>) {
+  async getLabel({ definition }: GetDisplayPropsParams<HalofiAbi, DefaultDataProps, HalofiGameDefinition>) {
     return definition.gameName;
   }
 
@@ -79,39 +77,27 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const playerGameBalances = await this.balancesApiSource.getBalances(address, this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       groupIds: [this.groupId],
       network: this.network,
     });
+    const multicall = this.appToolkit.getMulticall(this.network);
 
-    const incentiveTokenIndex = 3;
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
+        const halofiContract = this.contractFactory.halofiAbi({
+          address: contractPosition.address,
+          network: this.network,
+        });
+        const player = await multicall.wrap(halofiContract).players(address);
+
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
-        const rewardToken = contractPosition.tokens.find(isClaimable)!;
-        const incentiveToken = contractPosition.tokens[incentiveTokenIndex];
-        const incentiveOrRewardToken = incentiveToken ?? rewardToken;
         const balancesRaw: BigNumberish[] = [];
 
-        if (!playerGameBalances[contractPosition.address]) {
-          balancesRaw.push(...contractPosition.tokens.map(() => 0));
-        } else {
-          const { incentiveAmount, interestAmount, isWinner, paidAmount, rewardAmount } =
-            playerGameBalances[contractPosition.address];
-
-          const paidAmountRaw = paidAmount * 10 ** stakedToken.decimals;
-          const interestAmountRaw = interestAmount * 10 ** stakedToken.decimals;
-
-          const incentiveAmountRaw = incentiveAmount * 10 ** (incentiveOrRewardToken?.decimals ?? 0);
-          const rewardAmountRaw = rewardAmount * 10 ** (rewardToken?.decimals ?? 0);
-          const mayBeRewardAmountRaw = rewardAmountRaw < 0.01 ? incentiveAmountRaw : rewardAmountRaw;
-
-          balancesRaw.push(paidAmountRaw);
-          if (rewardToken && isWinner) balancesRaw.push(mayBeRewardAmountRaw);
-          if (incentiveToken && isWinner) balancesRaw.push(incentiveAmountRaw);
-          if (stakedToken && isWinner) balancesRaw.push(interestAmountRaw);
+        if (!player.withdrawn && stakedToken) {
+          const paidAmount = parseFloat(player.netAmountPaid.toString());
+          balancesRaw.push(paidAmount);
         }
 
         const nonZeroBalancesRaw = balancesRaw.filter(balance => balance > 0);

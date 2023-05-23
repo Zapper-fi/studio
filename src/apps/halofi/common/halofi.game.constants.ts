@@ -9,33 +9,10 @@ export enum NetworkId {
   CeloAlfajores = '44787',
 }
 
-export enum RewardType {
-  Reward = 'reward',
-  Incentive = 'incentive',
-  Deposit = 'deposit',
-}
-
-type RewardBalance = {
-  tokenId: string;
-  address: string;
-  type: string;
-  balance: string;
-  convertedBalance: string;
-};
-
 type Reward = {
   tokenId: string;
   address: string;
   type: string;
-};
-
-export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
-  const playerReward: Record<string, RewardBalance> = {};
-  rewards.forEach(reward => {
-    const { type } = reward;
-    playerReward[type] = reward;
-  });
-  return playerReward;
 };
 
 /**
@@ -107,36 +84,6 @@ export const getGameVersionType = (contractVersion: string) => {
   return false;
 };
 
-export type PlayerResponse = {
-  gameId: string;
-  playerId: string;
-  withdrawn: boolean;
-  isWaiting: boolean;
-  interestAmount: string;
-  incentiveAmount: string;
-  paidAmount: string;
-  isGameCompleted: string;
-  rewardAmount: string;
-  gameAPY: string;
-  totalEarningsConverted: string;
-  pooltotalEarningsConverted: string;
-  isWinner: boolean;
-  poolAPY: string;
-  rewards?: RewardBalance[];
-};
-
-export type PlayerBalance = {
-  incentiveAmount: number;
-  interestAmount: number;
-  withdrawn: boolean;
-  isWinner: boolean;
-  paidAmount: number;
-  rewardAmount: number;
-  poolAPY: number;
-  pooltotalEarningsConverted: number;
-  playerId: string;
-};
-
 export type GamesResponse = Record<
   string,
   {
@@ -170,4 +117,4 @@ export type GamesResponse = Record<
   }
 >;
 
-export const BASE_API_URL = 'https://staging.goodghosting-api.com/v1';
+export const BASE_API_URL = 'https://goodghosting-api.com/v1';
