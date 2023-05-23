@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.467.0](https://github.com/Zapper-fi/studio/compare/v0.466.2...v0.467.0) (2023-05-23)
+
+
+### Features
+
+* **granary-finace:** Add lending markets on Arbitrum ([#2686](https://github.com/Zapper-fi/studio/issues/2686)) ([1d39878](https://github.com/Zapper-fi/studio/commit/1d398789a05a4d64bec8267579587f52b7c9565d))
+
 ## [0.466.2](https://github.com/Zapper-fi/studio/compare/v0.466.1...v0.466.2) (2023-05-22)
 
 
