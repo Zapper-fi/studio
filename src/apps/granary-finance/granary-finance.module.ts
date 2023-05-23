@@ -3,6 +3,10 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
 
+import { ArbitrumGranaryFinancePositionPresenter } from './arbitrum/granary-finance.position-presenter';
+import { ArbitrumGranaryFinanceStableDebtTokenFetcher } from './arbitrum/granary-finance.stable-debt.token-fetcher';
+import { ArbitrumGranaryFinanceSupplyTokenFetcher } from './arbitrum/granary-finance.supply.token-fetcher';
+import { ArbitrumGranaryFinanceVariableDebtTokenFetcher } from './arbitrum/granary-finance.variable-debt.token-fetcher';
 import { GranaryFinanceContractFactory } from './contracts';
 import { EthereumGranaryFinancePositionPresenter } from './ethereum/granary-finance.position-presenter';
 import { EthereumGranaryFinanceStableDebtTokenFetcher } from './ethereum/granary-finance.stable-debt.token-fetcher';
@@ -21,12 +25,17 @@ import { OptimismGranaryFinanceVariableDebtTokenFetcher } from './optimism/grana
   providers: [
     GranaryFinanceContractFactory,
     AaveV2ContractFactory,
+    // Arbitrum
+    ArbitrumGranaryFinancePositionPresenter,
+    ArbitrumGranaryFinanceStableDebtTokenFetcher,
+    ArbitrumGranaryFinanceSupplyTokenFetcher,
+    ArbitrumGranaryFinanceVariableDebtTokenFetcher,
     // Ethereum
     EthereumGranaryFinancePositionPresenter,
     EthereumGranaryFinanceStableDebtTokenFetcher,
     EthereumGranaryFinanceSupplyTokenFetcher,
     EthereumGranaryFinanceVariableDebtTokenFetcher,
-    //
+    // Fantom
     FantomGranaryFinancePositionPresenter,
     FantomGranaryFinanceStableDebtTokenFetcher,
     FantomGranaryFinanceSupplyTokenFetcher,
