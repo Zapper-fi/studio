@@ -5,9 +5,7 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network, NETWORK_IDS } from '~types';
 
 import {
-  NetworkId,
   getGameVersionType,
-  RewardType,
   BASE_API_URL,
   GamesResponse,
   retry,
@@ -47,54 +45,23 @@ export class HalofiGameGamesApiSource {
 
     for (let i = 0; i < gameContractAddresses.length; i += 1) {
       const gameContractAddress = gameContractAddresses[i];
-      let rewardTokenAddresses: string[] = [];
-      const rewardTokens: Record<string, string> = {};
 
-      const {
-        depositTokenAddress,
-        rewardTokenAddress,
-        id,
-        contractVersion,
-        incentiveTokenAddress,
-        networkId,
-        strategyProvider,
-        gameNameShort,
-        gameName,
-        rewards,
-      } = gameConfigs[gameContractAddress];
-
+      const { depositTokenAddress, id, contractVersion, networkId, strategyProvider, gameNameShort, gameName } =
+        gameConfigs[gameContractAddress];
       const isV2Game = getGameVersionType(contractVersion);
-      const isPolygonGame = NetworkId.PolygonMainnet === networkId;
-      const isCeloGame = NetworkId.CeloMainnet === networkId;
 
-      if (isV2Game) {
-        rewards?.map(reward => {
-          rewardTokens[reward.type] = reward.address;
-        });
-        rewardTokens[RewardType.Deposit] = depositTokenAddress;
-        const rewardTokenAddress = Object.values(rewardTokens);
-        rewardTokenAddresses = [...rewardTokenAddress];
-      }
-
-      if (isPolygonGame && rewardTokenAddress) {
-        rewardTokenAddresses.push(rewardTokenAddress);
-        rewardTokenAddresses.push(depositTokenAddress);
-      }
-
-      if (isPolygonGame && rewardTokenAddress && incentiveTokenAddress) {
-        rewardTokenAddresses.push(incentiveTokenAddress);
-      }
-
-      if (isCeloGame && incentiveTokenAddress) {
-        rewardTokenAddresses.push(incentiveTokenAddress);
-        rewardTokenAddresses.push(depositTokenAddress);
-      }
-
-      if (depositTokenAddress && contractVersion && id && networkId && Number(networkId) === networkIdParam) {
+      if (
+        depositTokenAddress &&
+        contractVersion &&
+        isV2Game &&
+        id &&
+        networkId &&
+        Number(networkId) === networkIdParam
+      ) {
         farms.push({
           address: id,
           stakedTokenAddress: depositTokenAddress,
-          rewardTokenAddresses,
+          rewardTokenAddresses: [],
           strategyProvider,
           contractVersion,
           gameName: gameNameShort ?? gameName,

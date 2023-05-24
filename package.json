@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.466.1",
+  "version": "0.469.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -25,6 +25,7 @@
     "@golevelup/nestjs-modules": "^0.5.0",
     "@kyberswap/ks-sdk-core": "^1.0.4",
     "@kyberswap/ks-sdk-elastic": "^1.0.5",
+    "@morpho-labs/ethers-utils": "^1.2.0",
     "@nestjs/platform-express": "8.4.2",
     "@nestjs/schedule": "^2.1.0",
     "@pendle/sdk": "^2.5.8",
