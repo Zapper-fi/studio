@@ -17,18 +17,16 @@ import {
 
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
-import { RigoblockLogProvider } from '../common/rigoblock.log-provider';
+import { PoolLogType, RigoblockLogProvider } from '../common/rigoblock.log-provider';
 import { POOL_BUILDERS } from '../common/rigoblock.pool.pool-builders';
 
-export enum PoolLogType {
-  REGISTERED = 'registered',
-  TOKEN_WHITELISTED = 'whitelisted',
-}
-
 type RigoblockSmartPoolDefinition = DefaultAppTokenDefinition & {
-  type: PoolLogType;
-  poolAddress: string;
+  logType: PoolLogType;
   name: string;
+};
+
+type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
+  logType: PoolLogType;
 };
 
 @PositionTemplate()
@@ -36,7 +34,7 @@ export class EthereumRigoblockPoolTokenFetcher extends AppTokenTemplatePositionF
   SmartPool,
   RigoblockSmartPoolDefinition
 > {
-  groupLabel: string = 'SmartPool';
+  groupLabel: string = 'Smart Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -58,19 +56,19 @@ export class EthereumRigoblockPoolTokenFetcher extends AppTokenTemplatePositionF
           fromBlock: blockNumber,
           address: registryAddress.toLowerCase(),
           network: this.network,
-          label: PoolLogType.REGISTERED,
+          logType: PoolLogType.REGISTERED,
         }),
       ),
     );
     const definitions = await Promise.all(
       builderLogs.flatMap(logs =>
-        flatMap(logs, (logsForType, type: PoolLogType) =>
+        flatMap(logs, (logsForType, logType: PoolLogType) =>
           logsForType.map(async log => {
             const poolAddress = log.args[1].toLowerCase();
             const name = log.args[2].toLowerCase();
 
             return {
-              type,
+              logType,
               address: poolAddress,
               name: parseBytes32String(name),
             };
@@ -81,17 +79,48 @@ export class EthereumRigoblockPoolTokenFetcher extends AppTokenTemplatePositionF
     return [...definitions, ...this.extraDefinitions];
   }
 
-  async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
-    return definitions.map(({ address }) => address);
+  async getAddresses({ definitions }: RigoblockSmartPoolDefinition): Promise<string[]> {
+    return definitions.map(definition => definition.address);
   }
 
   getContract(address: string): SmartPool {
     return this.contractFactory.smartPool({ address, network: this.network });
   }
 
-  async getUnderlyingTokenDefinitions(): Promise<string> {
-    return [{ address: '0x4fbb350052bca5417566f188eb2ebce5b19bc964', network: this.network }];
+  async getTokenList(): Promise<WhitelistedTokenDefinition[]> {
+    const tokenBuilders = POOL_BUILDERS[this.network] ?? [];
+
+    const tokenLogs = await Promise.all(
+      tokenBuilders.map(({ tokenWhitelistAddress, blockNumber }) =>
+        this.logProvider.getRigoblockLogs({
+          fromBlock: blockNumber,
+          address: tokenWhitelistAddress.toLowerCase(),
+          network: this.network,
+          logType: PoolLogType.TOKEN_WHITELISTED,
+        }),
+      ),
+    );
+
+    return await Promise.all(
+      tokenLogs.flatMap(nlogs =>
+        flatMap(nlogs, (nlogsForType, logType: PoolLogType) =>
+          nlogsForType.map(async nlog => {
+            //console.log(log.args[0]);
+            const tokenAddress = nlog.args[0].toLowerCase();
+
+            return {
+              logType,
+              address: tokenAddress,
+            };
+          }),
+        ),
+      ),
+    );
   }
+
+  async getUnderlyingTokenDefinitions(): Promise<string> {
+    // we make sure no token duplicates are in the list
+    return [...new Set(await this.getTokenList())].map(x => ({ address: x.address.toLowerCase(), network: this.network }))};
 
   async getPricePerShare({
     appToken,
@@ -108,11 +137,12 @@ export class EthereumRigoblockPoolTokenFetcher extends AppTokenTemplatePositionF
       }),
     );
 
-    return reserves.map(r => r / appToken.supply);
-    //return [1];
+    return reserves.map(r => {
+      return r == 0 ? 0 : r / appToken.supply;
+    });
   }
 
-  async getLabel({ definition }): Promise<string> {
+  async getLabel({ definition }: RigoblockSmartPoolDefinition): Promise<string> {
     return definition.name;
   }
 }

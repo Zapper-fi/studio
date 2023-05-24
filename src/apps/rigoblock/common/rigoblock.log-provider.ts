@@ -7,28 +7,42 @@ import { Network } from '~types';
 
 import { RigoblockContractFactory } from '../contracts';
 
+export enum PoolLogType {
+  REGISTERED = 'registered',
+  TOKEN_WHITELISTED = 'whitelisted',
+}
+
 @Injectable()
 export class RigoblockLogProvider {
   constructor(@Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory) {}
 
   // TODO: token whitelisted logs can even be updated once every week
   @Cache({
-    key: ({ network, address, fromBlock, label }: { network: Network; fromBlock: number; address: string; label:string }) =>
-      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${label}`,
-    ttl: moment.duration(1, 'hour').asSeconds(),
+    key: ({ network, address, fromBlock, logType }: {
+      network: Network;
+      logType: PoolLogType;
+      fromBlock: number;
+      address: string;
+    }) =>
+      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
+    ttl: ({ logyType }: { logType: PoolLogType }) => {
+      logType === PoolLogType.REGISTERED
+        ? moment.duration(1, 'hour').asSeconds()
+        : moment.duration(48, 'hour').asSeconds()
+      },
   })
   async getRigoblockLogs({
     fromBlock,
     network,
     address,
-    label,
+    logType,
   }: {
     address: string;
-    label: string;
+    logType: PoolLogType;
     network: Network;
     fromBlock: number;
   }) {
-    const contract = label === 'registered'
+    const contract = logType === PoolLogType.REGISTERED
       ? this.contractFactory.poolRegistry({ network, address })
       : this.contractFactory.tokenWhitelist({ network, address });
     const mapper = <T extends Event>({ address, event, args }: T) => ({
@@ -37,19 +51,15 @@ export class RigoblockLogProvider {
       event,
     });
 
-    //label === 'registered' ? contract.filters.Registered() : contract.filters.Whitelisted(),
-    const [rigoblockLogs] = await Promise.all([
+    return await Promise.all([
       contract
         .queryFilter(
-          contract.filters.Registered(),
-          fromBlock
+          logType === PoolLogType.REGISTERED
+            ? contract.filters.Registered()
+            : contract.filters.Whitelisted(),
+          fromBlock,
         )
         .then(logs => logs.map(mapper)),
     ]);
-
-    return {
-      //label === 'registered' ? rigoblockLogs : [...new Set(rigoblockLogs)],
-      [label]: rigoblockLogs,
-    };
   }
 }
