@@ -6,7 +6,7 @@ import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetche
 export class PolygonRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
   groupLabel: string = 'Smart Pools';
 
-  const blockedTokenAddresses = [
+  blockedTokenAddresses = [
     '0xbc0bea8e634ec838a2a45f8a43e7e16cd2a8ba99', // GRG
     '0x3ba4c387f786bfee076a58914f5bd38d668b42c3', // BNB
     '0x0000000000000000000000000000000000001010', // MATIC

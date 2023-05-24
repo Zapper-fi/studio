@@ -5,7 +5,7 @@ import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetche
 @PositionTemplate()
 export class ArbitrumRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
   groupLabel: string = 'Smart Pools';
-  const blockedTokenAddresses = [
+  blockedTokenAddresses = [
     '0x51318b7d00db7acc4026c88c3952b66278b6a67f', // PLS
     '0x46ca8ed5465cb859bb3c3364078912c25f4d74de', // KTN
     '0x873484f654a7203296931f529680449e8a642898', // iETHV
