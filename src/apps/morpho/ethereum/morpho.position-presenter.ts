@@ -7,9 +7,9 @@ import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { MorphoContractFactory } from '../contracts';
+import { MorphoAaveV2Lens, MorphoCompoundLens, MorphoContractFactory } from '../contracts';
 
-export type EthereumMorphoPositionPresenterDataProps = { healthFactor: number };
+export type EthereumMorphoPositionPresenterDataProps = { healthFactorMA2: number; healthFactorMC: number };
 @PresenterTemplate()
 export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<EthereumMorphoPositionPresenterDataProps> {
   morphoCompoundLensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
@@ -24,20 +24,32 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
 
   override async dataProps(address: string): Promise<EthereumMorphoPositionPresenterDataProps | undefined> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const lens = this.contractFactory.morphoAaveV2Lens({
-      address: this.morphoAaveLensAddress,
-      network: this.network,
-    });
-    const healthFactor = await multicall
-      .wrap(lens)
-      .getUserHealthFactor(address)
-      .catch(err => {
+    const aaveV2Lens = multicall.wrap(
+      this.contractFactory.morphoAaveV2Lens({
+        address: this.morphoAaveLensAddress,
+        network: this.network,
+      }),
+    ) as MorphoAaveV2Lens;
+    const compoundLens = multicall.wrap(
+      this.contractFactory.morphoCompoundLens({
+        address: this.morphoCompoundLensAddress,
+        network: this.network,
+      }),
+    ) as MorphoCompoundLens;
+
+    const [healthFactorMA2, healthFactorMC] = await Promise.all([
+      aaveV2Lens.getUserHealthFactor(address).catch(err => {
         if (isMulticallUnderlyingError(err)) return;
         throw err;
-      });
+      }),
+      compoundLens.getUserHealthFactor(address, []).catch(err => {
+        if (isMulticallUnderlyingError(err)) return;
+        throw err;
+      }),
+    ]);
 
-    if (!healthFactor) return;
-    return { healthFactor: +formatUnits(healthFactor) };
+    if (!healthFactorMA2 || !healthFactorMC) return;
+    return { healthFactorMA2: +formatUnits(healthFactorMA2), healthFactorMC: +formatUnits(healthFactorMC) };
   }
 
   override metadataItemsForBalanceGroup(
@@ -45,19 +57,22 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
     _balances: ReadonlyBalances,
     dataProps?: EthereumMorphoPositionPresenterDataProps,
   ): MetadataItemWithLabel[] {
-    if (groupLabel === 'Morpho Aave') {
-      if (!dataProps) return [];
-
-      const { healthFactor } = dataProps;
-
-      return [
+    if (!dataProps) return [];
+    const format = (hf: number) =>
+      [
         {
           label: 'Health Factor',
-          value: healthFactor,
+          value: hf,
           type: 'number',
         },
-      ];
+      ] as MetadataItemWithLabel[];
+    switch (groupLabel) {
+      case 'Morpho Compound':
+        return format(dataProps.healthFactorMC);
+      case 'Morpho Aave':
+        return format(dataProps.healthFactorMA2);
+      default:
+        return [];
     }
-    return [];
   }
 }
