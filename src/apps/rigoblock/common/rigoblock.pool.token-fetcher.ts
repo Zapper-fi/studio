@@ -29,7 +29,6 @@ type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
   logType: PoolLogType;
 };
 
-@PositionTemplate()
 export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   SmartPool,
   RigoblockSmartPoolDefinition
