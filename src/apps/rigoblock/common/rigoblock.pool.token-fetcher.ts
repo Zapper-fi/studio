@@ -17,8 +17,8 @@ import {
 
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
-import { PoolLogType, RigoblockLogProvider } from '../common/rigoblock.log-provider';
-import { POOL_BUILDERS } from '../common/rigoblock.pool.pool-builders';
+import { PoolLogType, RigoblockLogProvider } from './rigoblock.log-provider';
+import { POOL_BUILDERS } from './rigoblock.pool.pool-builders';
 
 type RigoblockSmartPoolDefinition = DefaultAppTokenDefinition & {
   logType: PoolLogType;
@@ -34,8 +34,6 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   SmartPool,
   RigoblockSmartPoolDefinition
 > {
-  groupLabel: string = 'Smart Pools';
-
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory,

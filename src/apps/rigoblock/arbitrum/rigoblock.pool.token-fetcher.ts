@@ -3,6 +3,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetcher';
 
 @PositionTemplate()
-export class EthereumRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
-  groupLabel: string = 'Ethereum Smart Pools';
+export class ArbitrumRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
+  groupLabel: string = 'Arbitrum Smart Pools';
 }
