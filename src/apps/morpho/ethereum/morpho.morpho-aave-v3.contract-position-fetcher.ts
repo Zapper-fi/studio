@@ -6,7 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoAaveV3, MorphoAToken, MorphoContractFactory, Pool } from '~apps/morpho/contracts';
-import { MorphoAaveMath } from '~apps/morpho/utils/AaveV3.maths';
+import { MorphoAaveMath, SECONDS_PER_YEAR } from '~apps/morpho/utils/AaveV3.maths';
 import P2PInterestRates from '~apps/morpho/utils/P2PInterestRates';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
 
@@ -53,7 +53,6 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
     const morpho = multicall.wrap(
       this.contractFactory.morphoAaveV3({ address: this.morphoAddress, network: this.network }),
     ) as MorphoAaveV3;
-
     const [
       {
         idleSupply,
@@ -136,9 +135,8 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
       ? currentVariableBorrowRate
       : p2pBorrowRate.mul(borrowInP2P).add(currentVariableBorrowRate.mul(borrowOnPool)).div(totalBorrow);
 
-    const secondsPerYear = 365 * 24 * 60 * 60;
-    const supplyApy = Math.pow(1 + +formatUnits(supplyRate.div(secondsPerYear), 27), secondsPerYear) - 1;
-    const borrowApy = Math.pow(1 + +formatUnits(borrowRate.div(secondsPerYear), 27), secondsPerYear) - 1;
+    const supplyApy = Math.pow(1 + +formatUnits(supplyRate.div(SECONDS_PER_YEAR), 27), SECONDS_PER_YEAR) - 1;
+    const borrowApy = Math.pow(1 + +formatUnits(borrowRate.div(SECONDS_PER_YEAR), 27), SECONDS_PER_YEAR) - 1;
 
     const underlyingToken = contractPosition.tokens[0];
     const supply = +formatUnits(totalSupply, underlyingToken.decimals);
