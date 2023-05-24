@@ -16,7 +16,6 @@ export enum PoolLogType {
 export class RigoblockLogProvider {
   constructor(@Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory) {}
 
-  // TODO: token whitelisted logs can even be updated once every week
   @Cache({
     key: ({ network, address, fromBlock, logType }: {
       network: Network;
