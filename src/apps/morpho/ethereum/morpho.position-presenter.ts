@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { formatUnits } from 'ethers/lib/utils';
+import { constants } from 'ethers';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
@@ -7,13 +8,18 @@ import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { MorphoAaveV2Lens, MorphoCompoundLens, MorphoContractFactory } from '../contracts';
+import { MorphoAaveV2Lens, MorphoAaveV3, MorphoCompoundLens, MorphoContractFactory } from '../contracts';
 
-export type EthereumMorphoPositionPresenterDataProps = { healthFactorMA2: number; healthFactorMC: number };
+export type EthereumMorphoPositionPresenterDataProps = {
+  healthFactorMA2: number;
+  healthFactorMC: number;
+  healthFactorMA3: number;
+};
 @PresenterTemplate()
 export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<EthereumMorphoPositionPresenterDataProps> {
   morphoCompoundLensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
   morphoAaveLensAddress = '0x507fa343d0a90786d86c7cd885f5c49263a91ff4';
+  morphoAaveV3Address = '0x33333aea097c193e66081e930c33020272b33333';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -37,7 +43,14 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
       }),
     ) as MorphoCompoundLens;
 
-    const [healthFactorMA2, healthFactorMC] = await Promise.all([
+    const morphoAaveV3 = multicall.wrap(
+      this.contractFactory.morphoAaveV3({
+        address: this.morphoAaveV3Address,
+        network: this.network,
+      }),
+    ) as MorphoAaveV3;
+
+    const [healthFactorMA2, healthFactorMC, liquidityDataMA3] = await Promise.all([
       aaveV2Lens.getUserHealthFactor(address).catch(err => {
         if (isMulticallUnderlyingError(err)) return;
         throw err;
@@ -46,10 +59,22 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
         if (isMulticallUnderlyingError(err)) return;
         throw err;
       }),
+      morphoAaveV3.liquidityData(address).catch(err => {
+        if (isMulticallUnderlyingError(err)) return;
+        throw err;
+      }),
     ]);
 
-    if (!healthFactorMA2 || !healthFactorMC) return;
-    return { healthFactorMA2: +formatUnits(healthFactorMA2), healthFactorMC: +formatUnits(healthFactorMC) };
+    if (!healthFactorMA2 || !healthFactorMC || !liquidityDataMA3) return;
+    return {
+      healthFactorMA2: +formatUnits(healthFactorMA2),
+      healthFactorMC: +formatUnits(healthFactorMC),
+      healthFactorMA3: +formatUnits(
+        liquidityDataMA3.debt.isZero()
+          ? constants.MaxInt256
+          : liquidityDataMA3.maxDebt.mul(parseUnits('1')).div(liquidityDataMA3.debt),
+      ),
+    };
   }
 
   override metadataItemsForBalanceGroup(
@@ -71,6 +96,8 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
         return format(dataProps.healthFactorMC);
       case 'Morpho Aave':
         return format(dataProps.healthFactorMA2);
+      case 'Morpho AaveV3':
+        return format(dataProps.healthFactorMA3);
       default:
         return [];
     }
