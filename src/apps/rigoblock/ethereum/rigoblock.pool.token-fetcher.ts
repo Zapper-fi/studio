@@ -102,11 +102,10 @@ export class EthereumRigoblockPoolTokenFetcher extends AppTokenTemplatePositionF
     );
 
     return await Promise.all(
-      tokenLogs.flatMap(nlogs =>
-        flatMap(nlogs, (nlogsForType, logType: PoolLogType) =>
-          nlogsForType.map(async nlog => {
-            //console.log(log.args[0]);
-            const tokenAddress = nlog.args[0].toLowerCase();
+      tokenLogs.flatMap(logs =>
+        flatMap(logs, (logsForType, logType: PoolLogType) =>
+          logsForType.map(async log => {
+            const tokenAddress = log.args[0].toLowerCase();
 
             return {
               logType,
