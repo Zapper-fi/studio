@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { RigoblockLogProvider } from './common/rigoblock.log-provider';
 import { RigoblockContractFactory } from './contracts';
 import { EthereumRigoblockPoolTokenFetcher } from './ethereum/rigoblock.pool.token-fetcher';
 
 @Module({
-  providers: [EthereumRigoblockPoolTokenFetcher, RigoblockContractFactory],
+  providers: [EthereumRigoblockPoolTokenFetcher, RigoblockContractFactory, RigoblockLogProvider],
 })
 export class RigoblockAppModule extends AbstractApp() {}

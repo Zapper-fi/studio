@@ -11,6 +11,7 @@ import { RigoblockContractFactory } from '../contracts';
 export class RigoblockLogProvider {
   constructor(@Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory) {}
 
+  // TODO: token whitelisted logs can even be updated once every week
   @Cache({
     key: ({ network, address, fromBlock, label }: { network: Network; fromBlock: number; address: string; label:string }) =>
       `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${label}`,
@@ -36,17 +37,19 @@ export class RigoblockLogProvider {
       event,
     });
 
+    //label === 'registered' ? contract.filters.Registered() : contract.filters.Whitelisted(),
     const [rigoblockLogs] = await Promise.all([
       contract
         .queryFilter(
-          label === 'registered' ? contract.filters.Registered() : contract.filters.Whitelisted(),
+          contract.filters.Registered(),
           fromBlock
         )
         .then(logs => logs.map(mapper)),
     ]);
 
     return {
-      label === 'registered' ? rigoblockLogs : [...new Set(rigoblockLogs)],
+      //label === 'registered' ? rigoblockLogs : [...new Set(rigoblockLogs)],
+      [label]: rigoblockLogs,
     };
   }
 }
