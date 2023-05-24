@@ -41,6 +41,9 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
+  // some tokens on L2s don't have a price feed on CG
+  abstract blockedTokenAddresses: string[];
+
   extraDefinitions: RigoblockSmartPoolDefinition[] = [];
 
   async getDefinitions(): Promise<RigoblockSmartPoolDefinition[]> {
@@ -115,8 +118,13 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions(): Promise<string> {
+    const results = [...new Set(await this.getTokenList())];
+
     // we make sure no token duplicates are in the list
-    return [...new Set(await this.getTokenList())].map(x => ({ address: x.address.toLowerCase(), network: this.network }))};
+    return results
+      .map(x => ({ address: x.address.toLowerCase(), network: this.network }))
+      .filter(v => !this.blockedTokenAddresses.includes(v.address));
+  }
 
   async getPricePerShare({
     appToken,

@@ -15,6 +15,7 @@ import { PolygonRigoblockPoolTokenFetcher } from './polygon/rigoblock.pool.token
     EthereumRigoblockPoolTokenFetcher,
     OptimismRigoblockPoolTokenFetcher,
     PolygonRigoblockPoolTokenFetcher,
+
     RigoblockContractFactory,
     RigoblockLogProvider,
   ],

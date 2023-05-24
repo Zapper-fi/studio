@@ -4,5 +4,6 @@ import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetche
 
 @PositionTemplate()
 export class OptimismRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
-  groupLabel: string = 'Optimism Smart Pools';
+  groupLabel: string = 'Smart Pools';
+  const blockedTokenAddresses = ['0x0000000000000000000000000000000000000001'];
 }
