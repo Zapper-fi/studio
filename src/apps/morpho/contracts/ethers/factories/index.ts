@@ -4,6 +4,8 @@
 export { MorphoAToken__factory } from './MorphoAToken__factory';
 export { MorphoAaveV2__factory } from './MorphoAaveV2__factory';
 export { MorphoAaveV2Lens__factory } from './MorphoAaveV2Lens__factory';
+export { MorphoAaveV3__factory } from './MorphoAaveV3__factory';
 export { MorphoCToken__factory } from './MorphoCToken__factory';
 export { MorphoCompound__factory } from './MorphoCompound__factory';
 export { MorphoCompoundLens__factory } from './MorphoCompoundLens__factory';
+export { Pool__factory } from './Pool__factory';
