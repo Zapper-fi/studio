@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.469.0](https://github.com/Zapper-fi/studio/compare/v0.468.0...v0.469.0) (2023-05-24)
+
+
+### Features
+
+* **synthetix:** new market logos ([#2689](https://github.com/Zapper-fi/studio/issues/2689)) ([e19b4d4](https://github.com/Zapper-fi/studio/commit/e19b4d4aebb6dc442181394f2479e2f45c0d3499))
+
 ## [0.468.0](https://github.com/Zapper-fi/studio/compare/v0.467.0...v0.468.0) (2023-05-23)
 
 
