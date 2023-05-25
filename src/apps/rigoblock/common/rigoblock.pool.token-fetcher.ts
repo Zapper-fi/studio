@@ -117,7 +117,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     );
   }
 
-  async getUnderlyingTokenDefinitions(): Promise<string> {
+  async getUnderlyingTokenDefinitions() {
     const results = [...new Set(await this.getTokenList())];
 
     // we make sure no token duplicates are in the list

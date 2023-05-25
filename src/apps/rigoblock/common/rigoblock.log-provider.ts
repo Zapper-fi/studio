@@ -24,7 +24,7 @@ export class RigoblockLogProvider {
       address: string;
     }) =>
       `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
-    ttl: ({ logyType }: { logType: PoolLogType }) => {
+    ttl: ({ logType }: { logType: PoolLogType }) => {
       logType === PoolLogType.REGISTERED
         ? moment.duration(1, 'hour').asSeconds()
         : moment.duration(48, 'hour').asSeconds()
