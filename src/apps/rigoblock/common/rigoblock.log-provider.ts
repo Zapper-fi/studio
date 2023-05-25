@@ -24,7 +24,7 @@ export class RigoblockLogProvider {
       address: string;
     }) =>
       `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
-    ttl: moment.duration(1, 'hour').asSeconds(),
+    ttl: moment.duration(8, 'hours').asSeconds(),
   })
   async getRigoblockLogs({
     fromBlock,

@@ -11,6 +11,7 @@ import {
   DefaultAppTokenDefinition,
   GetUnderlyingTokensParams,
   UnderlyingTokenDefinition,
+  GetDisplayPropsParams,
   GetPricePerShareParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
@@ -33,7 +34,8 @@ type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
 
 export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   SmartPool,
-  RigoblockSmartPoolDefinition
+  RigoblockSmartPoolDefinition,
+  DefaultAppTokenDataProps
 > {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -131,7 +133,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({
     appToken,
     multicall
-  }): GetPricePerShareParams<SmartPool, DefaultAppTokenDataProps, RigoblockSmartPoolDefinition> {
+  }: GetPricePerShareParams<SmartPool, DefaultAppTokenDataProps, RigoblockSmartPoolDefinition>) {
     if (appToken.supply === 0) return appToken.tokens.map(() => 0);
 
     const reserves = await Promise.all(
