@@ -1,4 +1,4 @@
-import { parseBytes32String } from '@ethersproject/strings'
+import { parseBytes32String } from '@ethersproject/strings';
 import { Inject } from '@nestjs/common';
 import { flatMap } from 'lodash';
 
@@ -22,11 +22,13 @@ import { POOL_BUILDERS } from './rigoblock.pool.pool-builders';
 
 type RigoblockSmartPoolDefinition = DefaultAppTokenDefinition & {
   logType: PoolLogType;
+  address: string;
   name: string;
 };
 
 type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
   logType: PoolLogType;
+  address: string;
 };
 
 export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -79,7 +81,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     return [...definitions, ...this.extraDefinitions];
   }
 
-  async getAddresses({ definitions }: RigoblockSmartPoolDefinition): Promise<string[]> {
+  async getAddresses({ definitions }: GetAddressesParams<RigoblockSmartPoolDefinition>): Promise<string[]> {
     return definitions.map(definition => definition.address);
   }
 
@@ -129,7 +131,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({
     appToken,
     multicall
-  }): GetPricePerShareParams<SmartPool, DefaultAppTokenDataProps, DefaultAppTokenDefinition> {
+  }): GetPricePerShareParams<SmartPool, DefaultAppTokenDataProps, RigoblockSmartPoolDefinition> {
     if (appToken.supply === 0) return appToken.tokens.map(() => 0);
 
     const reserves = await Promise.all(
@@ -146,7 +148,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     });
   }
 
-  async getLabel({ definition }: RigoblockSmartPoolDefinition): Promise<string> {
+  async getLabel({ definition }: GetDisplayPropsParams<RigoblockSmartPoolDefinition>): Promise<string> {
     return definition.name;
   }
 }
