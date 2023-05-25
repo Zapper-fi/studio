@@ -150,7 +150,11 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     });
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<RigoblockSmartPoolDefinition>): Promise<string> {
+  async getLabel({ definition }: GetDisplayPropsParams<
+    SmartPool,
+    DefaultDataProps,
+    RigoblockSmartPoolDefinition,
+  >): Promise<string> {
     return definition.name;
   }
 }
