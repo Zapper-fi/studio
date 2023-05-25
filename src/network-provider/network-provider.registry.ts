@@ -1,7 +1,7 @@
 import { Network } from '~types/network.interface';
 
 export const DEFAULT_REGISTRY: Record<Exclude<Network, Network.BITCOIN_MAINNET>, string> = {
-  [Network.ARBITRUM_MAINNET]: 'https://arb1.arbitrum.io/rpc',
+  [Network.ARBITRUM_MAINNET]: 'https://arb-mainnet-public.unifra.io',
   [Network.AVALANCHE_MAINNET]: 'https://avalanche.public-rpc.com',
   [Network.BINANCE_SMART_CHAIN_MAINNET]: 'https://bsc-dataseed.binance.org/',
   [Network.CELO_MAINNET]: 'https://forno.celo.org',
