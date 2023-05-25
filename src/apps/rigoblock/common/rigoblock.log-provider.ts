@@ -45,16 +45,12 @@ export class RigoblockLogProvider {
       address,
       event,
     });
+    const eventFilter = PoolLogType.REGISTERED
+      ? await contract.filters.Registered()
+      : await contract.filters.Whitelisted(),
 
     return await Promise.all([
-      contract
-        .queryFilter(
-          logType === PoolLogType.REGISTERED
-            ? contract.filters.Registered()
-            : contract.filters.Whitelisted(),
-          fromBlock,
-        )
-        .then(logs => logs.map(mapper)),
+      contract.queryFilter(eventFilter, fromBlock).then(logs => logs.map(mapper)),
     ]);
   }
 }
