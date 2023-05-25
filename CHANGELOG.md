@@ -4,6 +4,47 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.473.0](https://github.com/Zapper-fi/studio/compare/v0.472.0...v0.473.0) (2023-05-25)
+
+
+### Features
+
+* **studio:** Add no git checks ([#2701](https://github.com/Zapper-fi/studio/issues/2701)) ([9bbe1df](https://github.com/Zapper-fi/studio/commit/9bbe1df00474b6f7bcc507b9468c09127a79ee16))
+* **studio:** Remove step to publish to NPM ([#2699](https://github.com/Zapper-fi/studio/issues/2699)) ([5347725](https://github.com/Zapper-fi/studio/commit/5347725d878d61c7d43221c01fa55c6ef3da5288))
+
+## [0.472.0](https://github.com/Zapper-fi/studio/compare/v0.471.0...v0.472.0) (2023-05-25)
+
+
+### Features
+
+* **studio:** Attempt to pin version on release-please-action ([#2697](https://github.com/Zapper-fi/studio/issues/2697)) ([486d55e](https://github.com/Zapper-fi/studio/commit/486d55e82b0609271b25b2117cbaf41559ff7814))
+
+## [0.471.0](https://github.com/Zapper-fi/studio/compare/v0.470.0...v0.471.0) (2023-05-25)
+
+
+### Features
+
+* **pods:** Added new Pods Yield Vault ([#2694](https://github.com/Zapper-fi/studio/issues/2694)) ([f7e99f1](https://github.com/Zapper-fi/studio/commit/f7e99f18a4a50fe7713ffc917b928ba83743dd48))
+
+## [0.470.0](https://github.com/Zapper-fi/studio/compare/v0.469.0...v0.470.0) (2023-05-25)
+
+
+### Features
+
+* **morpho:** Implement morpho-aaveV3 optimizer ([#2690](https://github.com/Zapper-fi/studio/issues/2690)) ([b3ea21a](https://github.com/Zapper-fi/studio/commit/b3ea21a64e507a7a5291f6160138a9fa4cdaf43c))
+
+
+### Bug Fixes
+
+* **jest-expect-message:** Fix dependencies ([#2695](https://github.com/Zapper-fi/studio/issues/2695)) ([a8ff81d](https://github.com/Zapper-fi/studio/commit/a8ff81dd285be2eefa3c821f136acb7e1693ffc9))
+
+## [0.469.0](https://github.com/Zapper-fi/studio/compare/v0.468.0...v0.469.0) (2023-05-24)
+
+
+### Features
+
+* **synthetix:** new market logos ([#2689](https://github.com/Zapper-fi/studio/issues/2689)) ([e19b4d4](https://github.com/Zapper-fi/studio/commit/e19b4d4aebb6dc442181394f2479e2f45c0d3499))
+
 ## [0.468.0](https://github.com/Zapper-fi/studio/compare/v0.467.0...v0.468.0) (2023-05-23)
 
 

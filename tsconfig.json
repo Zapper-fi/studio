@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "outDir": "./dist",
+    "types": ["jest", "node"],
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -25,5 +26,6 @@
     },
     "typeRoots": ["types", "node_modules/@types"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "files": ["node_modules/jest-expect-message/types/index.d.ts"]
 }
