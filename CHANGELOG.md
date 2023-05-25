@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.470.0](https://github.com/Zapper-fi/studio/compare/v0.469.0...v0.470.0) (2023-05-25)
+
+
+### Features
+
+* **morpho:** Implement morpho-aaveV3 optimizer ([#2690](https://github.com/Zapper-fi/studio/issues/2690)) ([b3ea21a](https://github.com/Zapper-fi/studio/commit/b3ea21a64e507a7a5291f6160138a9fa4cdaf43c))
+
+
+### Bug Fixes
+
+* **jest-expect-message:** Fix dependencies ([#2695](https://github.com/Zapper-fi/studio/issues/2695)) ([a8ff81d](https://github.com/Zapper-fi/studio/commit/a8ff81dd285be2eefa3c821f136acb7e1693ffc9))
+
 ## [0.469.0](https://github.com/Zapper-fi/studio/compare/v0.468.0...v0.469.0) (2023-05-24)
 
 
