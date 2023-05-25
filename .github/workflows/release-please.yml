@@ -18,7 +18,7 @@ jobs:
       changelog: ${{ steps.set_outputs.outputs.changelog }}
 
     steps:
-      - uses: google-github-actions/release-please-action@v3.7.8
+      - uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: node
@@ -56,13 +56,6 @@ jobs:
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: pnpm build
-        if: ${{ steps.release.outputs.release_created }}
-
-      - name: Publish to NPM
-        working-directory: dist
-        run: pnpm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Publish to Github Packages
