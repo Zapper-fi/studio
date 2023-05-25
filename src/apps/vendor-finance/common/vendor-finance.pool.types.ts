@@ -1,5 +1,10 @@
 import { DefaultDataProps } from '~position/display.interface';
 
+export type VendorFinancePoolDataProps = DefaultDataProps & {
+  deployer: string;
+  totalDeposited: number;
+};
+
 export type VendorFinancePoolDefinition = {
   address: string;
   deployer: string;
@@ -10,23 +15,6 @@ export type VendorFinancePoolDefinition = {
   feeRate: string;
   lendBalance: string;
   totalBorrowed: string;
-};
-
-export type VendorFinancePoolV2Definition = {
-  address: string;
-  deployer: string;
-  mintRatio: string;
-  colToken: string;
-  lendToken: string;
-  expiry: string;
-  feeRate: string;
-  lendBalance: string;
-  totalBorrowed: string;
-};
-
-export type VendorFinancePoolDataProps = DefaultDataProps & {
-  deployer: string;
-  totalDeposited: number;
 };
 
 export type VendorLendingPool = {
@@ -44,27 +32,8 @@ export type VendorLendingPool = {
   _paused: boolean;
 };
 
-export type VendorLendingPoolV2 = {
-  id: string;
-  deployer: string;
-  mintRatio: string;
-  colToken: string;
-  lendToken: string;
-  borrowers: string;
-  expiry: string;
-  startRate: string;
-  colBalance: string;
-  lendBalance: string;
-  totalBorrowed: string;
-  paused: boolean;
-};
-
 export type VendorLendingPoolsGraphResponse = {
   pools: Array<VendorLendingPool>;
-};
-
-export type VendorLendingPoolsV2GraphResponse = {
-  pools: Array<VendorLendingPoolV2>;
 };
 
 // Used for V1 Pools
@@ -85,20 +54,33 @@ export type VendorBorrowerGraphResponse = {
   borrower: VendorBorrower;
 };
 
-// Used for V2 Pools
-type BorrowersV2Position = {
-  pool: {
-    id: string;
-    mintRatio: string;
-  };
+export type VendorFinancePoolV2Definition = {
+  address: string;
+  deployer: string;
+  mintRatio: string;
+  colToken: string;
+  lendToken: string;
+  expiry: string;
+  feeRate: string;
+  lendBalance: string;
   totalBorrowed: string;
-  effectiveRate: string;
 };
 
-type VendorBorrowerV2 = {
-  positions: Array<BorrowersV2Position>;
+export type VendorLendingPoolV2 = {
+  id: string;
+  deployer: string;
+  mintRatio: string;
+  colToken: string;
+  lendToken: string;
+  borrowers: string;
+  expiry: string;
+  startRate: string;
+  colBalance: string;
+  lendBalance: string;
+  totalBorrowed: string;
+  paused: boolean;
 };
 
-export type VendorBorrowerV2GraphResponse = {
-  borrower: VendorBorrowerV2;
+export type VendorLendingPoolsV2GraphResponse = {
+  pools: Array<VendorLendingPoolV2>;
 };

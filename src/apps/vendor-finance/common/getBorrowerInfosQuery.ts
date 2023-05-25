@@ -14,18 +14,3 @@ export const borrowerInfosQuery = (address: string) => gql`
     }
   }
 `;
-
-export const borrowerV2InfosQuery = (address: string) => gql`
-  {
-    borrowers(id: "${address}") {
-      positions {
-        pool {
-          id
-          mintRatio
-        }
-        totalBorrowed
-        effectiveRate
-      }
-    }
-  }
-`;

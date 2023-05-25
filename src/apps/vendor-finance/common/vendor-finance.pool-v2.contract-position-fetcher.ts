@@ -10,24 +10,22 @@ import {
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
-
 import { VendorFinanceContractFactory, VendorFinancePoolV2 } from '../contracts';
 import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { MetaType } from '~position/position.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { borrowerV2InfosQuery } from './getBorrowerInfosQuery';
 import { isBorrowed } from '~position/position.utils';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import {
-  VendorBorrowerV2GraphResponse,
   VendorFinancePoolDataProps,
   VendorFinancePoolV2Definition,
   VendorLendingPoolsV2GraphResponse,
 } from './vendor-finance.pool.types';
+import { IPositionTracker } from '../contracts/ethers/VendorFinancePositionTracker';
 
 export abstract class VendorFinancePoolV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePoolV2> {
   abstract subgraphUrl: string;
@@ -122,6 +120,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
       },
     ];
   }
+
   async getDataProps(
     _params: GetDataPropsParams<VendorFinancePoolV2, DefaultDataProps, VendorFinancePoolV2Definition>,
   ): Promise<VendorFinancePoolDataProps> {
@@ -137,7 +136,6 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
   }: GetTokenBalancesParams<VendorFinancePoolV2, VendorFinancePoolDataProps>) {
     const collateralToken = contractPosition.tokens[0]!;
     const lentToken = contractPosition.tokens[1]!;
-
     // --- Lender logic ----
     // No deposit, no borrow, but lending out
     if (address === contractPosition.dataProps.deployer.toLowerCase()) {
@@ -146,21 +144,48 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const data = await gqlFetch<VendorBorrowerV2GraphResponse>({
-      endpoint: this.subgraphUrl,
-      query: borrowerV2InfosQuery(address),
-    });
-
-    const borrowerPosition = data.borrower?.positions.find(({ pool }) => pool.id === contractPosition.address);
+    const positionTrackerAddr = '0x93E73571A71D27cd35a20E14BA5B352C3C2236fC';
+    const startKey = '0x0000000000000000000000000000000000000000000000000000000000000000';
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const positionTracker = multicall.wrap(
+      this.contractFactory.vendorFinancePositionTracker({
+        address: positionTrackerAddr,
+        network: this.network,
+      }),
+    );
+    const borrowerPositionCount = await positionTracker.borrowPositionCount(address);
+    const borrowerPositions = await positionTracker.getBorrowPositions(address, startKey, borrowerPositionCount);
+    const borrowerPosition = borrowerPositions.find(
+      poolData => contractPosition.address.toLowerCase() === poolData.pool.toLowerCase(),
+    );
     if (!borrowerPosition) return [];
-
-    const poolRate = parseInt(borrowerPosition.pool.mintRatio) / 10 ** 18;
-    const suppliedBalance = parseInt(borrowerPosition.totalBorrowed) / 10 ** lentToken.decimals / poolRate;
+    const totalBorrowed = await this.getTotalBorrowed(borrowerPositions, address);
+    const poolSettings = await this.getPoolSettings(contractPosition.address);
+    const poolRate = Number(poolSettings.lendRatio) / 10 ** 18;
+    const suppliedBalance = totalBorrowed / 10 ** lentToken.decimals / poolRate;
     const suppliedBalanceRaw = suppliedBalance * 10 ** collateralToken.decimals;
-    const borrowedBalance = parseInt(borrowerPosition.totalBorrowed);
-
     // Deposit, borrow, no lending out (not pool creator)
-    return [suppliedBalanceRaw.toString(), borrowedBalance.toString(), '0'];
+    return [suppliedBalanceRaw.toString(), totalBorrowed.toString(), '0'];
     // --! Borrower logic !---
+  }
+
+  async getPoolSettings(address: string) {
+    const pool = this.contractFactory.vendorFinancePoolV2({ address, network: this.network });
+    return await pool.poolSettings();
+  }
+
+  async getTotalBorrowed(positions: IPositionTracker.EntryStructOutput[], borrowerAddr: string): Promise<number> {
+    let totalBorrowed = 0;
+    await Promise.all(
+      positions.map(async poolData => {
+        const lendingPool = this.contractFactory.vendorFinancePoolV2({
+          address: poolData.pool,
+          network: this.network,
+        });
+        const borrowedFromPoolAmt = Number((await lendingPool.debts(borrowerAddr)).debt.toString());
+        totalBorrowed += borrowedFromPoolAmt;
+      }),
+    );
+    return totalBorrowed;
   }
 }

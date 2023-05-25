@@ -13,20 +13,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IStructs {
   export type DataStruct = {
@@ -56,7 +46,7 @@ export declare namespace IStructs {
     string,
     string,
     string,
-    BigNumber
+    BigNumber,
   ] & {
     deployer: string;
     mintRatio: BigNumber;
@@ -75,267 +65,183 @@ export declare namespace IStructs {
 
 export interface VendorFinancePoolInterface extends utils.Interface {
   functions: {
-    "addBorrower(address)": FunctionFragment;
-    "borrowOnBehalfOf(address,uint256,uint256,uint256)": FunctionFragment;
-    "borrowers(address)": FunctionFragment;
-    "colToken()": FunctionFragment;
-    "collect()": FunctionFragment;
-    "debt(address)": FunctionFragment;
-    "deposit(uint256)": FunctionFragment;
-    "disabledBorrow()": FunctionFragment;
-    "expiry()": FunctionFragment;
-    "extendExpiry()": FunctionFragment;
-    "factory()": FunctionFragment;
-    "feeManager()": FunctionFragment;
-    "initialize((address,uint256,address,address,uint48,address[],uint48,uint48,address,address,address,uint256))": FunctionFragment;
-    "isPrivate()": FunctionFragment;
-    "lendToken()": FunctionFragment;
-    "mintRatio()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "priceFeed()": FunctionFragment;
-    "protocolColFee()": FunctionFragment;
-    "protocolFee()": FunctionFragment;
-    "proxiableUUID()": FunctionFragment;
-    "repayOnBehalfOf(address,uint256)": FunctionFragment;
-    "rollOver(address)": FunctionFragment;
-    "setBorrow(uint256)": FunctionFragment;
-    "totalFees()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "treasury()": FunctionFragment;
-    "undercollateralized()": FunctionFragment;
-    "upgradeTo(address)": FunctionFragment;
-    "upgradeToAndCall(address,bytes)": FunctionFragment;
-    "version()": FunctionFragment;
-    "withdraw(uint256)": FunctionFragment;
+    'addBorrower(address)': FunctionFragment;
+    'borrowOnBehalfOf(address,uint256,uint256,uint256)': FunctionFragment;
+    'borrowers(address)': FunctionFragment;
+    'colToken()': FunctionFragment;
+    'collect()': FunctionFragment;
+    'debt(address)': FunctionFragment;
+    'deposit(uint256)': FunctionFragment;
+    'disabledBorrow()': FunctionFragment;
+    'expiry()': FunctionFragment;
+    'extendExpiry()': FunctionFragment;
+    'factory()': FunctionFragment;
+    'feeManager()': FunctionFragment;
+    'initialize((address,uint256,address,address,uint48,address[],uint48,uint48,address,address,address,uint256))': FunctionFragment;
+    'isPrivate()': FunctionFragment;
+    'lendToken()': FunctionFragment;
+    'mintRatio()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'priceFeed()': FunctionFragment;
+    'protocolColFee()': FunctionFragment;
+    'protocolFee()': FunctionFragment;
+    'proxiableUUID()': FunctionFragment;
+    'repayOnBehalfOf(address,uint256)': FunctionFragment;
+    'rollOver(address)': FunctionFragment;
+    'setBorrow(uint256)': FunctionFragment;
+    'totalFees()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'treasury()': FunctionFragment;
+    'undercollateralized()': FunctionFragment;
+    'upgradeTo(address)': FunctionFragment;
+    'upgradeToAndCall(address,bytes)': FunctionFragment;
+    'version()': FunctionFragment;
+    'withdraw(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addBorrower"
-      | "borrowOnBehalfOf"
-      | "borrowers"
-      | "colToken"
-      | "collect"
-      | "debt"
-      | "deposit"
-      | "disabledBorrow"
-      | "expiry"
-      | "extendExpiry"
-      | "factory"
-      | "feeManager"
-      | "initialize"
-      | "isPrivate"
-      | "lendToken"
-      | "mintRatio"
-      | "owner"
-      | "priceFeed"
-      | "protocolColFee"
-      | "protocolFee"
-      | "proxiableUUID"
-      | "repayOnBehalfOf"
-      | "rollOver"
-      | "setBorrow"
-      | "totalFees"
-      | "transferOwnership"
-      | "treasury"
-      | "undercollateralized"
-      | "upgradeTo"
-      | "upgradeToAndCall"
-      | "version"
-      | "withdraw"
+      | 'addBorrower'
+      | 'borrowOnBehalfOf'
+      | 'borrowers'
+      | 'colToken'
+      | 'collect'
+      | 'debt'
+      | 'deposit'
+      | 'disabledBorrow'
+      | 'expiry'
+      | 'extendExpiry'
+      | 'factory'
+      | 'feeManager'
+      | 'initialize'
+      | 'isPrivate'
+      | 'lendToken'
+      | 'mintRatio'
+      | 'owner'
+      | 'priceFeed'
+      | 'protocolColFee'
+      | 'protocolFee'
+      | 'proxiableUUID'
+      | 'repayOnBehalfOf'
+      | 'rollOver'
+      | 'setBorrow'
+      | 'totalFees'
+      | 'transferOwnership'
+      | 'treasury'
+      | 'undercollateralized'
+      | 'upgradeTo'
+      | 'upgradeToAndCall'
+      | 'version'
+      | 'withdraw',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'addBorrower', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "addBorrower",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "borrowOnBehalfOf",
+    functionFragment: 'borrowOnBehalfOf',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
+  encodeFunctionData(functionFragment: 'borrowers', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'colToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'collect', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'debt', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'disabledBorrow', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'expiry', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'extendExpiry', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'factory', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feeManager', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [IStructs.DataStruct]): string;
+  encodeFunctionData(functionFragment: 'isPrivate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lendToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mintRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'priceFeed', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'protocolColFee', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'protocolFee', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "borrowers",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'repayOnBehalfOf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "colToken", values?: undefined): string;
-  encodeFunctionData(functionFragment: "collect", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rollOver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setBorrow', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'totalFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'undercollateralized', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "debt",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "disabledBorrow",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "expiry", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "extendExpiry",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "factory", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "feeManager",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [IStructs.DataStruct]
-  ): string;
-  encodeFunctionData(functionFragment: "isPrivate", values?: undefined): string;
-  encodeFunctionData(functionFragment: "lendToken", values?: undefined): string;
-  encodeFunctionData(functionFragment: "mintRatio", values?: undefined): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "priceFeed", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "protocolColFee",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "protocolFee",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "proxiableUUID",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "repayOnBehalfOf",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rollOver",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setBorrow",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "totalFees", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "undercollateralized",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "upgradeTo",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "upgradeToAndCall",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(functionFragment: "version", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: 'version', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(
-    functionFragment: "addBorrower",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "borrowOnBehalfOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "borrowers", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "colToken", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "collect", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "debt", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "disabledBorrow",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "expiry", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "extendExpiry",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "feeManager", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "isPrivate", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "lendToken", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mintRatio", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "priceFeed", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "protocolColFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "protocolFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "proxiableUUID",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "repayOnBehalfOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "rollOver", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setBorrow", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "totalFees", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "undercollateralized",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "upgradeToAndCall",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addBorrower', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'borrowOnBehalfOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'borrowers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'colToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collect', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'disabledBorrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'expiry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'extendExpiry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'factory', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feeManager', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isPrivate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lendToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'priceFeed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'protocolColFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'protocolFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'proxiableUUID', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'repayOnBehalfOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rollOver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBorrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'undercollateralized', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'version', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    "AddBorrower(address)": EventFragment;
-    "AdminChanged(address,address)": EventFragment;
-    "BalanceChange(address,bool,uint256)": EventFragment;
-    "BeaconUpgraded(address)": EventFragment;
-    "Borrow(address,uint256,uint256,uint48)": EventFragment;
-    "Collect(uint256,uint256,uint256,uint256)": EventFragment;
-    "Initialized(uint8)": EventFragment;
-    "Pause(uint256)": EventFragment;
-    "Repay(address,uint256,uint256)": EventFragment;
-    "RollOver(address,uint256)": EventFragment;
-    "UpdateExpiry(uint48)": EventFragment;
-    "Upgraded(address)": EventFragment;
+    'AddBorrower(address)': EventFragment;
+    'AdminChanged(address,address)': EventFragment;
+    'BalanceChange(address,bool,uint256)': EventFragment;
+    'BeaconUpgraded(address)': EventFragment;
+    'Borrow(address,uint256,uint256,uint48)': EventFragment;
+    'Collect(uint256,uint256,uint256,uint256)': EventFragment;
+    'Initialized(uint8)': EventFragment;
+    'Pause(uint256)': EventFragment;
+    'Repay(address,uint256,uint256)': EventFragment;
+    'RollOver(address,uint256)': EventFragment;
+    'UpdateExpiry(uint48)': EventFragment;
+    'Upgraded(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AddBorrower"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BalanceChange"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Borrow"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Collect"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Pause"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Repay"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RollOver"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateExpiry"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AddBorrower'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BalanceChange'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Borrow'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Collect'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Pause'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Repay'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RollOver'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateExpiry'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
 }
 
 export interface AddBorrowerEventObject {
@@ -349,10 +255,7 @@ export interface AdminChangedEventObject {
   previousAdmin: string;
   newAdmin: string;
 }
-export type AdminChangedEvent = TypedEvent<
-  [string, string],
-  AdminChangedEventObject
->;
+export type AdminChangedEvent = TypedEvent<[string, string], AdminChangedEventObject>;
 
 export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
 
@@ -361,20 +264,14 @@ export interface BalanceChangeEventObject {
   incoming: boolean;
   amount: BigNumber;
 }
-export type BalanceChangeEvent = TypedEvent<
-  [string, boolean, BigNumber],
-  BalanceChangeEventObject
->;
+export type BalanceChangeEvent = TypedEvent<[string, boolean, BigNumber], BalanceChangeEventObject>;
 
 export type BalanceChangeEventFilter = TypedEventFilter<BalanceChangeEvent>;
 
 export interface BeaconUpgradedEventObject {
   beacon: string;
 }
-export type BeaconUpgradedEvent = TypedEvent<
-  [string],
-  BeaconUpgradedEventObject
->;
+export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject>;
 
 export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
 
@@ -384,10 +281,7 @@ export interface BorrowEventObject {
   borrowAmount: BigNumber;
   currentFeeRate: number;
 }
-export type BorrowEvent = TypedEvent<
-  [string, BigNumber, BigNumber, number],
-  BorrowEventObject
->;
+export type BorrowEvent = TypedEvent<[string, BigNumber, BigNumber, number], BorrowEventObject>;
 
 export type BorrowEventFilter = TypedEventFilter<BorrowEvent>;
 
@@ -397,10 +291,7 @@ export interface CollectEventObject {
   lenderLend: BigNumber;
   lenderCol: BigNumber;
 }
-export type CollectEvent = TypedEvent<
-  [BigNumber, BigNumber, BigNumber, BigNumber],
-  CollectEventObject
->;
+export type CollectEvent = TypedEvent<[BigNumber, BigNumber, BigNumber, BigNumber], CollectEventObject>;
 
 export type CollectEventFilter = TypedEventFilter<CollectEvent>;
 
@@ -423,10 +314,7 @@ export interface RepayEventObject {
   colReturned: BigNumber;
   repayAmount: BigNumber;
 }
-export type RepayEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  RepayEventObject
->;
+export type RepayEvent = TypedEvent<[string, BigNumber, BigNumber], RepayEventObject>;
 
 export type RepayEventFilter = TypedEventFilter<RepayEvent>;
 
@@ -434,10 +322,7 @@ export interface RollOverEventObject {
   pool: string;
   colRolled: BigNumber;
 }
-export type RollOverEvent = TypedEvent<
-  [string, BigNumber],
-  RollOverEventObject
->;
+export type RollOverEvent = TypedEvent<[string, BigNumber], RollOverEventObject>;
 
 export type RollOverEventFilter = TypedEventFilter<RollOverEvent>;
 
@@ -465,16 +350,12 @@ export interface VendorFinancePool extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -484,7 +365,7 @@ export interface VendorFinancePool extends BaseContract {
   functions: {
     addBorrower(
       _newBorrower: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrowOnBehalfOf(
@@ -492,23 +373,18 @@ export interface VendorFinancePool extends BaseContract {
       _colDepositAmount: PromiseOrValue<BigNumberish>,
       _rate: PromiseOrValue<BigNumberish>,
       _estimate: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    borrowers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     colToken(overrides?: CallOverrides): Promise<[string]>;
 
-    collect(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    collect(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     debt(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         borrowAmount: BigNumber;
@@ -519,16 +395,14 @@ export interface VendorFinancePool extends BaseContract {
 
     deposit(
       _depositAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     disabledBorrow(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     expiry(overrides?: CallOverrides): Promise<[number]>;
 
-    extendExpiry(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    extendExpiry(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     factory(overrides?: CallOverrides): Promise<[string]>;
 
@@ -536,7 +410,7 @@ export interface VendorFinancePool extends BaseContract {
 
     initialize(
       data: IStructs.DataStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isPrivate(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -558,24 +432,24 @@ export interface VendorFinancePool extends BaseContract {
     repayOnBehalfOf(
       _borrower: PromiseOrValue<string>,
       _repayAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rollOver(
       _newPool: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBorrow(
       _disabled: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalFees(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       _owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
@@ -584,26 +458,26 @@ export interface VendorFinancePool extends BaseContract {
 
     upgradeTo(
       newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeToAndCall(
       newImplementation: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     version(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addBorrower(
     _newBorrower: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrowOnBehalfOf(
@@ -611,23 +485,18 @@ export interface VendorFinancePool extends BaseContract {
     _colDepositAmount: PromiseOrValue<BigNumberish>,
     _rate: PromiseOrValue<BigNumberish>,
     _estimate: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowers(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  borrowers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   colToken(overrides?: CallOverrides): Promise<string>;
 
-  collect(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  collect(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   debt(
     arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
       borrowAmount: BigNumber;
@@ -638,16 +507,14 @@ export interface VendorFinancePool extends BaseContract {
 
   deposit(
     _depositAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   disabledBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
   expiry(overrides?: CallOverrides): Promise<number>;
 
-  extendExpiry(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  extendExpiry(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   factory(overrides?: CallOverrides): Promise<string>;
 
@@ -655,7 +522,7 @@ export interface VendorFinancePool extends BaseContract {
 
   initialize(
     data: IStructs.DataStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isPrivate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -677,24 +544,24 @@ export interface VendorFinancePool extends BaseContract {
   repayOnBehalfOf(
     _borrower: PromiseOrValue<string>,
     _repayAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rollOver(
     _newPool: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBorrow(
     _disabled: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalFees(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
     _owner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
@@ -703,40 +570,34 @@ export interface VendorFinancePool extends BaseContract {
 
   upgradeTo(
     newImplementation: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeToAndCall(
     newImplementation: PromiseOrValue<string>,
     data: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   version(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addBorrower(
-      _newBorrower: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addBorrower(_newBorrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     borrowOnBehalfOf(
       _borrower: PromiseOrValue<string>,
       _colDepositAmount: PromiseOrValue<BigNumberish>,
       _rate: PromiseOrValue<BigNumberish>,
       _estimate: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    borrowers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    borrowers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     colToken(overrides?: CallOverrides): Promise<string>;
 
@@ -744,7 +605,7 @@ export interface VendorFinancePool extends BaseContract {
 
     debt(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         borrowAmount: BigNumber;
@@ -753,10 +614,7 @@ export interface VendorFinancePool extends BaseContract {
       }
     >;
 
-    deposit(
-      _depositAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deposit(_depositAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     disabledBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -768,10 +626,7 @@ export interface VendorFinancePool extends BaseContract {
 
     feeManager(overrides?: CallOverrides): Promise<string>;
 
-    initialize(
-      data: IStructs.DataStruct,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    initialize(data: IStructs.DataStruct, overrides?: CallOverrides): Promise<void>;
 
     isPrivate(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -792,144 +647,86 @@ export interface VendorFinancePool extends BaseContract {
     repayOnBehalfOf(
       _borrower: PromiseOrValue<string>,
       _repayAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    rollOver(
-      _newPool: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    rollOver(_newPool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setBorrow(
-      _disabled: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setBorrow(_disabled: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     totalFees(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(
-      _owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
     undercollateralized(overrides?: CallOverrides): Promise<BigNumber>;
 
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     upgradeToAndCall(
       newImplementation: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "AddBorrower(address)"(newBorrower?: null): AddBorrowerEventFilter;
+    'AddBorrower(address)'(newBorrower?: null): AddBorrowerEventFilter;
     AddBorrower(newBorrower?: null): AddBorrowerEventFilter;
 
-    "AdminChanged(address,address)"(
-      previousAdmin?: null,
-      newAdmin?: null
-    ): AdminChangedEventFilter;
-    AdminChanged(
-      previousAdmin?: null,
-      newAdmin?: null
-    ): AdminChangedEventFilter;
+    'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+    AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
 
-    "BalanceChange(address,bool,uint256)"(
-      token?: null,
-      incoming?: null,
-      amount?: null
-    ): BalanceChangeEventFilter;
-    BalanceChange(
-      token?: null,
-      incoming?: null,
-      amount?: null
-    ): BalanceChangeEventFilter;
+    'BalanceChange(address,bool,uint256)'(token?: null, incoming?: null, amount?: null): BalanceChangeEventFilter;
+    BalanceChange(token?: null, incoming?: null, amount?: null): BalanceChangeEventFilter;
 
-    "BeaconUpgraded(address)"(
-      beacon?: PromiseOrValue<string> | null
-    ): BeaconUpgradedEventFilter;
-    BeaconUpgraded(
-      beacon?: PromiseOrValue<string> | null
-    ): BeaconUpgradedEventFilter;
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
 
-    "Borrow(address,uint256,uint256,uint48)"(
+    'Borrow(address,uint256,uint256,uint48)'(
       borrower?: null,
       colDepositAmount?: null,
       borrowAmount?: null,
-      currentFeeRate?: null
+      currentFeeRate?: null,
     ): BorrowEventFilter;
-    Borrow(
-      borrower?: null,
-      colDepositAmount?: null,
-      borrowAmount?: null,
-      currentFeeRate?: null
-    ): BorrowEventFilter;
+    Borrow(borrower?: null, colDepositAmount?: null, borrowAmount?: null, currentFeeRate?: null): BorrowEventFilter;
 
-    "Collect(uint256,uint256,uint256,uint256)"(
+    'Collect(uint256,uint256,uint256,uint256)'(
       treasuryLend?: null,
       treasuryCol?: null,
       lenderLend?: null,
-      lenderCol?: null
+      lenderCol?: null,
     ): CollectEventFilter;
-    Collect(
-      treasuryLend?: null,
-      treasuryCol?: null,
-      lenderLend?: null,
-      lenderCol?: null
-    ): CollectEventFilter;
+    Collect(treasuryLend?: null, treasuryCol?: null, lenderLend?: null, lenderCol?: null): CollectEventFilter;
 
-    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    'Initialized(uint8)'(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "Pause(uint256)"(disabled?: null): PauseEventFilter;
+    'Pause(uint256)'(disabled?: null): PauseEventFilter;
     Pause(disabled?: null): PauseEventFilter;
 
-    "Repay(address,uint256,uint256)"(
-      borrower?: null,
-      colReturned?: null,
-      repayAmount?: null
-    ): RepayEventFilter;
-    Repay(
-      borrower?: null,
-      colReturned?: null,
-      repayAmount?: null
-    ): RepayEventFilter;
+    'Repay(address,uint256,uint256)'(borrower?: null, colReturned?: null, repayAmount?: null): RepayEventFilter;
+    Repay(borrower?: null, colReturned?: null, repayAmount?: null): RepayEventFilter;
 
-    "RollOver(address,uint256)"(
-      pool?: null,
-      colRolled?: null
-    ): RollOverEventFilter;
+    'RollOver(address,uint256)'(pool?: null, colRolled?: null): RollOverEventFilter;
     RollOver(pool?: null, colRolled?: null): RollOverEventFilter;
 
-    "UpdateExpiry(uint48)"(newExpiry?: null): UpdateExpiryEventFilter;
+    'UpdateExpiry(uint48)'(newExpiry?: null): UpdateExpiryEventFilter;
     UpdateExpiry(newExpiry?: null): UpdateExpiryEventFilter;
 
-    "Upgraded(address)"(
-      implementation?: PromiseOrValue<string> | null
-    ): UpgradedEventFilter;
-    Upgraded(
-      implementation?: PromiseOrValue<string> | null
-    ): UpgradedEventFilter;
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
   };
 
   estimateGas: {
     addBorrower(
       _newBorrower: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrowOnBehalfOf(
@@ -937,37 +734,27 @@ export interface VendorFinancePool extends BaseContract {
       _colDepositAmount: PromiseOrValue<BigNumberish>,
       _rate: PromiseOrValue<BigNumberish>,
       _estimate: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    borrowers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    borrowers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     colToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    collect(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    collect(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    debt(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
       _depositAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     disabledBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
     expiry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    extendExpiry(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    extendExpiry(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -975,7 +762,7 @@ export interface VendorFinancePool extends BaseContract {
 
     initialize(
       data: IStructs.DataStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isPrivate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -997,24 +784,24 @@ export interface VendorFinancePool extends BaseContract {
     repayOnBehalfOf(
       _borrower: PromiseOrValue<string>,
       _repayAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rollOver(
       _newPool: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setBorrow(
       _disabled: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalFees(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       _owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1023,27 +810,27 @@ export interface VendorFinancePool extends BaseContract {
 
     upgradeTo(
       newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeToAndCall(
       newImplementation: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addBorrower(
       _newBorrower: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrowOnBehalfOf(
@@ -1051,37 +838,27 @@ export interface VendorFinancePool extends BaseContract {
       _colDepositAmount: PromiseOrValue<BigNumberish>,
       _rate: PromiseOrValue<BigNumberish>,
       _estimate: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowers(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    borrowers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     colToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    collect(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    collect(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    debt(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    debt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
       _depositAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     disabledBorrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     expiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    extendExpiry(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    extendExpiry(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1089,7 +866,7 @@ export interface VendorFinancePool extends BaseContract {
 
     initialize(
       data: IStructs.DataStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isPrivate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1111,48 +888,46 @@ export interface VendorFinancePool extends BaseContract {
     repayOnBehalfOf(
       _borrower: PromiseOrValue<string>,
       _repayAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rollOver(
       _newPool: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBorrow(
       _disabled: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       _owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    undercollateralized(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    undercollateralized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     upgradeTo(
       newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeToAndCall(
       newImplementation: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
