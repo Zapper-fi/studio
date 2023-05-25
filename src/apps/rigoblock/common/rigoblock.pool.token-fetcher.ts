@@ -5,6 +5,7 @@ import { flatMap } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
+import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -38,7 +39,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   RigoblockSmartPoolDefinition
 > {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory,
     @Inject(RigoblockLogProvider) private readonly logProvider: RigoblockLogProvider,
   ) {
@@ -153,7 +154,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   async getLabel({ definition }: GetDisplayPropsParams<
     SmartPool,
     DefaultDataProps,
-    RigoblockSmartPoolDefinition,
+    RigoblockSmartPoolDefinition
   >): Promise<string> {
     return definition.name;
   }
