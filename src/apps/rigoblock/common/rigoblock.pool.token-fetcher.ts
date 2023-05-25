@@ -34,8 +34,8 @@ type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
 
 export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   SmartPool,
-  RigoblockSmartPoolDefinition,
-  DefaultAppTokenDataProps
+  DefaultAppTokenDataProps,
+  RigoblockSmartPoolDefinition
 > {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
