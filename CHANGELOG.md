@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.472.0](https://github.com/Zapper-fi/studio/compare/v0.471.0...v0.472.0) (2023-05-25)
+
+
+### Features
+
+* **studio:** Attempt to pin version on release-please-action ([#2697](https://github.com/Zapper-fi/studio/issues/2697)) ([486d55e](https://github.com/Zapper-fi/studio/commit/486d55e82b0609271b25b2117cbaf41559ff7814))
+
 ## [0.471.0](https://github.com/Zapper-fi/studio/compare/v0.470.0...v0.471.0) (2023-05-25)
 
 
