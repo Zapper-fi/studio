@@ -37,17 +37,15 @@ export class RigoblockLogProvider {
     network: Network;
     fromBlock: number;
   }) {
-    const contract = logType === PoolLogType.REGISTERED
-      ? this.contractFactory.poolRegistry({ network, address })
-      : this.contractFactory.tokenWhitelist({ network, address });
+    const [contract, eventFilter] =
+      logType === PoolLogType.REGISTERED
+        ? [this.contractFactory.poolRegistry({ network, address }), contract.filters.Registered()]
+        : [this.contractFactory.tokenWhitelist({ network, address }), contract.filters.Whitelisted()];
     const mapper = <T extends Event>({ address, event, args }: T) => ({
       args: Array.from(args?.values() ?? []),
       address,
       event,
     });
-    const eventFilter = PoolLogType.REGISTERED
-      ? await contract.filters.Registered()
-      : await contract.filters.Whitelisted(),
 
     return await Promise.all([
       contract.queryFilter(eventFilter, fromBlock).then(logs => logs.map(mapper)),
