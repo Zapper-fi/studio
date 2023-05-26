@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.473.0](https://github.com/Zapper-fi/studio/compare/v0.472.0...v0.473.0) (2023-05-25)
+
+
+### Features
+
+* **studio:** Add no git checks ([#2701](https://github.com/Zapper-fi/studio/issues/2701)) ([9bbe1df](https://github.com/Zapper-fi/studio/commit/9bbe1df00474b6f7bcc507b9468c09127a79ee16))
+* **studio:** Remove step to publish to NPM ([#2699](https://github.com/Zapper-fi/studio/issues/2699)) ([5347725](https://github.com/Zapper-fi/studio/commit/5347725d878d61c7d43221c01fa55c6ef3da5288))
+
+## [0.472.0](https://github.com/Zapper-fi/studio/compare/v0.471.0...v0.472.0) (2023-05-25)
+
+
+### Features
+
+* **studio:** Attempt to pin version on release-please-action ([#2697](https://github.com/Zapper-fi/studio/issues/2697)) ([486d55e](https://github.com/Zapper-fi/studio/commit/486d55e82b0609271b25b2117cbaf41559ff7814))
+
 ## [0.471.0](https://github.com/Zapper-fi/studio/compare/v0.470.0...v0.471.0) (2023-05-25)
 
 

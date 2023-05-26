@@ -58,19 +58,12 @@ jobs:
         run: pnpm build
         if: ${{ steps.release.outputs.release_created }}
 
-      - name: Publish to NPM
-        working-directory: dist
-        run: pnpm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: ${{ steps.release.outputs.release_created }}
-
       - name: Publish to Github Packages
         working-directory: dist
         run: |
           echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
           npm config set registry https://npm.pkg.github.com
-          npm publish
+          npm publish --no-git-checks
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
