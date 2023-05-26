@@ -4,7 +4,8 @@ import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetche
 
 @PositionTemplate()
 export class ArbitrumRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
-  groupLabel: string = 'Smart Pools';
+  groupLabel = 'Smart Pools';
+
   blockedTokenAddresses = [
     '0x51318b7d00db7acc4026c88c3952b66278b6a67f', // PLS
     '0x46ca8ed5465cb859bb3c3364078912c25f4d74de', // KTN

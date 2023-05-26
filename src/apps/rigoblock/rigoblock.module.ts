@@ -11,13 +11,12 @@ import { PolygonRigoblockPoolTokenFetcher } from './polygon/rigoblock.pool.token
 
 @Module({
   providers: [
+    RigoblockContractFactory,
+    RigoblockLogProvider,
     ArbitrumRigoblockPoolTokenFetcher,
     EthereumRigoblockPoolTokenFetcher,
     OptimismRigoblockPoolTokenFetcher,
     PolygonRigoblockPoolTokenFetcher,
-
-    RigoblockContractFactory,
-    RigoblockLogProvider,
   ],
 })
 export class RigoblockAppModule extends AbstractApp() {}

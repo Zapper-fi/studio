@@ -4,7 +4,8 @@ import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetche
 
 @PositionTemplate()
 export class OptimismRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
-  groupLabel: string = 'Smart Pools';
+  groupLabel = 'Smart Pools';
+
   blockedTokenAddresses = [
     '0xecf46257ed31c329f204eb43e254c609dee143b3', // GRG
     '0x7b0bcc23851bbf7601efc9e9fe532bf5284f65d3', // EST
