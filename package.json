@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.474.0",
+  "version": "0.475.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -55,7 +55,7 @@
     "@ethersproject/networks": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/solidity": "^5.7.0",
-    "@ethersproject/strings" : "5.7.0",
+    "@ethersproject/strings": "5.7.0",
     "@nestjs/cli": "8.2.4",
     "@nestjs/common": "8.4.2",
     "@nestjs/config": "^1.1.0",
