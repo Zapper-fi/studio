@@ -3,15 +3,11 @@ import { Inject } from '@nestjs/common';
 import { flatMap } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
   DefaultAppTokenDefinition,
-  GetUnderlyingTokensParams,
-  UnderlyingTokenDefinition,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   DefaultAppTokenDataProps,
@@ -133,7 +129,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 
   async getPricePerShare({
     appToken,
-    multicall
+    multicall,
   }: GetPricePerShareParams<SmartPool, DefaultAppTokenDataProps, RigoblockSmartPoolDefinition>) {
     if (appToken.supply === 0) return appToken.tokens.map(() => 0);
 
@@ -151,11 +147,9 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     });
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<
-    SmartPool,
-    DefaultDataProps,
-    RigoblockSmartPoolDefinition
-  >): Promise<string> {
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<SmartPool, DefaultDataProps, RigoblockSmartPoolDefinition>): Promise<string> {
     return definition.name;
   }
 }

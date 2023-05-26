@@ -96,6 +96,9 @@ devDependencies:
   '@ethersproject/solidity':
     specifier: ^5.7.0
     version: 5.7.0
+  '@ethersproject/strings':
+    specifier: 5.7.0
+    version: 5.7.0
   '@nestjs/cli':
     specifier: 8.2.4
     version: 8.2.4(@swc/core@1.2.249)(esbuild@0.14.54)

@@ -17,13 +17,17 @@ export class RigoblockLogProvider {
   constructor(@Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory) {}
 
   @Cache({
-    key: ({ network, address, fromBlock, logType }: {
+    key: ({
+      network,
+      address,
+      fromBlock,
+      logType,
+    }: {
       network: Network;
       logType: PoolLogType;
       fromBlock: number;
       address: string;
-    }) =>
-      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
+    }) => `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
     ttl: moment.duration(8, 'hours').asSeconds(),
   })
   async getRigoblockLogs({
@@ -41,7 +45,7 @@ export class RigoblockLogProvider {
       logType === PoolLogType.REGISTERED
         ? [
             this.contractFactory.poolRegistry({ network, address }),
-            this.contractFactory.poolRegistry({ network, address }).filters.Registered()
+            this.contractFactory.poolRegistry({ network, address }).filters.Registered(),
           ]
         : [
             this.contractFactory.tokenWhitelist({ network, address }),
@@ -54,8 +58,6 @@ export class RigoblockLogProvider {
       event,
     });
 
-    return await Promise.all([
-      contract.queryFilter(eventFilter, fromBlock).then(logs => logs.map(mapper)),
-    ]);
+    return await Promise.all([contract.queryFilter(eventFilter, fromBlock).then(logs => logs.map(mapper))]);
   }
 }
