@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.474.0](https://github.com/Zapper-fi/studio/compare/v0.473.0...v0.474.0) (2023-05-26)
+
+
+### Features
+
+* **vendor-finance:** Adds support for version 2 lending pools ([#2685](https://github.com/Zapper-fi/studio/issues/2685)) ([3324850](https://github.com/Zapper-fi/studio/commit/332485055597b27c2a4b84bcfd36edf0068fca1c))
+
 ## [0.473.0](https://github.com/Zapper-fi/studio/compare/v0.472.0...v0.473.0) (2023-05-25)
 
 
