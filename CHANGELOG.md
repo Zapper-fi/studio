@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.475.0](https://github.com/Zapper-fi/studio/compare/v0.474.0...v0.475.0) (2023-05-26)
+
+
+### Features
+
+* **rigoblock:** Add Rigoblock App ([#2693](https://github.com/Zapper-fi/studio/issues/2693)) ([ae7f7bc](https://github.com/Zapper-fi/studio/commit/ae7f7bc47bee66161ce490a4a7938b9286195705))
+
+
+### Bug Fixes
+
+* **rigoblock:** Fix Linting ([#2704](https://github.com/Zapper-fi/studio/issues/2704)) ([29bc4f2](https://github.com/Zapper-fi/studio/commit/29bc4f242f33fdcfa8b15784624e95df1398d212))
+
 ## [0.474.0](https://github.com/Zapper-fi/studio/compare/v0.473.0...v0.474.0) (2023-05-26)
 
 
