@@ -1,9 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CamelotContractFactory } from '~apps/camelot/contracts';
+import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -19,7 +18,7 @@ export type PlutusVaultAppTokenDefinition = {
 };
 
 @PositionTemplate()
-export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class ArbitrumPlutusPlsSpaTokenFetcher extends AppTokenTemplatePositionFetcher<
   Erc20,
   DefaultAppTokenDataProps,
   PlutusVaultAppTokenDefinition
@@ -28,7 +27,7 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly camelotContractFactory: CamelotContractFactory,
+    @Inject(UniswapV3ContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ContractFactory,
   ) {
     super(appToolkit);
   }
@@ -40,8 +39,8 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
   async getDefinitions(): Promise<PlutusVaultAppTokenDefinition[]> {
     return [
       {
-        address: '0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1', // plsDPX
-        underlyingTokenAddress: '0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55',
+        address: '0x0d111e482146fe9ac9ca3a65d92e65610bbc1ba6', // plsSPA
+        underlyingTokenAddress: '0x5575552988a3a80504bbaeb1311674fcfd40ad4b',
       },
     ];
   }
@@ -54,14 +53,17 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20>) {
-    const camelotPairContract = this.camelotContractFactory.camelotPair({
-      address: '0x035d9815ae5af78d568721fa118bb93428c91f51',
+  async getPricePerShare({ multicall }: GetPricePerShareParams<Erc20>) {
+    const uniswapV3PairContract = this.uniswapV3ContractFactory.uniswapV3Pool({
+      address: '0x03344b394ccdb3c36ddd134f4962d2fa97e3e714',
       network: this.network,
     });
-    const oneUnit = BigNumber.from(10).pow(18);
-    const pricePerShare = await multicall.wrap(camelotPairContract).getAmountOut(oneUnit, appToken.address);
+    const slot0 = await multicall.wrap(uniswapV3PairContract).slot0();
+    const tickBasisConstant = 1.0001;
 
-    return [Number(pricePerShare) / 10 ** appToken.decimals];
+    const token0InTermOfToken1 = tickBasisConstant ** Math.abs(slot0.tick);
+    const pricePerShare = 1 / token0InTermOfToken1;
+
+    return [pricePerShare];
   }
 }

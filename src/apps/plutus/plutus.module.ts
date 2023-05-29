@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 import { CamelotContractFactory } from '~apps/camelot/contracts';
+import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 
 import { ArbitrumPlutusFarmPlsArbContractPositionFetcher } from './arbitrum/plutus.farm-pls-arb.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher } from './arbitrum/plutus.farm-pls-dpx-v2.contract-position-fetcher';
@@ -12,6 +13,7 @@ import { ArbitrumPlutusFarmPlsRdntContractPositionFetcher } from './arbitrum/plu
 import { ArbitrumPlutusFarmContractPositionFetcher } from './arbitrum/plutus.farm.contract-position-fetcher';
 import { ArbitrumPlutusLockContractPositionFetcher } from './arbitrum/plutus.lock.contract-position-fetcher';
 import { ArbitrumPlutusPlsDpxTokenFetcher } from './arbitrum/plutus.pls-dpx.token-fetcher';
+import { ArbitrumPlutusPlsSpaTokenFetcher } from './arbitrum/plutus.pls-spa.token-fetcher';
 import { ArbitrumPlutusPlvGlpTokenFetcher } from './arbitrum/plutus.plv-glp.token-fetcher';
 import { ArbitrumPlutusTgeClaimableContractPositionFetcher } from './arbitrum/plutus.tge-claimable.contract-position-fetcher';
 import { ArbitrumPlutusVaultTokenFetcher } from './arbitrum/plutus.vault.token-fetcher';
@@ -21,6 +23,7 @@ import { PlutusContractFactory } from './contracts';
   providers: [
     PlutusContractFactory,
     CamelotContractFactory,
+    UniswapV3ContractFactory,
     ArbitrumPlutusFarmPlsArbContractPositionFetcher,
     ArbitrumPlutusFarmContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxContractPositionFetcher,
@@ -34,6 +37,7 @@ import { PlutusContractFactory } from './contracts';
     ArbitrumPlutusFarmPlsRdntContractPositionFetcher,
     // plsASSETs
     ArbitrumPlutusPlsDpxTokenFetcher,
+    ArbitrumPlutusPlsSpaTokenFetcher,
   ],
 })
 export class PlutusAppModule extends AbstractApp() {}
