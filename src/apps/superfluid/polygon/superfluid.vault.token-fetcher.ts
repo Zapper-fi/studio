@@ -20,7 +20,7 @@ const ALL_SUPERTOKENS_QUERY = gql`
 `;
 
 type TokensResponse = {
-  tokens?: {
+  tokens: {
     id: string;
     symbol: string;
     underlyingAddress: string;
@@ -30,6 +30,8 @@ type TokensResponse = {
 @PositionTemplate()
 export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePositionFetcher<VaultToken> {
   groupLabel = 'Vaults';
+
+  ignoredPools = ['0x263026e7e53dbfdce5ae55ade22493f828922965']; // RIC
 
   constructor(
     @Inject(SuperfluidContractFactory) private readonly contractFactory: SuperfluidContractFactory,
@@ -44,12 +46,14 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getAddresses(): Promise<string[]> {
     const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-matic';
-    const tokenData = await gqlFetch<TokensResponse>({
+    const tokenDataRaw = await gqlFetch<TokensResponse>({
       endpoint: subgraphUrl,
       query: ALL_SUPERTOKENS_QUERY,
     });
 
-    return tokenData.tokens?.map(v => v.id) ?? [];
+    const tokenData = tokenDataRaw.tokens?.filter(x => !this.ignoredPools.includes(x.id));
+
+    return tokenData.map(v => v.id) ?? [];
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VaultToken>) {
