@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.475.1](https://github.com/Zapper-fi/studio/compare/v0.475.0...v0.475.1) (2023-05-29)
+
+
+### Bug Fixes
+
+* **superfluid:** Filter out RIC app token address from vault position ([#2705](https://github.com/Zapper-fi/studio/issues/2705)) ([0d3ef44](https://github.com/Zapper-fi/studio/commit/0d3ef44079b5504a9c4f8942dd098cebfe1ec0b5))
+
 ## [0.475.0](https://github.com/Zapper-fi/studio/compare/v0.474.0...v0.475.0) (2023-05-26)
 
 
