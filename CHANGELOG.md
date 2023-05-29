@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.475.2](https://github.com/Zapper-fi/studio/compare/v0.475.1...v0.475.2) (2023-05-29)
+
+
+### Bug Fixes
+
+* **camelot:** Extract to Studio ([#2707](https://github.com/Zapper-fi/studio/issues/2707)) ([242fb90](https://github.com/Zapper-fi/studio/commit/242fb90de787db6f7588e12027c3049c7b1863d5))
+
 ## [0.475.1](https://github.com/Zapper-fi/studio/compare/v0.475.0...v0.475.1) (2023-05-29)
 
 
