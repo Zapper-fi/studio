@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.476.0](https://github.com/Zapper-fi/studio/compare/v0.475.2...v0.476.0) (2023-05-29)
+
+
+### Features
+
+* **chronos:** Add pools ([#2709](https://github.com/Zapper-fi/studio/issues/2709)) ([ce0b8fd](https://github.com/Zapper-fi/studio/commit/ce0b8fd20808c24e954af7909a56fef237f633c2))
+
 ## [0.475.2](https://github.com/Zapper-fi/studio/compare/v0.475.1...v0.475.2) (2023-05-29)
 
 
