@@ -10,7 +10,6 @@ import { BiswapContractFactory } from './contracts';
 @Module({
   providers: [
     UniswapV2ContractFactory,
-
     BiswapContractFactory,
     BinanceSmartChainBiswapPoolTokenFetcher,
     BinanceSmartChainBiswapContractPositionFetcher,
