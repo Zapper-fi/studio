@@ -1,10 +1,15 @@
+import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
+
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { ChronosContractFactory } from '~apps/chronos/contracts';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
+  GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -14,12 +19,19 @@ export type PlutusVaultAppTokenDefinition = {
 };
 
 @PositionTemplate()
-export class ArbitrumPlutusVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class ArbitrumPlutusPlsRdntTokenFetcher extends AppTokenTemplatePositionFetcher<
   Erc20,
   DefaultAppTokenDataProps,
   PlutusVaultAppTokenDefinition
 > {
   groupLabel = 'Vault';
+
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(ChronosContractFactory) protected readonly chronosContractFactory: ChronosContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
   getContract(address: string): Erc20 {
     return this.appToolkit.globalContracts.erc20({ address, network: this.network });
@@ -28,16 +40,8 @@ export class ArbitrumPlutusVaultTokenFetcher extends AppTokenTemplatePositionFet
   async getDefinitions(): Promise<PlutusVaultAppTokenDefinition[]> {
     return [
       {
-        address: '0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44', // plsJONES
-        underlyingTokenAddress: '0xe8ee01ae5959d3231506fcdef2d5f3e85987a39c',
-      },
-      {
-        address: '0x530f1cbb2ebd71bec58d351dcd3768148986a467', // plsGLP
-        underlyingTokenAddress: '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258',
-      },
-      {
-        address: '0x7a5d193fe4ed9098f7eadc99797087c96b002907', // plsARB
-        underlyingTokenAddress: '0x912ce59144191c1204e64559fe8253a0e49e6548',
+        address: '0x1605bbdab3b38d10fa23a7ed0d0e8f4fea5bff59', // plsRDNT
+        underlyingTokenAddress: '0x3082cc23568ea640225c2467653db90e9250aaa0',
       },
     ];
   }
@@ -50,19 +54,14 @@ export class ArbitrumPlutusVaultTokenFetcher extends AppTokenTemplatePositionFet
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getPricePerShare() {
-    return [1];
-  }
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20>) {
+    const chronosPairContract = this.chronosContractFactory.chronosPool({
+      address: '0x3fb69d8720816a604487f2fd5813b72c15dd77ea',
+      network: this.network,
+    });
+    const oneUnit = BigNumber.from(10).pow(18);
+    const pricePerShare = await multicall.wrap(chronosPairContract).getAmountOut(oneUnit, appToken.address);
 
-  async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Erc20>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+    return [Number(pricePerShare) / 10 ** appToken.decimals];
   }
 }
