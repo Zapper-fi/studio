@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.476.1](https://github.com/Zapper-fi/studio/compare/v0.476.0...v0.476.1) (2023-05-30)
+
+
+### Bug Fixes
+
+* **plutus:** pls assets price per share ([#2710](https://github.com/Zapper-fi/studio/issues/2710)) ([3544426](https://github.com/Zapper-fi/studio/commit/35444262bbd41043b15fc5c8c74f279fff8830ad))
+
 ## [0.476.0](https://github.com/Zapper-fi/studio/compare/v0.475.2...v0.476.0) (2023-05-29)
 
 
