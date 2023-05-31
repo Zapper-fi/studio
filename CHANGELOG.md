@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.476.2](https://github.com/Zapper-fi/studio/compare/v0.476.1...v0.476.2) (2023-05-31)
+
+
+### Bug Fixes
+
+* **reflexer:** Extract Reflexer to studio ([#2716](https://github.com/Zapper-fi/studio/issues/2716)) ([83f94b9](https://github.com/Zapper-fi/studio/commit/83f94b9a6ac4740f25013bfef7dd911d6d9f3c63))
+
 ## [0.476.1](https://github.com/Zapper-fi/studio/compare/v0.476.0...v0.476.1) (2023-05-30)
 
 
