@@ -43,6 +43,10 @@ export class EthereumLooksRareFarmContractPositionFetcher extends SingleStakingF
     return contract.rewardPerTokenStored();
   }
 
+  getIsActive({ contract }: GetDataPropsParams<LooksRareFeeSharing>) {
+    return contract.rewardPerTokenStored().then(v => v.gt(0));
+  }
+
   getStakedTokenBalance({
     address,
     contract,

@@ -74,7 +74,23 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
         const vbpAddress = await contract.extraRewards(v);
         const vbp = this.contractFactory.convexVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
         const rewardTokenAddressRaw = await multicall.wrap(vbp).rewardToken();
-        const rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
+        let rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
+
+        const stashTokenWrapper = this.contractFactory.convexStashTokenWrapper({
+          address: rewardTokenAddress,
+          network: this.network,
+        });
+
+        const isWrapper = await multicall
+          .wrap(stashTokenWrapper)
+          .booster()
+          .then(() => true)
+          .catch(() => false);
+
+        if (isWrapper) {
+          const rewardTokenAddressRaw = await multicall.wrap(stashTokenWrapper).token();
+          rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
+        }
 
         // We will combine CVX extra rewards with the amount minted
         if (rewardTokenAddress === primaryRewardTokenAddresses[1]) return null;

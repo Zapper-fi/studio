@@ -48,6 +48,12 @@ export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmT
     return contract.rewardRate();
   }
 
+  getIsActive({
+    contract,
+  }: GetDataPropsParams<AelinStaking, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
+    return contract.rewardRate().then(v => v.gt(0));
+  }
+
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AelinStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }

@@ -8,11 +8,6 @@ import { EthereumTeahouseVaultsTokenFetcher } from './ethereum/teahouse.vaults.t
 import { OptimismTeahouseVaultsTokenFetcher } from './optimism/teahouse.vaults.token-fetcher';
 
 @Module({
-  providers: [
-    TeahouseContractFactory,
-    EthereumTeahouseVaultsTokenFetcher,
-    OptimismTeahouseVaultsTokenFetcher,
-    ArbitrumTeahouseVaultsTokenFetcher,
-  ],
+  providers: [TeahouseContractFactory, EthereumTeahouseVaultsTokenFetcher, OptimismTeahouseVaultsTokenFetcher],
 })
 export class TeahouseAppModule extends AbstractApp() {}

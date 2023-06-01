@@ -117,7 +117,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       this.getApy(params),
     ]);
 
-    return { liquidity, reserves, apy } as V;
+    return { liquidity, reserves, apy, isDebt: this.isDebt } as V;
   }
 
   // Display Properties

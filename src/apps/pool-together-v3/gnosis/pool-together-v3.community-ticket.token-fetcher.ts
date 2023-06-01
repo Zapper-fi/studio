@@ -6,4 +6,6 @@ import { PoolTogetherV3CommunityTicketTokenFetcher } from '../common/pool-togeth
 export class GnosisPoolTogetherV3CommunityTicketTokenFetcher extends PoolTogetherV3CommunityTicketTokenFetcher {
   groupLabel = 'Community Prize Pools';
   isExcludedFromExplore = true;
+
+  TICKET_ADDRESS_RETURNED_BY_API = [];
 }

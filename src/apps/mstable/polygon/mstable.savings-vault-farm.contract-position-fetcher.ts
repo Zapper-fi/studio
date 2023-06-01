@@ -42,6 +42,10 @@ export class PolygonMstableSavingsVaultContractPositionFetcher extends SingleSta
     return contract.rewardRate();
   }
 
+  getIsActive({ contract }: GetDataPropsParams<MstableStaking>) {
+    return contract.rewardRate().then(rate => rate.gt(0));
+  }
+
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }

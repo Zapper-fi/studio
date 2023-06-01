@@ -155,6 +155,8 @@ export class KyberswapElasticFarmContractPositionBuilder {
       balanceUSD,
     };
 
+    balance.key = this.appToolkit.getPositionKey(balance);
+
     return balance;
   }
 }

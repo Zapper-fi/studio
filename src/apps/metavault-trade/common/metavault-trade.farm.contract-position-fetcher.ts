@@ -37,6 +37,10 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
     return contractPosition.tokens.filter(isClaimable).map(() => 0);
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getStakedTokenBalance({
     address,
     contractPosition,

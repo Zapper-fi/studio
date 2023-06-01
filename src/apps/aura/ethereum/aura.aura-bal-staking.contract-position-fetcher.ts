@@ -7,7 +7,7 @@ import { AuraBaseRewardPool } from '../contracts';
 
 @PositionTemplate()
 export class EthereumAuraAuraBalStakingContractPositionFetcher extends AuraFarmContractPositionFetcher {
-  groupLabel = 'auraBAL Staking';
+  groupLabel = 'auraBAL Classic';
 
   AURA_BAL_STAKING_V1 = '0x5e5ea2048475854a5702f5b8468a51ba1296efcc';
   AURA_BAL_STAKING_V2 = '0x00a7ba8ae7bca0b10a32ea1f8e2a1da980c6cad2';

@@ -143,7 +143,7 @@ export const getRange = ({
   const pool = new Pool(t0Wrapper, t1Wrapper, feeBips, sqrtPriceX96.toString(), liquidity.toString(), tickCurrent);
   const positionZ = new Position({ pool, liquidity: position.liquidity.toString(), tickLower, tickUpper });
 
-  const positionLowerBound = Number(positionZ.token0PriceLower.toFixed(4));
-  const positionUpperBound = Number(positionZ.token0PriceUpper.toFixed(4));
+  const positionLowerBound = Number(positionZ.token0PriceLower.toSignificant(4));
+  const positionUpperBound = Number(positionZ.token0PriceUpper.toSignificant(4));
   return [positionLowerBound, positionUpperBound];
 };

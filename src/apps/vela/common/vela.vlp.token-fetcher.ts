@@ -52,23 +52,16 @@ export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getApy(): Promise<number> {
-    const {
-      data: { VLP_APR },
-    } = await axios.request<VelaGetVlpAprResponse>({
-      method: 'post',
-      url: 'https://app.vela.exchange/api/public',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: JSON.stringify({
-        route: 'market',
-        action: 'GET_VLP_APR',
-        payload: {
-          chainId: NETWORK_IDS[this.network],
-        },
-      }),
-    });
-    return VLP_APR;
+    try {
+      const {
+        data: { VLP_APR },
+      } = await axios.get<VelaGetVlpAprResponse>(
+        `https://vela-public-server-prod-qxq2l.ondigitalocean.app/market/vlp-apr/${NETWORK_IDS[this.network]}`,
+      );
+      return VLP_APR;
+    } catch {
+      return 0;
+    }
   }
 
   async getPricePerShare({

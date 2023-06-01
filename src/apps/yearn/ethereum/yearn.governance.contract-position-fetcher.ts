@@ -42,6 +42,10 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
     return contract.rewardRate();
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<YearnGovernance>) {
+    return contract.rewardRate().then(rate => rate.gt(0));
+  }
+
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
     return contract.balanceOf(address);
   }

@@ -117,7 +117,7 @@ export class SolidLizardDefinitionsResolver {
   async getFarmAddresses() {
     const definitionsData = await this.getPoolDefinitionsData();
 
-    return definitionsData.map(pool => pool.gauge.id.toLowerCase()).filter(v => !!v);
+    return definitionsData.map(pool => pool.gauge?.id?.toLowerCase()).filter(v => !!v);
   }
 
   async getBribeDefinitions() {
@@ -127,7 +127,7 @@ export class SolidLizardDefinitionsResolver {
       .filter(v => !!v)
       .filter(v => !!v.gauge)
       .map(pool => {
-        const wBribeAddress = pool.gaugebribes.id;
+        const wBribeAddress = pool.gaugebribes?.id;
         if (wBribeAddress == null) return null;
 
         return { address: wBribeAddress.toLowerCase(), name: pool.symbol };

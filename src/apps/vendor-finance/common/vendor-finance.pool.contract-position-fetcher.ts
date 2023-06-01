@@ -20,25 +20,14 @@ import {
 
 import { VendorFinanceContractFactory, VendorFinancePool } from '../contracts';
 
-import { borrowerInfosQuery, VendorBorrowerGraphResponse } from './getBorrowerInfosQuery';
-import { LENDING_POOLS_QUERY, VendorLendingPoolsGraphResponse } from './getLendingPoolsQuery';
-
-export type VendorFinancePoolDefinition = {
-  address: string;
-  deployer: string;
-  mintRatio: string;
-  colToken: string;
-  lendToken: string;
-  expiry: string;
-  feeRate: string;
-  lendBalance: string;
-  totalBorrowed: string;
-};
-
-type VendorFinancePoolDataProps = DefaultDataProps & {
-  deployer: string;
-  totalDeposited: number;
-};
+import { borrowerInfosQuery } from './getBorrowerInfosQuery';
+import { LENDING_POOLS_QUERY } from './getLendingPoolsQuery';
+import {
+  VendorBorrowerGraphResponse,
+  VendorFinancePoolDataProps,
+  VendorFinancePoolDefinition,
+  VendorLendingPoolsGraphResponse,
+} from './vendor-finance.pool.types';
 
 export abstract class VendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
   abstract subgraphUrl: string;

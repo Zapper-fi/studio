@@ -134,6 +134,8 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
       address,
     };
 
+    positionBalance.key = this.appToolkit.getPositionKey(positionBalance);
+
     return compact([positionBalance].flat());
   }
 }

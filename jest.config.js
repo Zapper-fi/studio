@@ -17,5 +17,5 @@ module.exports = {
   transform: {
     '^.+\\.(ts|js|html)$': '@swc/jest',
   },
-  setupFilesAfterEnv: ['@alex_neo/jest-expect-message'],
+  setupFilesAfterEnv: ['jest-expect-message'],
 };

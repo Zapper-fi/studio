@@ -68,6 +68,10 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     return [0, 0];
   }
 
+  async getIsActive() {
+    return true;
+  }
+
   async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusLock>) {
     const lockDuration = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.lockDuration;
     return `PLS ${lockDuration} Month Lock`;

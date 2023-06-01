@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
+import { TickMath } from '@uniswap/v3-sdk';
+import { BigNumber } from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
 
@@ -74,9 +75,10 @@ export class UniswapV3LiquidityContractPositionBuilder {
     const token0Contract = this.contractFactory.erc20(token0);
     const token1Contract = this.contractFactory.erc20(token1);
 
-    const [slot, liquidity, feeGrowth0, feeGrowth1, ticksLower, ticksUpper, reserveRaw0, reserveRaw1] =
+    const [slot, tickSpacing, liquidity, feeGrowth0, feeGrowth1, ticksLower, ticksUpper, reserveRaw0, reserveRaw1] =
       await Promise.all([
         multicall.wrap(poolContract).slot0(),
+        multicall.wrap(poolContract).tickSpacing(),
         multicall.wrap(poolContract).liquidity(),
         multicall.wrap(poolContract).feeGrowthGlobal0X128(),
         multicall.wrap(poolContract).feeGrowthGlobal1X128(),
@@ -89,6 +91,8 @@ export class UniswapV3LiquidityContractPositionBuilder {
     // Retrieve underlying reserves, both supplied and claimable
     const range = getRange({ position, slot, token0, token1, network, liquidity });
     const suppliedBalances = getSupplied({ position, slot, token0, token1, network, liquidity });
+    const isMin = Math.floor(-position.tickLower / tickSpacing) === Math.floor(-TickMath.MIN_TICK / tickSpacing);
+    const isMax = Math.floor(position.tickUpper / tickSpacing) === Math.floor(TickMath.MAX_TICK / tickSpacing);
 
     const suppliedTokens = [token0, token1].map(v => supplied(v));
     const suppliedTokenBalances = suppliedTokens.map((t, i) => drillBalance(t, suppliedBalances[i]));
@@ -123,7 +127,7 @@ export class UniswapV3LiquidityContractPositionBuilder {
     };
 
     const displayProps = {
-      label: `${token0.symbol} / ${token1.symbol} (${range[0]} to ${range[1]})`,
+      label: `${token0.symbol} / ${token1.symbol} (${isMin ? 'MIN' : range[0]} - ${isMax ? 'MAX' : range[1]})`,
       images: [...getImagesFromToken(token0), ...getImagesFromToken(token1)],
       statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(Number(liquidity)) }],
     };
@@ -139,6 +143,8 @@ export class UniswapV3LiquidityContractPositionBuilder {
       displayProps,
       balanceUSD,
     };
+
+    balance.key = this.appToolkit.getPositionKey(balance);
 
     return balance;
   }

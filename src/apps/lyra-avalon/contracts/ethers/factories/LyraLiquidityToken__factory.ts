@@ -11,12 +11,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'string',
-        name: '_name',
+        name: 'name_',
         type: 'string',
       },
       {
         internalType: 'string',
-        name: '_symbol',
+        name: 'symbol_',
         type: 'string',
       },
     ],
@@ -120,6 +120,19 @@ const _abi = [
       },
     ],
     name: 'Approval',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'contract ILiquidityTracker',
+        name: 'liquidityTracker',
+        type: 'address',
+      },
+    ],
+    name: 'LiquidityTrackerSet',
     type: 'event',
   },
   {
@@ -257,7 +270,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'owner',
+        name: 'account',
         type: 'address',
       },
       {
@@ -375,7 +388,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'owner',
+        name: 'account',
         type: 'address',
       },
       {
