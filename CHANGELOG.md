@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.476.3](https://github.com/Zapper-fi/studio/compare/v0.476.2...v0.476.3) (2023-06-01)
+
+
+### Bug Fixes
+
+* **yearn:** Update api url to yDeamon ([#2718](https://github.com/Zapper-fi/studio/issues/2718)) ([624679b](https://github.com/Zapper-fi/studio/commit/624679bdfeb33efbb31fbd32aa74edc32290ce60))
+
 ## [0.476.2](https://github.com/Zapper-fi/studio/compare/v0.476.1...v0.476.2) (2023-05-31)
 
 
