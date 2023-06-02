@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.477.0](https://github.com/Zapper-fi/studio/compare/v0.476.3...v0.477.0) (2023-06-02)
+
+
+### Features
+
+* **raft:** add app ([#2720](https://github.com/Zapper-fi/studio/issues/2720)) ([2c4e78e](https://github.com/Zapper-fi/studio/commit/2c4e78e82a218c6a225fc7123a7060de66fd5f34))
+
+
+### Bug Fixes
+
+* **raft:** Linting + smol implementation fixes ([#2722](https://github.com/Zapper-fi/studio/issues/2722)) ([b21b859](https://github.com/Zapper-fi/studio/commit/b21b8590a6cb1a5f38bbff37783896c665ed2fd3))
+
 ## [0.476.3](https://github.com/Zapper-fi/studio/compare/v0.476.2...v0.476.3) (2023-06-01)
 
 
