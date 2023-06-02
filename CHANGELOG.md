@@ -4,6 +4,32 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.477.0](https://github.com/Zapper-fi/studio/compare/v0.476.3...v0.477.0) (2023-06-02)
+
+
+### Features
+
+* **raft:** add app ([#2720](https://github.com/Zapper-fi/studio/issues/2720)) ([2c4e78e](https://github.com/Zapper-fi/studio/commit/2c4e78e82a218c6a225fc7123a7060de66fd5f34))
+
+
+### Bug Fixes
+
+* **raft:** Linting + smol implementation fixes ([#2722](https://github.com/Zapper-fi/studio/issues/2722)) ([b21b859](https://github.com/Zapper-fi/studio/commit/b21b8590a6cb1a5f38bbff37783896c665ed2fd3))
+
+## [0.476.3](https://github.com/Zapper-fi/studio/compare/v0.476.2...v0.476.3) (2023-06-01)
+
+
+### Bug Fixes
+
+* **yearn:** Update api url to yDeamon ([#2718](https://github.com/Zapper-fi/studio/issues/2718)) ([624679b](https://github.com/Zapper-fi/studio/commit/624679bdfeb33efbb31fbd32aa74edc32290ce60))
+
+## [0.476.2](https://github.com/Zapper-fi/studio/compare/v0.476.1...v0.476.2) (2023-05-31)
+
+
+### Bug Fixes
+
+* **reflexer:** Extract Reflexer to studio ([#2716](https://github.com/Zapper-fi/studio/issues/2716)) ([83f94b9](https://github.com/Zapper-fi/studio/commit/83f94b9a6ac4740f25013bfef7dd911d6d9f3c63))
+
 ## [0.476.1](https://github.com/Zapper-fi/studio/compare/v0.476.0...v0.476.1) (2023-05-30)
 
 
