@@ -71,8 +71,10 @@ export abstract class SushiswapBentoboxVaultContractPositionFetcher extends Cont
     contract,
     contractPosition,
   }: GetTokenBalancesParams<SushiswapBentobox>): Promise<BigNumberish[]> {
-    const balance = await contract.balanceOf(contractPosition.tokens[0].address, address);
+    const token = contractPosition.tokens[0].address;
+    const share = await contract.balanceOf(token, address);
+    const amount = await contract.toAmount(token, share, false);
 
-    return [balance];
+    return [amount];
   }
 }
