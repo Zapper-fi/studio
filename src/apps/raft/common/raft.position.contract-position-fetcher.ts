@@ -46,6 +46,20 @@ export abstract class EthereumRaftContractPositionFetcher extends ContractPositi
     ];
   }
 
+  async getDataProps({
+    contractPosition,
+    multicall,
+  }) {
+    const positionManager = this.raftContractFactory.raftPositionManager({ address: this.positionManagerAddress, network: this.network })
+    const liquidiationContractAddress = await multicall.wrap(positionManager).splitLiquidationCollateral(this.collateral)
+    const liquidationContract = this.raftContractFactory.raftLiquiditation({ address: liquidiationContractAddress, network: this.network })
+
+    const collateralToken = contractPosition.tokens[0];
+    const minCRatio = Number(await multicall.wrap(liquidationContract).MCR()) / 10 ** collateralToken.decimals
+
+    return { minCRatio };
+  }
+
   async getLabel(): Promise<string> {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenFound = baseTokens.find(p => p.address === this.collateral);
