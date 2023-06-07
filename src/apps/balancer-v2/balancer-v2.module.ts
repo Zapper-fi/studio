@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumBalancerV2BoostedTokenFetcher } from './arbitrum/balancer-v2.boosted.token-fetcher';
 import { ArbitrumBalancerV2FarmContractPositionFetcher } from './arbitrum/balancer-v2.farm.contract-position-fetcher';
 import { ArbitrumBalancerV2PoolTokenFetcher } from './arbitrum/balancer-v2.pool.token-fetcher';
 import { BalancerV2SpotPriceHelper } from './common/balancer-v2.spot-price.helper';
@@ -18,6 +19,7 @@ import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.
   providers: [
     BalancerV2ContractFactory,
     // Arbitrum
+    ArbitrumBalancerV2BoostedTokenFetcher,
     ArbitrumBalancerV2PoolTokenFetcher,
     ArbitrumBalancerV2FarmContractPositionFetcher,
     // Ethereum
