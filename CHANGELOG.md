@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.477.1](https://github.com/Zapper-fi/studio/compare/v0.477.0...v0.477.1) (2023-06-05)
+
+
+### Bug Fixes
+
+* **raft:** requested minor fixes ([#2726](https://github.com/Zapper-fi/studio/issues/2726)) ([8cb8f36](https://github.com/Zapper-fi/studio/commit/8cb8f36dcb799d547fce81fc55b83e2fe8c5edc4))
+* **sushiswap-bentobox:** Use amount instead of share ([#2723](https://github.com/Zapper-fi/studio/issues/2723)) ([5348f0f](https://github.com/Zapper-fi/studio/commit/5348f0fc7dd385b4f0722d8569e83a0d263c73f9))
+
 ## [0.477.0](https://github.com/Zapper-fi/studio/compare/v0.476.3...v0.477.0) (2023-06-02)
 
 
