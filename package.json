@@ -28,6 +28,8 @@
     "@morpho-labs/ethers-utils": "^1.2.0",
     "@nestjs/platform-express": "8.4.2",
     "@nestjs/schedule": "^2.1.0",
+    "@pancakeswap/swap-sdk-core": "^1.0.0",
+    "@pancakeswap/v3-sdk": "^2.0.0",
     "@pendle/sdk": "^2.5.8",
     "@types/moment-duration-format": "^2.2.3",
     "@uniswap/sdk-core": "^3.0.1",
