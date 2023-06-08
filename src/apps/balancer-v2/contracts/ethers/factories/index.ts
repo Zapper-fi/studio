@@ -3,6 +3,7 @@
 /* eslint-disable */
 export { BalancerChildChainGaugeFactory__factory } from './BalancerChildChainGaugeFactory__factory';
 export { BalancerComposableStablePool__factory } from './BalancerComposableStablePool__factory';
+export { BalancerErc4626LinearPool__factory } from './BalancerErc4626LinearPool__factory';
 export { BalancerGauge__factory } from './BalancerGauge__factory';
 export { BalancerMerkleOrchard__factory } from './BalancerMerkleOrchard__factory';
 export { BalancerMerkleRedeem__factory } from './BalancerMerkleRedeem__factory';

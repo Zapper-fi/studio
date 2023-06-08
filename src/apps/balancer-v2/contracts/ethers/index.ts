@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { BalancerChildChainGaugeFactory } from './BalancerChildChainGaugeFactory';
 export type { BalancerComposableStablePool } from './BalancerComposableStablePool';
+export type { BalancerErc4626LinearPool } from './BalancerErc4626LinearPool';
 export type { BalancerGauge } from './BalancerGauge';
 export type { BalancerMerkleOrchard } from './BalancerMerkleOrchard';
 export type { BalancerMerkleRedeem } from './BalancerMerkleRedeem';
@@ -15,6 +16,7 @@ export type { BalancerWrappedAaveToken } from './BalancerWrappedAaveToken';
 export * as factories from './factories';
 export { BalancerChildChainGaugeFactory__factory } from './factories/BalancerChildChainGaugeFactory__factory';
 export { BalancerComposableStablePool__factory } from './factories/BalancerComposableStablePool__factory';
+export { BalancerErc4626LinearPool__factory } from './factories/BalancerErc4626LinearPool__factory';
 export { BalancerGauge__factory } from './factories/BalancerGauge__factory';
 export { BalancerMerkleOrchard__factory } from './factories/BalancerMerkleOrchard__factory';
 export { BalancerMerkleRedeem__factory } from './factories/BalancerMerkleRedeem__factory';
