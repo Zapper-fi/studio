@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.478.0](https://github.com/Zapper-fi/studio/compare/v0.477.1...v0.478.0) (2023-06-07)
+
+
+### Features
+
+* **balancer-v2:** add boosted tokens ([#2725](https://github.com/Zapper-fi/studio/issues/2725)) ([5232d06](https://github.com/Zapper-fi/studio/commit/5232d062035d89c8ecbd08b14a8c0090b10e90e4))
+* **raft:** add position presenter ([#2728](https://github.com/Zapper-fi/studio/issues/2728)) ([5de709f](https://github.com/Zapper-fi/studio/commit/5de709f8755015774209d7ead33b78b4b3bcc7db))
+
 ## [0.477.1](https://github.com/Zapper-fi/studio/compare/v0.477.0...v0.477.1) (2023-06-05)
 
 
