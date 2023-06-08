@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.479.0](https://github.com/Zapper-fi/studio/compare/v0.478.0...v0.479.0) (2023-06-08)
+
+
+### Features
+
+* Firm =&gt; add DBR rewards ([#2715](https://github.com/Zapper-fi/studio/issues/2715)) ([ae0744f](https://github.com/Zapper-fi/studio/commit/ae0744f2b3202f869324814840ea2247bec0fb8c))
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Disable approx. apy calculation using volumeUSD ([#2730](https://github.com/Zapper-fi/studio/issues/2730)) ([bcb98ff](https://github.com/Zapper-fi/studio/commit/bcb98ff6ae8524e055a111da4973258fb89e2ef8))
+
 ## [0.478.0](https://github.com/Zapper-fi/studio/compare/v0.477.1...v0.478.0) (2023-06-07)
 
 
