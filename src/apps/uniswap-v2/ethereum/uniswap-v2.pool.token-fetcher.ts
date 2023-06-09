@@ -41,6 +41,8 @@ export class EthereumUniswapV2PoolTokenFetcher extends UniswapV2DefaultPoolSubgr
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2';
   ignoredPools = ['0x3016a43b482d0480460f6625115bd372fe90c6bf'];
   first = 5000;
+  // Todo: remove when subgraph isn't throwing when calling volumeUSD
+  skipVolume = true;
 
   async getPositionsForBalances() {
     return this.appToolkit.getAppTokenPositionsFromDatabase<UniswapV2TokenDataProps>({

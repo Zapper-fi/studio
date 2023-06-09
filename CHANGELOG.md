@@ -4,6 +4,34 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.479.0](https://github.com/Zapper-fi/studio/compare/v0.478.0...v0.479.0) (2023-06-08)
+
+
+### Features
+
+* Firm =&gt; add DBR rewards ([#2715](https://github.com/Zapper-fi/studio/issues/2715)) ([ae0744f](https://github.com/Zapper-fi/studio/commit/ae0744f2b3202f869324814840ea2247bec0fb8c))
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Disable approx. apy calculation using volumeUSD ([#2730](https://github.com/Zapper-fi/studio/issues/2730)) ([bcb98ff](https://github.com/Zapper-fi/studio/commit/bcb98ff6ae8524e055a111da4973258fb89e2ef8))
+
+## [0.478.0](https://github.com/Zapper-fi/studio/compare/v0.477.1...v0.478.0) (2023-06-07)
+
+
+### Features
+
+* **balancer-v2:** add boosted tokens ([#2725](https://github.com/Zapper-fi/studio/issues/2725)) ([5232d06](https://github.com/Zapper-fi/studio/commit/5232d062035d89c8ecbd08b14a8c0090b10e90e4))
+* **raft:** add position presenter ([#2728](https://github.com/Zapper-fi/studio/issues/2728)) ([5de709f](https://github.com/Zapper-fi/studio/commit/5de709f8755015774209d7ead33b78b4b3bcc7db))
+
+## [0.477.1](https://github.com/Zapper-fi/studio/compare/v0.477.0...v0.477.1) (2023-06-05)
+
+
+### Bug Fixes
+
+* **raft:** requested minor fixes ([#2726](https://github.com/Zapper-fi/studio/issues/2726)) ([8cb8f36](https://github.com/Zapper-fi/studio/commit/8cb8f36dcb799d547fce81fc55b83e2fe8c5edc4))
+* **sushiswap-bentobox:** Use amount instead of share ([#2723](https://github.com/Zapper-fi/studio/issues/2723)) ([5348f0f](https://github.com/Zapper-fi/studio/commit/5348f0fc7dd385b4f0722d8569e83a0d263c73f9))
+
 ## [0.477.0](https://github.com/Zapper-fi/studio/compare/v0.476.3...v0.477.0) (2023-06-02)
 
 
