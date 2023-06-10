@@ -30,12 +30,11 @@ export class EthereumRaftPositionPresenter extends PositionPresenterTemplate<Raf
     balances: ReadonlyBalances,
     dataProps?: RaftPositionPresenterDataProps,
   ): MetadataItemWithLabel[] {
-
     const collateral = (balances[0] as ContractPositionBalance)?.tokens[0]
     const collateralUSD = collateral?.balanceUSD ?? 0;
-    const debt = (balances[0] as ContractPositionBalance)?.tokens[1]?.balanceUSD ?? 0;
-    const cRatio = Math.abs(debt) > 0 ? Math.abs(collateralUSD / debt) : 0;
-    const liquidationPrice = dataProps?.minCRatio ? (dataProps.minCRatio * debt) / collateral.balance : 0
+    const debt = Math.abs(((balances[0] as ContractPositionBalance)?.tokens[1]?.balanceUSD ?? 0));
+    const cRatio = debt > 0 ? Math.abs(collateralUSD / debt) : 0;
+    const liquidationPrice = dataProps?.minCRatio ? ((dataProps.minCRatio * debt) / collateral.balance) : 0
 
     return [
       { label: 'C-Ratio', ...buildPercentageDisplayItem(cRatio) },
