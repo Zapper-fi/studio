@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.479.0",
+  "version": "0.479.1",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -32,7 +32,7 @@
     "@pancakeswap/v3-sdk": "^2.0.0",
     "@pendle/sdk": "^2.5.8",
     "@types/moment-duration-format": "^2.2.3",
-    "@uniswap/sdk-core": "^3.0.1",
+    "@uniswap/sdk-core": "3.2.2",
     "@uniswap/v3-sdk": "^3.9.0",
     "bitcoin-address-validation": "^2.2.1",
     "dayjs": "^1.11.5",

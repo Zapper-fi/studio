@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.479.1](https://github.com/Zapper-fi/studio/compare/v0.479.0...v0.479.1) (2023-06-12)
+
+
+### Bug Fixes
+
+* **raft:** fix for position presenter ([#2732](https://github.com/Zapper-fi/studio/issues/2732)) ([ab8d4b6](https://github.com/Zapper-fi/studio/commit/ab8d4b6d8b5ab3dc75c297bfa546df2498c660fc))
+* **uniswap-v3:** Pin uniswap/sdk-core version to 3.2.2 ([#2735](https://github.com/Zapper-fi/studio/issues/2735)) ([8dc2831](https://github.com/Zapper-fi/studio/commit/8dc2831c55530e3eeae894942390156e10d9bd69))
+
 ## [0.479.0](https://github.com/Zapper-fi/studio/compare/v0.478.0...v0.479.0) (2023-06-08)
 
 
