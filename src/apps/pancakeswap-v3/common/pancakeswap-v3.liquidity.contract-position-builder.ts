@@ -3,7 +3,6 @@ import { Pool, Position, TickMath } from '@pancakeswap/v3-sdk';
 import { Token as PancakeSwapToken } from '@pancakeswap/swap-sdk-core';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { AbstractUniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3LiquidityPositionContractData, UniswapV3LiquiditySlotContractData } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.types';
 import { Token } from '~position/position.interface';
 import { Network, NETWORK_IDS } from '~types/network.interface';
@@ -14,6 +13,7 @@ import { BigNumber } from 'ethers';
 import { Erc20 } from '~contract/contracts';
 import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
 import { IMulticallWrapper } from '~multicall';
+import { AbstractUniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.abstract.contract-position-builder';
 
 export class PancakeswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3LiquidityContractPositionBuilder<
   PancakeswapPool,
