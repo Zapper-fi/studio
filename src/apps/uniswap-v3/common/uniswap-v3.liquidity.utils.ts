@@ -43,36 +43,6 @@ const getCounterfactualFees = (
     .toString();
 };
 
-export const getSupplied = ({
-  position,
-  slot,
-  token0,
-  token1,
-  network,
-  liquidity,
-}: {
-  position: UniswapV3LiquidityPositionContractData;
-  slot: UniswapV3LiquiditySlotContractData;
-  token0: Token;
-  token1: Token;
-  network: Network;
-  liquidity: BigNumber;
-}) => {
-  const tickLower = Number(position.tickLower);
-  const tickUpper = Number(position.tickUpper);
-  const feeBips = Number(position.fee);
-
-  const networkId = NETWORK_IDS[network]!;
-  const t0 = new TokenWrapper(networkId, token0.address, token0.decimals, token0.symbol);
-  const t1 = new TokenWrapper(networkId, token1.address, token1.decimals, token1.symbol);
-  const pool = new Pool(t0, t1, feeBips, slot.sqrtPriceX96.toString(), liquidity.toString(), Number(slot.tick));
-  const pos = new Position({ pool, liquidity: position.liquidity.toString(), tickLower, tickUpper });
-
-  const token0BalanceRaw = pos.amount0.multiply(10 ** token0.decimals).toFixed(0);
-  const token1BalanceRaw = pos.amount1.multiply(10 ** token1.decimals).toFixed(0);
-  return [token0BalanceRaw, token1BalanceRaw];
-};
-
 export const getClaimable = ({
   position,
   slot,
@@ -113,37 +83,4 @@ export const getClaimable = ({
   const token0ClaimableBalanceRaw = BigNumber.from(position.tokensOwed0).add(counterfactualFees0).toString();
   const token1ClaimableBalanceRaw = BigNumber.from(position.tokensOwed1).add(counterfactualFees1).toString();
   return [token0ClaimableBalanceRaw, token1ClaimableBalanceRaw];
-};
-
-export const getRange = ({
-  position,
-  slot,
-  token0,
-  token1,
-  network,
-  liquidity,
-}: {
-  position: UniswapV3LiquidityPositionContractData;
-  slot: UniswapV3LiquiditySlotContractData;
-  token0: Token;
-  token1: Token;
-  network: Network;
-  liquidity: BigNumber;
-}) => {
-  const sqrtPriceX96 = slot.sqrtPriceX96; // sqrt(token1/token0) Q64.96 value
-  const tickCurrent = Number(slot.tick);
-
-  const tickLower = Number(position.tickLower);
-  const tickUpper = Number(position.tickUpper);
-  const feeBips = Number(position.fee);
-
-  const networkId = NETWORK_IDS[network]!;
-  const t0Wrapper = new TokenWrapper(networkId, token0.address, token0.decimals, token0.symbol);
-  const t1Wrapper = new TokenWrapper(networkId, token1.address, token1.decimals, token1.symbol);
-  const pool = new Pool(t0Wrapper, t1Wrapper, feeBips, sqrtPriceX96.toString(), liquidity.toString(), tickCurrent);
-  const positionZ = new Position({ pool, liquidity: position.liquidity.toString(), tickLower, tickUpper });
-
-  const positionLowerBound = Number(positionZ.token0PriceLower.toSignificant(4));
-  const positionUpperBound = Number(positionZ.token0PriceUpper.toSignificant(4));
-  return [positionLowerBound, positionUpperBound];
 };
