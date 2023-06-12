@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { BaseContract, BigNumber as EtherBigNumber } from 'ethers';
+import { BaseContract, BigNumber as EtherBigNumber, BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
@@ -21,7 +21,7 @@ import { getClaimable } from './uniswap-v3.liquidity.utils';
 type UniswapV3LiquidityContractPositionHelperParams = {
     multicall: IMulticallWrapper;
     tokenLoader: TokenDependencySelector;
-    positionId: EtherBigNumber;
+    positionId: BigNumberish;
     network: Network;
     collapseClaimable?: boolean;
 };
@@ -112,7 +112,6 @@ export abstract class AbstractUniswapV3LiquidityContractPositionBuilder<
         collapseClaimable,
     }: UniswapV3LiquidityContractPositionHelperParams) {
         const positionManager = this.getPositionManager(network);
-        const factoryContract = this.getFactoryContract(network);
         const position = await multicall.wrap(positionManager).positions(positionId);
 
         const [token0, token1] = await this.getTokensForPosition({ multicall, positionId, tokenLoader, network });
