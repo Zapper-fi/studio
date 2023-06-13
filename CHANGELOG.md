@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.480.1](https://github.com/Zapper-fi/studio/compare/v0.480.0...v0.480.1) (2023-06-13)
+
+
+### Bug Fixes
+
+* **pancakeswap-v3:** Linting ([#2738](https://github.com/Zapper-fi/studio/issues/2738)) ([8a3c64e](https://github.com/Zapper-fi/studio/commit/8a3c64ec1830e6c8a63b406b9a616531a0da41a7))
+* **raft,reflexer:** fix missing position presenters ([#2737](https://github.com/Zapper-fi/studio/issues/2737)) ([62de162](https://github.com/Zapper-fi/studio/commit/62de1629f703cdf17bb9880343d6bd18c1d13126))
+
 ## [0.480.0](https://github.com/Zapper-fi/studio/compare/v0.479.1...v0.480.0) (2023-06-12)
 
 
