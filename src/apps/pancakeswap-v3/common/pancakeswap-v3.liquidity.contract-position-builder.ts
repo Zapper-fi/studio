@@ -1,19 +1,26 @@
 import { Inject } from '@nestjs/common';
-import { Pool, Position, TickMath } from '@pancakeswap/v3-sdk';
 import { Token as PancakeSwapToken } from '@pancakeswap/swap-sdk-core';
+import { Pool, Position, TickMath } from '@pancakeswap/v3-sdk';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { UniswapV3LiquidityPositionContractData, UniswapV3LiquiditySlotContractData } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.types';
+import { AbstractUniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.abstract.contract-position-builder';
+import {
+  UniswapV3LiquidityPositionContractData,
+  UniswapV3LiquiditySlotContractData,
+} from '~apps/uniswap-v3/common/uniswap-v3.liquidity.types';
+import { Erc20 } from '~contract/contracts';
+import { IMulticallWrapper } from '~multicall';
 import { Token } from '~position/position.interface';
+import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
-import { PancakeswapFactory, PancakeswapNfPositionManager, PancakeswapPool, PancakeswapV3ContractFactory } from '../contracts';
-
-import { BigNumber } from 'ethers';
-import { Erc20 } from '~contract/contracts';
-import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
-import { IMulticallWrapper } from '~multicall';
-import { AbstractUniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.abstract.contract-position-builder';
+import {
+  PancakeswapFactory,
+  PancakeswapNfPositionManager,
+  PancakeswapPool,
+  PancakeswapV3ContractFactory,
+} from '../contracts';
 
 export class PancakeswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3LiquidityContractPositionBuilder<
   PancakeswapPool,
@@ -30,9 +37,25 @@ export class PancakeswapV3LiquidityContractPositionBuilder extends AbstractUnisw
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PancakeswapV3ContractFactory) protected readonly contractFactory: PancakeswapV3ContractFactory,
-  ) { super(); }
+  ) {
+    super();
+  }
 
-  getRange({ position, slot, token0, token1, network, liquidity, }: { position: UniswapV3LiquidityPositionContractData; slot: UniswapV3LiquiditySlotContractData; token0: Token; token1: Token; network: Network; liquidity: BigNumber; }) {
+  getRange({
+    position,
+    slot,
+    token0,
+    token1,
+    network,
+    liquidity,
+  }: {
+    position: UniswapV3LiquidityPositionContractData;
+    slot: UniswapV3LiquiditySlotContractData;
+    token0: Token;
+    token1: Token;
+    network: Network;
+    liquidity: BigNumber;
+  }) {
     const sqrtPriceX96 = slot.sqrtPriceX96; // sqrt(token1/token0) Q64.96 value
     const tickCurrent = Number(slot.tick);
 
@@ -79,9 +102,21 @@ export class PancakeswapV3LiquidityContractPositionBuilder extends AbstractUnisw
     const token0BalanceRaw = pos.amount0.multiply(10 ** token0.decimals).toFixed(0);
     const token1BalanceRaw = pos.amount1.multiply(10 ** token1.decimals).toFixed(0);
     return [token0BalanceRaw, token1BalanceRaw];
-  };
+  }
 
-  async getPoolContract({ token0, token1, fee, multicall, network }: { token0: string; token1: string; fee: number; multicall: IMulticallWrapper; network: Network; }): Promise<PancakeswapPool> {
+  async getPoolContract({
+    token0,
+    token1,
+    fee,
+    multicall,
+    network,
+  }: {
+    token0: string;
+    token1: string;
+    fee: number;
+    multicall: IMulticallWrapper;
+    network: Network;
+  }): Promise<PancakeswapPool> {
     const factoryContract = this.contractFactory.pancakeswapFactory({ address: this.factoryAddress, network });
     const poolAddr = await multicall.wrap(factoryContract).getPool(token0, token1, fee);
     return this.contractFactory.pancakeswapPool({ address: poolAddr.toLowerCase(), network });
