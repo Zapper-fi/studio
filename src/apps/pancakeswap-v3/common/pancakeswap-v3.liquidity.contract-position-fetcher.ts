@@ -20,6 +20,7 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 import { Network } from '~types';
 
 import { PancakeswapNfPositionManager, PancakeswapV3ContractFactory } from '../contracts';
+
 import { PancakeswapV3LiquidityContractPositionBuilder } from './pancakeswap-v3.liquidity.contract-position-builder';
 
 /**
@@ -111,7 +112,8 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PancakeswapV3ContractFactory) protected readonly pancakeswapV3ContractFactory: PancakeswapV3ContractFactory,
-    @Inject(PancakeswapV3LiquidityContractPositionBuilder) protected readonly pancakeswapV3LiquidityContractPositionBuilder: PancakeswapV3LiquidityContractPositionBuilder
+    @Inject(PancakeswapV3LiquidityContractPositionBuilder)
+    protected readonly pancakeswapV3LiquidityContractPositionBuilder: PancakeswapV3LiquidityContractPositionBuilder,
   ) {
     super(appToolkit);
   }

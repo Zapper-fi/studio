@@ -8,9 +8,9 @@ import { PancakeswapV3ContractFactory } from './contracts';
 
 @Module({
   providers: [
+    PancakeswapV3ContractFactory,
     BinanceSmartChainPancakeSwapV3LiquidityContractPositionFetcher,
     PancakeswapV3LiquidityContractPositionBuilder,
-    PancakeswapV3ContractFactory,
   ],
 })
-export class PancakeswapV3AppModule extends AbstractApp() { }
+export class PancakeswapV3AppModule extends AbstractApp() {}
