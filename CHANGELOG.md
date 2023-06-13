@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.480.0](https://github.com/Zapper-fi/studio/compare/v0.479.1...v0.480.0) (2023-06-12)
+
+
+### Features
+
+* **pancakeswap-v3:** Added basic integration for PancakeSwap V3 ([#2734](https://github.com/Zapper-fi/studio/issues/2734)) ([05f5955](https://github.com/Zapper-fi/studio/commit/05f5955d6cc2e4b3bf854a0cd6c07b4922572a36))
+
 ## [0.479.1](https://github.com/Zapper-fi/studio/compare/v0.479.0...v0.479.1) (2023-06-12)
 
 
