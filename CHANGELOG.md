@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.480.2](https://github.com/Zapper-fi/studio/compare/v0.480.1...v0.480.2) (2023-06-14)
+
+
+### Bug Fixes
+
+* **sablier:** Update subgraph url ([#2741](https://github.com/Zapper-fi/studio/issues/2741)) ([8198295](https://github.com/Zapper-fi/studio/commit/819829572efc5b4a55ff34c06b3326157638afc2))
+
 ## [0.480.1](https://github.com/Zapper-fi/studio/compare/v0.480.0...v0.480.1) (2023-06-13)
 
 
