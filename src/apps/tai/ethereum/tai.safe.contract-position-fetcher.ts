@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
 import { gql } from 'graphql-request';
-import { mapKeys, map, pickBy, toPairs, sumBy, reduce } from 'lodash';
+import { map, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -79,7 +79,7 @@ export class TaiSafeContractPositionFetcher extends CustomContractPositionTempla
     super(appToolkit);
   }
 
-  getContract(address: string) {
+  getContract(address: string): TaiSafeJoin {
     return this.contractFactory.taiSafeJoin({ address, network: this.network });
   }
 

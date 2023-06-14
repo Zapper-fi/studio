@@ -19,7 +19,7 @@ export class TaiCollateralResolver {
     key: `studio:tai:collateral`,
     ttl: 15 * 60,
   })
-  async getCollateralTypes(network: Network) {
+  async getCollateralTypes(network: Network): Promise<Record<string, string>> {
     const { data } = await Axios.get<Record<string, string>>(`https://raw.githubusercontent.com/money-god/mgl-changelog/master/mainnet/contracts.json`);
     const results = toPairs(mapKeys(pickBy(data, (_, k) => k.includes('GEB_JOIN_')), (_, k) => k.replace('GEB_JOIN_', '').replace('_', '-')))
 
