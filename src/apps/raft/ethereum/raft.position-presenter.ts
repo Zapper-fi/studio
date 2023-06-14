@@ -39,7 +39,7 @@ export class EthereumRaftPositionPresenter extends PositionPresenterTemplate {
     const liquidationPrice = minCRatio * debt / collateral.balance
 
     return [
-      { label: 'C-Ratio', ...buildPercentageDisplayItem(cRatio) },
+      { label: 'C-Ratio', ...buildPercentageDisplayItem(cRatio * 100) },
       { label: 'Liquidation Price', ...buildDollarDisplayItem(liquidationPrice) },
     ];
   }
