@@ -8,10 +8,15 @@ import {
   DefaultContractPositionDefinition,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
+import { DefaultDataProps } from '~position/display.interface';
 
 import { RaftContractFactory, RaftPositionManager } from '../contracts';
 
-export abstract class EthereumRaftContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RaftPositionManager> {
+export interface RaftDataProps extends DefaultDataProps {
+  minCRatio: number
+}
+
+export abstract class EthereumRaftContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RaftPositionManager, RaftDataProps> {
   abstract collateral: string;
   abstract positionManagerAddress: string;
 

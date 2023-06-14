@@ -1,8 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Network } from '~types/network.interface';
 
@@ -58,11 +57,9 @@ export type SablierStreamToSalariesResponse = {
 
 @Injectable()
 export class SablierStreamApiClient {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
-
   async getTokens() {
     const tokensResponse = await gqlFetch<SablierTokensResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablierhq/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
       query: getTokensQuery,
     });
 
@@ -71,7 +68,7 @@ export class SablierStreamApiClient {
 
   async getStreams(address: string, _network: Network) {
     const streamsResponse = await gqlFetch<SablierStreamsResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablierhq/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
       query: getStreamsQuery,
       variables: { address: address },
     });
@@ -84,7 +81,7 @@ export class SablierStreamApiClient {
 
   async getLegacyStreams(address: string, _network: Network) {
     const streamsResponse = await gqlFetch<SablierStreamsResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablierhq/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
       query: getStreamsQuery,
       variables: { address: address },
     });
@@ -93,7 +90,7 @@ export class SablierStreamApiClient {
     const legacyStreamIds = _.uniq(allStreams.map(v => v.id).filter(v => Number(v) < 100_000));
 
     const salariesResponse = await gqlFetch<SablierStreamToSalariesResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablierhq/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
       query: getStreamsToSalariesQuery,
       variables: { streamIds: legacyStreamIds },
     });

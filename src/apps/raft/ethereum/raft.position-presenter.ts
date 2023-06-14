@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
@@ -10,14 +11,12 @@ import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { RaftContractFactory } from '../contracts';
+import { RaftDataProps } from '../common/raft.position.contract-position-fetcher'
 
 export const positionManagerAddress = '0x5f59b322eb3e16a0c78846195af1f588b77403fc'
 
-export type RaftPositionPresenterDataProps = {
-  minCRatio: number;
-};
-
-export class EthereumRaftPositionPresenter extends PositionPresenterTemplate<RaftPositionPresenterDataProps> {
+@PresenterTemplate()
+export class EthereumRaftPositionPresenter extends PositionPresenterTemplate {
   constructor(
     @Inject(RaftContractFactory) protected readonly contractFactory: RaftContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -27,15 +26,17 @@ export class EthereumRaftPositionPresenter extends PositionPresenterTemplate<Raf
 
   override metadataItemsForBalanceGroup(
     groupLabel: string,
-    balances: ReadonlyBalances,
-    dataProps?: RaftPositionPresenterDataProps,
+    balances: ReadonlyBalances
   ): MetadataItemWithLabel[] {
+    const balance = balances[0] as ContractPositionBalance<RaftDataProps>
+    const minCRatio = balance?.dataProps?.minCRatio;
+    if (!minCRatio) return [];
 
-    const collateral = (balances[0] as ContractPositionBalance)?.tokens[0]
+    const collateral = balance?.tokens[0]
     const collateralUSD = collateral?.balanceUSD ?? 0;
-    const debt = (balances[0] as ContractPositionBalance)?.tokens[1]?.balanceUSD ?? 0;
-    const cRatio = Math.abs(debt) > 0 ? Math.abs(collateralUSD / debt) : 0;
-    const liquidationPrice = dataProps?.minCRatio ? (dataProps.minCRatio * debt) / collateral.balance : 0
+    const debt = Math.abs(balance?.tokens[1]?.balanceUSD ?? 0);
+    const cRatio = debt > 0 ? Math.abs(collateralUSD / debt) : 0;
+    const liquidationPrice = minCRatio * debt / collateral.balance
 
     return [
       { label: 'C-Ratio', ...buildPercentageDisplayItem(cRatio) },

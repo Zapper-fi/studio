@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -7,6 +8,7 @@ import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/
 
 import { ReflexerContractFactory } from '../contracts';
 
+@PresenterTemplate()
 export class EthereumReflexerPositionPresenter extends PositionPresenterTemplate {
   constructor(@Inject(ReflexerContractFactory) protected readonly aaveV2ContractFactory: ReflexerContractFactory) {
     super();

@@ -4,6 +4,36 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.480.2](https://github.com/Zapper-fi/studio/compare/v0.480.1...v0.480.2) (2023-06-14)
+
+
+### Bug Fixes
+
+* **sablier:** Update subgraph url ([#2741](https://github.com/Zapper-fi/studio/issues/2741)) ([8198295](https://github.com/Zapper-fi/studio/commit/819829572efc5b4a55ff34c06b3326157638afc2))
+
+## [0.480.1](https://github.com/Zapper-fi/studio/compare/v0.480.0...v0.480.1) (2023-06-13)
+
+
+### Bug Fixes
+
+* **pancakeswap-v3:** Linting ([#2738](https://github.com/Zapper-fi/studio/issues/2738)) ([8a3c64e](https://github.com/Zapper-fi/studio/commit/8a3c64ec1830e6c8a63b406b9a616531a0da41a7))
+* **raft,reflexer:** fix missing position presenters ([#2737](https://github.com/Zapper-fi/studio/issues/2737)) ([62de162](https://github.com/Zapper-fi/studio/commit/62de1629f703cdf17bb9880343d6bd18c1d13126))
+
+## [0.480.0](https://github.com/Zapper-fi/studio/compare/v0.479.1...v0.480.0) (2023-06-12)
+
+
+### Features
+
+* **pancakeswap-v3:** Added basic integration for PancakeSwap V3 ([#2734](https://github.com/Zapper-fi/studio/issues/2734)) ([05f5955](https://github.com/Zapper-fi/studio/commit/05f5955d6cc2e4b3bf854a0cd6c07b4922572a36))
+
+## [0.479.1](https://github.com/Zapper-fi/studio/compare/v0.479.0...v0.479.1) (2023-06-12)
+
+
+### Bug Fixes
+
+* **raft:** fix for position presenter ([#2732](https://github.com/Zapper-fi/studio/issues/2732)) ([ab8d4b6](https://github.com/Zapper-fi/studio/commit/ab8d4b6d8b5ab3dc75c297bfa546df2498c660fc))
+* **uniswap-v3:** Pin uniswap/sdk-core version to 3.2.2 ([#2735](https://github.com/Zapper-fi/studio/issues/2735)) ([8dc2831](https://github.com/Zapper-fi/studio/commit/8dc2831c55530e3eeae894942390156e10d9bd69))
+
 ## [0.479.0](https://github.com/Zapper-fi/studio/compare/v0.478.0...v0.479.0) (2023-06-08)
 
 
