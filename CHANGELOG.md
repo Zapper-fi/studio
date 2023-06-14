@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.480.3](https://github.com/Zapper-fi/studio/compare/v0.480.2...v0.480.3) (2023-06-14)
+
+
+### Bug Fixes
+
+* **raft:** fix cratio percentage ([#2743](https://github.com/Zapper-fi/studio/issues/2743)) ([0b8c360](https://github.com/Zapper-fi/studio/commit/0b8c3607587e88b5e63048d61a8dc38b04bbd320))
+
 ## [0.480.2](https://github.com/Zapper-fi/studio/compare/v0.480.1...v0.480.2) (2023-06-14)
 
 
