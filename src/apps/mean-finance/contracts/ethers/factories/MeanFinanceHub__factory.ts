@@ -1937,7 +1937,7 @@ const _abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-];
+] as const;
 
 export class MeanFinanceHub__factory {
   static readonly abi = _abi;
