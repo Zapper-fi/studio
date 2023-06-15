@@ -4,6 +4,26 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.482.0](https://github.com/Zapper-fi/studio/compare/v0.481.0...v0.482.0) (2023-06-15)
+
+
+### Features
+
+* **mean-finance:** add Mean Finance bnb deployment and fix hub addresses ([#2746](https://github.com/Zapper-fi/studio/issues/2746)) ([1434223](https://github.com/Zapper-fi/studio/commit/1434223916580467b1a8cc3f4649eaf6dc889b6c))
+
+## [0.481.0](https://github.com/Zapper-fi/studio/compare/v0.480.3...v0.481.0) (2023-06-15)
+
+
+### Features
+
+* **tai:** add app ([#2724](https://github.com/Zapper-fi/studio/issues/2724)) ([3c61c9e](https://github.com/Zapper-fi/studio/commit/3c61c9e93cfd79d5fa7e191a83a02f8d899a54c0))
+
+
+### Bug Fixes
+
+* **raft:** Linting ([#2748](https://github.com/Zapper-fi/studio/issues/2748)) ([a17f536](https://github.com/Zapper-fi/studio/commit/a17f53659796571057cae759d2fafb022285e443))
+* **tai:** Linting ([#2747](https://github.com/Zapper-fi/studio/issues/2747)) ([6c4eef8](https://github.com/Zapper-fi/studio/commit/6c4eef8456b54dad62d8f0a36fb0026d1bcde482))
+
 ## [0.480.3](https://github.com/Zapper-fi/studio/compare/v0.480.2...v0.480.3) (2023-06-14)
 
 

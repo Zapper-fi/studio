@@ -7,6 +7,7 @@ import { MeanFinanceContractFactory } from './contracts';
 import { EthereumMeanFinanceDcaPositionContractPositionFetcher } from './ethereum/mean-finance.dca-position.contract-position-fetcher';
 import { OptimismMeanFinanceDcaPositionContractPositionFetcher } from './optimism/mean-finance.dca-position.contract-position-fetcher';
 import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/mean-finance.dca-position.contract-position-fetcher';
+import { BinanceSmartChainMeanFinanceDcaPositionContractPositionFetcher } from './binance-smart-chain/mean-finance.dca-position.contract-position-fetcher';
 
 @Module({
   providers: [
@@ -15,6 +16,7 @@ import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/
     PolygonMeanFinanceDcaPositionContractPositionFetcher,
     ArbitrumMeanFinanceDcaPositionContractPositionFetcher,
     EthereumMeanFinanceDcaPositionContractPositionFetcher,
+    BinanceSmartChainMeanFinanceDcaPositionContractPositionFetcher,
   ],
 })
-export class MeanFinanceAppModule extends AbstractApp() {}
+export class MeanFinanceAppModule extends AbstractApp() { }
