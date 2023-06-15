@@ -10,10 +10,10 @@ import { EthereumRaftWstethContractPositionFetcher } from './ethereum/raft.wstet
 
 @Module({
   providers: [
+    RaftContractFactory,
     EthereumRaftWstethCollateralTokenFetcher,
     EthereumRaftWstethDebtTokenFetcher,
     EthereumRaftWstethContractPositionFetcher,
-    RaftContractFactory,
     EthereumRaftPositionPresenter,
   ],
 })
