@@ -2,21 +2,24 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
-import { DefaultDataProps } from '~position/display.interface';
 
 import { RaftContractFactory, RaftPositionManager } from '../contracts';
 
 export interface RaftDataProps extends DefaultDataProps {
-  minCRatio: number
+  minCRatio: number;
 }
 
-export abstract class EthereumRaftContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RaftPositionManager, RaftDataProps> {
+export abstract class EthereumRaftContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  RaftPositionManager,
+  RaftDataProps
+> {
   abstract collateral: string;
   abstract positionManagerAddress: string;
 
@@ -51,16 +54,21 @@ export abstract class EthereumRaftContractPositionFetcher extends ContractPositi
     ];
   }
 
-  async getDataProps({
-    contractPosition,
-    multicall,
-  }) {
-    const positionManager = this.raftContractFactory.raftPositionManager({ address: this.positionManagerAddress, network: this.network })
-    const liquidiationContractAddress = await multicall.wrap(positionManager).splitLiquidationCollateral(this.collateral)
-    const liquidationContract = this.raftContractFactory.raftLiquiditation({ address: liquidiationContractAddress, network: this.network })
+  async getDataProps({ contractPosition, multicall }) {
+    const positionManager = this.raftContractFactory.raftPositionManager({
+      address: this.positionManagerAddress,
+      network: this.network,
+    });
+    const liquidiationContractAddress = await multicall
+      .wrap(positionManager)
+      .splitLiquidationCollateral(this.collateral);
+    const liquidationContract = this.raftContractFactory.raftLiquiditation({
+      address: liquidiationContractAddress,
+      network: this.network,
+    });
 
     const collateralToken = contractPosition.tokens[0];
-    const minCRatio = Number(await multicall.wrap(liquidationContract).MCR()) / 10 ** collateralToken.decimals
+    const minCRatio = Number(await multicall.wrap(liquidationContract).MCR()) / 10 ** collateralToken.decimals;
 
     return { minCRatio };
   }
