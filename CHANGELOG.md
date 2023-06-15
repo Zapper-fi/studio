@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.483.1](https://github.com/Zapper-fi/studio/compare/v0.483.0...v0.483.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Fix boosted pool lp token supply ([#2749](https://github.com/Zapper-fi/studio/issues/2749)) ([0b41c78](https://github.com/Zapper-fi/studio/commit/0b41c7898159f7737cf719ae7f5d1bd626c6d64a))
+
 ## [0.483.0](https://github.com/Zapper-fi/studio/compare/v0.482.0...v0.483.0) (2023-06-15)
 
 
