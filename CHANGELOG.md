@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.483.0](https://github.com/Zapper-fi/studio/compare/v0.482.0...v0.483.0) (2023-06-15)
+
+
+### Features
+
+* **mean-finance:** add Mean Finance Optimism Airdrop data ([#2750](https://github.com/Zapper-fi/studio/issues/2750)) ([32440c3](https://github.com/Zapper-fi/studio/commit/32440c3b99ce26d5c77a1656ad7b9c4888e5596f))
+
 ## [0.482.0](https://github.com/Zapper-fi/studio/compare/v0.481.0...v0.482.0) (2023-06-15)
 
 
