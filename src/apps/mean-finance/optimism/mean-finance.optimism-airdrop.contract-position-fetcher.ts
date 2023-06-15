@@ -35,8 +35,8 @@ export interface OptimismAirdropCampaingResponse {
 }
 
 @PositionTemplate()
-export class OptimismMeanFinanceOptimismAirdropAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
-  groupLabel = 'airdrop';
+export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
+  groupLabel = 'Airdrop';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -72,12 +72,17 @@ export class OptimismMeanFinanceOptimismAirdropAirdropContractPositionFetcher ex
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<MeanFinanceOptimismAirdrop, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
+    const claimed = await params.contract.claimed(params.address);
+
+    if (claimed) {
+      return [BigNumber.from(0)];
+    }
+
     const airdropData = await Axios.get<OptimismAirdropCampaingResponse>(
       `https://api.mean.finance/v1/optimism-airdrop/${params.address}`
     )
 
-    const claimed = await params.contract.claimed(params.address);
 
-    return [claimed ? BigNumber.from(0) : BigNumber.from(airdropData.data.op)];
+    return [BigNumber.from(airdropData.data.op)];
   }
 }
