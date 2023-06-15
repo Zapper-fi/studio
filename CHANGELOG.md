@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.482.0](https://github.com/Zapper-fi/studio/compare/v0.481.0...v0.482.0) (2023-06-15)
+
+
+### Features
+
+* **mean-finance:** add Mean Finance bnb deployment and fix hub addresses ([#2746](https://github.com/Zapper-fi/studio/issues/2746)) ([1434223](https://github.com/Zapper-fi/studio/commit/1434223916580467b1a8cc3f4649eaf6dc889b6c))
+
 ## [0.481.0](https://github.com/Zapper-fi/studio/compare/v0.480.3...v0.481.0) (2023-06-15)
 
 
