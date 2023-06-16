@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
-import { gql } from 'graphql-request';
+import { BigNumber, BigNumberish, Contract } from 'ethers';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -11,6 +10,7 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
+  GetDataPropsParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
@@ -23,34 +23,10 @@ type TraderJoeV2ContractPositionDefinition = DefaultContractPositionDefinition &
   poolAddress: string;
   token0Address: string;
   token1Address: string;
+  reserveToken0: BigNumber;
+  reserveToken1: BigNumber;
   binStep: number;
 };
-
-type GetLbPairsGQLResponse = {
-  lbpairs: {
-    id: string;
-    token0: {
-      id: string;
-    };
-    token1: {
-      id: string;
-    };
-  }[];
-};
-
-const SUBGRAPH_PAIRS_QUERY = gql`
-  query getLbPairs {
-    lbpairs(first: 50, orderBy: totalValueLockedUSD, orderDirection: desc) {
-      id
-      tokenX {
-        id
-      }
-      tokenY {
-        id
-      }
-    }
-  }
-`;
 
 export abstract class AbstractTraderJoeV2LiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
   groupLabel = 'liquidity';
@@ -86,10 +62,11 @@ export abstract class AbstractTraderJoeV2LiquidityContractPositionFetcher extend
             network: this.network,
           });
 
-          const [token0Address, token1Address, binStep] = await Promise.all([
+          const [token0Address, token1Address, binStep, [reserveToken0, reserveToken1]] = await Promise.all([
             multicall.wrap(pairContract).getTokenX(),
             multicall.wrap(pairContract).getTokenY(),
             multicall.wrap(pairContract).getBinStep(),
+            multicall.wrap(pairContract).getReserves(),
           ]);
 
           return {
@@ -97,20 +74,31 @@ export abstract class AbstractTraderJoeV2LiquidityContractPositionFetcher extend
             poolAddress: pairAddress,
             token0Address,
             token1Address,
+            reserveToken0,
+            reserveToken1,
             binStep,
           };
         })(),
       ),
-    );
+    ).then(arr => arr.filter(x => !x.reserveToken0.eq(0) && !x.reserveToken1.eq(0)));
+  }
 
-    /*
-    return response.lbpairs.map(pair => ({
-      address: this.factoryAddress,
-      poolAddress: pair.id.toLowerCase(),
-      token0Address: pair.token0.id.toLowerCase(),
-      token1Address: pair.token1.id.toLowerCase(),
-    }));
-    */
+  async getDataProps({
+    definition,
+  }: GetDataPropsParams<Contract, DefaultDataProps, TraderJoeV2ContractPositionDefinition>): Promise<DefaultDataProps> {
+    return {
+      tokenSupply: [
+        {
+          address: definition.token0Address,
+          reserve: definition.reserveToken0.toString(),
+        },
+        {
+          address: definition.token1Address,
+          reserve: definition.reserveToken1.toString(),
+        },
+      ],
+      binStep: definition.binStep,
+    };
   }
 
   async getTokenDefinitions({
