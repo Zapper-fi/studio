@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.0](https://github.com/Zapper-fi/studio/compare/v0.483.1...v0.484.0) (2023-06-16)
+
+
+### Features
+
+* **kwenta:** sstETH logo ([#2754](https://github.com/Zapper-fi/studio/issues/2754)) ([5c5b987](https://github.com/Zapper-fi/studio/commit/5c5b987799bd401fef6576871ac033fa09aa603d))
+
 ## [0.483.1](https://github.com/Zapper-fi/studio/compare/v0.483.0...v0.483.1) (2023-06-15)
 
 
