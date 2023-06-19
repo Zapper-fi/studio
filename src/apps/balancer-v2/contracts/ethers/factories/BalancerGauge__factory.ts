@@ -8,64 +8,20 @@ import type { BalancerGauge, BalancerGaugeInterface } from '../BalancerGauge';
 
 const _abi = [
   {
-    name: 'Deposit',
+    name: 'Approval',
     inputs: [
       {
-        name: 'provider',
+        name: '_owner',
         type: 'address',
         indexed: true,
       },
       {
-        name: 'value',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'Withdraw',
-    inputs: [
-      {
-        name: 'provider',
+        name: '_spender',
         type: 'address',
         indexed: true,
       },
       {
-        name: 'value',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    anonymous: false,
-    type: 'event',
-  },
-  {
-    name: 'UpdateLiquidityLimit',
-    inputs: [
-      {
-        name: 'user',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'original_balance',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'original_supply',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'working_balance',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'working_supply',
+        name: '_value',
         type: 'uint256',
         indexed: false,
       },
@@ -96,15 +52,10 @@ const _abi = [
     type: 'event',
   },
   {
-    name: 'Approval',
+    name: 'Deposit',
     inputs: [
       {
-        name: '_owner',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: '_spender',
+        name: '_user',
         type: 'address',
         indexed: true,
       },
@@ -118,16 +69,48 @@ const _abi = [
     type: 'event',
   },
   {
-    name: 'RewardDistributorUpdated',
+    name: 'Withdraw',
     inputs: [
       {
-        name: 'reward_token',
+        name: '_user',
         type: 'address',
         indexed: true,
       },
       {
-        name: 'distributor',
+        name: '_value',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    anonymous: false,
+    type: 'event',
+  },
+  {
+    name: 'UpdateLiquidityLimit',
+    inputs: [
+      {
+        name: '_user',
         type: 'address',
+        indexed: true,
+      },
+      {
+        name: '_original_balance',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: '_original_supply',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: '_working_balance',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: '_working_supply',
+        type: 'uint256',
         indexed: false,
       },
     ],
@@ -139,16 +122,20 @@ const _abi = [
     type: 'constructor',
     inputs: [
       {
-        name: 'minter',
+        name: '_voting_escrow_delegation_proxy',
         type: 'address',
       },
       {
-        name: 'veBoostProxy',
+        name: '_bal_pseudo_minter',
         type: 'address',
       },
       {
-        name: 'authorizerAdaptor',
+        name: '_authorizer_adaptor',
         type: 'address',
+      },
+      {
+        name: '_version',
+        type: 'string',
       },
     ],
     outputs: [],
@@ -175,28 +162,8 @@ const _abi = [
         type: 'uint256',
       },
       {
-        name: '_addr',
+        name: '_user',
         type: 'address',
-      },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'deposit',
-    inputs: [
-      {
-        name: '_value',
-        type: 'uint256',
-      },
-      {
-        name: '_addr',
-        type: 'address',
-      },
-      {
-        name: '_claim_rewards',
-        type: 'bool',
       },
     ],
     outputs: [],
@@ -223,42 +190,7 @@ const _abi = [
         type: 'uint256',
       },
       {
-        name: '_claim_rewards',
-        type: 'bool',
-      },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claim_rewards',
-    inputs: [],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claim_rewards',
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'claim_rewards',
-    inputs: [
-      {
-        name: '_addr',
-        type: 'address',
-      },
-      {
-        name: '_receiver',
+        name: '_user',
         type: 'address',
       },
     ],
@@ -273,27 +205,6 @@ const _abi = [
         name: '_from',
         type: 'address',
       },
-      {
-        name: '_to',
-        type: 'address',
-      },
-      {
-        name: '_value',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'transfer',
-    inputs: [
       {
         name: '_to',
         type: 'address',
@@ -375,6 +286,27 @@ const _abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
+    name: 'transfer',
+    inputs: [
+      {
+        name: '_to',
+        type: 'address',
+      },
+      {
+        name: '_value',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
     name: 'increaseAllowance',
     inputs: [
       {
@@ -434,88 +366,19 @@ const _abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'set_rewards_receiver',
-    inputs: [
-      {
-        name: '_receiver',
-        type: 'address',
-      },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'kick',
+    name: 'claimable_tokens',
     inputs: [
       {
         name: 'addr',
         type: 'address',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'deposit_reward_token',
-    inputs: [
+    outputs: [
       {
-        name: '_reward_token',
-        type: 'address',
-      },
-      {
-        name: '_amount',
+        name: '',
         type: 'uint256',
       },
     ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'add_reward',
-    inputs: [
-      {
-        name: '_reward_token',
-        type: 'address',
-      },
-      {
-        name: '_distributor',
-        type: 'address',
-      },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'set_reward_distributor',
-    inputs: [
-      {
-        name: '_reward_token',
-        type: 'address',
-      },
-      {
-        name: '_distributor',
-        type: 'address',
-      },
-    ],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'killGauge',
-    inputs: [],
-    outputs: [],
-  },
-  {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'unkillGauge',
-    inputs: [],
-    outputs: [],
   },
   {
     stateMutability: 'view',
@@ -562,55 +425,131 @@ const _abi = [
   {
     stateMutability: 'nonpayable',
     type: 'function',
-    name: 'claimable_tokens',
+    name: 'set_rewards_receiver',
     inputs: [
       {
-        name: 'addr',
+        name: '_receiver',
         type: 'address',
       },
     ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-    name: 'integrate_checkpoint',
+    name: 'claim_rewards',
     inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-    name: 'future_epoch_time',
-    inputs: [],
-    outputs: [
+    name: 'claim_rewards',
+    inputs: [
       {
-        name: '',
-        type: 'uint256',
+        name: '_addr',
+        type: 'address',
       },
     ],
+    outputs: [],
   },
   {
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
-    name: 'inflation_rate',
-    inputs: [],
-    outputs: [
+    name: 'claim_rewards',
+    inputs: [
       {
-        name: '',
+        name: '_addr',
+        type: 'address',
+      },
+      {
+        name: '_receiver',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'claim_rewards',
+    inputs: [
+      {
+        name: '_addr',
+        type: 'address',
+      },
+      {
+        name: '_receiver',
+        type: 'address',
+      },
+      {
+        name: '_reward_indexes',
+        type: 'uint256[]',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'add_reward',
+    inputs: [
+      {
+        name: '_reward_token',
+        type: 'address',
+      },
+      {
+        name: '_distributor',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'set_reward_distributor',
+    inputs: [
+      {
+        name: '_reward_token',
+        type: 'address',
+      },
+      {
+        name: '_distributor',
+        type: 'address',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'deposit_reward_token',
+    inputs: [
+      {
+        name: '_reward_token',
+        type: 'address',
+      },
+      {
+        name: '_amount',
         type: 'uint256',
       },
     ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'killGauge',
+    inputs: [],
+    outputs: [],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'unkillGauge',
+    inputs: [],
+    outputs: [],
   },
   {
     stateMutability: 'view',
@@ -621,18 +560,6 @@ const _abi = [
       {
         name: '',
         type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'version',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'string',
       },
     ],
   },
@@ -658,27 +585,10 @@ const _abi = [
     ],
   },
   {
-    stateMutability: 'nonpayable',
-    type: 'function',
-    name: 'initialize',
-    inputs: [
-      {
-        name: '_lp_token',
-        type: 'address',
-      },
-    ],
-    outputs: [],
-  },
-  {
     stateMutability: 'view',
     type: 'function',
-    name: 'balanceOf',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
+    name: 'integrate_checkpoint',
+    inputs: [],
     outputs: [
       {
         name: '',
@@ -689,8 +599,89 @@ const _abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'totalSupply',
+    name: 'bal_token',
     inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'bal_pseudo_minter',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'voting_escrow_delegation_proxy',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'authorizer_adaptor',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'nonpayable',
+    type: 'function',
+    name: 'initialize',
+    inputs: [
+      {
+        name: '_lp_token',
+        type: 'address',
+      },
+      {
+        name: '_version',
+        type: 'string',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'DOMAIN_SEPARATOR',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'nonces',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
     outputs: [
       {
         name: '',
@@ -725,25 +716,25 @@ const _abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'DOMAIN_SEPARATOR',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'nonces',
+    name: 'balanceOf',
     inputs: [
       {
         name: 'arg0',
         type: 'address',
       },
     ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'totalSupply',
+    inputs: [],
     outputs: [
       {
         name: '',
@@ -766,12 +757,150 @@ const _abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'is_killed',
+    name: 'version',
     inputs: [],
     outputs: [
       {
         name: '',
-        type: 'bool',
+        type: 'string',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'factory',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'working_balances',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'working_supply',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'period',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'period_timestamp',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'integrate_checkpoint_of',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'integrate_fraction',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'integrate_inv_supply',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'integrate_inv_supply_of',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
       },
     ],
   },
@@ -790,6 +919,23 @@ const _abi = [
   {
     stateMutability: 'view',
     type: 'function',
+    name: 'reward_tokens',
+    inputs: [
+      {
+        name: 'arg0',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    stateMutability: 'view',
+    type: 'function',
     name: 'reward_data',
     inputs: [
       {
@@ -802,10 +948,6 @@ const _abi = [
         name: '',
         type: 'tuple',
         components: [
-          {
-            name: 'token',
-            type: 'address',
-          },
           {
             name: 'distributor',
             type: 'address',
@@ -871,133 +1013,19 @@ const _abi = [
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'working_balances',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'working_supply',
+    name: 'is_killed',
     inputs: [],
     outputs: [
       {
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
   },
   {
     stateMutability: 'view',
     type: 'function',
-    name: 'integrate_inv_supply_of',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'integrate_checkpoint_of',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'integrate_fraction',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'period',
-    inputs: [],
-    outputs: [
-      {
-        name: '',
-        type: 'int128',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'reward_tokens',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'address',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'period_timestamp',
-    inputs: [
-      {
-        name: 'arg0',
-        type: 'uint256',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-  },
-  {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'integrate_inv_supply',
+    name: 'inflation_rate',
     inputs: [
       {
         name: 'arg0',
