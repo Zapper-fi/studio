@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.2](https://github.com/Zapper-fi/studio/compare/v0.484.1...v0.484.2) (2023-06-19)
+
+
+### Bug Fixes
+
+* **kyberswap-elastic:** Update addresses and abis ([#2758](https://github.com/Zapper-fi/studio/issues/2758)) ([685746a](https://github.com/Zapper-fi/studio/commit/685746ab2a95c122e7c24dd15b38a2ee49cbd1bf))
+
 ## [0.484.1](https://github.com/Zapper-fi/studio/compare/v0.484.0...v0.484.1) (2023-06-19)
 
 
