@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.3](https://github.com/Zapper-fi/studio/compare/v0.484.2...v0.484.3) (2023-06-19)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Update gauge contract ABI and regenerate ([#2760](https://github.com/Zapper-fi/studio/issues/2760)) ([1b85114](https://github.com/Zapper-fi/studio/commit/1b85114e0d6ac6065085ff738e51b1a5ee8b7741))
+
 ## [0.484.2](https://github.com/Zapper-fi/studio/compare/v0.484.1...v0.484.2) (2023-06-19)
 
 
