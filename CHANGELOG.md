@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.1](https://github.com/Zapper-fi/studio/compare/v0.484.0...v0.484.1) (2023-06-19)
+
+
+### Bug Fixes
+
+* **mean-finance:** Fix airdrop position balances ([#2756](https://github.com/Zapper-fi/studio/issues/2756)) ([a2f1873](https://github.com/Zapper-fi/studio/commit/a2f18737eb27db5dd391400906acce8dfa514321))
+
 ## [0.484.0](https://github.com/Zapper-fi/studio/compare/v0.483.1...v0.484.0) (2023-06-16)
 
 
