@@ -4,11 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Factory__factory } from './ethers';
-import { KyberswapElasticLm__factory } from './ethers';
-import { Pool__factory } from './ethers';
-import { PositionManager__factory } from './ethers';
-import { TickReader__factory } from './ethers';
+import {
+  Factory__factory,
+  KyberswapElasticLm__factory,
+  Pool__factory,
+  PositionManager__factory,
+  TickReader__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

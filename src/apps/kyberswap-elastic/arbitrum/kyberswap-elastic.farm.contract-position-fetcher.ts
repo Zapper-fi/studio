@@ -6,5 +6,5 @@ import { KyberswapElasticFarmContractPositionFetcher } from '../common/kyberswap
 export class ArbitrumKyberswapElasticFarmContractPositionFetcher extends KyberswapElasticFarmContractPositionFetcher {
   groupLabel = 'Farms';
 
-  kyberswapElasticLmAddress = '0xbdec4a045446f583dc564c0a227ffd475b329bf0';
+  kyberswapElasticLmAddress = '0x7d5ba536ab244aaa1ea42ab88428847f25e3e676';
 }

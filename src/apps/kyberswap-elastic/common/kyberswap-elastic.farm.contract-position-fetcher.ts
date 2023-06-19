@@ -90,10 +90,10 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
 
         return {
           address: this.kyberswapElasticLmAddress,
-          poolAddress: poolInfos.poolAddress,
+          poolAddress: poolInfos.poolAddress.toLowerCase(),
           token0Address: token0Raw.toLowerCase(),
           token1Address: token1Raw.toLowerCase(),
-          rewardTokenAddresses: poolInfos.rewardTokens,
+          rewardTokenAddresses: poolInfos.rewardTokens.map(x => x.toLowerCase()),
           feeTier: feeTier,
         };
       }),
