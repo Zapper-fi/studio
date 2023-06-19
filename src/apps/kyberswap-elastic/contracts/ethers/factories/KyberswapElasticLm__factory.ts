@@ -15,8 +15,8 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract IKyberRewardLockerV2',
-        name: '_rewardLocker',
+        internalType: 'contract IKSElasticLMHelper',
+        name: '_helper',
         type: 'address',
       },
     ],
@@ -48,12 +48,6 @@ const _abi = [
         indexed: false,
         internalType: 'uint32',
         name: 'endTime',
-        type: 'uint32',
-      },
-      {
-        indexed: false,
-        internalType: 'uint32',
-        name: 'vestingDuration',
         type: 'uint32',
       },
       {
@@ -164,6 +158,12 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'nftId',
+        type: 'uint256',
+      },
+      {
         indexed: false,
         internalType: 'address',
         name: 'to',
@@ -214,6 +214,19 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'contract IKSElasticLMHelper',
+        name: 'helper',
+        type: 'address',
+      },
+    ],
+    name: 'LMHelperUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: 'uint256',
         name: 'pid',
@@ -233,93 +246,12 @@ const _abi = [
       },
       {
         indexed: false,
-        internalType: 'uint32',
-        name: 'vestingDuration',
-        type: 'uint32',
-      },
-      {
-        indexed: false,
         internalType: 'uint256',
         name: 'feeTarget',
         type: 'uint256',
       },
     ],
     name: 'RenewPool',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'previousAdminRole',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'newAdminRole',
-        type: 'bytes32',
-      },
-    ],
-    name: 'RoleAdminChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-    ],
-    name: 'RoleGranted',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-    ],
-    name: 'RoleRevoked',
     type: 'event',
   },
   {
@@ -351,6 +283,51 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: 'address',
+        name: 'admin',
+        type: 'address',
+      },
+    ],
+    name: 'TransferAdmin',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: 'grantOrRevoke',
+        type: 'bool',
+      },
+    ],
+    name: 'UpdateOperator',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: 'enableOrDisable',
+        type: 'bool',
+      },
+    ],
+    name: 'UpdateSpecialFeatureEnabled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: false,
         internalType: 'address',
         name: 'sender',
@@ -367,19 +344,6 @@ const _abi = [
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'DEFAULT_ADMIN_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
@@ -394,11 +358,6 @@ const _abi = [
       {
         internalType: 'uint32',
         name: 'endTime',
-        type: 'uint32',
-      },
-      {
-        internalType: 'uint32',
-        name: 'vestingDuration',
         type: 'uint32',
       },
       {
@@ -423,29 +382,13 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'pAddress',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'checkPool',
+    inputs: [],
+    name: 'admin',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'address',
         name: '',
-        type: 'bool',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -458,8 +401,64 @@ const _abi = [
         name: 'nftIds',
         type: 'uint256[]',
       },
+      {
+        internalType: 'uint256',
+        name: 'amount0Min',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount1Min',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'poolAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'bool',
+        name: 'isReceiveNative',
+        type: 'bool',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'claimFee',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'nftIds',
+        type: 'uint256[]',
+      },
     ],
     name: 'deposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'pId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'nftIds',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'depositAndJoin',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -542,35 +541,6 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'pAddr',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getActiveTime',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'user',
         type: 'address',
       },
@@ -581,59 +551,6 @@ const _abi = [
         internalType: 'uint256[]',
         name: 'listNFTs',
         type: 'uint256[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getFee',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'poolAddress',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getFeePool',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'feeGrowthInside',
-        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -690,30 +607,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getLiq',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256',
         name: 'pId',
         type: 'uint256',
@@ -734,11 +627,6 @@ const _abi = [
       {
         internalType: 'uint32',
         name: 'endTime',
-        type: 'uint32',
-      },
-      {
-        internalType: 'uint32',
-        name: 'vestingDuration',
         type: 'uint32',
       },
       {
@@ -829,78 +717,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRoleAdmin',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getSignedFee',
-    outputs: [
-      {
-        internalType: 'int256',
-        name: '',
-        type: 'int256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'poolAddress',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'nftContract',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'nftId',
-        type: 'uint256',
-      },
-    ],
-    name: 'getSignedFeePool',
-    outputs: [
-      {
-        internalType: 'int256',
-        name: '',
-        type: 'int256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256',
         name: 'nftId',
         type: 'uint256',
@@ -935,24 +751,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'grantRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256[]',
         name: 'nftIds',
         type: 'uint256[]',
@@ -966,30 +764,6 @@ const _abi = [
     name: 'harvestMultiplePools',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'hasRole',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -1048,13 +822,19 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'numPools',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'operators',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'bool',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -1096,11 +876,6 @@ const _abi = [
       {
         internalType: 'uint32',
         name: 'endTime',
-        type: 'uint32',
-      },
-      {
-        internalType: 'uint32',
-        name: 'vestingDuration',
         type: 'uint32',
       },
       {
@@ -1150,6 +925,49 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
+        name: 'nftId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint128',
+        name: 'liquidity',
+        type: 'uint128',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount0Min',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount1Min',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'isReceiveNative',
+        type: 'bool',
+      },
+      {
+        internalType: 'bool[2]',
+        name: 'claimFeeAndRewards',
+        type: 'bool[2]',
+      },
+    ],
+    name: 'removeLiquidity',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
         name: 'pId',
         type: 'uint256',
       },
@@ -1161,11 +979,6 @@ const _abi = [
       {
         internalType: 'uint32',
         name: 'endTime',
-        type: 'uint32',
-      },
-      {
-        internalType: 'uint32',
-        name: 'vestingDuration',
         type: 'uint32',
       },
       {
@@ -1185,49 +998,13 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'renounceRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'revokeRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [],
-    name: 'rewardLocker',
+    name: 'specialFeatureEnabled',
     outputs: [
       {
-        internalType: 'contract IKyberRewardLockerV2',
+        internalType: 'bool',
         name: '',
-        type: 'address',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -1270,17 +1047,68 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'bytes4',
-        name: 'interfaceId',
-        type: 'bytes4',
+        internalType: 'address',
+        name: '_admin',
+        type: 'address',
       },
     ],
-    name: 'supportsInterface',
-    outputs: [
+    name: 'transferAdmin',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract IKSElasticLMHelper',
+        name: '_helper',
+        type: 'address',
+      },
+    ],
+    name: 'updateHelper',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
       {
         internalType: 'bool',
-        name: '',
+        name: 'grantOrRevoke',
         type: 'bool',
+      },
+    ],
+    name: 'updateOperator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: 'enableOrDisable',
+        type: 'bool',
+      },
+    ],
+    name: 'updateSpecialFeatureEnabled',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'weth',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
