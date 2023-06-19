@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
+import Axios from 'axios';
 import { BigNumber, BigNumberish, Contract } from 'ethers';
-import Axios from "axios";
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -78,11 +78,13 @@ export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends C
       return [BigNumber.from(0)];
     }
 
-    const airdropData = await Axios.get<OptimismAirdropCampaingResponse>(
-      `https://api.mean.finance/v1/optimism-airdrop/${params.address}`
-    )
-
-
-    return [BigNumber.from(airdropData.data.op)];
+    try {
+      const airdropData = await Axios.get<OptimismAirdropCampaingResponse>(
+        `https://api.mean.finance/v1/optimism-airdrop/${params.address}`,
+      );
+      return [BigNumber.from(airdropData.data.op)];
+    } catch {
+      return [0];
+    }
   }
 }
