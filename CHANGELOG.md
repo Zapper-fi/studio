@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.4](https://github.com/Zapper-fi/studio/compare/v0.484.3...v0.484.4) (2023-06-20)
+
+
+### Bug Fixes
+
+* **jones-dao:** Fix strategy token price per share ([#2764](https://github.com/Zapper-fi/studio/issues/2764)) ([bfcfd54](https://github.com/Zapper-fi/studio/commit/bfcfd542e780388e9997517a93cacf90c75eec5b))
+* **looks-rare:** Remove standard method apy ([#2762](https://github.com/Zapper-fi/studio/issues/2762)) ([bd72f16](https://github.com/Zapper-fi/studio/commit/bd72f167c166ad0b722e04d6aef8ac6f50f47d36))
+* **uniswap-v3:** Linting ([#2765](https://github.com/Zapper-fi/studio/issues/2765)) ([280bcc8](https://github.com/Zapper-fi/studio/commit/280bcc84235bddeaec9cfc630cee3373f852b479))
+
 ## [0.484.3](https://github.com/Zapper-fi/studio/compare/v0.484.2...v0.484.3) (2023-06-19)
 
 
