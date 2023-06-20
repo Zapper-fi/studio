@@ -1,9 +1,4 @@
-import { Token as TokenWrapper } from '@uniswap/sdk-core';
-import { Pool, Position } from '@uniswap/v3-sdk';
 import { BigNumber } from 'ethers';
-
-import { Token } from '~position/position.interface';
-import { Network, NETWORK_IDS } from '~types';
 
 import {
   UniswapV3LiquidityPositionContractData,

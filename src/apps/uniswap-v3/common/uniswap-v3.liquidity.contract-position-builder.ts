@@ -1,19 +1,22 @@
 import { Inject } from '@nestjs/common';
+import { Token as TokenWrapper } from '@uniswap/sdk-core';
 import { Pool, Position, TickMath } from '@uniswap/v3-sdk';
 import { BigNumber as EtherBigNumber } from 'ethers';
-import { Token as TokenWrapper } from '@uniswap/sdk-core';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall';
+import { Token } from '~position/position.interface';
 import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 import { UniswapV3ContractFactory, UniswapV3Factory, UniswapV3Pool, UniswapV3PositionManager } from '../contracts';
 
-import { UniswapV3LiquidityPositionContractData, UniswapV3LiquiditySlotContractData } from './uniswap-v3.liquidity.types';
-import { Token } from '~position/position.interface';
-import { Erc20 } from '~contract/contracts';
 import { AbstractUniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.abstract.contract-position-builder';
+import {
+  UniswapV3LiquidityPositionContractData,
+  UniswapV3LiquiditySlotContractData,
+} from './uniswap-v3.liquidity.types';
 
 export class UniswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3LiquidityContractPositionBuilder<
   UniswapV3Pool,
@@ -30,7 +33,9 @@ export class UniswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
-  ) { super(); }
+  ) {
+    super();
+  }
 
   getRange({
     position,
@@ -63,7 +68,7 @@ export class UniswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3
     const positionLowerBound = Number(positionZ.token0PriceLower.toSignificant(4));
     const positionUpperBound = Number(positionZ.token0PriceUpper.toSignificant(4));
     return [positionLowerBound, positionUpperBound];
-  };
+  }
 
   getSupplied({
     position,
@@ -93,17 +98,29 @@ export class UniswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3
     const token0BalanceRaw = pos.amount0.multiply(10 ** token0.decimals).toFixed(0);
     const token1BalanceRaw = pos.amount1.multiply(10 ** token1.decimals).toFixed(0);
     return [token0BalanceRaw, token1BalanceRaw];
-  };
+  }
 
   getPositionManager(network: Network) {
-    return this.contractFactory.uniswapV3PositionManager({ address: this.managerAddress, network })
+    return this.contractFactory.uniswapV3PositionManager({ address: this.managerAddress, network });
   }
 
   getFactoryContract(network: Network): UniswapV3Factory {
     return this.contractFactory.uniswapV3Factory({ address: this.factoryAddress, network });
   }
 
-  async getPoolContract({ token0, token1, fee, multicall, network }: { token0: string; token1: string; fee: number; multicall: IMulticallWrapper; network: Network; }): Promise<UniswapV3Pool> {
+  async getPoolContract({
+    token0,
+    token1,
+    fee,
+    multicall,
+    network,
+  }: {
+    token0: string;
+    token1: string;
+    fee: number;
+    multicall: IMulticallWrapper;
+    network: Network;
+  }): Promise<UniswapV3Pool> {
     const factoryContract = this.contractFactory.uniswapV3Factory({ address: this.factoryAddress, network });
     const poolAddr = await multicall.wrap(factoryContract).getPool(token0, token1, fee);
     return this.contractFactory.uniswapV3Pool({ address: poolAddr.toLowerCase(), network });
