@@ -1,14 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetAddressesParams,
-  GetPricePerShareParams,
-  GetUnderlyingTokensParams,
-} from '~position/template/app-token.template.types';
+import { GetAddressesParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { JonesDaoContractFactory, JonesStrategyToken } from '../contracts';
 
@@ -35,12 +30,12 @@ export class ArbitrumJonesDaoStrategyTokenFetcher extends AppTokenTemplatePositi
   async getDefinitions(): Promise<JonesDaoStrategyTokenDefinition[]> {
     return [
       {
-        address: '0x7241bc8035b65865156ddb5edef3eb32874a3af6', // jGLP
-        underlyingTokenAddress: '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258',
+        address: '0x17ff154a329e37282eb9a76c3ae848fc277f24c7',
+        underlyingTokenAddress: '0x7241bc8035b65865156ddb5edef3eb32874a3af6', // jGLP
       },
       {
-        address: '0xe66998533a1992ece9ea99cdf47686f4fc8458e0', // jUSDC
-        underlyingTokenAddress: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
+        address: '0xa485a0bc44988b95245d5f20497ccaff58a73e99',
+        underlyingTokenAddress: '0xe66998533a1992ece9ea99cdf47686f4fc8458e0', // jUSDC
       },
     ];
   }
@@ -55,16 +50,7 @@ export class ArbitrumJonesDaoStrategyTokenFetcher extends AppTokenTemplatePositi
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<JonesStrategyToken>) {
-    const vaultAddressRaw = await contract.vaultToken();
-    const glpVaultContract = this.contractFactory.jonesStrategyVault({
-      address: vaultAddressRaw.toLowerCase(),
-      network: this.network,
-    });
-    const oneUnit = ethers.BigNumber.from(10).pow(18);
-    const pricePerShareRaw = await multicall.wrap(glpVaultContract).convertToAssets(oneUnit);
-    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
-
-    return [pricePerShare];
+  async getPricePerShare() {
+    return [1];
   }
 }
