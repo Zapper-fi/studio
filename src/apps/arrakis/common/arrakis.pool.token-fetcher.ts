@@ -74,7 +74,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     const reservesRaw = await contract.getUnderlyingBalances();
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     const pricePerShare = reserves.map(r => {
-      return r == 0 ? 0 : r / appToken.supply;
+      return r / appToken.supply;
     });
     return pricePerShare;
   }
