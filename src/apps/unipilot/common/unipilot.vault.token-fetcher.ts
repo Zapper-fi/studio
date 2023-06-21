@@ -79,9 +79,7 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     const { totalLockedToken0, totalLockedToken1 } = definition;
     const reservesRaw = [totalLockedToken0, totalLockedToken1];
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
-    const pricePerShare = reserves.map(r => {
-      return r == 0 ? 0 : r / appToken.supply;
-    });
+    const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;
   }
 

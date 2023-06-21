@@ -62,8 +62,6 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     appToken,
     multicall,
   }: GetPricePerShareParams<EnzymeFinanceVault, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
-    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
-
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
         const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });

@@ -146,8 +146,6 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
     definition,
     appToken,
   }: GetPricePerShareParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
-    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
-
     const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
     const reservesRaw = await this.resolveReserves({ contract, swapAddress, multicall });
