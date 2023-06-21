@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.7](https://github.com/Zapper-fi/studio/compare/v0.484.6...v0.484.7) (2023-06-21)
+
+
+### Bug Fixes
+
+* **app-token-template:** Early return when supply is zero ([#2770](https://github.com/Zapper-fi/studio/issues/2770)) ([9d872a4](https://github.com/Zapper-fi/studio/commit/9d872a44913035741e302ab9e928c040a0cd67ce))
+
 ## [0.484.6](https://github.com/Zapper-fi/studio/compare/v0.484.5...v0.484.6) (2023-06-21)
 
 
