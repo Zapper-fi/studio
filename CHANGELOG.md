@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.5](https://github.com/Zapper-fi/studio/compare/v0.484.4...v0.484.5) (2023-06-21)
+
+
+### Bug Fixes
+
+* **solace:** Remove app integration(v1) ([#2766](https://github.com/Zapper-fi/studio/issues/2766)) ([a516b54](https://github.com/Zapper-fi/studio/commit/a516b545a7e3264c4e2aa00fddf67df89a51e63f))
+
 ## [0.484.4](https://github.com/Zapper-fi/studio/compare/v0.484.3...v0.484.4) (2023-06-20)
 
 
