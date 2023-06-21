@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.6](https://github.com/Zapper-fi/studio/compare/v0.484.5...v0.484.6) (2023-06-21)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Temporary replace subgraph url until indexing issues are fixed ([#2768](https://github.com/Zapper-fi/studio/issues/2768)) ([73a4fa9](https://github.com/Zapper-fi/studio/commit/73a4fa9d0635052592d32fe87f1e26d794b6b006))
+
 ## [0.484.5](https://github.com/Zapper-fi/studio/compare/v0.484.4...v0.484.5) (2023-06-21)
 
 
