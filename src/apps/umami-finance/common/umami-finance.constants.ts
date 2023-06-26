@@ -1,0 +1,15 @@
+export enum UmamiFinanceGlpVaultAddress {
+  GLP_USDC = '0x7ddf3cb155de8df81615998f273e032f1a173a97',
+  GLP_WETH = '0x44d9ee2f9d78cb8eb88549190226677258f9249e',
+  GLP_WBTC = '0x3237b8e9ce9bd6954aa7b16d92b9505f9e4deaa9',
+  GLP_LINK = '0x860dcc83cd3174bd967b1dd33627cba112860110',
+  GLP_UNI = '0x376502dec4362c06e07a90f38da8be491f849190',
+}
+
+export enum UmamiFinanceTimelockedGlpVaultAddress {
+  TL_GLP_USDC = '0x306cd1a21a29a79ab54ac01cde44ff67d960c68e',
+  TL_GLP_WETH = '0x9f33f4e7bdefc505f13e85f1a5442d55c7b7f856',
+  TL_GLP_WBTC = '0x22cf6f4d8111c2ddeceba75823993ecf289973dc',
+  TL_GLP_LINK = '0xc84e6b1f8758ba78d8e8791b2c8fbd75346527bc',
+  TL_GLP_UNI = '0x50188540f47b8848eaced81189ad45b9391c32d9',
+}
