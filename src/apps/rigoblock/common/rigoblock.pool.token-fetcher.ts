@@ -144,9 +144,9 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     // this block returns only held tokens. However, it would require less RPC calls to just multicall
     //  all tokens and display in UI only tokens with positive balances.
     const tokens = definition.tokenList
+    if(!tokens || tokens?.length === 0) return[]
     let heldTokens: WhitelistedTokenDefinition[] = []
-    for (let i = 0; i !== tokens?.length; i++) {
-      if (!tokens || tokens?.length === 0) return;
+    for (let i = 0; i !== tokens.length; i++) {
       const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
       const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
       if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
