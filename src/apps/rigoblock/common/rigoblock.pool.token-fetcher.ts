@@ -1,6 +1,6 @@
 import { parseBytes32String } from '@ethersproject/strings';
 import { Inject } from '@nestjs/common';
-import { flatMap } from 'lodash';
+import { compact, flatMap } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { DefaultDataProps } from '~position/display.interface';
@@ -22,6 +22,7 @@ type RigoblockSmartPoolDefinition = DefaultAppTokenDefinition & {
   logType: PoolLogType;
   address: string;
   name: string;
+  tokenList?: WhitelistedTokenDefinition[];
 };
 
 type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
@@ -49,6 +50,8 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 
   async getDefinitions(): Promise<RigoblockSmartPoolDefinition[]> {
     const poolBuilders = POOL_BUILDERS[this.network] ?? [];
+    // we query tracked tokens here to save redundant calls
+    const tokenList = await this.getTokenList()
 
     // Get all logs for each pool builder contract
     const builderLogs = await Promise.all(
@@ -72,6 +75,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
               logType,
               address: poolAddress,
               name: parseBytes32String(name),
+              tokenList,
             };
           }),
         ),
@@ -88,7 +92,19 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     return this.contractFactory.smartPool({ address, network: this.network });
   }
 
+  // whitelisted tokens are filtered by those that are not tracked
   async getTokenList(): Promise<WhitelistedTokenDefinition[]> {
+    const tokenList = [...new Set(await this.getTokenWhitelist())];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
+    const trackedTokens = tokenList.map(token => {
+      const tokenFound = baseTokens.find(p => p.address === token.address && !p.hide);
+      if (!tokenFound) return null;
+      return token;
+    });
+    return compact(trackedTokens);
+  }
+
+  async getTokenWhitelist(): Promise<WhitelistedTokenDefinition[]> {
     const tokenBuilders = POOL_BUILDERS[this.network] ?? [];
 
     const tokenLogs = await Promise.all(
@@ -118,13 +134,11 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     );
   }
 
-  async getUnderlyingTokenDefinitions() {
-    const results = [...new Set(await this.getTokenList())];
-
-    // we make sure no token duplicates are in the list
-    return results
+  async getUnderlyingTokenDefinitions({
+    definition
+  }: GetDisplayPropsParams<SmartPool, DefaultDataProps, RigoblockSmartPoolDefinition>) {
+    return definition.tokenList
       .map(x => ({ address: x.address.toLowerCase(), network: this.network }))
-      .filter(v => !this.blockedTokenAddresses.includes(v.address));
   }
 
   async getPricePerShare({
