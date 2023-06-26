@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.485.1](https://github.com/Zapper-fi/studio/compare/v0.485.0...v0.485.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* **beethoven-x:** Fix farm addressses and add missing composable pool factory ([#2777](https://github.com/Zapper-fi/studio/issues/2777)) ([c1bead3](https://github.com/Zapper-fi/studio/commit/c1bead3de79215bbb6939375ce7841ba0adc1d0d))
+
 ## [0.485.0](https://github.com/Zapper-fi/studio/compare/v0.484.8...v0.485.0) (2023-06-26)
 
 
