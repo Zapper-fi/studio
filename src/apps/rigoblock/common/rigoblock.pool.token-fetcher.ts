@@ -32,7 +32,7 @@ type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
   address: string;
 };
 
-interface RToken extends BaseToken {
+type RToken = BaseToken & {
   hide: boolean;
 }
 
@@ -98,7 +98,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   // whitelisted tokens are filtered by those that are not tracked
   async getTokenList(): Promise<WhitelistedTokenDefinition[]> {
     const tokenList = [...new Set(await this.getTokenWhitelist())];
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network) as RToken;
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network) as RToken[];
     const trackedTokens = tokenList.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.address && !p.hide);
       if (!tokenFound) return null;
@@ -144,9 +144,9 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     // this block returns only held tokens. However, it would require less RPC calls to just multicall
     //  all tokens and display in UI only tokens with positive balances.
     const tokens = definition.tokenList
-    let heldTokens = []
+    let heldTokens: WhitelistedTokenDefinition[] = []
     for (let i = 0; i !== tokens?.length; i++) {
-      if (tokens?.length === 0) return;
+      if (!tokens || tokens?.length === 0) return;
       const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
       const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
       if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
