@@ -135,9 +135,20 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({
+    multicall,
     definition
   }: GetDisplayPropsParams<SmartPool, DefaultDataProps, RigoblockSmartPoolDefinition>) {
-    return definition.tokenList
+    // this block returns only held tokens. However, it would require less RPC calls to just multicall
+    //  all tokens and display in UI only tokens with positive balances.
+    const tokens = definition.tokenList
+    let heldTokens = []
+    for (let i = 0; i !== tokens.length; i++) {
+      const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
+      const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
+      if (poolTokenBalance > 0) { heldTokens[i] = tokens[i] };
+    }
+
+    return compact(heldTokens)
       .map(x => ({ address: x.address.toLowerCase(), network: this.network }))
   }
 
