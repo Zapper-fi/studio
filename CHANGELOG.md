@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.484.8](https://github.com/Zapper-fi/studio/compare/v0.484.7...v0.484.8) (2023-06-22)
+
+
+### Bug Fixes
+
+* **defiedge:** Remove farms positions ([#2772](https://github.com/Zapper-fi/studio/issues/2772)) ([bd88de0](https://github.com/Zapper-fi/studio/commit/bd88de0ceb2fae91bd438c8f77f988953cce1bc9))
+
 ## [0.484.7](https://github.com/Zapper-fi/studio/compare/v0.484.6...v0.484.7) (2023-06-21)
 
 
