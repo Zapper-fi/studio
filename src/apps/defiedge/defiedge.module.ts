@@ -7,8 +7,8 @@ import { BinanceSmartChainDefiedgeStrategyTokenFetcher } from './binance-smart-c
 import { DefiedgeStrategyDefinitionsResolver } from './common/defiedge.strategy.definitions-resolver';
 import { DefiedgeContractFactory } from './contracts';
 import { EthereumDefiedgeStrategyTokenFetcher } from './ethereum/defiedge.strategy.token-fetcher';
-import { OPTIMISM_DEFIEDGE_PROVIDERS } from './optimism';
-import { POLYGON_DEFIEDGE_PROVIDERS } from './polygon';
+import { OptimismDefiedgeStrategyTokenFetcher } from './optimism/defiedge.strategy.token-fetcher';
+import { PolygonDefiedgeStrategyTokenFetcher } from './polygon/defiedge.strategy.token-fetcher';
 
 @Module({
   providers: [
@@ -17,8 +17,8 @@ import { POLYGON_DEFIEDGE_PROVIDERS } from './polygon';
     ArbitrumDefiedgeStrategyTokenFetcher,
     EthereumDefiedgeStrategyTokenFetcher,
     BinanceSmartChainDefiedgeStrategyTokenFetcher,
-    ...POLYGON_DEFIEDGE_PROVIDERS,
-    ...OPTIMISM_DEFIEDGE_PROVIDERS,
+    OptimismDefiedgeStrategyTokenFetcher,
+    PolygonDefiedgeStrategyTokenFetcher,
   ],
 })
 export class DefiedgeAppModule extends AbstractApp() {}

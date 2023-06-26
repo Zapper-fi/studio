@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { formatEther, parseEther } from 'ethers/lib/utils';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -20,7 +20,6 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { DefiedgeContractFactory, Strategy } from '../contracts';
-import { expandTo18Decimals } from '../utils';
 
 import { DefiedgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
@@ -38,6 +37,10 @@ export type DefiedgeStrategyTokenDataProps = DefaultAppTokenDataProps & {
   aum: number;
   unclaimedFees: number;
 };
+
+export function expandTo18Decimals(value: BigNumber, decimals?: number): BigNumber {
+  return value.mul(BigNumber.from(10).pow(BigNumber.from(18).sub(BigNumber.from(decimals ?? 0))));
+}
 
 export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePositionFetcher<
   Strategy,
@@ -59,18 +62,16 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     return this.contractFactory.strategy({ address, network: this.network });
   }
 
-  async getDefinitions() {
+  async getDefinitions(): Promise<DefiedgeStrategyDefinition[]> {
     const apiDefinitions = await this.definitionResolver.getStrategies(this.network);
 
-    const definitions = apiDefinitions.map(v => ({
+    return apiDefinitions.map(v => ({
       address: v.id.toLowerCase(),
       title: v.title,
       subTitle: v.subTitle,
       token0Address: v.token0.id.toLowerCase(),
       token1Address: v.token1.id.toLowerCase(),
     }));
-
-    return definitions;
   }
 
   async getAddresses({ definitions }: GetAddressesParams<DefiedgeStrategyDefinition>) {
@@ -119,8 +120,6 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
       contract.callStatic.getAUMWithFees(false),
       contract.totalSupply(),
     ]);
-
-    if (totalSupplyBN.eq(0)) return [0, 0];
 
     const { amount0, amount1 } = aumWithFee;
     const [token0, token1] = appToken.tokens;
