@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
-import { range } from 'lodash';
+import _, { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -22,15 +22,19 @@ import { BeethovenXGauge } from '../contracts/ethers/BeethovenXGauge';
 
 export const GAUGES_QUERY = gql`
   {
-    gauges {
-      id
+    poolGetPools(where: { chainIn: [OPTIMISM] }) {
+      staking {
+        id
+      }
     }
   }
 `;
 
 export type GaugesResponse = {
-  gauges: {
-    id: string;
+  poolGetPools: {
+    staking: {
+      id: string;
+    } | null;
   }[];
 };
 
@@ -53,7 +57,10 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
       endpoint: this.subgraphUrl,
       query: GAUGES_QUERY,
     });
-    return gaugesResponse.gauges.map(({ id }) => id.toLowerCase());
+
+    const gaugesAddressesRaw = gaugesResponse.poolGetPools.map(({ staking }) => staking?.id);
+
+    return _.compact(gaugesAddressesRaw);
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<BeethovenXGauge>) {
