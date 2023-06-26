@@ -43,9 +43,6 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  // some tokens on L2s don't have a price feed on CG
-  abstract blockedTokenAddresses: string[];
-
   extraDefinitions: RigoblockSmartPoolDefinition[] = [];
 
   async getDefinitions(): Promise<RigoblockSmartPoolDefinition[]> {
