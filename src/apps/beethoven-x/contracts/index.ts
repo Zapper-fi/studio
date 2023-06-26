@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BeethovenXBeetsBar__factory } from './ethers';
-import { BeethovenXGauge__factory } from './ethers';
-import { BeethovenXMasterchef__factory } from './ethers';
+import { BeethovenXBeetsBar__factory, BeethovenXGauge__factory, BeethovenXMasterchef__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
