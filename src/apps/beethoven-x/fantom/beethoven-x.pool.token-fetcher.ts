@@ -11,6 +11,7 @@ export class FantomBeethovenXPoolTokenFetcher extends BeethovenXPoolTokenFetcher
     '0xb384a86f2fd7788720db42f9daa60fc07ecbea06',
     '0x44814e3a603bb7f1198617995c5696c232f6e8ed',
     '0x911566c808bf00acb200b418564440a2af177548',
+    '0x5c3094982cf3c97a06b7d62a6f7669f14a199b19',
   ];
   weightedPoolV2Factories = [
     '0xb2ed595afc445b47db7043bec25e772bf0fa1fbb',

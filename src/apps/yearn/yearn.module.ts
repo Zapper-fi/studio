@@ -10,6 +10,7 @@ import { EthereumYearnVaultTokenFetcher } from './ethereum/yearn.vault.token-fet
 import { EthereumYearnYCrvTokenTokenFetcher } from './ethereum/yearn.y-crv.token-fetcher';
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnVaultTokenFetcher } from './fantom/yearn.vault.token-fetcher';
+import { OptimismYearnSakingContractPositionFetcher } from './optimism/yearn.staking.contract-position-fetcher';
 import { OptimismYearnVaultTokenFetcher } from './optimism/yearn.vault.token-fetcher';
 
 @Module({
@@ -27,6 +28,7 @@ import { OptimismYearnVaultTokenFetcher } from './optimism/yearn.vault.token-fet
     FantomYearnVaultTokenFetcher,
     // Optimism
     OptimismYearnVaultTokenFetcher,
+    OptimismYearnSakingContractPositionFetcher,
   ],
 })
 export class YearnAppModule extends AbstractApp() {}
