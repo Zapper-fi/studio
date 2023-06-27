@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.486.0](https://github.com/Zapper-fi/studio/compare/v0.485.1...v0.486.0) (2023-06-27)
+
+
+### Features
+
+* **studio:** Append stream ID to label ([#2780](https://github.com/Zapper-fi/studio/issues/2780)) ([162c203](https://github.com/Zapper-fi/studio/commit/162c203a6c6c0e8e52685781ee2ef741eef36686))
+
 ## [0.485.1](https://github.com/Zapper-fi/studio/compare/v0.485.0...v0.485.1) (2023-06-26)
 
 
