@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.488.0](https://github.com/Zapper-fi/studio/compare/v0.487.0...v0.488.0) (2023-06-27)
+
+
+### Features
+
+* **thales:** overtime parlay amm lp ([#2783](https://github.com/Zapper-fi/studio/issues/2783)) ([f0dffa8](https://github.com/Zapper-fi/studio/commit/f0dffa8d470e390ba911eb3ca9a7bbadb5df529f))
+
 ## [0.487.0](https://github.com/Zapper-fi/studio/compare/v0.486.0...v0.487.0) (2023-06-27)
 
 
