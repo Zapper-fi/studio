@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.487.0](https://github.com/Zapper-fi/studio/compare/v0.486.0...v0.487.0) (2023-06-27)
+
+
+### Features
+
+* **rigoblock:** optimize underlying token definitions ([#2779](https://github.com/Zapper-fi/studio/issues/2779)) ([8a2089b](https://github.com/Zapper-fi/studio/commit/8a2089bb1a4b6990f6c38aca81704e855987d5ec))
+
 ## [0.486.0](https://github.com/Zapper-fi/studio/compare/v0.485.1...v0.486.0) (2023-06-27)
 
 
