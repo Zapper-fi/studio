@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { DhedgeV2Factory } from './DhedgeV2Factory';
+export type { DhedgeV2StakingV2 } from './DhedgeV2StakingV2';
 export type { DhedgeV2Token } from './DhedgeV2Token';
 export * as factories from './factories';
 export { DhedgeV2Factory__factory } from './factories/DhedgeV2Factory__factory';
+export { DhedgeV2StakingV2__factory } from './factories/DhedgeV2StakingV2__factory';
 export { DhedgeV2Token__factory } from './factories/DhedgeV2Token__factory';
