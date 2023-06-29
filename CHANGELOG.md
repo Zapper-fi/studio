@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.489.0](https://github.com/Zapper-fi/studio/compare/v0.488.0...v0.489.0) (2023-06-29)
+
+
+### Features
+
+* **velodrome-v2:** create app + veNFT positions ([#2785](https://github.com/Zapper-fi/studio/issues/2785)) ([47a062c](https://github.com/Zapper-fi/studio/commit/47a062c24776ca4a8666cf1e13796a10a2e7b955))
+
 ## [0.488.0](https://github.com/Zapper-fi/studio/compare/v0.487.0...v0.488.0) (2023-06-27)
 
 
