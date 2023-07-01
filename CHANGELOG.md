@@ -4,6 +4,56 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.489.0](https://github.com/Zapper-fi/studio/compare/v0.488.0...v0.489.0) (2023-06-29)
+
+
+### Features
+
+* **velodrome-v2:** create app + veNFT positions ([#2785](https://github.com/Zapper-fi/studio/issues/2785)) ([47a062c](https://github.com/Zapper-fi/studio/commit/47a062c24776ca4a8666cf1e13796a10a2e7b955))
+
+## [0.488.0](https://github.com/Zapper-fi/studio/compare/v0.487.0...v0.488.0) (2023-06-27)
+
+
+### Features
+
+* **thales:** overtime parlay amm lp ([#2783](https://github.com/Zapper-fi/studio/issues/2783)) ([f0dffa8](https://github.com/Zapper-fi/studio/commit/f0dffa8d470e390ba911eb3ca9a7bbadb5df529f))
+
+## [0.487.0](https://github.com/Zapper-fi/studio/compare/v0.486.0...v0.487.0) (2023-06-27)
+
+
+### Features
+
+* **rigoblock:** optimize underlying token definitions ([#2779](https://github.com/Zapper-fi/studio/issues/2779)) ([8a2089b](https://github.com/Zapper-fi/studio/commit/8a2089bb1a4b6990f6c38aca81704e855987d5ec))
+
+## [0.486.0](https://github.com/Zapper-fi/studio/compare/v0.485.1...v0.486.0) (2023-06-27)
+
+
+### Features
+
+* **studio:** Append stream ID to label ([#2780](https://github.com/Zapper-fi/studio/issues/2780)) ([162c203](https://github.com/Zapper-fi/studio/commit/162c203a6c6c0e8e52685781ee2ef741eef36686))
+
+## [0.485.1](https://github.com/Zapper-fi/studio/compare/v0.485.0...v0.485.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* **beethoven-x:** Fix farm addressses and add missing composable pool factory ([#2777](https://github.com/Zapper-fi/studio/issues/2777)) ([c1bead3](https://github.com/Zapper-fi/studio/commit/c1bead3de79215bbb6939375ce7841ba0adc1d0d))
+
+## [0.485.0](https://github.com/Zapper-fi/studio/compare/v0.484.8...v0.485.0) (2023-06-26)
+
+
+### Features
+
+* **teahouse:** Add vaults on Arbitrum ([#2773](https://github.com/Zapper-fi/studio/issues/2773)) ([ae60595](https://github.com/Zapper-fi/studio/commit/ae605958ff4ed4f8b3e533833d72d447379d7d35))
+* **yearn:** Add OP boost staking positions ([#2775](https://github.com/Zapper-fi/studio/issues/2775)) ([4252bed](https://github.com/Zapper-fi/studio/commit/4252bed31aa1cbc358930dae0011e8b46458f9d3))
+
+## [0.484.8](https://github.com/Zapper-fi/studio/compare/v0.484.7...v0.484.8) (2023-06-22)
+
+
+### Bug Fixes
+
+* **defiedge:** Remove farms positions ([#2772](https://github.com/Zapper-fi/studio/issues/2772)) ([bd88de0](https://github.com/Zapper-fi/studio/commit/bd88de0ceb2fae91bd438c8f77f988953cce1bc9))
+
 ## [0.484.7](https://github.com/Zapper-fi/studio/compare/v0.484.6...v0.484.7) (2023-06-21)
 
 

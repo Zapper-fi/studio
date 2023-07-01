@@ -29,6 +29,8 @@ export class EthereumRaftPositionPresenter extends PositionPresenterTemplate {
     const minCRatio = balance?.dataProps?.minCRatio;
     if (!minCRatio) return [];
 
+    if (!balances.some(balance => balance.balanceUSD < 0)) return [];
+
     const collateral = balance?.tokens[0];
     const collateralUSD = collateral?.balanceUSD ?? 0;
     const debt = Math.abs(balance?.tokens[1]?.balanceUSD ?? 0);
