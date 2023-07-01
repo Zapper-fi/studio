@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.489.1](https://github.com/Zapper-fi/studio/compare/v0.489.0...v0.489.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* **kyberswap-elastic:** Update arbitrum and bsc subgraph url ([#2789](https://github.com/Zapper-fi/studio/issues/2789)) ([2836bcd](https://github.com/Zapper-fi/studio/commit/2836bcd1550d103769a4d92bb1701f2557210157))
+* **raft:** Early return if there's no balances ([#2787](https://github.com/Zapper-fi/studio/issues/2787)) ([4965dec](https://github.com/Zapper-fi/studio/commit/4965dece70d191fdd2d7e7860b5445afee3155ae))
+* **teahouse:** Vault token query filter optimization ([#2790](https://github.com/Zapper-fi/studio/issues/2790)) ([8016e50](https://github.com/Zapper-fi/studio/commit/8016e5042679224fdb8990a2602d271d7b6f6c62))
+
 ## [0.489.0](https://github.com/Zapper-fi/studio/compare/v0.488.0...v0.489.0) (2023-06-29)
 
 
