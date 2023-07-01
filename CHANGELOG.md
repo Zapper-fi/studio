@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.490.0](https://github.com/Zapper-fi/studio/compare/v0.489.1...v0.490.0) (2023-07-01)
+
+
+### Features
+
+* **umami-finance:** GLP vaults ([#2791](https://github.com/Zapper-fi/studio/issues/2791)) ([c8f4c9a](https://github.com/Zapper-fi/studio/commit/c8f4c9a41f2433cc9b8f4e590385da1e8695fc3c))
+
 ## [0.489.1](https://github.com/Zapper-fi/studio/compare/v0.489.0...v0.489.1) (2023-06-30)
 
 
