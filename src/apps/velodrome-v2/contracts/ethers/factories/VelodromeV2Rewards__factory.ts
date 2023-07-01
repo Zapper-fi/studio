@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { VelodromeRewards, VelodromeRewardsInterface } from '../VelodromeRewards';
+import type { VelodromeV2Rewards, VelodromeV2RewardsInterface } from '../VelodromeV2Rewards';
 
 const _abi = [
   {
@@ -278,12 +278,12 @@ const _abi = [
   },
 ];
 
-export class VelodromeRewards__factory {
+export class VelodromeV2Rewards__factory {
   static readonly abi = _abi;
-  static createInterface(): VelodromeRewardsInterface {
-    return new utils.Interface(_abi) as VelodromeRewardsInterface;
+  static createInterface(): VelodromeV2RewardsInterface {
+    return new utils.Interface(_abi) as VelodromeV2RewardsInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): VelodromeRewards {
-    return new Contract(address, _abi, signerOrProvider) as VelodromeRewards;
+  static connect(address: string, signerOrProvider: Signer | Provider): VelodromeV2Rewards {
+    return new Contract(address, _abi, signerOrProvider) as VelodromeV2Rewards;
   }
 }

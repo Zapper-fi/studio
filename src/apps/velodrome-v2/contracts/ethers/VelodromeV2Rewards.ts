@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface VelodromeRewardsInterface extends utils.Interface {
+export interface VelodromeV2RewardsInterface extends utils.Interface {
   functions: {
     'checkpointToken()': FunctionFragment;
     'claim(uint256)': FunctionFragment;
@@ -106,12 +106,12 @@ export type ClaimedEvent = TypedEvent<[BigNumber, BigNumber, BigNumber, BigNumbe
 
 export type ClaimedEventFilter = TypedEventFilter<ClaimedEvent>;
 
-export interface VelodromeRewards extends BaseContract {
+export interface VelodromeV2Rewards extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VelodromeRewardsInterface;
+  interface: VelodromeV2RewardsInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
