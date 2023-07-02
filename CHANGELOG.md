@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.491.0](https://github.com/Zapper-fi/studio/compare/v0.490.0...v0.491.0) (2023-07-02)
+
+
+### Features
+
+* **pika-protocol:** Add EsPika and Vest Escrow Pika position ([#2794](https://github.com/Zapper-fi/studio/issues/2794)) ([646e201](https://github.com/Zapper-fi/studio/commit/646e20151cfaf8bcbd0a7960d3c044a0bf651560))
+
 ## [0.490.0](https://github.com/Zapper-fi/studio/compare/v0.489.1...v0.490.0) (2023-07-01)
 
 
