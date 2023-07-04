@@ -74,22 +74,6 @@ const ONE_DOLLAR = BigNumber.from('1000000000000000000000000000000000000');
 
 const ONE_INDEX = BigNumber.from('1000000000000000000');
 
-export function chunkArrayForMultiCall<T>(
-  values: T[],
-  getCallData: (value: T, index: number) => { target: string; callData: string },
-): Multicall.CallStruct[][] {
-  const callChunks: Multicall.CallStruct[][] = [];
-  let index = 0;
-  for (let i = 0; i < values.length; i += CHUNK_SIZE) {
-    callChunks[i] = [];
-    for (let j = 0; j < CHUNK_SIZE && index < values.length; j++) {
-      callChunks[i / CHUNK_SIZE].push(getCallData(values[i + j], i + j));
-      index += 1;
-    }
-  }
-  return callChunks;
-}
-
 export async function getTokenDefinitionsLib(
   params: GetTokenDefinitionsParams<DolomiteMargin, DolomiteContractPositionDefinition>,
   network: Network,
