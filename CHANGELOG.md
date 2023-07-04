@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.492.1](https://github.com/Zapper-fi/studio/compare/v0.492.0...v0.492.1) (2023-07-04)
+
+
+### Bug Fixes
+
+* **dolomite:** Update subgraph URL ([#2799](https://github.com/Zapper-fi/studio/issues/2799)) ([a99fc56](https://github.com/Zapper-fi/studio/commit/a99fc5659a7ead0cceb56f5a76f5052d488cf859))
+
 ## [0.492.0](https://github.com/Zapper-fi/studio/compare/v0.491.0...v0.492.0) (2023-07-04)
 
 
