@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.492.0](https://github.com/Zapper-fi/studio/compare/v0.491.0...v0.492.0) (2023-07-04)
+
+
+### Features
+
+* Update readme with Node Hydrogen version ([#2797](https://github.com/Zapper-fi/studio/issues/2797)) ([2f505ef](https://github.com/Zapper-fi/studio/commit/2f505ef07c5b6fd848f71b7c6b61927594ed9041))
+
 ## [0.491.0](https://github.com/Zapper-fi/studio/compare/v0.490.0...v0.491.0) (2023-07-02)
 
 
