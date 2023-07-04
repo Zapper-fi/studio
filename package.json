@@ -79,7 +79,7 @@
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.180",
     "@types/murmurhash-js": "^1.0.3",
-    "@types/node": "16.11.7",
+    "@types/node": "18.16.1",
     "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
@@ -149,6 +149,6 @@
     "type-fest": "^0.18.0"
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   }
 }
