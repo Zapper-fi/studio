@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.493.0](https://github.com/Zapper-fi/studio/compare/v0.492.2...v0.493.0) (2023-07-05)
+
+
+### Features
+
+* **ramses-v2:** Add pool positions ([#2804](https://github.com/Zapper-fi/studio/issues/2804)) ([590c1b0](https://github.com/Zapper-fi/studio/commit/590c1b0811a00684466976d315c1f8c5ff9ff251))
+* **stake-dao:** Add Pendle, FPIS, APW and BPT locker tokens ([#2805](https://github.com/Zapper-fi/studio/issues/2805)) ([3af805c](https://github.com/Zapper-fi/studio/commit/3af805cf419b25f120c3e30c875714380b62aed0))
+
 ## [0.492.2](https://github.com/Zapper-fi/studio/compare/v0.492.1...v0.492.2) (2023-07-05)
 
 
