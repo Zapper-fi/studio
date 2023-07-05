@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { ArbitrumRamsesBribeContractPositionFetcher } from './arbitrum/ramses.bribe.contract-position-fetcher';
-import { ArbitrumRamsesStakingContractPositionFetcher } from './arbitrum/ramses.farm.contract-position-fetcher';
 import { ArbitrumRamsesPoolTokenFetcher } from './arbitrum/ramses.pool.token-fetcher';
 import { ArbitrumRamsesVotingEscrowContractPositionFetcher } from './arbitrum/ramses.voting-escrow.contract-position-fetcher';
 import { RamsesContractFactory } from './contracts';
@@ -14,7 +13,6 @@ import { RamsesContractFactory } from './contracts';
     UniswapV2ContractFactory,
     RamsesContractFactory,
     ArbitrumRamsesPoolTokenFetcher,
-    ArbitrumRamsesStakingContractPositionFetcher,
     ArbitrumRamsesVotingEscrowContractPositionFetcher,
     ArbitrumRamsesBribeContractPositionFetcher,
   ],
