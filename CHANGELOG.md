@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.492.2](https://github.com/Zapper-fi/studio/compare/v0.492.1...v0.492.2) (2023-07-05)
+
+
+### Bug Fixes
+
+* **ramses:** Remove farm positions ([#2801](https://github.com/Zapper-fi/studio/issues/2801)) ([2aefc93](https://github.com/Zapper-fi/studio/commit/2aefc9319de3c5f6f38333ffb83e4d374e7e9c2f))
+
 ## [0.492.1](https://github.com/Zapper-fi/studio/compare/v0.492.0...v0.492.1) (2023-07-04)
 
 
