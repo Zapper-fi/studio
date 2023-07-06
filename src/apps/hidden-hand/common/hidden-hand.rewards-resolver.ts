@@ -9,9 +9,9 @@ import { NETWORK_IDS, Network } from '~types';
 import { HiddenHandContractFactory } from '../contracts';
 
 type PROTOCOL = {
-  hash: string,
-  name: string,
-  address: string,
+  hash: string;
+  name: string;
+  address: string;
 };
 
 export type HiddenHandReward = {
@@ -181,7 +181,6 @@ export class HiddenHandRewardsResolver {
       const claimedAmount = await contract.claimed(rewardsIdentifier, address);
       return claimedAmount;
     } catch (error) {
-      console.log(error)
       return BigNumber.from(0);
     }
   }
