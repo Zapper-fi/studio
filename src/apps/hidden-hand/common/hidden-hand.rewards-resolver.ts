@@ -75,7 +75,7 @@ export class HiddenHandRewardsResolver {
 
   @Cache({
     key: `studio:hidden-hand:claimable-raw-data`,
-    ttl: 60 * 60 * 24, // 24hrs
+    ttl: 60 * 60 * 12, // 12hrs
   })
   private async getRawData(): Promise<HiddenHandDistribution> {
     const response = await axios.get(BASE_URL);
