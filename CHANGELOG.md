@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.494.0](https://github.com/Zapper-fi/studio/compare/v0.493.0...v0.494.0) (2023-07-06)
+
+
+### Features
+
+* **sonne:** claimable velo-v2 from staking ([#2807](https://github.com/Zapper-fi/studio/issues/2807)) ([b1cc924](https://github.com/Zapper-fi/studio/commit/b1cc9249a86837a108c5cfb9d04a1d44bb233ee3))
+
 ## [0.493.0](https://github.com/Zapper-fi/studio/compare/v0.492.2...v0.493.0) (2023-07-05)
 
 
