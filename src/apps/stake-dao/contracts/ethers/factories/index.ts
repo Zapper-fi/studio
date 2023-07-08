@@ -4,4 +4,7 @@
 export { StakeDaoCurvePool__factory } from './StakeDaoCurvePool__factory';
 export { StakeDaoFarm__factory } from './StakeDaoFarm__factory';
 export { StakeDaoGauge__factory } from './StakeDaoGauge__factory';
+export { StakeDaoMultiGauge__factory } from './StakeDaoMultiGauge__factory';
+export { StakeDaoPassiveVault__factory } from './StakeDaoPassiveVault__factory';
+export { StakeDaoVault__factory } from './StakeDaoVault__factory';
 export { StakeDaoVotingEscrow__factory } from './StakeDaoVotingEscrow__factory';
