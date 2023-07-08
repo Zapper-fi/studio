@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.495.0](https://github.com/Zapper-fi/studio/compare/v0.494.0...v0.495.0) (2023-07-08)
+
+
+### Features
+
+* **stake-dao:** Add vault tokens, passive vault tokens, multi-gauge positions and add addresses to gauge position ([#2809](https://github.com/Zapper-fi/studio/issues/2809)) ([96ced2a](https://github.com/Zapper-fi/studio/commit/96ced2ace4f166b340a12a84b653a1b39e786c74))
+* **velodrome-v2:** Add pools ([#2793](https://github.com/Zapper-fi/studio/issues/2793)) ([73224b5](https://github.com/Zapper-fi/studio/commit/73224b515b070cea9f87837a30de721cdef8ae0d))
+
 ## [0.494.0](https://github.com/Zapper-fi/studio/compare/v0.493.0...v0.494.0) (2023-07-06)
 
 
