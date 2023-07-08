@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, ethers } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { gql, GraphQLClient } from 'graphql-request';
 import { range, sumBy } from 'lodash';
 
@@ -8,7 +8,6 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import {
   CHUNK_SIZE,
-  chunkArrayForMultiCall,
   DOLOMITE_GRAPH_ENDPOINT,
   DolomiteContractPositionDefinition,
   ExtraTokenInfo,
@@ -26,7 +25,6 @@ import {
   DOLOMITE_MARGIN_ADDRESSES,
 } from '~apps/dolomite/common/utils';
 import { DolomiteContractFactory, DolomiteMargin } from '~apps/dolomite/contracts';
-import { Erc20__factory } from '~contract/contracts/ethers';
 import { IMulticallWrapper } from '~multicall';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -72,18 +70,15 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       }),
     );
 
-    const tokenNameCallChunks = chunkArrayForMultiCall(underlyingTokenAddresses, tokenAddress => ({
-      target: tokenAddress,
-      callData: Erc20__factory.createInterface().encodeFunctionData('name'),
-    }));
-    const tokenNames: string[] = [];
-    for (let i = 0; i < tokenNameCallChunks.length; i++) {
-      const { returnData } = await multicall.contract.callStatic.aggregate(tokenNameCallChunks[i], false);
-      returnData.forEach(({ data }) => {
-        const result = ethers.utils.defaultAbiCoder.decode(['string'], data);
-        tokenNames.push(result[0] as string);
-      });
-    }
+    const tokenNames = await Promise.all(
+      underlyingTokenAddresses.map(async underlyingTokenAddress => {
+        const underlyingTokenContract = this.contractFactory.erc20({
+          address: underlyingTokenAddress,
+          network: this.network,
+        });
+        return multicall.wrap(underlyingTokenContract).name();
+      }),
+    );
 
     const wrappedTokenAddresses: string[] = [];
     const modes: TokenMode[] = [];
@@ -105,7 +100,9 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
           // special edge-case for fee + staked GLP token.
           underlyingTokenAddresses[i] = '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258';
         } else {
-          underlyingTokenAddresses[i] = (await isolationModeTokenContract.UNDERLYING_TOKEN()).toLowerCase();
+          underlyingTokenAddresses[i] = (
+            await multicall.wrap(isolationModeTokenContract).UNDERLYING_TOKEN()
+          ).toLowerCase();
         }
       } else {
         modes.push(TokenMode.NORMAL);

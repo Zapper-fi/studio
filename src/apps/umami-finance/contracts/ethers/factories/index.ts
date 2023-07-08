@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { UmamiFinanceCompound__factory } from './UmamiFinanceCompound__factory';
+export { UmamiFinanceGlpVault__factory } from './UmamiFinanceGlpVault__factory';
 export { UmamiFinanceMarinate__factory } from './UmamiFinanceMarinate__factory';
-export { UmamiFinanceVault__factory } from './UmamiFinanceVault__factory';
+export { UmamiFinanceTimelockedGlpVault__factory } from './UmamiFinanceTimelockedGlpVault__factory';

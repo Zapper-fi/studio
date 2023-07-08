@@ -4,6 +4,56 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.494.0](https://github.com/Zapper-fi/studio/compare/v0.493.0...v0.494.0) (2023-07-06)
+
+
+### Features
+
+* **sonne:** claimable velo-v2 from staking ([#2807](https://github.com/Zapper-fi/studio/issues/2807)) ([b1cc924](https://github.com/Zapper-fi/studio/commit/b1cc9249a86837a108c5cfb9d04a1d44bb233ee3))
+
+## [0.493.0](https://github.com/Zapper-fi/studio/compare/v0.492.2...v0.493.0) (2023-07-05)
+
+
+### Features
+
+* **ramses-v2:** Add pool positions ([#2804](https://github.com/Zapper-fi/studio/issues/2804)) ([590c1b0](https://github.com/Zapper-fi/studio/commit/590c1b0811a00684466976d315c1f8c5ff9ff251))
+* **stake-dao:** Add Pendle, FPIS, APW and BPT locker tokens ([#2805](https://github.com/Zapper-fi/studio/issues/2805)) ([3af805c](https://github.com/Zapper-fi/studio/commit/3af805cf419b25f120c3e30c875714380b62aed0))
+
+## [0.492.2](https://github.com/Zapper-fi/studio/compare/v0.492.1...v0.492.2) (2023-07-05)
+
+
+### Bug Fixes
+
+* **ramses:** Remove farm positions ([#2801](https://github.com/Zapper-fi/studio/issues/2801)) ([2aefc93](https://github.com/Zapper-fi/studio/commit/2aefc9319de3c5f6f38333ffb83e4d374e7e9c2f))
+
+## [0.492.1](https://github.com/Zapper-fi/studio/compare/v0.492.0...v0.492.1) (2023-07-04)
+
+
+### Bug Fixes
+
+* **dolomite:** Update subgraph URL ([#2799](https://github.com/Zapper-fi/studio/issues/2799)) ([a99fc56](https://github.com/Zapper-fi/studio/commit/a99fc5659a7ead0cceb56f5a76f5052d488cf859))
+
+## [0.492.0](https://github.com/Zapper-fi/studio/compare/v0.491.0...v0.492.0) (2023-07-04)
+
+
+### Features
+
+* Update readme with Node Hydrogen version ([#2797](https://github.com/Zapper-fi/studio/issues/2797)) ([2f505ef](https://github.com/Zapper-fi/studio/commit/2f505ef07c5b6fd848f71b7c6b61927594ed9041))
+
+## [0.491.0](https://github.com/Zapper-fi/studio/compare/v0.490.0...v0.491.0) (2023-07-02)
+
+
+### Features
+
+* **pika-protocol:** Add EsPika and Vest Escrow Pika position ([#2794](https://github.com/Zapper-fi/studio/issues/2794)) ([646e201](https://github.com/Zapper-fi/studio/commit/646e20151cfaf8bcbd0a7960d3c044a0bf651560))
+
+## [0.490.0](https://github.com/Zapper-fi/studio/compare/v0.489.1...v0.490.0) (2023-07-01)
+
+
+### Features
+
+* **umami-finance:** GLP vaults ([#2791](https://github.com/Zapper-fi/studio/issues/2791)) ([c8f4c9a](https://github.com/Zapper-fi/studio/commit/c8f4c9a41f2433cc9b8f4e590385da1e8695fc3c))
+
 ## [0.489.1](https://github.com/Zapper-fi/studio/compare/v0.489.0...v0.489.1) (2023-06-30)
 
 

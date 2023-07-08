@@ -54,56 +54,49 @@
       { "name": "_name", "type": "string" },
       { "name": "_symbol", "type": "string" }
     ],
-    "outputs": [],
-    "gas": 426952
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "commit_transfer_ownership",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [],
-    "gas": 39572
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "accept_transfer_ownership",
     "inputs": [],
-    "outputs": [],
-    "gas": 39420
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "apply_transfer_ownership",
     "inputs": [],
-    "outputs": [],
-    "gas": 41644
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "commit_smart_wallet_checker",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [],
-    "gas": 37665
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "apply_smart_wallet_checker",
     "inputs": [],
-    "outputs": [],
-    "gas": 39692
+    "outputs": []
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_last_user_slope",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [{ "name": "", "type": "int128" }],
-    "gas": 5061
+    "outputs": [{ "name": "", "type": "int128" }]
   },
   {
     "stateMutability": "view",
@@ -113,24 +106,21 @@
       { "name": "_addr", "type": "address" },
       { "name": "_idx", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2864
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "locked__end",
     "inputs": [{ "name": "_addr", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2849
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "checkpoint",
     "inputs": [],
-    "outputs": [],
-    "gas": 37407744
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -140,8 +130,7 @@
       { "name": "_addr", "type": "address" },
       { "name": "_value", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 75001291
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -151,8 +140,7 @@
       { "name": "_addr", "type": "address" },
       { "name": "_value", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 75001434
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -162,32 +150,28 @@
       { "name": "_value", "type": "uint256" },
       { "name": "_unlock_time", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 75002950
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "increase_amount",
     "inputs": [{ "name": "_value", "type": "uint256" }],
-    "outputs": [],
-    "gas": 75002371
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "increase_unlock_time",
     "inputs": [{ "name": "_unlock_time", "type": "uint256" }],
-    "outputs": [],
-    "gas": 75003018
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "withdraw",
     "inputs": [],
-    "outputs": [],
-    "gas": 37587268
+    "outputs": []
   },
   {
     "stateMutability": "view",
@@ -214,8 +198,7 @@
       { "name": "addr", "type": "address" },
       { "name": "_block", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 1231801
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -225,8 +208,7 @@
       { "name": "addr", "type": "address" },
       { "name": "_block", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 1231831
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -247,24 +229,21 @@
     "type": "function",
     "name": "totalSupplyAt",
     "inputs": [{ "name": "_block", "type": "uint256" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 1354118
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "token",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3018
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "supply",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3048
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -274,16 +253,14 @@
     "outputs": [
       { "name": "amount", "type": "int128" },
       { "name": "end", "type": "uint256" }
-    ],
-    "gas": 5683
+    ]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "epoch",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3108
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -295,8 +272,7 @@
       { "name": "slope", "type": "int128" },
       { "name": "ts", "type": "uint256" },
       { "name": "blk", "type": "uint256" }
-    ],
-    "gas": 9993
+    ]
   },
   {
     "stateMutability": "view",
@@ -311,87 +287,76 @@
       { "name": "slope", "type": "int128" },
       { "name": "ts", "type": "uint256" },
       { "name": "blk", "type": "uint256" }
-    ],
-    "gas": 10238
+    ]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "user_point_epoch",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3413
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "slope_changes",
     "inputs": [{ "name": "arg0", "type": "uint256" }],
-    "outputs": [{ "name": "", "type": "int128" }],
-    "gas": 3343
+    "outputs": [{ "name": "", "type": "int128" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "name",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 13488
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "symbol",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 11241
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "decimals",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3318
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "future_smart_wallet_checker",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3348
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "smart_wallet_checker",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3378
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "admin",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3408
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "future_admin",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3438
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "initialized",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 3468
+    "outputs": [{ "name": "", "type": "bool" }]
   }
 ]
