@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.497.0](https://github.com/Zapper-fi/studio/compare/v0.496.0...v0.497.0) (2023-07-10)
+
+
+### Features
+
+* **polynomial:** USDC/OP smart wallet balance ([#2813](https://github.com/Zapper-fi/studio/issues/2813)) ([af457e1](https://github.com/Zapper-fi/studio/commit/af457e19cf68539d82e5b28c2282b1eda14415e0))
+
 ## [0.496.0](https://github.com/Zapper-fi/studio/compare/v0.495.0...v0.496.0) (2023-07-09)
 
 
