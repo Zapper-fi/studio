@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.496.0](https://github.com/Zapper-fi/studio/compare/v0.495.0...v0.496.0) (2023-07-09)
+
+
+### Features
+
+* **origin-story:** Add wOETH app token ([#2811](https://github.com/Zapper-fi/studio/issues/2811)) ([24f8979](https://github.com/Zapper-fi/studio/commit/24f8979a44f7f62a4c5a64a2974629458a7ce8e2))
+
 ## [0.495.0](https://github.com/Zapper-fi/studio/compare/v0.494.0...v0.495.0) (2023-07-08)
 
 
