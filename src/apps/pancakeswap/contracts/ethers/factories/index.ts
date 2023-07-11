@@ -9,6 +9,7 @@ export { PancakeswapFarmBooster__factory } from './PancakeswapFarmBooster__facto
 export { PancakeswapIfoChef__factory } from './PancakeswapIfoChef__factory';
 export { PancakeswapPair__factory } from './PancakeswapPair__factory';
 export { PancakeswapSmartChef__factory } from './PancakeswapSmartChef__factory';
+export { PancakeswapSmartChefInit__factory } from './PancakeswapSmartChefInit__factory';
 export { PancakeswapStablePool__factory } from './PancakeswapStablePool__factory';
 export { PancakeswapStablePoolRegistry__factory } from './PancakeswapStablePoolRegistry__factory';
 export { PancakeswapSyrupCake__factory } from './PancakeswapSyrupCake__factory';

@@ -13,6 +13,7 @@ import {
   PancakeswapIfoChef__factory,
   PancakeswapPair__factory,
   PancakeswapSmartChef__factory,
+  PancakeswapSmartChefInit__factory,
   PancakeswapStablePool__factory,
   PancakeswapStablePoolRegistry__factory,
   PancakeswapSyrupCake__factory,
@@ -51,6 +52,9 @@ export class PancakeswapContractFactory extends ContractFactory {
   pancakeswapSmartChef({ address, network }: ContractOpts) {
     return PancakeswapSmartChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  pancakeswapSmartChefInit({ address, network }: ContractOpts) {
+    return PancakeswapSmartChefInit__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   pancakeswapStablePool({ address, network }: ContractOpts) {
     return PancakeswapStablePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -70,6 +74,7 @@ export type { PancakeswapFarmBooster } from './ethers';
 export type { PancakeswapIfoChef } from './ethers';
 export type { PancakeswapPair } from './ethers';
 export type { PancakeswapSmartChef } from './ethers';
+export type { PancakeswapSmartChefInit } from './ethers';
 export type { PancakeswapStablePool } from './ethers';
 export type { PancakeswapStablePoolRegistry } from './ethers';
 export type { PancakeswapSyrupCake } from './ethers';
