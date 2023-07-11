@@ -66,7 +66,10 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
     return [await contract.balanceOf(address)];
   }
 
-  async getDataProps(): Promise<PolynomialSmartWalletDataProp> {
+  async getDataProps({ contract }): Promise<PolynomialSmartWalletDataProp> {
+    if (await contract.symbol() != 'sUSD') {
+      return { liquidity: 0 };
+    }
     const { data } = await Axios.get<{ tvl: number }>('https://perps-api-experimental.polynomial.fi/snx-perps/tvl');
     return {
       liquidity: data.tvl,
