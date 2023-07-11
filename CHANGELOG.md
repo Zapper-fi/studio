@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.497.1](https://github.com/Zapper-fi/studio/compare/v0.497.0...v0.497.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* **polynomial:** fix triple count smart wallet tvl ([#2815](https://github.com/Zapper-fi/studio/issues/2815)) ([4741471](https://github.com/Zapper-fi/studio/commit/4741471929a7fff0cb3ec64e975abbd69a056fb2))
+* **studio:** Fix Syrup farms ([#2816](https://github.com/Zapper-fi/studio/issues/2816)) ([66abb8f](https://github.com/Zapper-fi/studio/commit/66abb8ffd2b2d1384a76f0d52d7791a8b098bdff))
+
 ## [0.497.0](https://github.com/Zapper-fi/studio/compare/v0.496.0...v0.497.0) (2023-07-10)
 
 
