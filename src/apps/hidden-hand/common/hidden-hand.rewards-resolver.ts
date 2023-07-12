@@ -202,8 +202,8 @@ export class HiddenHandRewardsResolver {
     ttl: 60 * 60 * 12, // 12hrs
   })
   private async getRawData(): Promise<HiddenHandDistribution> {
-    const resV1 = await axios.get('http://localhost:3001/distribution/v1');
-    const resV2 = await axios.get('http://localhost:3001/distribution/v2');
+    const resV1 = await axios.get('https://api.hiddenhand.finance/distribution/v1');
+    const resV2 = await axios.get('https://api.hiddenhand.finance/distribution/v2');
     const distribution: HiddenHandDistribution = {};
 
     for (const item of resV1.data.data) {
