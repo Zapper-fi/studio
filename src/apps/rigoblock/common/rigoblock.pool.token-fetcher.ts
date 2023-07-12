@@ -160,6 +160,8 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     appToken,
     multicall,
   }: GetPricePerShareParams<SmartPool, DefaultAppTokenDataProps, RigoblockSmartPoolDefinition>) {
+    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
+
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
         const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
@@ -169,7 +171,9 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
       }),
     );
 
-    return reserves.map(r => r / appToken.supply);
+    return reserves.map(r => {
+      return r == 0 ? 0 : r / appToken.supply;
+    });
   }
 
   async getLabel({

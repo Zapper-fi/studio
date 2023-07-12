@@ -132,6 +132,8 @@ export abstract class PancakeswapPoolDynamicTokenFetcher<
     definition,
     appToken,
   }: GetPricePerShareParams<Erc20, PancakeswapPoolTokenDataProps, PancakeswapPoolDefinition>) {
+    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
+
     const contract = multicall.wrap(this.resolveStablePool(definition.swapAddress));
     const reservesRaw = await this.resolveReserves({ contract, multicall });
 

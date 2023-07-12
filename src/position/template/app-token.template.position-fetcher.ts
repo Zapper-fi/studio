@@ -265,7 +265,6 @@ export abstract class AppTokenTemplatePositionFetcher<
           ]);
 
           const supply = Number(totalSupplyRaw) / 10 ** decimals;
-          if (supply === 0) return null;
 
           // Resolve price per share stage
           const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
