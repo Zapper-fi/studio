@@ -265,12 +265,14 @@ export abstract class AppTokenTemplatePositionFetcher<
           ]);
 
           const supply = Number(totalSupplyRaw) / 10 ** decimals;
-          if (supply === 0) return null;
 
           // Resolve price per share stage
           const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
           const pricePerShareContext = { ...baseContext, appToken: pricePerShareStageFragment };
-          const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
+          const pricePerShare =
+            supply !== 0
+              ? await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]))
+              : Array(baseFragment.tokens.length).fill(1);
 
           // Resolve Price Stage
           const priceStageFragment = { ...pricePerShareStageFragment, pricePerShare };
