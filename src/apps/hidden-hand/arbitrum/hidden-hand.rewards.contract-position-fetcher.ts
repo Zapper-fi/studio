@@ -3,6 +3,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { HiddenHandRewardsContractPositionFetcher } from '../common/hidden-hand.rewards.contract-position-fetcher';
 
 @PositionTemplate()
-export class OptimismHiddenHandRewardsContractPositionFetcher extends HiddenHandRewardsContractPositionFetcher {
-  groupLabel = 'Optimism Rewards';
+export class ArbitrumHiddenHandRewardsContractPositionFetcher extends HiddenHandRewardsContractPositionFetcher {
+  groupLabel = 'Arbitrum Rewards';
 }

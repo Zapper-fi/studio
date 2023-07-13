@@ -4,5 +4,5 @@ import { HiddenHandRewardsContractPositionFetcher } from '../common/hidden-hand.
 
 @PositionTemplate()
 export class EthereumHiddenHandRewardsContractPositionFetcher extends HiddenHandRewardsContractPositionFetcher {
-  groupLabel: string = 'Ethereum Rewards';
+  groupLabel = 'Ethereum Rewards';
 }
