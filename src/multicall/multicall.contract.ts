@@ -1,6 +1,6 @@
 import { Fragment, FunctionFragment, JsonFragment } from '@ethersproject/abi';
 
-import { ContractCall } from './multicall.ethers';
+import { ContractCall } from './multicall.interface';
 
 export class MulticallContract {
   private _address: string;

@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.499.0](https://github.com/Zapper-fi/studio/compare/v0.498.0...v0.499.0) (2023-07-13)
+
+
+### Features
+
+* **studio:** Add load to Multicall wrapper interface ([#2825](https://github.com/Zapper-fi/studio/issues/2825)) ([ce4285b](https://github.com/Zapper-fi/studio/commit/ce4285beedee24124e1002b48811426f8a9b94fb))
+
 ## [0.498.0](https://github.com/Zapper-fi/studio/compare/v0.497.2...v0.498.0) (2023-07-13)
 
 
