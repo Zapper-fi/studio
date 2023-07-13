@@ -152,7 +152,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
           },
 
           displayProps: {
-            label: `${isRecipient ? 'Available' : 'Deposited'} ${token.symbol} on Sablier`,
+            label: `${isRecipient ? 'Available' : 'Deposited'} ${token.symbol} on Sablier stream #${stream.streamId}`,
             secondaryLabel: buildDollarDisplayItem(token.price),
             images: getImagesFromToken(token),
           },

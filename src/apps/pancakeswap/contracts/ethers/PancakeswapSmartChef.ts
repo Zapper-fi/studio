@@ -19,172 +19,105 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 
 export interface PancakeswapSmartChefInterface extends utils.Interface {
   functions: {
-    'PRECISION_FACTOR()': FunctionFragment;
-    'SMART_CHEF_FACTORY()': FunctionFragment;
-    'accTokenPerShare()': FunctionFragment;
     'bonusEndBlock()': FunctionFragment;
     'deposit(uint256)': FunctionFragment;
     'emergencyRewardWithdraw(uint256)': FunctionFragment;
     'emergencyWithdraw()': FunctionFragment;
-    'hasUserLimit()': FunctionFragment;
-    'initialize(address,address,uint256,uint256,uint256,uint256,address)': FunctionFragment;
-    'isInitialized()': FunctionFragment;
-    'lastRewardBlock()': FunctionFragment;
+    'getMultiplier(uint256,uint256)': FunctionFragment;
+    'massUpdatePools()': FunctionFragment;
     'owner()': FunctionFragment;
     'pendingReward(address)': FunctionFragment;
-    'poolLimitPerUser()': FunctionFragment;
-    'recoverWrongTokens(address,uint256)': FunctionFragment;
+    'poolInfo(uint256)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'rewardPerBlock()': FunctionFragment;
     'rewardToken()': FunctionFragment;
-    'stakedToken()': FunctionFragment;
     'startBlock()': FunctionFragment;
     'stopReward()': FunctionFragment;
+    'syrup()': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'updatePoolLimitPerUser(bool,uint256)': FunctionFragment;
-    'updateRewardPerBlock(uint256)': FunctionFragment;
-    'updateStartAndEndBlocks(uint256,uint256)': FunctionFragment;
+    'updatePool(uint256)': FunctionFragment;
     'userInfo(address)': FunctionFragment;
     'withdraw(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'PRECISION_FACTOR'
-      | 'SMART_CHEF_FACTORY'
-      | 'accTokenPerShare'
       | 'bonusEndBlock'
       | 'deposit'
       | 'emergencyRewardWithdraw'
       | 'emergencyWithdraw'
-      | 'hasUserLimit'
-      | 'initialize'
-      | 'isInitialized'
-      | 'lastRewardBlock'
+      | 'getMultiplier'
+      | 'massUpdatePools'
       | 'owner'
       | 'pendingReward'
-      | 'poolLimitPerUser'
-      | 'recoverWrongTokens'
+      | 'poolInfo'
       | 'renounceOwnership'
       | 'rewardPerBlock'
       | 'rewardToken'
-      | 'stakedToken'
       | 'startBlock'
       | 'stopReward'
+      | 'syrup'
       | 'transferOwnership'
-      | 'updatePoolLimitPerUser'
-      | 'updateRewardPerBlock'
-      | 'updateStartAndEndBlocks'
+      | 'updatePool'
       | 'userInfo'
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'PRECISION_FACTOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SMART_CHEF_FACTORY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accTokenPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bonusEndBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyRewardWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'hasUserLimit', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'initialize',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-    ],
+    functionFragment: 'getMultiplier',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'isInitialized', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastRewardBlock', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingReward', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'poolLimitPerUser', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'recoverWrongTokens',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakedToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stopReward', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'syrup', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'updatePoolLimitPerUser',
-    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'updateRewardPerBlock', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(
-    functionFragment: 'updateStartAndEndBlocks',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(functionFragment: 'PRECISION_FACTOR', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SMART_CHEF_FACTORY', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accTokenPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'bonusEndBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyRewardWithdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'hasUserLimit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isInitialized', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lastRewardBlock', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getMultiplier', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'massUpdatePools', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingReward', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolLimitPerUser', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'recoverWrongTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardPerBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakedToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'startBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'stopReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'syrup', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updatePoolLimitPerUser', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateRewardPerBlock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateStartAndEndBlocks', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updatePool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'userInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    'AdminTokenRecovery(address,uint256)': EventFragment;
     'Deposit(address,uint256)': EventFragment;
     'EmergencyWithdraw(address,uint256)': EventFragment;
-    'NewPoolLimit(uint256)': EventFragment;
-    'NewRewardPerBlock(uint256)': EventFragment;
-    'NewStartAndEndBlocks(uint256,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
-    'RewardsStop(uint256)': EventFragment;
     'Withdraw(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'AdminTokenRecovery'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'EmergencyWithdraw'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'NewPoolLimit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'NewRewardPerBlock'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'NewStartAndEndBlocks'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RewardsStop'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
-
-export interface AdminTokenRecoveryEventObject {
-  tokenRecovered: string;
-  amount: BigNumber;
-}
-export type AdminTokenRecoveryEvent = TypedEvent<[string, BigNumber], AdminTokenRecoveryEventObject>;
-
-export type AdminTokenRecoveryEventFilter = TypedEventFilter<AdminTokenRecoveryEvent>;
 
 export interface DepositEventObject {
   user: string;
@@ -202,28 +135,6 @@ export type EmergencyWithdrawEvent = TypedEvent<[string, BigNumber], EmergencyWi
 
 export type EmergencyWithdrawEventFilter = TypedEventFilter<EmergencyWithdrawEvent>;
 
-export interface NewPoolLimitEventObject {
-  poolLimitPerUser: BigNumber;
-}
-export type NewPoolLimitEvent = TypedEvent<[BigNumber], NewPoolLimitEventObject>;
-
-export type NewPoolLimitEventFilter = TypedEventFilter<NewPoolLimitEvent>;
-
-export interface NewRewardPerBlockEventObject {
-  rewardPerBlock: BigNumber;
-}
-export type NewRewardPerBlockEvent = TypedEvent<[BigNumber], NewRewardPerBlockEventObject>;
-
-export type NewRewardPerBlockEventFilter = TypedEventFilter<NewRewardPerBlockEvent>;
-
-export interface NewStartAndEndBlocksEventObject {
-  startBlock: BigNumber;
-  endBlock: BigNumber;
-}
-export type NewStartAndEndBlocksEvent = TypedEvent<[BigNumber, BigNumber], NewStartAndEndBlocksEventObject>;
-
-export type NewStartAndEndBlocksEventFilter = TypedEventFilter<NewStartAndEndBlocksEvent>;
-
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
@@ -231,13 +142,6 @@ export interface OwnershipTransferredEventObject {
 export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
-
-export interface RewardsStopEventObject {
-  blockNumber: BigNumber;
-}
-export type RewardsStopEvent = TypedEvent<[BigNumber], RewardsStopEventObject>;
-
-export type RewardsStopEventFilter = TypedEventFilter<RewardsStopEvent>;
 
 export interface WithdrawEventObject {
   user: string;
@@ -270,12 +174,6 @@ export interface PancakeswapSmartChef extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    PRECISION_FACTOR(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    SMART_CHEF_FACTORY(overrides?: CallOverrides): Promise<[string]>;
-
-    accTokenPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     bonusEndBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
@@ -290,34 +188,29 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    hasUserLimit(overrides?: CallOverrides): Promise<[boolean]>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    initialize(
-      _stakedToken: PromiseOrValue<string>,
-      _rewardToken: PromiseOrValue<string>,
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      _admin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
-
-    lastRewardBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    poolLimitPerUser(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    recoverWrongTokens(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    poolInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<
+      [string, BigNumber, BigNumber, BigNumber] & {
+        lpToken: string;
+        allocPoint: BigNumber;
+        lastRewardBlock: BigNumber;
+        accCakePerShare: BigNumber;
+      }
+    >;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -325,31 +218,19 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
-    stakedToken(overrides?: CallOverrides): Promise<[string]>;
-
     startBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    syrup(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updatePoolLimitPerUser(
-      _hasUserLimit: PromiseOrValue<boolean>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    updateRewardPerBlock(
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    updateStartAndEndBlocks(
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -363,12 +244,6 @@ export interface PancakeswapSmartChef extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
-
-  PRECISION_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-  SMART_CHEF_FACTORY(overrides?: CallOverrides): Promise<string>;
-
-  accTokenPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -384,34 +259,29 @@ export interface PancakeswapSmartChef extends BaseContract {
 
   emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  hasUserLimit(overrides?: CallOverrides): Promise<boolean>;
+  getMultiplier(
+    _from: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  initialize(
-    _stakedToken: PromiseOrValue<string>,
-    _rewardToken: PromiseOrValue<string>,
-    _rewardPerBlock: PromiseOrValue<BigNumberish>,
-    _startBlock: PromiseOrValue<BigNumberish>,
-    _bonusEndBlock: PromiseOrValue<BigNumberish>,
-    _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-    _admin: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  isInitialized(overrides?: CallOverrides): Promise<boolean>;
-
-  lastRewardBlock(overrides?: CallOverrides): Promise<BigNumber>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  poolLimitPerUser(overrides?: CallOverrides): Promise<BigNumber>;
-
-  recoverWrongTokens(
-    _tokenAddress: PromiseOrValue<string>,
-    _tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  poolInfo(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<
+    [string, BigNumber, BigNumber, BigNumber] & {
+      lpToken: string;
+      allocPoint: BigNumber;
+      lastRewardBlock: BigNumber;
+      accCakePerShare: BigNumber;
+    }
+  >;
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -419,31 +289,19 @@ export interface PancakeswapSmartChef extends BaseContract {
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
-  stakedToken(overrides?: CallOverrides): Promise<string>;
-
   startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  syrup(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updatePoolLimitPerUser(
-    _hasUserLimit: PromiseOrValue<boolean>,
-    _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  updateRewardPerBlock(
-    _rewardPerBlock: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  updateStartAndEndBlocks(
-    _startBlock: PromiseOrValue<BigNumberish>,
-    _bonusEndBlock: PromiseOrValue<BigNumberish>,
+  updatePool(
+    _pid: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -458,12 +316,6 @@ export interface PancakeswapSmartChef extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    PRECISION_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SMART_CHEF_FACTORY(overrides?: CallOverrides): Promise<string>;
-
-    accTokenPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
     bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
@@ -472,34 +324,29 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
 
-    hasUserLimit(overrides?: CallOverrides): Promise<boolean>;
-
-    initialize(
-      _stakedToken: PromiseOrValue<string>,
-      _rewardToken: PromiseOrValue<string>,
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      _admin: PromiseOrValue<string>,
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
-    isInitialized(overrides?: CallOverrides): Promise<boolean>;
-
-    lastRewardBlock(overrides?: CallOverrides): Promise<BigNumber>;
+    massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolLimitPerUser(overrides?: CallOverrides): Promise<BigNumber>;
-
-    recoverWrongTokens(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
+    poolInfo(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<void>;
+    ): Promise<
+      [string, BigNumber, BigNumber, BigNumber] & {
+        lpToken: string;
+        allocPoint: BigNumber;
+        lastRewardBlock: BigNumber;
+        accCakePerShare: BigNumber;
+      }
+    >;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -507,27 +354,15 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    stakedToken(overrides?: CallOverrides): Promise<string>;
-
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     stopReward(overrides?: CallOverrides): Promise<void>;
 
+    syrup(overrides?: CallOverrides): Promise<string>;
+
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePoolLimitPerUser(
-      _hasUserLimit: PromiseOrValue<boolean>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    updateRewardPerBlock(_rewardPerBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    updateStartAndEndBlocks(
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
       arg0: PromiseOrValue<string>,
@@ -538,9 +373,6 @@ export interface PancakeswapSmartChef extends BaseContract {
   };
 
   filters: {
-    'AdminTokenRecovery(address,uint256)'(tokenRecovered?: null, amount?: null): AdminTokenRecoveryEventFilter;
-    AdminTokenRecovery(tokenRecovered?: null, amount?: null): AdminTokenRecoveryEventFilter;
-
     'Deposit(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
     Deposit(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
@@ -549,15 +381,6 @@ export interface PancakeswapSmartChef extends BaseContract {
       amount?: null,
     ): EmergencyWithdrawEventFilter;
     EmergencyWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyWithdrawEventFilter;
-
-    'NewPoolLimit(uint256)'(poolLimitPerUser?: null): NewPoolLimitEventFilter;
-    NewPoolLimit(poolLimitPerUser?: null): NewPoolLimitEventFilter;
-
-    'NewRewardPerBlock(uint256)'(rewardPerBlock?: null): NewRewardPerBlockEventFilter;
-    NewRewardPerBlock(rewardPerBlock?: null): NewRewardPerBlockEventFilter;
-
-    'NewStartAndEndBlocks(uint256,uint256)'(startBlock?: null, endBlock?: null): NewStartAndEndBlocksEventFilter;
-    NewStartAndEndBlocks(startBlock?: null, endBlock?: null): NewStartAndEndBlocksEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
@@ -568,20 +391,11 @@ export interface PancakeswapSmartChef extends BaseContract {
       newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    'RewardsStop(uint256)'(blockNumber?: null): RewardsStopEventFilter;
-    RewardsStop(blockNumber?: null): RewardsStopEventFilter;
-
     'Withdraw(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
     Withdraw(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
-    PRECISION_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SMART_CHEF_FACTORY(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accTokenPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
     bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
@@ -596,34 +410,19 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    hasUserLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-    initialize(
-      _stakedToken: PromiseOrValue<string>,
-      _rewardToken: PromiseOrValue<string>,
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      _admin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastRewardBlock(overrides?: CallOverrides): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolLimitPerUser(overrides?: CallOverrides): Promise<BigNumber>;
-
-    recoverWrongTokens(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
@@ -631,31 +430,19 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakedToken(overrides?: CallOverrides): Promise<BigNumber>;
-
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    syrup(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePoolLimitPerUser(
-      _hasUserLimit: PromiseOrValue<boolean>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    updateRewardPerBlock(
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    updateStartAndEndBlocks(
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -668,12 +455,6 @@ export interface PancakeswapSmartChef extends BaseContract {
   };
 
   populateTransaction: {
-    PRECISION_FACTOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    SMART_CHEF_FACTORY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    accTokenPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     bonusEndBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
@@ -688,34 +469,19 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    hasUserLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initialize(
-      _stakedToken: PromiseOrValue<string>,
-      _rewardToken: PromiseOrValue<string>,
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      _admin: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lastRewardBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolLimitPerUser(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    recoverWrongTokens(
-      _tokenAddress: PromiseOrValue<string>,
-      _tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
@@ -723,31 +489,19 @@ export interface PancakeswapSmartChef extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stakedToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     startBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    syrup(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updatePoolLimitPerUser(
-      _hasUserLimit: PromiseOrValue<boolean>,
-      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    updateRewardPerBlock(
-      _rewardPerBlock: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    updateStartAndEndBlocks(
-      _startBlock: PromiseOrValue<BigNumberish>,
-      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 

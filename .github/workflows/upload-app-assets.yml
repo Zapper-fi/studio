@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: 'lts/gallium'
+          node-version: 'lts/hydrogen'
       - name: Compile new apps images
         run: |
           mkdir -p tmp/assets/apps

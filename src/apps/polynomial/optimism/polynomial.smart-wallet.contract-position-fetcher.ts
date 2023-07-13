@@ -8,8 +8,11 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
   GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 
 import { PolynomialAccountResolver } from '../common/polynomial.account-resolver';
 
@@ -19,7 +22,11 @@ export type PolynomialSmartWalletDataProp = {
 
 @PositionTemplate()
 export class OptimismPolynomialSmartWalletContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Erc20> {
-  sUSD = '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9';
+  supportedTokens = [
+    '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9', //sUSD
+    '0x7f5c764cbc14f9669b88837ca1490cca17c31607', //USDC
+    '0x4200000000000000000000000000000000000042'  //OP
+  ];
   groupLabel = 'Smart Wallet';
 
   constructor(
@@ -29,26 +36,26 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
     super(appToolkit);
   }
 
-  getContract(): Erc20 {
-    return this.appToolkit.globalContracts.erc20({ address: this.sUSD, network: this.network });
+  getContract(address: string): Erc20 {
+    return this.appToolkit.globalContracts.erc20({ address: address, network: this.network });
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: this.sUSD }];
+    return this.supportedTokens.map(token => {
+      return { address: token };
+    });
   }
 
-  async getLabel(): Promise<string> {
-    return 'Smart Wallet Balance';
+  async getLabel({ contractPosition }: GetDisplayPropsParams<Erc20>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getTokenDefinitions() {
-    return [
-      {
-        address: this.sUSD,
-        metaType: MetaType.SUPPLIED,
-        network: this.network,
-      },
-    ];
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Erc20>) {
+    return [{
+      address: contract.address,
+      metaType: MetaType.SUPPLIED,
+      network: this.network,
+    }];
   }
 
   async getAccountAddress(address: string): Promise<string> {
@@ -59,7 +66,10 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
     return [await contract.balanceOf(address)];
   }
 
-  async getDataProps(): Promise<PolynomialSmartWalletDataProp> {
+  async getDataProps({ contract }): Promise<PolynomialSmartWalletDataProp> {
+    if (await contract.symbol() != 'sUSD') {
+      return { liquidity: 0 };
+    }
     const { data } = await Axios.get<{ tvl: number }>('https://perps-api-experimental.polynomial.fi/snx-perps/tvl');
     return {
       liquidity: data.tvl,

@@ -9,6 +9,7 @@ export type { PancakeswapFarmBooster } from './PancakeswapFarmBooster';
 export type { PancakeswapIfoChef } from './PancakeswapIfoChef';
 export type { PancakeswapPair } from './PancakeswapPair';
 export type { PancakeswapSmartChef } from './PancakeswapSmartChef';
+export type { PancakeswapSmartChefInit } from './PancakeswapSmartChefInit';
 export type { PancakeswapStablePool } from './PancakeswapStablePool';
 export type { PancakeswapStablePoolRegistry } from './PancakeswapStablePoolRegistry';
 export type { PancakeswapSyrupCake } from './PancakeswapSyrupCake';
@@ -20,6 +21,7 @@ export { PancakeswapFactory__factory } from './factories/PancakeswapFactory__fac
 export { PancakeswapFarmBooster__factory } from './factories/PancakeswapFarmBooster__factory';
 export { PancakeswapIfoChef__factory } from './factories/PancakeswapIfoChef__factory';
 export { PancakeswapPair__factory } from './factories/PancakeswapPair__factory';
+export { PancakeswapSmartChefInit__factory } from './factories/PancakeswapSmartChefInit__factory';
 export { PancakeswapSmartChef__factory } from './factories/PancakeswapSmartChef__factory';
 export { PancakeswapStablePoolRegistry__factory } from './factories/PancakeswapStablePoolRegistry__factory';
 export { PancakeswapStablePool__factory } from './factories/PancakeswapStablePool__factory';

@@ -5,6 +5,4 @@ import { RigoblockPoolTokenFetcher } from '../common/rigoblock.pool.token-fetche
 @PositionTemplate()
 export class EthereumRigoblockPoolTokenFetcher extends RigoblockPoolTokenFetcher {
   groupLabel = 'Smart Pools';
-
-  blockedTokenAddresses = ['0x0000000000000000000000000000000000000001'];
 }

@@ -4,6 +4,130 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.497.2](https://github.com/Zapper-fi/studio/compare/v0.497.1...v0.497.2) (2023-07-12)
+
+
+### Reverts
+
+* **app-token-template:** Early return when supply is zero ([#2770](https://github.com/Zapper-fi/studio/issues/2770)) ([#2819](https://github.com/Zapper-fi/studio/issues/2819)) ([c2b377f](https://github.com/Zapper-fi/studio/commit/c2b377fe0c9a37d3a5dd3e931148514868ed73fa))
+
+## [0.497.1](https://github.com/Zapper-fi/studio/compare/v0.497.0...v0.497.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* **polynomial:** fix triple count smart wallet tvl ([#2815](https://github.com/Zapper-fi/studio/issues/2815)) ([4741471](https://github.com/Zapper-fi/studio/commit/4741471929a7fff0cb3ec64e975abbd69a056fb2))
+* **studio:** Fix Syrup farms ([#2816](https://github.com/Zapper-fi/studio/issues/2816)) ([66abb8f](https://github.com/Zapper-fi/studio/commit/66abb8ffd2b2d1384a76f0d52d7791a8b098bdff))
+
+## [0.497.0](https://github.com/Zapper-fi/studio/compare/v0.496.0...v0.497.0) (2023-07-10)
+
+
+### Features
+
+* **polynomial:** USDC/OP smart wallet balance ([#2813](https://github.com/Zapper-fi/studio/issues/2813)) ([af457e1](https://github.com/Zapper-fi/studio/commit/af457e19cf68539d82e5b28c2282b1eda14415e0))
+
+## [0.496.0](https://github.com/Zapper-fi/studio/compare/v0.495.0...v0.496.0) (2023-07-09)
+
+
+### Features
+
+* **origin-story:** Add wOETH app token ([#2811](https://github.com/Zapper-fi/studio/issues/2811)) ([24f8979](https://github.com/Zapper-fi/studio/commit/24f8979a44f7f62a4c5a64a2974629458a7ce8e2))
+
+## [0.495.0](https://github.com/Zapper-fi/studio/compare/v0.494.0...v0.495.0) (2023-07-08)
+
+
+### Features
+
+* **stake-dao:** Add vault tokens, passive vault tokens, multi-gauge positions and add addresses to gauge position ([#2809](https://github.com/Zapper-fi/studio/issues/2809)) ([96ced2a](https://github.com/Zapper-fi/studio/commit/96ced2ace4f166b340a12a84b653a1b39e786c74))
+* **velodrome-v2:** Add pools ([#2793](https://github.com/Zapper-fi/studio/issues/2793)) ([73224b5](https://github.com/Zapper-fi/studio/commit/73224b515b070cea9f87837a30de721cdef8ae0d))
+
+## [0.494.0](https://github.com/Zapper-fi/studio/compare/v0.493.0...v0.494.0) (2023-07-06)
+
+
+### Features
+
+* **sonne:** claimable velo-v2 from staking ([#2807](https://github.com/Zapper-fi/studio/issues/2807)) ([b1cc924](https://github.com/Zapper-fi/studio/commit/b1cc9249a86837a108c5cfb9d04a1d44bb233ee3))
+
+## [0.493.0](https://github.com/Zapper-fi/studio/compare/v0.492.2...v0.493.0) (2023-07-05)
+
+
+### Features
+
+* **ramses-v2:** Add pool positions ([#2804](https://github.com/Zapper-fi/studio/issues/2804)) ([590c1b0](https://github.com/Zapper-fi/studio/commit/590c1b0811a00684466976d315c1f8c5ff9ff251))
+* **stake-dao:** Add Pendle, FPIS, APW and BPT locker tokens ([#2805](https://github.com/Zapper-fi/studio/issues/2805)) ([3af805c](https://github.com/Zapper-fi/studio/commit/3af805cf419b25f120c3e30c875714380b62aed0))
+
+## [0.492.2](https://github.com/Zapper-fi/studio/compare/v0.492.1...v0.492.2) (2023-07-05)
+
+
+### Bug Fixes
+
+* **ramses:** Remove farm positions ([#2801](https://github.com/Zapper-fi/studio/issues/2801)) ([2aefc93](https://github.com/Zapper-fi/studio/commit/2aefc9319de3c5f6f38333ffb83e4d374e7e9c2f))
+
+## [0.492.1](https://github.com/Zapper-fi/studio/compare/v0.492.0...v0.492.1) (2023-07-04)
+
+
+### Bug Fixes
+
+* **dolomite:** Update subgraph URL ([#2799](https://github.com/Zapper-fi/studio/issues/2799)) ([a99fc56](https://github.com/Zapper-fi/studio/commit/a99fc5659a7ead0cceb56f5a76f5052d488cf859))
+
+## [0.492.0](https://github.com/Zapper-fi/studio/compare/v0.491.0...v0.492.0) (2023-07-04)
+
+
+### Features
+
+* Update readme with Node Hydrogen version ([#2797](https://github.com/Zapper-fi/studio/issues/2797)) ([2f505ef](https://github.com/Zapper-fi/studio/commit/2f505ef07c5b6fd848f71b7c6b61927594ed9041))
+
+## [0.491.0](https://github.com/Zapper-fi/studio/compare/v0.490.0...v0.491.0) (2023-07-02)
+
+
+### Features
+
+* **pika-protocol:** Add EsPika and Vest Escrow Pika position ([#2794](https://github.com/Zapper-fi/studio/issues/2794)) ([646e201](https://github.com/Zapper-fi/studio/commit/646e20151cfaf8bcbd0a7960d3c044a0bf651560))
+
+## [0.490.0](https://github.com/Zapper-fi/studio/compare/v0.489.1...v0.490.0) (2023-07-01)
+
+
+### Features
+
+* **umami-finance:** GLP vaults ([#2791](https://github.com/Zapper-fi/studio/issues/2791)) ([c8f4c9a](https://github.com/Zapper-fi/studio/commit/c8f4c9a41f2433cc9b8f4e590385da1e8695fc3c))
+
+## [0.489.1](https://github.com/Zapper-fi/studio/compare/v0.489.0...v0.489.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* **kyberswap-elastic:** Update arbitrum and bsc subgraph url ([#2789](https://github.com/Zapper-fi/studio/issues/2789)) ([2836bcd](https://github.com/Zapper-fi/studio/commit/2836bcd1550d103769a4d92bb1701f2557210157))
+* **raft:** Early return if there's no balances ([#2787](https://github.com/Zapper-fi/studio/issues/2787)) ([4965dec](https://github.com/Zapper-fi/studio/commit/4965dece70d191fdd2d7e7860b5445afee3155ae))
+* **teahouse:** Vault token query filter optimization ([#2790](https://github.com/Zapper-fi/studio/issues/2790)) ([8016e50](https://github.com/Zapper-fi/studio/commit/8016e5042679224fdb8990a2602d271d7b6f6c62))
+
+## [0.489.0](https://github.com/Zapper-fi/studio/compare/v0.488.0...v0.489.0) (2023-06-29)
+
+
+### Features
+
+* **velodrome-v2:** create app + veNFT positions ([#2785](https://github.com/Zapper-fi/studio/issues/2785)) ([47a062c](https://github.com/Zapper-fi/studio/commit/47a062c24776ca4a8666cf1e13796a10a2e7b955))
+
+## [0.488.0](https://github.com/Zapper-fi/studio/compare/v0.487.0...v0.488.0) (2023-06-27)
+
+
+### Features
+
+* **thales:** overtime parlay amm lp ([#2783](https://github.com/Zapper-fi/studio/issues/2783)) ([f0dffa8](https://github.com/Zapper-fi/studio/commit/f0dffa8d470e390ba911eb3ca9a7bbadb5df529f))
+
+## [0.487.0](https://github.com/Zapper-fi/studio/compare/v0.486.0...v0.487.0) (2023-06-27)
+
+
+### Features
+
+* **rigoblock:** optimize underlying token definitions ([#2779](https://github.com/Zapper-fi/studio/issues/2779)) ([8a2089b](https://github.com/Zapper-fi/studio/commit/8a2089bb1a4b6990f6c38aca81704e855987d5ec))
+
+## [0.486.0](https://github.com/Zapper-fi/studio/compare/v0.485.1...v0.486.0) (2023-06-27)
+
+
+### Features
+
+* **studio:** Append stream ID to label ([#2780](https://github.com/Zapper-fi/studio/issues/2780)) ([162c203](https://github.com/Zapper-fi/studio/commit/162c203a6c6c0e8e52685781ee2ef741eef36686))
+
 ## [0.485.1](https://github.com/Zapper-fi/studio/compare/v0.485.0...v0.485.1) (2023-06-26)
 
 

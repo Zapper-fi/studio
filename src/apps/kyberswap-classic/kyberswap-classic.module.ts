@@ -29,26 +29,33 @@ import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './poly
   providers: [
     KyberswapClassicContractFactory,
     UniswapV2ContractFactory,
-    EthereumKyberSwapClassicKsPoolTokenFetcher,
-    EthereumKyberSwapClassicDmmPoolTokenFetcher,
-    EthereumKyberSwapClassicFarmContractPositionFetcher,
-    PolygonKyberSwapDmmClassicPoolTokenFetcher,
-    PolygonKyberSwapKsClassicPoolTokenFetcher,
-    PolygonKyberSwapClassicFarmContractPositionFetcher,
-    PolygonKyberSwapClassicLegacyFarmContractPositionFetcher,
-    PolygonKyberSwapClassicFarmV2ContractPositionFetcher,
-    AvalancheKyberSwapKsClassicKsPoolTokenFetcher,
-    AvalancheKyberSwapDmmClassicDmmPoolTokenFetcher,
-    AvalancheKyberSwapClassicFarmContractPositionFetcher,
-    FantomKyberSwapClassicKsPoolTokenFetcher,
-    FantomKyberSwapClassicDmmPoolTokenFetcher,
-    ArbitrumKyberSwapClassicKsPoolTokenFetcher,
+    // Arbitrum
     ArbitrumKyberSwapClassicFarmContractPositionFetcher,
+    ArbitrumKyberSwapClassicKsPoolTokenFetcher,
+    // Avalanche
+    AvalancheKyberSwapClassicFarmContractPositionFetcher,
+    AvalancheKyberSwapDmmClassicDmmPoolTokenFetcher,
+    AvalancheKyberSwapKsClassicKsPoolTokenFetcher,
+    // Binance-smart-chain
+    BinanceSmartChainKyberSwapClassicDmmPoolTokenFetcher,
     BinanceSmartChainKyberSwapClassicFarmV2ContractPositionFetcher,
     BinanceSmartChainKyberSwapClassicKsPoolTokenFetcher,
-    BinanceSmartChainKyberSwapClassicDmmPoolTokenFetcher,
-    OptimismKyberSwapClassicKsPoolTokenFetcher,
+    // Ethereum
+    EthereumKyberSwapClassicDmmPoolTokenFetcher,
+    EthereumKyberSwapClassicFarmContractPositionFetcher,
+    EthereumKyberSwapClassicKsPoolTokenFetcher,
+    // Fantom
+    FantomKyberSwapClassicDmmPoolTokenFetcher,
+    FantomKyberSwapClassicKsPoolTokenFetcher,
+    // Optimism
     OptimismKyberSwapClassicFarmContractPositionFetcher,
+    OptimismKyberSwapClassicKsPoolTokenFetcher,
+    // Polygon
+    PolygonKyberSwapClassicFarmContractPositionFetcher,
+    PolygonKyberSwapClassicFarmV2ContractPositionFetcher,
+    PolygonKyberSwapClassicLegacyFarmContractPositionFetcher,
+    PolygonKyberSwapDmmClassicPoolTokenFetcher,
+    PolygonKyberSwapKsClassicPoolTokenFetcher,
   ],
 })
 export class KyberSwapClassicAppModule extends AbstractApp() {}
