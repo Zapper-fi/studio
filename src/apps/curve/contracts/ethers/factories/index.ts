@@ -18,6 +18,8 @@ export { CurvePoolLegacy__factory } from './CurvePoolLegacy__factory';
 export { CurveRewardsOnlyGauge__factory } from './CurveRewardsOnlyGauge__factory';
 export { CurveStableFactory__factory } from './CurveStableFactory__factory';
 export { CurveStableRegistry__factory } from './CurveStableRegistry__factory';
+export { CurveTricryptoFactory__factory } from './CurveTricryptoFactory__factory';
+export { CurveTricryptoPool__factory } from './CurveTricryptoPool__factory';
 export { CurveVestingEscrow__factory } from './CurveVestingEscrow__factory';
 export { CurveVotingEscrow__factory } from './CurveVotingEscrow__factory';
 export { CurveVotingEscrowReward__factory } from './CurveVotingEscrowReward__factory';
