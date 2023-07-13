@@ -271,10 +271,8 @@ export class HiddenHandRewardsResolver {
     const distribution = await this.getRawData();
     const filteredDistribution: HiddenHandDistribution = {};
     const networkId = NETWORK_IDS[network] || '';
-    // Loop through each market
     for (const market in distribution) {
       const filteredMarket: { [tokenAddress: string]: HiddenHandReward[] } = {};
-      // Loop through each token
       for (const tokenAddress in distribution[market][networkId]) {
         const rewards = distribution[market][networkId][tokenAddress];
         const filteredRewards = rewards.filter(reward => reward.account === address);
