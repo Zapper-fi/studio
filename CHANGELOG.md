@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.498.0](https://github.com/Zapper-fi/studio/compare/v0.497.2...v0.498.0) (2023-07-13)
+
+
+### Features
+
+* **studio:** Support loading single contract call structs with Multicall wrapper ([#2824](https://github.com/Zapper-fi/studio/issues/2824)) ([559bf22](https://github.com/Zapper-fi/studio/commit/559bf223a2fa92904cda798de6dfdb8c6a2d86ba))
+* **velodrome-v2:** Add gauge and bribe positions ([#2822](https://github.com/Zapper-fi/studio/issues/2822)) ([b87ac13](https://github.com/Zapper-fi/studio/commit/b87ac13c3ddf4f42eae7312d9c187d9f8f64412f))
+
 ## [0.497.2](https://github.com/Zapper-fi/studio/compare/v0.497.1...v0.497.2) (2023-07-12)
 
 
