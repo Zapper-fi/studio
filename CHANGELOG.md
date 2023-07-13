@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.500.0](https://github.com/Zapper-fi/studio/compare/v0.499.0...v0.500.0) (2023-07-13)
+
+
+### Features
+
+* **hidden-hand:** Add V2 Markets and Reward Harvester ([#2821](https://github.com/Zapper-fi/studio/issues/2821)) ([058f45d](https://github.com/Zapper-fi/studio/commit/058f45de99b984a5d2f770464de87c121cceb47a))
+
 ## [0.499.0](https://github.com/Zapper-fi/studio/compare/v0.498.0...v0.499.0) (2023-07-13)
 
 
