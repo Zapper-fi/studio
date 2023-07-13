@@ -78,6 +78,7 @@ export class AuroraBastionProtocolPoolTokenFetcher extends AppTokenTemplatePosit
     multicall,
     appToken,
   }: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, BastionProtocolPoolTokenDefinition>) {
+    if (appToken.supply === 0) return [0, 0];
     const swapContract = this.contractFactory.bastionProtocolSwap({
       address: definition.swapAddress,
       network: this.network,

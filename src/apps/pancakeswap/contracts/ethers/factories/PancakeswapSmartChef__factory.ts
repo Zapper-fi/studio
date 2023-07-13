@@ -8,28 +8,35 @@ import type { PancakeswapSmartChef, PancakeswapSmartChefInterface } from '../Pan
 
 const _abi = [
   {
-    inputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
-  {
-    anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'address',
-        name: 'tokenRecovered',
+        internalType: 'contract IBEP20',
+        name: '_syrup',
         type: 'address',
       },
       {
-        indexed: false,
+        internalType: 'contract IBEP20',
+        name: '_rewardToken',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: 'amount',
+        name: '_rewardPerBlock',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_startBlock',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_bonusEndBlock',
         type: 'uint256',
       },
     ],
-    name: 'AdminTokenRecovery',
-    type: 'event',
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
     anonymous: false,
@@ -73,51 +80,6 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'poolLimitPerUser',
-        type: 'uint256',
-      },
-    ],
-    name: 'NewPoolLimit',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'rewardPerBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'NewRewardPerBlock',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'startBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'endBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'NewStartAndEndBlocks',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         internalType: 'address',
         name: 'previousOwner',
@@ -131,19 +93,6 @@ const _abi = [
       },
     ],
     name: 'OwnershipTransferred',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'blockNumber',
-        type: 'uint256',
-      },
-    ],
-    name: 'RewardsStop',
     type: 'event',
   },
   {
@@ -164,45 +113,6 @@ const _abi = [
     ],
     name: 'Withdraw',
     type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'PRECISION_FACTOR',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'SMART_CHEF_FACTORY',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'accTokenPerShare',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
     inputs: [],
@@ -251,85 +161,34 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'hasUserLimit',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
-        internalType: 'contract IBEP20',
-        name: '_stakedToken',
-        type: 'address',
-      },
-      {
-        internalType: 'contract IBEP20',
-        name: '_rewardToken',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
-        name: '_rewardPerBlock',
+        name: '_from',
         type: 'uint256',
       },
       {
         internalType: 'uint256',
-        name: '_startBlock',
+        name: '_to',
         type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_bonusEndBlock',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_poolLimitPerUser',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_admin',
-        type: 'address',
       },
     ],
-    name: 'initialize',
+    name: 'getMultiplier',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'massUpdatePools',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'isInitialized',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'lastRewardBlock',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -365,34 +224,37 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'poolLimitPerUser',
-    outputs: [
+    inputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
+    name: 'poolInfo',
+    outputs: [
       {
-        internalType: 'address',
-        name: '_tokenAddress',
+        internalType: 'contract IBEP20',
+        name: 'lpToken',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_tokenAmount',
+        name: 'allocPoint',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'lastRewardBlock',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'accCakePerShare',
         type: 'uint256',
       },
     ],
-    name: 'recoverWrongTokens',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -430,19 +292,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'stakedToken',
-    outputs: [
-      {
-        internalType: 'contract IBEP20',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'startBlock',
     outputs: [
       {
@@ -462,6 +311,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'syrup',
+    outputs: [
+      {
+        internalType: 'contract IBEP20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -477,48 +339,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'bool',
-        name: '_hasUserLimit',
-        type: 'bool',
-      },
-      {
         internalType: 'uint256',
-        name: '_poolLimitPerUser',
+        name: '_pid',
         type: 'uint256',
       },
     ],
-    name: 'updatePoolLimitPerUser',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_rewardPerBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'updateRewardPerBlock',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_startBlock',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_bonusEndBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'updateStartAndEndBlocks',
+    name: 'updatePool',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

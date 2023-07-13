@@ -77,7 +77,7 @@ export declare namespace IVotingEscrow {
   };
 }
 
-export interface VelodromeVeInterface extends utils.Interface {
+export interface VelodromeV2VeInterface extends utils.Interface {
   functions: {
     'CLOCK_MODE()': FunctionFragment;
     'DELEGATION_TYPEHASH()': FunctionFragment;
@@ -727,12 +727,12 @@ export type WithdrawManagedEvent = TypedEvent<
 
 export type WithdrawManagedEventFilter = TypedEventFilter<WithdrawManagedEvent>;
 
-export interface VelodromeVe extends BaseContract {
+export interface VelodromeV2Ve extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VelodromeVeInterface;
+  interface: VelodromeV2VeInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { VelodromeVe, VelodromeVeInterface } from '../VelodromeVe';
+import type { VelodromeV2Ve, VelodromeV2VeInterface } from '../VelodromeV2Ve';
 
 const _abi = [
   {
@@ -2303,12 +2303,12 @@ const _abi = [
   },
 ];
 
-export class VelodromeVe__factory {
+export class VelodromeV2Ve__factory {
   static readonly abi = _abi;
-  static createInterface(): VelodromeVeInterface {
-    return new utils.Interface(_abi) as VelodromeVeInterface;
+  static createInterface(): VelodromeV2VeInterface {
+    return new utils.Interface(_abi) as VelodromeV2VeInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): VelodromeVe {
-    return new Contract(address, _abi, signerOrProvider) as VelodromeVe;
+  static connect(address: string, signerOrProvider: Signer | Provider): VelodromeV2Ve {
+    return new Contract(address, _abi, signerOrProvider) as VelodromeV2Ve;
   }
 }

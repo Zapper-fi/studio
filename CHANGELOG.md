@@ -4,6 +4,51 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.498.0](https://github.com/Zapper-fi/studio/compare/v0.497.2...v0.498.0) (2023-07-13)
+
+
+### Features
+
+* **studio:** Support loading single contract call structs with Multicall wrapper ([#2824](https://github.com/Zapper-fi/studio/issues/2824)) ([559bf22](https://github.com/Zapper-fi/studio/commit/559bf223a2fa92904cda798de6dfdb8c6a2d86ba))
+* **velodrome-v2:** Add gauge and bribe positions ([#2822](https://github.com/Zapper-fi/studio/issues/2822)) ([b87ac13](https://github.com/Zapper-fi/studio/commit/b87ac13c3ddf4f42eae7312d9c187d9f8f64412f))
+
+## [0.497.2](https://github.com/Zapper-fi/studio/compare/v0.497.1...v0.497.2) (2023-07-12)
+
+
+### Reverts
+
+* **app-token-template:** Early return when supply is zero ([#2770](https://github.com/Zapper-fi/studio/issues/2770)) ([#2819](https://github.com/Zapper-fi/studio/issues/2819)) ([c2b377f](https://github.com/Zapper-fi/studio/commit/c2b377fe0c9a37d3a5dd3e931148514868ed73fa))
+
+## [0.497.1](https://github.com/Zapper-fi/studio/compare/v0.497.0...v0.497.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* **polynomial:** fix triple count smart wallet tvl ([#2815](https://github.com/Zapper-fi/studio/issues/2815)) ([4741471](https://github.com/Zapper-fi/studio/commit/4741471929a7fff0cb3ec64e975abbd69a056fb2))
+* **studio:** Fix Syrup farms ([#2816](https://github.com/Zapper-fi/studio/issues/2816)) ([66abb8f](https://github.com/Zapper-fi/studio/commit/66abb8ffd2b2d1384a76f0d52d7791a8b098bdff))
+
+## [0.497.0](https://github.com/Zapper-fi/studio/compare/v0.496.0...v0.497.0) (2023-07-10)
+
+
+### Features
+
+* **polynomial:** USDC/OP smart wallet balance ([#2813](https://github.com/Zapper-fi/studio/issues/2813)) ([af457e1](https://github.com/Zapper-fi/studio/commit/af457e19cf68539d82e5b28c2282b1eda14415e0))
+
+## [0.496.0](https://github.com/Zapper-fi/studio/compare/v0.495.0...v0.496.0) (2023-07-09)
+
+
+### Features
+
+* **origin-story:** Add wOETH app token ([#2811](https://github.com/Zapper-fi/studio/issues/2811)) ([24f8979](https://github.com/Zapper-fi/studio/commit/24f8979a44f7f62a4c5a64a2974629458a7ce8e2))
+
+## [0.495.0](https://github.com/Zapper-fi/studio/compare/v0.494.0...v0.495.0) (2023-07-08)
+
+
+### Features
+
+* **stake-dao:** Add vault tokens, passive vault tokens, multi-gauge positions and add addresses to gauge position ([#2809](https://github.com/Zapper-fi/studio/issues/2809)) ([96ced2a](https://github.com/Zapper-fi/studio/commit/96ced2ace4f166b340a12a84b653a1b39e786c74))
+* **velodrome-v2:** Add pools ([#2793](https://github.com/Zapper-fi/studio/issues/2793)) ([73224b5](https://github.com/Zapper-fi/studio/commit/73224b515b070cea9f87837a30de721cdef8ae0d))
+
 ## [0.494.0](https://github.com/Zapper-fi/studio/compare/v0.493.0...v0.494.0) (2023-07-06)
 
 
