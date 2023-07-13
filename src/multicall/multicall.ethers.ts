@@ -5,16 +5,7 @@ import { FunctionFragment, Interface } from 'ethers/lib/utils';
 import { Multicall } from '~contract/contracts';
 
 import { MulticallContract } from './multicall.contract';
-import { IMulticallWrapper } from './multicall.interface';
-
-export type ContractCall = {
-  fragment: FunctionFragment;
-  address: string;
-  params: any[];
-  stack?: string;
-};
-
-type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 'address'>;
+import { ContractCall, IMulticallWrapper, TargetContract } from './multicall.interface';
 
 export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
 
