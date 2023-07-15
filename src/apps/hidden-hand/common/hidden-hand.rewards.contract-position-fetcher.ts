@@ -1,24 +1,25 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
 import { Contract } from 'ethers';
+import _, { sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
-import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
 import {
   DefaultContractPositionDefinition,
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
+import { NETWORK_IDS } from '~types';
 
 import { HiddenHandContractFactory, HiddenHandRewardDistributor } from '../contracts';
-import { HiddenHandRewardsResolver, HiddenHandRewardsDefinition, PROTOCOLS, REWARD_DISTRIBUTOR } from './hidden-hand.rewards-resolver';
-import { ContractPositionBalance } from '~position/position-balance.interface';
-import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
-import _, { sumBy } from 'lodash';
-import { MetaType } from '~position/position.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { NETWORK_IDS } from '~types';
+
+import { HiddenHandRewardsResolver, HiddenHandRewardsDefinition, PROTOCOLS } from './hidden-hand.rewards-resolver';
 
 export abstract class HiddenHandRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   HiddenHandRewardDistributor,
@@ -48,16 +49,29 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     return definitions;
   }
 
-  async getTokenDefinitions(
-    { address, contract }: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
-  ): Promise<UnderlyingTokenDefinition[] | null> {
+  async getTokenDefinitions({
+    address,
+    contract,
+  }: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>): Promise<
+    UnderlyingTokenDefinition[] | null
+  > {
     const distribution = await this.rewardsResolver.getData();
     const protocols = PROTOCOLS[this.network] || {};
     const neworkId = NETWORK_IDS[this.network] || '';
-    const vault = (await contract.BRIBE_VAULT()).toLowerCase();
+    let vault: string;
+    // ignore reward harvester contracts
+    if (
+      address === '0xd23aa7edf42cd3fc4cd391faabc0c207b1c86542' ||
+      address === '0xca795dc6f668add4801d2b92cf36c8fbcbeb8ac4' ||
+      address === '0x4573f58461acd1a6c743d9cde34a142ca18b6873'
+    ) {
+      vault = ZERO_ADDRESS;
+    } else {
+      vault = (await contract.BRIBE_VAULT()).toLowerCase();
+    }
 
     const marketEntry = Object.entries(protocols).find(
-      ([, protocolInfo]) => protocolInfo.address.toLowerCase() === address.toLowerCase()
+      ([, protocolInfo]) => protocolInfo.address.toLowerCase() === address.toLowerCase(),
     );
     const market = marketEntry ? marketEntry[0] : '';
 
@@ -76,15 +90,15 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
         metaType: MetaType.CLAIMABLE,
         address: token_,
         network: this.network,
-      }
+      };
     });
 
     return _.compact(tokenDefinitions);
   }
 
-  async getLabel(
-    { definition }: GetDisplayPropsParams<Contract, DefaultDataProps, HiddenHandRewardsDefinition>,
-  ): Promise<string> {
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<Contract, DefaultDataProps, HiddenHandRewardsDefinition>): Promise<string> {
     return definition.name;
   }
 
@@ -107,12 +121,11 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
         const marketEntry = Object.entries(protocols).find(
-          ([, protocolInfo]) => protocolInfo.address.toLowerCase() === contractPosition.address
+          ([, protocolInfo]) => protocolInfo.address.toLowerCase() === contractPosition.address,
         );
         const market = marketEntry ? marketEntry[0] : '';
         const tokens = await Promise.all(
           contractPosition.tokens.map(async bribeToken => {
-
             const claimable = distribution[market]?.[networkId]?.[bribeToken.address]?.[0].amount ?? 0;
             if (Number(claimable) > 0) {
               return drillBalance(bribeToken, claimable);

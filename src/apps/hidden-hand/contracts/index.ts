@@ -1,13 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { StaticJsonRpcProvider } from '@ethersproject/providers';
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 
-import { NetworkProviderService } from '~network-provider/network-provider.service';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { HiddenHandRewardDistributor__factory } from './ethers';
-import type { HiddenHandRewardDistributor } from './ethers';
-import { ContractFactory } from '~contract/contracts';
+import { HiddenHandHarvester__factory, HiddenHandRewardDistributor__factory } from './ethers';
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
@@ -19,6 +16,10 @@ export class HiddenHandContractFactory extends ContractFactory {
 
   hiddenHandRewardDistributor({ address, network }: ContractOpts) {
     return HiddenHandRewardDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+
+  hiddenHandHarvester({ address, network }: ContractOpts) {
+    return HiddenHandHarvester__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
