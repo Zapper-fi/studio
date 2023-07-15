@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.501.0](https://github.com/Zapper-fi/studio/compare/v0.500.0...v0.501.0) (2023-07-14)
+
+
+### Features
+
+* **polynomial:** Smart Wallet USDT/DAI balance ([#2829](https://github.com/Zapper-fi/studio/issues/2829)) ([c703827](https://github.com/Zapper-fi/studio/commit/c703827b3c2a118ad0452454eabe09aa8ff4875c))
+
 ## [0.500.0](https://github.com/Zapper-fi/studio/compare/v0.499.0...v0.500.0) (2023-07-13)
 
 
