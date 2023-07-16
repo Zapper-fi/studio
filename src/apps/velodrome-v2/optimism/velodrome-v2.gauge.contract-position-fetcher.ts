@@ -18,7 +18,7 @@ import { VelodromeV2Gauge } from '../contracts/ethers/VelodromeV2Gauge';
 
 @PositionTemplate()
 export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VelodromeV2Gauge> {
-  groupLabel = 'Guages';
+  groupLabel = 'Gauges';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
