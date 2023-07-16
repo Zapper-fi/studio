@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.502.0](https://github.com/Zapper-fi/studio/compare/v0.501.0...v0.502.0) (2023-07-16)
+
+
+### Features
+
+* **curve:** Add TriCrypto pools ([#2827](https://github.com/Zapper-fi/studio/issues/2827)) ([77917c6](https://github.com/Zapper-fi/studio/commit/77917c6fb431a40a7f0baaf164ccafb8717ff616))
+
 ## [0.501.0](https://github.com/Zapper-fi/studio/compare/v0.500.0...v0.501.0) (2023-07-14)
 
 
