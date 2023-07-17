@@ -5,15 +5,15 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CurveContractFactory, CurveTricryptoFactory } from '../contracts';
 
 import {
-  CurveTriPoolDynamicTokenFetcher,
+  CurvePoolDynamicV2TokenFetcher,
   ResolveCoinAddressesParams,
   ResolvePoolCountParams,
   ResolveReservesParams,
   ResolveTokenAddressParams,
-} from './curve.tripool-dynamic.token-fetcher';
+} from './curve.pool-dynamic-v2.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
-export abstract class CurveTricryptoPoolTokenFetcher extends CurveTriPoolDynamicTokenFetcher<CurveTricryptoFactory> {
+export abstract class CurveFactoryV2PoolTokenFetcher extends CurvePoolDynamicV2TokenFetcher<CurveTricryptoFactory> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,

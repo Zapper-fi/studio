@@ -55,7 +55,7 @@ export type ResolveReservesParams<T extends Contract> = {
   multicall: IMulticallWrapper;
 };
 
-export abstract class CurveTriPoolDynamicTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
   CurveTricryptoPool,
   CurvePoolTokenDataProps
 > {
