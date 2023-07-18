@@ -1,3 +1,4 @@
+import { EthereumCurveCrvUsdPoolTokenFetcher } from './curve.crv-usd-pool.token-fetcher';
 import { EthereumCurveCryptoPoolGaugeContractPositionFetcher } from './curve.crypto-pool-gauge.contract-position-fetcher';
 import { EthereumCurveCryptoPoolTokenFetcher } from './curve.crypto-pool.token-fetcher';
 import { EthereumCurveFactoryCryptoPoolGaugeContractPositionFetcher } from './curve.factory-crypto-pool-gauge.contract-position-fetcher';
@@ -14,6 +15,7 @@ export const ETHEREUM_CURVE_PROVIDERS = [
   EthereumCurveCryptoPoolGaugeContractPositionFetcher,
   EthereumCurveCryptoPoolTokenFetcher,
   EthereumCurveTricryptoPoolTokenFetcher,
+  EthereumCurveCrvUsdPoolTokenFetcher,
   EthereumCurveFactoryCryptoPoolGaugeContractPositionFetcher,
   EthereumCurveFactoryCryptoPoolTokenFetcher,
   EthereumCurveFactoryStablePoolGaugeContractPositionFetcher,

@@ -3,7 +3,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { CurveFactoryV2PoolTokenFetcher } from '../common/curve.factory-pool-v2.token-fetcher';
 
 @PositionTemplate()
-export class EthereumCurveTricryptoPoolTokenFetcher extends CurveFactoryV2PoolTokenFetcher {
+export class EthereumCurveCrvUsdPoolTokenFetcher extends CurveFactoryV2PoolTokenFetcher {
   groupLabel = 'Pools';
-  factoryAddress = '0x0c0e5f2ff0ff18a3be9b835635039256dc4b4963';
+  factoryAddress = '0x4f8846ae9380b90d2e71d5e3d042dff3e7ebb40d';
 }
