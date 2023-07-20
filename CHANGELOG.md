@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.503.0](https://github.com/Zapper-fi/studio/compare/v0.502.0...v0.503.0) (2023-07-18)
+
+
+### Features
+
+* **studio:** Add Curve crvUSD pools ([#2832](https://github.com/Zapper-fi/studio/issues/2832)) ([a470f67](https://github.com/Zapper-fi/studio/commit/a470f67753bb0df46ecf4dd12ae9790e120bbe87))
+
+## [0.502.0](https://github.com/Zapper-fi/studio/compare/v0.501.0...v0.502.0) (2023-07-16)
+
+
+### Features
+
+* **curve:** Add TriCrypto pools ([#2827](https://github.com/Zapper-fi/studio/issues/2827)) ([77917c6](https://github.com/Zapper-fi/studio/commit/77917c6fb431a40a7f0baaf164ccafb8717ff616))
+
+## [0.501.0](https://github.com/Zapper-fi/studio/compare/v0.500.0...v0.501.0) (2023-07-14)
+
+
+### Features
+
+* **polynomial:** Smart Wallet USDT/DAI balance ([#2829](https://github.com/Zapper-fi/studio/issues/2829)) ([c703827](https://github.com/Zapper-fi/studio/commit/c703827b3c2a118ad0452454eabe09aa8ff4875c))
+
 ## [0.500.0](https://github.com/Zapper-fi/studio/compare/v0.499.0...v0.500.0) (2023-07-13)
 
 
