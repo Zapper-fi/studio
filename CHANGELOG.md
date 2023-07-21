@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.504.0](https://github.com/Zapper-fi/studio/compare/v0.503.0...v0.504.0) (2023-07-21)
+
+
+### Features
+
+* **studio:** Eliminate legacy code for position balance fetchers ([#2834](https://github.com/Zapper-fi/studio/issues/2834)) ([2544869](https://github.com/Zapper-fi/studio/commit/2544869acfdac9ce70e864e97c9db8cbd06d031c))
+
 ## [0.503.0](https://github.com/Zapper-fi/studio/compare/v0.502.0...v0.503.0) (2023-07-18)
 
 
