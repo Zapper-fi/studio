@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.505.0](https://github.com/Zapper-fi/studio/compare/v0.504.0...v0.505.0) (2023-07-21)
+
+
+### Features
+
+* **yearn:** Add veYFI position ([#2836](https://github.com/Zapper-fi/studio/issues/2836)) ([8573ae9](https://github.com/Zapper-fi/studio/commit/8573ae9067d5f5ee3f9ee9d682160bdc084a4298))
+
 ## [0.504.0](https://github.com/Zapper-fi/studio/compare/v0.503.0...v0.504.0) (2023-07-21)
 
 
