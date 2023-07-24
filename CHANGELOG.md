@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.506.0](https://github.com/Zapper-fi/studio/compare/v0.505.0...v0.506.0) (2023-07-24)
+
+
+### Features
+
+* **network:** Support Base network ([#2838](https://github.com/Zapper-fi/studio/issues/2838)) ([2f21740](https://github.com/Zapper-fi/studio/commit/2f217406d696f52f7247e544b6a6bd8dc6b95da7))
+
 ## [0.505.0](https://github.com/Zapper-fi/studio/compare/v0.504.0...v0.505.0) (2023-07-21)
 
 
