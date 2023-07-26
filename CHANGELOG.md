@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.506.1](https://github.com/Zapper-fi/studio/compare/v0.506.0...v0.506.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* **multicall:** Update multicall contract address on Base network ([#2841](https://github.com/Zapper-fi/studio/issues/2841)) ([2778678](https://github.com/Zapper-fi/studio/commit/2778678d76a826e92fb09e98c7dfa1d1e3d7cd91))
+
 ## [0.506.0](https://github.com/Zapper-fi/studio/compare/v0.505.0...v0.506.0) (2023-07-24)
 
 
