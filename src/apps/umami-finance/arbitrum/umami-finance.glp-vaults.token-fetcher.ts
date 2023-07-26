@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -76,5 +77,15 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
 
   async getLabel({ appToken }: GetDisplayPropsParams<UmamiFinanceGlpVault>): Promise<string> {
     return `GLP ${appToken.tokens[0].symbol}`;
+  }
+
+  async getImages({
+    appToken,
+  }: GetDisplayPropsParams<
+    UmamiFinanceGlpVault,
+    DefaultAppTokenDataProps,
+    UmamiFinanceGlpVaultAppTokenDefinition
+  >): Promise<string[]> {
+    return [getTokenImg(appToken.address, this.network)];
   }
 }
