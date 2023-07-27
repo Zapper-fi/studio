@@ -11,7 +11,7 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.marinate.token-definition-resolver';
+import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
 
 @PositionTemplate()
@@ -48,7 +48,7 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
   }
 
   async getApy(_params: GetDataPropsParams<UmamiFinanceMarinate>) {
-    const { apr } = await this.yieldResolver.getYield();
+    const { apr } = await this.yieldResolver.getStakingYield();
     return Number(apr);
   }
 

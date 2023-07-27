@@ -7,7 +7,7 @@ import { ArbitrumUmamiFinanceGlpVaultsTokenFetcher } from './arbitrum/umami-fina
 import { ArbitrumUmamiFinanceMarinateUmamiTokenFetcher } from './arbitrum/umami-finance.marinate-umami.token-fetcher';
 import { ArbitrumUmamiFinanceMarinateContractPositionFetcher } from './arbitrum/umami-finance.marinate.contract-position-fetcher';
 import { ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher } from './arbitrum/umami-finance.timelocked-glp-vaults.token-fetcher';
-import { UmamiFinanceYieldResolver } from './common/umami-finance.marinate.token-definition-resolver';
+import { UmamiFinanceYieldResolver } from './common/umami-finance.yield-resolver';
 import { UmamiFinanceContractFactory } from './contracts';
 
 @Module({
