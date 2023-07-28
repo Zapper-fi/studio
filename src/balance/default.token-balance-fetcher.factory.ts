@@ -4,8 +4,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { ContractFactory } from '~contract';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
-import { PositionBalanceFetcher } from '~position/position-balance-fetcher.interface';
-import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types';
 
 type BuildTokenBalanceFetcherParams = {
@@ -26,7 +24,7 @@ export class DefaultTokenBalanceFetcherFactory {
   }
 
   build({ appId, groupId, network }: BuildTokenBalanceFetcherParams) {
-    const klass = class DefaultTokenBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
+    const klass = class DefaultTokenBalanceFetcher {
       constructor(readonly appToolkit: IAppToolkit, readonly contractFactory: ContractFactory) {}
 
       async getBalances(address: string) {

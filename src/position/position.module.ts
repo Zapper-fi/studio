@@ -3,7 +3,6 @@ import { DiscoveryModule } from '@nestjs/core';
 
 import { CacheModule } from '~cache/cache.module';
 
-import { PositionBalanceFetcherRegistry } from './position-balance-fetcher.registry';
 import { PositionFetcherRegistry } from './position-fetcher.registry';
 import { PositionFetcherTemplateRegistry } from './position-fetcher.template-registry';
 import { PositionKeyService } from './position-key.service';
@@ -19,7 +18,6 @@ import { TokenDependencySelectorService } from './selectors/token-dependency-sel
   providers: [
     ...PositionSources,
     AppTokenSelectorService,
-    PositionBalanceFetcherRegistry,
     PositionFetcherRegistry,
     PositionFetcherTemplateRegistry,
     PositionKeyService,
@@ -30,7 +28,6 @@ import { TokenDependencySelectorService } from './selectors/token-dependency-sel
   controllers: [PositionController],
   exports: [
     AppTokenSelectorService,
-    PositionBalanceFetcherRegistry,
     PositionFetcherRegistry,
     PositionFetcherTemplateRegistry,
     PositionKeyService,

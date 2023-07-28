@@ -4,6 +4,41 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.506.2](https://github.com/Zapper-fi/studio/compare/v0.506.1...v0.506.2) (2023-07-26)
+
+
+### Bug Fixes
+
+* **multicall:** Update multicall address on Base ([#2843](https://github.com/Zapper-fi/studio/issues/2843)) ([81f5c56](https://github.com/Zapper-fi/studio/commit/81f5c5653d935417313eabebe4fcb470476c4f18))
+
+## [0.506.1](https://github.com/Zapper-fi/studio/compare/v0.506.0...v0.506.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* **multicall:** Update multicall contract address on Base network ([#2841](https://github.com/Zapper-fi/studio/issues/2841)) ([2778678](https://github.com/Zapper-fi/studio/commit/2778678d76a826e92fb09e98c7dfa1d1e3d7cd91))
+
+## [0.506.0](https://github.com/Zapper-fi/studio/compare/v0.505.0...v0.506.0) (2023-07-24)
+
+
+### Features
+
+* **network:** Support Base network ([#2838](https://github.com/Zapper-fi/studio/issues/2838)) ([2f21740](https://github.com/Zapper-fi/studio/commit/2f217406d696f52f7247e544b6a6bd8dc6b95da7))
+
+## [0.505.0](https://github.com/Zapper-fi/studio/compare/v0.504.0...v0.505.0) (2023-07-21)
+
+
+### Features
+
+* **yearn:** Add veYFI position ([#2836](https://github.com/Zapper-fi/studio/issues/2836)) ([8573ae9](https://github.com/Zapper-fi/studio/commit/8573ae9067d5f5ee3f9ee9d682160bdc084a4298))
+
+## [0.504.0](https://github.com/Zapper-fi/studio/compare/v0.503.0...v0.504.0) (2023-07-21)
+
+
+### Features
+
+* **studio:** Eliminate legacy code for position balance fetchers ([#2834](https://github.com/Zapper-fi/studio/issues/2834)) ([2544869](https://github.com/Zapper-fi/studio/commit/2544869acfdac9ce70e864e97c9db8cbd06d031c))
+
 ## [0.503.0](https://github.com/Zapper-fi/studio/compare/v0.502.0...v0.503.0) (2023-07-18)
 
 
