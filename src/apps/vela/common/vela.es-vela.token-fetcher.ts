@@ -10,8 +10,8 @@ import { VelaContractFactory } from '../contracts';
 export abstract class VelaEsVelaTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   groupLabel = 'esVELA';
 
-  abstract get esVelaAddress(): string | Promise<string>;
-  abstract get velaAddress(): string | Promise<string>;
+  abstract esVelaAddress: string;
+  abstract velaAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -28,13 +28,11 @@ export abstract class VelaEsVelaTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getAddresses(): Promise<string[]> {
-    const esVelaAddress = await this.esVelaAddress;
-    return [esVelaAddress];
+    return [this.esVelaAddress];
   }
 
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {
-    const velaAddress = await this.velaAddress;
-    return [{ address: velaAddress, network: this.network }];
+    return [{ address: this.velaAddress, network: this.network }];
   }
 
   async getPricePerShare(): Promise<number[]> {
