@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -11,9 +12,11 @@ import {
   GetPricePerShareParams,
   DefaultAppTokenDataProps,
   GetDisplayPropsParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceTimelockedGlpVaultAddress } from '../common/umami-finance.constants';
+import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceContractFactory } from '../contracts';
 import { UmamiFinanceTimelockedGlpVault } from '../contracts/ethers/UmamiFinanceTimelockedGlpVault';
 
@@ -23,6 +26,8 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(UmamiFinanceYieldResolver)
+    private readonly yieldResolver: UmamiFinanceYieldResolver,
     @Inject(UmamiFinanceContractFactory) private readonly umamiFinanceContractFactory: UmamiFinanceContractFactory,
   ) {
     super(appToolkit);
@@ -71,5 +76,21 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
 
   async getLabel({ appToken }: GetDisplayPropsParams<UmamiFinanceTimelockedGlpVault>): Promise<string> {
     return `Timelocked GLP ${appToken.tokens[0].symbol}`;
+  }
+
+  async getImages({
+    appToken,
+  }: GetDisplayPropsParams<
+    UmamiFinanceTimelockedGlpVault,
+    DefaultAppTokenDataProps,
+    DefaultAppTokenDefinition
+  >): Promise<string[]> {
+    return [getTokenImg(appToken.address, this.network)];
+  }
+
+  async getApy(
+    _params: GetDataPropsParams<UmamiFinanceTimelockedGlpVault, DefaultAppTokenDataProps, DefaultAppTokenDefinition>,
+  ): Promise<number> {
+    return this.yieldResolver.getVaultYield(_params.address, true);
   }
 }
