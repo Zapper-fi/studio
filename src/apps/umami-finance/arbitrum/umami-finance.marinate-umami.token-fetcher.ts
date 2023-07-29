@@ -2,14 +2,16 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
+  GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.marinate.token-definition-resolver';
+import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
 
 @PositionTemplate()
@@ -46,7 +48,15 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
   }
 
   async getApy(_params: GetDataPropsParams<UmamiFinanceMarinate>) {
-    const { apr } = await this.yieldResolver.getYield();
+    const { apr } = await this.yieldResolver.getStakingYield();
     return Number(apr);
+  }
+
+  async getImages({
+    appToken,
+  }: GetDisplayPropsParams<UmamiFinanceMarinate, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<
+    string[]
+  > {
+    return [getTokenImg(appToken.address, this.network)];
   }
 }
