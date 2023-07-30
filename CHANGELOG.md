@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.508.0](https://github.com/Zapper-fi/studio/compare/v0.507.0...v0.508.0) (2023-07-30)
+
+
+### Features
+
+* **gmx:** Add size and leverage to perp display props ([#2852](https://github.com/Zapper-fi/studio/issues/2852)) ([9b6836f](https://github.com/Zapper-fi/studio/commit/9b6836f2a027555537d514e96740d57bd5356dad))
+
 ## [0.507.0](https://github.com/Zapper-fi/studio/compare/v0.506.2...v0.507.0) (2023-07-29)
 
 
