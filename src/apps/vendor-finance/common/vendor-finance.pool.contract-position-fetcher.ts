@@ -1,12 +1,10 @@
 import { Inject } from '@nestjs/common';
-
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
@@ -17,18 +15,19 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-
 import { VendorFinanceContractFactory, VendorFinancePool } from '../contracts';
-
+import { borrowerInfosQuery } from './getBorrowerInfosQuery';
 import { LENDING_POOLS_QUERY } from './getLendingPoolsQuery';
 import {
+  VendorBorrowerGraphResponse,
   VendorFinancePoolDataProps,
   VendorFinancePoolDefinition,
   VendorLendingPoolsGraphResponse,
 } from './vendor-finance.pool.types';
+import Axios from 'axios';
 
 export abstract class VendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
-  abstract subgraphUrl: string;
+  abstract entityUrl: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,12 +41,12 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
   }
 
   async getDefinitions() {
-    const data = await gqlFetch<VendorLendingPoolsGraphResponse>({
-      endpoint: this.subgraphUrl,
+    const data: VendorLendingPoolsGraphResponse = await Axios.post(this.entityUrl, {
       query: LENDING_POOLS_QUERY,
+      type: `v1-${this.network.charAt(0).toUpperCase() + this.network.slice(1)}`,
     });
 
-    return (data?.pools ?? []).map(poolData => ({
+    return (data?.data.pools ?? []).map(poolData => ({
       address: poolData.id,
       deployer: poolData._deployer,
       mintRatio: poolData._mintRatio,
@@ -120,22 +119,17 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
       },
     ];
   }
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<
-    VendorFinancePool,
-    DefaultDataProps,
-    VendorFinancePoolDefinition
-  >): Promise<VendorFinancePoolDataProps> {
+  async getDataProps(
+    _params: GetDataPropsParams<VendorFinancePool, DefaultDataProps, VendorFinancePoolDefinition>,
+  ): Promise<VendorFinancePoolDataProps> {
     return {
-      deployer: definition.deployer,
-      totalDeposited: parseInt(definition.lendBalance) + parseInt(definition.totalBorrowed),
+      deployer: _params.definition.deployer,
+      totalDeposited: parseInt(_params.definition.lendBalance) + parseInt(_params.definition.totalBorrowed),
     };
   }
 
   async getTokenBalancesPerPosition({
     address,
-    contract,
     contractPosition,
   }: GetTokenBalancesParams<VendorFinancePool, VendorFinancePoolDataProps>) {
     const collateralToken = contractPosition.tokens[0]!;
@@ -149,12 +143,18 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const [borrowPosition, mintRatioRaw] = await Promise.all([contract.debt(address), contract.mintRatio()]);
+    const data: VendorBorrowerGraphResponse = await Axios.post(this.entityUrl, {
+      query: borrowerInfosQuery(address),
+      type: `v1-${this.network.charAt(0).toUpperCase() + this.network.slice(1)}`,
+    });
 
-    const poolRate = Number(mintRatioRaw) / 10 ** 18;
-    const suppliedBalance = Number(borrowPosition.borrowAmount) / 10 ** lentToken.decimals / poolRate;
+    const borrowerPosition = data.data.borrower?.positions.find(({ pool }) => pool.id === contractPosition.address);
+    if (!borrowerPosition) return [];
+
+    const poolRate = parseInt(borrowerPosition.pool._mintRatio) / 10 ** 18;
+    const suppliedBalance = parseInt(borrowerPosition.totalBorrowed) / 10 ** lentToken.decimals / poolRate;
     const suppliedBalanceRaw = suppliedBalance * 10 ** collateralToken.decimals;
-    const borrowedBalance = Number(borrowPosition.borrowAmount);
+    const borrowedBalance = parseInt(borrowerPosition.totalBorrowed);
 
     // Deposit, borrow, no lending out (not pool creator)
     return [suppliedBalanceRaw.toString(), borrowedBalance.toString(), '0'];
