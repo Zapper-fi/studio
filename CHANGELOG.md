@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.508.1](https://github.com/Zapper-fi/studio/compare/v0.508.0...v0.508.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* **curve:** Update vesting escrow contract address ([#2855](https://github.com/Zapper-fi/studio/issues/2855)) ([f95d820](https://github.com/Zapper-fi/studio/commit/f95d820e39c756d4d5014e794c05774a48007750))
+
 ## [0.508.0](https://github.com/Zapper-fi/studio/compare/v0.507.0...v0.508.0) (2023-07-30)
 
 
