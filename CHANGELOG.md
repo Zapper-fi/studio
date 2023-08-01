@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.512.0](https://github.com/Zapper-fi/studio/compare/v0.511.0...v0.512.0) (2023-08-01)
+
+
+### Features
+
+* **inverse-firm:** Add cvxFxs rewards ([#2861](https://github.com/Zapper-fi/studio/issues/2861)) ([31c116d](https://github.com/Zapper-fi/studio/commit/31c116d7beae5d4c6292d4dfc9dad3814d00c97e))
+* **uniswap-v3:** Add Uniswap-v3 on Base ([#2862](https://github.com/Zapper-fi/studio/issues/2862)) ([c0384cc](https://github.com/Zapper-fi/studio/commit/c0384ccb45c8676c5951505faa13cbf3521f85d1))
+
 ## [0.511.0](https://github.com/Zapper-fi/studio/compare/v0.510.0...v0.511.0) (2023-08-01)
 
 
