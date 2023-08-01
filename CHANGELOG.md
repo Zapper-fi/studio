@@ -4,6 +4,35 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.508.1](https://github.com/Zapper-fi/studio/compare/v0.508.0...v0.508.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* **curve:** Update vesting escrow contract address ([#2855](https://github.com/Zapper-fi/studio/issues/2855)) ([f95d820](https://github.com/Zapper-fi/studio/commit/f95d820e39c756d4d5014e794c05774a48007750))
+
+## [0.508.0](https://github.com/Zapper-fi/studio/compare/v0.507.0...v0.508.0) (2023-07-30)
+
+
+### Features
+
+* **gmx:** Add size and leverage to perp display props ([#2852](https://github.com/Zapper-fi/studio/issues/2852)) ([9b6836f](https://github.com/Zapper-fi/studio/commit/9b6836f2a027555537d514e96740d57bd5356dad))
+
+## [0.507.0](https://github.com/Zapper-fi/studio/compare/v0.506.2...v0.507.0) (2023-07-29)
+
+
+### Features
+
+* adds support to read contract versions dynamically ([#2840](https://github.com/Zapper-fi/studio/issues/2840)) ([3313710](https://github.com/Zapper-fi/studio/commit/3313710b32b0931872fe08e85f82858cf24476bc))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Fix Pool positions on Optimism and update stkLyra position ([#2847](https://github.com/Zapper-fi/studio/issues/2847)) ([db16be2](https://github.com/Zapper-fi/studio/commit/db16be25df348f77b5f066c331c53490e374ae1e))
+* **umami-finance:** update and call logos + vaults APY ([#2845](https://github.com/Zapper-fi/studio/issues/2845)) ([010140a](https://github.com/Zapper-fi/studio/commit/010140a90bda6f76d786e87313b49fdee753ed01))
+* **vela:** Fix VLP and esVela app tokens ([#2851](https://github.com/Zapper-fi/studio/issues/2851)) ([4f533b3](https://github.com/Zapper-fi/studio/commit/4f533b3cc8db899b2b65736b429c40efc43b58a8))
+* **vendor-finance:** Fetch pool borrow position on chain ([#2849](https://github.com/Zapper-fi/studio/issues/2849)) ([d23de24](https://github.com/Zapper-fi/studio/commit/d23de2488ec0f8e466d76bdc6e0530d016375c71))
+
 ## [0.506.2](https://github.com/Zapper-fi/studio/compare/v0.506.1...v0.506.2) (2023-07-26)
 
 
