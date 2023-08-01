@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.510.0](https://github.com/Zapper-fi/studio/compare/v0.509.0...v0.510.0) (2023-08-01)
+
+
+### Features
+
+* **studio:** Re-add file-system-cache dependency ([c138fd5](https://github.com/Zapper-fi/studio/commit/c138fd511cff5d7eb5ac1bb11ab6e3fff50c666b))
+
 ## [0.509.0](https://github.com/Zapper-fi/studio/compare/v0.508.1...v0.509.0) (2023-08-01)
 
 
