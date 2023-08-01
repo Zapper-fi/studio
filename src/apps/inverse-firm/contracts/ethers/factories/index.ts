@@ -7,4 +7,5 @@ export { DbrDistributor__factory } from "./DbrDistributor__factory";
 export { RewardableEscrow__factory } from "./RewardableEscrow__factory";
 export { SimpleEscrow__factory } from "./SimpleEscrow__factory";
 export { SimpleMarket__factory } from "./SimpleMarket__factory";
+export { StCvxFxs__factory } from "./StCvxFxs__factory";
 export { Xinv__factory } from "./Xinv__factory";
