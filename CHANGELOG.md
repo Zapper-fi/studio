@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.509.0](https://github.com/Zapper-fi/studio/compare/v0.508.1...v0.509.0) (2023-08-01)
+
+
+### Features
+
+* **studio:** Bump deps for consumption in Zapper API ([#2848](https://github.com/Zapper-fi/studio/issues/2848)) ([d5d6985](https://github.com/Zapper-fi/studio/commit/d5d6985a650592983ed972b8f54f75da15bb11f3))
+
 ## [0.508.1](https://github.com/Zapper-fi/studio/compare/v0.508.0...v0.508.1) (2023-07-31)
 
 
