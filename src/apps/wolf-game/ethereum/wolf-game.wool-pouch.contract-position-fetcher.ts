@@ -1,8 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
@@ -33,10 +32,10 @@ const pouchesQuery = gql`
 export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<WolfGameWoolPouch> {
   groupLabel = 'Wool Pouches';
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolKit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(WolfGameContractFactory) protected readonly contractFactory: WolfGameContractFactory,
   ) {
-    super(appToolKit);
+    super(appToolkit);
   }
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0xb76fbbb30e31f2c3bdaa2466cfb1cfe39b220d06' }];
