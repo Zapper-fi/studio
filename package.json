@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.509.0",
+  "version": "0.511.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -33,7 +33,6 @@
     "@uniswap/sdk-core": "3.2.2",
     "@uniswap/v3-sdk": "^3.9.0",
     "dayjs": "^1.11.5",
-    "file-system-cache": "^1.0.5",
     "lodash": "^4.17.21",
     "moment-duration-format": "^2.3.2",
     "murmurhash-js": "^1.0.0",
@@ -96,6 +95,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "ethers": "^5.7.0",
     "express": "^4.18.2",
+    "file-system-cache": "^1.0.5",
     "fs-extra": "^10.0.1",
     "glob": "^8.0.3",
     "graphql": "^16.6.0",

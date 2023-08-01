@@ -1,8 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
@@ -20,7 +19,7 @@ export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositi
   groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(LooksRareContractFactory) protected readonly contractFactory: LooksRareContractFactory,
   ) {
     super(appToolkit);
