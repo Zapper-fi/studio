@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.511.0](https://github.com/Zapper-fi/studio/compare/v0.510.0...v0.511.0) (2023-08-01)
+
+
+### Features
+
+* **studio:** Keep file-system-cache in dev dependencies ([9fb3142](https://github.com/Zapper-fi/studio/commit/9fb3142981db5e32b14210ee1dce139a98ce717e))
+* **studio:** Use interface for app toolkit to avoid importing AppToolkit dependency tree ([#2860](https://github.com/Zapper-fi/studio/issues/2860)) ([da9adeb](https://github.com/Zapper-fi/studio/commit/da9adeb92d9f7ffcbb00e8f09e51e829a890f082))
+
 ## [0.510.0](https://github.com/Zapper-fi/studio/compare/v0.509.0...v0.510.0) (2023-08-01)
 
 
