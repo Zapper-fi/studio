@@ -32,7 +32,6 @@
     "@types/moment-duration-format": "^2.2.3",
     "@uniswap/sdk-core": "3.2.2",
     "@uniswap/v3-sdk": "^3.9.0",
-    "bitcoin-address-validation": "^2.2.1",
     "dayjs": "^1.11.5",
     "lodash": "^4.17.21",
     "moment-duration-format": "^2.3.2",
