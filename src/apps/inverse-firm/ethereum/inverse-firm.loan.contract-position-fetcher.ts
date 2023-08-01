@@ -20,8 +20,11 @@ import { InverseFirmContractFactory, SimpleMarket } from '../contracts';
 import { isClaimable } from '~position/position.utils';
 
 const DBR = '0xad038eb671c44b853887a7e32528fab35dc5d710';
+const CVX = '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b';
+const FXS = '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0';
 const REWARD_TOKENS = {
   '0xb516247596ca36bf32876199fbdcad6b3322330b': [DBR],
+  '0x93685185666c8d34ad4c574b3dbf41231bbfb31b': [CVX, FXS],
 }
 
 export type InverseFirmLoanContractPositionDefinition = {
@@ -43,6 +46,8 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
   invAddress = '0x41D5D79431A913C4aE7d69a668ecdfE5fF9DFB68'
   xinvAddress = '0x1637e4e9941D55703a7A5E7807d6aDA3f7DCD61B'
   dolaAddress = '0x865377367054516e17014ccded1e7d814edc9ce4'
+  stCvxFXsAddress = '0x49b4d1dF40442f0C31b1BbAEA3EDE7c38e37E31a'
+  cvxFxsMarketAddress = '0x93685185666c8d34ad4c574b3dbf41231bbfb31b'
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -129,10 +134,17 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     const borrowed = await contract.debts(address);
 
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
+
+    const stCvxFXsContract = this.contractFactory.stCvxFxs({ address: this.stCvxFXsAddress, network: this.network });
+    const cvxFxsClaimables = await multicall.wrap(stCvxFXsContract).claimableRewards(personalEscrow);
+
     const rewardBalances = await Promise.all(
       rewardTokens.map(token => {
         if (DBR === token.address.toLowerCase()) {
           return multicall.wrap(escrowContract).claimable()
+        } else if (contract.address.toLowerCase() === this.cvxFxsMarketAddress.toLowerCase()) {
+          const rewardData = cvxFxsClaimables.find(claimableData => claimableData[0].toLowerCase() === token.address.toLowerCase());
+          return Promise.resolve(rewardData ? rewardData.amount : 0);
         }
         return Promise.resolve(0);
       })
