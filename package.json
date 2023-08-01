@@ -49,6 +49,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/solidity": "^5.7.0",
     "@ethersproject/strings": "5.7.0",
+    "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/cli": "^10.1.10",
     "@nestjs/common": "^10.1.2",
     "@nestjs/config": "^3.0.0",
