@@ -30,8 +30,8 @@ export abstract class VestingEscrowTemplateContractPositionFetcher<
 
   async getTokenDefinitions(params: GetTokenDefinitionsParams<T>) {
     return [
-      { metaType: MetaType.CLAIMABLE, address: await this.getEscrowedTokenAddress(params), network: this.network },
       { metaType: MetaType.VESTING, address: await this.getEscrowedTokenAddress(params), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await this.getEscrowedTokenAddress(params), network: this.network },
     ];
   }
 
