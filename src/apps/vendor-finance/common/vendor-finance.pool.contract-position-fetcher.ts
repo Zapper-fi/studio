@@ -1,4 +1,6 @@
 import { Inject } from '@nestjs/common';
+import Axios from 'axios';
+
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
@@ -15,14 +17,15 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+
 import { VendorFinanceContractFactory, VendorFinancePool } from '../contracts';
+
 import { LENDING_POOLS_QUERY } from './getLendingPoolsQuery';
 import {
   VendorFinancePoolDataProps,
   VendorFinancePoolDefinition,
   VendorLendingPoolsGraphResponse,
 } from './vendor-finance.pool.types';
-import Axios from 'axios';
 
 export abstract class VendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
   abstract entityUrl: string;
