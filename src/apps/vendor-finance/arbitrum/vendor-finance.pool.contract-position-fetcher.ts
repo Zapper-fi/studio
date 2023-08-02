@@ -6,5 +6,5 @@ import { VendorFinancePoolContractPositionFetcher } from '../common/vendor-finan
 export class ArbitrumVendorFinancePoolContractPositionFetcher extends VendorFinancePoolContractPositionFetcher {
   groupLabel = 'Lending Pools';
 
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/0xtaiga/vendor-finance';
+  entityUrl = 'https://us-central1-vendor-finace.cloudfunctions.net/getEntitiesFromSubgraph';
 }

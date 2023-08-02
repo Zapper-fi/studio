@@ -33,6 +33,7 @@ export type VendorLendingPool = {
 };
 
 export type VendorLendingPoolsGraphResponse = {
+  data: any;
   pools: Array<VendorLendingPool>;
 };
 
@@ -64,5 +65,6 @@ export type VendorLendingPoolV2 = {
 };
 
 export type VendorLendingPoolsV2GraphResponse = {
+  [x: string]: any;
   pools: Array<VendorLendingPoolV2>;
 };
