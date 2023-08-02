@@ -4,6 +4,43 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.512.0](https://github.com/Zapper-fi/studio/compare/v0.511.0...v0.512.0) (2023-08-01)
+
+
+### Features
+
+* **inverse-firm:** Add cvxFxs rewards ([#2861](https://github.com/Zapper-fi/studio/issues/2861)) ([31c116d](https://github.com/Zapper-fi/studio/commit/31c116d7beae5d4c6292d4dfc9dad3814d00c97e))
+* **uniswap-v3:** Add Uniswap-v3 on Base ([#2862](https://github.com/Zapper-fi/studio/issues/2862)) ([c0384cc](https://github.com/Zapper-fi/studio/commit/c0384ccb45c8676c5951505faa13cbf3521f85d1))
+
+## [0.511.0](https://github.com/Zapper-fi/studio/compare/v0.510.0...v0.511.0) (2023-08-01)
+
+
+### Features
+
+* **studio:** Keep file-system-cache in dev dependencies ([9fb3142](https://github.com/Zapper-fi/studio/commit/9fb3142981db5e32b14210ee1dce139a98ce717e))
+* **studio:** Use interface for app toolkit to avoid importing AppToolkit dependency tree ([#2860](https://github.com/Zapper-fi/studio/issues/2860)) ([da9adeb](https://github.com/Zapper-fi/studio/commit/da9adeb92d9f7ffcbb00e8f09e51e829a890f082))
+
+## [0.510.0](https://github.com/Zapper-fi/studio/compare/v0.509.0...v0.510.0) (2023-08-01)
+
+
+### Features
+
+* **studio:** Re-add file-system-cache dependency ([c138fd5](https://github.com/Zapper-fi/studio/commit/c138fd511cff5d7eb5ac1bb11ab6e3fff50c666b))
+
+## [0.509.0](https://github.com/Zapper-fi/studio/compare/v0.508.1...v0.509.0) (2023-08-01)
+
+
+### Features
+
+* **studio:** Bump deps for consumption in Zapper API ([#2848](https://github.com/Zapper-fi/studio/issues/2848)) ([d5d6985](https://github.com/Zapper-fi/studio/commit/d5d6985a650592983ed972b8f54f75da15bb11f3))
+
+## [0.508.1](https://github.com/Zapper-fi/studio/compare/v0.508.0...v0.508.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* **curve:** Update vesting escrow contract address ([#2855](https://github.com/Zapper-fi/studio/issues/2855)) ([f95d820](https://github.com/Zapper-fi/studio/commit/f95d820e39c756d4d5014e794c05774a48007750))
+
 ## [0.508.0](https://github.com/Zapper-fi/studio/compare/v0.507.0...v0.508.0) (2023-07-30)
 
 

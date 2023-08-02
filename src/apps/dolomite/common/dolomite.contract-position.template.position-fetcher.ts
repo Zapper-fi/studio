@@ -38,6 +38,15 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
+type MarginAccountsResponseType = {
+  marginAccounts: {
+    user: {
+      id: string;
+    };
+    accountNumber: string;
+  }[];
+};
+
 export abstract class DolomiteContractPositionTemplatePositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   DolomiteMargin,
   DolomiteDataProps,
@@ -253,7 +262,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       const accountStructs: AccountStruct[] = [];
       const allAccounts = [account, ...isolationModeVaults];
       for (let i = 0; i < allAccounts.length; i++) {
-        const result = await client.request(query, { walletAddress: allAccounts[i] });
+        const result = await client.request<MarginAccountsResponseType>(query, { walletAddress: allAccounts[i] });
         result?.marginAccounts?.forEach(account => {
           accountStructs.push({
             accountOwner: account.user.id,

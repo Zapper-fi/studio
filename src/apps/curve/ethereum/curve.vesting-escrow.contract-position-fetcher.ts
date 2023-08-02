@@ -10,7 +10,7 @@ import { CurveContractFactory, CurveVestingEscrow } from '../contracts';
 @PositionTemplate()
 export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEscrowTemplateContractPositionFetcher<CurveVestingEscrow> {
   groupLabel = 'Vesting Escrow';
-  veTokenAddress = '0x575ccd8e2d300e2377b43478339e364000318e2c';
+  veTokenAddress = '0xd2d43555134dc575bf7279f4ba18809645db0f1d';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

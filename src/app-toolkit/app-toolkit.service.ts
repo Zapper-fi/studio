@@ -1,4 +1,5 @@
-import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
