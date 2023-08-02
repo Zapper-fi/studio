@@ -4,7 +4,7 @@ import { VendorFinancePoolV2ContractPositionFetcher } from '../common/vendor-fin
 
 @PositionTemplate()
 export class EthereumVendorFinancePoolV2ContractPositionFetcher extends VendorFinancePoolV2ContractPositionFetcher {
-  groupLabel = 'Lending Pools';
+  groupLabel = 'Lending Pools V2';
 
   entityUrl = 'https://us-central1-vendor-finace.cloudfunctions.net/getEntitiesFromSubgraph';
 }
