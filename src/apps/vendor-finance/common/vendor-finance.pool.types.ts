@@ -33,7 +33,27 @@ export type VendorLendingPool = {
 };
 
 export type VendorLendingPoolsGraphResponse = {
+  data: any;
   pools: Array<VendorLendingPool>;
+};
+
+// Used for V1 Pools
+export type BorrowerPosition = {
+  pool: {
+    id: string;
+    _mintRatio: string;
+  };
+  totalBorrowed: string;
+  effectiveRate: string;
+};
+
+export type VendorBorrower = {
+  positions: Array<BorrowerPosition>;
+};
+
+export type VendorBorrowerGraphResponse = {
+  data: any;
+  borrower: VendorBorrower;
 };
 
 export type VendorFinancePoolV2Definition = {
@@ -64,5 +84,6 @@ export type VendorLendingPoolV2 = {
 };
 
 export type VendorLendingPoolsV2GraphResponse = {
+  [x: string]: any;
   pools: Array<VendorLendingPoolV2>;
 };

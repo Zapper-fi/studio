@@ -1,15 +1,6 @@
 import { Inject } from '@nestjs/common';
-
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import {
-  buildDollarDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
-import { MetaType } from '~position/position.interface';
-import { isBorrowed } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
@@ -19,20 +10,25 @@ import {
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
-
 import { VendorFinanceContractFactory, VendorFinancePoolV2 } from '../contracts';
-import { IPositionTracker } from '../contracts/ethers/VendorFinancePositionTracker';
-
 import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
+import { MetaType } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isBorrowed } from '~position/position.utils';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import {
   VendorFinancePoolDataProps,
   VendorFinancePoolV2Definition,
   VendorLendingPoolsV2GraphResponse,
 } from './vendor-finance.pool.types';
+import { IPositionTracker } from '../contracts/ethers/VendorFinancePositionTracker';
+import Axios from 'axios';
 
 export abstract class VendorFinancePoolV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePoolV2> {
-  abstract subgraphUrl: string;
-  abstract positionTrackerAddress: string;
+  abstract entityUrl: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -46,12 +42,11 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    const data = await gqlFetch<VendorLendingPoolsV2GraphResponse>({
-      endpoint: this.subgraphUrl,
+    const data: VendorLendingPoolsV2GraphResponse = await Axios.post(this.entityUrl, {
       query: LENDING_POOLS_V2_QUERY,
+      type: `v2-${this.network.charAt(0).toUpperCase() + this.network.slice(1)}`,
     });
-
-    return (data?.pools ?? []).map(poolData => ({
+    return (data.data?.pools ?? []).map(poolData => ({
       address: poolData.id,
       deployer: poolData.deployer,
       mintRatio: poolData.mintRatio,
@@ -125,26 +120,21 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
     ];
   }
 
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<
-    VendorFinancePoolV2,
-    DefaultDataProps,
-    VendorFinancePoolV2Definition
-  >): Promise<VendorFinancePoolDataProps> {
+  async getDataProps(
+    _params: GetDataPropsParams<VendorFinancePoolV2, DefaultDataProps, VendorFinancePoolV2Definition>,
+  ): Promise<VendorFinancePoolDataProps> {
     return {
-      deployer: definition.deployer,
-      totalDeposited: parseInt(definition.lendBalance) + parseInt(definition.totalBorrowed),
+      deployer: _params.definition.deployer,
+      totalDeposited: parseInt(_params.definition.lendBalance) + parseInt(_params.definition.totalBorrowed),
     };
   }
 
   async getTokenBalancesPerPosition({
     address,
     contractPosition,
-    multicall,
   }: GetTokenBalancesParams<VendorFinancePoolV2, VendorFinancePoolDataProps>) {
-    const collateralToken = contractPosition.tokens[0];
-    const lentToken = contractPosition.tokens[1];
+    const collateralToken = contractPosition.tokens[0]!;
+    const lentToken = contractPosition.tokens[1]!;
     // --- Lender logic ----
     // No deposit, no borrow, but lending out
     if (address === contractPosition.dataProps.deployer.toLowerCase()) {
@@ -153,10 +143,15 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const startKey = '0x0000000000000000000000000000000000000000000000000000000000000000';
+    const positionTrackerAddr =
+      this.network === 'arbitrum'
+        ? '0x93E73571A71D27cd35a20E14BA5B352C3C2236fC' // Arbitrum
+        : '0x6eB1775410642CDF4ba2DCF2fdAEF4d0BBd08652'; // Ethereum
+    const startKey = '0x'.padEnd(66, '0');
+    const multicall = this.appToolkit.getMulticall(this.network);
     const positionTracker = multicall.wrap(
       this.contractFactory.vendorFinancePositionTracker({
-        address: this.positionTrackerAddress,
+        address: positionTrackerAddr,
         network: this.network,
       }),
     );

@@ -1,12 +1,10 @@
 import { Inject } from '@nestjs/common';
-
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
@@ -17,18 +15,17 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-
 import { VendorFinanceContractFactory, VendorFinancePool } from '../contracts';
-
 import { LENDING_POOLS_QUERY } from './getLendingPoolsQuery';
 import {
   VendorFinancePoolDataProps,
   VendorFinancePoolDefinition,
   VendorLendingPoolsGraphResponse,
 } from './vendor-finance.pool.types';
+import Axios from 'axios';
 
 export abstract class VendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
-  abstract subgraphUrl: string;
+  abstract entityUrl: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,12 +39,11 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
   }
 
   async getDefinitions() {
-    const data = await gqlFetch<VendorLendingPoolsGraphResponse>({
-      endpoint: this.subgraphUrl,
+    const data: VendorLendingPoolsGraphResponse = await Axios.post(this.entityUrl, {
       query: LENDING_POOLS_QUERY,
+      type: `v1-${this.network.charAt(0).toUpperCase() + this.network.slice(1)}`,
     });
-
-    return (data?.pools ?? []).map(poolData => ({
+    return (data.data?.pools ?? []).map(poolData => ({
       address: poolData.id,
       deployer: poolData._deployer,
       mintRatio: poolData._mintRatio,
