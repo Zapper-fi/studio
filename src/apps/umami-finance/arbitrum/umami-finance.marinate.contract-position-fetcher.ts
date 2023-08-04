@@ -49,7 +49,7 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<UmamiFinanceMarinate>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({

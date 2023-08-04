@@ -31,7 +31,7 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
   DefaultAppTokenDataProps,
   UmamiFinanceGlpVaultAppTokenDefinition
 > {
-  groupLabel: string;
+  groupLabel = 'GLP Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -40,7 +40,6 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
     @Inject(UmamiFinanceContractFactory) private readonly umamiFinanceContractFactory: UmamiFinanceContractFactory,
   ) {
     super(appToolkit);
-    this.groupLabel = 'GLP Vaults';
   }
 
   getContract(_address: string): UmamiFinanceGlpVault {

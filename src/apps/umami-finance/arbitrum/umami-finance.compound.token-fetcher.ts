@@ -6,8 +6,6 @@ import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
-  DefaultAppTokenDataProps,
-  DefaultAppTokenDefinition,
   GetPricePerShareParams,
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
@@ -16,11 +14,9 @@ import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolve
 import { UmamiFinanceCompound, UmamiFinanceContractFactory } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePositionFetcher<
-  UmamiFinanceCompound,
-  DefaultAppTokenDataProps,
-  DefaultAppTokenDefinition
-> {
+export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePositionFetcher<UmamiFinanceCompound> {
+  groupLabel = 'Compounding Marinating UMAMI';
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UmamiFinanceYieldResolver)
@@ -29,7 +25,6 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
   ) {
     super(appToolkit);
   }
-  groupLabel = 'Compounding Marinating UMAMI';
 
   getContract(address: string): UmamiFinanceCompound {
     return this.contractFactory.umamiFinanceCompound({ network: this.network, address });
@@ -43,9 +38,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
     return [{ address: '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4', network: this.network }];
   }
 
-  async getPricePerShare({
-    appToken,
-  }: GetPricePerShareParams<UmamiFinanceCompound, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
+  async getPricePerShare({ appToken }: GetPricePerShareParams<UmamiFinanceCompound>) {
     const underlyingTokenContract = this.contractFactory.umamiFinanceMarinate({
       address: appToken.tokens[0].address,
       network: this.network,
@@ -73,11 +66,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
     return Number(apy);
   }
 
-  async getImages({
-    appToken,
-  }: GetDisplayPropsParams<UmamiFinanceCompound, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<
-    string[]
-  > {
+  async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceCompound>): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
   }
 }
