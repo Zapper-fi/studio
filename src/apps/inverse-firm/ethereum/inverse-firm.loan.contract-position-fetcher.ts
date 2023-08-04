@@ -18,13 +18,22 @@ import {
 
 import { InverseFirmContractFactory, SimpleMarket } from '../contracts';
 import { isClaimable } from '~position/position.utils';
+import { CvxFxsStaking } from '../contracts/ethers/StCvxFxs';
+import { CvxCrvStakingWrapper } from '../contracts/ethers/StCvxCrv';
 
 const DBR = '0xad038eb671c44b853887a7e32528fab35dc5d710';
 const CVX = '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b';
 const FXS = '0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0';
+const CRV = '0xD533a949740bb3306d119CC777fa900bA034cd52';
+const THREE_CRV = '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490';
+
+const CVX_FXS_MARKET = '0x93685185666c8d34ad4c574b3dbf41231bbfb31b';
+const CVX_CRV_MARKET = '0x3474ad0e3a9775c9f68b415a7a9880b0cab9397a';
+
 const REWARD_TOKENS = {
   '0xb516247596ca36bf32876199fbdcad6b3322330b': [DBR],
-  '0x93685185666c8d34ad4c574b3dbf41231bbfb31b': [CVX, FXS],
+  [CVX_FXS_MARKET]: [CVX, FXS],
+  [CVX_CRV_MARKET]: [CVX, CRV, THREE_CRV],
 }
 
 export type InverseFirmLoanContractPositionDefinition = {
@@ -46,8 +55,8 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
   invAddress = '0x41D5D79431A913C4aE7d69a668ecdfE5fF9DFB68'
   xinvAddress = '0x1637e4e9941D55703a7A5E7807d6aDA3f7DCD61B'
   dolaAddress = '0x865377367054516e17014ccded1e7d814edc9ce4'
-  stCvxFXsAddress = '0x49b4d1dF40442f0C31b1BbAEA3EDE7c38e37E31a'
-  cvxFxsMarketAddress = '0x93685185666c8d34ad4c574b3dbf41231bbfb31b'
+  stCvxFxsAddress = '0x49b4d1dF40442f0C31b1BbAEA3EDE7c38e37E31a'
+  stCvxCrvAddress = '0xaa0C3f5F7DFD688C6E646F66CD2a6B66ACdbE434'
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -130,20 +139,33 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
       network: this.network,
     });
 
-    const supplied = await multicall.wrap(escrowContract).balance();
-    const borrowed = await contract.debts(address);
+    const [supplied, borrowed] = await Promise.all([
+      multicall.wrap(escrowContract).balance(),
+      multicall.wrap(contract).debts(address),
+    ]);
 
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
-    const stCvxFXsContract = this.contractFactory.stCvxFxs({ address: this.stCvxFXsAddress, network: this.network });
-    const cvxFxsClaimables = await multicall.wrap(stCvxFXsContract).claimableRewards(personalEscrow);
+    const isCvxFxsMarket = contract.address.toLowerCase() === CVX_FXS_MARKET.toLowerCase();
+    const isCvxCrvMarket = contract.address.toLowerCase() === CVX_CRV_MARKET.toLowerCase();
+
+    let claimablesAsTuple: CvxFxsStaking.EarnedDataStructOutput[] | CvxCrvStakingWrapper.EarnedDataStructOutput[] = [];
+    if (isCvxFxsMarket || isCvxCrvMarket) {
+      if (isCvxFxsMarket) {
+        const stakeContract = this.contractFactory.stCvxFxs({ address: this.stCvxFxsAddress, network: this.network });
+        claimablesAsTuple = await multicall.wrap(stakeContract).claimableRewards(personalEscrow);
+      } else {
+        const stakeContract = this.contractFactory.stCvxCrv({ address: this.stCvxCrvAddress, network: this.network });
+        claimablesAsTuple = await multicall.wrap(stakeContract).callStatic.earned(personalEscrow);
+      }
+    }
 
     const rewardBalances = await Promise.all(
       rewardTokens.map(token => {
         if (DBR === token.address.toLowerCase()) {
           return multicall.wrap(escrowContract).claimable()
-        } else if (contract.address.toLowerCase() === this.cvxFxsMarketAddress.toLowerCase()) {
-          const rewardData = cvxFxsClaimables.find(claimableData => claimableData[0].toLowerCase() === token.address.toLowerCase());
+        } else if (claimablesAsTuple.length > 0) {
+          const rewardData = claimablesAsTuple.find(claimableData => claimableData[0].toLowerCase() === token.address.toLowerCase());
           return Promise.resolve(rewardData ? rewardData.amount : 0);
         }
         return Promise.resolve(0);
