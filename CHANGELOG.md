@@ -4,6 +4,30 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.515.0](https://github.com/Zapper-fi/studio/compare/v0.514.0...v0.515.0) (2023-08-04)
+
+
+### Features
+
+* **curve:** Add TriCryptoGauge (v6) ([#2872](https://github.com/Zapper-fi/studio/issues/2872)) ([3620f55](https://github.com/Zapper-fi/studio/commit/3620f55d39228c42d92a0e7f47b0882484def82f))
+
+
+### Bug Fixes
+
+* **curve:** Fix vesting escrow underlying token order ([#2864](https://github.com/Zapper-fi/studio/issues/2864)) ([ba58bf7](https://github.com/Zapper-fi/studio/commit/ba58bf760437a3529e872f4edb88cc0472322b06))
+
+## [0.514.0](https://github.com/Zapper-fi/studio/compare/v0.513.0...v0.514.0) (2023-08-04)
+
+
+### Features
+
+* **index-coop:** Add Money Market Index ($icSMMT) ([#2873](https://github.com/Zapper-fi/studio/issues/2873)) ([2e46fb9](https://github.com/Zapper-fi/studio/commit/2e46fb98db7f069fa3d5a3cd3c365e5fbd96be5e))
+
+
+### Bug Fixes
+
+* **studio:** Resolve `esr` dependencies for `pnpm create-app` ([#2868](https://github.com/Zapper-fi/studio/issues/2868)) ([eaff805](https://github.com/Zapper-fi/studio/commit/eaff805b67775a7f24ceccbee32e62c4b682f504))
+
 ## [0.513.0](https://github.com/Zapper-fi/studio/compare/v0.512.0...v0.513.0) (2023-08-02)
 
 
