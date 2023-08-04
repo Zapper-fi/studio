@@ -4,6 +4,30 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.514.0](https://github.com/Zapper-fi/studio/compare/v0.513.0...v0.514.0) (2023-08-04)
+
+
+### Features
+
+* **index-coop:** Add Money Market Index ($icSMMT) ([#2873](https://github.com/Zapper-fi/studio/issues/2873)) ([2e46fb9](https://github.com/Zapper-fi/studio/commit/2e46fb98db7f069fa3d5a3cd3c365e5fbd96be5e))
+
+
+### Bug Fixes
+
+* **studio:** Resolve `esr` dependencies for `pnpm create-app` ([#2868](https://github.com/Zapper-fi/studio/issues/2868)) ([eaff805](https://github.com/Zapper-fi/studio/commit/eaff805b67775a7f24ceccbee32e62c4b682f504))
+
+## [0.513.0](https://github.com/Zapper-fi/studio/compare/v0.512.0...v0.513.0) (2023-08-02)
+
+
+### Features
+
+* **vendor-finance:** Adds support for v2 ETH pools + swaps subgraph endpoints ([#2854](https://github.com/Zapper-fi/studio/issues/2854)) ([7d5bd46](https://github.com/Zapper-fi/studio/commit/7d5bd46afcd99307df94551e1c4ecd03c37fb61a))
+
+
+### Bug Fixes
+
+* **vendor-finance:** Linting ([#2866](https://github.com/Zapper-fi/studio/issues/2866)) ([c7c0faf](https://github.com/Zapper-fi/studio/commit/c7c0faffe8230c29ae65d6bbd8e242950ac36250))
+
 ## [0.512.0](https://github.com/Zapper-fi/studio/compare/v0.511.0...v0.512.0) (2023-08-01)
 
 
