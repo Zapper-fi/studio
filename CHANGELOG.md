@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.516.0](https://github.com/Zapper-fi/studio/compare/v0.515.0...v0.516.0) (2023-08-05)
+
+
+### Features
+
+* **curve:** Blacklist msETH/ETH pool due to a broken supply ([65a78dd](https://github.com/Zapper-fi/studio/commit/65a78dd6118a637961d3b234e9f8dfa6254fa6b8))
+
 ## [0.515.0](https://github.com/Zapper-fi/studio/compare/v0.514.0...v0.515.0) (2023-08-04)
 
 
