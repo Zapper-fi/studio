@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.516.1](https://github.com/Zapper-fi/studio/compare/v0.516.0...v0.516.1) (2023-08-05)
+
+
+### Bug Fixes
+
+* **umami-finance:** dark bg logo instead of transparent ([#2870](https://github.com/Zapper-fi/studio/issues/2870)) ([db2be8c](https://github.com/Zapper-fi/studio/commit/db2be8c22fe8999b068807205662839db211dcae))
+
 ## [0.516.0](https://github.com/Zapper-fi/studio/compare/v0.515.0...v0.516.0) (2023-08-05)
 
 
