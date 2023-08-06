@@ -1,4 +1,4 @@
-import { type BigNumber, constants } from 'ethers';
+import { BigNumber, constants } from 'ethers';
 
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
@@ -35,7 +35,9 @@ export abstract class ExactlyDepositFetcher extends ExactlyTokenFetcher {
     const [prevTotalAssets] = market.interface.decodeFunctionResult('totalAssets', totalAssetsData) as [BigNumber];
     const [prevTimestamp] = multicall.interface.decodeFunctionResult('getCurrentBlockTimestamp', tsData) as [BigNumber];
 
-    const shareValue = totalFloatingDepositAssets.mul(constants.WeiPerEther).div(totalFloatingDepositShares);
+    const shareValue = BigNumber.from(totalFloatingDepositAssets)
+      .mul(constants.WeiPerEther)
+      .div(totalFloatingDepositShares);
     const prevShareValue = prevTotalAssets.mul(constants.WeiPerEther).div(prevTotalSupply);
     const proportion = shareValue.mul(constants.WeiPerEther).div(prevShareValue);
     return (Number(proportion) / 1e16 - 100) * (31_536_000 / (timestamp - prevTimestamp.toNumber()));
