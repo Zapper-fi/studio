@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.517.0](https://github.com/Zapper-fi/studio/compare/v0.516.1...v0.517.0) (2023-08-06)
+
+
+### Features
+
+* **exactly:** Serialize definition ([#2878](https://github.com/Zapper-fi/studio/issues/2878)) ([9d7a2bd](https://github.com/Zapper-fi/studio/commit/9d7a2bde89193af30d96ea5676e44570f9ce2909))
+
 ## [0.516.1](https://github.com/Zapper-fi/studio/compare/v0.516.0...v0.516.1) (2023-08-05)
 
 
