@@ -4,6 +4,7 @@ import { Inject } from '@nestjs/common';
 import { compact, flatMap } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -28,7 +29,7 @@ type RigoblockSmartPoolDefinition = DefaultAppTokenDefinition & {
 };
 
 type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
-  logType: PoolLogType;
+  logType?: PoolLogType;
   address: string;
 };
 
@@ -97,7 +98,8 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 
   // whitelisted tokens are filtered by those that are not tracked
   async getTokenList(): Promise<WhitelistedTokenDefinition[]> {
-    const tokenList = [...new Set(await this.getTokenWhitelist())];
+    let tokenList = [...new Set(await this.getTokenWhitelist())];
+    tokenList.push({ address: ZERO_ADDRESS })
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network) as RToken[];
     const trackedTokens = tokenList.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.address && !p.hide);
@@ -144,12 +146,17 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     // this block returns only held tokens. However, it would require less RPC calls to just multicall
     //  all tokens and display in UI only tokens with positive balances.
     const tokens = definition.tokenList
-    if(!tokens || tokens?.length === 0) return[]
+    if(!tokens || tokens?.length === 0) return []
     let heldTokens: WhitelistedTokenDefinition[] = []
     for (let i = 0; i !== tokens.length; i++) {
-      const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
-      const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
-      if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
+      if (tokens[i].address !== ZERO_ADDRESS) {
+        const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
+        const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
+        if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
+      } else {
+        const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(definition.address)
+        if (ethBalance && ethBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
+      };
     }
 
     return compact(heldTokens)
@@ -164,6 +171,10 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
+        if (token.address === ZERO_ADDRESS) {
+          const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(appToken.address)
+          return Number(ethBalance) / 10 ** 18;
+        };
         const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
         const reserveRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
