@@ -1,4 +1,4 @@
-import { constants } from 'ethers';
+import { BigNumber, constants } from 'ethers';
 
 import type { IMulticallWrapper } from '~multicall/multicall.interface';
 import type { AppTokenPosition } from '~position/position.interface';
@@ -18,7 +18,7 @@ export abstract class ExactlyFixedDepositFetcher extends ExactlyFixedPositionFet
 
   getBestRate({ definition }: GetDataPropsParams<Market, ExactlyFixedMarketProps, ExactlyMarketDefinition>) {
     return definition.fixedPools.reduce(
-      (best, { maturity, depositRate: rate }) => (rate.gt(best.rate) ? { maturity, rate } : best),
+      (best, { maturity, depositRate: rate }) => (BigNumber.from(rate).gt(best.rate) ? { maturity, rate } : best),
       { maturity: constants.Zero, rate: constants.Zero },
     );
   }

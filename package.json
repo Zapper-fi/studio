@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.513.0",
+  "version": "0.517.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -88,6 +88,8 @@
     "dataloader": "^2.1.0",
     "dedent": "^0.7.0",
     "dotenv": "^16.0.0",
+    "esbuild": "^0.18.17",
+    "esbuild-runner": "^2.2.2",
     "eslint": "^8.11.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.25.4",

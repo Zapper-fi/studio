@@ -16,6 +16,7 @@ import {
   CurveFactoryPoolV2__factory,
   CurveGauge__factory,
   CurveGaugeV2__factory,
+  CurveGaugeV6__factory,
   CurveNGauge__factory,
   CurvePool__factory,
   CurvePoolLegacy__factory,
@@ -71,6 +72,9 @@ export class CurveContractFactory extends ContractFactory {
   curveGaugeV2({ address, network }: ContractOpts) {
     return CurveGaugeV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  curveGaugeV6({ address, network }: ContractOpts) {
+    return CurveGaugeV6__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   curveNGauge({ address, network }: ContractOpts) {
     return CurveNGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -117,6 +121,7 @@ export type { CurveFactory } from './ethers';
 export type { CurveFactoryPoolV2 } from './ethers';
 export type { CurveGauge } from './ethers';
 export type { CurveGaugeV2 } from './ethers';
+export type { CurveGaugeV6 } from './ethers';
 export type { CurveNGauge } from './ethers';
 export type { CurvePool } from './ethers';
 export type { CurvePoolLegacy } from './ethers';
