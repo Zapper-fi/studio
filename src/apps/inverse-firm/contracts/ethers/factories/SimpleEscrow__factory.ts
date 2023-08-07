@@ -2,92 +2,92 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type { SimpleEscrow, SimpleEscrowInterface } from "../SimpleEscrow";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type { SimpleEscrow, SimpleEscrowInterface } from '../SimpleEscrow';
 
 const _abi = [
   {
     inputs: [],
-    name: "balance",
+    name: 'balance',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "contract IERC20",
-        name: "_token",
-        type: "address",
+        internalType: 'contract IERC20',
+        name: '_token',
+        type: 'address',
       },
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    name: "initialize",
+    name: 'initialize',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "market",
+    name: 'market',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "onDeposit",
+    name: 'onDeposit',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "recipient",
-        type: "address",
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
       },
     ],
-    name: "pay",
+    name: 'pay',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "token",
+    name: 'token',
     outputs: [
       {
-        internalType: "contract IERC20",
-        name: "",
-        type: "address",
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ];
 
@@ -96,10 +96,7 @@ export class SimpleEscrow__factory {
   static createInterface(): SimpleEscrowInterface {
     return new utils.Interface(_abi) as SimpleEscrowInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): SimpleEscrow {
+  static connect(address: string, signerOrProvider: Signer | Provider): SimpleEscrow {
     return new Contract(address, _abi, signerOrProvider) as SimpleEscrow;
   }
 }

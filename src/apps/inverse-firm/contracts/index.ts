@@ -1,29 +1,21 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { StaticJsonRpcProvider } from '@ethersproject/providers';
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 
-import { NetworkProviderService } from '~network-provider/network-provider.service';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BorrowController__factory } from './ethers';
-import type { BorrowController } from './ethers';
-import { Dbr__factory } from './ethers';
-import type { Dbr } from './ethers';
-import { DbrDistributor__factory } from './ethers';
-import type { DbrDistributor } from './ethers';
-import { RewardableEscrow__factory } from './ethers';
-import type { RewardableEscrow } from './ethers';
-import { SimpleEscrow__factory } from './ethers';
-import type { SimpleEscrow } from './ethers';
-import { SimpleMarket__factory } from './ethers';
-import type { SimpleMarket } from './ethers';
-import { StCvxCrv__factory } from './ethers';
-import type { StCvxCrv } from './ethers';
-import { StCvxFxs__factory } from './ethers';
-import type { StCvxFxs } from './ethers';
-import { Xinv__factory } from './ethers';
-import type { Xinv } from './ethers';
-import { ContractFactory } from '~contract/contracts';
+import {
+  BorrowController__factory,
+  Dbr__factory,
+  DbrDistributor__factory,
+  RewardableEscrow__factory,
+  SimpleEscrow__factory,
+  SimpleMarket__factory,
+  StCvxCrv__factory,
+  StCvxFxs__factory,
+  Xinv__factory,
+} from './ethers';
+
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
