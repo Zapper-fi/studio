@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.518.0](https://github.com/Zapper-fi/studio/compare/v0.517.0...v0.518.0) (2023-08-07)
+
+
+### Features
+
+* **inverse-firm:** Add cvxCrv rewards ([#2867](https://github.com/Zapper-fi/studio/issues/2867)) ([0f24142](https://github.com/Zapper-fi/studio/commit/0f241425bb3e926512e44d6fba9717cf83da4485))
+
+
+### Bug Fixes
+
+* **inverse-firm:** Linting ([#2882](https://github.com/Zapper-fi/studio/issues/2882)) ([0eed098](https://github.com/Zapper-fi/studio/commit/0eed098ba99291718bad38675344a751201103bc))
+* **umami-finance:** Cleanup ([#2875](https://github.com/Zapper-fi/studio/issues/2875)) ([45c7715](https://github.com/Zapper-fi/studio/commit/45c7715e7ea21b52c2df5805f40ce42b90742aeb))
+
 ## [0.517.0](https://github.com/Zapper-fi/studio/compare/v0.516.1...v0.517.0) (2023-08-06)
 
 
