@@ -4,6 +4,39 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.517.0](https://github.com/Zapper-fi/studio/compare/v0.516.1...v0.517.0) (2023-08-06)
+
+
+### Features
+
+* **exactly:** Serialize definition ([#2878](https://github.com/Zapper-fi/studio/issues/2878)) ([9d7a2bd](https://github.com/Zapper-fi/studio/commit/9d7a2bde89193af30d96ea5676e44570f9ce2909))
+
+## [0.516.1](https://github.com/Zapper-fi/studio/compare/v0.516.0...v0.516.1) (2023-08-05)
+
+
+### Bug Fixes
+
+* **umami-finance:** dark bg logo instead of transparent ([#2870](https://github.com/Zapper-fi/studio/issues/2870)) ([db2be8c](https://github.com/Zapper-fi/studio/commit/db2be8c22fe8999b068807205662839db211dcae))
+
+## [0.516.0](https://github.com/Zapper-fi/studio/compare/v0.515.0...v0.516.0) (2023-08-05)
+
+
+### Features
+
+* **curve:** Blacklist msETH/ETH pool due to a broken supply ([65a78dd](https://github.com/Zapper-fi/studio/commit/65a78dd6118a637961d3b234e9f8dfa6254fa6b8))
+
+## [0.515.0](https://github.com/Zapper-fi/studio/compare/v0.514.0...v0.515.0) (2023-08-04)
+
+
+### Features
+
+* **curve:** Add TriCryptoGauge (v6) ([#2872](https://github.com/Zapper-fi/studio/issues/2872)) ([3620f55](https://github.com/Zapper-fi/studio/commit/3620f55d39228c42d92a0e7f47b0882484def82f))
+
+
+### Bug Fixes
+
+* **curve:** Fix vesting escrow underlying token order ([#2864](https://github.com/Zapper-fi/studio/issues/2864)) ([ba58bf7](https://github.com/Zapper-fi/studio/commit/ba58bf760437a3529e872f4edb88cc0472322b06))
+
 ## [0.514.0](https://github.com/Zapper-fi/studio/compare/v0.513.0...v0.514.0) (2023-08-04)
 
 
