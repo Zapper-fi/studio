@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.518.1](https://github.com/Zapper-fi/studio/compare/v0.518.0...v0.518.1) (2023-08-07)
+
+
+### Bug Fixes
+
+* **curve:** Add crvUsd pool gauge positions ([#2883](https://github.com/Zapper-fi/studio/issues/2883)) ([e485c01](https://github.com/Zapper-fi/studio/commit/e485c016857798ea132fabc6a2f23544624089b0))
+
 ## [0.518.0](https://github.com/Zapper-fi/studio/compare/v0.517.0...v0.518.0) (2023-08-07)
 
 
