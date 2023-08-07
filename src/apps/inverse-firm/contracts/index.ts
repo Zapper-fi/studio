@@ -17,6 +17,8 @@ import { SimpleEscrow__factory } from './ethers';
 import type { SimpleEscrow } from './ethers';
 import { SimpleMarket__factory } from './ethers';
 import type { SimpleMarket } from './ethers';
+import { StCvxCrv__factory } from './ethers';
+import type { StCvxCrv } from './ethers';
 import { StCvxFxs__factory } from './ethers';
 import type { StCvxFxs } from './ethers';
 import { Xinv__factory } from './ethers';
@@ -49,6 +51,9 @@ export class InverseFirmContractFactory extends ContractFactory {
   simpleMarket({ address, network }: ContractOpts) {
     return SimpleMarket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  stCvxCrv({ address, network }: ContractOpts) {
+    return StCvxCrv__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   stCvxFxs({ address, network }: ContractOpts) {
     return StCvxFxs__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -63,5 +68,6 @@ export type { DbrDistributor } from './ethers';
 export type { RewardableEscrow } from './ethers';
 export type { SimpleEscrow } from './ethers';
 export type { SimpleMarket } from './ethers';
+export type { StCvxCrv } from './ethers';
 export type { StCvxFxs } from './ethers';
 export type { Xinv } from './ethers';
