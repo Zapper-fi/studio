@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.519.0](https://github.com/Zapper-fi/studio/compare/v0.518.1...v0.519.0) (2023-08-08)
+
+
+### Features
+
+* **y2k finance:** add y2k positions adapter for v1 and v2, add vlY2k adapter, add farms adapter for v1 ([#2880](https://github.com/Zapper-fi/studio/issues/2880)) ([c45a722](https://github.com/Zapper-fi/studio/commit/c45a722589edf40bfdd6113cb526f1fdda55fae9))
+
 ## [0.518.1](https://github.com/Zapper-fi/studio/compare/v0.518.0...v0.518.1) (2023-08-07)
 
 
