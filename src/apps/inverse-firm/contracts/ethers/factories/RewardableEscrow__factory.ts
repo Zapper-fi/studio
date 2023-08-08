@@ -2,246 +2,243 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type {
-  RewardableEscrow,
-  RewardableEscrowInterface,
-} from "../RewardableEscrow";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type { RewardableEscrow, RewardableEscrowInterface } from '../RewardableEscrow';
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: "contract IXINV",
-        name: "_xINV",
-        type: "address",
+        internalType: 'contract IXINV',
+        name: '_xINV',
+        type: 'address',
       },
       {
-        internalType: "contract IDbrDistributor",
-        name: "_distributor",
-        type: "address",
+        internalType: 'contract IDbrDistributor',
+        name: '_distributor',
+        type: 'address',
       },
     ],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
     inputs: [],
-    name: "balance",
+    name: 'balance',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "beneficiary",
+    name: 'beneficiary',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "claimDBR",
+    name: 'claimDBR',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "to",
-        type: "address",
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
       },
     ],
-    name: "claimDBRTo",
+    name: 'claimDBRTo',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "claimable",
+    name: 'claimable',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    name: "claimers",
+    name: 'claimers',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "delegatee",
-        type: "address",
+        internalType: 'address',
+        name: 'delegatee',
+        type: 'address',
       },
     ],
-    name: "delegate",
+    name: 'delegate',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "distributor",
+    name: 'distributor',
     outputs: [
       {
-        internalType: "contract IDbrDistributor",
-        name: "",
-        type: "address",
+        internalType: 'contract IDbrDistributor',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "contract IDelegateableERC20",
-        name: "_token",
-        type: "address",
+        internalType: 'contract IDelegateableERC20',
+        name: '_token',
+        type: 'address',
       },
       {
-        internalType: "address",
-        name: "_beneficiary",
-        type: "address",
+        internalType: 'address',
+        name: '_beneficiary',
+        type: 'address',
       },
     ],
-    name: "initialize",
+    name: 'initialize',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "market",
+    name: 'market',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "onDeposit",
+    name: 'onDeposit',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "recipient",
-        type: "address",
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
       },
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
       },
     ],
-    name: "pay",
+    name: 'pay',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "claimer",
-        type: "address",
+        internalType: 'address',
+        name: 'claimer',
+        type: 'address',
       },
       {
-        internalType: "bool",
-        name: "allowed",
-        type: "bool",
+        internalType: 'bool',
+        name: 'allowed',
+        type: 'bool',
       },
     ],
-    name: "setClaimer",
+    name: 'setClaimer',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "stakedXINV",
+    name: 'stakedXINV',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "token",
+    name: 'token',
     outputs: [
       {
-        internalType: "contract IDelegateableERC20",
-        name: "",
-        type: "address",
+        internalType: 'contract IDelegateableERC20',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "xINV",
+    name: 'xINV',
     outputs: [
       {
-        internalType: "contract IXINV",
-        name: "",
-        type: "address",
+        internalType: 'contract IXINV',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ];
 
@@ -250,10 +247,7 @@ export class RewardableEscrow__factory {
   static createInterface(): RewardableEscrowInterface {
     return new utils.Interface(_abi) as RewardableEscrowInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): RewardableEscrow {
+  static connect(address: string, signerOrProvider: Signer | Provider): RewardableEscrow {
     return new Contract(address, _abi, signerOrProvider) as RewardableEscrow;
   }
 }
