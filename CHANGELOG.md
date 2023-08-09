@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.520.0](https://github.com/Zapper-fi/studio/compare/v0.519.0...v0.520.0) (2023-08-09)
+
+
+### Features
+
+* **studio:** Filter out some duplicate definitions in responses ([#2886](https://github.com/Zapper-fi/studio/issues/2886)) ([55e1f36](https://github.com/Zapper-fi/studio/commit/55e1f36d6a248ba2bf74c31ee6c3d084487663e8))
+
 ## [0.519.0](https://github.com/Zapper-fi/studio/compare/v0.518.1...v0.519.0) (2023-08-08)
 
 
