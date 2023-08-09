@@ -22,7 +22,6 @@ export class PolygonJarvisSynthTokenFetcher extends JarvisSynthTokenFetcher {
     '0xc8442072cf1e131506eac7df33ea8910e1d5cfdd',
     '0xbe813590e1b191120f5df3343368f8a2f579514c',
     '0x874b8d8e818c79166f00b64fb161925e3e95921f',
-    '0x44a56d2b0fd2f6c480587f854970918e0ddc53cd',
     '0x9db17967f2c14beea791a2fd4654f8ddc11d990b',
   ];
 }
