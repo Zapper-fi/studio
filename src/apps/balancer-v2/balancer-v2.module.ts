@@ -9,6 +9,7 @@ import { BalancerV2SpotPriceHelper } from './common/balancer-v2.spot-price.helpe
 import { BalancerV2ContractFactory } from './contracts';
 import { EthereumBalancerV2FarmContractPositionFetcher } from './ethereum/balancer-v2.farm.contract-position-fetcher';
 import { EthereumBalancerV2PoolTokenFetcher } from './ethereum/balancer-v2.pool.token-fetcher';
+import { EthereumBalancerV2VeBalRewardsContractPositionFetcher } from './ethereum/balancer-v2.ve-bal-rewards.contract-position-fetcher';
 import { EthereumBalancerV2VotingEscrowContractPositionFetcher } from './ethereum/balancer-v2.voting-escrow.contract-position-fetcher';
 import { EthereumBalancerV2WrappedAaveTokenFetcher } from './ethereum/balancer-v2.wrapped-aave.token-fetcher';
 import { PolygonBalancerV2BoostedTokenFetcher } from './polygon/balancer-v2.boosted.token-fetcher';
@@ -28,6 +29,7 @@ import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.
     EthereumBalancerV2VotingEscrowContractPositionFetcher,
     EthereumBalancerV2FarmContractPositionFetcher,
     EthereumBalancerV2WrappedAaveTokenFetcher,
+    EthereumBalancerV2VeBalRewardsContractPositionFetcher,
     // Polygon
     PolygonBalancerV2BoostedTokenFetcher,
     PolygonBalancerV2PoolTokenFetcher,
