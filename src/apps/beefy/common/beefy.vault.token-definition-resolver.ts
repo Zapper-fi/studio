@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -56,10 +57,9 @@ export class BeefyVaultTokenDefinitionsResolver {
       this.getVaultDefinitionsData(network),
       this.getVaultApyData(),
     ]);
-    const definitionsData = definitionsDataRaw.filter(x => x.tokenAddress);
 
-    const vaultDefinitions = definitionsData.map(t => {
-      const tokenAddress = t.tokenAddress.toLowerCase();
+    const vaultDefinitions = definitionsDataRaw.map(t => {
+      const tokenAddress = t.tokenAddress?.toLowerCase() ?? ZERO_ADDRESS; // Beefy doesn't have the concept of ZERO address to represent ETH
       return {
         address: t.earnContractAddress.toLowerCase(),
         underlyingAddress:
