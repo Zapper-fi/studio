@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.520.1](https://github.com/Zapper-fi/studio/compare/v0.520.0...v0.520.1) (2023-08-11)
+
+
+### Bug Fixes
+
+* **beefy:** Fix Beefy vaults which had no underlying tokens ([#2889](https://github.com/Zapper-fi/studio/issues/2889)) ([11c2079](https://github.com/Zapper-fi/studio/commit/11c20793103748d575215039cac3d94844d493ba))
+* **qi-dao:** Extract wrapped tokens to ATI ([#2890](https://github.com/Zapper-fi/studio/issues/2890)) ([0851eda](https://github.com/Zapper-fi/studio/commit/0851edac4f331a2f43a76d480333af9a44cfa1be))
+
 ## [0.520.0](https://github.com/Zapper-fi/studio/compare/v0.519.0...v0.520.0) (2023-08-09)
 
 
