@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.521.0](https://github.com/Zapper-fi/studio/compare/v0.520.1...v0.521.0) (2023-08-13)
+
+
+### Features
+
+* **balancer-v2:** Add veBal rewards ([#2888](https://github.com/Zapper-fi/studio/issues/2888)) ([f801468](https://github.com/Zapper-fi/studio/commit/f8014688adf6c0c4840f82696e866d956cb87076))
+
+
+### Bug Fixes
+
+* **balancer-v2:** Fix label ([#2893](https://github.com/Zapper-fi/studio/issues/2893)) ([9d3b018](https://github.com/Zapper-fi/studio/commit/9d3b018af2f68e657a31bf4c3372741876b386e7))
+
 ## [0.520.1](https://github.com/Zapper-fi/studio/compare/v0.520.0...v0.520.1) (2023-08-11)
 
 
