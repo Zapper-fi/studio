@@ -2,11 +2,10 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { BalancerFeeDistributor, BalancerV2ContractFactory } from '../contracts';
 
@@ -54,8 +53,8 @@ export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends Contr
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<BalancerFeeDistributor>) {
-    return `${contractPosition.tokens.map(asset => getLabelFromToken(asset)).join(' - ')}`;
+  async getLabel() {
+    return 'veBal Claimables';
   }
 
   async getTokenBalancesPerPosition({
