@@ -2,9 +2,11 @@ import { Inject, NotImplementedException } from '@nestjs/common';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3LiquidityContractPositionFetcher } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-fetcher';
+import { MetaType } from '~position/position.interface';
 
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
@@ -51,40 +53,36 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
   async getTokenDefinitions({ definition }) {
     const underlyingTokenBalances = await this.getBalances(definition.address);
     return underlyingTokenBalances.map(balance => {
-      return [
-        {
-          metaType: MetaType.SUPPLIED,
-          address: balance.tokens.token0.address,
-          network: this.network,
-        },
-        {
-          metaType: MetaType.SUPPLIED,
-          address: balance.tokens.token1.address,
-          network: this.network,
-        },
-      ];
-    });
+      const tokens = balance.tokens;
+      return tokens.map(token => {
+        return [
+          {
+            metaType: MetaType.SUPPLIED,
+            address: token.address,
+            network: this.network,
+          },
+        ];
+      });
+    }).flat(2);
   }
 
-  /*async getDataProps({
+  async getDataProps({
     multicall,
     contractPosition,
-    definition,
-  }) {
-    throw new NotImplementedException();
-  }*/
+  }): Promise {
+    const { tokens } = contractPosition;
+    return { tokens };
+  }
 
-  async getLabel({
-    contractPosition,
-    definition,
-  }) {
-    throw new NotImplementedException();
+  async getLabel({ contractPosition }) {
+    return contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
   }
 
   async getTokenBalancesPerPosition() {
     throw new NotImplementedException();
   }
 
+  // TODO: check if by renaming injected definitions we can avoid having to override this method
   async getBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
     const multicall = this.appToolkit.getMulticall(this.network);
