@@ -6,6 +6,8 @@ import { ArbitrumBeefyBoostVaultContractPositionFetcher } from './arbitrum/beefy
 import { ArbitrumBeefyVaultTokenFetcher } from './arbitrum/beefy.vault.token-fetcher';
 import { AvalancheBeefyBoostVaultContractPositionFetcher } from './avalanche/beefy.boost-vault.contract-position-fetcher';
 import { AvalancheBeefyVaultTokenFetcher } from './avalanche/beefy.vault.token-fetcher';
+import { BaseBeefyBoostVaultContractPositionFetcher } from './base/beefy.boost-vault.contract-position-fetcher';
+import { BaseBeefyVaultTokenFetcher } from './base/beefy.vault.token-fetcher';
 import { BinanceSmartChainBeefyBoostVaultContractPositionFetcher } from './binance-smart-chain/beefy.boost-vault.contract-position-fetcher';
 import { BinanceSmartChainBeefyVaultTokenFetcher } from './binance-smart-chain/beefy.vault.token-fetcher';
 import { BeefyBoostVaultDefinitionsResolver } from './common/beefy.boost-vault.definition-resolver';
@@ -32,6 +34,9 @@ import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetch
     // Avalanche
     AvalancheBeefyVaultTokenFetcher,
     AvalancheBeefyBoostVaultContractPositionFetcher,
+    // Base
+    BaseBeefyVaultTokenFetcher,
+    BaseBeefyBoostVaultContractPositionFetcher,
     // Binance Smart Chain
     BinanceSmartChainBeefyVaultTokenFetcher,
     BinanceSmartChainBeefyBoostVaultContractPositionFetcher,
