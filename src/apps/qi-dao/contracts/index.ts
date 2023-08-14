@@ -11,7 +11,6 @@ import {
   QiDaoMasterChefV3__factory,
   QiDaoVaultInfo__factory,
   QiDaoVaultNft__factory,
-  QiDaoWrappedToken__factory,
   QiDaoYieldToken__factory,
 } from './ethers';
 
@@ -42,9 +41,6 @@ export class QiDaoContractFactory extends ContractFactory {
   qiDaoVaultNft({ address, network }: ContractOpts) {
     return QiDaoVaultNft__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  qiDaoWrappedToken({ address, network }: ContractOpts) {
-    return QiDaoWrappedToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   qiDaoYieldToken({ address, network }: ContractOpts) {
     return QiDaoYieldToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -56,5 +52,4 @@ export type { QiDaoMasterChef } from './ethers';
 export type { QiDaoMasterChefV3 } from './ethers';
 export type { QiDaoVaultInfo } from './ethers';
 export type { QiDaoVaultNft } from './ethers';
-export type { QiDaoWrappedToken } from './ethers';
 export type { QiDaoYieldToken } from './ethers';

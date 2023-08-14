@@ -1,6 +1,15 @@
 import { Inject } from '@nestjs/common';
+import Axios from 'axios';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
+import { MetaType } from '~position/position.interface';
+import { isBorrowed } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
@@ -10,25 +19,20 @@ import {
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
+
 import { VendorFinanceContractFactory, VendorFinancePoolV2 } from '../contracts';
+import { IPositionTracker } from '../contracts/ethers/VendorFinancePositionTracker';
+
 import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { MetaType } from '~position/position.interface';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isBorrowed } from '~position/position.utils';
-import {
-  buildDollarDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
 import {
   VendorFinancePoolDataProps,
   VendorFinancePoolV2Definition,
   VendorLendingPoolsV2GraphResponse,
 } from './vendor-finance.pool.types';
-import { IPositionTracker } from '../contracts/ethers/VendorFinancePositionTracker';
 
 export abstract class VendorFinancePoolV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePoolV2> {
-  abstract subgraphUrl: string;
+  abstract entityUrl: string;
+  abstract positionTrackerAddr: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,12 +46,11 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    const data = await gqlFetch<VendorLendingPoolsV2GraphResponse>({
-      endpoint: this.subgraphUrl,
+    const data: VendorLendingPoolsV2GraphResponse = await Axios.post(this.entityUrl, {
       query: LENDING_POOLS_V2_QUERY,
+      type: `v2-${this.network.charAt(0).toUpperCase() + this.network.slice(1)}`,
     });
-
-    return (data?.pools ?? []).map(poolData => ({
+    return (data.data?.pools ?? []).map(poolData => ({
       address: poolData.id,
       deployer: poolData.deployer,
       mintRatio: poolData.mintRatio,
@@ -144,12 +147,11 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const positionTrackerAddr = '0x93E73571A71D27cd35a20E14BA5B352C3C2236fC';
-    const startKey = '0x0000000000000000000000000000000000000000000000000000000000000000';
+    const startKey = '0x'.padEnd(66, '0');
     const multicall = this.appToolkit.getMulticall(this.network);
     const positionTracker = multicall.wrap(
       this.contractFactory.vendorFinancePositionTracker({
-        address: positionTrackerAddr,
+        address: this.positionTrackerAddr,
         network: this.network,
       }),
     );

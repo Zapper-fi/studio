@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -9,29 +10,31 @@ import {
   GetUnderlyingTokensParams,
   UnderlyingTokenDefinition,
   GetPricePerShareParams,
-  DefaultAppTokenDataProps,
   GetDisplayPropsParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceTimelockedGlpVaultAddress } from '../common/umami-finance.constants';
+import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceContractFactory } from '../contracts';
 import { UmamiFinanceTimelockedGlpVault } from '../contracts/ethers/UmamiFinanceTimelockedGlpVault';
 
 @PositionTemplate()
 export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<UmamiFinanceTimelockedGlpVault> {
-  groupLabel: string;
+  groupLabel = 'Timelocked GLP Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(UmamiFinanceYieldResolver)
+    private readonly yieldResolver: UmamiFinanceYieldResolver,
     @Inject(UmamiFinanceContractFactory) private readonly umamiFinanceContractFactory: UmamiFinanceContractFactory,
   ) {
     super(appToolkit);
-    this.groupLabel = 'Timelocked GLP Vaults';
   }
 
-  getContract(_address: string): UmamiFinanceTimelockedGlpVault {
+  getContract(address: string): UmamiFinanceTimelockedGlpVault {
     return this.umamiFinanceContractFactory.umamiFinanceTimelockedGlpVault({
-      address: _address,
+      address,
       network: this.network,
     });
   }
@@ -48,21 +51,14 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
 
   async getUnderlyingTokenDefinitions({
     contract,
-  }: GetUnderlyingTokensParams<UmamiFinanceTimelockedGlpVault, DefaultAppTokenDefinition>): Promise<
-    UnderlyingTokenDefinition[]
-  > {
-    const underlyingToken = await contract.asset();
-    return [{ address: underlyingToken, network: this.network }];
+  }: GetUnderlyingTokensParams<UmamiFinanceTimelockedGlpVault>): Promise<UnderlyingTokenDefinition[]> {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({
     contract,
     appToken,
-  }: GetPricePerShareParams<
-    UmamiFinanceTimelockedGlpVault,
-    DefaultAppTokenDataProps,
-    DefaultAppTokenDefinition
-  >): Promise<number[]> {
+  }: GetPricePerShareParams<UmamiFinanceTimelockedGlpVault>): Promise<number[]> {
     const pricePerShareRaw = await contract.pps();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
 
@@ -71,5 +67,13 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
 
   async getLabel({ appToken }: GetDisplayPropsParams<UmamiFinanceTimelockedGlpVault>): Promise<string> {
     return `Timelocked GLP ${appToken.tokens[0].symbol}`;
+  }
+
+  async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceTimelockedGlpVault>): Promise<string[]> {
+    return [getTokenImg(appToken.address, this.network)];
+  }
+
+  async getApy({ address }: GetDataPropsParams<UmamiFinanceTimelockedGlpVault>): Promise<number> {
+    return this.yieldResolver.getVaultYield(address, true);
   }
 }

@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -33,7 +34,7 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
       }),
     );
 
-    return tokenAddressesByPool.flat();
+    return uniq(tokenAddressesByPool.flat());
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<WombatExchangePoolToken>) {

@@ -128,6 +128,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
 
         const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
         const isLong = contractPosition.dataProps.isLong;
+        const positionKey = contractPosition.dataProps.positionKey;
 
         const position = await contract.getPosition(address, collateralToken.address, indexToken.address, isLong);
         // non existing position returns size and collateral = 0
@@ -162,7 +163,16 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
           leverage: Number(leverage),
         };
 
+        const displayProps = {
+          ...contractPosition.displayProps,
+          isLong,
+          positionKey,
+          size,
+          leverage,
+        };
+
         contractPosition.dataProps = dataProps;
+        contractPosition.displayProps = displayProps;
 
         const allTokens = contractPosition.tokens.map((cp, idx) =>
           drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),

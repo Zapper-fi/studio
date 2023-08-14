@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { uniqBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
@@ -65,7 +66,7 @@ export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemp
       }),
     );
 
-    return definitions;
+    return uniqBy(definitions, 'address');
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {

@@ -1,31 +1,18 @@
 import { Inject } from '@nestjs/common';
-import axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  DefaultAppTokenDefinition,
-  UnderlyingTokenDefinition,
-  GetPricePerShareParams,
-  DefaultAppTokenDataProps,
-} from '~position/template/app-token.template.types';
-import { NETWORK_IDS } from '~types';
+import { UnderlyingTokenDefinition, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { VelaContractFactory } from '../contracts';
 
-interface VelaGetVlpAprResponse {
-  VLP_APR: number;
-  VELA_APR: number;
-  TOTAL_APR: number;
-}
-
 export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  groupLabel = 'vlp';
+  groupLabel = 'VLP';
 
-  abstract get vlpAddress(): string | Promise<string>;
-  abstract get usdcAddress(): string | Promise<string>;
-  abstract get velaVaultAddress(): string | Promise<string>;
+  abstract vlpAddress: string;
+  abstract usdcAddress: string;
+  abstract vaultAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,43 +29,25 @@ export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getAddresses(): Promise<string[]> {
-    const vlpAddress = await this.vlpAddress;
-    return [vlpAddress];
+    return [this.vlpAddress];
   }
 
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {
-    const usdcAddress = await this.usdcAddress;
-    return [{ address: usdcAddress, network: this.network }];
+    return [{ address: this.usdcAddress, network: this.network }];
   }
 
-  async getApy(): Promise<number> {
-    try {
-      const {
-        data: { VLP_APR },
-      } = await axios.get<VelaGetVlpAprResponse>(
-        `https://vela-public-server-prod-qxq2l.ondigitalocean.app/market/vlp-apr/${NETWORK_IDS[this.network]}`,
-      );
-      return VLP_APR;
-    } catch {
-      return 0;
-    }
-  }
-
-  async getPricePerShare({
-    multicall,
-  }: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number[]> {
-    const velaVaultAddress = await this.velaVaultAddress;
+  async getPricePerShare({ multicall }: GetPricePerShareParams<Erc20>): Promise<number[]> {
     const velaVault = multicall.wrap(
       this.velaContractFactory.velaVault({
-        address: velaVaultAddress,
+        address: this.vaultAddress,
         network: this.network,
       }),
     );
-    const [vlpPrice, basisPointsDivisor] = await Promise.all([
-      velaVault.getVLPPrice(),
-      velaVault.BASIS_POINTS_DIVISOR(),
-    ]);
+    const basisPointsDivisor = 100000;
+
+    const vlpPrice = await velaVault.getVLPPrice();
     const pricePerShare = Number(vlpPrice) / Number(basisPointsDivisor);
+
     return [pricePerShare];
   }
 }
