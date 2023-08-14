@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.522.0](https://github.com/Zapper-fi/studio/compare/v0.521.0...v0.522.0) (2023-08-14)
+
+
+### Features
+
+* **balancer-v2:** Support Avalanche and Base ([#2897](https://github.com/Zapper-fi/studio/issues/2897)) ([5e56b18](https://github.com/Zapper-fi/studio/commit/5e56b18fb8eca86fca90664a305323a90222fe4e))
+* **beefy:** Add vaults and boosted vaults positions ([#2894](https://github.com/Zapper-fi/studio/issues/2894)) ([1e46799](https://github.com/Zapper-fi/studio/commit/1e467998fa9865454a2f148532eedb5f594f655c))
+
+
+### Bug Fixes
+
+* **base-rpc:** Update Base rpc url ([#2896](https://github.com/Zapper-fi/studio/issues/2896)) ([5611c90](https://github.com/Zapper-fi/studio/commit/5611c90a07f041b77db78a46f29f481d6e97e49a))
+
 ## [0.521.0](https://github.com/Zapper-fi/studio/compare/v0.520.1...v0.521.0) (2023-08-13)
 
 
