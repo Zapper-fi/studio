@@ -15,5 +15,5 @@ export const DEFAULT_REGISTRY: Record<Exclude<Network, Network.BITCOIN_MAINNET>,
   [Network.CRONOS_MAINNET]: 'https://evm-cronos.crypto.org',
   [Network.AURORA_MAINNET]: 'https://mainnet.aurora.dev',
   [Network.EVMOS_MAINNET]: 'https://eth.bd.evmos.org:8545',
-  [Network.BASE_MAINNET]: 'https://developer-access-mainnet.base.org',
+  [Network.BASE_MAINNET]: 'https://mainnet.base.org',
 };
