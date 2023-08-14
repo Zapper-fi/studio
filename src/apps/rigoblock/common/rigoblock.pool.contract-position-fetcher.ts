@@ -31,6 +31,14 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
     return this.rigoblockContractFactory.smartPool({ address, network: this.network });
   }
 
+  async getDataProps({
+    multicall,
+    contractPosition,
+  }): Promise {
+    const { tokens } = contractPosition;
+    return { tokens };
+  }
+
   async getDefinitions(): Promise<RigoblockPoolAppTokenDefinition[]> {
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
@@ -43,6 +51,10 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
         address: pool.address,
       };
     });
+  }
+
+  async getLabel({ contractPosition }) {
+    return contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
   }
 
   // we defined the liquidity position of a rigoblock pool
@@ -60,21 +72,5 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
         ];
       });
     }).flat(2);
-  }
-
-  async getDataProps({
-    multicall,
-    contractPosition,
-  }): Promise {
-    const { tokens } = contractPosition;
-    return { tokens };
-  }
-
-  async getLabel({ contractPosition }) {
-    return contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
-  }
-
-  async getTokenBalancesPerPosition() {
-    throw new NotImplementedException();
   }
 }
