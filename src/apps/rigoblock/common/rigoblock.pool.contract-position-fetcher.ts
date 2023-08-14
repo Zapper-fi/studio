@@ -16,10 +16,11 @@ export type RigoblockPoolAppTokenDefinition = {
 
 export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3LiquidityContractPositionFetcher {
   groupLabel: string;
+  subgraphUrl = '';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RigoblockContractFactory) private readonly rigoblockContractFactory: RigoblockContractFactory,
+    @Inject(RigoblockContractFactory) protected readonly rigoblockContractFactory: RigoblockContractFactory,
     @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
@@ -34,7 +35,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
   async getDataProps({
     multicall,
     contractPosition,
-  }): Promise {
+  }) {
     const { tokens } = contractPosition;
     return { tokens };
   }
