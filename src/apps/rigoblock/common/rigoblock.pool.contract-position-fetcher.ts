@@ -19,8 +19,8 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory,
-    @Inject(UniswapV3ContractFactory) protected readonly uniswapContractFactory: UniswapV3ContractFactory,
+    @Inject(RigoblockContractFactory) private readonly rigoblockContractFactory: RigoblockContractFactory,
+    @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {
@@ -28,11 +28,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
   }
 
   getContract(address: string): SmartPool {
-    return this.contractFactory.smartPool({ address, network: this.network });
-  }
-
-  getPositionManager() {
-    return this.uniswapContractFactory.uniswapV3PositionManager({ address: this.positionManagerAddress, network: this.network });
+    return this.rigoblockContractFactory.smartPool({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<RigoblockPoolAppTokenDefinition[]> {
@@ -80,29 +76,5 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
 
   async getTokenBalancesPerPosition() {
     throw new NotImplementedException();
-  }
-
-  // TODO: check if by renaming injected definitions we can avoid having to override this method
-  async getBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
-    // @TODO: Rely on contract positions when we can correctly index all pools
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenLoader = this.appToolkit.getTokenDependencySelector({
-      tags: { network: this.network, context: `${this.appId}__template_balances` },
-    });
-
-    const positionManager = this.getPositionManager();
-    const numPositionsRaw = await positionManager.balanceOf(address);
-    const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index =>
-        this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
-          positionId: await multicall.wrap(positionManager).tokenOfOwnerByIndex(address, index),
-          network: this.network,
-          multicall,
-          tokenLoader,
-        }),
-      ),
-    );
-
-    return compact(balances);
   }
 }
