@@ -6,6 +6,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3LiquidityPositionDataProps } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-fetcher';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
@@ -17,7 +18,7 @@ export type RigoblockPoolAppTokenDefinition = {
 };
 
 export abstract class RigoblockPoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
-  UniswapV3LiquidityPositionDataProps
+  SmartPool
 > {
   abstract positionManagerAddress: string;
   abstract groupLabel: string;
