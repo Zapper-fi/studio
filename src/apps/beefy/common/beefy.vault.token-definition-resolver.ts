@@ -15,7 +15,6 @@ type BeefyMarketResponse = {
   earnedTokenAddress: string;
   earnContractAddress: string;
   network: string;
-  status: string;
 };
 
 const NETWORK_NAME: Partial<Record<Network, string>> = {
@@ -29,13 +28,14 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
   [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.CELO_MAINNET]: 'celo',
   [Network.AURORA_MAINNET]: 'aurora',
+  [Network.BASE_MAINNET]: 'base',
 };
 
 @Injectable()
 export class BeefyVaultTokenDefinitionsResolver {
   @Cache({
     key: _network => `studio:beefy:${_network}:vault-data`,
-    ttl: 5 * 60, // 60 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(_network: Network) {
     const { data } = await Axios.get<BeefyMarketResponse[]>(`https://api.beefy.finance/vaults`);
