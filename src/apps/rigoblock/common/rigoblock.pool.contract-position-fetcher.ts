@@ -11,6 +11,7 @@ import { RigoblockContractFactory, SmartPool } from '../contracts';
 
 export type RigoblockPoolAppTokenDefinition = {
   address: string;
+  label: string;
 };
 
 export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3LiquidityContractPositionFetcher {
@@ -48,12 +49,13 @@ export abstract class RigoblockPoolContractPositionFetcher extends UniswapV3Liqu
     return appTokens.map(pool => {
       return {
         address: pool.address,
+        label: pool.displayProps.label,
       };
     });
   }
 
-  async getLabel({ contractPosition }) {
-    return contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
+  async getLabel({ definition }) {
+    return definition.label;
   }
 
   // we defined the liquidity position of a rigoblock pool
