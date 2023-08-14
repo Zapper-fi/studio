@@ -1,7 +1,5 @@
-import { gql } from 'graphql-request';
-
-export const LENDING_POOLS_QUERY = gql`
-  query getPoolsList {
+export const LENDING_POOLS_QUERY = {
+  query: `query {
     pools(first: 1000, where: { _expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
       id
       _deployer
@@ -17,10 +15,11 @@ export const LENDING_POOLS_QUERY = gql`
       _paused
     }
   }
-`;
+`,
+};
 
-export const LENDING_POOLS_V2_QUERY = gql`
-  query getPoolsList {
+export const LENDING_POOLS_V2_QUERY = {
+  query: `query {
     pools(first: 1000, where: { expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
       id
       deployer
@@ -36,4 +35,5 @@ export const LENDING_POOLS_V2_QUERY = gql`
       paused
     }
   }
-`;
+`,
+};

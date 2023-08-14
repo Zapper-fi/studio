@@ -8,22 +8,6 @@ import type { VelaVault, VelaVaultInterface } from '../VelaVault';
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_vlp',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_vUSDC',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -53,18 +37,37 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'address',
-        name: 'previousOwner',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'posId',
+        type: 'uint256',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'newOwner',
+        name: 'account',
         type: 'address',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'exceededPnl',
+        type: 'uint256',
+      },
     ],
-    name: 'OwnershipTransferred',
+    name: 'ForceClose',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'version',
+        type: 'uint8',
+      },
+    ],
+    name: 'Initialized',
     type: 'event',
   },
   {
@@ -96,87 +99,6 @@ const _abi = [
       },
     ],
     name: 'Stake',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'refer',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fee',
-        type: 'uint256',
-      },
-    ],
-    name: 'TakeVUSDIn',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'refer',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fee',
-        type: 'uint256',
-      },
-    ],
-    name: 'TakeVUSDOut',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'TransferBounty',
     type: 'event',
   },
   {
@@ -236,492 +158,19 @@ const _abi = [
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'BASIS_POINTS_DIVISOR',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'DEFAULT_FUNDING_RATE_FACTOR',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'DEFAULT_MAX_OPEN_INTEREST',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'DEFAULT_VLP_PRICE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'FUNDING_RATE_PRECISION',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'LIQUIDATE_FEE_EXCEED',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'LIQUIDATE_NONE_EXCEED',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'LIQUIDATE_THRESHOLD_EXCEED',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_COOLDOWN_DURATION',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_DELTA_TIME',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_DEPOSIT_FEE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_FEE_BASIS_POINTS',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_FEE_REWARD_BASIS_POINTS',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_FUNDING_RATE_FACTOR',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_FUNDING_RATE_INTERVAL',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_LIQUIDATION_FEE_USD',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_STAKING_FEE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_TOKENFARM_COOLDOWN_DURATION',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_TRIGGER_GAS_FEE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MAX_VESTING_DURATION',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_FEE_REWARD_BASIS_POINTS',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_FUNDING_RATE_INTERVAL',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'MIN_LEVERAGE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ORDER_FILLED',
-    outputs: [
-      {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ORDER_NOT_FILLED',
-    outputs: [
-      {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'POSITION_LIMIT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'POSITION_MARKET',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'POSITION_STOP_LIMIT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'POSITION_STOP_MARKET',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'POSITION_TRAILING_STOP',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'PRICE_PRECISION',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'STAKING_PID_FOR_CHARGE_FEE',
-    outputs: [
-      {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'TRAILING_STOP_TYPE_AMOUNT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'TRAILING_STOP_TYPE_PERCENT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'VLP_DECIMALS',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ZERO_ADDRESS',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'bool',
-        name: '_hasProfit',
+        name: '_isIncrease',
         type: 'bool',
       },
       {
         internalType: 'uint256',
-        name: '_adjustDelta',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_fee',
+        name: '_delta',
         type: 'uint256',
       },
     ],
-    name: 'accountDeltaAndFeeIntoTotalUSDC',
+    name: 'accountDeltaIntoTotalUSD',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -729,24 +178,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: '_isLong',
-        type: 'bool',
-      },
-      {
         internalType: 'uint256',
         name: '_posId',
         type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: 'isPlus',
-        type: 'bool',
       },
       {
         internalType: 'uint256',
@@ -754,7 +188,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'addOrRemoveCollateral',
+    name: 'addCollateral',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -762,15 +196,18 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'a',
+        type: 'uint256',
       },
-      {
-        internalType: 'bool',
-        name: '_isLong',
-        type: 'bool',
-      },
+    ],
+    name: 'addOrRemoveCollateralPacked',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
         name: '_posId',
@@ -786,6 +223,11 @@ const _abi = [
         name: '_sizeDelta',
         type: 'uint256',
       },
+      {
+        internalType: 'uint256',
+        name: '_allowedPrice',
+        type: 'uint256',
+      },
     ],
     name: 'addPosition',
     outputs: [],
@@ -795,15 +237,69 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'a',
+        type: 'uint256',
       },
       {
-        internalType: 'bool',
-        name: '_isLong',
-        type: 'bool',
+        internalType: 'uint256',
+        name: 'b',
+        type: 'uint256',
       },
+    ],
+    name: 'addPositionPacked',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_posId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool[]',
+        name: '_isTPs',
+        type: 'bool[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_prices',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_amountPercents',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'addTPSL',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'a',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_tps',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'addTPSLPacked',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
         name: '_posId',
@@ -823,16 +319,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: '_isLong',
-        type: 'bool',
-      },
-      {
         internalType: 'uint256',
         name: '_posId',
         type: 'uint256',
@@ -846,19 +332,27 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
+        internalType: 'uint256[]',
+        name: '_posIds',
+        type: 'uint256[]',
       },
+    ],
+    name: 'cancelPendingOrders',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
         name: '_sizeDelta',
         type: 'uint256',
       },
       {
-        internalType: 'bool',
-        name: '_isLong',
-        type: 'bool',
+        internalType: 'uint256',
+        name: '_allowedPrice',
+        type: 'uint256',
       },
       {
         internalType: 'uint256',
@@ -868,7 +362,25 @@ const _abi = [
     ],
     name: 'decreasePosition',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'a',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_posId',
+        type: 'uint256',
+      },
+    ],
+    name: 'decreasePositionPacked',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -898,23 +410,69 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_account',
+        name: '_token',
         type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'depositSelf',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'depositSelfAllUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'depositSelfUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_fee',
+        type: 'uint256',
       },
       {
         internalType: 'address',
         name: '_refer',
         type: 'address',
       },
-      {
-        internalType: 'uint256',
-        name: '_fee',
-        type: 'uint256',
-      },
     ],
     name: 'distributeFee',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_posId',
+        type: 'uint256',
+      },
+    ],
+    name: 'forceClosePosition',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -928,6 +486,42 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getVaultUSDBalance',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_operators',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_vlp',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_vusd',
+        type: 'address',
+      },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -952,9 +546,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_indexToken',
-        type: 'address',
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
       },
       {
         internalType: 'bool',
@@ -983,11 +577,82 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'owner',
-    outputs: [
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'a',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'b',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'c',
+        type: 'uint256',
+      },
+    ],
+    name: 'newPositionOrderPacked',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_tokenId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: '_isLong',
+        type: 'bool',
+      },
+      {
+        internalType: 'enum OrderType',
+        name: '_orderType',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_params',
+        type: 'uint256[]',
+      },
       {
         internalType: 'address',
+        name: '_refer',
+        type: 'address',
+      },
+      {
+        internalType: 'bool[]',
+        name: '_isTPs',
+        type: 'bool[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_prices',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_amountPercents',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'newPositionOrderWithTPSL',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'operators',
+    outputs: [
+      {
+        internalType: 'contract IOperators',
         name: '',
         type: 'address',
       },
@@ -996,8 +661,32 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'renounceOwnership',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_posId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'removeCollateral',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract IERC20Upgradeable',
+        name: '_token',
+        type: 'address',
+      },
+    ],
+    name: 'setUSDC',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1017,6 +706,16 @@ const _abi = [
       {
         internalType: 'contract IPositionVault',
         name: '_positionVault',
+        type: 'address',
+      },
+      {
+        internalType: 'contract IOrderVault',
+        name: '_orderVault',
+        type: 'address',
+      },
+      {
+        internalType: 'contract ILiquidateVault',
+        name: '_liquidateVault',
         type: 'address',
       },
     ],
@@ -1052,12 +751,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_refer',
+        name: '_token',
         type: 'address',
       },
       {
@@ -1065,9 +759,42 @@ const _abi = [
         name: '_amount',
         type: 'uint256',
       },
+    ],
+    name: 'stakeSelf',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'stakeSelfAllUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
-        name: '_fee',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'stakeSelfUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
         type: 'uint256',
       },
     ],
@@ -1084,18 +811,8 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: '_refer',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
-        name: '_fee',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_usdOut',
+        name: '_amount',
         type: 'uint256',
       },
     ],
@@ -1106,7 +823,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'totalUSDC',
+    name: 'totalUSD',
     outputs: [
       {
         internalType: 'uint256',
@@ -1115,50 +832,6 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'totalVLP',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferBounty',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-    ],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1173,13 +846,28 @@ const _abi = [
         name: '_vlpAmount',
         type: 'uint256',
       },
-      {
-        internalType: 'address',
-        name: '_receiver',
-        type: 'address',
-      },
     ],
     name: 'unstake',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'unstakeAllUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_vlpAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'unstakeUSDC',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1192,17 +880,32 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
         name: '_amount',
         type: 'uint256',
       },
     ],
     name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'withdrawAllUSDC',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdrawUSDC',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

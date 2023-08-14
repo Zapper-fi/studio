@@ -12,6 +12,7 @@ export type { CurveFactory } from './CurveFactory';
 export type { CurveFactoryPoolV2 } from './CurveFactoryPoolV2';
 export type { CurveGauge } from './CurveGauge';
 export type { CurveGaugeV2 } from './CurveGaugeV2';
+export type { CurveGaugeV6 } from './CurveGaugeV6';
 export type { CurveNGauge } from './CurveNGauge';
 export type { CurvePool } from './CurvePool';
 export type { CurvePoolLegacy } from './CurvePoolLegacy';
@@ -34,6 +35,7 @@ export { CurveDoubleGauge__factory } from './factories/CurveDoubleGauge__factory
 export { CurveFactoryPoolV2__factory } from './factories/CurveFactoryPoolV2__factory';
 export { CurveFactory__factory } from './factories/CurveFactory__factory';
 export { CurveGaugeV2__factory } from './factories/CurveGaugeV2__factory';
+export { CurveGaugeV6__factory } from './factories/CurveGaugeV6__factory';
 export { CurveGauge__factory } from './factories/CurveGauge__factory';
 export { CurveNGauge__factory } from './factories/CurveNGauge__factory';
 export { CurvePoolLegacy__factory } from './factories/CurvePoolLegacy__factory';

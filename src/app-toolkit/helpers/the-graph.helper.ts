@@ -1,5 +1,4 @@
-import { GraphQLClient } from 'graphql-request';
-import { Variables } from 'graphql-request/dist/types';
+import { GraphQLClient, Variables } from 'graphql-request';
 
 export const gqlFetch = async <T = any>({
   endpoint,

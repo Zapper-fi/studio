@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
@@ -14,7 +13,7 @@ export abstract class GainsNetworkStakingContractPositionFetcher extends SingleS
   groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
   ) {
     super(appToolkit);

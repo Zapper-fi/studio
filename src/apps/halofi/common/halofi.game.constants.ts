@@ -71,14 +71,12 @@ export async function retry(onRetry: (...args: any[]) => any, args: any[], maxRe
   return retryWithBackoff(0);
 }
 
-const ContractVersions = ['2.0.0', '2.0.1', '2.0.2', '2.0.3', '2.0.4'];
+const ContractVersions = ['2.0'];
 
 export const getGameVersionType = (contractVersion: string) => {
-  if (ContractVersions.includes(contractVersion)) {
-    return true;
-  }
-  const [derivedContractVersion] = contractVersion.split('-');
-  if (ContractVersions.includes(derivedContractVersion)) {
+  const baseContractVersion = contractVersion.slice(0, 3);
+
+  if (ContractVersions.indexOf(baseContractVersion) !== -1) {
     return true;
   }
   return false;

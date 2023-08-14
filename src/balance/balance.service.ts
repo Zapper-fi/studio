@@ -2,7 +2,6 @@ import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { fromPairs } from 'lodash';
 
 import { ContractType } from '~position/contract.interface';
-import { PositionBalanceFetcherRegistry } from '~position/position-balance-fetcher.registry';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
 import { PositionFetcherTemplateRegistry } from '~position/position-fetcher.template-registry';
 
@@ -21,8 +20,6 @@ export class BalanceService {
   constructor(
     @Inject(BalanceFetcherRegistry) private readonly balanceFetcherRegistry: BalanceFetcherRegistry,
     @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
-    @Inject(PositionBalanceFetcherRegistry)
-    private readonly positionFetcherBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
     @Inject(DefaultTokenBalanceFetcherFactory)
     private readonly defaultTokenBalanceFetcherFactory: DefaultTokenBalanceFetcherFactory,
     @Inject(PositionFetcherTemplateRegistry)
@@ -107,9 +104,6 @@ export class BalanceService {
             tokenGroupIds.map(async groupId => {
               const fetcherSelector = { type: ContractType.APP_TOKEN, appId, groupId, network };
 
-              const balanceFetcher = this.positionFetcherBalanceFetcherRegistry.get(fetcherSelector);
-              if (balanceFetcher) return balanceFetcher.getBalances(address);
-
               const defaultBalanceFetcher = this.defaultTokenBalanceFetcherFactory.build(fetcherSelector);
               return defaultBalanceFetcher.getBalances(address);
             }),
@@ -117,9 +111,6 @@ export class BalanceService {
           await Promise.all(
             positionGroupIds.map(async groupId => {
               const fetcherSelector = { type: ContractType.POSITION, appId, groupId, network };
-
-              const balanceFetcher = this.positionFetcherBalanceFetcherRegistry.get(fetcherSelector);
-              if (balanceFetcher) return balanceFetcher.getBalances(address);
 
               const defaultBalanceFetcher = this.defaultContractPositionBalanceFetcherFactory.build(fetcherSelector);
               return defaultBalanceFetcher.getBalances(address);

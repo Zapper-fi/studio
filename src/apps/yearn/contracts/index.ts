@@ -12,6 +12,7 @@ import {
   YearnStakingRewardRegistry__factory,
   YearnVault__factory,
   YearnVaultV2__factory,
+  YearnVeYfi__factory,
   YearnYCrv__factory,
 } from './ethers';
 
@@ -45,6 +46,9 @@ export class YearnContractFactory extends ContractFactory {
   yearnVaultV2({ address, network }: ContractOpts) {
     return YearnVaultV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  yearnVeYfi({ address, network }: ContractOpts) {
+    return YearnVeYfi__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   yearnYCrv({ address, network }: ContractOpts) {
     return YearnYCrv__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -57,4 +61,5 @@ export type { YearnStaking } from './ethers';
 export type { YearnStakingRewardRegistry } from './ethers';
 export type { YearnVault } from './ethers';
 export type { YearnVaultV2 } from './ethers';
+export type { YearnVeYfi } from './ethers';
 export type { YearnYCrv } from './ethers';

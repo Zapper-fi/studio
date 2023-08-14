@@ -9,6 +9,7 @@ import {
   BalancerChildChainGaugeFactory__factory,
   BalancerComposableStablePool__factory,
   BalancerErc4626LinearPool__factory,
+  BalancerFeeDistributor__factory,
   BalancerGauge__factory,
   BalancerMerkleOrchard__factory,
   BalancerMerkleRedeem__factory,
@@ -40,6 +41,9 @@ export class BalancerV2ContractFactory extends ContractFactory {
   }
   balancerErc4626LinearPool({ address, network }: ContractOpts) {
     return BalancerErc4626LinearPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  balancerFeeDistributor({ address, network }: ContractOpts) {
+    return BalancerFeeDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   balancerGauge({ address, network }: ContractOpts) {
     return BalancerGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -74,6 +78,7 @@ export type { BalancerBoostedPool } from './ethers';
 export type { BalancerChildChainGaugeFactory } from './ethers';
 export type { BalancerComposableStablePool } from './ethers';
 export type { BalancerErc4626LinearPool } from './ethers';
+export type { BalancerFeeDistributor } from './ethers';
 export type { BalancerGauge } from './ethers';
 export type { BalancerMerkleOrchard } from './ethers';
 export type { BalancerMerkleRedeem } from './ethers';
