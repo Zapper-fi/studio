@@ -92,6 +92,7 @@
     "class-validator": "^0.13.2",
     "conventional-changelog-conventionalcommits": "^4.6.3",
     "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
     "dataloader": "^2.1.0",
     "dedent": "^0.7.0",
     "dotenv": "^16.0.0",
