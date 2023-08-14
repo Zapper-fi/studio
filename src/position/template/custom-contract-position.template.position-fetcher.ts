@@ -93,7 +93,6 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
-    if (!this.network) return [];
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },

@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 //import { UniswapV3AppModule } from '~apps/uniswap-v3/uniswap-v3.module';
 import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
-//import { UniswapV3LiquidityContractPositionFetcher } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-fetcher';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 
 import { ArbitrumRigoblockPoolContractPositionFetcher } from './arbitrum/rigoblock.pool.contract-position-fetcher';
@@ -21,7 +20,6 @@ import { PolygonRigoblockPoolTokenFetcher } from './polygon/rigoblock.pool.token
   //imports: [UniswapV3AppModule],
   providers: [
     UniswapV3ContractFactory,
-    //UniswapV3LiquidityContractPositionFetcher,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumRigoblockPoolContractPositionFetcher,
     ArbitrumRigoblockPoolTokenFetcher,
