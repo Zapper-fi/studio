@@ -79,7 +79,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
           balanceUSD: token.balanceUSD,
         };
       });
-    });
+    }).flat(1);
     return { liquidityPositions: liquidityPositions };
   }
 
