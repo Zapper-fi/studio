@@ -16,7 +16,7 @@ import { RigoblockContractFactory, SmartPool } from '../contracts';
 export type UnderlyingLiquidityPositionTokens = {
   address: string;
   balance: number;
-  balanceRaw: BigNumber;
+  balanceRaw: string;
   balanceUSD: number;
 }
 
