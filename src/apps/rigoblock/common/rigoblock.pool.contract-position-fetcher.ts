@@ -8,8 +8,8 @@ import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/comm
 import { UniswapV3LiquidityPositionDataProps } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-fetcher';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
+import { GetDataPropsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
-
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
 export type UnderlyingLiquidityPositionTokens = {
@@ -68,7 +68,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
 
   async getDataProps({ contractPosition }: GetDataPropsParams<
     RigoblockLiquidityDataProps
-  >): Promise<RigoblockLiquidityDataProps[]> {
+  >): Promise<RigoblockLiquidityDataProps> {
     const liquidityBalances = await this.getBalances(contractPosition.address);
     const liquidityPositions: UnderlyingLiquidityPositionTokens[] = liquidityBalances.map(balance => {
       return balance.tokens.map(token => {
@@ -80,7 +80,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
         };
       });
     });
-    return { liquidityPositions };
+    return { liquidityPositions: liquidityPositions };
   }
 
   async getLabel({ definition }) {
