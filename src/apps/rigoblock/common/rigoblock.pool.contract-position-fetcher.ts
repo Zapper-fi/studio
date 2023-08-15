@@ -12,11 +12,15 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
-export type RigoblockLiquidityPositionDataProps = {
+type LiquidityDataProps = {
   address: string;
   balance: number;
   balanceRaw: number;
   balanceUSD: number;
+}
+
+export type RigoblockLiquidityPositionDataProps = {
+  liquidityPositionProps: LiquidityDataProps[];
 };
 
 export type RigoblockPoolAppTokenDefinition = {
@@ -62,18 +66,22 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     });
   }
 
-  async getDataProps({ contractPosition }): Promise<RigoblockLiquidityPositionDataProps[]> {
+  async getDataProps({ contractPosition }): Promise<RigoblockLiquidityPositionDataProps> {
     const liquidityBalances = await this.getBalances(contractPosition.address);
-    return liquidityBalances.map(balance => {
-      return balance.tokens.map(token => {
-        return {
-          address: token.address,
-          balance: token.balance,
-          balanceRaw: token.balanceRaw,
-          balanceUSD: token.balanceUSD,
-        }
-      })
-    });
+    return liquidityBalances
+      .filter(v => v.length !== 0)
+      .map(balance => {
+        return balance.tokens.map(token => {
+          return {
+            liquidityProps: {
+              address: token.address,
+              balance: token.balance,
+              balanceRaw: token.balanceRaw,
+              balanceUSD: token.balanceUSD,
+            }
+          }
+        })
+      });
   }
 
   async getLabel({ definition }) {
@@ -83,29 +91,34 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
   // @ts-ignore
   async getTokenBalancesPerPosition({ address }) {
     const underlyingTokenBalances = await this.getBalances(address);
-    return underlyingTokenBalances.map(balance => {
-      const tokens = balance.tokens;
-      return tokens.map(token => {
-        return [token.balanceRaw];
-      });
-    }).flat(2);
+    return underlyingTokenBalances
+      .filter(v => v.length !== 0)
+      .map(balance => {
+        const tokens = balance.tokens;
+        return tokens.map(token => {
+          return [token.balanceRaw];
+        });
+      }).flat(2);
   }
 
   // we defined the liquidity position of a rigoblock pool
   async getTokenDefinitions({ definition }) {
     const underlyingTokenBalances = await this.getBalances(definition.address);
-    return underlyingTokenBalances.map(balance => {
-      const tokens = balance.tokens;
-      return tokens.map(token => {
-        return [
-          {
-            metaType: MetaType.SUPPLIED,
-            address: token.address,
-            network: this.network,
-          },
-        ];
-      });
-    }).flat(2);
+    // we only return positions with positive pool-provided liquidity
+    return underlyingTokenBalances
+      .filter(v => v.length !== 0)
+      .map(balance => {
+        const tokens = balance.tokens;
+        return tokens.map(token => {
+          return [
+            {
+              metaType: MetaType.SUPPLIED,
+              address: token.address,
+              network: this.network,
+            },
+          ];
+        });
+      }).flat(2);
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
