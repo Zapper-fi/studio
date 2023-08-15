@@ -12,15 +12,15 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
-type LiquidityDataProps = {
+export type UnderlyingLiquidityPositionTokens = {
   address: string;
   balance: number;
   balanceRaw: number;
   balanceUSD: number;
 }
 
-export type RigoblockLiquidityPositionDataProps = {
-  liquidityPositionProps: LiquidityDataProps[];
+export type RigoblockLiquidityDataProps = {
+  liquidityPositions: UnderlyingLiquidityPositionTokens[];
 };
 
 export type RigoblockPoolAppTokenDefinition = {
@@ -30,7 +30,7 @@ export type RigoblockPoolAppTokenDefinition = {
 
 export abstract class RigoblockPoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SmartPool,
-  RigoblockLiquidityPositionDataProps
+  RigoblockLiquidityDataProps
 > {
   abstract positionManagerAddress: string;
   abstract groupLabel: string;
@@ -67,21 +67,20 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
   }
 
   async getDataProps({ contractPosition }: GetDataPropsParams<
-    RigoblockLiquidityPositionDataProps
-  >): Promise<RigoblockLiquidityPositionDataProps> {
+    RigoblockLiquidityDataProps
+  >): Promise<RigoblockLiquidityDataProps[]> {
     const liquidityBalances = await this.getBalances(contractPosition.address);
-    return liquidityBalances.map(balance => {
+    const liquidityPositions: UnderlyingLiquidityPositionTokens[] = liquidityBalances.map(balance => {
       return balance.tokens.map(token => {
         return {
-          liquidityPositionProps: {
-            address: token.address,
-            balance: token.balance,
-            balanceRaw: token.balanceRaw,
-            balanceUSD: token.balanceUSD,
-          }
-        }
-      })
+          address: token.address,
+          balance: token.balance,
+          balanceRaw: token.balanceRaw,
+          balanceUSD: token.balanceUSD,
+        };
+      });
     });
+    return { liquidityPositions };
   }
 
   async getLabel({ definition }) {
