@@ -66,9 +66,9 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     });
   }
 
-  async getDataProps({ contractPosition }: GetDataPropsParams<
+  async getDataProps({ contractPosition }) /*: GetDataPropsParams<
     RigoblockLiquidityDataProps
-  >): Promise<RigoblockLiquidityDataProps> {
+  >): Promise<RigoblockLiquidityDataProps>*/ {
     const liquidityBalances = await this.getBalances(contractPosition.address);
     const liquidityPositions: UnderlyingLiquidityPositionTokens[] = liquidityBalances.map(balance => {
       return balance.tokens.map(token => {
