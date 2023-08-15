@@ -31,8 +31,7 @@ export type RigoblockPoolAppTokenDefinition = {
 
 export abstract class RigoblockPoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SmartPool,
-  RigoblockLiquidityDataProps,
-  UniswapV3LiquidityPositionDataProps
+  RigoblockLiquidityDataProps
 > {
   abstract positionManagerAddress: string;
   abstract groupLabel: string;
@@ -68,9 +67,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     });
   }
 
-  async getDataProps({ contractPosition }: GetDataPropsParams<
-    RigoblockLiquidityDataProps
-  >): Promise<RigoblockLiquidityDataProps> {
+  async getDataProps({ contractPosition }): Promise<RigoblockLiquidityDataProps> {
     const liquidityBalances = await this.getBalances(contractPosition.address);
     const liquidityPositions: UnderlyingLiquidityPositionTokens[] = liquidityBalances.map(balance => {
       return balance.tokens.map(token => {
