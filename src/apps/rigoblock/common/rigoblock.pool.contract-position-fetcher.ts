@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -15,7 +16,7 @@ import { RigoblockContractFactory, SmartPool } from '../contracts';
 export type UnderlyingLiquidityPositionTokens = {
   address: string;
   balance: number;
-  balanceRaw: number;
+  balanceRaw: BigNumber;
   balanceUSD: number;
 }
 
@@ -93,7 +94,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     return underlyingTokenBalances.map(balance => {
       const tokens = balance.tokens;
       return tokens.map(token => {
-        return [token.balanceRaw];
+        return token.balanceRaw;
       });
     }).flat(2);
   }
