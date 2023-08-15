@@ -3,12 +3,14 @@
 /* eslint-disable */
 export type { StargateAa } from './StargateAa';
 export type { StargateChef } from './StargateChef';
+export type { StargateChefBase } from './StargateChefBase';
 export type { StargateEth } from './StargateEth';
 export type { StargateFactory } from './StargateFactory';
 export type { StargatePool } from './StargatePool';
 export type { StargateVe } from './StargateVe';
 export * as factories from './factories';
 export { StargateAa__factory } from './factories/StargateAa__factory';
+export { StargateChefBase__factory } from './factories/StargateChefBase__factory';
 export { StargateChef__factory } from './factories/StargateChef__factory';
 export { StargateEth__factory } from './factories/StargateEth__factory';
 export { StargateFactory__factory } from './factories/StargateFactory__factory';

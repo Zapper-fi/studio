@@ -9,6 +9,9 @@ import { ArbitrumStargateVotingEscrowContractPositionFetcher } from './arbitrum/
 import { AvalancheStargateFarmContractPositionFetcher } from './avalanche/stargate.farm.contract-position-fetcher';
 import { AvalancheStargatePoolTokenFetcher } from './avalanche/stargate.pool.token-fetcher';
 import { AvalancheStargateVotingEscrowContractPositionFetcher } from './avalanche/stargate.voting-escrow.contract-position-fetcher';
+import { BaseStargateEthTokenFetcher } from './base/stargate.eth.token-fetcher';
+import { BaseStargateFarmContractPositionFetcher } from './base/stargate.farm.contract-position-fetcher';
+import { BaseStargatePoolTokenFetcher } from './base/stargate.pool.token-fetcher';
 import { BinanceSmartChainStargateFarmContractPositionFetcher } from './binance-smart-chain/stargate.farm.contract-position-fetcher';
 import { BinanceSmartChainStargatePoolTokenFetcher } from './binance-smart-chain/stargate.pool.token-fetcher';
 import { BinanceSmartChainStargateVotingEscrowContractPositionFetcher } from './binance-smart-chain/stargate.voting-escrow.contract-position-fetcher';
@@ -41,6 +44,10 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
     AvalancheStargateFarmContractPositionFetcher,
     AvalancheStargatePoolTokenFetcher,
     AvalancheStargateVotingEscrowContractPositionFetcher,
+    // Base
+    BaseStargateEthTokenFetcher,
+    BaseStargateFarmContractPositionFetcher,
+    BaseStargatePoolTokenFetcher,
     // Binance-smart-chain
     BinanceSmartChainStargateFarmContractPositionFetcher,
     BinanceSmartChainStargatePoolTokenFetcher,
