@@ -1,4 +1,4 @@
-import { Inject, NotImplementedException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -39,14 +39,6 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     return this.rigoblockContractFactory.smartPool({ address, network: this.network });
   }
 
-  async getDataProps({
-    multicall,
-    contractPosition,
-  }) {
-    const { tokens } = contractPosition;
-    return { tokens };
-  }
-
   async getDefinitions(): Promise<RigoblockPoolAppTokenDefinition[]> {
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
@@ -62,13 +54,33 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     });
   }
 
+  async getDataProps({ contractPosition }) {
+    const liquidityBalances = await this.getBalances(contractPosition.address);
+    return liquidityBalances.map(balance => {
+      return balance.tokens.map(token => {
+        return {
+          address: token.address,
+          balance: token.balance,
+          balanceRaw: token.balanceRaw,
+          balanceUSD: token.balanceUSD,
+        }
+      })
+    });
+  }
+
   async getLabel({ definition }) {
     return definition.label;
   }
 
   // @ts-ignore
-  async getTokenBalancesPerPosition() {
-    throw new NotImplementedException();
+  async getTokenBalancesPerPosition({ address }) {
+    const underlyingTokenBalances = await this.getBalances(address);
+    return underlyingTokenBalances.map(balance => {
+      const tokens = balance.tokens;
+      return tokens.map(token => {
+        return [token.balanceRaw];
+      });
+    }).flat(2);
   }
 
   // we defined the liquidity position of a rigoblock pool
