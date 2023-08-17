@@ -13,7 +13,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 import { OpnxContractFactory, Veox } from '../contracts';
 
 @PositionTemplate()
-export class EthereumOpnxVeoxTokenFetcher extends VotingEscrowTemplateContractPositionFetcher<Veox> {
+export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<Veox> {
   veTokenAddress = '0x28901cf869d94c9d892fbd86c8e57b801e8fdd87';
   groupLabel = 'Staking';
 
