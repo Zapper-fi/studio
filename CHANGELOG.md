@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.523.0](https://github.com/Zapper-fi/studio/compare/v0.522.0...v0.523.0) (2023-08-17)
+
+
+### Features
+
+* **opnx:** add staked OX ([#2900](https://github.com/Zapper-fi/studio/issues/2900)) ([55436a7](https://github.com/Zapper-fi/studio/commit/55436a779d2dbb59420793a083d0340f7a99d3a4))
+* **stargate:** Support Base ([#2898](https://github.com/Zapper-fi/studio/issues/2898)) ([c2f3b81](https://github.com/Zapper-fi/studio/commit/c2f3b81c566ac4c0cfef62294ef997652edba510))
+
+
+### Bug Fixes
+
+* **mux:** Fix perp balances ([#2901](https://github.com/Zapper-fi/studio/issues/2901)) ([1f3c0f5](https://github.com/Zapper-fi/studio/commit/1f3c0f5ea073f68fd9df92a05652f4a1810bcb8c))
+
 ## [0.522.0](https://github.com/Zapper-fi/studio/compare/v0.521.0...v0.522.0) (2023-08-14)
 
 
