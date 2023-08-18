@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, NotImplementedException } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 import { compact, range } from 'lodash';
 
@@ -31,7 +31,8 @@ export type RigoblockPoolAppTokenDefinition = {
 
 export abstract class RigoblockPoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SmartPool,
-  RigoblockLiquidityDataProps
+  RigoblockLiquidityDataProps,
+  UniswapV3LiquidityPositionDataProps
 > {
   abstract positionManagerAddress: string;
   abstract groupLabel: string;
@@ -87,17 +88,11 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
   }
 
   // @ts-ignore
-  async getTokenBalancesPerPosition({ address }) {
-    const underlyingTokenBalances = await this.getBalances(address);
-    return underlyingTokenBalances.map(balance => {
-      const tokens = balance.tokens;
-      return tokens.map(token => {
-        return token.balanceRaw;
-      });
-    }).flat(2);
+  async getTokenBalancesPerPosition() {
+    throw new NotImplementedException();
   }
 
-  // we defined the liquidity position of a rigoblock pool
+  // we define the liquidity position of a rigoblock pool
   async getTokenDefinitions({ definition }) {
     const underlyingTokenBalances = await this.getBalances(definition.address);
     return underlyingTokenBalances.map(balance => {
