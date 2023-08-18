@@ -1,4 +1,4 @@
-import { Inject, NotImplementedException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 import { compact, range } from 'lodash';
 
@@ -10,7 +10,7 @@ import { UniswapV3LiquidityPositionDataProps } from '~apps/uniswap-v3/common/uni
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { GetDataPropsParams } from '~position/template/contract-position.template.types';
-import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { RigoblockContractFactory, SmartPool } from '../contracts';
 
 export type UnderlyingLiquidityPositionTokens = {
@@ -29,15 +29,13 @@ export type RigoblockPoolAppTokenDefinition = {
   label: string;
 };
 
-export abstract class RigoblockPoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
+export abstract class RigoblockPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   SmartPool,
   RigoblockLiquidityDataProps,
-  UniswapV3LiquidityPositionDataProps
+  RigoblockPoolAppTokenDefinition
 > {
   abstract positionManagerAddress: string;
   abstract groupLabel: string;
-
-  appId = 'rigoblock';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -68,6 +66,23 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
     });
   }
 
+  // we define the liquidity position of a rigoblock pool
+  async getTokenDefinitions({ definition }) {
+    const underlyingTokenBalances = await this.getUnderlyingBalances(definition.address);
+    return underlyingTokenBalances.map(balance => {
+      const tokens = balance.tokens;
+      return tokens.map(token => {
+        return [
+          {
+            metaType: MetaType.SUPPLIED,
+            address: token.address,
+            network: this.network,
+          },
+        ];
+      });
+    }).flat(2);
+  }
+
   async getDataProps({ contractPosition }): Promise<RigoblockLiquidityDataProps> {
     const liquidityBalances = await this.getBalances(contractPosition.address);
     const liquidityPositions: UnderlyingLiquidityPositionTokens[] = liquidityBalances.map(balance => {
@@ -88,28 +103,17 @@ export abstract class RigoblockPoolContractPositionFetcher extends CustomContrac
   }
 
   // @ts-ignore
-  async getTokenBalancesPerPosition() {
-    throw new NotImplementedException();
-  }
-
-  // we define the liquidity position of a rigoblock pool
-  async getTokenDefinitions({ definition }) {
-    const underlyingTokenBalances = await this.getBalances(definition.address);
+  async getTokenBalancesPerPosition({ address, contractPosition }) {
+    const underlyingTokenBalances = await this.getUnderlyingBalances(address);
     return underlyingTokenBalances.map(balance => {
       const tokens = balance.tokens;
       return tokens.map(token => {
-        return [
-          {
-            metaType: MetaType.SUPPLIED,
-            address: token.address,
-            network: this.network,
-          },
-        ];
+        return [token.balanceRaw];
       });
-    }).flat(2);
+    }).flat(1);
   }
 
-  async getBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
+  async getUnderlyingBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
