@@ -152,8 +152,8 @@ export function computePositionPnlUsd(
   assetPrice: number,
   assetMinProfitTime: number,
   assetMinProfitRate: string,
-  amount: string,
-  entryPrice: string,
+  amount: BigNumber,
+  entryPrice: BigNumber,
   lastIncreasedTime: number,
   isLong: boolean,
 ): { pendingPnlUsd: BigNumber; pnlUsd: BigNumber } {

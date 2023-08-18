@@ -19,13 +19,14 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',
   [Network.AVALANCHE_MAINNET]: 'avax',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
+  [Network.BASE_MAINNET]: 'base',
 };
 
 @Injectable()
 export class BeefyBoostVaultDefinitionsResolver {
   @Cache({
     key: _network => `studio:beefy:${_network}:boost-vault-data`,
-    ttl: 5 * 60, // 60 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getBoostVaultDefinitionsData(_network: Network) {
     const { data } = await Axios.get<BeefyBostedVaultResponse[]>(

@@ -12,211 +12,141 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface DbrInterface extends utils.Interface {
   functions: {
-    "DOMAIN_SEPARATOR()": FunctionFragment;
-    "_totalSupply()": FunctionFragment;
-    "accrueDueTokens(address)": FunctionFragment;
-    "addMarket(address)": FunctionFragment;
-    "addMinter(address)": FunctionFragment;
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "balances(address)": FunctionFragment;
-    "burn(uint256)": FunctionFragment;
-    "claimOperator()": FunctionFragment;
-    "debts(address)": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "deficitOf(address)": FunctionFragment;
-    "dueTokensAccrued(address)": FunctionFragment;
-    "invalidateNonce()": FunctionFragment;
-    "lastUpdated(address)": FunctionFragment;
-    "markets(address)": FunctionFragment;
-    "mint(address,uint256)": FunctionFragment;
-    "minters(address)": FunctionFragment;
-    "name()": FunctionFragment;
-    "nonces(address)": FunctionFragment;
-    "onBorrow(address,uint256)": FunctionFragment;
-    "onForceReplenish(address,address,uint256,uint256)": FunctionFragment;
-    "onRepay(address,uint256)": FunctionFragment;
-    "operator()": FunctionFragment;
-    "pendingOperator()": FunctionFragment;
-    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
-    "removeMinter(address)": FunctionFragment;
-    "replenishmentPriceBps()": FunctionFragment;
-    "setPendingOperator(address)": FunctionFragment;
-    "setReplenishmentPriceBps(uint256)": FunctionFragment;
-    "signedBalanceOf(address)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "totalDueTokensAccrued()": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
+    'DOMAIN_SEPARATOR()': FunctionFragment;
+    '_totalSupply()': FunctionFragment;
+    'accrueDueTokens(address)': FunctionFragment;
+    'addMarket(address)': FunctionFragment;
+    'addMinter(address)': FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'balances(address)': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
+    'claimOperator()': FunctionFragment;
+    'debts(address)': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'deficitOf(address)': FunctionFragment;
+    'dueTokensAccrued(address)': FunctionFragment;
+    'invalidateNonce()': FunctionFragment;
+    'lastUpdated(address)': FunctionFragment;
+    'markets(address)': FunctionFragment;
+    'mint(address,uint256)': FunctionFragment;
+    'minters(address)': FunctionFragment;
+    'name()': FunctionFragment;
+    'nonces(address)': FunctionFragment;
+    'onBorrow(address,uint256)': FunctionFragment;
+    'onForceReplenish(address,address,uint256,uint256)': FunctionFragment;
+    'onRepay(address,uint256)': FunctionFragment;
+    'operator()': FunctionFragment;
+    'pendingOperator()': FunctionFragment;
+    'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'removeMinter(address)': FunctionFragment;
+    'replenishmentPriceBps()': FunctionFragment;
+    'setPendingOperator(address)': FunctionFragment;
+    'setReplenishmentPriceBps(uint256)': FunctionFragment;
+    'signedBalanceOf(address)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'totalDueTokensAccrued()': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DOMAIN_SEPARATOR"
-      | "_totalSupply"
-      | "accrueDueTokens"
-      | "addMarket"
-      | "addMinter"
-      | "allowance"
-      | "approve"
-      | "balanceOf"
-      | "balances"
-      | "burn"
-      | "claimOperator"
-      | "debts"
-      | "decimals"
-      | "deficitOf"
-      | "dueTokensAccrued"
-      | "invalidateNonce"
-      | "lastUpdated"
-      | "markets"
-      | "mint"
-      | "minters"
-      | "name"
-      | "nonces"
-      | "onBorrow"
-      | "onForceReplenish"
-      | "onRepay"
-      | "operator"
-      | "pendingOperator"
-      | "permit"
-      | "removeMinter"
-      | "replenishmentPriceBps"
-      | "setPendingOperator"
-      | "setReplenishmentPriceBps"
-      | "signedBalanceOf"
-      | "symbol"
-      | "totalDueTokensAccrued"
-      | "totalSupply"
-      | "transfer"
-      | "transferFrom"
+      | 'DOMAIN_SEPARATOR'
+      | '_totalSupply'
+      | 'accrueDueTokens'
+      | 'addMarket'
+      | 'addMinter'
+      | 'allowance'
+      | 'approve'
+      | 'balanceOf'
+      | 'balances'
+      | 'burn'
+      | 'claimOperator'
+      | 'debts'
+      | 'decimals'
+      | 'deficitOf'
+      | 'dueTokensAccrued'
+      | 'invalidateNonce'
+      | 'lastUpdated'
+      | 'markets'
+      | 'mint'
+      | 'minters'
+      | 'name'
+      | 'nonces'
+      | 'onBorrow'
+      | 'onForceReplenish'
+      | 'onRepay'
+      | 'operator'
+      | 'pendingOperator'
+      | 'permit'
+      | 'removeMinter'
+      | 'replenishmentPriceBps'
+      | 'setPendingOperator'
+      | 'setReplenishmentPriceBps'
+      | 'signedBalanceOf'
+      | 'symbol'
+      | 'totalDueTokensAccrued'
+      | 'totalSupply'
+      | 'transfer'
+      | 'transferFrom',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
+  encodeFunctionData(functionFragment: '_totalSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accrueDueTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addMinter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "DOMAIN_SEPARATOR",
-    values?: undefined
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'claimOperator', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'debts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'deficitOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'dueTokensAccrued', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'invalidateNonce', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastUpdated', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'markets', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'minters', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'onBorrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "_totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "accrueDueTokens",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addMarket",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addMinter",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "allowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "balances",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "burn",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimOperator",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "debts",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "deficitOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "dueTokensAccrued",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "invalidateNonce",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastUpdated",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "markets",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "minters",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nonces",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "onBorrow",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "onForceReplenish",
+    functionFragment: 'onForceReplenish',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "onRepay",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'onRepay',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "operator", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pendingOperator', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "pendingOperator",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "permit",
+    functionFragment: 'permit',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -224,158 +154,82 @@ export interface DbrInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+      PromiseOrValue<BytesLike>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'removeMinter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'replenishmentPriceBps', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setPendingOperator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setReplenishmentPriceBps', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'signedBalanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalDueTokensAccrued', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "removeMinter",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "replenishmentPriceBps",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPendingOperator",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setReplenishmentPriceBps",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "signedBalanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalDueTokensAccrued",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "DOMAIN_SEPARATOR",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "accrueDueTokens",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addMarket", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "addMinter", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "claimOperator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "debts", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deficitOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "dueTokensAccrued",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "invalidateNonce",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastUpdated",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "markets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "minters", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "onBorrow", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "onForceReplenish",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "onRepay", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "operator", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "pendingOperator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "removeMinter",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "replenishmentPriceBps",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setPendingOperator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setReplenishmentPriceBps",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "signedBalanceOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalDueTokensAccrued",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accrueDueTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addMinter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimOperator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'debts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deficitOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'dueTokensAccrued', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'invalidateNonce', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastUpdated', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'markets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minters', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'onBorrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'onForceReplenish', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'onRepay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'operator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingOperator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'permit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeMinter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'replenishmentPriceBps', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPendingOperator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setReplenishmentPriceBps', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'signedBalanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalDueTokensAccrued', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
 
   events: {
-    "AddMarket(address)": EventFragment;
-    "AddMinter(address)": EventFragment;
-    "Approval(address,address,uint256)": EventFragment;
-    "ChangeOperator(address)": EventFragment;
-    "ForceReplenish(address,address,address,uint256,uint256,uint256)": EventFragment;
-    "RemoveMinter(address)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    'AddMarket(address)': EventFragment;
+    'AddMinter(address)': EventFragment;
+    'Approval(address,address,uint256)': EventFragment;
+    'ChangeOperator(address)': EventFragment;
+    'ForceReplenish(address,address,address,uint256,uint256,uint256)': EventFragment;
+    'RemoveMinter(address)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AddMarket"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "AddMinter"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ChangeOperator"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ForceReplenish"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RemoveMinter"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AddMarket'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AddMinter'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ChangeOperator'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ForceReplenish'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RemoveMinter'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
 export interface AddMarketEventObject {
@@ -397,20 +251,14 @@ export interface ApprovalEventObject {
   spender: string;
   amount: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
+export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
 export interface ChangeOperatorEventObject {
   newOperator: string;
 }
-export type ChangeOperatorEvent = TypedEvent<
-  [string],
-  ChangeOperatorEventObject
->;
+export type ChangeOperatorEvent = TypedEvent<[string], ChangeOperatorEventObject>;
 
 export type ChangeOperatorEventFilter = TypedEventFilter<ChangeOperatorEvent>;
 
@@ -441,10 +289,7 @@ export interface TransferEventObject {
   to: string;
   amount: BigNumber;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -458,16 +303,12 @@ export interface Dbr extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -481,103 +322,72 @@ export interface Dbr extends BaseContract {
 
     accrueDueTokens(
       user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addMarket(
       market_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addMinter(
       minter_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burn(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimOperator(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    claimOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    debts(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    debts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    deficitOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    deficitOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    dueTokensAccrued(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    dueTokensAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    invalidateNonce(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    invalidateNonce(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    lastUpdated(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    lastUpdated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    markets(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     mint(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    minters(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     onBorrow(
       user: PromiseOrValue<string>,
       additionalDebt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     onForceReplenish(
@@ -585,13 +395,13 @@ export interface Dbr extends BaseContract {
       replenisher: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       replenisherReward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     onRepay(
       user: PromiseOrValue<string>,
       repaidDebt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     operator(overrides?: CallOverrides): Promise<[string]>;
@@ -606,30 +416,27 @@ export interface Dbr extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeMinter(
       minter_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     replenishmentPriceBps(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setPendingOperator(
       newOperator_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setReplenishmentPriceBps(
       newReplenishmentPriceBps_: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    signedBalanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    signedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -640,14 +447,14 @@ export interface Dbr extends BaseContract {
     transfer(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -657,103 +464,68 @@ export interface Dbr extends BaseContract {
 
   accrueDueTokens(
     user: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addMarket(
     market_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addMinter(
     minter_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
     spender: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balances(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   burn(
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimOperator(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  claimOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  debts(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  debts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  deficitOf(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  deficitOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  dueTokensAccrued(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  dueTokensAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  invalidateNonce(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  invalidateNonce(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  lastUpdated(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  lastUpdated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  markets(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   mint(
     to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  minters(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   onBorrow(
     user: PromiseOrValue<string>,
     additionalDebt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   onForceReplenish(
@@ -761,13 +533,13 @@ export interface Dbr extends BaseContract {
     replenisher: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     replenisherReward: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   onRepay(
     user: PromiseOrValue<string>,
     repaidDebt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   operator(overrides?: CallOverrides): Promise<string>;
@@ -782,30 +554,27 @@ export interface Dbr extends BaseContract {
     v: PromiseOrValue<BigNumberish>,
     r: PromiseOrValue<BytesLike>,
     s: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeMinter(
     minter_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   replenishmentPriceBps(overrides?: CallOverrides): Promise<BigNumber>;
 
   setPendingOperator(
     newOperator_: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setReplenishmentPriceBps(
     newReplenishmentPriceBps_: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  signedBalanceOf(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  signedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -816,14 +585,14 @@ export interface Dbr extends BaseContract {
   transfer(
     to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -831,101 +600,58 @@ export interface Dbr extends BaseContract {
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accrueDueTokens(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    accrueDueTokens(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addMarket(
-      market_: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addMarket(market_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addMinter(
-      minter_: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    addMinter(minter_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    balanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    burn(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     claimOperator(overrides?: CallOverrides): Promise<void>;
 
-    debts(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    deficitOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deficitOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dueTokensAccrued(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    dueTokensAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     invalidateNonce(overrides?: CallOverrides): Promise<void>;
 
-    lastUpdated(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    lastUpdated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    markets(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    mint(to: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    minters(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     onBorrow(
       user: PromiseOrValue<string>,
       additionalDebt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     onForceReplenish(
@@ -933,13 +659,13 @@ export interface Dbr extends BaseContract {
       replenisher: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       replenisherReward: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     onRepay(
       user: PromiseOrValue<string>,
       repaidDebt: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     operator(overrides?: CallOverrides): Promise<string>;
@@ -954,30 +680,21 @@ export interface Dbr extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    removeMinter(
-      minter_: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    removeMinter(minter_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     replenishmentPriceBps(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setPendingOperator(
-      newOperator_: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPendingOperator(newOperator_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setReplenishmentPriceBps(
       newReplenishmentPriceBps_: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    signedBalanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    signedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -988,53 +705,45 @@ export interface Dbr extends BaseContract {
     transfer(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
   filters: {
-    "AddMarket(address)"(
-      market?: PromiseOrValue<string> | null
-    ): AddMarketEventFilter;
+    'AddMarket(address)'(market?: PromiseOrValue<string> | null): AddMarketEventFilter;
     AddMarket(market?: PromiseOrValue<string> | null): AddMarketEventFilter;
 
-    "AddMinter(address)"(
-      minter?: PromiseOrValue<string> | null
-    ): AddMinterEventFilter;
+    'AddMinter(address)'(minter?: PromiseOrValue<string> | null): AddMinterEventFilter;
     AddMinter(minter?: PromiseOrValue<string> | null): AddMinterEventFilter;
 
-    "Approval(address,address,uint256)"(
+    'Approval(address,address,uint256)'(
       owner?: PromiseOrValue<string> | null,
       spender?: PromiseOrValue<string> | null,
-      amount?: null
+      amount?: null,
     ): ApprovalEventFilter;
     Approval(
       owner?: PromiseOrValue<string> | null,
       spender?: PromiseOrValue<string> | null,
-      amount?: null
+      amount?: null,
     ): ApprovalEventFilter;
 
-    "ChangeOperator(address)"(
-      newOperator?: PromiseOrValue<string> | null
-    ): ChangeOperatorEventFilter;
-    ChangeOperator(
-      newOperator?: PromiseOrValue<string> | null
-    ): ChangeOperatorEventFilter;
+    'ChangeOperator(address)'(newOperator?: PromiseOrValue<string> | null): ChangeOperatorEventFilter;
+    ChangeOperator(newOperator?: PromiseOrValue<string> | null): ChangeOperatorEventFilter;
 
-    "ForceReplenish(address,address,address,uint256,uint256,uint256)"(
+    'ForceReplenish(address,address,address,uint256,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
       replenisher?: PromiseOrValue<string> | null,
       market?: PromiseOrValue<string> | null,
       deficit?: null,
       replenishmentCost?: null,
-      replenisherReward?: null
+      replenisherReward?: null,
     ): ForceReplenishEventFilter;
     ForceReplenish(
       account?: PromiseOrValue<string> | null,
@@ -1042,25 +751,21 @@ export interface Dbr extends BaseContract {
       market?: PromiseOrValue<string> | null,
       deficit?: null,
       replenishmentCost?: null,
-      replenisherReward?: null
+      replenisherReward?: null,
     ): ForceReplenishEventFilter;
 
-    "RemoveMinter(address)"(
-      minter?: PromiseOrValue<string> | null
-    ): RemoveMinterEventFilter;
-    RemoveMinter(
-      minter?: PromiseOrValue<string> | null
-    ): RemoveMinterEventFilter;
+    'RemoveMinter(address)'(minter?: PromiseOrValue<string> | null): RemoveMinterEventFilter;
+    RemoveMinter(minter?: PromiseOrValue<string> | null): RemoveMinterEventFilter;
 
-    "Transfer(address,address,uint256)"(
+    'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
-      amount?: null
+      amount?: null,
     ): TransferEventFilter;
     Transfer(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
-      amount?: null
+      amount?: null,
     ): TransferEventFilter;
   };
 
@@ -1071,103 +776,72 @@ export interface Dbr extends BaseContract {
 
     accrueDueTokens(
       user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addMarket(
       market_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addMinter(
       minter_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimOperator(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    claimOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    debts(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    debts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deficitOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    deficitOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dueTokensAccrued(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    dueTokensAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    invalidateNonce(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    invalidateNonce(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    lastUpdated(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    lastUpdated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    markets(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    minters(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     onBorrow(
       user: PromiseOrValue<string>,
       additionalDebt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     onForceReplenish(
@@ -1175,13 +849,13 @@ export interface Dbr extends BaseContract {
       replenisher: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       replenisherReward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     onRepay(
       user: PromiseOrValue<string>,
       repaidDebt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     operator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1196,30 +870,27 @@ export interface Dbr extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeMinter(
       minter_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     replenishmentPriceBps(overrides?: CallOverrides): Promise<BigNumber>;
 
     setPendingOperator(
       newOperator_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setReplenishmentPriceBps(
       newReplenishmentPriceBps_: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    signedBalanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    signedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1230,14 +901,14 @@ export interface Dbr extends BaseContract {
     transfer(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1248,103 +919,72 @@ export interface Dbr extends BaseContract {
 
     accrueDueTokens(
       user: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addMarket(
       market_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addMinter(
       minter_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    balanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balances(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimOperator(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    claimOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    debts(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    debts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deficitOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    deficitOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    dueTokensAccrued(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    dueTokensAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    invalidateNonce(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    invalidateNonce(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    lastUpdated(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastUpdated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    markets(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    minters(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onBorrow(
       user: PromiseOrValue<string>,
       additionalDebt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     onForceReplenish(
@@ -1352,13 +992,13 @@ export interface Dbr extends BaseContract {
       replenisher: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       replenisherReward: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     onRepay(
       user: PromiseOrValue<string>,
       repaidDebt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     operator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1373,52 +1013,45 @@ export interface Dbr extends BaseContract {
       v: PromiseOrValue<BigNumberish>,
       r: PromiseOrValue<BytesLike>,
       s: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeMinter(
       minter_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    replenishmentPriceBps(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    replenishmentPriceBps(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPendingOperator(
       newOperator_: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setReplenishmentPriceBps(
       newReplenishmentPriceBps_: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    signedBalanceOf(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    signedBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalDueTokensAccrued(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalDueTokensAccrued(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

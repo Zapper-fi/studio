@@ -4,6 +4,86 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.523.0](https://github.com/Zapper-fi/studio/compare/v0.522.0...v0.523.0) (2023-08-17)
+
+
+### Features
+
+* **opnx:** add staked OX ([#2900](https://github.com/Zapper-fi/studio/issues/2900)) ([55436a7](https://github.com/Zapper-fi/studio/commit/55436a779d2dbb59420793a083d0340f7a99d3a4))
+* **stargate:** Support Base ([#2898](https://github.com/Zapper-fi/studio/issues/2898)) ([c2f3b81](https://github.com/Zapper-fi/studio/commit/c2f3b81c566ac4c0cfef62294ef997652edba510))
+
+
+### Bug Fixes
+
+* **mux:** Fix perp balances ([#2901](https://github.com/Zapper-fi/studio/issues/2901)) ([1f3c0f5](https://github.com/Zapper-fi/studio/commit/1f3c0f5ea073f68fd9df92a05652f4a1810bcb8c))
+
+## [0.522.0](https://github.com/Zapper-fi/studio/compare/v0.521.0...v0.522.0) (2023-08-14)
+
+
+### Features
+
+* **balancer-v2:** Support Avalanche and Base ([#2897](https://github.com/Zapper-fi/studio/issues/2897)) ([5e56b18](https://github.com/Zapper-fi/studio/commit/5e56b18fb8eca86fca90664a305323a90222fe4e))
+* **beefy:** Add vaults and boosted vaults positions ([#2894](https://github.com/Zapper-fi/studio/issues/2894)) ([1e46799](https://github.com/Zapper-fi/studio/commit/1e467998fa9865454a2f148532eedb5f594f655c))
+
+
+### Bug Fixes
+
+* **base-rpc:** Update Base rpc url ([#2896](https://github.com/Zapper-fi/studio/issues/2896)) ([5611c90](https://github.com/Zapper-fi/studio/commit/5611c90a07f041b77db78a46f29f481d6e97e49a))
+
+## [0.521.0](https://github.com/Zapper-fi/studio/compare/v0.520.1...v0.521.0) (2023-08-13)
+
+
+### Features
+
+* **balancer-v2:** Add veBal rewards ([#2888](https://github.com/Zapper-fi/studio/issues/2888)) ([f801468](https://github.com/Zapper-fi/studio/commit/f8014688adf6c0c4840f82696e866d956cb87076))
+
+
+### Bug Fixes
+
+* **balancer-v2:** Fix label ([#2893](https://github.com/Zapper-fi/studio/issues/2893)) ([9d3b018](https://github.com/Zapper-fi/studio/commit/9d3b018af2f68e657a31bf4c3372741876b386e7))
+
+## [0.520.1](https://github.com/Zapper-fi/studio/compare/v0.520.0...v0.520.1) (2023-08-11)
+
+
+### Bug Fixes
+
+* **beefy:** Fix Beefy vaults which had no underlying tokens ([#2889](https://github.com/Zapper-fi/studio/issues/2889)) ([11c2079](https://github.com/Zapper-fi/studio/commit/11c20793103748d575215039cac3d94844d493ba))
+* **qi-dao:** Extract wrapped tokens to ATI ([#2890](https://github.com/Zapper-fi/studio/issues/2890)) ([0851eda](https://github.com/Zapper-fi/studio/commit/0851edac4f331a2f43a76d480333af9a44cfa1be))
+
+## [0.520.0](https://github.com/Zapper-fi/studio/compare/v0.519.0...v0.520.0) (2023-08-09)
+
+
+### Features
+
+* **studio:** Filter out some duplicate definitions in responses ([#2886](https://github.com/Zapper-fi/studio/issues/2886)) ([55e1f36](https://github.com/Zapper-fi/studio/commit/55e1f36d6a248ba2bf74c31ee6c3d084487663e8))
+
+## [0.519.0](https://github.com/Zapper-fi/studio/compare/v0.518.1...v0.519.0) (2023-08-08)
+
+
+### Features
+
+* **y2k finance:** add y2k positions adapter for v1 and v2, add vlY2k adapter, add farms adapter for v1 ([#2880](https://github.com/Zapper-fi/studio/issues/2880)) ([c45a722](https://github.com/Zapper-fi/studio/commit/c45a722589edf40bfdd6113cb526f1fdda55fae9))
+
+## [0.518.1](https://github.com/Zapper-fi/studio/compare/v0.518.0...v0.518.1) (2023-08-07)
+
+
+### Bug Fixes
+
+* **curve:** Add crvUsd pool gauge positions ([#2883](https://github.com/Zapper-fi/studio/issues/2883)) ([e485c01](https://github.com/Zapper-fi/studio/commit/e485c016857798ea132fabc6a2f23544624089b0))
+
+## [0.518.0](https://github.com/Zapper-fi/studio/compare/v0.517.0...v0.518.0) (2023-08-07)
+
+
+### Features
+
+* **inverse-firm:** Add cvxCrv rewards ([#2867](https://github.com/Zapper-fi/studio/issues/2867)) ([0f24142](https://github.com/Zapper-fi/studio/commit/0f241425bb3e926512e44d6fba9717cf83da4485))
+
+
+### Bug Fixes
+
+* **inverse-firm:** Linting ([#2882](https://github.com/Zapper-fi/studio/issues/2882)) ([0eed098](https://github.com/Zapper-fi/studio/commit/0eed098ba99291718bad38675344a751201103bc))
+* **umami-finance:** Cleanup ([#2875](https://github.com/Zapper-fi/studio/issues/2875)) ([45c7715](https://github.com/Zapper-fi/studio/commit/45c7715e7ea21b52c2df5805f40ce42b90742aeb))
+
 ## [0.517.0](https://github.com/Zapper-fi/studio/compare/v0.516.1...v0.517.0) (2023-08-06)
 
 

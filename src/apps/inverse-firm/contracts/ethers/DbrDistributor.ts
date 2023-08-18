@@ -12,192 +12,111 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface DbrDistributorInterface extends utils.Interface {
   functions: {
-    "INV()": FunctionFragment;
-    "accruedRewards(address)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "claim(address)": FunctionFragment;
-    "claimable(address)": FunctionFragment;
-    "dbr()": FunctionFragment;
-    "gov()": FunctionFragment;
-    "lastUpdate()": FunctionFragment;
-    "mantissa()": FunctionFragment;
-    "maxRewardRate()": FunctionFragment;
-    "minRewardRate()": FunctionFragment;
-    "operator()": FunctionFragment;
-    "rewardIndexMantissa()": FunctionFragment;
-    "rewardRate()": FunctionFragment;
-    "setGov(address)": FunctionFragment;
-    "setOperator(address)": FunctionFragment;
-    "setRewardRate(uint256)": FunctionFragment;
-    "setRewardRateConstraints(uint256,uint256)": FunctionFragment;
-    "stake(uint256)": FunctionFragment;
-    "stakerIndexMantissa(address)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "unstake(uint256)": FunctionFragment;
+    'INV()': FunctionFragment;
+    'accruedRewards(address)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'claim(address)': FunctionFragment;
+    'claimable(address)': FunctionFragment;
+    'dbr()': FunctionFragment;
+    'gov()': FunctionFragment;
+    'lastUpdate()': FunctionFragment;
+    'mantissa()': FunctionFragment;
+    'maxRewardRate()': FunctionFragment;
+    'minRewardRate()': FunctionFragment;
+    'operator()': FunctionFragment;
+    'rewardIndexMantissa()': FunctionFragment;
+    'rewardRate()': FunctionFragment;
+    'setGov(address)': FunctionFragment;
+    'setOperator(address)': FunctionFragment;
+    'setRewardRate(uint256)': FunctionFragment;
+    'setRewardRateConstraints(uint256,uint256)': FunctionFragment;
+    'stake(uint256)': FunctionFragment;
+    'stakerIndexMantissa(address)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'unstake(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "INV"
-      | "accruedRewards"
-      | "balanceOf"
-      | "claim"
-      | "claimable"
-      | "dbr"
-      | "gov"
-      | "lastUpdate"
-      | "mantissa"
-      | "maxRewardRate"
-      | "minRewardRate"
-      | "operator"
-      | "rewardIndexMantissa"
-      | "rewardRate"
-      | "setGov"
-      | "setOperator"
-      | "setRewardRate"
-      | "setRewardRateConstraints"
-      | "stake"
-      | "stakerIndexMantissa"
-      | "totalSupply"
-      | "unstake"
+      | 'INV'
+      | 'accruedRewards'
+      | 'balanceOf'
+      | 'claim'
+      | 'claimable'
+      | 'dbr'
+      | 'gov'
+      | 'lastUpdate'
+      | 'mantissa'
+      | 'maxRewardRate'
+      | 'minRewardRate'
+      | 'operator'
+      | 'rewardIndexMantissa'
+      | 'rewardRate'
+      | 'setGov'
+      | 'setOperator'
+      | 'setRewardRate'
+      | 'setRewardRateConstraints'
+      | 'stake'
+      | 'stakerIndexMantissa'
+      | 'totalSupply'
+      | 'unstake',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "INV", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'INV', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accruedRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claimable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'dbr', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'gov', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastUpdate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mantissa', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxRewardRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minRewardRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardIndexMantissa', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setGov', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOperator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewardRate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "accruedRewards",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'setRewardRateConstraints',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claim",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimable",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "dbr", values?: undefined): string;
-  encodeFunctionData(functionFragment: "gov", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "lastUpdate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "mantissa", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "maxRewardRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "minRewardRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "operator", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "rewardIndexMantissa",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setGov",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setOperator",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewardRate",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRewardRateConstraints",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stake",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stakerIndexMantissa",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "unstake",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'stakerIndexMantissa', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'unstake', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(functionFragment: "INV", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "accruedRewards",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "dbr", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "gov", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "lastUpdate", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mantissa", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "maxRewardRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "minRewardRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "operator", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardIndexMantissa",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "rewardRate", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setGov", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setOperator",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardRate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRewardRateConstraints",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "stakerIndexMantissa",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "unstake", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'INV', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accruedRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'dbr', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'gov', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastUpdate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mantissa', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxRewardRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minRewardRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'operator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardIndexMantissa', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setGov', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setOperator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardRate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardRateConstraints', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakerIndexMantissa', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstake', data: BytesLike): Result;
 
   events: {};
 }
@@ -212,16 +131,12 @@ export interface DbrDistributor extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -231,25 +146,16 @@ export interface DbrDistributor extends BaseContract {
   functions: {
     INV(overrides?: CallOverrides): Promise<[string]>;
 
-    accruedRewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    accruedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     claim(
       to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimable(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    claimable(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     dbr(overrides?: CallOverrides): Promise<[string]>;
 
@@ -271,64 +177,52 @@ export interface DbrDistributor extends BaseContract {
 
     setGov(
       _gov: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardRate(
       _rewardRate: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardRateConstraints(
       _min: PromiseOrValue<BigNumberish>,
       _max: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakerIndexMantissa(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    stakerIndexMantissa(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     unstake(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   INV(overrides?: CallOverrides): Promise<string>;
 
-  accruedRewards(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  accruedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   claim(
     to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimable(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  claimable(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   dbr(overrides?: CallOverrides): Promise<string>;
 
@@ -350,61 +244,49 @@ export interface DbrDistributor extends BaseContract {
 
   setGov(
     _gov: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOperator(
     _operator: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardRate(
     _rewardRate: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardRateConstraints(
     _min: PromiseOrValue<BigNumberish>,
     _max: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakerIndexMantissa(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  stakerIndexMantissa(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   unstake(
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     INV(overrides?: CallOverrides): Promise<string>;
 
-    accruedRewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    accruedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    claimable(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    claimable(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dbr(overrides?: CallOverrides): Promise<string>;
 
@@ -424,43 +306,25 @@ export interface DbrDistributor extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setGov(
-      _gov: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOperator(
-      _operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setOperator(_operator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardRate(
-      _rewardRate: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setRewardRate(_rewardRate: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setRewardRateConstraints(
       _min: PromiseOrValue<BigNumberish>,
       _max: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    stake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakerIndexMantissa(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    stakerIndexMantissa(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unstake(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    unstake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {};
@@ -468,25 +332,13 @@ export interface DbrDistributor extends BaseContract {
   estimateGas: {
     INV(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accruedRewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    accruedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    claim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimable(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    claimable(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dbr(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -506,67 +358,52 @@ export interface DbrDistributor extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setGov(
-      _gov: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardRate(
       _rewardRate: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardRateConstraints(
       _min: PromiseOrValue<BigNumberish>,
       _max: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stake(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakerIndexMantissa(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    stakerIndexMantissa(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     unstake(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     INV(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accruedRewards(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    accruedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
       to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimable(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    claimable(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dbr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -582,48 +419,43 @@ export interface DbrDistributor extends BaseContract {
 
     operator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardIndexMantissa(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    rewardIndexMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setGov(
       _gov: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardRate(
       _rewardRate: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardRateConstraints(
       _min: PromiseOrValue<BigNumberish>,
       _max: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakerIndexMantissa(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    stakerIndexMantissa(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unstake(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

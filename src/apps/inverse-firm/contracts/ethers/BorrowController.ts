@@ -12,115 +12,69 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BorrowControllerInterface extends utils.Interface {
   functions: {
-    "allow(address)": FunctionFragment;
-    "borrowAllowed(address,address,uint256)": FunctionFragment;
-    "contractAllowlist(address)": FunctionFragment;
-    "dailyBorrows(address,uint256)": FunctionFragment;
-    "dailyLimits(address)": FunctionFragment;
-    "deny(address)": FunctionFragment;
-    "onRepay(uint256)": FunctionFragment;
-    "operator()": FunctionFragment;
-    "setDailyLimit(address,uint256)": FunctionFragment;
-    "setOperator(address)": FunctionFragment;
+    'allow(address)': FunctionFragment;
+    'borrowAllowed(address,address,uint256)': FunctionFragment;
+    'contractAllowlist(address)': FunctionFragment;
+    'dailyBorrows(address,uint256)': FunctionFragment;
+    'dailyLimits(address)': FunctionFragment;
+    'deny(address)': FunctionFragment;
+    'onRepay(uint256)': FunctionFragment;
+    'operator()': FunctionFragment;
+    'setDailyLimit(address,uint256)': FunctionFragment;
+    'setOperator(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "allow"
-      | "borrowAllowed"
-      | "contractAllowlist"
-      | "dailyBorrows"
-      | "dailyLimits"
-      | "deny"
-      | "onRepay"
-      | "operator"
-      | "setDailyLimit"
-      | "setOperator"
+      | 'allow'
+      | 'borrowAllowed'
+      | 'contractAllowlist'
+      | 'dailyBorrows'
+      | 'dailyLimits'
+      | 'deny'
+      | 'onRepay'
+      | 'operator'
+      | 'setDailyLimit'
+      | 'setOperator',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'allow', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "allow",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'borrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'contractAllowlist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "borrowAllowed",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: 'dailyBorrows',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'dailyLimits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deny', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'onRepay', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "contractAllowlist",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'setDailyLimit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "dailyBorrows",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "dailyLimits",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "deny",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "onRepay",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "operator", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "setDailyLimit",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setOperator",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'setOperator', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: "allow", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "borrowAllowed",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "contractAllowlist",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "dailyBorrows",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "dailyLimits",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "deny", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "onRepay", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "operator", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setDailyLimit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setOperator",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'allow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'borrowAllowed', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'contractAllowlist', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'dailyBorrows', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'dailyLimits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deny', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'onRepay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'operator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setDailyLimit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setOperator', data: BytesLike): Result;
 
   events: {};
 }
@@ -135,16 +89,12 @@ export interface BorrowController extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -154,40 +104,34 @@ export interface BorrowController extends BaseContract {
   functions: {
     allow(
       allowedContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrowAllowed(
       msgSender: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    contractAllowlist(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    contractAllowlist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     dailyBorrows(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    dailyLimits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    dailyLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deny(
       deniedContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     onRepay(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     operator(overrides?: CallOverrides): Promise<[string]>;
@@ -195,51 +139,45 @@ export interface BorrowController extends BaseContract {
     setDailyLimit(
       market: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   allow(
     allowedContract: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrowAllowed(
     msgSender: PromiseOrValue<string>,
     arg1: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  contractAllowlist(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  contractAllowlist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   dailyBorrows(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  dailyLimits(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  dailyLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   deny(
     deniedContract: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   onRepay(
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   operator(overrides?: CallOverrides): Promise<string>;
@@ -247,65 +185,47 @@ export interface BorrowController extends BaseContract {
   setDailyLimit(
     market: PromiseOrValue<string>,
     limit: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOperator(
     _operator: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allow(
-      allowedContract: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    allow(allowedContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     borrowAllowed(
       msgSender: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    contractAllowlist(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    contractAllowlist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     dailyBorrows(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    dailyLimits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    dailyLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deny(
-      deniedContract: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deny(deniedContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    onRepay(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    onRepay(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     operator(overrides?: CallOverrides): Promise<string>;
 
     setDailyLimit(
       market: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    setOperator(
-      _operator: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setOperator(_operator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {};
@@ -313,40 +233,34 @@ export interface BorrowController extends BaseContract {
   estimateGas: {
     allow(
       allowedContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrowAllowed(
       msgSender: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    contractAllowlist(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    contractAllowlist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dailyBorrows(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    dailyLimits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    dailyLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deny(
       deniedContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     onRepay(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     operator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -354,52 +268,46 @@ export interface BorrowController extends BaseContract {
     setDailyLimit(
       market: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     allow(
       allowedContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrowAllowed(
       msgSender: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    contractAllowlist(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    contractAllowlist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dailyBorrows(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    dailyLimits(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    dailyLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deny(
       deniedContract: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     onRepay(
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     operator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -407,12 +315,12 @@ export interface BorrowController extends BaseContract {
     setDailyLimit(
       market: PromiseOrValue<string>,
       limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

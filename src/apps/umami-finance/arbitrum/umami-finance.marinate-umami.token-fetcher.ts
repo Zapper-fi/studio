@@ -4,22 +4,16 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetDataPropsParams,
-  DefaultAppTokenDataProps,
-  DefaultAppTokenDefinition,
-  GetDisplayPropsParams,
-} from '~position/template/app-token.template.types';
+import { GetDataPropsParams, GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTemplatePositionFetcher<
-  UmamiFinanceMarinate,
-  DefaultAppTokenDataProps,
-  DefaultAppTokenDefinition
-> {
+export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTemplatePositionFetcher<UmamiFinanceMarinate> {
+  groupLabel = 'mUMAMI';
+  isExcludedFromBalances = true;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UmamiFinanceYieldResolver)
@@ -28,8 +22,6 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
   ) {
     super(appToolkit);
   }
-  groupLabel = 'mUMAMI';
-  isExcludedFromBalances = true;
 
   getContract(address: string): UmamiFinanceMarinate {
     return this.contractFactory.umamiFinanceMarinate({ network: this.network, address });
@@ -52,11 +44,7 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
     return Number(apr);
   }
 
-  async getImages({
-    appToken,
-  }: GetDisplayPropsParams<UmamiFinanceMarinate, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<
-    string[]
-  > {
+  async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceMarinate>): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
   }
 }
