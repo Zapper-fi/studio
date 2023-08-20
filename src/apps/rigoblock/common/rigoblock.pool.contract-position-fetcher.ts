@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
-import { compact, range } from 'lodash';
+import { compact, range, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -21,6 +21,7 @@ export type UnderlyingLiquidityPositionTokens = {
 }
 
 export type RigoblockLiquidityDataProps = {
+  liquidity: number;
   liquidityPositions: UnderlyingLiquidityPositionTokens[];
 };
 
@@ -95,7 +96,11 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
         };
       });
     }).flat(1);
-    return { liquidityPositions: liquidityPositions };
+    const liquidity = sumBy(liquidityPositions, v => v.balanceUSD);
+    return {
+      liquidity: liquidity,
+      liquidityPositions: liquidityPositions
+    };
   }
 
   async getLabel({ definition }) {
