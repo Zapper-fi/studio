@@ -3,6 +3,7 @@ import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { ethers } from 'ethers';
 
 import { IContractFactory } from '~contract/contracts';
+import { IGraphWrapper } from '~graph/graph.interface';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
@@ -58,4 +59,8 @@ export interface IAppToolkit {
   // Global Helpers
 
   getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS;
+
+  // Graph
+
+  getGraphClient(url: string, headers?: Record<string, string>): IGraphWrapper;
 }

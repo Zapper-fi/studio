@@ -6,6 +6,7 @@ import { ethers } from 'ethers';
 
 import { AppService } from '~app/app.service';
 import { ContractFactory } from '~contract';
+import { GraphService } from '~graph/graph.service';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { DefaultDataProps } from '~position/display.interface';
@@ -34,6 +35,7 @@ export class AppToolkit implements IAppToolkit {
     private readonly tokenDependencySelectorService: TokenDependencySelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @Inject(GraphService) private readonly graphService: GraphService,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
@@ -103,5 +105,10 @@ export class AppToolkit implements IAppToolkit {
   getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS {
     if (source instanceof ethers.BigNumber) return new BigNumberJS(source.toString());
     return new BigNumberJS(source);
+  }
+
+  // External calls
+  getGraphClient(url: string, headers: Record<string, string>) {
+    return this.graphService.getClient(url, headers);
   }
 }
