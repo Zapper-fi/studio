@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.523.1](https://github.com/Zapper-fi/studio/compare/v0.523.0...v0.523.1) (2023-08-21)
+
+
+### Bug Fixes
+
+* **position:** Update tokenId's type to String ([#2903](https://github.com/Zapper-fi/studio/issues/2903)) ([86e103a](https://github.com/Zapper-fi/studio/commit/86e103a1c624425b932a710eeb806672c153441d))
+
 ## [0.523.0](https://github.com/Zapper-fi/studio/compare/v0.522.0...v0.523.0) (2023-08-17)
 
 
