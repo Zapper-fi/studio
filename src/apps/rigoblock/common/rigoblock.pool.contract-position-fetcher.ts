@@ -28,6 +28,7 @@ export type RigoblockLiquidityDataProps = {
 export type RigoblockPoolAppTokenDefinition = {
   address: string;
   label: string;
+  underlyingTokenBalances: UniswapV3LiquidityPositionDataProps[];
 };
 
 export abstract class RigoblockPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -59,20 +60,22 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
       groupIds: ['pool'],
     });
 
-    return appTokens.map(pool => {
-      return {
-        address: pool.address,
-        label: pool.displayProps.label,
-      };
-    });
+    return await Promise.all(
+      appTokens.map(async pool => {
+        const underlyingTokenBalances = await this.getUnderlyingBalances(pool.address);
+        return {
+          address: pool.address,
+          label: pool.displayProps.label,
+          underlyingTokenBalances: underlyingTokenBalances,
+        };
+      }),
+    );
   }
 
   // we define the liquidity position of a rigoblock pool
   async getTokenDefinitions({ definition }) {
-    const underlyingTokenBalances = await this.getUnderlyingBalances(definition.address);
-    return underlyingTokenBalances.map(balance => {
-      const tokens = balance.tokens;
-      return tokens.map(token => {
+    return definition.underlyingTokenBalances.map(balance => {
+      return balance.tokens.map(token => {
         return [
           {
             metaType: MetaType.SUPPLIED,
@@ -84,8 +87,8 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
     }).flat(2);
   }
 
-  async getDataProps({ contractPosition }): Promise<RigoblockLiquidityDataProps> {
-    const liquidityBalances = await this.getBalances(contractPosition.address);
+  async getDataProps({ definition }): Promise<RigoblockLiquidityDataProps> {
+    const liquidityBalances = definition.underlyingTokenBalances;
     const liquidityPositions: UnderlyingLiquidityPositionTokens[] = liquidityBalances.map(balance => {
       return balance.tokens.map(token => {
         return {
@@ -107,15 +110,9 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
     return definition.label;
   }
 
-  // @ts-ignore
   async getTokenBalancesPerPosition({ address, contractPosition }) {
-    const underlyingTokenBalances = await this.getUnderlyingBalances(address);
-    return underlyingTokenBalances.map(balance => {
-      const tokens = balance.tokens;
-      return tokens.map(token => {
-        return [token.balanceRaw];
-      });
-    }).flat(1);
+    const { dataProps } = contractPosition;
+    return dataProps.liquidityPositions.map(v => v.balanceRaw);
   }
 
   async getUnderlyingBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
