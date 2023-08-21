@@ -43,29 +43,42 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
     return farms.map(farm => ({ address: farm }));
   }
 
-  async getTokenDefinitions(
-    params: GetTokenDefinitionsParams<Y2KFinanceStakingRewards, DefaultContractPositionDefinition>,
-  ): Promise<UnderlyingTokenDefinition[] | null> {
+  async getTokenDefinitions({
+    contract,
+  }: GetTokenDefinitionsParams<Y2KFinanceStakingRewards, DefaultContractPositionDefinition>): Promise<
+    UnderlyingTokenDefinition[] | null
+  > {
+    const [stakingToken, tokenIdRaw, rewardsToken] = await Promise.all([
+      contract.stakingToken(),
+      contract.id(),
+      contract.rewardsToken(),
+    ]);
+
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await params.contract.stakingToken(),
+        address: stakingToken,
         network: this.network,
-        tokenId: (await params.contract.id()).toNumber(),
+        tokenId: tokenIdRaw.toString(),
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await params.contract.rewardsToken(),
+        address: rewardsToken,
         network: this.network,
       },
     ];
   }
 
-  async getLabel(
-    params: GetDisplayPropsParams<Y2KFinanceStakingRewards, DefaultDataProps, DefaultContractPositionDefinition>,
-  ): Promise<string> {
+  async getLabel({
+    contractPosition,
+  }: GetDisplayPropsParams<
+    Y2KFinanceStakingRewards,
+    DefaultDataProps,
+    DefaultContractPositionDefinition
+  >): Promise<string> {
+    const stakingTokenAddress = contractPosition.tokens[0];
     const vault = this.contractFactory.y2KFinanceVaultV1({
-      address: await params.contract.stakingToken(),
+      address: stakingTokenAddress.address,
       network: this.network,
     });
     const name = await vault.name();
