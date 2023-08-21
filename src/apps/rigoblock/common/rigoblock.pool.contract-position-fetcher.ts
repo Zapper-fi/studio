@@ -28,7 +28,7 @@ export type RigoblockLiquidityDataProps = {
 export type RigoblockPoolAppTokenDefinition = {
   address: string;
   label: string;
-  underlyingTokenBalances: UniswapV3LiquidityPositionDataProps[];
+  underlyingTokenBalances: ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[];
 };
 
 export abstract class RigoblockPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
