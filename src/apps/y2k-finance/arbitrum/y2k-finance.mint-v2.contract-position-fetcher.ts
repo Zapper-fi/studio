@@ -46,22 +46,23 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
   async getTokenDefinitions(
     params: GetTokenDefinitionsParams<Y2KFinanceCarousel, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const epochIds = await params.contract.getAllEpochs();
+    const epochIdsRaw = await params.contract.getAllEpochs();
     const claimableAsset = await params.contract.asset();
     const emission = await params.contract.emissionsToken();
+    const epochIds = epochIdsRaw.map(x => x.toString());
     return epochIds
-      .map(id => [
+      .map(tokenId => [
         {
           metaType: MetaType.SUPPLIED,
           address: params.contract.address,
           network: this.network,
-          tokenId: id.toNumber(),
+          tokenId,
         },
         {
           metaType: MetaType.CLAIMABLE,
           address: claimableAsset,
           network: this.network,
-          tokenId: id.toNumber(),
+          tokenId,
         },
         {
           metaType: MetaType.CLAIMABLE,

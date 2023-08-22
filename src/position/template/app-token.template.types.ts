@@ -17,7 +17,7 @@ export type DefaultAppTokenDataProps = {
 export type UnderlyingTokenDefinition = {
   address: string;
   network: Network;
-  tokenId?: number;
+  tokenId?: string;
 };
 
 // PHASE 1: List addresses and definitions
