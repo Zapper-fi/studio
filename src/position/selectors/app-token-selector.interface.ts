@@ -10,7 +10,7 @@ export type LoggingTags = {
 export type AppTokenSelectorKey = {
   address: string;
   network: Network;
-  tokenId?: number;
+  tokenId?: string;
 };
 
 export type GetOne = (opts: AppTokenSelectorKey) => Promise<AppTokenPosition | null>;
