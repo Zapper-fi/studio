@@ -17,7 +17,7 @@ import { PolygonHalofiGameContractPositionFetcher } from './polygon/halofi.game.
     PolygonHalofiGameContractPositionFetcher,
     // Celo
     CeloHalofiGameContractPositionFetcher,
-    // Base Network
+    // Base
     BaseHalofiGameContractPositionFetcher,
   ],
 })
