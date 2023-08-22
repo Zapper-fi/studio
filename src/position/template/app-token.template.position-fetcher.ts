@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import _, { isEqual, isUndefined, uniqWith, compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
+import _, { isUndefined, compact, isArray, sortBy, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -11,12 +11,12 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition, isNonFungibleToken, NonFungibleToken } from '~position/position.interface';
+import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
@@ -161,152 +161,121 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   async getPositionsForBatch(definitions: R[]) {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenLoader = this.appToolkit.getTokenDependencySelector({
-      tags: { network: this.network, context: `${this.appId}__template` },
-    });
+    const tokenLoaderTags = { network: this.network, context: `${this.appId}__template` };
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({ tags: tokenLoaderTags });
+    const context = { network: this.network, multicall, tokenLoader };
+    const appTokens = await Promise.all(definitions.map(d => this.getPosition(d, context)));
 
-    const maybeSkeletons = await Promise.all(
-      definitions.map(async definition => {
-        const address = definition.address.toLowerCase();
-        const contract = multicall.wrap(this.getContract(address));
-        const context = { address, definition, contract, multicall, tokenLoader };
-
-        const underlyingTokenDefinitions = await this.getUnderlyingTokenDefinitions(context)
-          .then(v => v.map(t => ({ address: t.address.toLowerCase(), network: t.network, tokenId: t.tokenId })))
-          .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
-            throw err;
-          });
-
-        if (!underlyingTokenDefinitions) return null;
-        return { address, definition, underlyingTokenDefinitions };
-      }),
-    );
-
-    const skeletons = compact(maybeSkeletons);
-    const [base, meta] = partition(skeletons, t => {
-      const tokenAddresses = skeletons.map(v => v.address);
-      const underlyingTokenAddresses = t.underlyingTokenDefinitions.map(v => v.address);
-      return intersection(underlyingTokenAddresses, tokenAddresses).length === 0;
-    });
-
-    const currentTokens: AppTokenPosition<V>[] = [];
-    for (const skeletonsSubset of [base, meta]) {
-      const underlyingTokenQueries = skeletons.flatMap(v => v.underlyingTokenDefinitions);
-      const underlyingTokenRequestsUnique = uniqWith(underlyingTokenQueries, isEqual);
-      const tokenDependencies = await tokenLoader
-        .getMany(underlyingTokenRequestsUnique)
-        .then(tokenDeps => compact(tokenDeps));
-      const allTokens = [...currentTokens, ...tokenDependencies];
-
-      const skeletonsWithResolvedTokens = await Promise.all(
-        skeletonsSubset.map(async ({ address, definition, underlyingTokenDefinitions }) => {
-          const maybeTokens = underlyingTokenDefinitions.map(definition => {
-            const match = allTokens.find(token => {
-              const isAddressMatch = token.address === definition.address;
-              const isNetworkMatch = token.network === definition.network;
-              const isMaybeTokenIdMatch =
-                isUndefined(definition.tokenId) ||
-                (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
-                (token.type === ContractType.NON_FUNGIBLE_TOKEN && token.assets?.[0].tokenId === definition.tokenId);
-
-              return isAddressMatch && isNetworkMatch && isMaybeTokenIdMatch;
-            });
-
-            return match;
-          });
-
-          const tokens = compact(maybeTokens);
-
-          if (maybeTokens.length !== tokens.length) return null;
-
-          // @TODO Temporary; the current shape of the underlying NFT token is by collection
-          // Collapse same-collection NFT tokens until we refactor the Studio NFT token domain model
-          const collapsedTokens = tokens.reduce<(BaseToken | AppTokenPosition | NonFungibleToken)[]>((acc, token) => {
-            if (token.type !== ContractType.NON_FUNGIBLE_TOKEN) return [...acc, token];
-
-            const existingNftCollection = acc
-              .filter(isNonFungibleToken)
-              .find(v => v.address === token.address && v.network === token.network);
-
-            if (existingNftCollection) {
-              existingNftCollection.assets ??= [];
-              existingNftCollection.assets.push(...(token.assets ?? []));
-              existingNftCollection.assets = existingNftCollection.assets.slice(0, 5);
-              return acc;
-            }
-
-            return [...acc, token];
-          }, []);
-
-          return { address, definition, tokens: collapsedTokens };
-        }),
-      );
-
-      const tokens = await Promise.all(
-        compact(skeletonsWithResolvedTokens).map(async ({ address, definition, tokens }) => {
-          const contract = multicall.wrap(this.getContract(address));
-          const baseContext = { address, contract, multicall, tokenLoader, definition };
-          const baseFragment: GetTokenPropsParams<T, V, R>['appToken'] = {
-            type: ContractType.APP_TOKEN,
-            appId: this.appId,
-            groupId: this.groupId,
-            network: this.network,
-            address,
-            tokens,
-          };
-
-          const tokenPropsContext = { ...baseContext, appToken: baseFragment };
-          const [symbol, decimals, totalSupplyRaw] = await Promise.all([
-            this.getSymbol(tokenPropsContext),
-            this.getDecimals(tokenPropsContext),
-            this.getSupply(tokenPropsContext),
-          ]);
-
-          const supply = Number(totalSupplyRaw) / 10 ** decimals;
-
-          // Resolve price per share stage
-          const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
-          const pricePerShareContext = { ...baseContext, appToken: pricePerShareStageFragment };
-          const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
-
-          // Resolve Price Stage
-          const priceStageFragment = { ...pricePerShareStageFragment, pricePerShare };
-          const priceContext = { ...baseContext, appToken: priceStageFragment };
-          const price = await this.getPrice(priceContext);
-
-          // Resolve Data Props Stage
-          const dataPropsStageFragment = { ...priceStageFragment, price };
-          const dataPropsStageParams = { ...baseContext, appToken: dataPropsStageFragment };
-          const dataProps = await this.getDataProps(dataPropsStageParams);
-
-          // Resolve Display Props Stage
-          const displayPropsStageFragment = { ...dataPropsStageFragment, dataProps };
-          const displayPropsStageParams = { ...baseContext, appToken: displayPropsStageFragment };
-          const displayProps = {
-            label: await this.getLabel(displayPropsStageParams),
-            labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-            secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
-            tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
-            images: await this.getImages(displayPropsStageParams),
-            statsItems: await this.getStatsItems(displayPropsStageParams),
-            balanceDisplayMode: await this.getBalanceDisplayMode(displayPropsStageParams),
-          };
-
-          const appToken = { ...displayPropsStageFragment, displayProps };
-          const key = this.appToolkit.getPositionKey(appToken);
-          return { key, ...appToken };
-        }),
-      );
-
-      const positionsSubset = compact(tokens);
-      currentTokens.push(...positionsSubset);
-    }
-
-    return sortBy(currentTokens, t => {
+    return sortBy(compact(appTokens), t => {
       if (typeof t.dataProps.liquidity === 'number') return -t.dataProps.liquidity;
       return 1;
     });
+  }
+
+  async getPosition(
+    definition: R,
+    context: {
+      network: Network;
+      multicall: IMulticallWrapper;
+      tokenLoader: TokenDependencySelector;
+    },
+  ): Promise<AppTokenPosition<V> | null> {
+    const address = definition.address.toLowerCase();
+    const { multicall, tokenLoader } = context;
+
+    const contract = multicall.wrap(this.getContract(address));
+    const baseContext = { address, contract, multicall, tokenLoader, definition };
+    const underlyingTokenDefinitions = await this.getUnderlyingTokenDefinitions(baseContext);
+    const underlyingTokens = await tokenLoader
+      .getMany(underlyingTokenDefinitions)
+      .then(tokenDeps => compact(tokenDeps));
+
+    const maybeTokens = underlyingTokenDefinitions.map(definition => {
+      const match = underlyingTokens.find(token => {
+        const isAddressMatch = token.address === definition.address;
+        const isNetworkMatch = token.network === definition.network;
+        const isMaybeTokenIdMatch =
+          isUndefined(definition.tokenId) ||
+          (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
+          (token.type === ContractType.NON_FUNGIBLE_TOKEN && token.assets?.[0].tokenId === definition.tokenId);
+
+        return isAddressMatch && isNetworkMatch && isMaybeTokenIdMatch;
+      });
+
+      return match;
+    });
+
+    const rawTokens = compact(maybeTokens);
+    if (maybeTokens.length !== rawTokens.length) return null;
+
+    // @TODO Temporary; the current shape of the underlying NFT token is by collection
+    // Collapse same-collection NFT tokens until we refactor the Studio NFT token domain model
+    const tokens = rawTokens.reduce<(BaseToken | AppTokenPosition | NonFungibleToken)[]>((acc, token) => {
+      if (token.type !== ContractType.NON_FUNGIBLE_TOKEN) return [...acc, token];
+
+      const existingNftCollection = acc
+        .filter(isNonFungibleToken)
+        .find(v => v.address === token.address && v.network === token.network);
+
+      if (existingNftCollection) {
+        existingNftCollection.assets ??= [];
+        existingNftCollection.assets.push(...(token.assets ?? []));
+        existingNftCollection.assets = existingNftCollection.assets.slice(0, 5);
+        return acc;
+      }
+
+      return [...acc, token];
+    }, []);
+
+    const baseFragment: GetTokenPropsParams<T, V, R>['appToken'] = {
+      type: ContractType.APP_TOKEN,
+      appId: this.appId,
+      groupId: this.groupId,
+      network: this.network,
+      address,
+      tokens,
+    };
+
+    const tokenPropsContext = { ...baseContext, appToken: baseFragment };
+    const [symbol, decimals, totalSupplyRaw] = await Promise.all([
+      this.getSymbol(tokenPropsContext),
+      this.getDecimals(tokenPropsContext),
+      this.getSupply(tokenPropsContext),
+    ]);
+
+    const supply = Number(totalSupplyRaw) / 10 ** decimals;
+
+    // Resolve price per share stage
+    const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
+    const pricePerShareContext = { ...baseContext, appToken: pricePerShareStageFragment };
+    const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
+
+    // Resolve Price Stage
+    const priceStageFragment = { ...pricePerShareStageFragment, pricePerShare };
+    const priceContext = { ...baseContext, appToken: priceStageFragment };
+    const price = await this.getPrice(priceContext);
+
+    // Resolve Data Props Stage
+    const dataPropsStageFragment = { ...priceStageFragment, price };
+    const dataPropsStageParams = { ...baseContext, appToken: dataPropsStageFragment };
+    const dataProps = await this.getDataProps(dataPropsStageParams);
+
+    // Resolve Display Props Stage
+    const displayPropsStageFragment = { ...dataPropsStageFragment, dataProps };
+    const displayPropsStageParams = { ...baseContext, appToken: displayPropsStageFragment };
+    const displayProps = {
+      label: await this.getLabel(displayPropsStageParams),
+      labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
+      secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
+      tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
+      images: await this.getImages(displayPropsStageParams),
+      statsItems: await this.getStatsItems(displayPropsStageParams),
+      balanceDisplayMode: await this.getBalanceDisplayMode(displayPropsStageParams),
+    };
+
+    const appToken = { ...displayPropsStageFragment, displayProps };
+    const key = this.appToolkit.getPositionKey(appToken);
+    return { key, ...appToken };
   }
 
   // Default (adapted) Template Runner
