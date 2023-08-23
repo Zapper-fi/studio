@@ -73,7 +73,6 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
           metaType: MetaType.CLAIMABLE,
           address: claimableAsset,
           network: this.network,
-          tokenId,
         },
       ])
       .flat();
@@ -93,7 +92,9 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
     const vault = params.multicall.wrap(params.contract);
     const results = await Promise.all(
       epochIds.map(async id => {
+        const finalTVL = await vault.idFinalTVL(id);
         const balance = await vault.balanceOf(params.address, id);
+        if (finalTVL.isZero() || balance.isZero()) return [0, 0];
         const claimable = await vault.previewWithdraw(id, balance);
         return [balance, claimable];
       }),

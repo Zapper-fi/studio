@@ -1,8 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
+import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -17,12 +19,24 @@ import {
 
 import { Y2KFinanceContractFactory, Y2KFinanceStakingRewards } from '../contracts';
 
-const rewardsFactory = '0x9889fca1d9a5d131f5d4306a2bc2f293cafad2f3';
-const fromBlock = 33934362;
+export const FARMS_QUERY = gql`
+  {
+    farms {
+      address
+    }
+  }
+`;
+
+export type FarmsResponse = {
+  farms: {
+    address: string;
+  }[];
+};
 
 @PositionTemplate()
 export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Y2KFinanceStakingRewards> {
   groupLabel = 'Farms';
+  subgraphUrl = 'https://subgraph.satsuma-prod.com/a30e504dd617/y2k-finance/v2-prod/api';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -36,11 +50,11 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    const factory = this.contractFactory.y2KFinanceRewardsFactory({ address: rewardsFactory, network: this.network });
-    const filter = factory.filters.CreatedStakingReward();
-    const events = await factory.queryFilter(filter, fromBlock);
-    const farms = events.map(e => [e.args.hedgeFarm, e.args.riskFarm]).flat();
-    return farms.map(farm => ({ address: farm }));
+    const farmsResponse = await gqlFetch<FarmsResponse>({
+      endpoint: this.subgraphUrl,
+      query: FARMS_QUERY,
+    });
+    return farmsResponse.farms.map(farm => ({ address: farm.address }));
   }
 
   async getTokenDefinitions({
