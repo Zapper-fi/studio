@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.523.2](https://github.com/Zapper-fi/studio/compare/v0.523.1...v0.523.2) (2023-08-22)
+
+
+### Bug Fixes
+
+* **y2k finance:** use subgraph to fetch markets, remove tokenId for y2k token ([#2907](https://github.com/Zapper-fi/studio/issues/2907)) ([874944a](https://github.com/Zapper-fi/studio/commit/874944a36ffdd130c972e79cf0a5e96b8f81a0bf))
+
 ## [0.523.1](https://github.com/Zapper-fi/studio/compare/v0.523.0...v0.523.1) (2023-08-21)
 
 
