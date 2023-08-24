@@ -4,6 +4,46 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.523.2](https://github.com/Zapper-fi/studio/compare/v0.523.1...v0.523.2) (2023-08-22)
+
+
+### Bug Fixes
+
+* **y2k finance:** use subgraph to fetch markets, remove tokenId for y2k token ([#2907](https://github.com/Zapper-fi/studio/issues/2907)) ([874944a](https://github.com/Zapper-fi/studio/commit/874944a36ffdd130c972e79cf0a5e96b8f81a0bf))
+
+## [0.523.1](https://github.com/Zapper-fi/studio/compare/v0.523.0...v0.523.1) (2023-08-21)
+
+
+### Bug Fixes
+
+* **position:** Update tokenId's type to String ([#2903](https://github.com/Zapper-fi/studio/issues/2903)) ([86e103a](https://github.com/Zapper-fi/studio/commit/86e103a1c624425b932a710eeb806672c153441d))
+
+## [0.523.0](https://github.com/Zapper-fi/studio/compare/v0.522.0...v0.523.0) (2023-08-17)
+
+
+### Features
+
+* **opnx:** add staked OX ([#2900](https://github.com/Zapper-fi/studio/issues/2900)) ([55436a7](https://github.com/Zapper-fi/studio/commit/55436a779d2dbb59420793a083d0340f7a99d3a4))
+* **stargate:** Support Base ([#2898](https://github.com/Zapper-fi/studio/issues/2898)) ([c2f3b81](https://github.com/Zapper-fi/studio/commit/c2f3b81c566ac4c0cfef62294ef997652edba510))
+
+
+### Bug Fixes
+
+* **mux:** Fix perp balances ([#2901](https://github.com/Zapper-fi/studio/issues/2901)) ([1f3c0f5](https://github.com/Zapper-fi/studio/commit/1f3c0f5ea073f68fd9df92a05652f4a1810bcb8c))
+
+## [0.522.0](https://github.com/Zapper-fi/studio/compare/v0.521.0...v0.522.0) (2023-08-14)
+
+
+### Features
+
+* **balancer-v2:** Support Avalanche and Base ([#2897](https://github.com/Zapper-fi/studio/issues/2897)) ([5e56b18](https://github.com/Zapper-fi/studio/commit/5e56b18fb8eca86fca90664a305323a90222fe4e))
+* **beefy:** Add vaults and boosted vaults positions ([#2894](https://github.com/Zapper-fi/studio/issues/2894)) ([1e46799](https://github.com/Zapper-fi/studio/commit/1e467998fa9865454a2f148532eedb5f594f655c))
+
+
+### Bug Fixes
+
+* **base-rpc:** Update Base rpc url ([#2896](https://github.com/Zapper-fi/studio/issues/2896)) ([5611c90](https://github.com/Zapper-fi/studio/commit/5611c90a07f041b77db78a46f29f481d6e97e49a))
+
 ## [0.521.0](https://github.com/Zapper-fi/studio/compare/v0.520.1...v0.521.0) (2023-08-13)
 
 

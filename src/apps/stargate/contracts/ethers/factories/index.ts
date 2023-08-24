@@ -3,6 +3,7 @@
 /* eslint-disable */
 export { StargateAa__factory } from './StargateAa__factory';
 export { StargateChef__factory } from './StargateChef__factory';
+export { StargateChefBase__factory } from './StargateChefBase__factory';
 export { StargateEth__factory } from './StargateEth__factory';
 export { StargateFactory__factory } from './StargateFactory__factory';
 export { StargatePool__factory } from './StargatePool__factory';

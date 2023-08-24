@@ -10,7 +10,7 @@ export type LoggingTags = {
 export type TokenDependencySelectorKey = {
   address: string;
   network: Network;
-  tokenId?: number;
+  tokenId?: string;
 };
 
 export type TokenDependency = BaseToken | AppTokenPosition | NonFungibleToken;

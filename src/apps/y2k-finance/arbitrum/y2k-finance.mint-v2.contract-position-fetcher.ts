@@ -1,8 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
+import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -17,12 +19,24 @@ import {
 
 import { Y2KFinanceCarousel, Y2KFinanceContractFactory } from '../contracts';
 
-const carouselFactory = '0xc3179ac01b7d68aed4f27a19510ffe2bfb78ab3e';
-const fromBlock = 96059531;
+export const VAULTS_QUERY = gql`
+  {
+    vaults(where: { isV2: true }) {
+      address
+    }
+  }
+`;
+
+export type VaultsResponse = {
+  vaults: {
+    address: string;
+  }[];
+};
 
 @PositionTemplate()
 export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Y2KFinanceCarousel> {
   groupLabel = 'Positions';
+  subgraphUrl = 'https://subgraph.satsuma-prod.com/a30e504dd617/y2k-finance/v2-prod/api';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -36,32 +50,33 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    const factory = this.contractFactory.y2KFinanceCarouselFactory({ address: carouselFactory, network: this.network });
-    const filter = factory.filters.MarketCreated();
-    const events = await factory.queryFilter(filter, fromBlock);
-    const vaults = events.map(e => [e.args.premium, e.args.collateral]).flat();
-    return vaults.map(vault => ({ address: vault }));
+    const vaultsResponse = await gqlFetch<VaultsResponse>({
+      endpoint: this.subgraphUrl,
+      query: VAULTS_QUERY,
+    });
+    return vaultsResponse.vaults.map(vault => ({ address: vault.address }));
   }
 
   async getTokenDefinitions(
     params: GetTokenDefinitionsParams<Y2KFinanceCarousel, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const epochIds = await params.contract.getAllEpochs();
+    const epochIdsRaw = await params.contract.getAllEpochs();
     const claimableAsset = await params.contract.asset();
     const emission = await params.contract.emissionsToken();
+    const epochIds = epochIdsRaw.map(x => x.toString());
     return epochIds
-      .map(id => [
+      .map(tokenId => [
         {
           metaType: MetaType.SUPPLIED,
           address: params.contract.address,
+          // address: '0x892785f33cdee22a30aef750f285e18c18040c3e',
           network: this.network,
-          tokenId: id.toNumber(),
+          tokenId,
         },
         {
           metaType: MetaType.CLAIMABLE,
           address: claimableAsset,
           network: this.network,
-          tokenId: id.toNumber(),
         },
         {
           metaType: MetaType.CLAIMABLE,
@@ -86,7 +101,9 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
     const vault = params.multicall.wrap(params.contract);
     const results = await Promise.all(
       epochIds.map(async id => {
+        const finalTVL = await vault.finalTVL(id);
         const balance = await vault.balanceOf(params.address, id);
+        if (finalTVL.isZero() || balance.isZero()) return [0, 0, 0];
         const claimable = await vault.previewWithdraw(id, balance);
         const emission = await vault.previewEmissionsWithdraw(id, balance);
         return [balance, claimable, emission];
