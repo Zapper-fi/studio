@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.524.0](https://github.com/Zapper-fi/studio/compare/v0.523.2...v0.524.0) (2023-08-23)
+
+
+### Features
+
+* **halofi:** adds support for base network ([#2905](https://github.com/Zapper-fi/studio/issues/2905)) ([6ce85e4](https://github.com/Zapper-fi/studio/commit/6ce85e44a7e93dd3fd9a4182bfc0b0fccc3fd859))
+* **yamato:** create app + deposit & borrow positions ([#2911](https://github.com/Zapper-fi/studio/issues/2911)) ([bb5eca3](https://github.com/Zapper-fi/studio/commit/bb5eca3028c734632d8898ab649ff88d721f26de))
+
 ## [0.523.2](https://github.com/Zapper-fi/studio/compare/v0.523.1...v0.523.2) (2023-08-22)
 
 
