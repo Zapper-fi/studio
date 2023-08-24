@@ -13,7 +13,7 @@ import {
 import { CryptexV2ContractFactory, DsuToken } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumDsuTokenFetcher extends AppTokenTemplatePositionFetcher<DsuToken> {
+export class ArbitrumCryptexV2DsuTokenFetcher extends AppTokenTemplatePositionFetcher<DsuToken> {
   groupLabel = 'DSU';
   isExcludedFromTvl = true;
   constructor(
