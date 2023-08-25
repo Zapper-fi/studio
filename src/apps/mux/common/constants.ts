@@ -55,9 +55,9 @@ export const POOL_ADDRESS = {
 };
 
 export const GRAPH_URL = {
-  [Network.ARBITRUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-arb',
-  [Network.BINANCE_SMART_CHAIN_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-bsc',
-  [Network.AVALANCHE_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ava',
-  [Network.FANTOM_OPERA_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ftm',
-  [Network.OPTIMISM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-op',
+  [Network.ARBITRUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-arb?source=zapper',
+  [Network.BINANCE_SMART_CHAIN_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-bsc?source=zapper',
+  [Network.AVALANCHE_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ava?source=zapper',
+  [Network.FANTOM_OPERA_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ftm?source=zapper',
+  [Network.OPTIMISM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-op?source=zapper',
 };

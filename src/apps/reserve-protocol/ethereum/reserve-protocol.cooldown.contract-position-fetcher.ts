@@ -49,7 +49,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     // Get RTokens data
     const rTokensData = await gqlFetchAll<RTokens>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/lcamargof/reserve-test',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/lcamargof/reserve-test?source=zapper',
       query: getRTokens,
       variables: {},
       dataToSearch: 'tokens',

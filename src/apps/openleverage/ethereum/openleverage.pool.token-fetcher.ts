@@ -6,5 +6,5 @@ import { OpenleveragePoolTokenFetcher } from '../common/openleverage.pool.token-
 export class EthereumOpenleveragePoolTokenFetcher extends OpenleveragePoolTokenFetcher {
   groupLabel = 'Pools';
 
-  subgraphUrl = `https://api.thegraph.com/subgraphs/name/openleveragedev/openleverage`;
+  subgraphUrl = `https://api.thegraph.com/subgraphs/name/openleveragedev/openleverage?source=zapper`;
 }

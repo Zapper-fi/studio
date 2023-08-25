@@ -4,7 +4,7 @@ import { BalancerV2PoolTokenFetcher } from '~apps/balancer-v2/common/balancer-v2
 @PositionTemplate()
 export class PolygonKoyoPoolTokenFetcher extends BalancerV2PoolTokenFetcher {
   groupLabel = 'Pools';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-matic';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-matic?source=zapper';
   vaultAddress = '0xacf8489ccb47da2d7306d827bbede05bfa6fea1b';
   minLiquidity = 0;
 }

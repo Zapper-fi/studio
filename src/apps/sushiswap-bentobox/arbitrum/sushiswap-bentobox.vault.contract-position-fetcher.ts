@@ -5,6 +5,6 @@ import { SushiswapBentoboxVaultContractPositionFetcher } from '../common/sushisw
 @PositionTemplate()
 export class ArbitrumSushiSwapBentoBoxContractPositionFetcher extends SushiswapBentoboxVaultContractPositionFetcher {
   groupLabel = 'BentoBox';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/sushiswap/bentobox-arbitrum';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/sushiswap/bentobox-arbitrum?source=zapper';
   bentoboxAddress = '0x74c764d41b77dbbb4fe771dab1939b00b146894a';
 }

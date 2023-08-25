@@ -27,7 +27,7 @@ export class OptimismKwentaPerpV1CrossMarginContractPositionFetcher extends Opti
 
   async getAccountAddress(address: string): Promise<string> {
     const crossMarginAccountsFromSubgraph = await gqlFetch<GetCrossMarginAccounts>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-main',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-main?source=zapper',
       query: getCrossMarginAccountsQuery,
       variables: { address: address },
     });

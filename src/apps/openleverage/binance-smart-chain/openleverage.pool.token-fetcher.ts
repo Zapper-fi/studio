@@ -6,5 +6,5 @@ import { OpenleveragePoolTokenFetcher } from '../common/openleverage.pool.token-
 export class BinanceSmartChainOpenleveragePoolTokenFetcher extends OpenleveragePoolTokenFetcher {
   groupLabel = 'Pools';
 
-  subgraphUrl = `https://api.thegraph.com/subgraphs/name/openleveragedev/openleverage-bsc`;
+  subgraphUrl = `https://api.thegraph.com/subgraphs/name/openleveragedev/openleverage-bsc?source=zapper`;
 }

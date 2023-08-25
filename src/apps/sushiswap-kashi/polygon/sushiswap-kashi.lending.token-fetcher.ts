@@ -5,5 +5,5 @@ import { SushiswapKashiLendingTokenFetcher } from '../common/sushiswap-kashi.len
 @PositionTemplate()
 export class PolygonSushiswapKashiLendingTokenFetcher extends SushiswapKashiLendingTokenFetcher {
   groupLabel = 'Lending';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/matthewlilley/kashi-polygon';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/matthewlilley/kashi-polygon?source=zapper';
 }

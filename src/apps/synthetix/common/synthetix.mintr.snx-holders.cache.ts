@@ -40,8 +40,8 @@ export class SynthetixMintrSnxHoldersCache {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private graphs = {
-    [Network.ETHEREUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main',
-    [Network.OPTIMISM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main',
+    [Network.ETHEREUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main?source=zapper',
+    [Network.OPTIMISM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main?source=zapper',
   };
 
   @Cache({

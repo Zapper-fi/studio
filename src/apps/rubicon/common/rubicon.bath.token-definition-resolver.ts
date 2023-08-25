@@ -31,7 +31,7 @@ export class RubiconBathTokenDefinitionResolver {
   })
   private async getPoolDefinitionsData() {
     const data = await gqlFetch<RubiconPoolFetcherResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/denverbaumgartner/bathtokenoptimism`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/denverbaumgartner/bathtokenoptimism?source=zapper`,
       query: POOL_QUERY,
     });
 

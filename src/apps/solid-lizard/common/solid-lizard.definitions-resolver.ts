@@ -96,7 +96,7 @@ export class SolidLizardDefinitionsResolver {
   })
   private async getPoolDefinitionsData() {
     const response = await gqlFetch<SolidLizardApiPairData>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/solidlizardfinance/sliz',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/solidlizardfinance/sliz?source=zapper',
       query: poolsQuery,
     });
 
