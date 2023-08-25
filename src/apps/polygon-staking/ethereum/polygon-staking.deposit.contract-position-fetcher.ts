@@ -57,7 +57,7 @@ type DelegatedMaticResponse = {
   }[];
 };
 
-const GQL_ENDPOINT = `https://api.thegraph.com/subgraphs/name/maticnetwork/mainnet-root-subgraphs`;
+const GQL_ENDPOINT = `https://api.thegraph.com/subgraphs/name/maticnetwork/mainnet-root-subgraphs?source=zapper`;
 
 const DELEGATED_MATIC_QUERY = gql`
   query getDelegatedMatic($address: String!, $first: Int, $lastId: String) {

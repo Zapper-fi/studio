@@ -94,7 +94,7 @@ export class ReflexerSafeContractPositionFetcher extends CustomContractPositionT
 
   async getBalances(address: string) {
     const safesResponse = await gqlFetch<ReflexerSafesResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/reflexer-labs/rai-mainnet`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/reflexer-labs/rai-mainnet?source=zapper`,
       query: safePositionsQuery,
       variables: { address: address.toLowerCase() },
     });

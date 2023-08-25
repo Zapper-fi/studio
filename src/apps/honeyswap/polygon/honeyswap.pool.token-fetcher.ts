@@ -5,6 +5,6 @@ import { UniswapV2DefaultPoolSubgraphTemplateTokenFetcher } from '~apps/uniswap-
 export class PolygonHoneyswapPoolTokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
   groupLabel = 'Pools';
 
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/1hive/honeyswap-polygon';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/1hive/honeyswap-polygon?source=zapper';
   factoryAddress = '0x03daa61d8007443a6584e3d8f85105096543c19c';
 }

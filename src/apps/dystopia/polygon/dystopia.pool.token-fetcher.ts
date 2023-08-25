@@ -53,7 +53,7 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
 
   async getAddresses() {
     const data = await gqlFetch<DystopiaQueryResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia?source=zapper',
       query: DYSTOPIA_QUERY,
     });
     return data.pairs.map(v => v.id);

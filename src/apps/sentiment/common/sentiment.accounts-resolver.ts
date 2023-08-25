@@ -37,7 +37,7 @@ export class SentimentAccountsResolver {
   })
   private async getAllAccountsData() {
     const data = await gqlFetchAll<GetAccountsResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/r0ohafza/sentiment`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/r0ohafza/sentiment?source=zapper`,
       query: GET_ALL_ACCOUNTS_QUERY,
       variables: undefined,
       dataToSearch: 'accounts',

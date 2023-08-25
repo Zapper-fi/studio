@@ -113,7 +113,7 @@ export class LlamapayStreamApiClient {
 
   async getTokens(network: string) {
     const tokensResponse = await gqlFetch<LlamapayTokensResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-${network}?source=zapper`,
       query: getTokensQuery,
     });
 
@@ -125,7 +125,7 @@ export class LlamapayStreamApiClient {
 
   async getStreams(address: string, network: string) {
     const streamsResponse = await gqlFetch<LlamapayStreamsResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-${network}?source=zapper`,
       query: getStreamsQuery,
       variables: { id: address },
     });
@@ -135,7 +135,7 @@ export class LlamapayStreamApiClient {
 
   async getVestingEscrows(address: string, network: string) {
     const vestingEscrowsResponse = await gqlFetch<LlamapayVestingEscrowsResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-vesting-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-vesting-${network}?source=zapper`,
       query: getVestingEscrowsQuery,
       variables: { id: address },
     });

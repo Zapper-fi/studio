@@ -7,7 +7,7 @@ import { YieldProtocolBorrowContractPositionFetcher } from '../common/yield-prot
 @PositionTemplate()
 export class ArbitrumYieldProtocolBorrowContractPositionFetcher extends YieldProtocolBorrowContractPositionFetcher {
   groupLabel = 'Borrow';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/yieldprotocol/v2-arbitrum';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/yieldprotocol/v2-arbitrum?source=zapper';
   cauldronAddress = '0x23cc87fbebdd67cce167fa9ec6ad3b7fe3892e30';
   ladleAddress = '0x16e25cf364cecc305590128335b8f327975d0560';
 }

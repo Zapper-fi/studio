@@ -5,5 +5,5 @@ import { SushiswapKashiLendingTokenFetcher } from '../common/sushiswap-kashi.len
 @PositionTemplate()
 export class ArbitrumSushiswapKashiLendingTokenFetcher extends SushiswapKashiLendingTokenFetcher {
   groupLabel = 'Lending';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/matthewlilley/kashi-arbitrum';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/matthewlilley/kashi-arbitrum?source=zapper';
 }

@@ -95,7 +95,7 @@ export class AuraBalancerPoolResolver {
     ttl: 15 * 60,
   })
   private async getBalancerPoolData(poolId: string) {
-    const endpoint = `https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2`;
+    const endpoint = `https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2?source=zapper`;
     const { pool } = await gqlFetch<GetPoolResponse>({
       endpoint,
       query: GET_POOL_QUERY,

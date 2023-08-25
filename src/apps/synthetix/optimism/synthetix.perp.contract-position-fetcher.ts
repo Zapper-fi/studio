@@ -65,7 +65,7 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
 
   async getDefinitions(): Promise<SynthetixPerpPositionDefinition[]> {
     const { futuresMarkets } = await gqlFetch<FuturesMarkets>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps?source=zapper',
       query: FUTURES_MARKETS_QUERY,
     });
 
