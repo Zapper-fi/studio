@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { ChickenBondBlusd__factory } from './ethers';
-import { ChickenBondBondNft__factory } from './ethers';
-import { ChickenBondManager__factory } from './ethers';
-import { CurvePool__factory } from './ethers';
+import {
+  ChickenBondBlusd__factory,
+  ChickenBondBondNft__factory,
+  ChickenBondManager__factory,
+  CurvePool__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

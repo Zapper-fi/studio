@@ -4,13 +4,15 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PenguinChef__factory } from './ethers';
-import { PenguinChefV2__factory } from './ethers';
-import { PenguinExtraRewarder__factory } from './ethers';
-import { PenguinIPefi__factory } from './ethers';
-import { PenguinRewarderRate__factory } from './ethers';
-import { PenguinVault__factory } from './ethers';
-import { PenguinXPefi__factory } from './ethers';
+import {
+  PenguinChef__factory,
+  PenguinChefV2__factory,
+  PenguinExtraRewarder__factory,
+  PenguinIPefi__factory,
+  PenguinRewarderRate__factory,
+  PenguinVault__factory,
+  PenguinXPefi__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { InsuracePoolToken__factory } from './ethers';
-import { InsuraceStakersPoolV2__factory } from './ethers';
+import { InsuracePoolToken__factory, InsuraceStakersPoolV2__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

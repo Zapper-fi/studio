@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { TrisolarisFactory__factory } from './ethers';
-import { TrisolarisMasterChef__factory } from './ethers';
-import { TrisolarisPair__factory } from './ethers';
-import { TrisolarisRewarder__factory } from './ethers';
+import {
+  TrisolarisFactory__factory,
+  TrisolarisMasterChef__factory,
+  TrisolarisPair__factory,
+  TrisolarisRewarder__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

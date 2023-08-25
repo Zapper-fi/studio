@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { DystopiaGauge__factory } from './ethers';
-import { DystopiaPair__factory } from './ethers';
-import { DystopiaVe__factory } from './ethers';
+import { DystopiaGauge__factory, DystopiaPair__factory, DystopiaVe__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

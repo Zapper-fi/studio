@@ -4,15 +4,17 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PendleData__factory } from './ethers';
-import { PendleDexFactory__factory } from './ethers';
-import { PendleDexPair__factory } from './ethers';
-import { PendleForge__factory } from './ethers';
-import { PendleMarket__factory } from './ethers';
-import { PendleOwnershipToken__factory } from './ethers';
-import { PendleStaking__factory } from './ethers';
-import { PendleStakingManager__factory } from './ethers';
-import { PendleYieldToken__factory } from './ethers';
+import {
+  PendleData__factory,
+  PendleDexFactory__factory,
+  PendleDexPair__factory,
+  PendleForge__factory,
+  PendleMarket__factory,
+  PendleOwnershipToken__factory,
+  PendleStaking__factory,
+  PendleStakingManager__factory,
+  PendleYieldToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

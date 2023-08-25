@@ -4,11 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PlatypusFinanceMasterPlatypusV1__factory } from './ethers';
-import { PlatypusFinanceMasterPlatypusV2__factory } from './ethers';
-import { PlatypusFinancePool__factory } from './ethers';
-import { PlatypusFinancePoolToken__factory } from './ethers';
-import { PlatypusFinanceVotingEscrow__factory } from './ethers';
+import {
+  PlatypusFinanceMasterPlatypusV1__factory,
+  PlatypusFinanceMasterPlatypusV2__factory,
+  PlatypusFinancePool__factory,
+  PlatypusFinancePoolToken__factory,
+  PlatypusFinanceVotingEscrow__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

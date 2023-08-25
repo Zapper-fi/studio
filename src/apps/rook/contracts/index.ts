@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { RookKToken__factory } from './ethers';
-import { RookLiquidityPoolDistributor__factory } from './ethers';
-import { RookLiquidityPoolV2__factory } from './ethers';
-import { RookLiquidityPoolV3__factory } from './ethers';
+import {
+  RookKToken__factory,
+  RookLiquidityPoolDistributor__factory,
+  RookLiquidityPoolV2__factory,
+  RookLiquidityPoolV3__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

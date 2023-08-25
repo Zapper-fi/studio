@@ -4,9 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { VectorFinanceMasterChef__factory } from './ethers';
-import { VectorFinanceMasterChefPoolHelper__factory } from './ethers';
-import { VectorFinanceMasterChefRewarder__factory } from './ethers';
+import {
+  VectorFinanceMasterChef__factory,
+  VectorFinanceMasterChefPoolHelper__factory,
+  VectorFinanceMasterChefRewarder__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

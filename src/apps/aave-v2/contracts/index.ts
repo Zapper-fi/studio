@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AaveProtocolDataProvider__factory } from './ethers';
-import { AaveStakedTokenIncentivesController__factory } from './ethers';
-import { AaveV2AToken__factory } from './ethers';
-import { AaveV2LendingPoolProvider__factory } from './ethers';
+import {
+  AaveProtocolDataProvider__factory,
+  AaveStakedTokenIncentivesController__factory,
+  AaveV2AToken__factory,
+  AaveV2LendingPoolProvider__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

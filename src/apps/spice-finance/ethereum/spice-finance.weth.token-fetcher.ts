@@ -1,8 +1,11 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish, constants } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc721 } from '~contract/contracts';
+import { IMulticallWrapper } from '~multicall';
+import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -15,16 +18,13 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { SpiceFinanceContractFactory } from '../contracts';
-import { BigNumberish, constants } from 'ethers';
-import { IMulticallWrapper } from '~multicall';
-import { AppTokenPosition } from '~position/position.interface';
 
 @PositionTemplate()
 export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositionFetcher<Erc721> {
-  groupLabel = "WETH";
+  groupLabel = 'WETH';
 
-  vaultAddress = "0x6110d61DD1133b0f845f1025d6678Cd22A11a2fe";
-  underlyingTokenAddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+  vaultAddress = '0x6110d61dd1133b0f845f1025d6678cd22a11a2fe';
+  underlyingTokenAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 
   constructor(
     @Inject(APP_TOOLKIT) public readonly appToolkit: IAppToolkit,
@@ -74,7 +74,9 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
     return [reserve];
   }
 
-  async getBalancePerToken({ address }: {
+  async getBalancePerToken({
+    address,
+  }: {
     address: string;
     appToken: AppTokenPosition;
     multicall: IMulticallWrapper;

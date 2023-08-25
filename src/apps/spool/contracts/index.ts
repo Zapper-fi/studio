@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { SpoolStaking__factory } from './ethers';
-import { SpoolVault__factory } from './ethers';
-import { SpoolVospool__factory } from './ethers';
+import { SpoolStaking__factory, SpoolVault__factory, SpoolVospool__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

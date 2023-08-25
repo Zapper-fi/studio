@@ -31,4 +31,4 @@ import { PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher } from './po
     PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher,
   ],
 })
-export class GammaStrategiesAppModule extends AbstractApp() { }
+export class GammaStrategiesAppModule extends AbstractApp() {}

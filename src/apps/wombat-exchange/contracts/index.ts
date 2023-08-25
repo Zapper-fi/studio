@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { WombatExchangeMasterWombat__factory } from './ethers';
-import { WombatExchangePool__factory } from './ethers';
-import { WombatExchangePoolToken__factory } from './ethers';
-import { WombatExchangeVotingEscrow__factory } from './ethers';
+import {
+  WombatExchangeMasterWombat__factory,
+  WombatExchangePool__factory,
+  WombatExchangePoolToken__factory,
+  WombatExchangeVotingEscrow__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

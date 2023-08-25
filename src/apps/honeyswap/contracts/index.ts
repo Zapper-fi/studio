@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { HoneyswapFactory__factory } from './ethers';
-import { HoneyswapPair__factory } from './ethers';
+import { HoneyswapFactory__factory, HoneyswapPair__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

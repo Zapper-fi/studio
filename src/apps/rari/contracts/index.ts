@@ -4,9 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { RariFundManager__factory } from './ethers';
-import { RariGovernanceTokenDistributor__factory } from './ethers';
-import { RariUniswapTokenDistributor__factory } from './ethers';
+import {
+  RariFundManager__factory,
+  RariGovernanceTokenDistributor__factory,
+  RariUniswapTokenDistributor__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

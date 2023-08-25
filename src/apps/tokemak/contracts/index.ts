@@ -4,11 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { TokemakAccToke__factory } from './ethers';
-import { TokemakReactor__factory } from './ethers';
-import { TokemakRewards__factory } from './ethers';
-import { TokemakRewardsHash__factory } from './ethers';
-import { TokemakTokeStaking__factory } from './ethers';
+import {
+  TokemakAccToke__factory,
+  TokemakReactor__factory,
+  TokemakRewards__factory,
+  TokemakRewardsHash__factory,
+  TokemakTokeStaking__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
