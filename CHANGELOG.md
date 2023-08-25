@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.525.0](https://github.com/Zapper-fi/studio/compare/v0.524.0...v0.525.0) (2023-08-25)
+
+
+### Features
+
+* **apps:** Add source to subgraph urls ([#2915](https://github.com/Zapper-fi/studio/issues/2915)) ([8f0523b](https://github.com/Zapper-fi/studio/commit/8f0523b5954c7f73a1deffba293226ab97cf2ec9))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2913](https://github.com/Zapper-fi/studio/issues/2913)) ([de9f0eb](https://github.com/Zapper-fi/studio/commit/de9f0eb5953550c3873f506b876aee1781e01f11))
+
 ## [0.524.0](https://github.com/Zapper-fi/studio/compare/v0.523.2...v0.524.0) (2023-08-23)
 
 
