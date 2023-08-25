@@ -195,7 +195,7 @@ export class HiddenHandRewardsResolver {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(HiddenHandContractFactory) protected readonly contractFactory: HiddenHandContractFactory,
-  ) { }
+  ) {}
 
   @Cache({
     key: `studio:hidden-hand:claimable-raw-data`,

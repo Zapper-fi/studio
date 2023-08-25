@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { RariFuseComptroller__factory } from './ethers';
-import { RariFusePoolLens__factory } from './ethers';
-import { RariFusePoolsDirectory__factory } from './ethers';
-import { RariFuseToken__factory } from './ethers';
+import {
+  RariFuseComptroller__factory,
+  RariFusePoolLens__factory,
+  RariFusePoolsDirectory__factory,
+  RariFuseToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

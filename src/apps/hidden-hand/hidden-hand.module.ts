@@ -17,4 +17,4 @@ import { OptimismHiddenHandRewardsContractPositionFetcher } from './optimism/hid
     HiddenHandContractFactory,
   ],
 })
-export class HiddenHandAppModule extends AbstractApp() { }
+export class HiddenHandAppModule extends AbstractApp() {}

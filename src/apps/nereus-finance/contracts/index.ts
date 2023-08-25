@@ -4,9 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { NereusFinanceDataProvider__factory } from './ethers';
-import { NereusFinanceLendingPoolProvider__factory } from './ethers';
-import { NereusFinanceStakedTokenIncentivesController__factory } from './ethers';
+import {
+  NereusFinanceDataProvider__factory,
+  NereusFinanceLendingPoolProvider__factory,
+  NereusFinanceStakedTokenIncentivesController__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

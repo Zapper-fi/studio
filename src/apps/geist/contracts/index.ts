@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { GeistRewards__factory } from './ethers';
-import { GeistStaking__factory } from './ethers';
+import { GeistRewards__factory, GeistStaking__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

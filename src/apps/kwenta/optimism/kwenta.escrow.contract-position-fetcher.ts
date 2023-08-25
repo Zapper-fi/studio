@@ -29,7 +29,10 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
   }
 
   async getEscrowedTokenBalance({ multicall, contract, address }: GetTokenBalancesParams<KwentaEscrow>) {
-    const stakingContract = this.contractFactory.kwentaStaking({ address: this.stakingContractAddress, network: this.network });
+    const stakingContract = this.contractFactory.kwentaStaking({
+      address: this.stakingContractAddress,
+      network: this.network,
+    });
     const mcStakingContract = multicall.wrap(stakingContract);
     const stakedBalance = await mcStakingContract.balanceOf(address);
     const stakedNonEscrowedBalance = await mcStakingContract.nonEscrowedBalanceOf(address);

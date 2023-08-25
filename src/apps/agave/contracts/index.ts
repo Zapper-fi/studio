@@ -4,9 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AgaveBaseIncentivesController__factory } from './ethers';
-import { AgaveLendingPoolProvider__factory } from './ethers';
-import { AgaveProtocolDataProvider__factory } from './ethers';
+import {
+  AgaveBaseIncentivesController__factory,
+  AgaveLendingPoolProvider__factory,
+  AgaveProtocolDataProvider__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

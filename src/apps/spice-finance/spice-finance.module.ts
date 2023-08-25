@@ -8,4 +8,4 @@ import { EthereumSpiceFinanceWethTokenFetcher } from './ethereum/spice-finance.w
 @Module({
   providers: [EthereumSpiceFinanceWethTokenFetcher, SpiceFinanceContractFactory],
 })
-export class SpiceFinanceAppModule extends AbstractApp() { }
+export class SpiceFinanceAppModule extends AbstractApp() {}

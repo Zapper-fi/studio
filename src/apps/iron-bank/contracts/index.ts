@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { IronBankCToken__factory } from './ethers';
-import { IronBankComptroller__factory } from './ethers';
-import { IronBankLens__factory } from './ethers';
+import { IronBankCToken__factory, IronBankComptroller__factory, IronBankLens__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -1,6 +1,6 @@
 import { parseBytes32String } from '@ethersproject/strings';
-import { BigNumber } from 'ethers';
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 import { compact, flatMap } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -34,7 +34,7 @@ type WhitelistedTokenDefinition = DefaultAppTokenDefinition & {
 
 type RToken = BaseToken & {
   hide: boolean;
-}
+};
 
 export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   SmartPool,
@@ -54,7 +54,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   async getDefinitions(): Promise<RigoblockSmartPoolDefinition[]> {
     const poolBuilders = POOL_BUILDERS[this.network] ?? [];
     // we query tracked tokens here to save redundant calls
-    const tokenList = await this.getTokenList()
+    const tokenList = await this.getTokenList();
 
     // Get all logs for each pool builder contract
     const builderLogs = await Promise.all(
@@ -98,7 +98,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   // whitelisted tokens are filtered by those that are not tracked
   async getTokenList(): Promise<WhitelistedTokenDefinition[]> {
     const tokenList = [...new Set(await this.getTokenWhitelist())];
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network) as RToken[];
+    const baseTokens = (await this.appToolkit.getBaseTokenPrices(this.network)) as RToken[];
     const trackedTokens = tokenList.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.address && !p.hide);
       if (!tokenFound) return null;
@@ -139,21 +139,22 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 
   async getUnderlyingTokenDefinitions({
     multicall,
-    definition
+    definition,
   }: GetDisplayPropsParams<SmartPool, DefaultDataProps, RigoblockSmartPoolDefinition>) {
     // this block returns only held tokens. However, it would require less RPC calls to just multicall
     //  all tokens and display in UI only tokens with positive balances.
-    const tokens = definition.tokenList
-    if(!tokens || tokens?.length === 0) return[]
-    let heldTokens: WhitelistedTokenDefinition[] = []
+    const tokens = definition.tokenList;
+    if (!tokens || tokens?.length === 0) return [];
+    const heldTokens: WhitelistedTokenDefinition[] = [];
     for (let i = 0; i !== tokens.length; i++) {
       const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
       const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
-      if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
+      if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) {
+        heldTokens[i] = tokens[i];
+      }
     }
 
-    return compact(heldTokens)
-      .map(x => ({ address: x.address.toLowerCase(), network: this.network }))
+    return compact(heldTokens).map(x => ({ address: x.address.toLowerCase(), network: this.network }));
   }
 
   async getPricePerShare({

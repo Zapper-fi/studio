@@ -4,11 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MstableAsset__factory } from './ethers';
-import { MstableMetavault4626__factory } from './ethers';
-import { MstableStaking__factory } from './ethers';
-import { MstableStakingV2__factory } from './ethers';
-import { MstableVmta__factory } from './ethers';
+import {
+  MstableAsset__factory,
+  MstableMetavault4626__factory,
+  MstableStaking__factory,
+  MstableStakingV2__factory,
+  MstableVmta__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

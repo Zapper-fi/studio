@@ -4,17 +4,19 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherMerkleDistributor__factory } from './ethers';
-import { PoolTogetherV3CommunityPrizePool__factory } from './ethers';
-import { PoolTogetherV3MultiTokenListener__factory } from './ethers';
-import { PoolTogetherV3MultipleWinners__factory } from './ethers';
-import { PoolTogetherV3MultipleWinnersPrizeStrategy__factory } from './ethers';
-import { PoolTogetherV3Pod__factory } from './ethers';
-import { PoolTogetherV3PodRegistry__factory } from './ethers';
-import { PoolTogetherV3PoolWithMultipleWinnersBuilder__factory } from './ethers';
-import { PoolTogetherV3PrizePool__factory } from './ethers';
-import { PoolTogetherV3Ticket__factory } from './ethers';
-import { PoolTogetherV3TokenFaucet__factory } from './ethers';
+import {
+  PoolTogetherMerkleDistributor__factory,
+  PoolTogetherV3CommunityPrizePool__factory,
+  PoolTogetherV3MultiTokenListener__factory,
+  PoolTogetherV3MultipleWinners__factory,
+  PoolTogetherV3MultipleWinnersPrizeStrategy__factory,
+  PoolTogetherV3Pod__factory,
+  PoolTogetherV3PodRegistry__factory,
+  PoolTogetherV3PoolWithMultipleWinnersBuilder__factory,
+  PoolTogetherV3PrizePool__factory,
+  PoolTogetherV3Ticket__factory,
+  PoolTogetherV3TokenFaucet__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

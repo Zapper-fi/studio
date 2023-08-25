@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PieDaoReferralRewards__factory } from './ethers';
-import { PieDaoRewards__factory } from './ethers';
-import { PieDaoStaking__factory } from './ethers';
-import { PieDaoVoteLockedDough__factory } from './ethers';
+import {
+  PieDaoReferralRewards__factory,
+  PieDaoRewards__factory,
+  PieDaoStaking__factory,
+  PieDaoVoteLockedDough__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
-import { YamatoContractFactory } from '../contracts';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -12,10 +12,15 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
+import { YamatoContractFactory } from '../contracts';
 import { Yamato } from '../contracts/ethers/Yamato';
 
 @PositionTemplate()
-export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Yamato, DefaultDataProps, DefaultContractPositionDefinition> {
+export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  Yamato,
+  DefaultDataProps,
+  DefaultContractPositionDefinition
+> {
   groupLabel: 'Pledge';
 
   constructor(
@@ -30,9 +35,8 @@ export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositio
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0x02Fe72b2E9fF717EbF3049333B184E9Cd984f257' }];
+    return [{ address: '0x02fe72b2e9ff717ebf3049333b184e9cd984f257' }];
   }
-
 
   async getTokenDefinitions() {
     return [

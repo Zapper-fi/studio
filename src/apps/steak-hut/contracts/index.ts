@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { SteakHutHjoe__factory } from './ethers';
-import { SteakHutPool__factory } from './ethers';
-import { SteakHutStaking__factory } from './ethers';
+import { SteakHutHjoe__factory, SteakHutPool__factory, SteakHutStaking__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

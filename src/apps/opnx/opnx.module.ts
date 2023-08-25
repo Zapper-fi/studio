@@ -8,4 +8,4 @@ import { EthereumOpnxContractPositionFetcher } from './ethereum/opnx.veox.contra
 @Module({
   providers: [EthereumOpnxContractPositionFetcher, OpnxContractFactory],
 })
-export class OpnxAppModule extends AbstractApp() { }
+export class OpnxAppModule extends AbstractApp() {}

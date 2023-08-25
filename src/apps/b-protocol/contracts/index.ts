@@ -4,12 +4,14 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BProtocolBamm__factory } from './ethers';
-import { BProtocolBammLens__factory } from './ethers';
-import { BProtocolCompoundComptroller__factory } from './ethers';
-import { BProtocolCompoundRegistry__factory } from './ethers';
-import { BProtocolCompoundToken__factory } from './ethers';
-import { BProtocolGetInfo__factory } from './ethers';
+import {
+  BProtocolBamm__factory,
+  BProtocolBammLens__factory,
+  BProtocolCompoundComptroller__factory,
+  BProtocolCompoundRegistry__factory,
+  BProtocolCompoundToken__factory,
+  BProtocolGetInfo__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
