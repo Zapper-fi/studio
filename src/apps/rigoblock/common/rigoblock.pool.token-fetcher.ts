@@ -99,7 +99,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
   // whitelisted tokens are filtered by those that are not tracked
   async getTokenList(): Promise<WhitelistedTokenDefinition[]> {
     const tokenList = [...new Set(await this.getTokenWhitelist())];
-    tokenList.push({ address: ZERO_ADDRESS })
+    tokenList.push({ address: ZERO_ADDRESS });
     const baseTokens = (await this.appToolkit.getBaseTokenPrices(this.network)) as RToken[];
     const trackedTokens = tokenList.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.address && !p.hide);
@@ -156,9 +156,11 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
           heldTokens[i] = tokens[i];
         }
       } else {
-        const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(definition.address)
-        if (ethBalance && ethBalance.gt(BigNumber.from(0))) { heldTokens[i] = tokens[i] };
-      };
+        const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(definition.address);
+        if (ethBalance && ethBalance.gt(BigNumber.from(0))) {
+          heldTokens[i] = tokens[i];
+        }
+      }
     }
 
     return compact(heldTokens).map(x => ({ address: x.address.toLowerCase(), network: this.network }));
@@ -173,9 +175,9 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
         if (token.address === ZERO_ADDRESS) {
-          const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(appToken.address)
+          const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(appToken.address);
           return Number(ethBalance) / 10 ** 18;
-        };
+        }
         const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
         const reserveRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;

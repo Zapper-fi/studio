@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Event } from 'ethers';
-import moment from 'moment';
+import { duration } from 'moment';
 
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
@@ -28,7 +28,7 @@ export class RigoblockLogProvider {
       fromBlock: number;
       address: string;
     }) => `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
-    ttl: moment.duration(8, 'hours').asSeconds(),
+    ttl: duration(8, 'hours').asSeconds(),
   })
   async getRigoblockLogs({
     fromBlock,

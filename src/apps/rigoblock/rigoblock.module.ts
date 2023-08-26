@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
+import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 
 import { ArbitrumRigoblockPoolContractPositionFetcher } from './arbitrum/rigoblock.pool.contract-position-fetcher';
 import { ArbitrumRigoblockPoolTokenFetcher } from './arbitrum/rigoblock.pool.token-fetcher';
