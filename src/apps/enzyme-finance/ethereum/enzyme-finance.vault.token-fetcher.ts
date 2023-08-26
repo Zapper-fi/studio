@@ -41,7 +41,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getAddresses(): Promise<string[]> {
-    const endpoint = `https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme`;
+    const endpoint = `https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme?source=zapper`;
     const data = await gqlFetch<EnzymeFinanceVaultsResponse>({ endpoint, query });
     return data.funds.map(v => v.id.toLowerCase());
   }

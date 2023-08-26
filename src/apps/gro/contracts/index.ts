@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { GroLabsVault__factory } from './ethers';
-import { GroLpTokenStaker__factory } from './ethers';
-import { GroVesting__factory } from './ethers';
+import { GroLabsVault__factory, GroLpTokenStaker__factory, GroVesting__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -58,7 +58,7 @@ export class TenderizeTokenDefinitionsResolver {
   })
   private async getVaultDefinitionsData(network: Network) {
     const data = await gqlFetch<TenderTokenFetcherResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}?source=zapper`,
       query: TOKEN_QUERY,
     });
 
@@ -105,7 +105,7 @@ export class TenderizeTokenDefinitionsResolver {
   })
   private async getRewardRateData(network: Network, tenderFarm: string) {
     return gqlFetch<RewardRateFetcherResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}?source=zapper`,
       variables: { tenderFarm },
       query: gql`
         query ($tenderFarm: String!) {

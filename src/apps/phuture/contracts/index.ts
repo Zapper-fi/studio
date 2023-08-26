@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PhutureManagedIndex__factory } from './ethers';
-import { PhutureVToken__factory } from './ethers';
-import { PhutureVTokenFactory__factory } from './ethers';
+import { PhutureManagedIndex__factory, PhutureVToken__factory, PhutureVTokenFactory__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

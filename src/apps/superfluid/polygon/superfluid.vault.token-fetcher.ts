@@ -45,7 +45,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getAddresses(): Promise<string[]> {
-    const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-matic';
+    const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/protocol-v1-matic?source=zapper';
     const tokenDataRaw = await gqlFetch<TokensResponse>({
       endpoint: subgraphUrl,
       query: ALL_SUPERTOKENS_QUERY,

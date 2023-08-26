@@ -59,7 +59,7 @@ export type SablierStreamToSalariesResponse = {
 export class SablierStreamApiClient {
   async getTokens() {
     const tokensResponse = await gqlFetch<SablierTokensResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier?source=zapper',
       query: getTokensQuery,
     });
 
@@ -68,7 +68,7 @@ export class SablierStreamApiClient {
 
   async getStreams(address: string, _network: Network) {
     const streamsResponse = await gqlFetch<SablierStreamsResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier?source=zapper',
       query: getStreamsQuery,
       variables: { address: address },
     });
@@ -81,7 +81,7 @@ export class SablierStreamApiClient {
 
   async getLegacyStreams(address: string, _network: Network) {
     const streamsResponse = await gqlFetch<SablierStreamsResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier?source=zapper',
       query: getStreamsQuery,
       variables: { address: address },
     });
@@ -90,7 +90,7 @@ export class SablierStreamApiClient {
     const legacyStreamIds = _.uniq(allStreams.map(v => v.id).filter(v => Number(v) < 100_000));
 
     const salariesResponse = await gqlFetch<SablierStreamToSalariesResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/sablier-labs/sablier?source=zapper',
       query: getStreamsToSalariesQuery,
       variables: { streamIds: legacyStreamIds },
     });

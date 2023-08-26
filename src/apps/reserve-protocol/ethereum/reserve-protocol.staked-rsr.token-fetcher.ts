@@ -30,7 +30,7 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
   async getAddresses(): Promise<string[]> {
     // Get RTokens data
     const rTokensData = await gqlFetchAll<RTokens>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/lcamargof/reserve-test',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/lcamargof/reserve-test?source=zapper',
       query: getRTokens,
       variables: {},
       dataToSearch: 'tokens',

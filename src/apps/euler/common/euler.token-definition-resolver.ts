@@ -65,7 +65,7 @@ export class EulerTokenDefinitionsResolver {
 
   private async getTokenDefinitionsData() {
     const data = await gqlFetch<EulerMarketsResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet?source=zapper`,
       query: MARKET_QUERY,
     });
 

@@ -4,12 +4,14 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { HectorNetworkBondDepository__factory } from './ethers';
-import { HectorNetworkBondNoTreasury__factory } from './ethers';
-import { HectorNetworkStakeBondDepository__factory } from './ethers';
-import { HectorNetworkStaked__factory } from './ethers';
-import { HectorNetworkStakingRewards__factory } from './ethers';
-import { HectorNetworkToken__factory } from './ethers';
+import {
+  HectorNetworkBondDepository__factory,
+  HectorNetworkBondNoTreasury__factory,
+  HectorNetworkStakeBondDepository__factory,
+  HectorNetworkStaked__factory,
+  HectorNetworkStakingRewards__factory,
+  HectorNetworkToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -4,12 +4,14 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { CompoundCToken__factory } from './ethers';
-import { CompoundComptroller__factory } from './ethers';
-import { TarotBorrowable__factory } from './ethers';
-import { TarotFactory__factory } from './ethers';
-import { TarotSupplyVault__factory } from './ethers';
-import { TarotVault__factory } from './ethers';
+import {
+  CompoundCToken__factory,
+  CompoundComptroller__factory,
+  TarotBorrowable__factory,
+  TarotFactory__factory,
+  TarotSupplyVault__factory,
+  TarotVault__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

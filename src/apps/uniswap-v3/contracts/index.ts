@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { UniswapV3Factory__factory } from './ethers';
-import { UniswapV3Pool__factory } from './ethers';
-import { UniswapV3PositionManager__factory } from './ethers';
+import { UniswapV3Factory__factory, UniswapV3Pool__factory, UniswapV3PositionManager__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

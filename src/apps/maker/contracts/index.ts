@@ -4,12 +4,14 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MakerCdpManager__factory } from './ethers';
-import { MakerGemJoin__factory } from './ethers';
-import { MakerGovernance__factory } from './ethers';
-import { MakerIlkRegistry__factory } from './ethers';
-import { MakerProxyRegistry__factory } from './ethers';
-import { MakerVat__factory } from './ethers';
+import {
+  MakerCdpManager__factory,
+  MakerGemJoin__factory,
+  MakerGovernance__factory,
+  MakerIlkRegistry__factory,
+  MakerProxyRegistry__factory,
+  MakerVat__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

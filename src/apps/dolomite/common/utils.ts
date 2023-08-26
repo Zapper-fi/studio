@@ -68,7 +68,8 @@ export const DOLOMITE_AMM_FACTORY_ADDRESSES = {
   [Network.ARBITRUM_MAINNET]: '0xd99c21c96103f36bc1fa26dd6448af4da030c1ef',
 };
 
-export const DOLOMITE_GRAPH_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/dolomite-exchange/dolomite-v2-arbitrum';
+export const DOLOMITE_GRAPH_ENDPOINT =
+  'https://api.thegraph.com/subgraphs/name/dolomite-exchange/dolomite-v2-arbitrum?source=zapper';
 
 const ONE_DOLLAR = BigNumber.from('1000000000000000000000000000000000000');
 

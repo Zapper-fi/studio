@@ -8,4 +8,4 @@ import { UnstoppableContractFactory } from './contracts';
 @Module({
   providers: [ArbitrumUnstoppableGlpCompounderTokenFetcher, UnstoppableContractFactory],
 })
-export class UnstoppableAppModule extends AbstractApp() { }
+export class UnstoppableAppModule extends AbstractApp() {}

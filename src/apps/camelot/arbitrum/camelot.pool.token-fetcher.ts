@@ -5,6 +5,6 @@ import { UniswapV2DefaultPoolSubgraphTemplateTokenFetcher } from '~apps/uniswap-
 export class ArbitrumCamelotPoolTokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
   groupLabel = 'Pools';
 
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/camelotlabs/camelot-amm';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/camelotlabs/camelot-amm?source=zapper';
   factoryAddress = '0x6eccab422d763ac031210895c81787e87b43a652';
 }

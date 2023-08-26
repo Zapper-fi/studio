@@ -4,18 +4,20 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PickleController__factory } from './ethers';
-import { PickleJar__factory } from './ethers';
-import { PickleJarMasterchef__factory } from './ethers';
-import { PickleJarSingleRewardStaking__factory } from './ethers';
-import { PickleJarUniv3__factory } from './ethers';
-import { PickleMiniChefV2__factory } from './ethers';
-import { PickleRegistry__factory } from './ethers';
-import { PickleRewarder__factory } from './ethers';
-import { PickleStrategyUniv3__factory } from './ethers';
-import { PickleVotingEscrow__factory } from './ethers';
-import { PickleVotingEscrowReward__factory } from './ethers';
-import { PickleVotingEscrowRewardV2__factory } from './ethers';
+import {
+  PickleController__factory,
+  PickleJar__factory,
+  PickleJarMasterchef__factory,
+  PickleJarSingleRewardStaking__factory,
+  PickleJarUniv3__factory,
+  PickleMiniChefV2__factory,
+  PickleRegistry__factory,
+  PickleRewarder__factory,
+  PickleStrategyUniv3__factory,
+  PickleVotingEscrow__factory,
+  PickleVotingEscrowReward__factory,
+  PickleVotingEscrowRewardV2__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

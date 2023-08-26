@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MarketXyzComptroller__factory } from './ethers';
-import { MarketXyzPoolDirectory__factory } from './ethers';
-import { MarketXyzPoolLens__factory } from './ethers';
-import { MarketXyzToken__factory } from './ethers';
+import {
+  MarketXyzComptroller__factory,
+  MarketXyzPoolDirectory__factory,
+  MarketXyzPoolLens__factory,
+  MarketXyzToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -4,6 +4,6 @@ import { YieldProtocolLendTokenFetcher } from '../common/yield-protocol.lend.tok
 
 @PositionTemplate()
 export class ArbitrumYieldProtocolLendTokenFetcher extends YieldProtocolLendTokenFetcher {
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/yieldprotocol/v2-arbitrum';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/yieldprotocol/v2-arbitrum?source=zapper';
   groupLabel = 'Lending';
 }

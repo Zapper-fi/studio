@@ -4,10 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BluebitChef__factory } from './ethers';
-import { BluebitVeToken__factory } from './ethers';
-import { Stats__factory } from './ethers';
-import { Vault__factory } from './ethers';
+import { BluebitChef__factory, BluebitVeToken__factory, Stats__factory, Vault__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -43,7 +43,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
         rewardTokenAddresses: [
           '0x1db2466d9f5e10d7090e7152b68d62703a2245f0',
           '0x3c8b650257cfb5f272f799f5e2b4e65093a11a05',
-          '0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db',
+          '0x9560e827af36c94d2ac33a39bce1fe78631088db',
           '0x4200000000000000000000000000000000000042',
         ],
       },
@@ -53,7 +53,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
         rewardTokenAddresses: [
           '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
           '0x3c8b650257cfb5f272f799f5e2b4e65093a11a05',
-          '0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db',
+          '0x9560e827af36c94d2ac33a39bce1fe78631088db',
           '0x4200000000000000000000000000000000000042',
         ],
       },

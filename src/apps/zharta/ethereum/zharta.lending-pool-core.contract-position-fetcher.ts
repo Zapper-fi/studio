@@ -22,7 +22,7 @@ interface ZhartaLendingPoolCoreContractPositionDefinition extends DefaultContrac
 @PositionTemplate()
 export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ZhartaLendingPoolCore> {
   groupLabel = 'Deposits';
-  contracts = ['0xE3c959Bc97b92973d5367DBF4cE1b7b9660Ee271'];
+  contracts = ['0xe3c959bc97b92973d5367dbf4ce1b7b9660ee271'];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -57,9 +57,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
   private async getRegularTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<ZhartaLendingPoolCore, ZhartaLendingPoolCoreContractPositionDefinition>) {
-    const [depositAddress] = await Promise.all([
-      contract.erc20TokenContract()
-    ]);
+    const [depositAddress] = await Promise.all([contract.erc20TokenContract()]);
 
     return [
       {
@@ -71,7 +69,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
         metaType: MetaType.CLAIMABLE,
         address: depositAddress,
         network: this.network,
-      }
+      },
     ];
   }
 
@@ -84,11 +82,11 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
     address,
     contractPosition,
     contract,
-    multicall
+    multicall,
   }: GetTokenBalancesParams<ZhartaLendingPoolCore>) {
     const [lenderFundsRaw, withdrawableAmountRaw] = await Promise.all([
       contract.funds(address),
-      contract.computeWithdrawableAmount(address)
+      contract.computeWithdrawableAmount(address),
     ]);
 
     return [lenderFundsRaw.currentAmountDeposited, withdrawableAmountRaw.sub(lenderFundsRaw.currentAmountDeposited)];

@@ -6,8 +6,8 @@ import { KyberswapElasticLiquidityContractPositionFetcher } from '../common/kybe
 export class ArbitrumKyberswapElasticLiquidityContractPositionFetcher extends KyberswapElasticLiquidityContractPositionFetcher {
   groupLabel = 'Pools';
 
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/kybernetwork/kyberswap-elastic-arbitrum-one';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/kybernetwork/kyberswap-elastic-arbitrum-one?source=zapper';
   positionManagerAddress = '0xe222fbe074a436145b255442d919e4e3a6c6a480';
   factoryAddress = '0xc7a590291e07b9fe9e64b86c58fd8fc764308c4a';
-  blockSubgraphUrl = 'https://api.thegraph.com/subgraphs/name/kybernetwork/arbitrum-blocks';
+  blockSubgraphUrl = 'https://api.thegraph.com/subgraphs/name/kybernetwork/arbitrum-blocks?source=zapper';
 }

@@ -47,7 +47,8 @@ const MARKETS_QUERY = gql`
 const SUBGRAPH_URL = {
   [Network.ETHEREUM_MAINNET]:
     'https://gateway.thegraph.com/api/fbf06f34dad21c4df6a9e1f647ba1d16/deployments/id/QmRMtCkaYsizfmoavcE1ULwc2DkG1GZjXDHTwHjXAAH9sp',
-  [Network.ARBITRUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/siros-ena/silo-finance-arbitrum-alt',
+  [Network.ARBITRUM_MAINNET]:
+    'https://api.thegraph.com/subgraphs/name/siros-ena/silo-finance-arbitrum-alt?source=zapper',
 };
 
 @Injectable()

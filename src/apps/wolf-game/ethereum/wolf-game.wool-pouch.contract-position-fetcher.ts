@@ -71,7 +71,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
       groupIds: [this.groupId],
     });
     const result = await gqlFetch<PouchesResult>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/wolfgamedev/wolf-game',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/wolfgamedev/wolf-game?source=zapper',
       query: pouchesQuery,
       variables: { owner: address },
     });

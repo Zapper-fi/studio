@@ -4,9 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { LlamaAirforceMerkleDistributor__factory } from './ethers';
-import { LlamaAirforceUnionVault__factory } from './ethers';
-import { LlamaAirforceUnionVaultPirex__factory } from './ethers';
+import {
+  LlamaAirforceMerkleDistributor__factory,
+  LlamaAirforceUnionVault__factory,
+  LlamaAirforceUnionVaultPirex__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { GmxAumManager__factory } from './ethers';
-import { GmxRewardReader__factory } from './ethers';
-import { GmxRewardTracker__factory } from './ethers';
-import { GmxVault__factory } from './ethers';
+import {
+  GmxAumManager__factory,
+  GmxRewardReader__factory,
+  GmxRewardTracker__factory,
+  GmxVault__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
