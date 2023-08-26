@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.526.0](https://github.com/Zapper-fi/studio/compare/v0.525.0...v0.526.0) (2023-08-26)
+
+
+### Features
+
+* **rigoblock:** add uni v3 positions ([#2902](https://github.com/Zapper-fi/studio/issues/2902)) ([4dd9051](https://github.com/Zapper-fi/studio/commit/4dd9051555a85448c30f7237848dd5e5d352c61a))
+
 ## [0.525.0](https://github.com/Zapper-fi/studio/compare/v0.524.0...v0.525.0) (2023-08-25)
 
 
