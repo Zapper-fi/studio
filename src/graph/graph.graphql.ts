@@ -1,20 +1,28 @@
-import { Logger } from '@nestjs/common';
 import { GraphQLClient, Variables } from 'graphql-request';
 
 import { IGraphWrapper } from './graph.interface';
 
+type GraphCallHook = {
+  beforeCallHook?: (query: string, variables?: Variables) => void;
+};
+
 export class GraphQLRequest implements IGraphWrapper {
-  private logger = new Logger(GraphQLRequest.name);
   private client: GraphQLClient;
   private isHostedServiceSubgraph: boolean;
+  private beforeCallHook?: (query: string, variables?: Variables) => void;
 
-  constructor(url: string, headers: Record<string, string>) {
+  constructor(url: string, headers: Record<string, string>, { beforeCallHook }: GraphCallHook = {}) {
     this.client = new GraphQLClient(url, { headers });
     this.isHostedServiceSubgraph = url.includes('api.thegraph.com/subgraphs');
+    this.beforeCallHook = beforeCallHook;
+  }
+
+  private performFetch(query: string, variables?: Variables): void {
+    if (this.beforeCallHook) this.beforeCallHook(query, variables);
   }
 
   async gqlFetch<T>({ query, variables }: { query: string; variables?: Variables }): Promise<T> {
-    if (this.isHostedServiceSubgraph) this.logger.log('Fetching data from hosted service subgraph');
+    this.performFetch(query, variables);
 
     return this.client.request<T>(query, variables);
   }
