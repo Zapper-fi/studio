@@ -7,6 +7,7 @@ import { ArbitrumVendorFinancePoolContractPositionFetcher } from './arbitrum/ven
 import { VendorFinanceContractFactory } from './contracts';
 import { EthereumVendorFinancePoolV2ContractPositionFetcher } from './ethereum/vendor-finance.pool-v2.contract-position-fetcher';
 import { EthereumVendorFinancePoolContractPositionFetcher } from './ethereum/vendor-finance.pool.contract-position-fetcher';
+import { BaseVendorFinancePoolV2ContractPositionFetcher } from './base/vendor-finance.pool-v2.contract-position-fetcher';
 
 @Module({
   providers: [
@@ -17,6 +18,8 @@ import { EthereumVendorFinancePoolContractPositionFetcher } from './ethereum/ven
     // Ethereum
     EthereumVendorFinancePoolContractPositionFetcher,
     EthereumVendorFinancePoolV2ContractPositionFetcher,
+    // Base
+    BaseVendorFinancePoolV2ContractPositionFetcher,
   ],
 })
 export class VendorFinanceAppModule extends AbstractApp() {}
