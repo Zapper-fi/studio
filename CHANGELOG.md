@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.526.1](https://github.com/Zapper-fi/studio/compare/v0.526.0...v0.526.1) (2023-08-30)
+
+
+### Bug Fixes
+
+* **balaner-v2:** Fix boosted app tokens price per share ([#2919](https://github.com/Zapper-fi/studio/issues/2919)) ([37195db](https://github.com/Zapper-fi/studio/commit/37195db0f52e96711129451c69c2e6742b2b8d0e))
+* **tenderize:** Remove code fetching APY externally ([#2917](https://github.com/Zapper-fi/studio/issues/2917)) ([a6e8a81](https://github.com/Zapper-fi/studio/commit/a6e8a81c5a1a303d267ca3b1aa43eea522aaf669))
+
 ## [0.526.0](https://github.com/Zapper-fi/studio/compare/v0.525.0...v0.526.0) (2023-08-26)
 
 
