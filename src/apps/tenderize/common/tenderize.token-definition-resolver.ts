@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import Axios from 'axios';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -79,24 +78,6 @@ export class TenderizeTokenDefinitionsResolver {
       };
     });
     return tokenDefinitions;
-  }
-
-  @Cache({
-    key: `studio:tenderize:token-apy-data`,
-    ttl: 5 * 60, // 5 minutes
-  })
-  private async getTokenApyData() {
-    const { data } = await Axios.get<TokenApyResponse>('https://www.tenderize.me/api/apy');
-
-    return data;
-  }
-
-  async getTokenApy(id: string) {
-    const apyDataRaw = await this.getTokenApyData();
-    const apyData = Object.values(apyDataRaw);
-    const apyRaw = apyData.find(x => x.subgraphId.toLowerCase() === id)?.apy ?? 0;
-
-    return Number(apyRaw);
   }
 
   @Cache({

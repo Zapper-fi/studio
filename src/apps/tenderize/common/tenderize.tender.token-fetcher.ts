@@ -7,7 +7,6 @@ import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
   GetPricePerShareParams,
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
@@ -62,9 +61,5 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
     const pricePerShareRaw = await multicall.wrap(tenderSwapContract).getVirtualPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [pricePerShare];
-  }
-
-  async getApy({ definition }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
-    return this.tokenDefinitionsResolver.getTokenApy(definition.id);
   }
 }
