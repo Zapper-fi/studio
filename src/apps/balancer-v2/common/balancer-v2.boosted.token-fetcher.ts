@@ -8,7 +8,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
-  GetAddressesParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetTokenPropsParams,
@@ -47,17 +46,13 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.balancerBoostedPool({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<{ address: string }[]> {
+  async getAddresses() {
     const poolsResponse = await gqlFetch<GetBoostedResponse>({
       endpoint: this.subgraphUrl,
       query: GET_BOOSTED_QUERY,
     });
 
-    return poolsResponse.pools;
-  }
-
-  async getAddresses({ definitions }: GetAddressesParams) {
-    return definitions.map(v => v.address);
+    return poolsResponse.pools.map(x => x.address);
   }
 
   async getSupply({
@@ -82,9 +77,13 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     });
     const boosted = multicall.wrap(_boosted);
 
-    const decimals = await boosted.decimals();
-    const ratio = await boosted.getWrappedTokenRate();
-    return [Number(ratio) / 10 ** Number(decimals)];
+    try {
+      const [decimals, ratioRaw] = await Promise.all([boosted.decimals(), boosted.getWrappedTokenRate()]);
+
+      return [Number(ratioRaw) / 10 ** Number(decimals)];
+    } catch (error) {
+      return [0];
+    }
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<BalancerBoostedPool>): Promise<string> {
