@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.527.0](https://github.com/Zapper-fi/studio/compare/v0.526.1...v0.527.0) (2023-08-31)
+
+
+### Features
+
+* **vendor-finance:** Adds Coinbase Base network support for Vendor V2 Pools ([#2920](https://github.com/Zapper-fi/studio/issues/2920)) ([03c38dd](https://github.com/Zapper-fi/studio/commit/03c38dd75f9cfd5e7166c6b8875212b734120579))
+
 ## [0.526.1](https://github.com/Zapper-fi/studio/compare/v0.526.0...v0.526.1) (2023-08-30)
 
 
