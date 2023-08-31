@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.527.1](https://github.com/Zapper-fi/studio/compare/v0.527.0...v0.527.1) (2023-08-31)
+
+
+### Bug Fixes
+
+* **dopex:** Fix SSOV V3 option price ([#2922](https://github.com/Zapper-fi/studio/issues/2922)) ([c35f498](https://github.com/Zapper-fi/studio/commit/c35f498315e159051df2f9ade07ba3f7911b34aa))
+
 ## [0.527.0](https://github.com/Zapper-fi/studio/compare/v0.526.1...v0.527.0) (2023-08-31)
 
 
