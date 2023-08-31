@@ -98,7 +98,9 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
 
   async getPrice({ appToken, contract }: GetPriceParams<DopexOptionToken>): Promise<number> {
     const optionValueRaw = await contract.optionValue();
-    return Number(optionValueRaw) / 10 ** appToken.decimals;
+    const optionValue = Number(optionValueRaw);
+
+    return optionValue !== 0 ? optionValue / 10 ** appToken.decimals : 0;
   }
 
   async getPricePerShare() {
