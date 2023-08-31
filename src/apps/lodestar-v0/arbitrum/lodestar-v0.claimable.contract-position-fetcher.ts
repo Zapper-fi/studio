@@ -9,13 +9,12 @@ import {
 } from '~apps/compound/common/compound.claimable.contract-position-fetcher';
 import { ContractPosition } from '~position/position.interface';
 
-import { LodestarComptroller, LodestarContractFactory } from '../contracts';
-import { LodestarLens } from '../contracts/ethers/LodestarLens';
+import { LodestarV0Comptroller, LodestarV0ContractFactory, LodestarV0Lens } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumLodestarClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
-  LodestarComptroller,
-  LodestarLens
+export class ArbitrumLodestarV0ClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
+  LodestarV0Comptroller,
+  LodestarV0Lens
 > {
   groupLabel = 'Claimable';
 
@@ -25,17 +24,17 @@ export class ArbitrumLodestarClaimableContractPositionFetcher extends CompoundCl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LodestarContractFactory) protected readonly contractFactory: LodestarContractFactory,
+    @Inject(LodestarV0ContractFactory) protected readonly contractFactory: LodestarV0ContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getCompoundComptrollerContract(address: string): LodestarComptroller {
-    return this.contractFactory.lodestarComptroller({ address, network: this.network });
+  getCompoundComptrollerContract(address: string): LodestarV0Comptroller {
+    return this.contractFactory.lodestarV0Comptroller({ address, network: this.network });
   }
 
-  getCompoundLensContract(address: string): LodestarLens {
-    return this.contractFactory.lodestarLens({ address, network: this.network });
+  getCompoundLensContract(address: string): LodestarV0Lens {
+    return this.contractFactory.lodestarV0Lens({ address, network: this.network });
   }
 
   async getClaimableBalance(
@@ -43,7 +42,7 @@ export class ArbitrumLodestarClaimableContractPositionFetcher extends CompoundCl
     {
       contract,
       contractPosition,
-    }: { contract: LodestarLens; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
+    }: { contract: LodestarV0Lens; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
   ): Promise<BigNumberish> {
     const [rewardToken] = contractPosition.tokens;
     const { address: comptrollerAddress } = contractPosition;

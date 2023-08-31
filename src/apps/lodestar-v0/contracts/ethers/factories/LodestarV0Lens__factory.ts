@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { LodestarLens, LodestarLensInterface } from '../LodestarLens';
+import type { LodestarV0Lens, LodestarV0LensInterface } from '../LodestarV0Lens';
 
 const _abi = [
   {
@@ -890,12 +890,12 @@ const _abi = [
   },
 ];
 
-export class LodestarLens__factory {
+export class LodestarV0Lens__factory {
   static readonly abi = _abi;
-  static createInterface(): LodestarLensInterface {
-    return new utils.Interface(_abi) as LodestarLensInterface;
+  static createInterface(): LodestarV0LensInterface {
+    return new utils.Interface(_abi) as LodestarV0LensInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): LodestarLens {
-    return new Contract(address, _abi, signerOrProvider) as LodestarLens;
+  static connect(address: string, signerOrProvider: Signer | Provider): LodestarV0Lens {
+    return new Contract(address, _abi, signerOrProvider) as LodestarV0Lens;
   }
 }
