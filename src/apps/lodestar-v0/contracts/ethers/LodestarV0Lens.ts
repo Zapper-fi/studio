@@ -276,7 +276,7 @@ export declare namespace CompoundLens {
   };
 }
 
-export interface LodestarLensInterface extends utils.Interface {
+export interface LodestarV0LensInterface extends utils.Interface {
   functions: {
     'cTokenBalances(address,address)': FunctionFragment;
     'cTokenBalancesAll(address[],address)': FunctionFragment;
@@ -391,12 +391,12 @@ export type lodeMetaDataEvent = TypedEvent<[BigNumber, BigNumber], lodeMetaDataE
 
 export type lodeMetaDataEventFilter = TypedEventFilter<lodeMetaDataEvent>;
 
-export interface LodestarLens extends BaseContract {
+export interface LodestarV0Lens extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LodestarLensInterface;
+  interface: LodestarV0LensInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

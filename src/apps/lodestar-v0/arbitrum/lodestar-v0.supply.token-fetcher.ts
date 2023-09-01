@@ -11,48 +11,48 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { LodestarComptroller, LodestarContractFactory, LodestarIToken } from '../contracts';
+import { LodestarV0Comptroller, LodestarV0ContractFactory, LodestarV0IToken } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumLodestarSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
-  LodestarIToken,
-  LodestarComptroller
+export class ArbitrumLodestarV0SupplyTokenFetcher extends CompoundSupplyTokenFetcher<
+  LodestarV0IToken,
+  LodestarV0Comptroller
 > {
   groupLabel = 'Lending';
   comptrollerAddress = '0x92a62f8c4750d7fbdf9ee1db268d18169235117b';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LodestarContractFactory) protected readonly contractFactory: LodestarContractFactory,
+    @Inject(LodestarV0ContractFactory) protected readonly contractFactory: LodestarV0ContractFactory,
   ) {
     super(appToolkit);
   }
 
   getCompoundCTokenContract(address: string) {
-    return this.contractFactory.lodestarIToken({ address, network: this.network });
+    return this.contractFactory.lodestarV0IToken({ address, network: this.network });
   }
 
   getCompoundComptrollerContract(address: string) {
-    return this.contractFactory.lodestarComptroller({ address, network: this.network });
+    return this.contractFactory.lodestarV0Comptroller({ address, network: this.network });
   }
 
-  async getMarkets({ contract }: GetMarketsParams<LodestarComptroller>) {
+  async getMarkets({ contract }: GetMarketsParams<LodestarV0Comptroller>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<LodestarIToken>) {
+  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<LodestarV0IToken>) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetPricePerShareParams<LodestarIToken>) {
+  async getExchangeRate({ contract }: GetPricePerShareParams<LodestarV0IToken>) {
     return contract.callStatic.exchangeRateCurrent();
   }
 
-  async getSupplyRate({ contract }: GetDataPropsParams<LodestarIToken>) {
+  async getSupplyRate({ contract }: GetDataPropsParams<LodestarV0IToken>) {
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 
-  async getLabel({ appToken, contract }: GetDisplayPropsParams<LodestarIToken>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken, contract }: GetDisplayPropsParams<LodestarV0IToken>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
     const [symbol, name] = await Promise.all([contract.symbol(), contract.name()]);
     if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;

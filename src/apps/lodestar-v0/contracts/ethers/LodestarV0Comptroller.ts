@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface LodestarComptrollerInterface extends utils.Interface {
+export interface LodestarV0ComptrollerInterface extends utils.Interface {
   functions: {
     '_become(address)': FunctionFragment;
     '_borrowGuardianPaused()': FunctionFragment;
@@ -746,12 +746,12 @@ export type NewSupplyCapGuardianEvent = TypedEvent<[string, string], NewSupplyCa
 
 export type NewSupplyCapGuardianEventFilter = TypedEventFilter<NewSupplyCapGuardianEvent>;
 
-export interface LodestarComptroller extends BaseContract {
+export interface LodestarV0Comptroller extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LodestarComptrollerInterface;
+  interface: LodestarV0ComptrollerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
