@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.527.2](https://github.com/Zapper-fi/studio/compare/v0.527.1...v0.527.2) (2023-09-01)
+
+
+### Bug Fixes
+
+* **lodestar-v0:** Rename Lodestar to Lodestar-v0 ([#2924](https://github.com/Zapper-fi/studio/issues/2924)) ([36c418f](https://github.com/Zapper-fi/studio/commit/36c418f22ba145f70ae8f1ab815a9fdb7b74c7e4))
+
 ## [0.527.1](https://github.com/Zapper-fi/studio/compare/v0.527.0...v0.527.1) (2023-08-31)
 
 
