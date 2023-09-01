@@ -12,7 +12,7 @@ import { AlphaOne, HedgefarmContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePositionFetcher<AlphaOne> {
-  groupLabel: string;
+  groupLabel = 'Alpha One';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
