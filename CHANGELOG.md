@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.528.0](https://github.com/Zapper-fi/studio/compare/v0.527.2...v0.528.0) (2023-09-01)
+
+
+### Features
+
+* **hedgefarm:** Fix missing group labels on hedge farm ([b474c68](https://github.com/Zapper-fi/studio/commit/b474c686a1e0f31656c38ac63510d53e9e118899))
+
+
+### Bug Fixes
+
+* **pendle-v2:** Fix market definitions ([#2926](https://github.com/Zapper-fi/studio/issues/2926)) ([ecab227](https://github.com/Zapper-fi/studio/commit/ecab227606cc3701e3b3afa933238435aee47b27))
+
 ## [0.527.2](https://github.com/Zapper-fi/studio/compare/v0.527.1...v0.527.2) (2023-09-01)
 
 
