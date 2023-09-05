@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.528.2](https://github.com/Zapper-fi/studio/compare/v0.528.1...v0.528.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* **yearn:** Update url fetching vaults definitions ([#2930](https://github.com/Zapper-fi/studio/issues/2930)) ([b0c2398](https://github.com/Zapper-fi/studio/commit/b0c2398e50b255af21548284f76b2b172661da40))
+
 ## [0.528.1](https://github.com/Zapper-fi/studio/compare/v0.528.0...v0.528.1) (2023-09-05)
 
 
