@@ -23,7 +23,7 @@ export class YearnVaultTokenDefinitionsResolver {
     ttl: 5 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
-    const url = `https://ydaemon.yearn.finance/${NETWORK_IDS[network]}/vaults/all`;
+    const url = `https://ydaemon.yearn.fi/${NETWORK_IDS[network]}/vaults/all`;
     const { data } = await Axios.get<YearnVaultData[]>(url);
     return data;
   }
