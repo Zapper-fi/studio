@@ -138,10 +138,14 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
     const defaultDataProps = await super.getDataProps(params);
 
     const { contract, definition } = params;
+    let fee: number;
 
-    const fees = await contract.fee();
-    const fee = Number(fees) / 10 ** 8;
-
+    try {
+      const fees = await contract.fee();
+      fee = Number(fees) / 10 ** 8;
+    } catch {
+      fee = 0;
+    }
     const volume = await this.volumeDataLoader.load(definition.address);
     const feeVolume = fee * volume;
     const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
