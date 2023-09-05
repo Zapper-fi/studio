@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.528.3](https://github.com/Zapper-fi/studio/compare/v0.528.2...v0.528.3) (2023-09-05)
+
+
+### Bug Fixes
+
+* **curve:** Fix gauge v6 and dynamic pools without fee ([#2932](https://github.com/Zapper-fi/studio/issues/2932)) ([1022ebf](https://github.com/Zapper-fi/studio/commit/1022ebf1c2dc902e8d3a0ee4ea5039ff531e5c30))
+
 ## [0.528.2](https://github.com/Zapper-fi/studio/compare/v0.528.1...v0.528.2) (2023-09-05)
 
 
