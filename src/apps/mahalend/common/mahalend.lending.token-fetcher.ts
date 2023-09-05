@@ -11,7 +11,7 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { MahalendContractFactory } from '../contracts';
-import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
+import { AaveV2AToken } from '../contracts/ethers/MahalendAToken';
 
 export type AaveV2TokenDataProps = {
   apy: number;
