@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.528.1](https://github.com/Zapper-fi/studio/compare/v0.528.0...v0.528.1) (2023-09-05)
+
+
+### Bug Fixes
+
+* **spool:** ignore removed strategies ([#2928](https://github.com/Zapper-fi/studio/issues/2928)) ([07652dd](https://github.com/Zapper-fi/studio/commit/07652dd254b19c0252ff3eb6d43545b3b29c515b))
+
 ## [0.528.0](https://github.com/Zapper-fi/studio/compare/v0.527.2...v0.528.0) (2023-09-01)
 
 
