@@ -4,6 +4,7 @@ import _, { range } from 'lodash';
 import { duration } from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
 import { MetaType } from '~position/position.interface';
@@ -81,6 +82,9 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
       poolRange.map(async poolIndex => {
         const tokenAddress = await this.resolveTokenAddress({ contract, poolIndex, multicall });
         const gaugeAddress = await this.resolveGaugeAddress({ contract, tokenAddress, multicall });
+
+        if (gaugeAddress == ZERO_ADDRESS) return null;
+
         const gaugeV6Contract = this.contractFactory.curveGaugeV6({
           address: gaugeAddress.toLowerCase(),
           network: this.network,
@@ -101,7 +105,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
       }),
     );
 
-    return gaugeDefinitions;
+    return _.compact(gaugeDefinitions);
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<CurveGaugeV6, CurvePoolGaugeDefinition>) {
