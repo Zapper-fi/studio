@@ -13,7 +13,7 @@ import { AaveV2AToken } from '../contracts/ethers/MahalendAToken';
 export class ArbitrumAaveV2VariableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0xE76C1D2a7a56348574810e83D38c07D47f0641F3';
-  isDebt = true;
+  isDebt = true; //condition
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.variableDebtTokenAddress;
