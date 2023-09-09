@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ARBITRUM_CURVE_PROVIDERS } from './arbitrum';
 import { AVALANCHE_CURVE_PROVIDERS } from './avalanche';
+import { BASE_CURVE_PROVIDERS } from './base';
 import { CurveVolumeDataLoader } from './common/curve.volume.data-loader';
 import { CurveContractFactory } from './contracts';
 import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
@@ -24,6 +25,7 @@ import { POLYGON_CURVE_PROVIDERS } from './polygon';
     ...GNOSIS_CURVE_PROVIDERS,
     ...OPTIMISM_CURVE_PROVIDERS,
     ...POLYGON_CURVE_PROVIDERS,
+    ...BASE_CURVE_PROVIDERS,
   ],
 })
 export class CurveAppModule extends AbstractApp() {}
