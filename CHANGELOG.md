@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.529.0](https://github.com/Zapper-fi/studio/compare/v0.528.3...v0.529.0) (2023-09-11)
+
+
+### Features
+
+* **sonne:** Add lending markets on Base ([#2936](https://github.com/Zapper-fi/studio/issues/2936)) ([7f6c4b7](https://github.com/Zapper-fi/studio/commit/7f6c4b7c2c5453f07454fdc88ccfc1fe5362110d))
+
+
+### Bug Fixes
+
+* **yearn:** Revert pointing to ydeamon stating environment ([#2938](https://github.com/Zapper-fi/studio/issues/2938)) ([643847d](https://github.com/Zapper-fi/studio/commit/643847db454c43890a129f722003e40875baf747))
+
 ## [0.528.3](https://github.com/Zapper-fi/studio/compare/v0.528.2...v0.528.3) (2023-09-05)
 
 

@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { BaseSonneBorrowContractPositionFetcher } from './base/sonne.borrow.contract-position-fetcher';
+import { BaseSonnePositionPresenter } from './base/sonne.position-presenter';
+import { BaseSonneSupplyTokenFetcher } from './base/sonne.supply.token-fetcher';
 import { SonneContractFactory } from './contracts';
 import { OptimismSonneBorrowContractPositionFetcher } from './optimism/sonne.borrow.contract-position-fetcher';
 import { OptimismSonnePositionPresenter } from './optimism/sonne.position-presenter';
@@ -11,6 +14,11 @@ import { OptimismSonneSupplyTokenFetcher } from './optimism/sonne.supply.token-f
 @Module({
   providers: [
     SonneContractFactory,
+    // Base
+    BaseSonnePositionPresenter,
+    BaseSonneBorrowContractPositionFetcher,
+    BaseSonneSupplyTokenFetcher,
+    // Optimism
     OptimismSonnePositionPresenter,
     OptimismSonneBorrowContractPositionFetcher,
     OptimismSonneSupplyTokenFetcher,
