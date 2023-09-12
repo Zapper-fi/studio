@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { gql, GraphQLClient } from 'graphql-request';
+import { gql } from 'graphql-request';
+import moment from 'moment';
 
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -42,53 +44,36 @@ const MARKETS_QUERY = gql`
   }
 `;
 
-const SUBGRAPH_URL: Partial<Record<Network, string>> = {
+const SUBGRAPH_URL = {
   [Network.ETHEREUM_MAINNET]:
     'https://gateway.thegraph.com/api/fbf06f34dad21c4df6a9e1f647ba1d16/deployments/id/QmRMtCkaYsizfmoavcE1ULwc2DkG1GZjXDHTwHjXAAH9sp',
-  [Network.ARBITRUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/siros-ena/silo-finance-arbitrum-alt',
+  [Network.ARBITRUM_MAINNET]:
+    'https://api.thegraph.com/subgraphs/name/siros-ena/silo-finance-arbitrum-alt?source=zapper',
 };
 
 @Injectable()
 export class SiloFinanceDefinitionResolver {
   @Cache({
     key: network => `studio:silo-finance:${network}:silo-data`,
-    ttl: 15 * 60, // 15 minutes
+    ttl: moment.duration('15', 'minutes').asSeconds(),
   })
   private async getSiloDefinitionData(network: Network) {
-    const url = SUBGRAPH_URL[network];
-    if (!url) return null;
-
-    const client = new GraphQLClient(url, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const marketsData = await client.request<SiloFinanceMarketsResponse>(MARKETS_QUERY);
-
-    return marketsData;
+    return gqlFetch<SiloFinanceMarketsResponse>({ endpoint: SUBGRAPH_URL[network], query: MARKETS_QUERY });
   }
 
-  async getSiloDefinition(network: Network) {
+  async getSiloDefinitions(network: Network) {
     const siloDefinitionData = await this.getSiloDefinitionData(network);
     if (!siloDefinitionData) return null;
 
-    const siloDefinitions = siloDefinitionData.markets
-      .map(market => {
-        const siloAddress = market.id.toLowerCase();
-        const name = market.name;
-        const marketAssets = market.marketAssets.map(marketAsset => {
-          return {
-            sToken: marketAsset.sToken.id.toLowerCase(),
-            spToken: marketAsset.spToken.id.toLowerCase(),
-            dToken: marketAsset.dToken.id.toLowerCase(),
-          };
-        });
-
-        return {
-          siloAddress,
-          name,
-          marketAssets,
-        };
-      })
-      .flat();
+    const siloDefinitions = siloDefinitionData.markets.map(market => ({
+      name: market.name,
+      siloAddress: market.id.toLowerCase(),
+      marketAssets: market.marketAssets.map(marketAsset => ({
+        sToken: marketAsset.sToken.id.toLowerCase(),
+        spToken: marketAsset.spToken.id.toLowerCase(),
+        dToken: marketAsset.dToken.id.toLowerCase(),
+      })),
+    }));
 
     return siloDefinitions;
   }

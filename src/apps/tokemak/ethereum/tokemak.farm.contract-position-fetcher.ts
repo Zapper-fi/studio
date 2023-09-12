@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
@@ -25,7 +24,7 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
   groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
   ) {
     super(appToolkit);
@@ -41,6 +40,10 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
 
   async getRewardRates() {
     return 0;
+  }
+
+  async getIsActive() {
+    return true;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<TokemakTokeStaking, SingleStakingFarmDataProps>) {

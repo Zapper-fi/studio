@@ -39,96 +39,84 @@ export declare namespace IKyberSwapElasticLM {
 
 export interface KyberswapElasticLmInterface extends utils.Interface {
   functions: {
-    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
-    'addPool(address,uint32,uint32,uint32,address[],uint256[],uint256)': FunctionFragment;
-    'checkPool(address,address,uint256)': FunctionFragment;
+    'addPool(address,uint32,uint32,address[],uint256[],uint256)': FunctionFragment;
+    'admin()': FunctionFragment;
+    'claimFee(uint256[],uint256,uint256,address,bool,uint256)': FunctionFragment;
     'deposit(uint256[])': FunctionFragment;
+    'depositAndJoin(uint256,uint256[])': FunctionFragment;
     'emergencyEnable()': FunctionFragment;
     'emergencyEnabled()': FunctionFragment;
     'emergencyWithdraw(uint256[])': FunctionFragment;
     'emergencyWithdrawForOwner(address[],uint256[])': FunctionFragment;
     'exit(uint256,uint256[],uint256[])': FunctionFragment;
-    'getActiveTime(address,address,uint256)': FunctionFragment;
     'getDepositedNFTs(address)': FunctionFragment;
-    'getFee(address,uint256)': FunctionFragment;
-    'getFeePool(address,address,uint256)': FunctionFragment;
     'getJoinedPools(uint256)': FunctionFragment;
     'getJoinedPoolsInRange(uint256,uint256,uint256)': FunctionFragment;
-    'getLiq(address,uint256)': FunctionFragment;
     'getPoolInfo(uint256)': FunctionFragment;
     'getRewardCalculationData(uint256,uint256)': FunctionFragment;
-    'getRoleAdmin(bytes32)': FunctionFragment;
-    'getSignedFee(address,uint256)': FunctionFragment;
-    'getSignedFeePool(address,address,uint256)': FunctionFragment;
     'getUserInfo(uint256,uint256)': FunctionFragment;
-    'grantRole(bytes32,address)': FunctionFragment;
     'harvestMultiplePools(uint256[],bytes[])': FunctionFragment;
-    'hasRole(bytes32,address)': FunctionFragment;
     'isEmergencyWithdrawnNFT(uint256)': FunctionFragment;
     'join(uint256,uint256[],uint256[])': FunctionFragment;
     'nft()': FunctionFragment;
-    'numPools()': FunctionFragment;
+    'operators(address)': FunctionFragment;
     'poolLength()': FunctionFragment;
     'pools(uint256)': FunctionFragment;
     'positions(uint256)': FunctionFragment;
-    'renewPool(uint256,uint32,uint32,uint32,uint256[],uint256)': FunctionFragment;
-    'renounceRole(bytes32,address)': FunctionFragment;
-    'revokeRole(bytes32,address)': FunctionFragment;
-    'rewardLocker()': FunctionFragment;
+    'removeLiquidity(uint256,uint128,uint256,uint256,uint256,bool,bool[2])': FunctionFragment;
+    'renewPool(uint256,uint32,uint32,uint256[],uint256)': FunctionFragment;
+    'specialFeatureEnabled()': FunctionFragment;
     'stakes(uint256,uint256)': FunctionFragment;
-    'supportsInterface(bytes4)': FunctionFragment;
+    'transferAdmin(address)': FunctionFragment;
+    'updateHelper(address)': FunctionFragment;
+    'updateOperator(address,bool)': FunctionFragment;
+    'updateSpecialFeatureEnabled(bool)': FunctionFragment;
+    'weth()': FunctionFragment;
     'withdraw(uint256[])': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'DEFAULT_ADMIN_ROLE'
       | 'addPool'
-      | 'checkPool'
+      | 'admin'
+      | 'claimFee'
       | 'deposit'
+      | 'depositAndJoin'
       | 'emergencyEnable'
       | 'emergencyEnabled'
       | 'emergencyWithdraw'
       | 'emergencyWithdrawForOwner'
       | 'exit'
-      | 'getActiveTime'
       | 'getDepositedNFTs'
-      | 'getFee'
-      | 'getFeePool'
       | 'getJoinedPools'
       | 'getJoinedPoolsInRange'
-      | 'getLiq'
       | 'getPoolInfo'
       | 'getRewardCalculationData'
-      | 'getRoleAdmin'
-      | 'getSignedFee'
-      | 'getSignedFeePool'
       | 'getUserInfo'
-      | 'grantRole'
       | 'harvestMultiplePools'
-      | 'hasRole'
       | 'isEmergencyWithdrawnNFT'
       | 'join'
       | 'nft'
-      | 'numPools'
+      | 'operators'
       | 'poolLength'
       | 'pools'
       | 'positions'
+      | 'removeLiquidity'
       | 'renewPool'
-      | 'renounceRole'
-      | 'revokeRole'
-      | 'rewardLocker'
+      | 'specialFeatureEnabled'
       | 'stakes'
-      | 'supportsInterface'
+      | 'transferAdmin'
+      | 'updateHelper'
+      | 'updateOperator'
+      | 'updateSpecialFeatureEnabled'
+      | 'weth'
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'addPool',
     values: [
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>[],
@@ -136,11 +124,23 @@ export interface KyberswapElasticLmInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
     ],
   ): string;
+  encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'checkPool',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'claimFee',
+    values: [
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'depositAndJoin',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'emergencyEnable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emergencyEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>[]]): string;
@@ -152,69 +152,50 @@ export interface KyberswapElasticLmInterface extends utils.Interface {
     functionFragment: 'exit',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'getActiveTime',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
   encodeFunctionData(functionFragment: 'getDepositedNFTs', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'getFee',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'getFeePool',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
   encodeFunctionData(functionFragment: 'getJoinedPools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'getJoinedPoolsInRange',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'getLiq',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'getPoolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'getRewardCalculationData',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
-  encodeFunctionData(
-    functionFragment: 'getSignedFee',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'getSignedFeePool',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
   encodeFunctionData(
     functionFragment: 'getUserInfo',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'grantRole',
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'harvestMultiplePools',
     values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BytesLike>[]],
   ): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isEmergencyWithdrawnNFT', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'join',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(functionFragment: 'nft', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'numPools', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'operators', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'positions', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'renewPool',
+    functionFragment: 'removeLiquidity',
     values: [
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renewPool',
+    values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -222,76 +203,71 @@ export interface KyberswapElasticLmInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
     ],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'renounceRole',
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'revokeRole',
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'rewardLocker', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'specialFeatureEnabled', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'stakes',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'transferAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateHelper', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateOperator',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateSpecialFeatureEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'weth', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>[]]): string;
 
-  decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addPool', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'checkPool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAndJoin', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyEnable', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyEnabled', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdrawForOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'exit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getActiveTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getDepositedNFTs', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getFeePool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getJoinedPools', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getJoinedPoolsInRange', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getLiq', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPoolInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getRewardCalculationData', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getSignedFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getSignedFeePool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getUserInfo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'harvestMultiplePools', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isEmergencyWithdrawnNFT', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'join', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nft', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'numPools', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'operators', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolLength', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pools', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'positions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeLiquidity', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renewPool', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardLocker', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'specialFeatureEnabled', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'stakes', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateHelper', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateOperator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateSpecialFeatureEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'weth', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    'AddPool(uint256,address,uint32,uint32,uint32,uint256)': EventFragment;
+    'AddPool(uint256,address,uint32,uint32,uint256)': EventFragment;
     'Deposit(address,uint256)': EventFragment;
     'EmergencyEnabled()': EventFragment;
     'EmergencyWithdraw(address,uint256)': EventFragment;
     'EmergencyWithdrawForOwner(address,uint256)': EventFragment;
     'Exit(address,uint256,uint256,uint256)': EventFragment;
-    'Harvest(address,address,uint256)': EventFragment;
+    'Harvest(uint256,address,address,uint256)': EventFragment;
     'Join(uint256,uint256,uint256)': EventFragment;
-    'RenewPool(uint256,uint32,uint32,uint32,uint256)': EventFragment;
-    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
-    'RoleGranted(bytes32,address,address)': EventFragment;
-    'RoleRevoked(bytes32,address,address)': EventFragment;
+    'LMHelperUpdated(address)': EventFragment;
+    'RenewPool(uint256,uint32,uint32,uint256)': EventFragment;
     'SyncLiq(uint256,uint256,uint256)': EventFragment;
+    'TransferAdmin(address)': EventFragment;
+    'UpdateOperator(address,bool)': EventFragment;
+    'UpdateSpecialFeatureEnabled(bool)': EventFragment;
     'Withdraw(address,uint256)': EventFragment;
   };
 
@@ -303,11 +279,12 @@ export interface KyberswapElasticLmInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Exit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Join'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LMHelperUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RenewPool'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'SyncLiq'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TransferAdmin'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateOperator'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateSpecialFeatureEnabled'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
 
@@ -316,10 +293,9 @@ export interface AddPoolEventObject {
   poolAddress: string;
   startTime: number;
   endTime: number;
-  vestingDuration: number;
   feeTarget: BigNumber;
 }
-export type AddPoolEvent = TypedEvent<[BigNumber, string, number, number, number, BigNumber], AddPoolEventObject>;
+export type AddPoolEvent = TypedEvent<[BigNumber, string, number, number, BigNumber], AddPoolEventObject>;
 
 export type AddPoolEventFilter = TypedEventFilter<AddPoolEvent>;
 
@@ -363,11 +339,12 @@ export type ExitEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], Ex
 export type ExitEventFilter = TypedEventFilter<ExitEvent>;
 
 export interface HarvestEventObject {
+  nftId: BigNumber;
   to: string;
   reward: string;
   amount: BigNumber;
 }
-export type HarvestEvent = TypedEvent<[string, string, BigNumber], HarvestEventObject>;
+export type HarvestEvent = TypedEvent<[BigNumber, string, string, BigNumber], HarvestEventObject>;
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
 
@@ -380,43 +357,22 @@ export type JoinEvent = TypedEvent<[BigNumber, BigNumber, BigNumber], JoinEventO
 
 export type JoinEventFilter = TypedEventFilter<JoinEvent>;
 
+export interface LMHelperUpdatedEventObject {
+  helper: string;
+}
+export type LMHelperUpdatedEvent = TypedEvent<[string], LMHelperUpdatedEventObject>;
+
+export type LMHelperUpdatedEventFilter = TypedEventFilter<LMHelperUpdatedEvent>;
+
 export interface RenewPoolEventObject {
   pid: BigNumber;
   startTime: number;
   endTime: number;
-  vestingDuration: number;
   feeTarget: BigNumber;
 }
-export type RenewPoolEvent = TypedEvent<[BigNumber, number, number, number, BigNumber], RenewPoolEventObject>;
+export type RenewPoolEvent = TypedEvent<[BigNumber, number, number, BigNumber], RenewPoolEventObject>;
 
 export type RenewPoolEventFilter = TypedEventFilter<RenewPoolEvent>;
-
-export interface RoleAdminChangedEventObject {
-  role: string;
-  previousAdminRole: string;
-  newAdminRole: string;
-}
-export type RoleAdminChangedEvent = TypedEvent<[string, string, string], RoleAdminChangedEventObject>;
-
-export type RoleAdminChangedEventFilter = TypedEventFilter<RoleAdminChangedEvent>;
-
-export interface RoleGrantedEventObject {
-  role: string;
-  account: string;
-  sender: string;
-}
-export type RoleGrantedEvent = TypedEvent<[string, string, string], RoleGrantedEventObject>;
-
-export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
-
-export interface RoleRevokedEventObject {
-  role: string;
-  account: string;
-  sender: string;
-}
-export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedEventObject>;
-
-export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
 export interface SyncLiqEventObject {
   nftId: BigNumber;
@@ -426,6 +382,28 @@ export interface SyncLiqEventObject {
 export type SyncLiqEvent = TypedEvent<[BigNumber, BigNumber, BigNumber], SyncLiqEventObject>;
 
 export type SyncLiqEventFilter = TypedEventFilter<SyncLiqEvent>;
+
+export interface TransferAdminEventObject {
+  admin: string;
+}
+export type TransferAdminEvent = TypedEvent<[string], TransferAdminEventObject>;
+
+export type TransferAdminEventFilter = TypedEventFilter<TransferAdminEvent>;
+
+export interface UpdateOperatorEventObject {
+  user: string;
+  grantOrRevoke: boolean;
+}
+export type UpdateOperatorEvent = TypedEvent<[string, boolean], UpdateOperatorEventObject>;
+
+export type UpdateOperatorEventFilter = TypedEventFilter<UpdateOperatorEvent>;
+
+export interface UpdateSpecialFeatureEnabledEventObject {
+  enableOrDisable: boolean;
+}
+export type UpdateSpecialFeatureEnabledEvent = TypedEvent<[boolean], UpdateSpecialFeatureEnabledEventObject>;
+
+export type UpdateSpecialFeatureEnabledEventFilter = TypedEventFilter<UpdateSpecialFeatureEnabledEvent>;
 
 export interface WithdrawEventObject {
   sender: string;
@@ -458,27 +436,35 @@ export interface KyberswapElasticLm extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
-
     addPool(
       poolAddress: PromiseOrValue<string>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardTokens: PromiseOrValue<string>[],
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    checkPool(
-      pAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[boolean]>;
+    admin(overrides?: CallOverrides): Promise<[string]>;
+
+    claimFee(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      poolAddress: PromiseOrValue<string>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     deposit(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    depositAndJoin(
+      pId: PromiseOrValue<BigNumberish>,
       nftIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
@@ -505,30 +491,10 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getActiveTime(
-      pAddr: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
     getDepositedNFTs(
       user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]] & { listNFTs: BigNumber[] }>;
-
-    getFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
-    getFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber] & { feeGrowthInside: BigNumber }>;
 
     getJoinedPools(
       nftId: PromiseOrValue<BigNumberish>,
@@ -542,21 +508,14 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]] & { poolIds: BigNumber[] }>;
 
-    getLiq(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
     getPoolInfo(
       pId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [string, number, number, number, BigNumber, BigNumber, BigNumber, string[], BigNumber[]] & {
+      [string, number, number, BigNumber, BigNumber, BigNumber, string[], BigNumber[]] & {
         poolAddress: string;
         startTime: number;
         endTime: number;
-        vestingDuration: number;
         totalSecondsClaimed: BigNumber;
         feeTarget: BigNumber;
         numStakes: BigNumber;
@@ -575,21 +534,6 @@ export interface KyberswapElasticLm extends BaseContract {
       }
     >;
 
-    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
-
-    getSignedFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
-    getSignedFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
-
     getUserInfo(
       nftId: PromiseOrValue<BigNumberish>,
       pId: PromiseOrValue<BigNumberish>,
@@ -602,23 +546,11 @@ export interface KyberswapElasticLm extends BaseContract {
       }
     >;
 
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
     harvestMultiplePools(
       nftIds: PromiseOrValue<BigNumberish>[],
       datas: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[boolean]>;
 
     isEmergencyWithdrawnNFT(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -631,7 +563,7 @@ export interface KyberswapElasticLm extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<[string]>;
 
-    numPools(overrides?: CallOverrides): Promise<[BigNumber]>;
+    operators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -639,11 +571,10 @@ export interface KyberswapElasticLm extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [string, number, number, number, BigNumber, BigNumber, BigNumber] & {
+      [string, number, number, BigNumber, BigNumber, BigNumber] & {
         poolAddress: string;
         startTime: number;
         endTime: number;
-        vestingDuration: number;
         totalSecondsClaimed: BigNumber;
         feeTarget: BigNumber;
         numStakes: BigNumber;
@@ -655,29 +586,27 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string, BigNumber] & { owner: string; liquidity: BigNumber }>;
 
+    removeLiquidity(
+      nftId: PromiseOrValue<BigNumberish>,
+      liquidity: PromiseOrValue<BigNumberish>,
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      claimFeeAndRewards: [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     renewPool(
       pId: PromiseOrValue<BigNumberish>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    rewardLocker(overrides?: CallOverrides): Promise<[string]>;
+    specialFeatureEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     stakes(
       arg0: PromiseOrValue<BigNumberish>,
@@ -691,7 +620,28 @@ export interface KyberswapElasticLm extends BaseContract {
       }
     >;
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
+    transferAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    updateHelper(
+      _helper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    updateOperator(
+      user: PromiseOrValue<string>,
+      grantOrRevoke: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    updateSpecialFeatureEnabled(
+      enableOrDisable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    weth(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
       nftIds: PromiseOrValue<BigNumberish>[],
@@ -699,27 +649,35 @@ export interface KyberswapElasticLm extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
   addPool(
     poolAddress: PromiseOrValue<string>,
     startTime: PromiseOrValue<BigNumberish>,
     endTime: PromiseOrValue<BigNumberish>,
-    vestingDuration: PromiseOrValue<BigNumberish>,
     rewardTokens: PromiseOrValue<string>[],
     rewardAmounts: PromiseOrValue<BigNumberish>[],
     feeTarget: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  checkPool(
-    pAddress: PromiseOrValue<string>,
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<boolean>;
+  admin(overrides?: CallOverrides): Promise<string>;
+
+  claimFee(
+    nftIds: PromiseOrValue<BigNumberish>[],
+    amount0Min: PromiseOrValue<BigNumberish>,
+    amount1Min: PromiseOrValue<BigNumberish>,
+    poolAddress: PromiseOrValue<string>,
+    isReceiveNative: PromiseOrValue<boolean>,
+    deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   deposit(
+    nftIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  depositAndJoin(
+    pId: PromiseOrValue<BigNumberish>,
     nftIds: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
@@ -746,27 +704,7 @@ export interface KyberswapElasticLm extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getActiveTime(
-    pAddr: PromiseOrValue<string>,
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
   getDepositedNFTs(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
-
-  getFee(
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  getFeePool(
-    poolAddress: PromiseOrValue<string>,
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
 
   getJoinedPools(nftId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
@@ -777,21 +715,14 @@ export interface KyberswapElasticLm extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  getLiq(
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
   getPoolInfo(
     pId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
-    [string, number, number, number, BigNumber, BigNumber, BigNumber, string[], BigNumber[]] & {
+    [string, number, number, BigNumber, BigNumber, BigNumber, string[], BigNumber[]] & {
       poolAddress: string;
       startTime: number;
       endTime: number;
-      vestingDuration: number;
       totalSecondsClaimed: BigNumber;
       feeTarget: BigNumber;
       numStakes: BigNumber;
@@ -806,21 +737,6 @@ export interface KyberswapElasticLm extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<IKyberSwapElasticLM.RewardCalculationDataStructOutput>;
 
-  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
-
-  getSignedFee(
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
-  getSignedFeePool(
-    poolAddress: PromiseOrValue<string>,
-    nftContract: PromiseOrValue<string>,
-    nftId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
-
   getUserInfo(
     nftId: PromiseOrValue<BigNumberish>,
     pId: PromiseOrValue<BigNumberish>,
@@ -833,23 +749,11 @@ export interface KyberswapElasticLm extends BaseContract {
     }
   >;
 
-  grantRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
   harvestMultiplePools(
     nftIds: PromiseOrValue<BigNumberish>[],
     datas: PromiseOrValue<BytesLike>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  hasRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<boolean>;
 
   isEmergencyWithdrawnNFT(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
@@ -862,7 +766,7 @@ export interface KyberswapElasticLm extends BaseContract {
 
   nft(overrides?: CallOverrides): Promise<string>;
 
-  numPools(overrides?: CallOverrides): Promise<BigNumber>;
+  operators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -870,11 +774,10 @@ export interface KyberswapElasticLm extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
-    [string, number, number, number, BigNumber, BigNumber, BigNumber] & {
+    [string, number, number, BigNumber, BigNumber, BigNumber] & {
       poolAddress: string;
       startTime: number;
       endTime: number;
-      vestingDuration: number;
       totalSecondsClaimed: BigNumber;
       feeTarget: BigNumber;
       numStakes: BigNumber;
@@ -886,29 +789,27 @@ export interface KyberswapElasticLm extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<[string, BigNumber] & { owner: string; liquidity: BigNumber }>;
 
+  removeLiquidity(
+    nftId: PromiseOrValue<BigNumberish>,
+    liquidity: PromiseOrValue<BigNumberish>,
+    amount0Min: PromiseOrValue<BigNumberish>,
+    amount1Min: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    isReceiveNative: PromiseOrValue<boolean>,
+    claimFeeAndRewards: [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   renewPool(
     pId: PromiseOrValue<BigNumberish>,
     startTime: PromiseOrValue<BigNumberish>,
     endTime: PromiseOrValue<BigNumberish>,
-    vestingDuration: PromiseOrValue<BigNumberish>,
     rewardAmounts: PromiseOrValue<BigNumberish>[],
     feeTarget: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  revokeRole(
-    role: PromiseOrValue<BytesLike>,
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  rewardLocker(overrides?: CallOverrides): Promise<string>;
+  specialFeatureEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   stakes(
     arg0: PromiseOrValue<BigNumberish>,
@@ -922,7 +823,28 @@ export interface KyberswapElasticLm extends BaseContract {
     }
   >;
 
-  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
+  transferAdmin(
+    _admin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  updateHelper(
+    _helper: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  updateOperator(
+    user: PromiseOrValue<string>,
+    grantOrRevoke: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  updateSpecialFeatureEnabled(
+    enableOrDisable: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  weth(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
     nftIds: PromiseOrValue<BigNumberish>[],
@@ -930,27 +852,35 @@ export interface KyberswapElasticLm extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
-
     addPool(
       poolAddress: PromiseOrValue<string>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardTokens: PromiseOrValue<string>[],
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    checkPool(
-      pAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
+    admin(overrides?: CallOverrides): Promise<string>;
+
+    claimFee(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      poolAddress: PromiseOrValue<string>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<boolean>;
+    ): Promise<void>;
 
     deposit(nftIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
+
+    depositAndJoin(
+      pId: PromiseOrValue<BigNumberish>,
+      nftIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     emergencyEnable(overrides?: CallOverrides): Promise<void>;
 
@@ -971,27 +901,7 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    getActiveTime(
-      pAddr: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     getDepositedNFTs(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
-
-    getFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    getFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
 
     getJoinedPools(nftId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
@@ -1002,21 +912,14 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    getLiq(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     getPoolInfo(
       pId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [string, number, number, number, BigNumber, BigNumber, BigNumber, string[], BigNumber[]] & {
+      [string, number, number, BigNumber, BigNumber, BigNumber, string[], BigNumber[]] & {
         poolAddress: string;
         startTime: number;
         endTime: number;
-        vestingDuration: number;
         totalSecondsClaimed: BigNumber;
         feeTarget: BigNumber;
         numStakes: BigNumber;
@@ -1031,21 +934,6 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<IKyberSwapElasticLM.RewardCalculationDataStructOutput>;
 
-    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
-
-    getSignedFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    getSignedFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     getUserInfo(
       nftId: PromiseOrValue<BigNumberish>,
       pId: PromiseOrValue<BigNumberish>,
@@ -1058,23 +946,11 @@ export interface KyberswapElasticLm extends BaseContract {
       }
     >;
 
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
     harvestMultiplePools(
       nftIds: PromiseOrValue<BigNumberish>[],
       datas: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<boolean>;
 
     isEmergencyWithdrawnNFT(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
@@ -1087,7 +963,7 @@ export interface KyberswapElasticLm extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<string>;
 
-    numPools(overrides?: CallOverrides): Promise<BigNumber>;
+    operators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1095,11 +971,10 @@ export interface KyberswapElasticLm extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [string, number, number, number, BigNumber, BigNumber, BigNumber] & {
+      [string, number, number, BigNumber, BigNumber, BigNumber] & {
         poolAddress: string;
         startTime: number;
         endTime: number;
-        vestingDuration: number;
         totalSecondsClaimed: BigNumber;
         feeTarget: BigNumber;
         numStakes: BigNumber;
@@ -1111,29 +986,27 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[string, BigNumber] & { owner: string; liquidity: BigNumber }>;
 
+    removeLiquidity(
+      nftId: PromiseOrValue<BigNumberish>,
+      liquidity: PromiseOrValue<BigNumberish>,
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      claimFeeAndRewards: [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     renewPool(
       pId: PromiseOrValue<BigNumberish>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    rewardLocker(overrides?: CallOverrides): Promise<string>;
+    specialFeatureEnabled(overrides?: CallOverrides): Promise<boolean>;
 
     stakes(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1147,18 +1020,29 @@ export interface KyberswapElasticLm extends BaseContract {
       }
     >;
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
+    transferAdmin(_admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    updateHelper(_helper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    updateOperator(
+      user: PromiseOrValue<string>,
+      grantOrRevoke: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    updateSpecialFeatureEnabled(enableOrDisable: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    weth(overrides?: CallOverrides): Promise<string>;
 
     withdraw(nftIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'AddPool(uint256,address,uint32,uint32,uint32,uint256)'(
+    'AddPool(uint256,address,uint32,uint32,uint256)'(
       pId?: PromiseOrValue<BigNumberish> | null,
       poolAddress?: null,
       startTime?: null,
       endTime?: null,
-      vestingDuration?: null,
       feeTarget?: null,
     ): AddPoolEventFilter;
     AddPool(
@@ -1166,7 +1050,6 @@ export interface KyberswapElasticLm extends BaseContract {
       poolAddress?: null,
       startTime?: null,
       endTime?: null,
-      vestingDuration?: null,
       feeTarget?: null,
     ): AddPoolEventFilter;
 
@@ -1204,12 +1087,18 @@ export interface KyberswapElasticLm extends BaseContract {
       liq?: PromiseOrValue<BigNumberish> | null,
     ): ExitEventFilter;
 
-    'Harvest(address,address,uint256)'(
+    'Harvest(uint256,address,address,uint256)'(
+      nftId?: PromiseOrValue<BigNumberish> | null,
       to?: null,
       reward?: null,
       amount?: PromiseOrValue<BigNumberish> | null,
     ): HarvestEventFilter;
-    Harvest(to?: null, reward?: null, amount?: PromiseOrValue<BigNumberish> | null): HarvestEventFilter;
+    Harvest(
+      nftId?: PromiseOrValue<BigNumberish> | null,
+      to?: null,
+      reward?: null,
+      amount?: PromiseOrValue<BigNumberish> | null,
+    ): HarvestEventFilter;
 
     'Join(uint256,uint256,uint256)'(
       nftId?: PromiseOrValue<BigNumberish> | null,
@@ -1222,53 +1111,21 @@ export interface KyberswapElasticLm extends BaseContract {
       liq?: PromiseOrValue<BigNumberish> | null,
     ): JoinEventFilter;
 
-    'RenewPool(uint256,uint32,uint32,uint32,uint256)'(
+    'LMHelperUpdated(address)'(helper?: null): LMHelperUpdatedEventFilter;
+    LMHelperUpdated(helper?: null): LMHelperUpdatedEventFilter;
+
+    'RenewPool(uint256,uint32,uint32,uint256)'(
       pid?: PromiseOrValue<BigNumberish> | null,
       startTime?: null,
       endTime?: null,
-      vestingDuration?: null,
       feeTarget?: null,
     ): RenewPoolEventFilter;
     RenewPool(
       pid?: PromiseOrValue<BigNumberish> | null,
       startTime?: null,
       endTime?: null,
-      vestingDuration?: null,
       feeTarget?: null,
     ): RenewPoolEventFilter;
-
-    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: PromiseOrValue<BytesLike> | null,
-      previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null,
-    ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(
-      role?: PromiseOrValue<BytesLike> | null,
-      previousAdminRole?: PromiseOrValue<BytesLike> | null,
-      newAdminRole?: PromiseOrValue<BytesLike> | null,
-    ): RoleAdminChangedEventFilter;
-
-    'RoleGranted(bytes32,address,address)'(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null,
-    ): RoleGrantedEventFilter;
-    RoleGranted(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null,
-    ): RoleGrantedEventFilter;
-
-    'RoleRevoked(bytes32,address,address)'(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null,
-    ): RoleRevokedEventFilter;
-    RoleRevoked(
-      role?: PromiseOrValue<BytesLike> | null,
-      account?: PromiseOrValue<string> | null,
-      sender?: PromiseOrValue<string> | null,
-    ): RoleRevokedEventFilter;
 
     'SyncLiq(uint256,uint256,uint256)'(
       nftId?: PromiseOrValue<BigNumberish> | null,
@@ -1281,32 +1138,52 @@ export interface KyberswapElasticLm extends BaseContract {
       liq?: PromiseOrValue<BigNumberish> | null,
     ): SyncLiqEventFilter;
 
+    'TransferAdmin(address)'(admin?: PromiseOrValue<string> | null): TransferAdminEventFilter;
+    TransferAdmin(admin?: PromiseOrValue<string> | null): TransferAdminEventFilter;
+
+    'UpdateOperator(address,bool)'(
+      user?: PromiseOrValue<string> | null,
+      grantOrRevoke?: null,
+    ): UpdateOperatorEventFilter;
+    UpdateOperator(user?: PromiseOrValue<string> | null, grantOrRevoke?: null): UpdateOperatorEventFilter;
+
+    'UpdateSpecialFeatureEnabled(bool)'(enableOrDisable?: null): UpdateSpecialFeatureEnabledEventFilter;
+    UpdateSpecialFeatureEnabled(enableOrDisable?: null): UpdateSpecialFeatureEnabledEventFilter;
+
     'Withdraw(address,uint256)'(sender?: null, nftId?: PromiseOrValue<BigNumberish> | null): WithdrawEventFilter;
     Withdraw(sender?: null, nftId?: PromiseOrValue<BigNumberish> | null): WithdrawEventFilter;
   };
 
   estimateGas: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
-
     addPool(
       poolAddress: PromiseOrValue<string>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardTokens: PromiseOrValue<string>[],
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkPool(
-      pAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+    admin(overrides?: CallOverrides): Promise<BigNumber>;
+
+    claimFee(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      poolAddress: PromiseOrValue<string>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    depositAndJoin(
+      pId: PromiseOrValue<BigNumberish>,
       nftIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
@@ -1333,27 +1210,7 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getActiveTime(
-      pAddr: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     getDepositedNFTs(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    getFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
 
     getJoinedPools(nftId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1361,12 +1218,6 @@ export interface KyberswapElasticLm extends BaseContract {
       nftId: PromiseOrValue<BigNumberish>,
       fromIndex: PromiseOrValue<BigNumberish>,
       toIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    getLiq(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1378,43 +1229,16 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getSignedFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    getSignedFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
     getUserInfo(
       nftId: PromiseOrValue<BigNumberish>,
       pId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
     harvestMultiplePools(
       nftIds: PromiseOrValue<BigNumberish>[],
       datas: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isEmergencyWithdrawnNFT(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1428,7 +1252,7 @@ export interface KyberswapElasticLm extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<BigNumber>;
 
-    numPools(overrides?: CallOverrides): Promise<BigNumber>;
+    operators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1436,29 +1260,27 @@ export interface KyberswapElasticLm extends BaseContract {
 
     positions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    removeLiquidity(
+      nftId: PromiseOrValue<BigNumberish>,
+      liquidity: PromiseOrValue<BigNumberish>,
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      claimFeeAndRewards: [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     renewPool(
       pId: PromiseOrValue<BigNumberish>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    rewardLocker(overrides?: CallOverrides): Promise<BigNumber>;
+    specialFeatureEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     stakes(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1466,7 +1288,28 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+    transferAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updateHelper(
+      _helper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updateOperator(
+      user: PromiseOrValue<string>,
+      grantOrRevoke: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updateSpecialFeatureEnabled(
+      enableOrDisable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    weth(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
       nftIds: PromiseOrValue<BigNumberish>[],
@@ -1475,27 +1318,35 @@ export interface KyberswapElasticLm extends BaseContract {
   };
 
   populateTransaction: {
-    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     addPool(
       poolAddress: PromiseOrValue<string>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardTokens: PromiseOrValue<string>[],
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkPool(
-      pAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+    admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    claimFee(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      poolAddress: PromiseOrValue<string>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
+      nftIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositAndJoin(
+      pId: PromiseOrValue<BigNumberish>,
       nftIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
@@ -1522,27 +1373,7 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getActiveTime(
-      pAddr: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     getDepositedNFTs(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    getFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
 
     getJoinedPools(nftId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1550,12 +1381,6 @@ export interface KyberswapElasticLm extends BaseContract {
       nftId: PromiseOrValue<BigNumberish>,
       fromIndex: PromiseOrValue<BigNumberish>,
       toIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    getLiq(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1567,43 +1392,16 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getSignedFee(
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    getSignedFeePool(
-      poolAddress: PromiseOrValue<string>,
-      nftContract: PromiseOrValue<string>,
-      nftId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     getUserInfo(
       nftId: PromiseOrValue<BigNumberish>,
       pId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    grantRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
     harvestMultiplePools(
       nftIds: PromiseOrValue<BigNumberish>[],
       datas: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    hasRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isEmergencyWithdrawnNFT(
@@ -1620,7 +1418,7 @@ export interface KyberswapElasticLm extends BaseContract {
 
     nft(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    numPools(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    operators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1628,29 +1426,27 @@ export interface KyberswapElasticLm extends BaseContract {
 
     positions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    removeLiquidity(
+      nftId: PromiseOrValue<BigNumberish>,
+      liquidity: PromiseOrValue<BigNumberish>,
+      amount0Min: PromiseOrValue<BigNumberish>,
+      amount1Min: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      isReceiveNative: PromiseOrValue<boolean>,
+      claimFeeAndRewards: [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     renewPool(
       pId: PromiseOrValue<BigNumberish>,
       startTime: PromiseOrValue<BigNumberish>,
       endTime: PromiseOrValue<BigNumberish>,
-      vestingDuration: PromiseOrValue<BigNumberish>,
       rewardAmounts: PromiseOrValue<BigNumberish>[],
       feeTarget: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    revokeRole(
-      role: PromiseOrValue<BytesLike>,
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    rewardLocker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    specialFeatureEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakes(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1658,7 +1454,28 @@ export interface KyberswapElasticLm extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    transferAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateHelper(
+      _helper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateOperator(
+      user: PromiseOrValue<string>,
+      grantOrRevoke: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateSpecialFeatureEnabled(
+      enableOrDisable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    weth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       nftIds: PromiseOrValue<BigNumberish>[],

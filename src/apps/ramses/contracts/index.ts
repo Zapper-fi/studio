@@ -10,6 +10,7 @@ import {
   RamsesPool__factory,
   RamsesRewards__factory,
   RamsesVe__factory,
+  RamsesVoter__factory,
 } from './ethers';
 
 // eslint-disable-next-line
@@ -36,6 +37,9 @@ export class RamsesContractFactory extends ContractFactory {
   ramsesVe({ address, network }: ContractOpts) {
     return RamsesVe__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  ramsesVoter({ address, network }: ContractOpts) {
+    return RamsesVoter__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { RamsesBribe } from './ethers';
@@ -43,3 +47,4 @@ export type { RamsesGauge } from './ethers';
 export type { RamsesPool } from './ethers';
 export type { RamsesRewards } from './ethers';
 export type { RamsesVe } from './ethers';
+export type { RamsesVoter } from './ethers';

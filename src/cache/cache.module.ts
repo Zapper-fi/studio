@@ -1,4 +1,5 @@
-import { Module, CacheModule as NestCacheModule } from '@nestjs/common';
+import { CacheModule as NestCacheModule } from '@nestjs/cache-manager';
+import { Module } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
 
 import { CacheOnIntervalService } from './cache-on-interval.service';

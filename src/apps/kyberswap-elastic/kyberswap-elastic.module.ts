@@ -6,12 +6,12 @@ import { ArbitrumKyberswapElasticFarmContractPositionFetcher } from './arbitrum/
 import { ArbitrumKyberswapElasticLiquidityContractPositionFetcher } from './arbitrum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { AvalancheKyberswapElasticFarmContractPositionFetcher } from './avalanche/kyberswap-elastic.farm.contract-position-fetcher';
 import { AvalancheKyberswapElasticLiquidityContractPositionFetcher } from './avalanche/kyberswap-elastic.liquidity.contract-position-fetcher';
+import { BinanceSmartChainKyberswapElasticFarmContractPositionFetcher } from './binance-smart-chain/kyberswap-elastic.farm.contract-position-fetcher';
 import { BinanceSmartChainKyberswapElasticLiquidityContractPositionFetcher } from './binance-smart-chain/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { KyberswapElasticApyDataLoader } from './common/kyberswap-elastic.apy.data-loader';
 import { KyberswapElasticFarmContractPositionBuilder } from './common/kyberswap-elastic.farm.contract-position-builder';
 import { KyberswapElasticLiquidityContractPositionBuilder } from './common/kyberswap-elastic.liquidity.contract-position-builder';
 import { KyberswapElasticContractFactory } from './contracts';
-import { CronosKyberswapElasticLiquidityContractPositionFetcher } from './cronos/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { EthereumKyberswapElasticFarmContractPositionFetcher } from './ethereum/kyberswap-elastic.farm.contract-position-fetcher';
 import { EthereumKyberswapElasticLiquidityContractPositionFetcher } from './ethereum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { FantomKyberswapElasticLiquidityContractPositionFetcher } from './fantom/kyberswap-elastic.liquidity.contract-position-fetcher';
@@ -26,24 +26,23 @@ import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polyg
     KyberswapElasticApyDataLoader,
     KyberswapElasticFarmContractPositionBuilder,
     KyberswapElasticLiquidityContractPositionBuilder,
-    // Ethereum
-    EthereumKyberswapElasticLiquidityContractPositionFetcher,
-    EthereumKyberswapElasticFarmContractPositionFetcher,
-    // Binance-smart-chain
-    BinanceSmartChainKyberswapElasticLiquidityContractPositionFetcher,
+    // Arbitrum
+    ArbitrumKyberswapElasticLiquidityContractPositionFetcher,
+    ArbitrumKyberswapElasticFarmContractPositionFetcher,
     // Avalanche
     AvalancheKyberswapElasticLiquidityContractPositionFetcher,
     AvalancheKyberswapElasticFarmContractPositionFetcher,
+    // Binance-smart-chain
+    BinanceSmartChainKyberswapElasticLiquidityContractPositionFetcher,
+    BinanceSmartChainKyberswapElasticFarmContractPositionFetcher,
+    // Ethereum
+    EthereumKyberswapElasticLiquidityContractPositionFetcher,
+    EthereumKyberswapElasticFarmContractPositionFetcher,
     // Fantom
     FantomKyberswapElasticLiquidityContractPositionFetcher,
     // Optimism
     OptimismKyberswapElasticLiquidityContractPositionFetcher,
     OptimismKyberswapElasticFarmContractPositionFetcher,
-    // Cronos
-    CronosKyberswapElasticLiquidityContractPositionFetcher,
-    // Arbitrum
-    ArbitrumKyberswapElasticLiquidityContractPositionFetcher,
-    ArbitrumKyberswapElasticFarmContractPositionFetcher,
     // Polygon
     PolygonKyberswapElasticLiquidityContractPositionFetcher,
     PolygonKyberswapElasticFarmContractPositionFetcher,

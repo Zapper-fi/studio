@@ -22,6 +22,7 @@ export type SynthetixPositionPresenterDataProps = {
 
 export abstract class SynthetixPositionPresenter extends PositionPresenterTemplate<SynthetixPositionPresenterDataProps> {
   abstract snxAddress: string;
+  abstract sUSDAddress: string;
 
   constructor(
     @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
@@ -34,11 +35,11 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
     const [snxToken, susdToken] = await Promise.all([
       this.appToolkit.getBaseTokenPrice({
         network: this.network,
-        address: '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f',
+        address: this.snxAddress,
       }),
       this.appToolkit.getBaseTokenPrice({
         network: this.network,
-        address: '0x57ab1ec28d129707052df4df418d58a2d46d5f51',
+        address: this.sUSDAddress,
       }),
     ]);
 

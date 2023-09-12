@@ -57,7 +57,7 @@ const vaultsQuery = gql`
       fees {
         feeSize
       }
-      strategies(orderBy: position, orderDirection: asc) {
+      strategies(orderBy: position, orderDirection: asc, where: { strategy_: { isRemoved: false } }) {
         id
         position
         allocation

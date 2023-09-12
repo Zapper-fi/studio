@@ -35,8 +35,8 @@ type KyberswapElasticLiquidityContractPositionHelperParams = {
 };
 
 export class KyberswapElasticFarmContractPositionBuilder {
-  managerAddress = '0x2b1c7b41f6a8f2b2bc45c3233a5d5fb3cd6dc9a8';
-  factoryAddress = '0x5f1dddbf348ac2fbe22a163e30f99f9ece3dd50a';
+  positionManagerAddress = '0xe222fbe074a436145b255442d919e4e3a6c6a480';
+  factoryAddress = '0xc7a590291e07b9fe9e64b86c58fd8fc764308c4a';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -52,7 +52,7 @@ export class KyberswapElasticFarmContractPositionBuilder {
     collapseClaimable,
     kyberswapElasticLmAddress,
   }: KyberswapElasticLiquidityContractPositionHelperParams) {
-    const positionManager = this.contractFactory.positionManager({ address: this.managerAddress, network });
+    const positionManager = this.contractFactory.positionManager({ address: this.positionManagerAddress, network });
     const factoryContract = this.contractFactory.factory({ address: this.factoryAddress, network });
     const elasticLmContract = this.contractFactory.kyberswapElasticLm({ address: kyberswapElasticLmAddress, network });
     const position = await multicall.wrap(positionManager).positions(positionId);
@@ -145,8 +145,8 @@ export class KyberswapElasticFarmContractPositionBuilder {
 
     const balance: ContractPositionBalance<KyberswapElasticLiquidityPositionDataProps> = {
       type: ContractType.POSITION,
-      address: this.managerAddress,
-      appId: 'kyberswap',
+      address: this.positionManagerAddress,
+      appId: 'kyberswap-elastic',
       groupId: 'farm',
       network,
       tokens,
@@ -154,6 +154,8 @@ export class KyberswapElasticFarmContractPositionBuilder {
       displayProps,
       balanceUSD,
     };
+
+    balance.key = this.appToolkit.getPositionKey(balance);
 
     return balance;
   }

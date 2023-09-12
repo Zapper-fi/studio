@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { SaddleCommunalFarm__factory } from './ethers';
-import { SaddleMiniChefV2__factory } from './ethers';
-import { SaddleMiniChefV2Rewarder__factory } from './ethers';
-import { SaddleSwap__factory } from './ethers';
+import {
+  SaddleCommunalFarm__factory,
+  SaddleMiniChefV2__factory,
+  SaddleMiniChefV2Rewarder__factory,
+  SaddleSwap__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

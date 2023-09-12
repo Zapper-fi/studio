@@ -39,7 +39,7 @@ export abstract class ExactlyFixedPositionFetcher<
 
   getApy(params: GetDataPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
     const { maturity, rate } = this.getBestRate(params);
-    const timeLeft = maturity.toNumber() - Math.round(Date.now() / 1_000);
+    const timeLeft = Number(maturity) - Math.round(Date.now() / 1_000);
     return Promise.resolve(
       ((1 + ((Number(rate) / 1e18) * timeLeft) / 31_536_000) ** (31_536_000 / timeLeft) - 1) * 100,
     );

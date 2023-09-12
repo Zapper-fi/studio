@@ -4,15 +4,17 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MyceliumAumManager__factory } from './ethers';
-import { MyceliumMlpManager__factory } from './ethers';
-import { MyceliumPerpFarm__factory } from './ethers';
-import { MyceliumPerpToken__factory } from './ethers';
-import { MyceliumPositionReader__factory } from './ethers';
-import { MyceliumRewardReader__factory } from './ethers';
-import { MyceliumRewardTracker__factory } from './ethers';
-import { MyceliumStaking__factory } from './ethers';
-import { MyceliumVault__factory } from './ethers';
+import {
+  MyceliumAumManager__factory,
+  MyceliumMlpManager__factory,
+  MyceliumPerpFarm__factory,
+  MyceliumPerpToken__factory,
+  MyceliumPositionReader__factory,
+  MyceliumRewardReader__factory,
+  MyceliumRewardTracker__factory,
+  MyceliumStaking__factory,
+  MyceliumVault__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

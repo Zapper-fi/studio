@@ -428,7 +428,7 @@ const _abi = [
     name: 'OwnershipTransferred',
     type: 'event',
   },
-];
+] as const;
 
 export class SynthetixRewards__factory {
   static readonly abi = _abi;

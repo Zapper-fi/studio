@@ -17,7 +17,7 @@ export class RenApiClient {
   })
   async getDarknodeAssets() {
     const data = await gqlFetch<GetAssetsResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/renproject/renvm',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/renproject/renvm?source=zapper',
       query: GET_ASSETS_QUERY,
     });
 
@@ -31,7 +31,7 @@ export class RenApiClient {
   })
   async getDarknodeBalance(address: string) {
     const data = await gqlFetch<GetDarknodesResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/renproject/renvm',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/renproject/renvm?source=zapper',
       query: GET_DARKNODES_QUERY,
       variables: {
         address: address.toLowerCase(),

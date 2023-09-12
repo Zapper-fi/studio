@@ -1,18 +1,24 @@
-import { Inject } from '@nestjs/common';
+import { Inject, NotImplementedException } from '@nestjs/common';
+import _, { compact, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { DefaultDataProps } from '~position/display.interface';
+import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RocketNodeDeposit, RocketPoolContractFactory } from '../contracts';
 
 @PositionTemplate()
-export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketNodeDeposit> {
+export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RocketNodeDeposit> {
   groupLabel = 'Minipools';
+
+  minipoolManagerAddress = '0x6293b8abc1f36afb22406be5f96d893072a8cf3a';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -43,16 +49,101 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractP
     return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 
-  async getTokenBalancesPerPosition({ address, multicall }: GetTokenBalancesParams<RocketNodeDeposit>) {
-    const miniPoolManagerAddress = '0x6293b8abc1f36afb22406be5f96d893072a8cf3a';
+  getTokenBalancesPerPosition(): never {
+    throw new NotImplementedException();
+  }
+
+  async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
     const miniPoolManager = this.contractFactory.rocketMinipoolManager({
-      address: miniPoolManagerAddress,
+      address: this.minipoolManagerAddress,
       network: this.network,
     });
 
-    const minipoolCountRaw = await multicall.wrap(miniPoolManager).getNodeActiveMinipoolCount(address);
-    const minipoolDepositSize = 16 * 10 ** 18; // 16 ETH
-    const balanceRaw = Number(minipoolCountRaw) * minipoolDepositSize;
-    return [balanceRaw.toString()];
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const numPositionsRaw = await multicall.wrap(miniPoolManager).getNodeMinipoolCount(address);
+
+    const balances = await Promise.all(
+      range(0, numPositionsRaw.toNumber()).map(async index => {
+        const miniPoolAddress = await multicall.wrap(miniPoolManager).getNodeMinipoolAt(address, index);
+
+        const miniPoolContract = this.contractFactory.rocketMinipool({
+          address: miniPoolAddress,
+          network: this.network,
+        });
+
+        const isFinalized = await multicall.wrap(miniPoolContract).getFinalised();
+        if (isFinalized) return null;
+
+        const depositAmountRaw = await multicall.wrap(miniPoolContract).getNodeDepositBalance();
+        const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());
+
+        return {
+          ...contractPositions[0],
+          tokens: [depositAmount],
+          balanceUSD: depositAmount.balanceUSD,
+        };
+      }),
+    );
+
+    return _.compact(balances);
+  }
+
+  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const contractPosition = contractPositions[0];
+    if (!contractPosition) return [];
+
+    const minipoolManagerContract = this.contractFactory.rocketMinipoolManager({
+      address: this.minipoolManagerAddress,
+      network: this.network,
+    });
+    const minipoolCount = await multicall.wrap(minipoolManagerContract).getNodeMinipoolCount(address);
+
+    const minipoolAddresses = await Promise.all(
+      range(0, minipoolCount.toNumber()).map(async i =>
+        multicall.wrap(minipoolManagerContract).getNodeMinipoolAt(address, i),
+      ),
+    );
+    if (minipoolAddresses.length === 0) return [];
+
+    return compact(
+      await Promise.all(
+        minipoolAddresses
+          .map(async address => {
+            const minipoolContract = this.contractFactory.rocketMinipool({ address, network: this.network });
+
+            const isFinalized = await multicall.wrap(minipoolContract).getFinalised();
+            if (isFinalized) return null;
+
+            const nodeDepositBalance = await multicall.wrap(minipoolContract).getNodeDepositBalance();
+
+            return [
+              {
+                key: this.appToolkit.getPositionKey(contractPosition),
+                tokens: [
+                  {
+                    key: this.appToolkit.getPositionKey(contractPosition.tokens[0]),
+                    balance: nodeDepositBalance.toString(),
+                  },
+                ],
+              },
+            ];
+          })
+          .flat(),
+      ),
+    ).flat();
   }
 }

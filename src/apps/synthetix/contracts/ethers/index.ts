@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { SynthetixAddressResolver } from './SynthetixAddressResolver';
 export type { SynthetixExchangeRates } from './SynthetixExchangeRates';
+export type { SynthetixFeePool } from './SynthetixFeePool';
 export type { SynthetixLoan } from './SynthetixLoan';
 export type { SynthetixNetworkToken } from './SynthetixNetworkToken';
 export type { SynthetixPerp } from './SynthetixPerp';
@@ -12,6 +13,7 @@ export type { SynthetixSynthToken } from './SynthetixSynthToken';
 export * as factories from './factories';
 export { SynthetixAddressResolver__factory } from './factories/SynthetixAddressResolver__factory';
 export { SynthetixExchangeRates__factory } from './factories/SynthetixExchangeRates__factory';
+export { SynthetixFeePool__factory } from './factories/SynthetixFeePool__factory';
 export { SynthetixLoan__factory } from './factories/SynthetixLoan__factory';
 export { SynthetixNetworkToken__factory } from './factories/SynthetixNetworkToken__factory';
 export { SynthetixPerp__factory } from './factories/SynthetixPerp__factory';

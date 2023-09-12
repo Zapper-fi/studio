@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PikaProtocolV3Rewards__factory } from './ethers';
-import { PikaProtocolV3Vault__factory } from './ethers';
+import { PikaProtocolV3Rewards__factory, PikaProtocolV3Vault__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

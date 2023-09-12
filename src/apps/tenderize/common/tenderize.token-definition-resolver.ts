@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import Axios from 'axios';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -58,7 +57,7 @@ export class TenderizeTokenDefinitionsResolver {
   })
   private async getVaultDefinitionsData(network: Network) {
     const data = await gqlFetch<TenderTokenFetcherResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}?source=zapper`,
       query: TOKEN_QUERY,
     });
 
@@ -82,30 +81,12 @@ export class TenderizeTokenDefinitionsResolver {
   }
 
   @Cache({
-    key: `studio:tenderize:token-apy-data`,
-    ttl: 5 * 60, // 5 minutes
-  })
-  private async getTokenApyData() {
-    const { data } = await Axios.get<TokenApyResponse>('https://www.tenderize.me/api/apy');
-
-    return data;
-  }
-
-  async getTokenApy(id: string) {
-    const apyDataRaw = await this.getTokenApyData();
-    const apyData = Object.values(apyDataRaw);
-    const apyRaw = apyData.find(x => x.subgraphId.toLowerCase() === id)?.apy ?? 0;
-
-    return Number(apyRaw);
-  }
-
-  @Cache({
     key: (network, tenderFarm) => `studio:tenderize:${network}:${tenderFarm}-reward-data`,
     ttl: 5 * 60, // 5 minutes
   })
   private async getRewardRateData(network: Network, tenderFarm: string) {
     return gqlFetch<RewardRateFetcherResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}?source=zapper`,
       variables: { tenderFarm },
       query: gql`
         query ($tenderFarm: String!) {

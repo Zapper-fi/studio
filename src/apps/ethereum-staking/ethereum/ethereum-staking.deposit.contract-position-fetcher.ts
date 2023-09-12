@@ -49,7 +49,7 @@ type BeaconChainValidator = {
   }[];
 };
 
-const SUBGRAPH_DEPOSITS_ENDPOINT = `https://api.thegraph.com/subgraphs/name/terryyyyyy/eth2staking`;
+const SUBGRAPH_DEPOSITS_ENDPOINT = `https://api.thegraph.com/subgraphs/name/terryyyyyy/eth2staking?source=zapper`;
 const BEACON_CHAIN_API_ENDPOINT = `https://beaconcha.in/api/v1`;
 
 const ETH2_DEPOSITS_QUERY = gql`

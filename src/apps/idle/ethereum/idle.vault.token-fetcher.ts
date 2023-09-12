@@ -1,9 +1,12 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDefinition,
+  GetAddressesParams,
   GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -29,13 +32,22 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
     return this.contractFactory.idleToken({ network: this.network, address });
   }
 
-  async getAddresses() {
+  async getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
     const controller = this.contractFactory.idleController({
       address: '0x275da8e61ea8e02d51edd8d0dc5c0e62b4cdb0be',
       network: this.network,
     });
 
-    return controller.getAllMarkets();
+    const vaultTokens = await controller.getAllMarkets();
+    const liveVaultTokens = await Promise.all(
+      vaultTokens.map(async address => {
+        const contract = this.contractFactory.idleToken({ network: this.network, address });
+        const isPaused = await multicall.wrap(contract).paused();
+        return isPaused ? null : address;
+      }),
+    );
+
+    return compact(liveVaultTokens);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IdleToken>) {

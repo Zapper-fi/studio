@@ -14,7 +14,7 @@ export type UnderlyingTokenDefinition = {
   metaType: MetaType;
   address: string;
   network: Network;
-  tokenId?: number;
+  tokenId?: string;
 };
 
 // PHASE 1: List definitions

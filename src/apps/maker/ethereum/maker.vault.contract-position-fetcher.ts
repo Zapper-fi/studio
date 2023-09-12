@@ -7,7 +7,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
-import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
@@ -193,11 +192,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
             const secondaryLabel = `C-Ratio: ${(cRatio * 100).toFixed(2)}%`;
 
             const positionBalance: ContractPositionBalance<MakerVaultDataProps> = {
-              type: ContractType.POSITION,
-              address: position.address,
-              appId: position.appId,
-              groupId: position.groupId,
-              network: position.network,
+              ...position,
               tokens,
               balanceUSD,
 

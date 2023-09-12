@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherMerkleDistributor__factory } from './ethers';
-import { PoolTogetherV3TokenFaucet__factory } from './ethers';
-import { PoolTogetherV4PrizePool__factory } from './ethers';
-import { PoolTogetherV4Ticket__factory } from './ethers';
+import {
+  PoolTogetherMerkleDistributor__factory,
+  PoolTogetherV3TokenFaucet__factory,
+  PoolTogetherV4PrizePool__factory,
+  PoolTogetherV4Ticket__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

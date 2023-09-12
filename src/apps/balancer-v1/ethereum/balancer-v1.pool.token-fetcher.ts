@@ -72,7 +72,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     this.volumeDataLoader = this.volumeDataLoaderBuilder.getLoader();
 
     const poolsFromSubgraph = await gqlFetch<GetAllPoolsData>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer?source=zapper',
       query: getPoolsQuery,
     });
 

@@ -33,7 +33,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: 'lts/gallium'
+          node-version: 'lts/hydrogen'
           registry-url: 'https://registry.npmjs.org'
         if: ${{ steps.release.outputs.release_created }}
 
@@ -48,7 +48,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.2.1
         with:
-          version: 7.0.1
+          version: 8.6.6
           run_install: true
         if: ${{ steps.release.outputs.release_created }}
 
@@ -58,19 +58,12 @@ jobs:
         run: pnpm build
         if: ${{ steps.release.outputs.release_created }}
 
-      - name: Publish to NPM
-        working-directory: dist
-        run: pnpm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        if: ${{ steps.release.outputs.release_created }}
-
       - name: Publish to Github Packages
         working-directory: dist
         run: |
           echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
           npm config set registry https://npm.pkg.github.com
-          npm publish
+          npm publish --no-git-checks
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}

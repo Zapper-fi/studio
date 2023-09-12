@@ -41,6 +41,10 @@ export class EthereumInverseFarmContractPositionFetcher extends SingleStakingFar
     return contract.rewardRate();
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<SynthetixRewards>): Promise<boolean> {
+    return (await contract.rewardRate()).gt(0);
+  }
+
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
     return contract.balanceOf(address);
   }

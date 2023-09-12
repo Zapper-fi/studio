@@ -1,20 +1,11 @@
 import DataLoader from 'dataloader';
-import { Contract } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { FunctionFragment, Interface } from 'ethers/lib/utils';
 
 import { Multicall } from '~contract/contracts';
 
 import { MulticallContract } from './multicall.contract';
-import { IMulticallWrapper } from './multicall.interface';
-
-export type ContractCall = {
-  fragment: FunctionFragment;
-  address: string;
-  params: any[];
-  stack?: string;
-};
-
-type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 'address'>;
+import { ContractCall, IMulticallWrapper, TargetContract } from './multicall.interface';
 
 export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
 
@@ -26,12 +17,12 @@ const DEFAULT_DATALOADER_OPTIONS = { cache: false, maxBatchSize: 250 };
 
 export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;
-  private dataLoader: DataLoader<ContractCall, any>;
+  private dataLoader: DataLoader<ContractCall, ethers.utils.Result>;
   private beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
 
   constructor(
     multicall: Multicall,
-    dataLoaderOptions: DataLoader.Options<ContractCall, any> = DEFAULT_DATALOADER_OPTIONS,
+    dataLoaderOptions: DataLoader.Options<ContractCall, ethers.utils.Result> = DEFAULT_DATALOADER_OPTIONS,
     { beforeCallHook }: MulticallCallbackHooks = {},
   ) {
     this.multicall = multicall;
@@ -56,7 +47,7 @@ export class EthersMulticall implements IMulticallWrapper {
       throw new Error(`Unexpected response length: received ${res.returnData.length}; expected ${callRequests.length}`);
     }
 
-    const result = calls.map((call, i) => {
+    const result: (ethers.utils.Result | Error)[] = calls.map((call, i) => {
       const signature = FunctionFragment.from(call.fragment).format();
       const callIdentifier = [call.address, signature].join(':');
       const [success, data] = res.returnData[i];
@@ -81,7 +72,11 @@ export class EthersMulticall implements IMulticallWrapper {
     return result;
   }
 
-  wrap<T extends TargetContract>(contract: T) {
+  public async load(call: ContractCall): Promise<ethers.utils.Result> {
+    return this.dataLoader.load(call);
+  }
+
+  public wrap<T extends TargetContract>(contract: T) {
     const abi = contract.interface.fragments;
     const stack = new Error().stack?.split('\n').slice(1).join('\n');
     const multicallContract = new MulticallContract(contract.address, abi as any, stack);

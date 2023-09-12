@@ -1,31 +1,25 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { DefaultDataProps } from '~position/display.interface';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  SingleStakingFarmDataProps,
-  SingleStakingFarmDefinition,
-  SingleStakingFarmTemplateContractPositionFetcher,
-} from '~position/template/single-staking.template.contract-position-fetcher';
+  DefaultContractPositionDefinition,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { LooksRareContractFactory, LooksRareFeeSharing } from '../contracts';
 
-const FARMS = [
-  {
-    address: '0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce',
-    stakedTokenAddress: '0xf4d2888d29d722226fafa5d9b24f9164c092421e',
-    rewardTokenAddresses: ['0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'],
-  },
-];
-
 @PositionTemplate()
-export class EthereumLooksRareFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<LooksRareFeeSharing> {
+export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
   groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(LooksRareContractFactory) protected readonly contractFactory: LooksRareContractFactory,
   ) {
     super(appToolkit);
@@ -35,25 +29,38 @@ export class EthereumLooksRareFarmContractPositionFetcher extends SingleStakingF
     return this.contractFactory.looksRareFeeSharing({ address, network: this.network });
   }
 
-  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    return FARMS;
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [{ address: '0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce' }];
   }
 
-  getRewardRates({ contract }: GetDataPropsParams<LooksRareFeeSharing, SingleStakingFarmDataProps>) {
-    return contract.rewardPerTokenStored();
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<LooksRareFeeSharing>) {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await contract.looksRareToken(), // LOOKS
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: await contract.rewardToken(), // WETH
+        network: this.network,
+      },
+    ];
   }
 
-  getStakedTokenBalance({
+  async getLabel() {
+    return 'Standard Method';
+  }
+
+  async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<LooksRareFeeSharing, SingleStakingFarmDataProps>) {
-    return contract.calculateSharesValueInLOOKS(address);
-  }
+  }: GetTokenBalancesParams<LooksRareFeeSharing, DefaultDataProps>): Promise<BigNumberish[]> {
+    const [suppliedBalance, claimableBalance] = await Promise.all([
+      contract.calculateSharesValueInLOOKS(address),
+      contract.calculatePendingRewards(address),
+    ]);
 
-  getRewardTokenBalances({
-    address,
-    contract,
-  }: GetTokenBalancesParams<LooksRareFeeSharing, SingleStakingFarmDataProps>) {
-    return contract.calculatePendingRewards(address);
+    return [suppliedBalance, claimableBalance];
   }
 }

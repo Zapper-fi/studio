@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MeanFinanceHub } from './MeanFinanceHub';
+export type { MeanFinanceOptimismAirdrop } from './MeanFinanceOptimismAirdrop';
 export type { MeanFinancePermissionManager } from './MeanFinancePermissionManager';
 export type { MeanFinanceTransformerRegistry } from './MeanFinanceTransformerRegistry';
 export * as factories from './factories';
 export { MeanFinanceHub__factory } from './factories/MeanFinanceHub__factory';
+export { MeanFinanceOptimismAirdrop__factory } from './factories/MeanFinanceOptimismAirdrop__factory';
 export { MeanFinancePermissionManager__factory } from './factories/MeanFinancePermissionManager__factory';
 export { MeanFinanceTransformerRegistry__factory } from './factories/MeanFinanceTransformerRegistry__factory';

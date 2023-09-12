@@ -1,6 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import _ from 'lodash';
-import { compact, range } from 'lodash';
+import _, { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -71,6 +70,16 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
       range(0, poolLengthRaw.toNumber()).map(async index => {
         const poolInfos = await multicall.wrap(kyberswapElasticLmContract).getPoolInfo(index);
         const poolContract = this.contractFactory.pool({ address: poolInfos.poolAddress, network: this.network });
+        // filtering out pool '0xf2057f0231bedcecf32436e3cd6b0b93c6675e0a' on Polygon, this
+        // seems to not exist on Polygon and is actually on Arbitrum. KyberSwap is even filtering it out
+        // from some of their own GQL queries.
+        // (see https://github.com/KyberNetwork/kyberswap-interface/blob/23dfea561ea5ad4eb13778518a94209fff1846b7/src/state/farms/elastic/updaters/v1.tsx#L79 for details)
+        if (
+          poolContract.address.toLowerCase() === '0xf2057f0231bedcecf32436e3cd6b0b93c6675e0a' &&
+          this.network === 'polygon'
+        ) {
+          return;
+        }
         const [token0Raw, token1Raw, feeTier] = await Promise.all([
           multicall.wrap(poolContract).token0(),
           multicall.wrap(poolContract).token1(),
@@ -81,10 +90,10 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
 
         return {
           address: this.kyberswapElasticLmAddress,
-          poolAddress: poolInfos.poolAddress,
+          poolAddress: poolInfos.poolAddress.toLowerCase(),
           token0Address: token0Raw.toLowerCase(),
           token1Address: token1Raw.toLowerCase(),
-          rewardTokenAddresses: poolInfos.rewardTokens,
+          rewardTokenAddresses: poolInfos.rewardTokens.map(x => x.toLowerCase()),
           feeTier: feeTier,
         };
       }),

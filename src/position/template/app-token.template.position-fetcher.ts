@@ -117,7 +117,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       this.getApy(params),
     ]);
 
-    return { liquidity, reserves, apy } as V;
+    return { liquidity, reserves, apy, isDebt: this.isDebt } as V;
   }
 
   // Display Properties
@@ -208,8 +208,7 @@ export abstract class AppTokenTemplatePositionFetcher<
               const isMaybeTokenIdMatch =
                 isUndefined(definition.tokenId) ||
                 (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
-                (token.type === ContractType.NON_FUNGIBLE_TOKEN &&
-                  Number(token.assets?.[0].tokenId) === definition.tokenId);
+                (token.type === ContractType.NON_FUNGIBLE_TOKEN && token.assets?.[0].tokenId === definition.tokenId);
 
               return isAddressMatch && isNetworkMatch && isMaybeTokenIdMatch;
             });

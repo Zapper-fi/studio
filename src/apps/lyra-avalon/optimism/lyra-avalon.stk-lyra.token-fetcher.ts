@@ -22,7 +22,7 @@ export class OptimismLyraAvalonStkLyraTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getAddresses() {
-    return ['0xde48b1b5853cc63b1d05e507414d3e02831722f8'];
+    return ['0x0f5d45a7023612e9e244fe84fac5fcf3740d1492'];
   }
 
   async getUnderlyingTokenDefinitions() {

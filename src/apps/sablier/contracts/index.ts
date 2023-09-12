@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { SablierSalary__factory } from './ethers';
-import { SablierStream__factory } from './ethers';
-import { SablierStreamLegacy__factory } from './ethers';
+import { SablierSalary__factory, SablierStream__factory, SablierStreamLegacy__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

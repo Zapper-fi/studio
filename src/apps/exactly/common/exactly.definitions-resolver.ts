@@ -4,6 +4,7 @@ import { type BigNumber, constants } from 'ethers';
 import type { IMulticallWrapper } from '~multicall/multicall.interface';
 import type { DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
+import { serializeEthersResult } from '~utils/serialize-ethers';
 
 import { type Previewer, Previewer__factory } from '../contracts/ethers';
 
@@ -35,7 +36,13 @@ export class ExactlyDefinitionsResolver {
       multicall.contract.interface.decodeFunctionResult('getCurrentBlockTimestamp', ts)[0] as BigNumber
     ).toNumber();
     return (previewer.decodeFunctionResult('exactly', exactly)[0] as Previewer.MarketAccountStructOutput[]).map(
-      m => ({ address: m.market.toLowerCase(), blockNumber, timestamp, ...m } as ExactlyMarketDefinition),
+      m =>
+        ({
+          address: m.market.toLowerCase(),
+          blockNumber,
+          timestamp,
+          ...serializeEthersResult(m),
+        } as ExactlyMarketDefinition),
     );
   }
 

@@ -5,6 +5,6 @@ import { UniswapV2DefaultPoolSubgraphTemplateTokenFetcher } from '~apps/uniswap-
 export class GnosisHoneyswapPoolTokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
   groupLabel = 'Pools';
 
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/1hive/honeyswap-xdai';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/1hive/honeyswap-xdai?source=zapper';
   factoryAddress = '0x9ad6c38be94206ca50bb0d90783181662f0cfa10';
 }

@@ -5,94 +5,40 @@ import { Cache } from '~cache/cache.decorator';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 export type YearnVaultData = {
-  inception: number;
-  icon: string;
-  symbol: string;
-  tags: string[];
-  special?: boolean;
-  apy: {
-    type: string;
-    gross_apr: number;
-    net_apy: number;
-    fees: {
-      performance: number;
-      withdrawal: number;
-      management: number;
-      keep_crv: number;
-      cvx_keep_crv: number;
-    };
-    points: {
-      week_ago: number;
-      month_ago: number;
-      inception: number;
-    };
-    composite: number;
-  };
   address: string;
   endorsed: boolean;
-  strategies: {
-    name: string;
-    address: string;
-  }[];
-  tvl: {
-    totalAssets: number;
-    value: string;
-    price: number;
-  };
   name: string;
-  display_name: string;
-  updated: number;
-  fees: {
-    special: {
-      keepCrv: number;
-    };
-    general: {
-      withdrawalFee: number;
-      performanceFee: number;
-    };
-  };
   token: {
-    name: string;
-    icon: string;
-    symbol: string;
-    address: string;
-    display_name: string;
-    decimals: number;
-  };
-  emergencyShutdown?: false;
-  decimals: number;
-  type: string;
-  migration: null | {
-    available: boolean;
     address: string;
   };
-};
-
-type GetVaultDefinitionsParams = {
-  network: Network;
-  vaultType: 'v1' | 'v2';
-  vaultsToIgnore: string[];
+  apy: {
+    net_apy: number;
+  };
 };
 
 @Injectable()
 export class YearnVaultTokenDefinitionsResolver {
   @Cache({
-    key: network => `studio:yearn:${network}:vault-data`,
-    ttl: 5 * 60, // 60 minutes
+    key: network => `studio:yearn:${network}:vault-data-test`,
+    ttl: 5 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
-    const url = `https://api.yearn.finance/v1/chains/${NETWORK_IDS[network]}/vaults/all`;
+    const url = `https://ydaemon.yearn.finance/${NETWORK_IDS[network]}/vaults/all`;
     const { data } = await Axios.get<YearnVaultData[]>(url);
     return data;
   }
 
-  async getVaultDefinitions({ network, vaultsToIgnore, vaultType }: GetVaultDefinitionsParams) {
+  async getVaultDefinitions(network: Network) {
     const definitionsData = await this.getVaultDefinitionsData(network);
 
     return definitionsData
-      .filter(vault => vault.type === 'v1' || !!vault.endorsed) // Remove experimental v2 vaults
-      .filter(vault => !vault.special) // Remove "special" vaults
-      .filter(vault => !vaultsToIgnore.includes(vault.address.toLowerCase())) // Remove vaults not having the same structure as the other
-      .filter(vault => vault.type === vaultType);
+      .filter(vault => !!vault.endorsed) // Remove experimental v2 vaults
+      .map(vault => {
+        return {
+          address: vault.address,
+          underlyingTokenAddress: vault.token.address.toLowerCase(),
+          apy: vault.apy.net_apy * 100,
+        };
+      });
   }
 }

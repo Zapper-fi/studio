@@ -147,6 +147,8 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
       balanceUSD,
     };
 
+    balance.key = this.appToolkit.getPositionKey(balance);
+
     return balance;
   }
 }

@@ -36,7 +36,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
 
   async getFarmAddresses() {
     const data = await gqlFetch<DystopiaQueryResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia',
+      endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia?source=zapper',
       query: DYSTOPIA_QUERY,
     });
     return filter(data.pairs.map(v => v.gauge?.id));

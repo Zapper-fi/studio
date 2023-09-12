@@ -4,11 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BadgerDiggToken__factory } from './ethers';
-import { BadgerRegistry__factory } from './ethers';
-import { BadgerSett__factory } from './ethers';
-import { BadgerTree__factory } from './ethers';
-import { BadgerYearnVault__factory } from './ethers';
+import {
+  BadgerDiggToken__factory,
+  BadgerRegistry__factory,
+  BadgerSett__factory,
+  BadgerTree__factory,
+  BadgerYearnVault__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -4,10 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MetavaultTradeMvlpManager__factory } from './ethers';
-import { MetavaultTradeRewardReader__factory } from './ethers';
-import { MetavaultTradeRewardTracker__factory } from './ethers';
-import { MetavaultTradeVault__factory } from './ethers';
+import {
+  MetavaultTradeMvlpManager__factory,
+  MetavaultTradeRewardReader__factory,
+  MetavaultTradeRewardTracker__factory,
+  MetavaultTradeVault__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

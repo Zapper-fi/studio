@@ -3,8 +3,10 @@
 /* eslint-disable */
 export type { KyberSwapClassicFactory } from './KyberSwapClassicFactory';
 export type { KyberSwapClassicMasterchef } from './KyberSwapClassicMasterchef';
+export type { KyberSwapClassicMasterchefV2 } from './KyberSwapClassicMasterchefV2';
 export type { KyberSwapClassicPool } from './KyberSwapClassicPool';
 export * as factories from './factories';
 export { KyberSwapClassicFactory__factory } from './factories/KyberSwapClassicFactory__factory';
+export { KyberSwapClassicMasterchefV2__factory } from './factories/KyberSwapClassicMasterchefV2__factory';
 export { KyberSwapClassicMasterchef__factory } from './factories/KyberSwapClassicMasterchef__factory';
 export { KyberSwapClassicPool__factory } from './factories/KyberSwapClassicPool__factory';

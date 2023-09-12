@@ -89,7 +89,7 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
             const writePosition = await multicall.wrap(ssovV3Contract).writePosition(tokenId);
             const suppliedAmountRaw = writePosition.collateralAmount;
 
-            const suppliedAmount = drillBalance(contractPositions[0].tokens[0], suppliedAmountRaw.toString());
+            const suppliedAmount = drillBalance(contractPosition.tokens[0], suppliedAmountRaw.toString());
 
             const strike = Number(writePosition.strike) / 10 ** 8;
             const epoch = Number(writePosition.epoch);

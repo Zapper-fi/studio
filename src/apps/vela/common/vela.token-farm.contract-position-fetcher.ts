@@ -80,6 +80,13 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
     return rewardsPerSec;
   }
 
+  async getIsActive({
+    definition: { poolId },
+    contract,
+  }: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>): Promise<boolean> {
+    return (await contract.poolRewardsPerSec(poolId)).rewardsPerSec.some(v => v.gt(0));
+  }
+
   async getDataProps(
     params: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>,
   ): Promise<VelaTokenFarmDataProps> {

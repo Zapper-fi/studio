@@ -10,6 +10,7 @@ import { ArbitrumAbracadabraStakedSpellTokenFetcher } from './arbitrum/abracadab
 import { AvalancheAbracadabraCauldronContractPositionFetcher } from './avalanche/abracadabra.cauldron.contract-position-fetcher';
 import { AvalancheAbracadabraFarmContractPositionFetcher } from './avalanche/abracadabra.farm.contract-position-fetcher';
 import { AvalancheAbracadabraMspellContractPositionFetcher } from './avalanche/abracadabra.m-spell.contract-position-fetcher';
+import { AvalancheAbracadabraMagicGlpTokenFetcher } from './avalanche/abracadabra.magic-glp.token-fetcher';
 import { AvalancheAbracadabraStakedSpellTokenFetcher } from './avalanche/abracadabra.staked-spell.token-fetcher';
 import { BinanceSmartChainAbracadabraCauldronContractPositionFetcher } from './binance-smart-chain/abracadabra.cauldron.contract-position-fetcher';
 import { AbracadabraContractFactory } from './contracts';
@@ -22,6 +23,8 @@ import { FantomAbracadabraCauldronContractPositionFetcher } from './fantom/abrac
 import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadabra.farm.contract-position-fetcher';
 import { FantomAbracadabraMspellContractPositionFetcher } from './fantom/abracadabra.m-spell.contract-position-fetcher';
 import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.staked-spell.token-fetcher';
+import { OptimismAbracadabraCauldronContractPositionFetcher } from './optimism/abracadabra.cauldron.contract-position-fetcher';
+import { OptimismAbracadabraErc20VaultsTokenFetcher } from './optimism/abracadabra.erc-20-vaults.token-fetcher';
 
 @Module({
   providers: [
@@ -35,6 +38,7 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
     // Avalanche
     AvalancheAbracadabraCauldronContractPositionFetcher,
     AvalancheAbracadabraFarmContractPositionFetcher,
+    AvalancheAbracadabraMagicGlpTokenFetcher,
     AvalancheAbracadabraMspellContractPositionFetcher,
     AvalancheAbracadabraStakedSpellTokenFetcher,
     // Binance-smart-chain
@@ -50,6 +54,9 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
     FantomAbracadabraFarmContractPositionFetcher,
     FantomAbracadabraMspellContractPositionFetcher,
     FantomAbracadabraStakedSpellTokenFetcher,
+    // Optimism
+    OptimismAbracadabraErc20VaultsTokenFetcher,
+    OptimismAbracadabraCauldronContractPositionFetcher,
   ],
 })
 export class AbracadabraAppModule extends AbstractApp() {}

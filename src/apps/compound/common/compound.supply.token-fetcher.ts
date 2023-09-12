@@ -2,10 +2,16 @@ import { BigNumberish, Contract } from 'ethers';
 
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+  buildStringDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { BalanceDisplayMode, DisplayProps } from '~position/display.interface';
+import { BalanceDisplayMode, DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
@@ -15,6 +21,10 @@ import {
 
 export type GetMarketsParams<S> = GetAddressesParams & {
   contract: S;
+};
+
+export type CompoundSupplyTokenDataProps = DefaultAppTokenDataProps & {
+  exchangeRate: number;
 };
 
 export abstract class CompoundSupplyTokenFetcher<
@@ -30,8 +40,8 @@ export abstract class CompoundSupplyTokenFetcher<
 
   abstract getMarkets(params: GetMarketsParams<S>): Promise<string[]>;
   abstract getUnderlyingAddress(params: GetUnderlyingTokensParams<R>): Promise<string>;
-  abstract getExchangeRate(params: GetPricePerShareParams<R>): Promise<BigNumberish>;
-  abstract getSupplyRate(params: GetDataPropsParams<R>): Promise<BigNumberish>;
+  abstract getExchangeRate(params: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>): Promise<BigNumberish>;
+  abstract getSupplyRate(params: GetDataPropsParams<R, CompoundSupplyTokenDataProps>): Promise<BigNumberish>;
 
   getContract(address: string): R {
     return this.getCompoundCTokenContract(address);
@@ -53,23 +63,25 @@ export abstract class CompoundSupplyTokenFetcher<
     return [{ address: underlyingAddress, network: this.network }];
   }
 
-  async getExchangeRateMantissa(params: GetPricePerShareParams<R>) {
+  async getExchangeRateMantissa(params: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
     const { appToken } = params;
     const [underlyingToken] = appToken.tokens;
     return underlyingToken.decimals + 10;
   }
 
-  async getPricePerShare(params: GetPricePerShareParams<R>) {
+  async getPricePerShare(params: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
     const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(params), this.getExchangeRateMantissa(params)]);
     return [Number(rateRaw) / 10 ** mantissa];
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<R>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken }: GetDisplayPropsParams<R, CompoundSupplyTokenDataProps>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
     return underlyingToken.symbol;
   }
 
-  async getLabelDetailed({ appToken }: GetDisplayPropsParams<R>): Promise<DisplayProps['labelDetailed']> {
+  async getLabelDetailed({
+    appToken,
+  }: GetDisplayPropsParams<R, CompoundSupplyTokenDataProps>): Promise<DisplayProps['labelDetailed']> {
     return appToken.symbol;
   }
 
@@ -77,17 +89,41 @@ export abstract class CompoundSupplyTokenFetcher<
     return BalanceDisplayMode.UNDERLYING;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<R>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<R, CompoundSupplyTokenDataProps>) {
     return appToken.price * appToken.supply;
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<R>) {
+  async getReserves({ appToken }: GetDataPropsParams<R, CompoundSupplyTokenDataProps>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  async getApy(params: GetDataPropsParams<R>) {
+  async getApy(params: GetDataPropsParams<R, CompoundSupplyTokenDataProps>) {
     const supplyRate = await this.getSupplyRate(params);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     return 100 * (Math.pow(1 + (blocksPerDay * Number(supplyRate)) / Number(1e18), 365) - 1);
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<R, CompoundSupplyTokenDataProps>,
+  ): Promise<CompoundSupplyTokenDataProps> {
+    const defaultDataProps = await super.getDataProps(params);
+
+    const exchangeRate = await this.getPricePerShare(params);
+    return { ...defaultDataProps, exchangeRate: exchangeRate[0] };
+  }
+
+  async getStatsItems({
+    appToken,
+  }: GetDisplayPropsParams<R, CompoundSupplyTokenDataProps>): Promise<StatsItem[] | undefined> {
+    const { apy, liquidity, exchangeRate } = appToken.dataProps;
+    const exchangeRateFormatted = `${(1 / exchangeRate).toFixed(3)} ${appToken.symbol} = 1 ${
+      appToken.tokens[0].symbol
+    }`;
+
+    return [
+      { label: 'APY', value: buildPercentageDisplayItem(apy) },
+      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      { label: 'Exchange Rate', value: buildStringDisplayItem(exchangeRateFormatted) },
+    ];
   }
 }

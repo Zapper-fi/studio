@@ -6,7 +6,7 @@ export const BLOCKS_PER_DAY: Record<Network, number> = {
   [Network.BINANCE_SMART_CHAIN_MAINNET]: 17280,
   [Network.ARBITRUM_MAINNET]: 6400,
   [Network.AVALANCHE_MAINNET]: 28800,
-  [Network.OPTIMISM_MAINNET]: 0,
+  [Network.OPTIMISM_MAINNET]: 43200,
   [Network.CELO_MAINNET]: 0,
   [Network.BITCOIN_MAINNET]: 0,
   [Network.HARMONY_MAINNET]: 0,
@@ -16,4 +16,5 @@ export const BLOCKS_PER_DAY: Record<Network, number> = {
   [Network.CRONOS_MAINNET]: 17280,
   [Network.AURORA_MAINNET]: 86400,
   [Network.EVMOS_MAINNET]: 17280,
+  [Network.BASE_MAINNET]: 43200,
 };

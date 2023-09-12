@@ -56,6 +56,13 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     return [globalData.rewardRate];
   }
 
+  async getIsActive({ contract }: GetDataPropsParams<MstableStakingV2>) {
+    const lastRewardTimeRaw = await contract.lastTimeRewardApplicable();
+    const now = Math.floor(Date.now() / 1000) - 60 * 60;
+    const isActive = Number(lastRewardTimeRaw) >= now;
+    return isActive;
+  }
+
   async getStakedTokenBalance({
     address,
     contract,

@@ -4,33 +4,46 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import {
-  DefaultContractPositionDefinition,
-  GetDisplayPropsParams,
-  GetTokenBalancesParams,
-} from '~position/template/contract-position.template.types';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { SynthetixContractFactory, SynthetixPerp } from '../contracts';
 
-export type GetContracts = {
-  futuresMarkets: {
-    id: string;
-    marketKey: string;
-  }[];
+export type Market = {
+  id: string;
+  marketKey: string;
+  asset: string;
 };
 
-export const getContractsQuery = gql`
+export type FuturesMarkets = {
+  futuresMarkets: Market[];
+};
+
+export const FUTURES_MARKETS_QUERY = gql`
   query MyQuery {
     futuresMarkets {
       id
       marketKey
+      asset
     }
   }
 `;
 
-export abstract class OptimismSynthetixPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SynthetixPerp> {
+export type SynthetixPerpPositionDefinition = {
+  address: string;
+  asset: string;
+};
+
+export abstract class OptimismSynthetixPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  SynthetixPerp,
+  DefaultDataProps,
+  SynthetixPerpPositionDefinition
+> {
+  useCustomMarketLogos = false;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
@@ -42,7 +55,30 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     return this.contractFactory.synthetixPerp({ address, network: this.network });
   }
 
-  abstract getDefinitions(): Promise<DefaultContractPositionDefinition[]>;
+  abstract marketFilter(marketKey: string): boolean;
+
+  protected isV2Market(marketKey: string): boolean {
+    const marketKeyString = parseBytes32String(marketKey);
+    //v2 marketKey includes 'PERP', v1 doesn't
+    return marketKeyString.includes('PERP');
+  }
+
+  async getDefinitions(): Promise<SynthetixPerpPositionDefinition[]> {
+    const { futuresMarkets } = await gqlFetch<FuturesMarkets>({
+      endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps?source=zapper',
+      query: FUTURES_MARKETS_QUERY,
+    });
+
+    const markets = futuresMarkets.filter(market => this.marketFilter(market.marketKey));
+
+    const definitions = markets.map(market => {
+      const baseAssetRaw = parseBytes32String(market.asset);
+      const baseAsset = baseAssetRaw.charAt(0) === 's' ? baseAssetRaw.substring(1) : baseAssetRaw;
+      return { address: market.id.toLowerCase(), asset: baseAsset };
+    });
+
+    return definitions;
+  }
 
   async getTokenDefinitions() {
     return [
@@ -54,23 +90,16 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     ];
   }
 
-  protected async getBaseAsset({ contractPosition }) {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const contract = multicall.wrap(this.getContract(contractPosition.address));
-    const baseAssetRaw = await contract.baseAsset();
-    let baseAsset = parseBytes32String(baseAssetRaw);
-    //some market use legacy naming starting with an "s"
-    if (baseAsset.charAt(0) === 's') {
-      baseAsset = baseAsset.substring(1);
-    }
-    return baseAsset;
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, SynthetixPerpPositionDefinition>): Promise<string> {
+    return `${definition.asset}-PERP`;
   }
 
-  abstract getLabel({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>): Promise<string>;
-
-  async getImages({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>) {
-    const baseAsset = await this.getBaseAsset({ contractPosition });
-    return [getAppAssetImage('synthetix', `s${baseAsset}`)];
+  async getImages({
+    definition,
+  }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, SynthetixPerpPositionDefinition>) {
+    return [getAppAssetImage(this.useCustomMarketLogos ? this.appId : 'synthetix', `s${definition.asset}`)];
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerp>) {

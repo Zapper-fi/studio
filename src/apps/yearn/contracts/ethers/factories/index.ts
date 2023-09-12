@@ -4,6 +4,9 @@
 export { YearnGovernance__factory } from './YearnGovernance__factory';
 export { YearnLpYCrv__factory } from './YearnLpYCrv__factory';
 export { YearnStakedYCrv__factory } from './YearnStakedYCrv__factory';
+export { YearnStaking__factory } from './YearnStaking__factory';
+export { YearnStakingRewardRegistry__factory } from './YearnStakingRewardRegistry__factory';
 export { YearnVault__factory } from './YearnVault__factory';
 export { YearnVaultV2__factory } from './YearnVaultV2__factory';
+export { YearnVeYfi__factory } from './YearnVeYfi__factory';
 export { YearnYCrv__factory } from './YearnYCrv__factory';

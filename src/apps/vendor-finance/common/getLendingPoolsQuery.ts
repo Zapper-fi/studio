@@ -1,26 +1,5 @@
-import { gql } from 'graphql-request';
-
-type VendorLendingPool = {
-  id: string;
-  _deployer: string;
-  _mintRatio: string;
-  _colToken: string;
-  _lendToken: string;
-  _borrowers: string;
-  _expiry: string;
-  _feeRate: string;
-  _colBalance: string;
-  _lendBalance: string;
-  _totalBorrowed: string;
-  _paused: boolean;
-};
-
-export type VendorLendingPoolsGraphResponse = {
-  pools: Array<VendorLendingPool>;
-};
-
-export const LENDING_POOLS_QUERY = gql`
-  query getPoolsList {
+export const LENDING_POOLS_QUERY = {
+  query: `query {
     pools(first: 1000, where: { _expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
       id
       _deployer
@@ -36,4 +15,25 @@ export const LENDING_POOLS_QUERY = gql`
       _paused
     }
   }
-`;
+`,
+};
+
+export const LENDING_POOLS_V2_QUERY = {
+  query: `query {
+    pools(first: 1000, where: { expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
+      id
+      deployer
+      mintRatio
+      colToken
+      lendToken
+      borrowers
+      expiry
+      startRate
+      colBalance
+      lendBalance
+      totalBorrowed
+      paused
+    }
+  }
+`,
+};

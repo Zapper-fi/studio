@@ -4,13 +4,15 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AngleLiquidityGauge__factory } from './ethers';
-import { AnglePerpetualManager__factory } from './ethers';
-import { AnglePoolManager__factory } from './ethers';
-import { AngleSanToken__factory } from './ethers';
-import { AngleStablemaster__factory } from './ethers';
-import { AngleVaultManager__factory } from './ethers';
-import { AngleVeAngle__factory } from './ethers';
+import {
+  AngleLiquidityGauge__factory,
+  AnglePerpetualManager__factory,
+  AnglePoolManager__factory,
+  AngleSanToken__factory,
+  AngleStablemaster__factory,
+  AngleVaultManager__factory,
+  AngleVeAngle__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

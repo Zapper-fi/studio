@@ -4,11 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { YieldProtocolCauldron__factory } from './ethers';
-import { YieldProtocolLadle__factory } from './ethers';
-import { YieldProtocolLendToken__factory } from './ethers';
-import { YieldProtocolPool__factory } from './ethers';
-import { YieldProtocolPoolToken__factory } from './ethers';
+import {
+  YieldProtocolCauldron__factory,
+  YieldProtocolLadle__factory,
+  YieldProtocolLendToken__factory,
+  YieldProtocolPool__factory,
+  YieldProtocolPoolToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

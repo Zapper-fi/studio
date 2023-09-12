@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
+import { uniqBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -11,15 +11,13 @@ import {
   GetDisplayPropsParams,
   GetPriceParams,
 } from '~position/template/app-token.template.types';
-import { NETWORK_IDS } from '~types';
 
 import { PendleV2ContractFactory, StandardizedYield } from '../contracts';
-import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
-import { MarketsQueryResponse } from '../pendle-v2.types';
+
+import { PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 
 export type PendleV2StandardizedYieldTokenDefinition = {
   address: string;
-  icon: string;
   name: string;
   price: number;
   underlyingApy: number;
@@ -38,6 +36,7 @@ export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemp
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
+    @Inject(PendleV2MarketDefinitionsResolver) protected readonly pendleV2Resolver: PendleV2MarketDefinitionsResolver,
   ) {
     super(appToolkit);
   }
@@ -47,17 +46,12 @@ export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemp
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2StandardizedYieldTokenDefinition[]> {
-    const marketsResponse = await gqlFetch<MarketsQueryResponse>({
-      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
-      query: BACKEND_QUERIES.getMarkets,
-      variables: { chainId: NETWORK_IDS[this.network] },
-    });
+    const marketsResponse = await this.pendleV2Resolver.getMarketDefinitions(this.network);
 
     const definitions = await Promise.all(
-      marketsResponse.markets.results.map(async market => {
+      marketsResponse.map(async market => {
         return {
           address: market.sy.address,
-          icon: market.sy.proIcon,
           name: market.sy.proName,
           price: market.sy.price.usd,
           underlyingApy: market.underlyingApy,
@@ -65,7 +59,7 @@ export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemp
       }),
     );
 
-    return definitions;
+    return uniqBy(definitions, 'address');
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
@@ -110,16 +104,6 @@ export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemp
     return definition.name;
   }
 
-  async getImages({
-    definition,
-  }: GetDisplayPropsParams<
-    StandardizedYield,
-    PendleV2StandardizedYieldTokenDataProps,
-    PendleV2StandardizedYieldTokenDefinition
-  >): Promise<string[]> {
-    return [definition.icon];
-  }
-
   async getDataProps(
     params: GetDataPropsParams<
       StandardizedYield,
@@ -129,7 +113,6 @@ export abstract class PendleV2StandardizedYieldTokenFetcher extends AppTokenTemp
   ): Promise<PendleV2StandardizedYieldTokenDataProps> {
     const defaultDataProps = await super.getDataProps(params);
     const { definition } = params;
-
     return {
       ...defaultDataProps,
       ...definition,

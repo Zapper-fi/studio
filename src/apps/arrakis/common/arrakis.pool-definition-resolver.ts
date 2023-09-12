@@ -48,7 +48,7 @@ export class ArrakisPoolDefinitionsResolver {
   })
   private async getPoolDefinitionsData(network: Network) {
     const data = await gqlFetch<ArrakisPoolFetcherResponse>({
-      endpoint: `https://api.thegraph.com/subgraphs/name/gelatodigital/g-uni${NETWORK_NAME[network]}`,
+      endpoint: `https://api.thegraph.com/subgraphs/name/gelatodigital/g-uni${NETWORK_NAME[network]}?source=zapper`,
       query: POOL_ADDRESSES_QUERY,
     });
 

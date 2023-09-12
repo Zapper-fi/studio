@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { DhedgeV2Factory__factory } from './ethers';
-import { DhedgeV2Token__factory } from './ethers';
+import { DhedgeV2Factory__factory, DhedgeV2Token__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

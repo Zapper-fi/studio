@@ -4,9 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MeanFinanceHub__factory } from './ethers';
-import { MeanFinancePermissionManager__factory } from './ethers';
-import { MeanFinanceTransformerRegistry__factory } from './ethers';
+import {
+  MeanFinanceHub__factory,
+  MeanFinanceOptimismAirdrop__factory,
+  MeanFinancePermissionManager__factory,
+  MeanFinanceTransformerRegistry__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -20,6 +23,9 @@ export class MeanFinanceContractFactory extends ContractFactory {
   meanFinanceHub({ address, network }: ContractOpts) {
     return MeanFinanceHub__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  meanFinanceOptimismAirdrop({ address, network }: ContractOpts) {
+    return MeanFinanceOptimismAirdrop__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   meanFinancePermissionManager({ address, network }: ContractOpts) {
     return MeanFinancePermissionManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -29,5 +35,6 @@ export class MeanFinanceContractFactory extends ContractFactory {
 }
 
 export type { MeanFinanceHub } from './ethers';
+export type { MeanFinanceOptimismAirdrop } from './ethers';
 export type { MeanFinancePermissionManager } from './ethers';
 export type { MeanFinanceTransformerRegistry } from './ethers';

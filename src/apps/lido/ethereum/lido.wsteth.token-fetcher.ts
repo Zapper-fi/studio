@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -11,6 +10,8 @@ import { LidoContractFactory, LidoWsteth } from '../contracts';
 @PositionTemplate()
 export class EthereumLidoWstethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoWsteth> {
   groupLabel = 'wstETH';
+
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

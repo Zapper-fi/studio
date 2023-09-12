@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { constants, type BigNumber } from 'ethers';
+import { BigNumber, constants } from 'ethers';
 
 import { APP_TOOLKIT, type IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -73,7 +73,7 @@ export abstract class ExactlyTokenFetcher<
   async getPricePerShare(params: GetPricePerShareParams<Market, V, ExactlyMarketDefinition>) {
     const [supply, totalAssets] = await Promise.all([this.getSupply(params), this.getTotalAssets(params)]);
     if (!BigInt(String(supply))) return [1];
-    return [Number(totalAssets.mul(constants.WeiPerEther).div(supply)) / 1e18];
+    return [Number(BigNumber.from(totalAssets).mul(constants.WeiPerEther).div(supply)) / 1e18];
   }
 
   async getApy(params: GetDataPropsParams<Market, V, ExactlyMarketDefinition>) {

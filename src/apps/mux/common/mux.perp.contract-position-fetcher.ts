@@ -165,13 +165,15 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
       indexToken.price,
       contractPosition.dataProps.indexTokenMinProfitTime,
       contractPosition.dataProps.indexTokenMinProfitRate,
-      fromWei(size).toFixed(0),
-      fromWei(entryPrice).toFixed(0),
+      fromWei(size),
+      fromWei(entryPrice),
       lastIncreasedTime,
       isLong,
     );
 
     const collateralAmount = fromWei(collateral);
+    if (Number(collateralAmount) == 0) return [0, 0, 0];
+
     const collateralAmountUsd = collateralAmount.times(collateralToken.price);
 
     const hasProfit = pnlUsd.gt(0);
@@ -185,6 +187,6 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
     const profitTokenBalanceRaw = pnlUsd.div(profitToken.price);
     const profitTokenBalance = profitTokenBalanceRaw.shiftedBy(profitToken.decimals).toFixed(0);
 
-    return [collateralBalance, 0, profitTokenBalance];
+    return isLong ? [collateralBalance, profitTokenBalance, 0] : [collateralBalance, 0, profitTokenBalance];
   }
 }

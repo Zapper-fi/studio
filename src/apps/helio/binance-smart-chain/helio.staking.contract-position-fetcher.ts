@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
@@ -25,7 +24,7 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
   groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(HelioContractFactory) protected readonly contractFactory: HelioContractFactory,
   ) {
     super(appToolkit);
@@ -41,6 +40,12 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
 
   getRewardRates({ contract }: GetDataPropsParams<HelioJar, SingleStakingFarmDataProps>) {
     return contract.rate();
+  }
+
+  getIsActive({
+    contract,
+  }: GetDataPropsParams<HelioJar, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
+    return contract.rate().then(v => v.gt(0));
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HelioJar, SingleStakingFarmDataProps>) {

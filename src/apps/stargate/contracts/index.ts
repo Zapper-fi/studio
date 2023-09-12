@@ -4,12 +4,15 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { StargateAa__factory } from './ethers';
-import { StargateChef__factory } from './ethers';
-import { StargateEth__factory } from './ethers';
-import { StargateFactory__factory } from './ethers';
-import { StargatePool__factory } from './ethers';
-import { StargateVe__factory } from './ethers';
+import {
+  StargateAa__factory,
+  StargateChef__factory,
+  StargateChefBase__factory,
+  StargateEth__factory,
+  StargateFactory__factory,
+  StargatePool__factory,
+  StargateVe__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -25,6 +28,9 @@ export class StargateContractFactory extends ContractFactory {
   }
   stargateChef({ address, network }: ContractOpts) {
     return StargateChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  stargateChefBase({ address, network }: ContractOpts) {
+    return StargateChefBase__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   stargateEth({ address, network }: ContractOpts) {
     return StargateEth__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -42,6 +48,7 @@ export class StargateContractFactory extends ContractFactory {
 
 export type { StargateAa } from './ethers';
 export type { StargateChef } from './ethers';
+export type { StargateChefBase } from './ethers';
 export type { StargateEth } from './ethers';
 export type { StargateFactory } from './ethers';
 export type { StargatePool } from './ethers';

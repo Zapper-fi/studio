@@ -27,7 +27,7 @@ import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 export type YieldIlksRes = {
   assets: {
     id: string;
-    assetId: string;
+    assetId: string | null;
   }[];
 };
 
@@ -132,8 +132,6 @@ const vaultsQuery = gql`
   }
 `;
 
-// TESTTT: 0x35e057137060cd397bd82e3dff54beba480e7012
-
 export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   YieldProtocolLadle,
   YieldProtocolBorrowDataProps,
@@ -142,8 +140,6 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
   abstract subgraphUrl: string;
   abstract cauldronAddress: string;
   abstract ladleAddress: string;
-  //   abstract CAULDRON = '0x23cc87fbebdd67cce167fa9ec6ad3b7fe3892e30';
-  // export const LADLE = '0x16e25cf364cecc305590128335b8f327975d0560';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -162,15 +158,8 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
       network: this.network,
     });
 
-    const { assets: ilks } = await gqlFetch<YieldIlksRes>({
-      endpoint: this.subgraphUrl,
-      query: ilksQuery,
-    });
-
-    const { seriesEntities: artsRes } = await gqlFetch<YieldArtsRes>({
-      endpoint: this.subgraphUrl,
-      query: artsQuery,
-    });
+    const { assets: ilks } = await gqlFetch<YieldIlksRes>({ endpoint: this.subgraphUrl, query: ilksQuery });
+    const { seriesEntities: artsRes } = await gqlFetch<YieldArtsRes>({ endpoint: this.subgraphUrl, query: artsQuery });
 
     // get distinct debt assets
     const distinctArts = uniqWith(artsRes, isEqual);
@@ -178,6 +167,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
     const definitionsByIlk = await Promise.all(
       ilks.map(async ilk => {
         const { assetId: ilkId, id: ilkAddress } = ilk;
+        if (!ilkId) return [];
 
         return Promise.all(
           distinctArts.map(async art => {
@@ -313,6 +303,8 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
             images,
           },
         };
+
+        positionBalance.key = this.appToolkit.getPositionKey(positionBalance);
 
         return positionBalance;
       }),

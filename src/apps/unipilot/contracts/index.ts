@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { UnipilotEthereumFactory__factory } from './ethers';
-import { UnipilotPolygonFactory__factory } from './ethers';
-import { UnipilotVault__factory } from './ethers';
+import { UnipilotEthereumFactory__factory, UnipilotPolygonFactory__factory, UnipilotVault__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

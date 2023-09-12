@@ -31,8 +31,8 @@ Zapper Studio is a platform which enables developers in our community to integra
 
 Ensure the following have been installed on your system:
 
-- Node v16.14.2 or above
-- [pnpm](https://pnpm.io/)
+- Node v18.16.1 or above
+- [pnpm 8](https://pnpm.io/)
 
 ## Getting Started
 
@@ -60,12 +60,6 @@ $ pnpm dev
 
 ```bash
 pnpm studio create-app
-```
-
-## Creating a new app group
-
-```bash
-pnpm studio create-group [app-id]
 ```
 
 ## Generating code templates

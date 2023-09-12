@@ -20,353 +20,298 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 
 export interface VelaVaultInterface extends utils.Interface {
   functions: {
-    'BASIS_POINTS_DIVISOR()': FunctionFragment;
-    'DEFAULT_FUNDING_RATE_FACTOR()': FunctionFragment;
-    'DEFAULT_MAX_OPEN_INTEREST()': FunctionFragment;
-    'DEFAULT_VLP_PRICE()': FunctionFragment;
-    'FUNDING_RATE_PRECISION()': FunctionFragment;
-    'LIQUIDATE_FEE_EXCEED()': FunctionFragment;
-    'LIQUIDATE_NONE_EXCEED()': FunctionFragment;
-    'LIQUIDATE_THRESHOLD_EXCEED()': FunctionFragment;
-    'MAX_COOLDOWN_DURATION()': FunctionFragment;
-    'MAX_DELTA_TIME()': FunctionFragment;
-    'MAX_DEPOSIT_FEE()': FunctionFragment;
-    'MAX_FEE_BASIS_POINTS()': FunctionFragment;
-    'MAX_FEE_REWARD_BASIS_POINTS()': FunctionFragment;
-    'MAX_FUNDING_RATE_FACTOR()': FunctionFragment;
-    'MAX_FUNDING_RATE_INTERVAL()': FunctionFragment;
-    'MAX_LIQUIDATION_FEE_USD()': FunctionFragment;
-    'MAX_STAKING_FEE()': FunctionFragment;
-    'MAX_TOKENFARM_COOLDOWN_DURATION()': FunctionFragment;
-    'MAX_TRIGGER_GAS_FEE()': FunctionFragment;
-    'MAX_VESTING_DURATION()': FunctionFragment;
-    'MIN_FEE_REWARD_BASIS_POINTS()': FunctionFragment;
-    'MIN_FUNDING_RATE_INTERVAL()': FunctionFragment;
-    'MIN_LEVERAGE()': FunctionFragment;
-    'ORDER_FILLED()': FunctionFragment;
-    'ORDER_NOT_FILLED()': FunctionFragment;
-    'POSITION_LIMIT()': FunctionFragment;
-    'POSITION_MARKET()': FunctionFragment;
-    'POSITION_STOP_LIMIT()': FunctionFragment;
-    'POSITION_STOP_MARKET()': FunctionFragment;
-    'POSITION_TRAILING_STOP()': FunctionFragment;
-    'PRICE_PRECISION()': FunctionFragment;
-    'STAKING_PID_FOR_CHARGE_FEE()': FunctionFragment;
-    'TRAILING_STOP_TYPE_AMOUNT()': FunctionFragment;
-    'TRAILING_STOP_TYPE_PERCENT()': FunctionFragment;
-    'VLP_DECIMALS()': FunctionFragment;
-    'ZERO_ADDRESS()': FunctionFragment;
-    'accountDeltaAndFeeIntoTotalUSDC(bool,uint256,uint256)': FunctionFragment;
-    'addOrRemoveCollateral(address,bool,uint256,bool,uint256)': FunctionFragment;
-    'addPosition(address,bool,uint256,uint256,uint256)': FunctionFragment;
-    'addTrailingStop(address,bool,uint256,uint256[])': FunctionFragment;
-    'cancelPendingOrder(address,bool,uint256)': FunctionFragment;
-    'decreasePosition(address,uint256,bool,uint256)': FunctionFragment;
+    'accountDeltaIntoTotalUSD(bool,uint256)': FunctionFragment;
+    'addCollateral(uint256,uint256)': FunctionFragment;
+    'addOrRemoveCollateralPacked(uint256)': FunctionFragment;
+    'addPosition(uint256,uint256,uint256,uint256)': FunctionFragment;
+    'addPositionPacked(uint256,uint256)': FunctionFragment;
+    'addTPSL(uint256,bool[],uint256[],uint256[])': FunctionFragment;
+    'addTPSLPacked(uint256,uint256[])': FunctionFragment;
+    'addTrailingStop(uint256,uint256[])': FunctionFragment;
+    'cancelPendingOrder(uint256)': FunctionFragment;
+    'cancelPendingOrders(uint256[])': FunctionFragment;
+    'decreasePosition(uint256,uint256,uint256)': FunctionFragment;
+    'decreasePositionPacked(uint256,uint256)': FunctionFragment;
     'deposit(address,address,uint256)': FunctionFragment;
-    'distributeFee(address,address,uint256)': FunctionFragment;
+    'depositSelf(address,uint256)': FunctionFragment;
+    'depositSelfAllUSDC()': FunctionFragment;
+    'depositSelfUSDC(uint256)': FunctionFragment;
+    'distributeFee(uint256,address)': FunctionFragment;
+    'forceClosePosition(uint256)': FunctionFragment;
     'getVLPPrice()': FunctionFragment;
+    'getVaultUSDBalance()': FunctionFragment;
+    'initialize(address,address,address)': FunctionFragment;
     'lastStakedAt(address)': FunctionFragment;
-    'newPositionOrder(address,bool,uint8,uint256[],address)': FunctionFragment;
-    'owner()': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'setVaultSettings(address,address,address)': FunctionFragment;
+    'newPositionOrder(uint256,bool,uint8,uint256[],address)': FunctionFragment;
+    'newPositionOrderPacked(uint256,uint256,uint256)': FunctionFragment;
+    'newPositionOrderWithTPSL(uint256,bool,uint8,uint256[],address,bool[],uint256[],uint256[])': FunctionFragment;
+    'operators()': FunctionFragment;
+    'removeCollateral(uint256,uint256)': FunctionFragment;
+    'setUSDC(address)': FunctionFragment;
+    'setVaultSettings(address,address,address,address,address)': FunctionFragment;
     'stake(address,address,uint256)': FunctionFragment;
-    'takeVUSDIn(address,address,uint256,uint256)': FunctionFragment;
-    'takeVUSDOut(address,address,uint256,uint256)': FunctionFragment;
-    'totalUSDC()': FunctionFragment;
-    'totalVLP()': FunctionFragment;
-    'transferBounty(address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'unstake(address,uint256,address)': FunctionFragment;
-    'withdraw(address,address,uint256)': FunctionFragment;
+    'stakeSelf(address,uint256)': FunctionFragment;
+    'stakeSelfAllUSDC()': FunctionFragment;
+    'stakeSelfUSDC(uint256)': FunctionFragment;
+    'takeVUSDIn(address,uint256)': FunctionFragment;
+    'takeVUSDOut(address,uint256)': FunctionFragment;
+    'totalUSD()': FunctionFragment;
+    'unstake(address,uint256)': FunctionFragment;
+    'unstakeAllUSDC()': FunctionFragment;
+    'unstakeUSDC(uint256)': FunctionFragment;
+    'withdraw(address,uint256)': FunctionFragment;
+    'withdrawAllUSDC()': FunctionFragment;
+    'withdrawUSDC(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'BASIS_POINTS_DIVISOR'
-      | 'DEFAULT_FUNDING_RATE_FACTOR'
-      | 'DEFAULT_MAX_OPEN_INTEREST'
-      | 'DEFAULT_VLP_PRICE'
-      | 'FUNDING_RATE_PRECISION'
-      | 'LIQUIDATE_FEE_EXCEED'
-      | 'LIQUIDATE_NONE_EXCEED'
-      | 'LIQUIDATE_THRESHOLD_EXCEED'
-      | 'MAX_COOLDOWN_DURATION'
-      | 'MAX_DELTA_TIME'
-      | 'MAX_DEPOSIT_FEE'
-      | 'MAX_FEE_BASIS_POINTS'
-      | 'MAX_FEE_REWARD_BASIS_POINTS'
-      | 'MAX_FUNDING_RATE_FACTOR'
-      | 'MAX_FUNDING_RATE_INTERVAL'
-      | 'MAX_LIQUIDATION_FEE_USD'
-      | 'MAX_STAKING_FEE'
-      | 'MAX_TOKENFARM_COOLDOWN_DURATION'
-      | 'MAX_TRIGGER_GAS_FEE'
-      | 'MAX_VESTING_DURATION'
-      | 'MIN_FEE_REWARD_BASIS_POINTS'
-      | 'MIN_FUNDING_RATE_INTERVAL'
-      | 'MIN_LEVERAGE'
-      | 'ORDER_FILLED'
-      | 'ORDER_NOT_FILLED'
-      | 'POSITION_LIMIT'
-      | 'POSITION_MARKET'
-      | 'POSITION_STOP_LIMIT'
-      | 'POSITION_STOP_MARKET'
-      | 'POSITION_TRAILING_STOP'
-      | 'PRICE_PRECISION'
-      | 'STAKING_PID_FOR_CHARGE_FEE'
-      | 'TRAILING_STOP_TYPE_AMOUNT'
-      | 'TRAILING_STOP_TYPE_PERCENT'
-      | 'VLP_DECIMALS'
-      | 'ZERO_ADDRESS'
-      | 'accountDeltaAndFeeIntoTotalUSDC'
-      | 'addOrRemoveCollateral'
+      | 'accountDeltaIntoTotalUSD'
+      | 'addCollateral'
+      | 'addOrRemoveCollateralPacked'
       | 'addPosition'
+      | 'addPositionPacked'
+      | 'addTPSL'
+      | 'addTPSLPacked'
       | 'addTrailingStop'
       | 'cancelPendingOrder'
+      | 'cancelPendingOrders'
       | 'decreasePosition'
+      | 'decreasePositionPacked'
       | 'deposit'
+      | 'depositSelf'
+      | 'depositSelfAllUSDC'
+      | 'depositSelfUSDC'
       | 'distributeFee'
+      | 'forceClosePosition'
       | 'getVLPPrice'
+      | 'getVaultUSDBalance'
+      | 'initialize'
       | 'lastStakedAt'
       | 'newPositionOrder'
-      | 'owner'
-      | 'renounceOwnership'
+      | 'newPositionOrderPacked'
+      | 'newPositionOrderWithTPSL'
+      | 'operators'
+      | 'removeCollateral'
+      | 'setUSDC'
       | 'setVaultSettings'
       | 'stake'
+      | 'stakeSelf'
+      | 'stakeSelfAllUSDC'
+      | 'stakeSelfUSDC'
       | 'takeVUSDIn'
       | 'takeVUSDOut'
-      | 'totalUSDC'
-      | 'totalVLP'
-      | 'transferBounty'
-      | 'transferOwnership'
+      | 'totalUSD'
       | 'unstake'
-      | 'withdraw',
+      | 'unstakeAllUSDC'
+      | 'unstakeUSDC'
+      | 'withdraw'
+      | 'withdrawAllUSDC'
+      | 'withdrawUSDC',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'BASIS_POINTS_DIVISOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'DEFAULT_FUNDING_RATE_FACTOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'DEFAULT_MAX_OPEN_INTEREST', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'DEFAULT_VLP_PRICE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'FUNDING_RATE_PRECISION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'LIQUIDATE_FEE_EXCEED', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'LIQUIDATE_NONE_EXCEED', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'LIQUIDATE_THRESHOLD_EXCEED', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_COOLDOWN_DURATION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_DELTA_TIME', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_DEPOSIT_FEE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_FEE_BASIS_POINTS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_FEE_REWARD_BASIS_POINTS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_FUNDING_RATE_FACTOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_FUNDING_RATE_INTERVAL', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_LIQUIDATION_FEE_USD', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_STAKING_FEE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_TOKENFARM_COOLDOWN_DURATION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_TRIGGER_GAS_FEE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MAX_VESTING_DURATION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MIN_FEE_REWARD_BASIS_POINTS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MIN_FUNDING_RATE_INTERVAL', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'MIN_LEVERAGE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ORDER_FILLED', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ORDER_NOT_FILLED', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'POSITION_LIMIT', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'POSITION_MARKET', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'POSITION_STOP_LIMIT', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'POSITION_STOP_MARKET', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'POSITION_TRAILING_STOP', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'PRICE_PRECISION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'STAKING_PID_FOR_CHARGE_FEE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'TRAILING_STOP_TYPE_AMOUNT', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'TRAILING_STOP_TYPE_PERCENT', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'VLP_DECIMALS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ZERO_ADDRESS', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'accountDeltaAndFeeIntoTotalUSDC',
-    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'accountDeltaIntoTotalUSD',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'addOrRemoveCollateral',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    functionFragment: 'addCollateral',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'addOrRemoveCollateralPacked', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'addPosition',
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
     ],
   ): string;
   encodeFunctionData(
-    functionFragment: 'addTrailingStop',
+    functionFragment: 'addPositionPacked',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addTPSL',
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>,
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>[],
+      PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>[],
     ],
   ): string;
   encodeFunctionData(
-    functionFragment: 'cancelPendingOrder',
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'addTPSLPacked',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(
+    functionFragment: 'addTrailingStop',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'cancelPendingOrder', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'cancelPendingOrders', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(
     functionFragment: 'decreasePosition',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<boolean>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'decreasePositionPacked',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'deposit',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: 'distributeFee',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'depositSelf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'depositSelfAllUSDC', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'depositSelfUSDC', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'distributeFee',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'forceClosePosition', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getVLPPrice', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getVaultUSDBalance', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'lastStakedAt', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'newPositionOrder',
     values: [
-      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<boolean>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<string>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'newPositionOrderPacked',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'newPositionOrderWithTPSL',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'operators', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'removeCollateral',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setUSDC', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'setVaultSettings',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'stake',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
+    functionFragment: 'stakeSelf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stakeSelfAllUSDC', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'stakeSelfUSDC', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
     functionFragment: 'takeVUSDIn',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'takeVUSDOut',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-    ],
-  ): string;
-  encodeFunctionData(functionFragment: 'totalUSDC', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalVLP', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'transferBounty',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'totalUSD', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'unstake',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'unstakeAllUSDC', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'unstakeUSDC', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'withdraw',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'withdrawAllUSDC', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawUSDC', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(functionFragment: 'BASIS_POINTS_DIVISOR', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'DEFAULT_FUNDING_RATE_FACTOR', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'DEFAULT_MAX_OPEN_INTEREST', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'DEFAULT_VLP_PRICE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'FUNDING_RATE_PRECISION', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'LIQUIDATE_FEE_EXCEED', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'LIQUIDATE_NONE_EXCEED', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'LIQUIDATE_THRESHOLD_EXCEED', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_COOLDOWN_DURATION', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_DELTA_TIME', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_DEPOSIT_FEE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_FEE_BASIS_POINTS', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_FEE_REWARD_BASIS_POINTS', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_FUNDING_RATE_FACTOR', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_FUNDING_RATE_INTERVAL', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_LIQUIDATION_FEE_USD', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_STAKING_FEE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_TOKENFARM_COOLDOWN_DURATION', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_TRIGGER_GAS_FEE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MAX_VESTING_DURATION', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MIN_FEE_REWARD_BASIS_POINTS', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MIN_FUNDING_RATE_INTERVAL', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'MIN_LEVERAGE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ORDER_FILLED', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ORDER_NOT_FILLED', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'POSITION_LIMIT', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'POSITION_MARKET', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'POSITION_STOP_LIMIT', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'POSITION_STOP_MARKET', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'POSITION_TRAILING_STOP', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'PRICE_PRECISION', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'STAKING_PID_FOR_CHARGE_FEE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'TRAILING_STOP_TYPE_AMOUNT', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'TRAILING_STOP_TYPE_PERCENT', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'VLP_DECIMALS', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ZERO_ADDRESS', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accountDeltaAndFeeIntoTotalUSDC', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'addOrRemoveCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accountDeltaIntoTotalUSD', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addOrRemoveCollateralPacked', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addPosition', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addPositionPacked', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addTPSL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addTPSLPacked', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addTrailingStop', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cancelPendingOrder', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cancelPendingOrders', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreasePosition', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decreasePositionPacked', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositSelf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositSelfAllUSDC', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositSelfUSDC', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'distributeFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'forceClosePosition', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getVLPPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getVaultUSDBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lastStakedAt', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'newPositionOrder', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'newPositionOrderPacked', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'newPositionOrderWithTPSL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'operators', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeCollateral', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUSDC', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setVaultSettings', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeSelf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeSelfAllUSDC', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeSelfUSDC', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'takeVUSDIn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'takeVUSDOut', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalUSDC', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalVLP', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferBounty', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalUSD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unstake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstakeAllUSDC', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstakeUSDC', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawAllUSDC', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawUSDC', data: BytesLike): Result;
 
   events: {
     'Deposit(address,address,uint256)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
+    'ForceClose(uint256,address,uint256)': EventFragment;
+    'Initialized(uint8)': EventFragment;
     'Stake(address,address,uint256,uint256)': EventFragment;
-    'TakeVUSDIn(address,address,uint256,uint256)': EventFragment;
-    'TakeVUSDOut(address,address,uint256,uint256)': EventFragment;
-    'TransferBounty(address,uint256)': EventFragment;
     'Unstake(address,address,uint256,uint256)': EventFragment;
     'Withdraw(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ForceClose'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Stake'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'TakeVUSDIn'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'TakeVUSDOut'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'TransferBounty'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unstake'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
@@ -380,13 +325,21 @@ export type DepositEvent = TypedEvent<[string, string, BigNumber], DepositEventO
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
+export interface ForceCloseEventObject {
+  posId: BigNumber;
+  account: string;
+  exceededPnl: BigNumber;
 }
-export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
+export type ForceCloseEvent = TypedEvent<[BigNumber, string, BigNumber], ForceCloseEventObject>;
 
-export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export type ForceCloseEventFilter = TypedEventFilter<ForceCloseEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface StakeEventObject {
   account: string;
@@ -397,34 +350,6 @@ export interface StakeEventObject {
 export type StakeEvent = TypedEvent<[string, string, BigNumber, BigNumber], StakeEventObject>;
 
 export type StakeEventFilter = TypedEventFilter<StakeEvent>;
-
-export interface TakeVUSDInEventObject {
-  account: string;
-  refer: string;
-  amount: BigNumber;
-  fee: BigNumber;
-}
-export type TakeVUSDInEvent = TypedEvent<[string, string, BigNumber, BigNumber], TakeVUSDInEventObject>;
-
-export type TakeVUSDInEventFilter = TypedEventFilter<TakeVUSDInEvent>;
-
-export interface TakeVUSDOutEventObject {
-  account: string;
-  refer: string;
-  amount: BigNumber;
-  fee: BigNumber;
-}
-export type TakeVUSDOutEvent = TypedEvent<[string, string, BigNumber, BigNumber], TakeVUSDOutEventObject>;
-
-export type TakeVUSDOutEventFilter = TypedEventFilter<TakeVUSDOutEvent>;
-
-export interface TransferBountyEventObject {
-  account: string;
-  amount: BigNumber;
-}
-export type TransferBountyEvent = TypedEvent<[string, BigNumber], TransferBountyEventObject>;
-
-export type TransferBountyEventFilter = TypedEventFilter<TransferBountyEvent>;
 
 export interface UnstakeEventObject {
   account: string;
@@ -468,124 +393,78 @@ export interface VelaVault extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    BASIS_POINTS_DIVISOR(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    DEFAULT_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    DEFAULT_MAX_OPEN_INTEREST(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    DEFAULT_VLP_PRICE(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    FUNDING_RATE_PRECISION(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    LIQUIDATE_FEE_EXCEED(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    LIQUIDATE_NONE_EXCEED(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    LIQUIDATE_THRESHOLD_EXCEED(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_DELTA_TIME(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_DEPOSIT_FEE(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_FEE_BASIS_POINTS(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_LIQUIDATION_FEE_USD(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_STAKING_FEE(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_TOKENFARM_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_TRIGGER_GAS_FEE(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MAX_VESTING_DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MIN_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MIN_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    MIN_LEVERAGE(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    ORDER_FILLED(overrides?: CallOverrides): Promise<[number]>;
-
-    ORDER_NOT_FILLED(overrides?: CallOverrides): Promise<[number]>;
-
-    POSITION_LIMIT(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    POSITION_MARKET(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    POSITION_STOP_LIMIT(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    POSITION_STOP_MARKET(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    POSITION_TRAILING_STOP(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    PRICE_PRECISION(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    STAKING_PID_FOR_CHARGE_FEE(overrides?: CallOverrides): Promise<[number]>;
-
-    TRAILING_STOP_TYPE_AMOUNT(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    TRAILING_STOP_TYPE_PERCENT(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    VLP_DECIMALS(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
-
-    accountDeltaAndFeeIntoTotalUSDC(
-      _hasProfit: PromiseOrValue<boolean>,
-      _adjustDelta: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
+    accountDeltaIntoTotalUSD(
+      _isIncrease: PromiseOrValue<boolean>,
+      _delta: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    addOrRemoveCollateral(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
+    addCollateral(
       _posId: PromiseOrValue<BigNumberish>,
-      isPlus: PromiseOrValue<boolean>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    addOrRemoveCollateralPacked(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     addPosition(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _collateralDelta: PromiseOrValue<BigNumberish>,
       _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    addPositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    addTPSL(
+      _posId: PromiseOrValue<BigNumberish>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    addTPSLPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _tps: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addTrailingStop(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancelPendingOrder(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    decreasePosition(
-      _indexToken: PromiseOrValue<string>,
-      _sizeDelta: PromiseOrValue<BigNumberish>,
-      _isLong: PromiseOrValue<boolean>,
-      _posId: PromiseOrValue<BigNumberish>,
+    cancelPendingOrders(
+      _posIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    decreasePosition(
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    decreasePositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
@@ -595,19 +474,45 @@ export interface VelaVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    distributeFee(
-      _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
+    depositSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    depositSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    depositSelfUSDC(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    distributeFee(
+      _fee: PromiseOrValue<BigNumberish>,
+      _refer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    forceClosePosition(
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getVLPPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    getVaultUSDBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    initialize(
+      _operators: PromiseOrValue<string>,
+      _vlp: PromiseOrValue<string>,
+      _vusd: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     lastStakedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     newPositionOrder(
-      _indexToken: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       _isLong: PromiseOrValue<boolean>,
       _orderType: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
@@ -615,14 +520,44 @@ export interface VelaVault extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    newPositionOrderPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      c: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    newPositionOrderWithTPSL(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _orderType: PromiseOrValue<BigNumberish>,
+      _params: PromiseOrValue<BigNumberish>[],
+      _refer: PromiseOrValue<string>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    operators(overrides?: CallOverrides): Promise<[string]>;
+
+    removeCollateral(
+      _posId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    setUSDC(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setVaultSettings(
       _priceManager: PromiseOrValue<string>,
       _settingsManager: PromiseOrValue<string>,
       _positionVault: PromiseOrValue<string>,
+      _orderVault: PromiseOrValue<string>,
+      _liquidateVault: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -633,170 +568,132 @@ export interface VelaVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    stakeSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    stakeSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    stakeSelfUSDC(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     takeVUSDIn(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     takeVUSDOut(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
-      _usdOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    totalUSDC(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    totalVLP(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    transferBounty(
-      _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    totalUSD(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     unstake(
       _tokenOut: PromiseOrValue<string>,
       _vlpAmount: PromiseOrValue<BigNumberish>,
-      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    unstakeAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    unstakeUSDC(
+      _vlpAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
       _token: PromiseOrValue<string>,
-      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    withdrawAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    withdrawUSDC(
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  BASIS_POINTS_DIVISOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-  DEFAULT_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-  DEFAULT_MAX_OPEN_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
-
-  DEFAULT_VLP_PRICE(overrides?: CallOverrides): Promise<BigNumber>;
-
-  FUNDING_RATE_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  LIQUIDATE_FEE_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-  LIQUIDATE_NONE_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-  LIQUIDATE_THRESHOLD_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_DELTA_TIME(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_DEPOSIT_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_FEE_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_LIQUIDATION_FEE_USD(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_STAKING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_TOKENFARM_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_TRIGGER_GAS_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MAX_VESTING_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MIN_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MIN_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<BigNumber>;
-
-  MIN_LEVERAGE(overrides?: CallOverrides): Promise<BigNumber>;
-
-  ORDER_FILLED(overrides?: CallOverrides): Promise<number>;
-
-  ORDER_NOT_FILLED(overrides?: CallOverrides): Promise<number>;
-
-  POSITION_LIMIT(overrides?: CallOverrides): Promise<BigNumber>;
-
-  POSITION_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-  POSITION_STOP_LIMIT(overrides?: CallOverrides): Promise<BigNumber>;
-
-  POSITION_STOP_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-  POSITION_TRAILING_STOP(overrides?: CallOverrides): Promise<BigNumber>;
-
-  PRICE_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
-
-  STAKING_PID_FOR_CHARGE_FEE(overrides?: CallOverrides): Promise<number>;
-
-  TRAILING_STOP_TYPE_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
-
-  TRAILING_STOP_TYPE_PERCENT(overrides?: CallOverrides): Promise<BigNumber>;
-
-  VLP_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
-
-  ZERO_ADDRESS(overrides?: CallOverrides): Promise<string>;
-
-  accountDeltaAndFeeIntoTotalUSDC(
-    _hasProfit: PromiseOrValue<boolean>,
-    _adjustDelta: PromiseOrValue<BigNumberish>,
-    _fee: PromiseOrValue<BigNumberish>,
+  accountDeltaIntoTotalUSD(
+    _isIncrease: PromiseOrValue<boolean>,
+    _delta: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  addOrRemoveCollateral(
-    _indexToken: PromiseOrValue<string>,
-    _isLong: PromiseOrValue<boolean>,
+  addCollateral(
     _posId: PromiseOrValue<BigNumberish>,
-    isPlus: PromiseOrValue<boolean>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  addOrRemoveCollateralPacked(
+    a: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   addPosition(
-    _indexToken: PromiseOrValue<string>,
-    _isLong: PromiseOrValue<boolean>,
     _posId: PromiseOrValue<BigNumberish>,
     _collateralDelta: PromiseOrValue<BigNumberish>,
     _sizeDelta: PromiseOrValue<BigNumberish>,
+    _allowedPrice: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  addPositionPacked(
+    a: PromiseOrValue<BigNumberish>,
+    b: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  addTPSL(
+    _posId: PromiseOrValue<BigNumberish>,
+    _isTPs: PromiseOrValue<boolean>[],
+    _prices: PromiseOrValue<BigNumberish>[],
+    _amountPercents: PromiseOrValue<BigNumberish>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  addTPSLPacked(
+    a: PromiseOrValue<BigNumberish>,
+    _tps: PromiseOrValue<BigNumberish>[],
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addTrailingStop(
-    _indexToken: PromiseOrValue<string>,
-    _isLong: PromiseOrValue<boolean>,
     _posId: PromiseOrValue<BigNumberish>,
     _params: PromiseOrValue<BigNumberish>[],
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancelPendingOrder(
-    _indexToken: PromiseOrValue<string>,
-    _isLong: PromiseOrValue<boolean>,
     _posId: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  decreasePosition(
-    _indexToken: PromiseOrValue<string>,
-    _sizeDelta: PromiseOrValue<BigNumberish>,
-    _isLong: PromiseOrValue<boolean>,
-    _posId: PromiseOrValue<BigNumberish>,
+  cancelPendingOrders(
+    _posIds: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  decreasePosition(
+    _sizeDelta: PromiseOrValue<BigNumberish>,
+    _allowedPrice: PromiseOrValue<BigNumberish>,
+    _posId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  decreasePositionPacked(
+    a: PromiseOrValue<BigNumberish>,
+    _posId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
@@ -806,19 +703,45 @@ export interface VelaVault extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  distributeFee(
-    _account: PromiseOrValue<string>,
-    _refer: PromiseOrValue<string>,
-    _fee: PromiseOrValue<BigNumberish>,
+  depositSelf(
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  depositSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  depositSelfUSDC(
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  distributeFee(
+    _fee: PromiseOrValue<BigNumberish>,
+    _refer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  forceClosePosition(
+    _posId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getVLPPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getVaultUSDBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+  initialize(
+    _operators: PromiseOrValue<string>,
+    _vlp: PromiseOrValue<string>,
+    _vusd: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   lastStakedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   newPositionOrder(
-    _indexToken: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
     _isLong: PromiseOrValue<boolean>,
     _orderType: PromiseOrValue<BigNumberish>,
     _params: PromiseOrValue<BigNumberish>[],
@@ -826,14 +749,44 @@ export interface VelaVault extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  newPositionOrderPacked(
+    a: PromiseOrValue<BigNumberish>,
+    b: PromiseOrValue<BigNumberish>,
+    c: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  newPositionOrderWithTPSL(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _isLong: PromiseOrValue<boolean>,
+    _orderType: PromiseOrValue<BigNumberish>,
+    _params: PromiseOrValue<BigNumberish>[],
+    _refer: PromiseOrValue<string>,
+    _isTPs: PromiseOrValue<boolean>[],
+    _prices: PromiseOrValue<BigNumberish>[],
+    _amountPercents: PromiseOrValue<BigNumberish>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  operators(overrides?: CallOverrides): Promise<string>;
+
+  removeCollateral(
+    _posId: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  setUSDC(
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setVaultSettings(
     _priceManager: PromiseOrValue<string>,
     _settingsManager: PromiseOrValue<string>,
     _positionVault: PromiseOrValue<string>,
+    _orderVault: PromiseOrValue<string>,
+    _liquidateVault: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -844,168 +797,121 @@ export interface VelaVault extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  stakeSelf(
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  stakeSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  stakeSelfUSDC(
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   takeVUSDIn(
     _account: PromiseOrValue<string>,
-    _refer: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    _fee: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   takeVUSDOut(
     _account: PromiseOrValue<string>,
-    _refer: PromiseOrValue<string>,
-    _fee: PromiseOrValue<BigNumberish>,
-    _usdOut: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  totalUSDC(overrides?: CallOverrides): Promise<BigNumber>;
-
-  totalVLP(overrides?: CallOverrides): Promise<BigNumber>;
-
-  transferBounty(
-    _account: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  totalUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
   unstake(
     _tokenOut: PromiseOrValue<string>,
     _vlpAmount: PromiseOrValue<BigNumberish>,
-    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  unstakeAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  unstakeUSDC(
+    _vlpAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
     _token: PromiseOrValue<string>,
-    _account: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  withdrawAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  withdrawUSDC(
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    BASIS_POINTS_DIVISOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    DEFAULT_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    DEFAULT_MAX_OPEN_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
-
-    DEFAULT_VLP_PRICE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    FUNDING_RATE_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LIQUIDATE_FEE_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LIQUIDATE_NONE_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LIQUIDATE_THRESHOLD_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_DELTA_TIME(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_DEPOSIT_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FEE_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_LIQUIDATION_FEE_USD(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_STAKING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_TOKENFARM_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_TRIGGER_GAS_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_VESTING_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MIN_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MIN_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MIN_LEVERAGE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ORDER_FILLED(overrides?: CallOverrides): Promise<number>;
-
-    ORDER_NOT_FILLED(overrides?: CallOverrides): Promise<number>;
-
-    POSITION_LIMIT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_STOP_LIMIT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_STOP_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_TRAILING_STOP(overrides?: CallOverrides): Promise<BigNumber>;
-
-    PRICE_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    STAKING_PID_FOR_CHARGE_FEE(overrides?: CallOverrides): Promise<number>;
-
-    TRAILING_STOP_TYPE_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    TRAILING_STOP_TYPE_PERCENT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    VLP_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<string>;
-
-    accountDeltaAndFeeIntoTotalUSDC(
-      _hasProfit: PromiseOrValue<boolean>,
-      _adjustDelta: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
+    accountDeltaIntoTotalUSD(
+      _isIncrease: PromiseOrValue<boolean>,
+      _delta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    addOrRemoveCollateral(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
+    addCollateral(
       _posId: PromiseOrValue<BigNumberish>,
-      isPlus: PromiseOrValue<boolean>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    addOrRemoveCollateralPacked(a: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     addPosition(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _collateralDelta: PromiseOrValue<BigNumberish>,
       _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    addPositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    addTPSL(
+      _posId: PromiseOrValue<BigNumberish>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    addTPSLPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _tps: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     addTrailingStop(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    cancelPendingOrder(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
+    cancelPendingOrder(_posId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    cancelPendingOrders(_posIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
+
+    decreasePosition(
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
       _posId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    decreasePosition(
-      _indexToken: PromiseOrValue<string>,
-      _sizeDelta: PromiseOrValue<BigNumberish>,
-      _isLong: PromiseOrValue<boolean>,
+    decreasePositionPacked(
+      a: PromiseOrValue<BigNumberish>,
       _posId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
@@ -1017,19 +923,39 @@ export interface VelaVault extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    distributeFee(
-      _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
+    depositSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    depositSelfAllUSDC(overrides?: CallOverrides): Promise<void>;
+
+    depositSelfUSDC(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    distributeFee(
+      _fee: PromiseOrValue<BigNumberish>,
+      _refer: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    forceClosePosition(_posId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     getVLPPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getVaultUSDBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(
+      _operators: PromiseOrValue<string>,
+      _vlp: PromiseOrValue<string>,
+      _vusd: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     lastStakedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     newPositionOrder(
-      _indexToken: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       _isLong: PromiseOrValue<boolean>,
       _orderType: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
@@ -1037,14 +963,41 @@ export interface VelaVault extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
+    newPositionOrderPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      c: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+    newPositionOrderWithTPSL(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _orderType: PromiseOrValue<BigNumberish>,
+      _params: PromiseOrValue<BigNumberish>[],
+      _refer: PromiseOrValue<string>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    operators(overrides?: CallOverrides): Promise<string>;
+
+    removeCollateral(
+      _posId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setUSDC(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setVaultSettings(
       _priceManager: PromiseOrValue<string>,
       _settingsManager: PromiseOrValue<string>,
       _positionVault: PromiseOrValue<string>,
+      _orderVault: PromiseOrValue<string>,
+      _liquidateVault: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1055,47 +1008,49 @@ export interface VelaVault extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    stakeSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    stakeSelfAllUSDC(overrides?: CallOverrides): Promise<void>;
+
+    stakeSelfUSDC(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     takeVUSDIn(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     takeVUSDOut(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
-      _usdOut: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    totalUSDC(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalVLP(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferBounty(
-      _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    totalUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
     unstake(
       _tokenOut: PromiseOrValue<string>,
       _vlpAmount: PromiseOrValue<BigNumberish>,
-      _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    unstakeAllUSDC(overrides?: CallOverrides): Promise<void>;
+
+    unstakeUSDC(_vlpAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     withdraw(
       _token: PromiseOrValue<string>,
-      _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    withdrawAllUSDC(overrides?: CallOverrides): Promise<void>;
+
+    withdrawUSDC(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -1110,14 +1065,19 @@ export interface VelaVault extends BaseContract {
       amount?: null,
     ): DepositEventFilter;
 
-    'OwnershipTransferred(address,address)'(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnershipTransferredEventFilter;
+    'ForceClose(uint256,address,uint256)'(
+      posId?: PromiseOrValue<BigNumberish> | null,
+      account?: PromiseOrValue<string> | null,
+      exceededPnl?: null,
+    ): ForceCloseEventFilter;
+    ForceClose(
+      posId?: PromiseOrValue<BigNumberish> | null,
+      account?: PromiseOrValue<string> | null,
+      exceededPnl?: null,
+    ): ForceCloseEventFilter;
+
+    'Initialized(uint8)'(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
 
     'Stake(address,address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
@@ -1126,38 +1086,6 @@ export interface VelaVault extends BaseContract {
       mintAmount?: null,
     ): StakeEventFilter;
     Stake(account?: PromiseOrValue<string> | null, token?: null, amount?: null, mintAmount?: null): StakeEventFilter;
-
-    'TakeVUSDIn(address,address,uint256,uint256)'(
-      account?: PromiseOrValue<string> | null,
-      refer?: PromiseOrValue<string> | null,
-      amount?: null,
-      fee?: null,
-    ): TakeVUSDInEventFilter;
-    TakeVUSDIn(
-      account?: PromiseOrValue<string> | null,
-      refer?: PromiseOrValue<string> | null,
-      amount?: null,
-      fee?: null,
-    ): TakeVUSDInEventFilter;
-
-    'TakeVUSDOut(address,address,uint256,uint256)'(
-      account?: PromiseOrValue<string> | null,
-      refer?: PromiseOrValue<string> | null,
-      amount?: null,
-      fee?: null,
-    ): TakeVUSDOutEventFilter;
-    TakeVUSDOut(
-      account?: PromiseOrValue<string> | null,
-      refer?: PromiseOrValue<string> | null,
-      amount?: null,
-      fee?: null,
-    ): TakeVUSDOutEventFilter;
-
-    'TransferBounty(address,uint256)'(
-      account?: PromiseOrValue<string> | null,
-      amount?: null,
-    ): TransferBountyEventFilter;
-    TransferBounty(account?: PromiseOrValue<string> | null, amount?: null): TransferBountyEventFilter;
 
     'Unstake(address,address,uint256,uint256)'(
       account?: PromiseOrValue<string> | null,
@@ -1185,124 +1113,78 @@ export interface VelaVault extends BaseContract {
   };
 
   estimateGas: {
-    BASIS_POINTS_DIVISOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    DEFAULT_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    DEFAULT_MAX_OPEN_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
-
-    DEFAULT_VLP_PRICE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    FUNDING_RATE_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LIQUIDATE_FEE_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LIQUIDATE_NONE_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LIQUIDATE_THRESHOLD_EXCEED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_DELTA_TIME(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_DEPOSIT_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FEE_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_LIQUIDATION_FEE_USD(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_STAKING_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_TOKENFARM_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_TRIGGER_GAS_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MAX_VESTING_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MIN_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MIN_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<BigNumber>;
-
-    MIN_LEVERAGE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ORDER_FILLED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ORDER_NOT_FILLED(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_LIMIT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_STOP_LIMIT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_STOP_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-    POSITION_TRAILING_STOP(overrides?: CallOverrides): Promise<BigNumber>;
-
-    PRICE_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    STAKING_PID_FOR_CHARGE_FEE(overrides?: CallOverrides): Promise<BigNumber>;
-
-    TRAILING_STOP_TYPE_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    TRAILING_STOP_TYPE_PERCENT(overrides?: CallOverrides): Promise<BigNumber>;
-
-    VLP_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accountDeltaAndFeeIntoTotalUSDC(
-      _hasProfit: PromiseOrValue<boolean>,
-      _adjustDelta: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
+    accountDeltaIntoTotalUSD(
+      _isIncrease: PromiseOrValue<boolean>,
+      _delta: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    addOrRemoveCollateral(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
+    addCollateral(
       _posId: PromiseOrValue<BigNumberish>,
-      isPlus: PromiseOrValue<boolean>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    addOrRemoveCollateralPacked(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     addPosition(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _collateralDelta: PromiseOrValue<BigNumberish>,
       _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    addPositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    addTPSL(
+      _posId: PromiseOrValue<BigNumberish>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    addTPSLPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _tps: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addTrailingStop(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cancelPendingOrder(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    decreasePosition(
-      _indexToken: PromiseOrValue<string>,
-      _sizeDelta: PromiseOrValue<BigNumberish>,
-      _isLong: PromiseOrValue<boolean>,
-      _posId: PromiseOrValue<BigNumberish>,
+    cancelPendingOrders(
+      _posIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    decreasePosition(
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    decreasePositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
@@ -1312,19 +1194,45 @@ export interface VelaVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    distributeFee(
-      _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
+    depositSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    depositSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    depositSelfUSDC(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    distributeFee(
+      _fee: PromiseOrValue<BigNumberish>,
+      _refer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    forceClosePosition(
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getVLPPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getVaultUSDBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(
+      _operators: PromiseOrValue<string>,
+      _vlp: PromiseOrValue<string>,
+      _vusd: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     lastStakedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     newPositionOrder(
-      _indexToken: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       _isLong: PromiseOrValue<boolean>,
       _orderType: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
@@ -1332,14 +1240,44 @@ export interface VelaVault extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
+    newPositionOrderPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      c: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    newPositionOrderWithTPSL(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _orderType: PromiseOrValue<BigNumberish>,
+      _params: PromiseOrValue<BigNumberish>[],
+      _refer: PromiseOrValue<string>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    operators(overrides?: CallOverrides): Promise<BigNumber>;
+
+    removeCollateral(
+      _posId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setUSDC(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setVaultSettings(
       _priceManager: PromiseOrValue<string>,
       _settingsManager: PromiseOrValue<string>,
       _positionVault: PromiseOrValue<string>,
+      _orderVault: PromiseOrValue<string>,
+      _liquidateVault: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1350,171 +1288,133 @@ export interface VelaVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    stakeSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    stakeSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    stakeSelfUSDC(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     takeVUSDIn(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     takeVUSDOut(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
-      _usdOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    totalUSDC(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalVLP(overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferBounty(
-      _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    totalUSD(overrides?: CallOverrides): Promise<BigNumber>;
 
     unstake(
       _tokenOut: PromiseOrValue<string>,
       _vlpAmount: PromiseOrValue<BigNumberish>,
-      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    unstakeAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    unstakeUSDC(
+      _vlpAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
       _token: PromiseOrValue<string>,
-      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    withdrawAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    withdrawUSDC(
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    BASIS_POINTS_DIVISOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    DEFAULT_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    DEFAULT_MAX_OPEN_INTEREST(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    DEFAULT_VLP_PRICE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    FUNDING_RATE_PRECISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    LIQUIDATE_FEE_EXCEED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    LIQUIDATE_NONE_EXCEED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    LIQUIDATE_THRESHOLD_EXCEED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_DELTA_TIME(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_DEPOSIT_FEE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_FEE_BASIS_POINTS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_FUNDING_RATE_FACTOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_LIQUIDATION_FEE_USD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_STAKING_FEE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_TOKENFARM_COOLDOWN_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_TRIGGER_GAS_FEE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MAX_VESTING_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MIN_FEE_REWARD_BASIS_POINTS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MIN_FUNDING_RATE_INTERVAL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    MIN_LEVERAGE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ORDER_FILLED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ORDER_NOT_FILLED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    POSITION_LIMIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    POSITION_MARKET(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    POSITION_STOP_LIMIT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    POSITION_STOP_MARKET(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    POSITION_TRAILING_STOP(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    PRICE_PRECISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    STAKING_PID_FOR_CHARGE_FEE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    TRAILING_STOP_TYPE_AMOUNT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    TRAILING_STOP_TYPE_PERCENT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    VLP_DECIMALS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ZERO_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    accountDeltaAndFeeIntoTotalUSDC(
-      _hasProfit: PromiseOrValue<boolean>,
-      _adjustDelta: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
+    accountDeltaIntoTotalUSD(
+      _isIncrease: PromiseOrValue<boolean>,
+      _delta: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    addOrRemoveCollateral(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
+    addCollateral(
       _posId: PromiseOrValue<BigNumberish>,
-      isPlus: PromiseOrValue<boolean>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    addOrRemoveCollateralPacked(
+      a: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     addPosition(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _collateralDelta: PromiseOrValue<BigNumberish>,
       _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    addPositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    addTPSL(
+      _posId: PromiseOrValue<BigNumberish>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    addTPSLPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _tps: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addTrailingStop(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancelPendingOrder(
-      _indexToken: PromiseOrValue<string>,
-      _isLong: PromiseOrValue<boolean>,
       _posId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    decreasePosition(
-      _indexToken: PromiseOrValue<string>,
-      _sizeDelta: PromiseOrValue<BigNumberish>,
-      _isLong: PromiseOrValue<boolean>,
-      _posId: PromiseOrValue<BigNumberish>,
+    cancelPendingOrders(
+      _posIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    decreasePosition(
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _allowedPrice: PromiseOrValue<BigNumberish>,
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    decreasePositionPacked(
+      a: PromiseOrValue<BigNumberish>,
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
@@ -1524,19 +1424,45 @@ export interface VelaVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    distributeFee(
-      _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
+    depositSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    depositSelfUSDC(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    distributeFee(
+      _fee: PromiseOrValue<BigNumberish>,
+      _refer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    forceClosePosition(
+      _posId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getVLPPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    getVaultUSDBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialize(
+      _operators: PromiseOrValue<string>,
+      _vlp: PromiseOrValue<string>,
+      _vusd: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     lastStakedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     newPositionOrder(
-      _indexToken: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       _isLong: PromiseOrValue<boolean>,
       _orderType: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BigNumberish>[],
@@ -1544,14 +1470,44 @@ export interface VelaVault extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    newPositionOrderPacked(
+      a: PromiseOrValue<BigNumberish>,
+      b: PromiseOrValue<BigNumberish>,
+      c: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    newPositionOrderWithTPSL(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _orderType: PromiseOrValue<BigNumberish>,
+      _params: PromiseOrValue<BigNumberish>[],
+      _refer: PromiseOrValue<string>,
+      _isTPs: PromiseOrValue<boolean>[],
+      _prices: PromiseOrValue<BigNumberish>[],
+      _amountPercents: PromiseOrValue<BigNumberish>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    operators(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    removeCollateral(
+      _posId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setUSDC(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setVaultSettings(
       _priceManager: PromiseOrValue<string>,
       _settingsManager: PromiseOrValue<string>,
       _positionVault: PromiseOrValue<string>,
+      _orderVault: PromiseOrValue<string>,
+      _liquidateVault: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1562,47 +1518,55 @@ export interface VelaVault extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    stakeSelf(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    stakeSelfAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    stakeSelfUSDC(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     takeVUSDIn(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      _fee: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     takeVUSDOut(
       _account: PromiseOrValue<string>,
-      _refer: PromiseOrValue<string>,
-      _fee: PromiseOrValue<BigNumberish>,
-      _usdOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    totalUSDC(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalVLP(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    transferBounty(
-      _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    totalUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unstake(
       _tokenOut: PromiseOrValue<string>,
       _vlpAmount: PromiseOrValue<BigNumberish>,
-      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    unstakeAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    unstakeUSDC(
+      _vlpAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
       _token: PromiseOrValue<string>,
-      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    withdrawAllUSDC(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    withdrawUSDC(
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;

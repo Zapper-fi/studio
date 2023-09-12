@@ -8,4 +8,5 @@ export class OptimismSynthetixMintrContractPositionFetcher extends SynthetixMint
   isExcludedFromTvl = true;
   snxAddress = '0x8700daec35af8ff88c16bdf0418774cb3d7599b4';
   sUSDAddress = '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9';
+  feePoolAddress = '0xf9fe3607e6d19d8dc690dd976061a91d4a0db30b';
 }

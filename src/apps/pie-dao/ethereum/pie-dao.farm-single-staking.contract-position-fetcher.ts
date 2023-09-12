@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
@@ -50,7 +49,7 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
   groupLabel = 'Farms';
 
   constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PieDaoContractFactory) protected readonly contractFactory: PieDaoContractFactory,
   ) {
     super(appToolkit);
@@ -66,6 +65,10 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
 
   getRewardRates({ contract }: GetDataPropsParams<PieDaoRewards, SingleStakingFarmDataProps>) {
     return contract.rewardRate();
+  }
+
+  async getIsActive({ contract }: GetDataPropsParams<PieDaoRewards>) {
+    return (await contract.rewardRate()).gt(0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {

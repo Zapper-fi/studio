@@ -5,7 +5,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
-  GetDataPropsParams,
   GetPriceParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
@@ -59,17 +58,5 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
     appToken,
   }: GetPriceParams<TenderToken, DefaultAppTokenDataProps, TenderizeTokenDefinition>): Promise<number> {
     return appToken.tokens[0].price;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<TenderToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<TenderToken>) {
-    return (appToken.pricePerShare as number[]).map(t => t * appToken.supply);
-  }
-
-  async getApy() {
-    return 0;
   }
 }

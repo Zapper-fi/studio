@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BeefyBoostVault__factory } from './ethers';
-import { BeefyVaultToken__factory } from './ethers';
+import { BeefyBoostVault__factory, BeefyVaultToken__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };

@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { UmamiFinanceCompound } from './UmamiFinanceCompound';
+export type { UmamiFinanceGlpVault } from './UmamiFinanceGlpVault';
 export type { UmamiFinanceMarinate } from './UmamiFinanceMarinate';
-export type { UmamiFinanceVault } from './UmamiFinanceVault';
+export type { UmamiFinanceTimelockedGlpVault } from './UmamiFinanceTimelockedGlpVault';
 export * as factories from './factories';
 export { UmamiFinanceCompound__factory } from './factories/UmamiFinanceCompound__factory';
+export { UmamiFinanceGlpVault__factory } from './factories/UmamiFinanceGlpVault__factory';
 export { UmamiFinanceMarinate__factory } from './factories/UmamiFinanceMarinate__factory';
-export { UmamiFinanceVault__factory } from './factories/UmamiFinanceVault__factory';
+export { UmamiFinanceTimelockedGlpVault__factory } from './factories/UmamiFinanceTimelockedGlpVault__factory';
