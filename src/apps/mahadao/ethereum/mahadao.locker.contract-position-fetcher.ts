@@ -25,7 +25,7 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
   }
 
   async getEscrowedTokenAddress() {
-    return '0x745407c86DF8DB893011912d3aB28e68B62E49B0';
+    return '0x745407c86df8db893011912d3ab28e68b62e49b0';
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<MahadoMahaxLocker>) {
