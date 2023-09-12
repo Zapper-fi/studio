@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AaveV2ATokenInterface extends utils.Interface {
+export interface MahalendATokenInterface extends utils.Interface {
   functions: {
     'ATOKEN_REVISION()': FunctionFragment;
     'DOMAIN_SEPARATOR()': FunctionFragment;
@@ -281,12 +281,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface AaveV2AToken extends BaseContract {
+export interface MahalendAToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AaveV2ATokenInterface;
+  interface: MahalendATokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

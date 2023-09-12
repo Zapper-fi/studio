@@ -6,8 +6,8 @@ import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/
 
 import { MahalendContractFactory } from '../contracts';
 
-export type AaveV2PositionPresenterDataProps = { healthFactor: number };
-export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<AaveV2PositionPresenterDataProps> {
+export type MahalendPositionPresenterDataProps = { healthFactor: number };
+export abstract class MahalendPositionPresenter extends PositionPresenterTemplate<MahalendPositionPresenterDataProps> {
   abstract lendingPoolAddress: string;
 
   constructor(@Inject(MahalendContractFactory) protected readonly aaveV2ContractFactory: MahalendContractFactory) {
@@ -46,7 +46,7 @@ export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<
     ],
   };
 
-  override async dataProps(address: string): Promise<AaveV2PositionPresenterDataProps | undefined> {
+  override async dataProps(address: string): Promise<MahalendPositionPresenterDataProps | undefined> {
     const lendingPoolContract = this.aaveV2ContractFactory.aaveV2LendingPoolProvider({
       network: this.network,
       address: this.lendingPoolAddress,
@@ -60,7 +60,7 @@ export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<
   override metadataItemsForBalanceGroup(
     groupLabel: string,
     balances: ReadonlyBalances,
-    dataProps?: AaveV2PositionPresenterDataProps,
+    dataProps?: MahalendPositionPresenterDataProps,
   ): MetadataItemWithLabel[] {
     if (groupLabel === 'Lending') {
       // When no debt, no health factor (pas de bras, pas de chocolat)

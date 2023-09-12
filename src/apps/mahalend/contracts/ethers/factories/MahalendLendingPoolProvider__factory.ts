@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AaveV2LendingPoolProvider, AaveV2LendingPoolProviderInterface } from '../MahalendLendingPoolProvider';
+import type { MahalendLendingPoolProvider, MahalendLendingPoolProviderInterface } from '../MahalendLendingPoolProvider';
 
 const _abi = [
   {
@@ -1086,12 +1086,12 @@ const _abi = [
   },
 ];
 
-export class AaveV2LendingPoolProvider__factory {
+export class MahalendLendingPoolProvider__factory {
   static readonly abi = _abi;
-  static createInterface(): AaveV2LendingPoolProviderInterface {
-    return new utils.Interface(_abi) as AaveV2LendingPoolProviderInterface;
+  static createInterface(): MahalendLendingPoolProviderInterface {
+    return new utils.Interface(_abi) as MahalendLendingPoolProviderInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AaveV2LendingPoolProvider {
-    return new Contract(address, _abi, signerOrProvider) as AaveV2LendingPoolProvider;
+  static connect(address: string, signerOrProvider: Signer | Provider): MahalendLendingPoolProvider {
+    return new Contract(address, _abi, signerOrProvider) as MahalendLendingPoolProvider;
   }
 }

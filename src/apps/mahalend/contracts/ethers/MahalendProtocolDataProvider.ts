@@ -6,7 +6,7 @@ import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export declare namespace AaveProtocolDataProvider {
+export declare namespace MahalendProtocolDataProvider {
   export type TokenDataStruct = {
     symbol: PromiseOrValue<string>;
     tokenAddress: PromiseOrValue<string>;
@@ -18,7 +18,7 @@ export declare namespace AaveProtocolDataProvider {
   };
 }
 
-export interface AaveProtocolDataProviderInterface extends utils.Interface {
+export interface MahalendProtocolDataProviderInterface extends utils.Interface {
   functions: {
     'ADDRESSES_PROVIDER()': FunctionFragment;
     'getAllATokens()': FunctionFragment;
@@ -62,12 +62,12 @@ export interface AaveProtocolDataProviderInterface extends utils.Interface {
   events: {};
 }
 
-export interface AaveProtocolDataProvider extends BaseContract {
+export interface MahalendProtocolDataProvider extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AaveProtocolDataProviderInterface;
+  interface: MahalendProtocolDataProviderInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -87,9 +87,9 @@ export interface AaveProtocolDataProvider extends BaseContract {
   functions: {
     ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<[string]>;
 
-    getAllATokens(overrides?: CallOverrides): Promise<[AaveProtocolDataProvider.TokenDataStructOutput[]]>;
+    getAllATokens(overrides?: CallOverrides): Promise<[MahalendProtocolDataProvider.TokenDataStructOutput[]]>;
 
-    getAllReservesTokens(overrides?: CallOverrides): Promise<[AaveProtocolDataProvider.TokenDataStructOutput[]]>;
+    getAllReservesTokens(overrides?: CallOverrides): Promise<[MahalendProtocolDataProvider.TokenDataStructOutput[]]>;
 
     getReserveConfigurationData(
       asset: PromiseOrValue<string>,
@@ -159,9 +159,9 @@ export interface AaveProtocolDataProvider extends BaseContract {
 
   ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<string>;
 
-  getAllATokens(overrides?: CallOverrides): Promise<AaveProtocolDataProvider.TokenDataStructOutput[]>;
+  getAllATokens(overrides?: CallOverrides): Promise<MahalendProtocolDataProvider.TokenDataStructOutput[]>;
 
-  getAllReservesTokens(overrides?: CallOverrides): Promise<AaveProtocolDataProvider.TokenDataStructOutput[]>;
+  getAllReservesTokens(overrides?: CallOverrides): Promise<MahalendProtocolDataProvider.TokenDataStructOutput[]>;
 
   getReserveConfigurationData(
     asset: PromiseOrValue<string>,
@@ -231,9 +231,9 @@ export interface AaveProtocolDataProvider extends BaseContract {
   callStatic: {
     ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<string>;
 
-    getAllATokens(overrides?: CallOverrides): Promise<AaveProtocolDataProvider.TokenDataStructOutput[]>;
+    getAllATokens(overrides?: CallOverrides): Promise<MahalendProtocolDataProvider.TokenDataStructOutput[]>;
 
-    getAllReservesTokens(overrides?: CallOverrides): Promise<AaveProtocolDataProvider.TokenDataStructOutput[]>;
+    getAllReservesTokens(overrides?: CallOverrides): Promise<MahalendProtocolDataProvider.TokenDataStructOutput[]>;
 
     getReserveConfigurationData(
       asset: PromiseOrValue<string>,

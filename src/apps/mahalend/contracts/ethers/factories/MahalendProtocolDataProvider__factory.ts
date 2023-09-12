@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AaveProtocolDataProvider, AaveProtocolDataProviderInterface } from '../MahalendProtocolDataProvider';
+import type {
+  MahalendProtocolDataProvider,
+  MahalendProtocolDataProviderInterface,
+} from '../MahalendProtocolDataProvider';
 
 const _abi = [
   {
@@ -48,7 +51,7 @@ const _abi = [
             type: 'address',
           },
         ],
-        internalType: 'struct AaveProtocolDataProvider.TokenData[]',
+        internalType: 'struct MahalendProtocolDataProvider.TokenData[]',
         name: '',
         type: 'tuple[]',
       },
@@ -73,7 +76,7 @@ const _abi = [
             type: 'address',
           },
         ],
-        internalType: 'struct AaveProtocolDataProvider.TokenData[]',
+        internalType: 'struct MahalendProtocolDataProvider.TokenData[]',
         name: '',
         type: 'tuple[]',
       },
@@ -304,12 +307,12 @@ const _abi = [
   },
 ];
 
-export class AaveProtocolDataProvider__factory {
+export class MahalendProtocolDataProvider__factory {
   static readonly abi = _abi;
-  static createInterface(): AaveProtocolDataProviderInterface {
-    return new utils.Interface(_abi) as AaveProtocolDataProviderInterface;
+  static createInterface(): MahalendProtocolDataProviderInterface {
+    return new utils.Interface(_abi) as MahalendProtocolDataProviderInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AaveProtocolDataProvider {
-    return new Contract(address, _abi, signerOrProvider) as AaveProtocolDataProvider;
+  static connect(address: string, signerOrProvider: Signer | Provider): MahalendProtocolDataProvider {
+    return new Contract(address, _abi, signerOrProvider) as MahalendProtocolDataProvider;
   }
 }

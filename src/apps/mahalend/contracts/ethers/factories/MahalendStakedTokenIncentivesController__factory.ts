@@ -5,8 +5,8 @@
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
 import type {
-  AaveStakedTokenIncentivesController,
-  AaveStakedTokenIncentivesControllerInterface,
+  MahalendStakedTokenIncentivesController,
+  MahalendStakedTokenIncentivesControllerInterface,
 } from '../MahalendStakedTokenIncentivesController';
 
 const _abi = [
@@ -556,12 +556,12 @@ const _abi = [
   },
 ];
 
-export class AaveStakedTokenIncentivesController__factory {
+export class MahalendStakedTokenIncentivesController__factory {
   static readonly abi = _abi;
-  static createInterface(): AaveStakedTokenIncentivesControllerInterface {
-    return new utils.Interface(_abi) as AaveStakedTokenIncentivesControllerInterface;
+  static createInterface(): MahalendStakedTokenIncentivesControllerInterface {
+    return new utils.Interface(_abi) as MahalendStakedTokenIncentivesControllerInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AaveStakedTokenIncentivesController {
-    return new Contract(address, _abi, signerOrProvider) as AaveStakedTokenIncentivesController;
+  static connect(address: string, signerOrProvider: Signer | Provider): MahalendStakedTokenIncentivesController {
+    return new Contract(address, _abi, signerOrProvider) as MahalendStakedTokenIncentivesController;
   }
 }

@@ -4,10 +4,10 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AaveProtocolDataProvider__factory } from './ethers';
-import { AaveStakedTokenIncentivesController__factory } from './ethers';
-import { AaveV2AToken__factory } from './ethers';
-import { AaveV2LendingPoolProvider__factory } from './ethers';
+import { MahalendProtocolDataProvider__factory } from './ethers';
+import { MahalendStakedTokenIncentivesController__factory } from './ethers';
+import { MahalendAToken__factory } from './ethers';
+import { MahalendLendingPoolProvider__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -19,20 +19,23 @@ export class MahalendContractFactory extends ContractFactory {
   }
 
   aaveProtocolDataProvider({ address, network }: ContractOpts) {
-    return AaveProtocolDataProvider__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+    return MahalendProtocolDataProvider__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   aaveStakedTokenIncentivesController({ address, network }: ContractOpts) {
-    return AaveStakedTokenIncentivesController__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+    return MahalendStakedTokenIncentivesController__factory.connect(
+      address,
+      this.appToolkit.getNetworkProvider(network),
+    );
   }
   aaveV2AToken({ address, network }: ContractOpts) {
-    return AaveV2AToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+    return MahalendAToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   aaveV2LendingPoolProvider({ address, network }: ContractOpts) {
-    return AaveV2LendingPoolProvider__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+    return MahalendLendingPoolProvider__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { AaveProtocolDataProvider } from './ethers';
-export type { AaveStakedTokenIncentivesController } from './ethers';
-export type { AaveV2AToken } from './ethers';
-export type { AaveV2LendingPoolProvider } from './ethers';
+export type { MahalendProtocolDataProvider } from './ethers';
+export type { MahalendStakedTokenIncentivesController } from './ethers';
+export type { MahalendAToken } from './ethers';
+export type { MahalendLendingPoolProvider } from './ethers';

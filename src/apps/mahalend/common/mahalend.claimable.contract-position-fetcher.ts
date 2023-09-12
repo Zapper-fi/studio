@@ -8,16 +8,16 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { AaveStakedTokenIncentivesController, MahalendContractFactory } from '../contracts';
+import { MahalendStakedTokenIncentivesController, MahalendContractFactory } from '../contracts';
 
-export type AaveV2ClaimableDataProps = {
+export type MahalendClaimableDataProps = {
   incentivesControllerAddress: string;
   protocolDataProviderAddress: string;
 };
 
-export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTemplatePositionFetcher<
-  AaveStakedTokenIncentivesController,
-  AaveV2ClaimableDataProps
+export abstract class MahalendClaimablePositionFetcher extends ContractPositionTemplatePositionFetcher<
+  MahalendStakedTokenIncentivesController,
+  MahalendClaimableDataProps
 > {
   abstract incentivesControllerAddress: string;
   abstract protocolDataProviderAddress: string;
@@ -45,7 +45,7 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
   }
 
   async getLabel(
-    params: GetDisplayPropsParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
+    params: GetDisplayPropsParams<MahalendStakedTokenIncentivesController, MahalendClaimableDataProps>,
   ): Promise<string> {
     const rewardToken = params.contractPosition.tokens[0];
     return `Claimable ${rewardToken.symbol}`;
@@ -56,13 +56,13 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
   }
 
   async getSecondaryLabel(
-    params: GetDisplayPropsParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
+    params: GetDisplayPropsParams<MahalendStakedTokenIncentivesController, MahalendClaimableDataProps>,
   ): Promise<DisplayProps['secondaryLabel']> {
     const rewardToken = params.contractPosition.tokens[0];
     return buildDollarDisplayItem(rewardToken.price);
   }
 
-  async getDataProps(): Promise<AaveV2ClaimableDataProps> {
+  async getDataProps(): Promise<MahalendClaimableDataProps> {
     return {
       incentivesControllerAddress: this.incentivesControllerAddress,
       protocolDataProviderAddress: this.protocolDataProviderAddress,
@@ -74,7 +74,9 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
     contractPosition,
     contract,
     multicall,
-  }: GetTokenBalancesParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<MahalendStakedTokenIncentivesController, MahalendClaimableDataProps>): Promise<
+    BigNumberish[]
+  > {
     // Build contracts for staked token incentives and protocol data provider
     const { dataProps } = contractPosition;
     const { protocolDataProviderAddress } = dataProps;

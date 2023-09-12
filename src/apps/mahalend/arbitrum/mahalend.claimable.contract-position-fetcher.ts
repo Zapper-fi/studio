@@ -1,9 +1,9 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { AaveV2ClaimablePositionFetcher } from '../common/mahalend.claimable.contract-position-fetcher';
+import { MahalendClaimablePositionFetcher } from '../common/mahalend.claimable.contract-position-fetcher';
 
 @PositionTemplate()
-export class ArbitrumAaveV2ClaimableContractPositionFetcher extends AaveV2ClaimablePositionFetcher {
+export class ArbitrumMahalendClaimableContractPositionFetcher extends MahalendClaimablePositionFetcher {
   groupLabel = 'Rewards';
   isExcludedFromExplore = true;
   isExcludedFromTvl = true;

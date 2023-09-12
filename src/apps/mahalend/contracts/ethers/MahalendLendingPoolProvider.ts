@@ -78,7 +78,7 @@ export declare namespace DataTypes {
   };
 }
 
-export interface AaveV2LendingPoolProviderInterface extends utils.Interface {
+export interface MahalendLendingPoolProviderInterface extends utils.Interface {
   functions: {
     'FLASHLOAN_PREMIUM_TOTAL()': FunctionFragment;
     'LENDINGPOOL_REVISION()': FunctionFragment;
@@ -452,12 +452,12 @@ export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber], With
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface AaveV2LendingPoolProvider extends BaseContract {
+export interface MahalendLendingPoolProvider extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AaveV2LendingPoolProviderInterface;
+  interface: MahalendLendingPoolProviderInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

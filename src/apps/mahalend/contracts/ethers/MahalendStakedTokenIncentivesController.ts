@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AaveStakedTokenIncentivesControllerInterface extends utils.Interface {
+export interface MahalendStakedTokenIncentivesControllerInterface extends utils.Interface {
   functions: {
     'DISTRIBUTION_END()': FunctionFragment;
     'EMISSION_MANAGER()': FunctionFragment;
@@ -202,12 +202,12 @@ export type UserIndexUpdatedEvent = TypedEvent<[string, string, BigNumber], User
 
 export type UserIndexUpdatedEventFilter = TypedEventFilter<UserIndexUpdatedEvent>;
 
-export interface AaveStakedTokenIncentivesController extends BaseContract {
+export interface MahalendStakedTokenIncentivesController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AaveStakedTokenIncentivesControllerInterface;
+  interface: MahalendStakedTokenIncentivesControllerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
