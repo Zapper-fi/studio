@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.530.0](https://github.com/Zapper-fi/studio/compare/v0.529.0...v0.530.0) (2023-09-14)
+
+
+### Features
+
+* **curve:** Add positions on Base ([#2935](https://github.com/Zapper-fi/studio/issues/2935)) ([b623096](https://github.com/Zapper-fi/studio/commit/b62309692fca1fb3ad4098285de193617193ba01))
+
 ## [0.529.0](https://github.com/Zapper-fi/studio/compare/v0.528.3...v0.529.0) (2023-09-11)
 
 
