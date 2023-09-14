@@ -84,6 +84,8 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
   abstract registryAddress: string;
   blacklistedSwapAddresses: string[] = [];
 
+  skipVolume = false;
+
   abstract resolveRegistry(address: string): T;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveSwapAddress(params: ResolveSwapAddressParams<T>): Promise<string>;
@@ -105,7 +107,9 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
+    if (!this.skipVolume) {
+      this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
+    }
 
     const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const poolCount = await this.resolvePoolCount({ contract, multicall });
@@ -170,7 +174,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
     const fees = await this.resolveFees({ contract, swapAddress, multicall });
     const fee = Number(fees[0]) / 10 ** 8;
 
-    const volume = await this.volumeDataLoader.load(definition.swapAddress);
+    const volume = this.skipVolume == false ? await this.volumeDataLoader.load(definition.swapAddress) : 0;
     const feeVolume = fee * volume;
     const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
 
