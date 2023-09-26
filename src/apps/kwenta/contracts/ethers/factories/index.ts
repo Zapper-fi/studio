@@ -4,3 +4,4 @@
 export { KwentaAccountResolver__factory } from './KwentaAccountResolver__factory';
 export { KwentaEscrow__factory } from './KwentaEscrow__factory';
 export { KwentaStaking__factory } from './KwentaStaking__factory';
+export { KwentaStakingV2__factory } from './KwentaStakingV2__factory';
