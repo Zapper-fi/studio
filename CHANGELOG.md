@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.531.1](https://github.com/Zapper-fi/studio/compare/v0.531.0...v0.531.1) (2023-09-27)
+
+
+### Bug Fixes
+
+* **arbitrum-airdrop:** Removed position because contract has been self destructed ([#2946](https://github.com/Zapper-fi/studio/issues/2946)) ([92dbbe2](https://github.com/Zapper-fi/studio/commit/92dbbe2d588833024c606382424247d084638305))
+
 ## [0.531.0](https://github.com/Zapper-fi/studio/compare/v0.530.0...v0.531.0) (2023-09-27)
 
 
