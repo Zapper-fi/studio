@@ -11,6 +11,7 @@ export class EthereumAuraAuraBalStakingContractPositionFetcher extends AuraFarmC
 
   AURA_BAL_STAKING_V1 = '0x5e5ea2048475854a5702f5b8468a51ba1296efcc';
   AURA_BAL_STAKING_V2 = '0x00a7ba8ae7bca0b10a32ea1f8e2a1da980c6cad2';
+  boosterMultiplierAddress = '0xa57b8d98dae62b26ec3bcc4a365338157060b234';
 
   getFarmAddresses() {
     return [this.AURA_BAL_STAKING_V1, this.AURA_BAL_STAKING_V2];
