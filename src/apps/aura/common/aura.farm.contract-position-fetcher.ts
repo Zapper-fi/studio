@@ -69,6 +69,8 @@ export const claimedBalToMintedAura = (claimedBalAmount: string, currentAuraSupp
 };
 
 export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<AuraBaseRewardPool> {
+  abstract boosterMultiplierAddress: string;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(AuraContractFactory)
@@ -168,7 +170,18 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
 
     const balBalanceBN = await contract.earned(address);
     const balBalanceRaw = balBalanceBN.toString();
-    let auraBalanceRaw = claimedBalToMintedAura(balBalanceRaw, currentAuraSupply.toString());
+    const auraBalanceMintedRaw = claimedBalToMintedAura(balBalanceRaw, currentAuraSupply.toString());
+    const boosterMultiplierContract = this.contractFactory.auraBoosterV2({
+      address: this.boosterMultiplierAddress,
+      network: this.network,
+    });
+
+    const [rewardMultiplierDenominator, rewardMultipleRaw] = await Promise.all([
+      multicall.wrap(boosterMultiplierContract).REWARD_MULTIPLIER_DENOMINATOR(),
+      multicall.wrap(boosterMultiplierContract).getRewardMultipliers(contractPosition.address),
+    ]);
+
+    let auraBalanceRaw = auraBalanceMintedRaw.mul(rewardMultipleRaw).div(rewardMultiplierDenominator);
 
     const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
     const extraRewardBalances = await Promise.all(

@@ -11,6 +11,7 @@ import {
   AuraBalancerHelpers__factory,
   AuraBaseRewardPool__factory,
   AuraBooster__factory,
+  AuraBoosterV2__factory,
   AuraDepositToken__factory,
   AuraLocker__factory,
   AuraMasterchef__factory,
@@ -46,6 +47,9 @@ export class AuraContractFactory extends ContractFactory {
   auraBooster({ address, network }: ContractOpts) {
     return AuraBooster__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  auraBoosterV2({ address, network }: ContractOpts) {
+    return AuraBoosterV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   auraDepositToken({ address, network }: ContractOpts) {
     return AuraDepositToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -72,6 +76,7 @@ export type { AuraBalVirtualRewardPool } from './ethers';
 export type { AuraBalancerHelpers } from './ethers';
 export type { AuraBaseRewardPool } from './ethers';
 export type { AuraBooster } from './ethers';
+export type { AuraBoosterV2 } from './ethers';
 export type { AuraDepositToken } from './ethers';
 export type { AuraLocker } from './ethers';
 export type { AuraMasterchef } from './ethers';

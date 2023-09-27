@@ -7,6 +7,7 @@ export { AuraBalVirtualRewardPool__factory } from './AuraBalVirtualRewardPool__f
 export { AuraBalancerHelpers__factory } from './AuraBalancerHelpers__factory';
 export { AuraBaseRewardPool__factory } from './AuraBaseRewardPool__factory';
 export { AuraBooster__factory } from './AuraBooster__factory';
+export { AuraBoosterV2__factory } from './AuraBoosterV2__factory';
 export { AuraDepositToken__factory } from './AuraDepositToken__factory';
 export { AuraLocker__factory } from './AuraLocker__factory';
 export { AuraMasterchef__factory } from './AuraMasterchef__factory';
