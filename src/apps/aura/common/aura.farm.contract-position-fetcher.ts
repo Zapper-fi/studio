@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
-import { range } from 'lodash';
+import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { isClaimable } from '~position/position.utils';
@@ -97,11 +97,33 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
       range(0, Number(await contract.extraRewardsLength())).map(async v => {
         const vbpAddress = await contract.extraRewards(v);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
-        return multicall.wrap(vbp).rewardToken();
+        const stashTokenAddressRaw = await multicall.wrap(vbp).rewardToken();
+        let rewardTokenAddress = stashTokenAddressRaw.toLowerCase();
+
+        const stashTokenContract = this.contractFactory.auraStashToken({
+          address: rewardTokenAddress,
+          network: this.network,
+        });
+
+        const isStash = await multicall
+          .wrap(stashTokenContract)
+          .stash()
+          .then(() => true)
+          .catch(() => false);
+
+        if (isStash) {
+          const rewardTokenAddressRaw = await multicall.wrap(stashTokenContract).baseToken();
+          rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
+        }
+
+        // We will combine AURA extra rewards with the amount minted
+        if (rewardTokenAddress === primaryRewardTokenAddresses[1]) return null;
+
+        return rewardTokenAddress;
       }),
     );
 
-    return [...primaryRewardTokenAddresses, ...extraRewardTokenAddresses];
+    return [...primaryRewardTokenAddresses, ...compact(extraRewardTokenAddresses)];
   }
 
   async getRewardRates({
@@ -139,17 +161,18 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     multicall,
   }: GetTokenBalancesParams<AuraBaseRewardPool>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    const [, auraRewardToken, ...extraRewards] = rewardTokens;
+    const [, auraRewardToken] = rewardTokens;
 
     const auraTokenContract = multicall.wrap(this.contractFactory.erc20(auraRewardToken));
     const currentAuraSupply = await auraTokenContract.totalSupply();
 
     const balBalanceBN = await contract.earned(address);
     const balBalanceRaw = balBalanceBN.toString();
-    const auraBalanceRaw = claimedBalToMintedAura(balBalanceRaw, currentAuraSupply.toString());
+    let auraBalanceRaw = claimedBalToMintedAura(balBalanceRaw, currentAuraSupply.toString());
 
+    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
     const extraRewardBalances = await Promise.all(
-      extraRewards.map(async (_, i) => {
+      range(0, Number(numExtraRewards)).map(async (_, i) => {
         const extraRewardAddress = await contract.extraRewards(i);
         const extraRewardContract = this.contractFactory.auraVirtualBalanceRewardPool({
           address: extraRewardAddress,
@@ -157,10 +180,34 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
         });
 
         const earnedBN = await multicall.wrap(extraRewardContract).earned(address);
-        return earnedBN.toString();
+        const extraRewardStashTokenAddressRaw = await multicall.wrap(extraRewardContract).rewardToken();
+        let extraRewardStashTokenAddress = extraRewardStashTokenAddressRaw.toLowerCase();
+        const stashTokenContract = this.contractFactory.auraStashToken({
+          address: extraRewardStashTokenAddress,
+          network: this.network,
+        });
+
+        const isStash = await multicall
+          .wrap(stashTokenContract)
+          .stash()
+          .then(() => true)
+          .catch(() => false);
+
+        if (isStash) {
+          const extraRewardTokenAddressRaw = await multicall.wrap(stashTokenContract).baseToken();
+          extraRewardStashTokenAddress = extraRewardTokenAddressRaw.toLowerCase();
+        }
+
+        // We will combine AURA extra rewards with the amount minted
+        if (extraRewardStashTokenAddress === auraRewardToken.address) {
+          auraBalanceRaw = auraBalanceRaw.add(earnedBN);
+          return null;
+        }
+
+        return earnedBN;
       }),
     );
 
-    return [balBalanceRaw, auraBalanceRaw, ...extraRewardBalances];
+    return [balBalanceRaw, auraBalanceRaw, ...compact(extraRewardBalances)];
   }
 }

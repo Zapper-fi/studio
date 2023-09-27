@@ -24,8 +24,8 @@ import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-f
     ArbitrumAuraDepositTokenFetcher,
     // Ethereum
     EthereumAuraAuraBalTokenFetcher,
-    EthereumAuraDepositTokenFetcher,
     EthereumAuraChefContractPositionFetcher,
+    EthereumAuraDepositTokenFetcher,
     EthereumAuraLpFarmContractPositionFetcher,
     EthereumAuraLockerContractPositionFetcher,
     EthereumAuraAuraBalStakingContractPositionFetcher,

@@ -10,5 +10,6 @@ export { AuraBooster__factory } from './AuraBooster__factory';
 export { AuraDepositToken__factory } from './AuraDepositToken__factory';
 export { AuraLocker__factory } from './AuraLocker__factory';
 export { AuraMasterchef__factory } from './AuraMasterchef__factory';
+export { AuraStashToken__factory } from './AuraStashToken__factory';
 export { AuraToken__factory } from './AuraToken__factory';
 export { AuraVirtualBalanceRewardPool__factory } from './AuraVirtualBalanceRewardPool__factory';
