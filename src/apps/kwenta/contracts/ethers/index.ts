@@ -4,7 +4,9 @@
 export type { KwentaAccountResolver } from './KwentaAccountResolver';
 export type { KwentaEscrow } from './KwentaEscrow';
 export type { KwentaStaking } from './KwentaStaking';
+export type { KwentaStakingV2 } from './KwentaStakingV2';
 export * as factories from './factories';
 export { KwentaAccountResolver__factory } from './factories/KwentaAccountResolver__factory';
 export { KwentaEscrow__factory } from './factories/KwentaEscrow__factory';
+export { KwentaStakingV2__factory } from './factories/KwentaStakingV2__factory';
 export { KwentaStaking__factory } from './factories/KwentaStaking__factory';
