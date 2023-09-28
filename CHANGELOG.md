@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.532.0](https://github.com/Zapper-fi/studio/compare/v0.531.1...v0.532.0) (2023-09-28)
+
+
+### Features
+
+* **kwenta:** staking v2 ([#2943](https://github.com/Zapper-fi/studio/issues/2943)) ([a74bb31](https://github.com/Zapper-fi/studio/commit/a74bb319c534df22cac720d112ffcc270ea1b903))
+
 ## [0.531.1](https://github.com/Zapper-fi/studio/compare/v0.531.0...v0.531.1) (2023-09-27)
 
 
