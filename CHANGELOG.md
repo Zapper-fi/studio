@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.532.1](https://github.com/Zapper-fi/studio/compare/v0.532.0...v0.532.1) (2023-09-28)
+
+
+### Bug Fixes
+
+* **vendor-finance:** Linting ([#2949](https://github.com/Zapper-fi/studio/issues/2949)) ([be78fb6](https://github.com/Zapper-fi/studio/commit/be78fb69214c3e5b97778770badfca9f50adc2bd))
+
 ## [0.532.0](https://github.com/Zapper-fi/studio/compare/v0.531.1...v0.532.0) (2023-09-28)
 
 
