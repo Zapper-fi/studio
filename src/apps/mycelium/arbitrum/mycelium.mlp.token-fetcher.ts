@@ -9,6 +9,7 @@ import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
   UnderlyingTokenDefinition,
@@ -42,8 +43,7 @@ export class ArbitrumMyceliumMlpTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.erc20({ network: this.network, address });
   }
 
-  async getDefinitions(): Promise<MyceliumMlpTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<MyceliumMlpTokenDefinition[]> {
     const mlpManagerContract = this.contractFactory.myceliumMlpManager({
       address: this.mlpManagerAddress,
       network: this.network,

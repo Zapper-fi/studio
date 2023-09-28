@@ -9,6 +9,7 @@ import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -44,8 +45,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
     return this.contractFactory.convexRewardPool({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<ConvexLpFarmDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<ConvexLpFarmDefinition[]> {
     const depositContract = this.contractFactory.convexBoosterSidechain({
       address: this.boosterContractAddress,
       network: this.network,

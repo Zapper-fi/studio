@@ -42,6 +42,8 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
   isExcludedFromExplore = false;
   isExcludedFromTvl = false;
 
+  batchSize = 250;
+
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   // 1. Get contract position definitions (i.e.: contract addresses and additional context)
@@ -93,7 +95,7 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });

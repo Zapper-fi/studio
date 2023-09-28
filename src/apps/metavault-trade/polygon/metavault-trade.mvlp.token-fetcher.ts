@@ -9,6 +9,7 @@ import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
   UnderlyingTokenDefinition,
@@ -42,8 +43,7 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
     return this.contractFactory.erc20({ network: this.network, address });
   }
 
-  async getDefinitions(): Promise<MetavaultTradeMvlpTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<MetavaultTradeMvlpTokenDefinition[]> {
     const mvlpManagerContract = this.contractFactory.metavaultTradeMvlpManager({
       address: this.mvlpManagerAddress,
       network: this.network,

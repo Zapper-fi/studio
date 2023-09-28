@@ -12,6 +12,7 @@ import { isClaimable } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDataPropsParams,
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -69,9 +70,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     return this.contractFactory.simpleMarket({ network: this.network, address });
   }
 
-  async getDefinitions(): Promise<InverseFirmLoanContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<InverseFirmLoanContractPositionDefinition[]> {
     const dolaBorrowRightContract = this.contractFactory.dbr({
       address: this.dbrAddress,
       network: this.network,

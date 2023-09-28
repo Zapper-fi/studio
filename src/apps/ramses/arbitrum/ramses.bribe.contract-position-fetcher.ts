@@ -4,7 +4,11 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
-import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/ramses.voting-rewards.contract-position-fetcher';
 import { RamsesBribe } from '../contracts';
@@ -23,14 +27,13 @@ export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsCon
     return this.contractFactory.ramsesBribe({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<RamsesBribeDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<RamsesBribeDefinition[]> {
     const pools = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       network: this.network,
       groupIds: ['pool'],
     });
 
-    const multicall = this.appToolkit.getMulticall(this.network);
     const ramsesVoter = this.contractFactory.ramsesVoter({ network: this.network, address: this.voterAddress });
 
     const gauges = await Promise.all(pools.map(p => multicall.wrap(ramsesVoter).gauges(p.address)));

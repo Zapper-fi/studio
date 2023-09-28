@@ -92,9 +92,12 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakedRsr>): Promise<BigNumberish[]> {
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+    multicall,
+  }: GetTokenBalancesParams<StakedRsr>): Promise<BigNumberish[]> {
     // Get FacadeRead
-    const multicall = this.appToolkit.getMulticall(this.network);
     const facadeRead = multicall.wrap(
       this.contractFactory.facadeRead({
         network: this.network,

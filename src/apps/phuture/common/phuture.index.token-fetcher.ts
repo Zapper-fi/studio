@@ -6,6 +6,7 @@ import {
   DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
 import { PhutureContractFactory, PhutureManagedIndex } from '../contracts';
@@ -38,8 +39,9 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
     return [this.managerAddress];
   }
 
-  async getUnderlyingTokenDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getUnderlyingTokenDefinitions({
+    multicall,
+  }: GetUnderlyingTokensParams<PhutureManagedIndex, PhutureIndexAppTokenDefinition>) {
     const managerContract = this.contractFactory.phutureManagedIndex({
       address: this.managerAddress,
       network: this.network,

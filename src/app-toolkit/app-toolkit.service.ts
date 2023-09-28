@@ -48,7 +48,7 @@ export class AppToolkit implements IAppToolkit {
     return this.networkProviderService.getProvider(network);
   }
 
-  getMulticall(network: Network, batchSize: number) {
+  getMulticall(network: Network, batchSize = 250) {
     return this.multicallService.getMulticall(network, batchSize);
   }
 

@@ -53,6 +53,8 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   minLiquidity = 1000;
 
+  batchSize = 250;
+
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   // 1. Get token contract instance
@@ -160,7 +162,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   async getPositionsForBatch(definitions: R[]) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
@@ -312,7 +314,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
@@ -346,7 +348,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   async getBalances(_address: string): Promise<AppTokenPositionBalance<V>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const address = await this.getAccountAddress(_address);
     const appTokens = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
@@ -363,7 +365,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   async getRawBalances(_address: string): Promise<RawAppTokenBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const address = await this.getAccountAddress(_address);
     if (address === ZERO_ADDRESS) return [];
 

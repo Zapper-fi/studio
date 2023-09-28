@@ -52,8 +52,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
     return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PikaProtocolVault>) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getTokenBalancesPerPosition({ address, contract, multicall }: GetTokenBalancesParams<PikaProtocolVault>) {
     const rewardContract = this.contractFactory.pikaProtocolVaultReward({
       address: '0x58488bb666d2da33f8e8938dbdd582d2481d4183',
       network: this.network,

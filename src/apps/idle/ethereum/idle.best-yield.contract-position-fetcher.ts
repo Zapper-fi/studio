@@ -8,6 +8,7 @@ import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -39,8 +40,7 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
     return this.contractFactory.idleToken({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<IdleBestYieldTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<IdleBestYieldTokenDefinition[]> {
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       groupIds: ['vault'],

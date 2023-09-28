@@ -150,8 +150,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
   async getDataProps(
     params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps, DolomiteContractPositionDefinition>,
   ): Promise<DolomiteDataProps> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    return mapTokensToDolomiteDataProps(params, this.isFetchingDolomiteBalances(), multicall);
+    return mapTokensToDolomiteDataProps(params, this.isFetchingDolomiteBalances(), params.multicall);
   }
 
   async getLabel(_params: GetDisplayPropsParams<DolomiteMargin>): Promise<string> {

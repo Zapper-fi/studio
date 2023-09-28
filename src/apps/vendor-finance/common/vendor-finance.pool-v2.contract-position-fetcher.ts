@@ -136,6 +136,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition({
     address,
     contractPosition,
+    multicall,
   }: GetTokenBalancesParams<VendorFinancePoolV2, VendorFinancePoolDataProps>) {
     const collateralToken = contractPosition.tokens[0]!;
     const lentToken = contractPosition.tokens[1]!;
@@ -148,7 +149,6 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
 
     // --- Borrower logic ----
     const startKey = '0x'.padEnd(66, '0');
-    const multicall = this.appToolkit.getMulticall(this.network);
     const positionTracker = multicall.wrap(
       this.contractFactory.vendorFinancePositionTracker({
         address: this.positionTrackerAddr,

@@ -7,6 +7,7 @@ import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -38,8 +39,7 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
     return this.contractFactory.acrossStaking({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<AcrossStakingContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<AcrossStakingContractPositionDefinition[]> {
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       network: this.network,

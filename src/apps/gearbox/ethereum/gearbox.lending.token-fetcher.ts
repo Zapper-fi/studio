@@ -77,11 +77,10 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
   async getLiquidity(
     params: GetDataPropsParams<DieselToken, DefaultAppTokenDataProps, GearboxLendingDefinition>,
   ): Promise<number> {
-    const multicall = this.appToolkit.getMulticall(network);
     const poolContract = this._getPoolContract(params.definition);
     const [liquidity, underlyingToken] = await Promise.all([
-      multicall.wrap(poolContract).expectedLiquidity(),
-      multicall.wrap(poolContract).underlyingToken(),
+      params.multicall.wrap(poolContract).expectedLiquidity(),
+      params.multicall.wrap(poolContract).underlyingToken(),
     ]);
     const underlyingTokenDecimals = await this.gearboxContractFactory
       .erc20({ address: underlyingToken, network })
@@ -105,8 +104,8 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({
     contract: dieselTokenContract,
     definition,
+    multicall,
   }: GetPricePerShareParams<DieselToken, DefaultAppTokenDataProps, GearboxLendingDefinition>) {
-    const multicall = this.appToolkit.getMulticall(network);
     const poolContract = this._getPoolContract(definition);
 
     const [underlying, underlyingToken, dieselTokenTotalSupply, dieselTokenDecimals] = await Promise.all([

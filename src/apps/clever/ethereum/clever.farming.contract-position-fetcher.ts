@@ -7,6 +7,7 @@ import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -40,8 +41,7 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
     return this.contractFactory.cleverGauge({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<CleverFarmingContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<CleverFarmingContractPositionDefinition[]> {
     const gaugeAddresses = [
       '0xc5022291ca8281745d173bb855dcd34dda67f2f0', // abcCVX
       '0x86e917ad6cb44f9e6c8d9fa012acf0d0cfcf114f', // CLEV/ETH

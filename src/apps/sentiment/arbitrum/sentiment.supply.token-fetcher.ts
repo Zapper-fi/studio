@@ -8,6 +8,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -39,8 +40,7 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
-  async getDefinitions(): Promise<SentimentSupplyAppTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<SentimentSupplyAppTokenDefinition[]> {
     const registryContract = this.contractFactory.sentimentRegistry({
       address: '0x17b07cfbab33c0024040e7c299f8048f4a49679b',
       network: this.network,

@@ -6,7 +6,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDefinition,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -30,8 +32,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.velodromeV2Pool({ address, network: this.network });
   }
 
-  async getDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<DefaultAppTokenDefinition[]> {
     const factoryContract = this.contractFactory.velodromeV2PoolFactory({
       address: '0xf1046053aa5682b4f9a81b5481394da16be5ff5a',
       network: this.network,

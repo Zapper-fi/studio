@@ -4,9 +4,11 @@ import { compact, range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDefinitionsParams } from '~position/template/app-token.template.types';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
+  MasterChefContractPositionDefinition,
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
@@ -31,8 +33,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
     return this.contractFactory.pancakeswapChefV2({ address, network: this.network });
   }
 
-  async getDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<MasterChefContractPositionDefinition[]> {
     const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefAddress, network: this.network });
     const poolLength = await chefV2.poolLength();
 
