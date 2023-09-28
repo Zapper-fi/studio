@@ -22,7 +22,7 @@ export interface IAppToolkit {
 
   getNetworkProvider(network: Network): StaticJsonRpcProvider;
 
-  getMulticall(network: Network): IMulticallWrapper;
+  getMulticall(network: Network, batchSize: number): IMulticallWrapper;
 
   // Base Tokens
 

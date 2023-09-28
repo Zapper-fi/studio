@@ -11,6 +11,8 @@ export class EthereumAuraLpFarmContractPositionFetcher extends AuraFarmContractP
   BOOSTER_V1_ADDRESS = '0x7818a1da7bd1e64c199029e86ba244a9798eee10';
   boosterMultiplierAddress = '0xa57b8d98dae62b26ec3bcc4a365338157060b234';
 
+  batchSize = 150;
+
   async getFarmAddresses() {
     const boosters = [this.BOOSTER_V1_ADDRESS, this.boosterMultiplierAddress].map(booster =>
       this.contractFactory.auraBooster({ address: booster, network: this.network }),

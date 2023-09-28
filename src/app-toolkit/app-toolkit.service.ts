@@ -48,8 +48,8 @@ export class AppToolkit implements IAppToolkit {
     return this.networkProviderService.getProvider(network);
   }
 
-  getMulticall(network: Network) {
-    return this.multicallService.getMulticall(network);
+  getMulticall(network: Network, batchSize: number) {
+    return this.multicallService.getMulticall(network, batchSize);
   }
 
   // Base Tokens

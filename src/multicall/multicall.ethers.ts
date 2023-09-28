@@ -13,8 +13,6 @@ export type MulticallCallbackHooks = {
   beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
 };
 
-const DEFAULT_DATALOADER_OPTIONS = { cache: false, maxBatchSize: 250 };
-
 export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, ethers.utils.Result>;
@@ -22,7 +20,7 @@ export class EthersMulticall implements IMulticallWrapper {
 
   constructor(
     multicall: Multicall,
-    dataLoaderOptions: DataLoader.Options<ContractCall, ethers.utils.Result> = DEFAULT_DATALOADER_OPTIONS,
+    dataLoaderOptions: DataLoader.Options<ContractCall, ethers.utils.Result>,
     { beforeCallHook }: MulticallCallbackHooks = {},
   ) {
     this.multicall = multicall;

@@ -44,6 +44,8 @@ export abstract class ContractPositionTemplatePositionFetcher<
   isExcludedFromExplore = false;
   isExcludedFromTvl = false;
 
+  batchSize = 250;
+
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   // 1. Get contract instance
@@ -95,7 +97,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
@@ -223,7 +225,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   }: GetTokenBalancesParams<T, V>): Promise<BigNumberish[]>;
 
   async getBalances(_address: string): Promise<ContractPositionBalance<V>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const address = await this.getAccountAddress(_address);
     if (address === ZERO_ADDRESS) return [];
 
@@ -250,7 +252,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   }
 
   async getRawBalances(_address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const address = await this.getAccountAddress(_address);
     if (address === ZERO_ADDRESS) return [];
 

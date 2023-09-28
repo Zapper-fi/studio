@@ -14,11 +14,11 @@ export class MulticallService {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
 
-  getMulticall(network: Network) {
+  getMulticall(network: Network, batchSize: number) {
     const multicallAddress = MULTICALL_ADDRESSES[network];
     if (!multicallAddress) throw new Error(`Multicall not supported on network "${network}"`);
 
     const contract = this.contractFactory.multicall({ network, address: multicallAddress });
-    return new EthersMulticall(contract);
+    return new EthersMulticall(contract, { cache: false, maxBatchSize: batchSize });
   }
 }
