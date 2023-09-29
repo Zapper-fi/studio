@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.532.2](https://github.com/Zapper-fi/studio/compare/v0.532.1...v0.532.2) (2023-09-29)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Cleanup ([#2952](https://github.com/Zapper-fi/studio/issues/2952)) ([1166d0a](https://github.com/Zapper-fi/studio/commit/1166d0a6e0b3b850b9cf90e793d79cb6ceb290a6))
+* **lido:** Fix stETH pricePerShare ([#2953](https://github.com/Zapper-fi/studio/issues/2953)) ([c25d03c](https://github.com/Zapper-fi/studio/commit/c25d03c8f5518b63630a7894661c6d071af58356))
+
 ## [0.532.1](https://github.com/Zapper-fi/studio/compare/v0.532.0...v0.532.1) (2023-09-28)
 
 
