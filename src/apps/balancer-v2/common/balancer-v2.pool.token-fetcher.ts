@@ -95,15 +95,15 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
   }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>) {
     // Logic derived from https://github.com/balancer-labs/frontend-v2/blob/f22a7bf8f7adfbf1158178322ce9aa12034b5894/src/services/balancer/contracts/contracts/vault.ts#L86-L93
     if (
-      definition.poolType === 'StablePhantom' ||
-      definition.poolType === 'AaveLinear' ||
-      definition.poolType === 'Linear'
+      definition.poolType === PoolType.StablePhantom ||
+      definition.poolType === PoolType.AaveLinear ||
+      definition.poolType === PoolType.Linear
     ) {
       const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
       return multicall.wrap(phantomPoolContract).getVirtualSupply();
     }
 
-    if (definition.poolType === 'ComposableStable') {
+    if (definition.poolType === PoolType.ComposableStable) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
       return multicall.wrap(phantomPoolContract).getActualSupply();
     }

@@ -8,4 +8,6 @@ export enum PoolType {
   StablePhantom = 'StablePhantom',
   AaveLinear = 'AaveLinear',
   ERC4626Linear = 'ERC4626Linear',
+  Linear = 'Linear',
+  ComposableStable = 'ComposableStable',
 }
