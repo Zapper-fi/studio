@@ -77,12 +77,14 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({
+  async getRewardTokenBalances({
     address,
     contractPosition,
     contract,
   }: GetTokenBalancesParams<BalancerGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
+    if (!rewardTokens) return 0;
+
     return Promise.all(rewardTokens.map(v => contract.claimable_reward(address, v.address)));
   }
 }
