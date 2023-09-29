@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.532.3](https://github.com/Zapper-fi/studio/compare/v0.532.2...v0.532.3) (2023-09-29)
+
+
+### Bug Fixes
+
+* **reserve-protocol:** Filter out address which isnt fully supported yet ([#2956](https://github.com/Zapper-fi/studio/issues/2956)) ([e96921e](https://github.com/Zapper-fi/studio/commit/e96921e7c9d5bd93a8c4cf720c29073ed6d20483))
+
 ## [0.532.2](https://github.com/Zapper-fi/studio/compare/v0.532.1...v0.532.2) (2023-09-29)
 
 
