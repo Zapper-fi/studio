@@ -33,8 +33,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
-> implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
-{
+> implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons {
   appId: string;
   groupId: string;
   network: Network;
@@ -44,7 +43,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   isExcludedFromExplore = false;
   isExcludedFromTvl = false;
 
-  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) { }
 
   // 1. Get contract instance
   abstract getContract(address: string): T;
