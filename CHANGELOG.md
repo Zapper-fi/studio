@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.532.4](https://github.com/Zapper-fi/studio/compare/v0.532.3...v0.532.4) (2023-10-01)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Filter out faulty reawrd address from Balancer-v2 farm position ([#2959](https://github.com/Zapper-fi/studio/issues/2959)) ([06c9eae](https://github.com/Zapper-fi/studio/commit/06c9eaef12930766f2c9e2898307a6d9c4401470))
+
 ## [0.532.3](https://github.com/Zapper-fi/studio/compare/v0.532.2...v0.532.3) (2023-09-29)
 
 
