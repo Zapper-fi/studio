@@ -2,28 +2,28 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import {
-  MahalendReserveApyData,
-  MahalendReserveTokenAddressesData,
-  MahalendLendingTokenFetcher,
-  MahalendLendingTokenDataProps,
-} from '../common/mahalend.lending.token-fetcher';
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+  AaveV2LendingTokenFetcher,
+  AaveV2LendingTokenDataProps,
+} from '../../aave-v2/common/aave-v2.lending.token-fetcher';
 import { MahalendAToken } from '../contracts/ethers/MahalendAToken';
 
 @PositionTemplate()
-export class ArbitrumMahalendStableDebtTokenFetcher extends MahalendLendingTokenFetcher {
+export class ArbitrumMahalendStableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0xE76C1D2a7a56348574810e83D38c07D47f0641F3';
   isDebt = true;
 
-  getTokenAddress(reserveTokenAddressesData: MahalendReserveTokenAddressesData): string {
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.stableDebtTokenAddress;
   }
 
-  getApyFromReserveData(reserveApyData: MahalendReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.stableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<MahalendAToken, MahalendLendingTokenDataProps>) {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<MahalendAToken, AaveV2LendingTokenDataProps>) {
     return `${appToken.dataProps.apy.toFixed(3)}% APR (stable)`;
   }
 }
