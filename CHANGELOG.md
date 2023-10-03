@@ -4,6 +4,63 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.532.4](https://github.com/Zapper-fi/studio/compare/v0.532.3...v0.532.4) (2023-10-01)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Filter out faulty reawrd address from Balancer-v2 farm position ([#2959](https://github.com/Zapper-fi/studio/issues/2959)) ([06c9eae](https://github.com/Zapper-fi/studio/commit/06c9eaef12930766f2c9e2898307a6d9c4401470))
+
+## [0.532.3](https://github.com/Zapper-fi/studio/compare/v0.532.2...v0.532.3) (2023-09-29)
+
+
+### Bug Fixes
+
+* **reserve-protocol:** Filter out address which isnt fully supported yet ([#2956](https://github.com/Zapper-fi/studio/issues/2956)) ([e96921e](https://github.com/Zapper-fi/studio/commit/e96921e7c9d5bd93a8c4cf720c29073ed6d20483))
+
+## [0.532.2](https://github.com/Zapper-fi/studio/compare/v0.532.1...v0.532.2) (2023-09-29)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Cleanup ([#2952](https://github.com/Zapper-fi/studio/issues/2952)) ([1166d0a](https://github.com/Zapper-fi/studio/commit/1166d0a6e0b3b850b9cf90e793d79cb6ceb290a6))
+* **lido:** Fix stETH pricePerShare ([#2953](https://github.com/Zapper-fi/studio/issues/2953)) ([c25d03c](https://github.com/Zapper-fi/studio/commit/c25d03c8f5518b63630a7894661c6d071af58356))
+
+## [0.532.1](https://github.com/Zapper-fi/studio/compare/v0.532.0...v0.532.1) (2023-09-28)
+
+
+### Bug Fixes
+
+* **vendor-finance:** Linting ([#2949](https://github.com/Zapper-fi/studio/issues/2949)) ([be78fb6](https://github.com/Zapper-fi/studio/commit/be78fb69214c3e5b97778770badfca9f50adc2bd))
+
+## [0.532.0](https://github.com/Zapper-fi/studio/compare/v0.531.1...v0.532.0) (2023-09-28)
+
+
+### Features
+
+* **kwenta:** staking v2 ([#2943](https://github.com/Zapper-fi/studio/issues/2943)) ([a74bb31](https://github.com/Zapper-fi/studio/commit/a74bb319c534df22cac720d112ffcc270ea1b903))
+
+## [0.531.1](https://github.com/Zapper-fi/studio/compare/v0.531.0...v0.531.1) (2023-09-27)
+
+
+### Bug Fixes
+
+* **arbitrum-airdrop:** Removed position because contract has been self destructed ([#2946](https://github.com/Zapper-fi/studio/issues/2946)) ([92dbbe2](https://github.com/Zapper-fi/studio/commit/92dbbe2d588833024c606382424247d084638305))
+
+## [0.531.0](https://github.com/Zapper-fi/studio/compare/v0.530.0...v0.531.0) (2023-09-27)
+
+
+### Features
+
+* **studio:** Add Aura deposits ([#2942](https://github.com/Zapper-fi/studio/issues/2942)) ([96ff98b](https://github.com/Zapper-fi/studio/commit/96ff98b467cc3da68ad881ef11b17a6b43eeb887))
+
+## [0.530.0](https://github.com/Zapper-fi/studio/compare/v0.529.0...v0.530.0) (2023-09-14)
+
+
+### Features
+
+* **curve:** Add positions on Base ([#2935](https://github.com/Zapper-fi/studio/issues/2935)) ([b623096](https://github.com/Zapper-fi/studio/commit/b62309692fca1fb3ad4098285de193617193ba01))
+
 ## [0.529.0](https://github.com/Zapper-fi/studio/compare/v0.528.3...v0.529.0) (2023-09-11)
 
 

@@ -4,7 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { KwentaAccountResolver__factory, KwentaEscrow__factory, KwentaStaking__factory } from './ethers';
+import {
+  KwentaAccountResolver__factory,
+  KwentaEscrow__factory,
+  KwentaStaking__factory,
+  KwentaStakingV2__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -24,8 +29,12 @@ export class KwentaContractFactory extends ContractFactory {
   kwentaStaking({ address, network }: ContractOpts) {
     return KwentaStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  kwentaStakingV2({ address, network }: ContractOpts) {
+    return KwentaStakingV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { KwentaAccountResolver } from './ethers';
 export type { KwentaEscrow } from './ethers';
 export type { KwentaStaking } from './ethers';
+export type { KwentaStakingV2 } from './ethers';

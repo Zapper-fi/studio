@@ -11,7 +11,6 @@ import { AvalancheBalancerV2PoolTokenFetcher } from './avalanche/balancer-v2.poo
 import { BaseBalancerV2BoostedTokenFetcher } from './base/balancer-v2.boosted.token-fetcher';
 import { BaseBalancerV2FarmContractPositionFetcher } from './base/balancer-v2.farm.contract-position-fetcher';
 import { BaseBalancerV2PoolTokenFetcher } from './base/balancer-v2.pool.token-fetcher';
-import { BalancerV2SpotPriceHelper } from './common/balancer-v2.spot-price.helper';
 import { BalancerV2ContractFactory } from './contracts';
 import { EthereumBalancerV2FarmContractPositionFetcher } from './ethereum/balancer-v2.farm.contract-position-fetcher';
 import { EthereumBalancerV2PoolTokenFetcher } from './ethereum/balancer-v2.pool.token-fetcher';
@@ -49,8 +48,6 @@ import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.
     PolygonBalancerV2PoolTokenFetcher,
     PolygonBalancerV2FarmContractPositionFetcher,
     PolygonBalancerV2StaticYieldTokenFetcher,
-    // Helpers
-    BalancerV2SpotPriceHelper,
   ],
 })
 export class BalancerV2AppModule extends AbstractApp() {}
