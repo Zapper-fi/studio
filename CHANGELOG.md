@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.533.0](https://github.com/Zapper-fi/studio/compare/v0.532.4...v0.533.0) (2023-10-06)
+
+
+### Features
+
+* **kwenta:** escrow v2 ([#2961](https://github.com/Zapper-fi/studio/issues/2961)) ([621fd9e](https://github.com/Zapper-fi/studio/commit/621fd9ec3e4c93b58290f15c602d73ba779765d9))
+
 ## [0.532.4](https://github.com/Zapper-fi/studio/compare/v0.532.3...v0.532.4) (2023-10-01)
 
 
