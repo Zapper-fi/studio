@@ -3,8 +3,8 @@ import { PresentationConfig } from '~app/app.interface';
 import { AaveV2PositionPresenter } from '~apps/aave-v2/common/aave-v2.position-presenter';
 
 @PresenterTemplate()
-export class OptimismGranaryFinancePositionPresenter extends AaveV2PositionPresenter {
-  lendingPoolAddress = '0x8fd4af47e4e63d1d2d45582c3286b4bd9bb95dfe';
+export class BaseGranaryFinancePositionPresenter extends AaveV2PositionPresenter {
+  lendingPoolAddress = '0xb702ce183b4e1faa574834715e5d4a6378d0eed3';
 
   explorePresentationConfig?: PresentationConfig = {
     tabs: [
