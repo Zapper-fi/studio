@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.535.0](https://github.com/Zapper-fi/studio/compare/v0.534.0...v0.535.0) (2023-10-11)
+
+
+### Features
+
+* **stake-dao:** Add vaults and gauges positions ([#2964](https://github.com/Zapper-fi/studio/issues/2964)) ([88c935f](https://github.com/Zapper-fi/studio/commit/88c935f53b62355574eeadc3974291f07bef3c8d))
+
 ## [0.534.0](https://github.com/Zapper-fi/studio/compare/v0.533.0...v0.534.0) (2023-10-10)
 
 
