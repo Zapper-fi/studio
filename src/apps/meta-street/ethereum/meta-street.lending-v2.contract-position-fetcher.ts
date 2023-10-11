@@ -229,16 +229,18 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
       ? redeemed.amount
       : activeShares.mul(tickData.value).div(tickData.shares).add(redeemed.amount);
 
-    /* Compute deposit position (deposit shares * depositor's avg share price - withdrawn amount) */
-    const depositPosition = deposited.shares.eq(constants.Zero)
-      ? constants.Zero
-      : deposited.shares.mul(deposited.amount).div(deposited.shares).sub(withdrawn.amount);
+    /* Compute deposit position based on remaining shares */
+    const depositPosition = deposited.shares.gt(0)
+      ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
+      : constants.Zero;
 
-    /* Compute supplied and claimable balances */
-    const suppliedBalance = depositPosition.gt(currentPosition) ? currentPosition : depositPosition;
-    const claimableBalance = depositPosition.gt(currentPosition)
-      ? constants.Zero
-      : currentPosition.sub(depositPosition);
+    /* Compute supplied balance (minimum of currentPosition and depositPosition) */
+    const suppliedBalance = currentPosition.gt(depositPosition) ? depositPosition : currentPosition;
+
+    /* Compute claimable balance (interest earned) */
+    const claimableBalance = currentPosition.gt(depositPosition)
+      ? currentPosition.sub(depositPosition)
+      : constants.Zero;
 
     return [suppliedBalance, claimableBalance];
   }
