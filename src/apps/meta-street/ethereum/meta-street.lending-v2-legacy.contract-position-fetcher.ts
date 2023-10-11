@@ -5,7 +5,7 @@ import { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-
+import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
@@ -15,7 +15,6 @@ import {
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
-import { MetaType } from '~position/position.interface';
 
 import { MetaStreetContractFactory, PoolV2Legacy } from '../contracts';
 
@@ -93,17 +92,17 @@ export type Redemption = {
 
 @PositionTemplate()
 export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolV2Legacy> {
-  groupLabel: string = 'Lending V2 Legacy';
+  groupLabel = 'Lending V2 Legacy';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetaStreetContractFactory) protected readonly MetaStreetContractFactory: MetaStreetContractFactory,
+    @Inject(MetaStreetContractFactory) protected readonly contractFactory: MetaStreetContractFactory,
   ) {
     super(appToolkit);
   }
 
   getContract(_address: string): PoolV2Legacy {
-    return this.MetaStreetContractFactory.poolV2Legacy({ address: _address, network: this.network });
+    return this.contractFactory.poolV2Legacy({ address: _address, network: this.network });
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<ContractPositionDefinition[]> {
@@ -192,7 +191,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     );
 
     /* Get account's withdrawal logs and compute withdrawn amount and burned shares */
-    let firstDepositBlockNumber: number = depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER;
+    const firstDepositBlockNumber: number = depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER;
     const withdrawLogs = await contract.queryFilter(contract.filters.Withdrawn(address, tick), firstDepositBlockNumber);
     const withdrawn: Withdrawn = withdrawLogs.reduce(
       (withdrawn: Withdrawn, l) => {
