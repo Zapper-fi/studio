@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.535.1](https://github.com/Zapper-fi/studio/compare/v0.535.0...v0.535.1) (2023-10-11)
+
+
+### Bug Fixes
+
+* **granary-finance:** Add variable debt on Base ([#2966](https://github.com/Zapper-fi/studio/issues/2966)) ([b2ce320](https://github.com/Zapper-fi/studio/commit/b2ce3207d3e7346927a5a0a00a20da0f6627bf26))
+* **meta-street:** Linting ([#2967](https://github.com/Zapper-fi/studio/issues/2967)) ([2e9c881](https://github.com/Zapper-fi/studio/commit/2e9c881ff4dd33756c4f1ce3ea89e630dd781dd0))
+
 ## [0.535.0](https://github.com/Zapper-fi/studio/compare/v0.534.0...v0.535.0) (2023-10-11)
 
 
