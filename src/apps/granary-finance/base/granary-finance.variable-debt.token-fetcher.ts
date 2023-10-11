@@ -9,20 +9,20 @@ import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 @PositionTemplate()
-export class OptimismGranaryFinanceStableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
+export class BaseGranaryFinanceVariableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
-  providerAddress = '0x9546f673ef71ff666ae66d01fd6e7c6dae5a9995';
+  providerAddress = '0xed984a0e9c12ee27602314191fc4487a702bb83f';
   isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
-    return reserveTokenAddressesData.stableDebtTokenAddress;
+    return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
   getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
-    return reserveApyData.stableBorrowApy;
+    return reserveApyData.variableBorrowApy;
   }
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${appToken.dataProps.apy.toFixed(3)}% APR (stable)`;
+    return `${appToken.dataProps.apy.toFixed(3)}% APR (variable)`;
   }
 }
