@@ -29,6 +29,7 @@ export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePo
       '0xcd6997334867728ba14d7922f72c893fcee70e84', // Passive sEUR
       '0xbc10c4f7b9fe0b305e8639b04c536633a3db7065', // Passive stETH
       '0xa2761b0539374eb7af2155f76eb09864af075250', // Passive sETH
+      '0xb17640796e4c27a39af51887aff3f8dc0daf9567', // Passive 3CRV
     ];
   }
 
