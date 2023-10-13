@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.1](https://github.com/Zapper-fi/studio/compare/v0.536.0...v0.536.1) (2023-10-13)
+
+
+### Bug Fixes
+
+* **silo-finance:** Migrate app tokens to ATI ([#2972](https://github.com/Zapper-fi/studio/issues/2972)) ([66b5fb9](https://github.com/Zapper-fi/studio/commit/66b5fb900ee7785d64a19bc52590fe91e11838d1))
+
 ## [0.536.0](https://github.com/Zapper-fi/studio/compare/v0.535.1...v0.536.0) (2023-10-13)
 
 
