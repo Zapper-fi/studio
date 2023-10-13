@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.2](https://github.com/Zapper-fi/studio/compare/v0.536.1...v0.536.2) (2023-10-13)
+
+
+### Bug Fixes
+
+* **silo-finance:** Update groupId to target app tokens implemented using ATI ([#2974](https://github.com/Zapper-fi/studio/issues/2974)) ([6f63a0c](https://github.com/Zapper-fi/studio/commit/6f63a0cc63d97ecbc3b865508247a376d59a4c21))
+
 ## [0.536.1](https://github.com/Zapper-fi/studio/compare/v0.536.0...v0.536.1) (2023-10-13)
 
 
