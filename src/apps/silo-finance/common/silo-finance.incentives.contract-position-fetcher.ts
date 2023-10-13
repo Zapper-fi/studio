@@ -44,7 +44,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       network: this.network,
-      groupIds: ['s-token'],
+      groupIds: ['s-tokens'],
     });
 
     const sTokenAddresses = appTokens.map(x => x.address);
