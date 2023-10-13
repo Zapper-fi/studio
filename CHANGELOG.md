@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.0](https://github.com/Zapper-fi/studio/compare/v0.535.1...v0.536.0) (2023-10-13)
+
+
+### Features
+
+* **metastreet:** Fix MetaStreet app ([#2970](https://github.com/Zapper-fi/studio/issues/2970)) ([c5ed958](https://github.com/Zapper-fi/studio/commit/c5ed958411bdcf9e402a27fe9e80e61339cca642))
+
 ## [0.535.1](https://github.com/Zapper-fi/studio/compare/v0.535.0...v0.535.1) (2023-10-11)
 
 
