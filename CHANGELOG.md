@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.3](https://github.com/Zapper-fi/studio/compare/v0.536.2...v0.536.3) (2023-10-17)
+
+
+### Bug Fixes
+
+* **stargate:** Fix farms on Base ([#2976](https://github.com/Zapper-fi/studio/issues/2976)) ([c711c60](https://github.com/Zapper-fi/studio/commit/c711c60a48ec4a8e9ed423a3b2181cb4adec7b05))
+
 ## [0.536.2](https://github.com/Zapper-fi/studio/compare/v0.536.1...v0.536.2) (2023-10-13)
 
 
