@@ -1,4 +1,7 @@
+import { BigNumberish } from 'ethers';
+
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetMasterChefDataPropsParams } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.contract-position-fetcher';
 import { StargateChef } from '../contracts';
@@ -13,5 +16,9 @@ export class AvalancheStargateFarmContractPositionFetcher extends StargateFarmCo
   }
   getStargateTokenAddress(contract: StargateChef): Promise<string> {
     return contract.stargate();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StargateChef>): Promise<BigNumberish> {
+    return contract.stargatePerBlock();
   }
 }
