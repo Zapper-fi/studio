@@ -134,10 +134,14 @@ export class AngleApiHelper {
     key: (network: Network) => `studio:angle:vaults:${network}:angle`,
     ttl: 15 * 60,
   })
-  async getUserVaults(address: string, _network: Network) {
-    return this.callAngleApi<Record<string, TVault>>('vaults', {
+  async getVaultIds(address: string, _network: Network) {
+    const userVaultDataRaw = await this.callAngleApi<Record<string, TVault>>('vaults', {
       chainId: 1,
       user: address,
+    });
+
+    return Object.values(userVaultDataRaw).map(userVault => {
+      return userVault.id;
     });
   }
 
