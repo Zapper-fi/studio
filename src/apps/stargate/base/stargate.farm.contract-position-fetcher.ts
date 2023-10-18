@@ -1,8 +1,10 @@
 import { BigNumberish } from 'ethers';
 
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import {
   GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
@@ -18,11 +20,23 @@ export class BaseStargateFarmContractPositionFetcher extends StargateFarmContrac
   getStargateChefContract(address: string): StargateChefBase {
     return this.contractFactory.stargateChefBase({ address, network: this.network });
   }
+
   getStargateTokenAddress(contract: StargateChefBase): Promise<string> {
     return contract.eToken();
   }
 
   getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StargateChefBase>): Promise<BigNumberish> {
     return contract.eTokenPerSecond();
+  }
+
+  getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<StargateChefBase>): Promise<BigNumberish> {
+    return contract.pendingEmissionToken(contractPosition.dataProps.poolIndex, address).catch(err => {
+      if (isMulticallUnderlyingError(err)) return 0;
+      throw err;
+    });
   }
 }
