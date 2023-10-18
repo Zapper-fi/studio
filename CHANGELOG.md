@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.6](https://github.com/Zapper-fi/studio/compare/v0.536.5...v0.536.6) (2023-10-18)
+
+
+### Bug Fixes
+
+* **angle:** Reduce external dependencies on vault balances ([#2983](https://github.com/Zapper-fi/studio/issues/2983)) ([6af241e](https://github.com/Zapper-fi/studio/commit/6af241e1723b5fde1cbc7f8967c44c4f27705454))
+
 ## [0.536.5](https://github.com/Zapper-fi/studio/compare/v0.536.4...v0.536.5) (2023-10-18)
 
 
