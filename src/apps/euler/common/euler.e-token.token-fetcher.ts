@@ -1,10 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { ethers } from 'ethers';
-import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
-import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -76,62 +73,5 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
   async getApy({ appToken }: GetDataPropsParams<EulerEtokenContract>) {
     const market = await this.tokenDefinitionsResolver.getMarket(appToken.address, this.tokenType);
     return (Number(market!.supplyAPY) * 100) / 1e27;
-  }
-
-  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<DefaultAppTokenDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    return (
-      await Promise.all(
-        appTokens.map(async appToken => {
-          const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-          const underlyingBalance = await multicall
-            .wrap(this.getContract(appToken.address))
-            .convertBalanceToUnderlying(balanceRaw);
-
-          return [
-            {
-              key: this.appToolkit.getPositionKey(appToken),
-              balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
-            },
-            {
-              key: `${this.appToolkit.getPositionKey(appToken)}-underlying`,
-              balance: underlyingBalance.toString(),
-            },
-          ];
-        }),
-      )
-    ).flat();
-  }
-
-  async drillRawBalances(balances: RawTokenBalance[]): Promise<AppTokenPositionBalance<DefaultAppTokenDataProps>[]> {
-    const appTokens = await this.getPositionsForBalances();
-
-    const appTokenBalances = appTokens.map(token => {
-      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
-      const underlyingTokenBalance = balances.find(
-        b => b.key === `${this.appToolkit.getPositionKey(token)}-underlying`,
-      );
-
-      if (!tokenBalance || !underlyingTokenBalance) return null;
-
-      const result = drillBalance<typeof token, DefaultAppTokenDataProps>(token, tokenBalance.balance, {
-        isDebt: this.isDebt,
-      });
-
-      const underlyingToken = drillBalance<typeof token, DefaultAppTokenDataProps>(
-        appTokens[0],
-        underlyingTokenBalance.balance,
-      );
-
-      return { ...result, tokens: [underlyingToken] };
-    });
-
-    return _.compact(appTokenBalances);
   }
 }
