@@ -8,7 +8,6 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { BalanceDisplayMode } from '~position/display.interface';
-import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -143,31 +142,5 @@ export abstract class RariFuseSupplyTokenFetcher<
 
   async getBalanceDisplayMode() {
     return BalanceDisplayMode.UNDERLYING;
-  }
-
-  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
-    const lens = this.getLensContract(this.lensAddress);
-    const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
-    const participatedComptrollers = poolsBySupplier[1].map(t => t.comptroller.toLowerCase());
-
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<RariFuseSupplyTokenDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    return Promise.all(
-      appTokens
-        .filter(v => participatedComptrollers.includes(v.dataProps.comptroller))
-        .map(async appToken => {
-          const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-
-          return {
-            key: this.appToolkit.getPositionKey(appToken),
-            balance: balanceRaw.toString(),
-          };
-        }),
-    );
   }
 }
