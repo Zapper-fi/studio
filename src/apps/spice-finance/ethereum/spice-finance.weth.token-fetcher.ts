@@ -1,11 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, constants } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc721 } from '~contract/contracts';
-import { IMulticallWrapper } from '~multicall';
-import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -72,29 +69,6 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
     const reserveRaw = await vault.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
-  }
-
-  async getBalancePerToken({
-    address,
-  }: {
-    address: string;
-    appToken: AppTokenPosition;
-    multicall: IMulticallWrapper;
-  }): Promise<BigNumberish> {
-    const vault = this.spiceFinanceContractFactory.spiceFinanceNftVault({
-      address: this.vaultAddress,
-      network: this.network,
-    });
-    let balance = constants.Zero;
-    for (let i = 1; i <= 555; ++i) {
-      const owner = await vault.ownerOf(i);
-      if (owner.toLowerCase() === address.toLowerCase()) {
-        const shares = await vault.tokenShares(i);
-        const assets = await vault.convertToAssets(shares);
-        balance = balance.add(assets);
-      }
-    }
-    return balance;
   }
 
   async getApy(_params: GetDataPropsParams<Erc721>) {
