@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.5](https://github.com/Zapper-fi/studio/compare/v0.536.4...v0.536.5) (2023-10-18)
+
+
+### Bug Fixes
+
+* **stargate:** Fix pending emission token balance ([#2981](https://github.com/Zapper-fi/studio/issues/2981)) ([2949700](https://github.com/Zapper-fi/studio/commit/29497004c33a311fbf6f26969565dc2c8ee1df90))
+
 ## [0.536.4](https://github.com/Zapper-fi/studio/compare/v0.536.3...v0.536.4) (2023-10-18)
 
 
