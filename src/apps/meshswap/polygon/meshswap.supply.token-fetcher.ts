@@ -3,28 +3,18 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { StatsItem } from '~position/display.interface';
-import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
 import { MeshswapContractFactory, MeshswapSinglePool } from '../contracts';
 
-export type MeshswapContractPositionDataProps = DefaultAppTokenDataProps & {
-  exchangeRate: number;
-};
-
 @PositionTemplate()
-export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<
-  MeshswapSinglePool,
-  MeshswapContractPositionDataProps
-> {
+export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<MeshswapSinglePool> {
   groupLabel = 'Supply';
 
   constructor(
@@ -60,8 +50,10 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     return [{ address: await contract.token(), network: this.network }];
   }
 
-  async getPricePerShare() {
-    return [1];
+  async getPricePerShare({ contract }: GetPricePerShareParams<MeshswapSinglePool>): Promise<number[]> {
+    const exchangeRateRaw = await contract.exchangeRateStored();
+    const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
+    return [exchangeRate];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<string> {
@@ -75,42 +67,5 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     const borrowAmount = Number(borrowAmountRaw) / 10 ** appToken.decimals;
 
     return borrowAmount + cash;
-  }
-
-  async getDataProps(
-    params: GetDataPropsParams<MeshswapSinglePool, MeshswapContractPositionDataProps>,
-  ): Promise<MeshswapContractPositionDataProps> {
-    const defaultDataProps = await super.getDataProps(params);
-    const exchangeRateRaw = await params.contract.exchangeRateStored();
-    const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
-    return { ...defaultDataProps, exchangeRate };
-  }
-
-  async getStatsItems({ appToken }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<StatsItem[] | undefined> {
-    const { liquidity } = appToken.dataProps;
-
-    return [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
-  }
-
-  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-
-    const appTokens = await this.appToolkit.getAppTokenPositions<MeshswapContractPositionDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    return Promise.all(
-      appTokens.map(async appToken => {
-        const balanceRaw = await multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
-        const balance = Number(balanceRaw) * appToken.dataProps.exchangeRate;
-
-        return {
-          key: this.appToolkit.getPositionKey(appToken),
-          balance: balance.toString(),
-        };
-      }),
-    );
   }
 }
