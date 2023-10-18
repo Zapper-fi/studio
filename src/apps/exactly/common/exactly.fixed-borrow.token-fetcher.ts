@@ -1,7 +1,5 @@
 import { BigNumber, constants } from 'ethers';
 
-import type { IMulticallWrapper } from '~multicall/multicall.interface';
-import type { AppTokenPosition } from '~position/position.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 import type { ExactlyMarketDefinition } from '../common/exactly.definitions-resolver';
@@ -22,23 +20,5 @@ export abstract class ExactlyFixedBorrowFetcher extends ExactlyFixedPositionFetc
       (best, { maturity, minBorrowRate: rate }) => (BigNumber.from(rate).lt(best.rate) ? { maturity, rate } : best),
       { maturity: constants.Zero, rate: constants.MaxUint256 },
     );
-  }
-
-  async getBalancePerToken({
-    address,
-    appToken,
-    multicall,
-  }: {
-    address: string;
-    appToken: AppTokenPosition;
-    multicall: IMulticallWrapper;
-  }) {
-    const { fixedBorrowPositions } = await this.definitionsResolver.getDefinition({
-      multicall,
-      network: this.network,
-      account: address,
-      market: appToken.address,
-    });
-    return fixedBorrowPositions.reduce((total, { previewValue }) => total.add(previewValue), constants.Zero);
   }
 }
