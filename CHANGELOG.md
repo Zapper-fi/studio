@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.536.4](https://github.com/Zapper-fi/studio/compare/v0.536.3...v0.536.4) (2023-10-18)
+
+
+### Bug Fixes
+
+* **studio:** Fix contributing guidelines link ([#2979](https://github.com/Zapper-fi/studio/issues/2979)) ([ffc30e3](https://github.com/Zapper-fi/studio/commit/ffc30e3fe48acbe47b975a603344285392bd6ccc))
+* **template:** early return for dead address ([#2978](https://github.com/Zapper-fi/studio/issues/2978)) ([7543844](https://github.com/Zapper-fi/studio/commit/754384487a06fa36d11804fca3ea242440926eba))
+
 ## [0.536.3](https://github.com/Zapper-fi/studio/compare/v0.536.2...v0.536.3) (2023-10-17)
 
 
