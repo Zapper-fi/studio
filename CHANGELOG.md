@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.537.0](https://github.com/Zapper-fi/studio/compare/v0.536.6...v0.537.0) (2023-10-18)
+
+
+### Features
+
+* **studio:** Remove overrides on getBalancePerToken ([#2987](https://github.com/Zapper-fi/studio/issues/2987)) ([2d1609b](https://github.com/Zapper-fi/studio/commit/2d1609b4b4c65e2f8a481cbf2aa2f98c51ef6a94))
+* **studio:** Remove overrides on getRawBalances ([#2985](https://github.com/Zapper-fi/studio/issues/2985)) ([5c5ff57](https://github.com/Zapper-fi/studio/commit/5c5ff575c2ea4f96a6fb79a513ad0817b7e1b32f))
+
 ## [0.536.6](https://github.com/Zapper-fi/studio/compare/v0.536.5...v0.536.6) (2023-10-18)
 
 
