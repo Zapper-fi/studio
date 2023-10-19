@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.537.1](https://github.com/Zapper-fi/studio/compare/v0.537.0...v0.537.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **angle:** Remove Perps ([#2988](https://github.com/Zapper-fi/studio/issues/2988)) ([ca830a6](https://github.com/Zapper-fi/studio/commit/ca830a69f3a32b8cdbd5a54a02ad499b50658a00))
+
 ## [0.537.0](https://github.com/Zapper-fi/studio/compare/v0.536.6...v0.537.0) (2023-10-18)
 
 
