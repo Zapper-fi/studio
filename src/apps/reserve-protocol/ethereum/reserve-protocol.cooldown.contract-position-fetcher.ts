@@ -34,6 +34,9 @@ enum CollateralStatus {
 export class EthereumReserveProtocolCooldownContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StakedRsr> {
   groupLabel = 'Unstaked RSR in Cooldown';
 
+  // Filtering out until main is fully supported in pro
+  blockedTokenAddress = ['0x1c77ebbab708153f5f899c29b155a6cc92a2ac40'];
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(ReserveProtocolContractFactory)
@@ -56,9 +59,11 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     });
 
     // Get stRSR token definitions
-    return rTokensData.tokens.map(token => ({
-      address: token.rToken.rewardToken.token.id.toLowerCase(),
-    }));
+    return rTokensData.tokens
+      .filter(x => !this.blockedTokenAddress.includes(x.rToken.rewardToken.token.id.toLowerCase()))
+      .map(token => ({
+        address: token.rToken.rewardToken.token.id.toLowerCase(),
+      }));
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<StakedRsr>) {

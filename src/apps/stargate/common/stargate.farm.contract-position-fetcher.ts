@@ -16,6 +16,7 @@ export abstract class StargateFarmContractPositionFetcher<
 > extends MasterChefTemplateContractPositionFetcher<R> {
   abstract getStargateChefContract(address: string): R;
   abstract getStargateTokenAddress(contract: R): Promise<string>;
+  abstract getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<R>): Promise<BigNumberish>;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,10 +43,6 @@ export abstract class StargateFarmContractPositionFetcher<
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<R>): Promise<BigNumberish> {
     return contract.totalAllocPoint();
-  }
-
-  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<R>): Promise<BigNumberish> {
-    return contract.stargatePerBlock();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<R>): Promise<BigNumberish> {

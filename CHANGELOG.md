@@ -4,6 +4,129 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.537.1](https://github.com/Zapper-fi/studio/compare/v0.537.0...v0.537.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **angle:** Remove Perps ([#2988](https://github.com/Zapper-fi/studio/issues/2988)) ([ca830a6](https://github.com/Zapper-fi/studio/commit/ca830a69f3a32b8cdbd5a54a02ad499b50658a00))
+
+## [0.537.0](https://github.com/Zapper-fi/studio/compare/v0.536.6...v0.537.0) (2023-10-18)
+
+
+### Features
+
+* **studio:** Remove overrides on getBalancePerToken ([#2987](https://github.com/Zapper-fi/studio/issues/2987)) ([2d1609b](https://github.com/Zapper-fi/studio/commit/2d1609b4b4c65e2f8a481cbf2aa2f98c51ef6a94))
+* **studio:** Remove overrides on getRawBalances ([#2985](https://github.com/Zapper-fi/studio/issues/2985)) ([5c5ff57](https://github.com/Zapper-fi/studio/commit/5c5ff575c2ea4f96a6fb79a513ad0817b7e1b32f))
+
+## [0.536.6](https://github.com/Zapper-fi/studio/compare/v0.536.5...v0.536.6) (2023-10-18)
+
+
+### Bug Fixes
+
+* **angle:** Reduce external dependencies on vault balances ([#2983](https://github.com/Zapper-fi/studio/issues/2983)) ([6af241e](https://github.com/Zapper-fi/studio/commit/6af241e1723b5fde1cbc7f8967c44c4f27705454))
+
+## [0.536.5](https://github.com/Zapper-fi/studio/compare/v0.536.4...v0.536.5) (2023-10-18)
+
+
+### Bug Fixes
+
+* **stargate:** Fix pending emission token balance ([#2981](https://github.com/Zapper-fi/studio/issues/2981)) ([2949700](https://github.com/Zapper-fi/studio/commit/29497004c33a311fbf6f26969565dc2c8ee1df90))
+
+## [0.536.4](https://github.com/Zapper-fi/studio/compare/v0.536.3...v0.536.4) (2023-10-18)
+
+
+### Bug Fixes
+
+* **studio:** Fix contributing guidelines link ([#2979](https://github.com/Zapper-fi/studio/issues/2979)) ([ffc30e3](https://github.com/Zapper-fi/studio/commit/ffc30e3fe48acbe47b975a603344285392bd6ccc))
+* **template:** early return for dead address ([#2978](https://github.com/Zapper-fi/studio/issues/2978)) ([7543844](https://github.com/Zapper-fi/studio/commit/754384487a06fa36d11804fca3ea242440926eba))
+
+## [0.536.3](https://github.com/Zapper-fi/studio/compare/v0.536.2...v0.536.3) (2023-10-17)
+
+
+### Bug Fixes
+
+* **stargate:** Fix farms on Base ([#2976](https://github.com/Zapper-fi/studio/issues/2976)) ([c711c60](https://github.com/Zapper-fi/studio/commit/c711c60a48ec4a8e9ed423a3b2181cb4adec7b05))
+
+## [0.536.2](https://github.com/Zapper-fi/studio/compare/v0.536.1...v0.536.2) (2023-10-13)
+
+
+### Bug Fixes
+
+* **silo-finance:** Update groupId to target app tokens implemented using ATI ([#2974](https://github.com/Zapper-fi/studio/issues/2974)) ([6f63a0c](https://github.com/Zapper-fi/studio/commit/6f63a0cc63d97ecbc3b865508247a376d59a4c21))
+
+## [0.536.1](https://github.com/Zapper-fi/studio/compare/v0.536.0...v0.536.1) (2023-10-13)
+
+
+### Bug Fixes
+
+* **silo-finance:** Migrate app tokens to ATI ([#2972](https://github.com/Zapper-fi/studio/issues/2972)) ([66b5fb9](https://github.com/Zapper-fi/studio/commit/66b5fb900ee7785d64a19bc52590fe91e11838d1))
+
+## [0.536.0](https://github.com/Zapper-fi/studio/compare/v0.535.1...v0.536.0) (2023-10-13)
+
+
+### Features
+
+* **metastreet:** Fix MetaStreet app ([#2970](https://github.com/Zapper-fi/studio/issues/2970)) ([c5ed958](https://github.com/Zapper-fi/studio/commit/c5ed958411bdcf9e402a27fe9e80e61339cca642))
+
+## [0.535.1](https://github.com/Zapper-fi/studio/compare/v0.535.0...v0.535.1) (2023-10-11)
+
+
+### Bug Fixes
+
+* **granary-finance:** Add variable debt on Base ([#2966](https://github.com/Zapper-fi/studio/issues/2966)) ([b2ce320](https://github.com/Zapper-fi/studio/commit/b2ce3207d3e7346927a5a0a00a20da0f6627bf26))
+* **meta-street:** Linting ([#2967](https://github.com/Zapper-fi/studio/issues/2967)) ([2e9c881](https://github.com/Zapper-fi/studio/commit/2e9c881ff4dd33756c4f1ce3ea89e630dd781dd0))
+
+## [0.535.0](https://github.com/Zapper-fi/studio/compare/v0.534.0...v0.535.0) (2023-10-11)
+
+
+### Features
+
+* **stake-dao:** Add vaults and gauges positions ([#2964](https://github.com/Zapper-fi/studio/issues/2964)) ([88c935f](https://github.com/Zapper-fi/studio/commit/88c935f53b62355574eeadc3974291f07bef3c8d))
+
+## [0.534.0](https://github.com/Zapper-fi/studio/compare/v0.533.0...v0.534.0) (2023-10-10)
+
+
+### Features
+
+* **metastreet:** Add MetaStreet App ([#2955](https://github.com/Zapper-fi/studio/issues/2955)) ([4e7b735](https://github.com/Zapper-fi/studio/commit/4e7b735ac3f8b5e47f90d7982822b8e019dfc08d))
+
+## [0.533.0](https://github.com/Zapper-fi/studio/compare/v0.532.4...v0.533.0) (2023-10-06)
+
+
+### Features
+
+* **kwenta:** escrow v2 ([#2961](https://github.com/Zapper-fi/studio/issues/2961)) ([621fd9e](https://github.com/Zapper-fi/studio/commit/621fd9ec3e4c93b58290f15c602d73ba779765d9))
+
+## [0.532.4](https://github.com/Zapper-fi/studio/compare/v0.532.3...v0.532.4) (2023-10-01)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Filter out faulty reawrd address from Balancer-v2 farm position ([#2959](https://github.com/Zapper-fi/studio/issues/2959)) ([06c9eae](https://github.com/Zapper-fi/studio/commit/06c9eaef12930766f2c9e2898307a6d9c4401470))
+
+## [0.532.3](https://github.com/Zapper-fi/studio/compare/v0.532.2...v0.532.3) (2023-09-29)
+
+
+### Bug Fixes
+
+* **reserve-protocol:** Filter out address which isnt fully supported yet ([#2956](https://github.com/Zapper-fi/studio/issues/2956)) ([e96921e](https://github.com/Zapper-fi/studio/commit/e96921e7c9d5bd93a8c4cf720c29073ed6d20483))
+
+## [0.532.2](https://github.com/Zapper-fi/studio/compare/v0.532.1...v0.532.2) (2023-09-29)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Cleanup ([#2952](https://github.com/Zapper-fi/studio/issues/2952)) ([1166d0a](https://github.com/Zapper-fi/studio/commit/1166d0a6e0b3b850b9cf90e793d79cb6ceb290a6))
+* **lido:** Fix stETH pricePerShare ([#2953](https://github.com/Zapper-fi/studio/issues/2953)) ([c25d03c](https://github.com/Zapper-fi/studio/commit/c25d03c8f5518b63630a7894661c6d071af58356))
+
+## [0.532.1](https://github.com/Zapper-fi/studio/compare/v0.532.0...v0.532.1) (2023-09-28)
+
+
+### Bug Fixes
+
+* **vendor-finance:** Linting ([#2949](https://github.com/Zapper-fi/studio/issues/2949)) ([be78fb6](https://github.com/Zapper-fi/studio/commit/be78fb69214c3e5b97778770badfca9f50adc2bd))
+
 ## [0.532.0](https://github.com/Zapper-fi/studio/compare/v0.531.1...v0.532.0) (2023-09-28)
 
 

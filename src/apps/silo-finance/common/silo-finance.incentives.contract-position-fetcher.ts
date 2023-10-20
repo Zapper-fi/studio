@@ -13,8 +13,6 @@ import {
 
 import { SiloFinanceContractFactory, SiloIncentives } from '../contracts';
 
-import { SiloFinanceDefinitionResolver } from './silo-finance.definition-resolver';
-
 export type SiloFinanceIncentivesContractPositionDefinition = {
   address: string;
   sTokenAddresses: string[];
@@ -34,8 +32,6 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(SiloFinanceContractFactory) protected readonly contractFactory: SiloFinanceContractFactory,
-    @Inject(SiloFinanceDefinitionResolver)
-    protected readonly siloDefinitionResolver: SiloFinanceDefinitionResolver,
   ) {
     super(appToolkit);
   }
@@ -48,7 +44,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       network: this.network,
-      groupIds: ['s-token'],
+      groupIds: ['s-tokens'],
     });
 
     const sTokenAddresses = appTokens.map(x => x.address);

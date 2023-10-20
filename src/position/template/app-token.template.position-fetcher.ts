@@ -3,7 +3,7 @@ import { BigNumberish, Contract } from 'ethers/lib/ethers';
 import _, { isEqual, isUndefined, uniqWith, compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { DEAD_ADDRESS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import {
   buildDollarDisplayItem,
@@ -351,7 +351,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     const multicall = this.appToolkit.getMulticall(this.network, this.batchSize);
     const address = await this.getAccountAddress(_address);
     const appTokens = await this.getPositionsForBalances();
-    if (address === ZERO_ADDRESS) return [];
+    if ([ZERO_ADDRESS, DEAD_ADDRESS].includes(address)) return [];
 
     const balances = await Promise.all(
       appTokens.map(async appToken => {

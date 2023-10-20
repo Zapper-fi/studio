@@ -42,6 +42,7 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
   }
 
   abstract subgraphUrl: string;
+  faultyRewardAddress?: string[] = [];
 
   getContract(address: string): BalancerGauge {
     return this.contractFactory.balancerGauge({ address, network: this.network });
@@ -60,8 +61,11 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<BalancerGauge>) {
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
-    return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
+    const rewardTokenAddressesRaw = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
+
+    const rewardTokenAddresses = rewardTokenAddressesRaw.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
+
+    return rewardTokenAddresses.filter(x => !this.faultyRewardAddress?.includes(x));
   }
 
   async getRewardRates({ contract, contractPosition }: GetDataPropsParams<BalancerGauge, SingleStakingFarmDataProps>) {
@@ -77,12 +81,14 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({
+  async getRewardTokenBalances({
     address,
     contractPosition,
     contract,
   }: GetTokenBalancesParams<BalancerGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
+    if (!rewardTokens) return 0;
+
     return Promise.all(rewardTokens.map(v => contract.claimable_reward(address, v.address)));
   }
 }

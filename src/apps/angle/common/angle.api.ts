@@ -19,18 +19,6 @@ type TAPR = {
   };
 };
 
-type TokenInfo = {
-  readonly name: string;
-  readonly decimals: number;
-  readonly symbol: string;
-  readonly isSanToken?: boolean;
-  readonly useInSwap?: boolean;
-  readonly hasPermit?: boolean;
-  readonly permitVersion?: string;
-  readonly logoURI?: string;
-  readonly tags?: string[];
-};
-
 type TVaultManager = {
   address: string;
   borrowFee: number;
@@ -50,26 +38,6 @@ type TVaultManager = {
   totalCollateral: number;
   totalDebt: number;
   treasury: string;
-};
-
-type TPerpetual = {
-  perpetualID: string;
-  owner: string;
-  decimals: string;
-  margin: string;
-  committedAmount: string;
-  entryRate: string;
-  perpetualManager: string;
-  stableAddress: string;
-  collatAddress: string;
-  stableName: string;
-  collatName: string;
-  openingTimestamp: string;
-  lastUpdateTimestamp: string;
-  openingBlockNumber: string;
-  lastUpdateBlockNumber: string;
-  status: string;
-  claimable: number;
 };
 
 type TVault = {
@@ -119,25 +87,17 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:angle:perpetuals:${network}:angle`,
-    ttl: 15 * 60,
-  })
-  async getUserPerpetuals(address: string, _network: Network) {
-    return this.callAngleApi<{ perpetuals: TPerpetual[] }>('perpetuals', {
-      chainId: 1,
-      user: address,
-    });
-  }
-
-  @Cache({
-    instance: 'user',
     key: (network: Network) => `studio:angle:vaults:${network}:angle`,
     ttl: 15 * 60,
   })
-  async getUserVaults(address: string, _network: Network) {
-    return this.callAngleApi<Record<string, TVault>>('vaults', {
+  async getVaultIds(address: string, _network: Network) {
+    const userVaultDataRaw = await this.callAngleApi<Record<string, TVault>>('vaults', {
       chainId: 1,
       user: address,
+    });
+
+    return Object.values(userVaultDataRaw).map(userVault => {
+      return userVault.id;
     });
   }
 
@@ -151,18 +111,5 @@ export class AngleApiHelper {
       chainId: 1,
       user: address,
     });
-  }
-
-  @Cache({
-    instance: 'business',
-    key: (network: Network) => `studio:angle:tokenlist:${network}:angle`,
-    ttl: 60 * 60,
-  })
-  async fetchTokenList(_network: Network, networkName = 'mainnet') {
-    const tokenListEndpoint = 'https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/ERC20_LIST.json';
-    const tokenList = await Axios.get<[{ [network: string]: Record<string, TokenInfo> }]>(tokenListEndpoint).then(
-      v => v.data[0][networkName],
-    );
-    return tokenList;
   }
 }
