@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.537.2](https://github.com/Zapper-fi/studio/compare/v0.537.1...v0.537.2) (2023-10-20)
+
+
+### Bug Fixes
+
+* **maker:** Added coded sDAI ([#2990](https://github.com/Zapper-fi/studio/issues/2990)) ([2b64c10](https://github.com/Zapper-fi/studio/commit/2b64c1062c79bd79ea94e03509fb0cf97d6d5391))
+
 ## [0.537.1](https://github.com/Zapper-fi/studio/compare/v0.537.0...v0.537.1) (2023-10-19)
 
 
