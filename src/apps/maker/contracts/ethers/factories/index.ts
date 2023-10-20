@@ -6,4 +6,5 @@ export { MakerGemJoin__factory } from './MakerGemJoin__factory';
 export { MakerGovernance__factory } from './MakerGovernance__factory';
 export { MakerIlkRegistry__factory } from './MakerIlkRegistry__factory';
 export { MakerProxyRegistry__factory } from './MakerProxyRegistry__factory';
+export { MakerSDai__factory } from './MakerSDai__factory';
 export { MakerVat__factory } from './MakerVat__factory';
