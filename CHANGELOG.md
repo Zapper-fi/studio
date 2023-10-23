@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.537.3](https://github.com/Zapper-fi/studio/compare/v0.537.2...v0.537.3) (2023-10-23)
+
+
+### Bug Fixes
+
+* **yearn:** Migrate all app tokens to ATI ([#2993](https://github.com/Zapper-fi/studio/issues/2993)) ([0552a3c](https://github.com/Zapper-fi/studio/commit/0552a3ca4da8afcb81292aa8a05c1de0f10f9378))
+
 ## [0.537.2](https://github.com/Zapper-fi/studio/compare/v0.537.1...v0.537.2) (2023-10-20)
 
 
