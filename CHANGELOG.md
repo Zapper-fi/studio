@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.538.1](https://github.com/Zapper-fi/studio/compare/v0.538.0...v0.538.1) (2023-10-24)
+
+
+### Bug Fixes
+
+* **pool-together-v5:** decimals bug post-linting ([#2998](https://github.com/Zapper-fi/studio/issues/2998)) ([1d8ff7c](https://github.com/Zapper-fi/studio/commit/1d8ff7ce24762b1778bbfece0cdbc92909cf53e7))
+
 ## [0.538.0](https://github.com/Zapper-fi/studio/compare/v0.537.3...v0.538.0) (2023-10-24)
 
 
