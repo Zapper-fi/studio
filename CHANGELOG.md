@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.538.0](https://github.com/Zapper-fi/studio/compare/v0.537.3...v0.538.0) (2023-10-24)
+
+
+### Features
+
+* **maker:** Add deposit in DSR ([#2995](https://github.com/Zapper-fi/studio/issues/2995)) ([61b8bc3](https://github.com/Zapper-fi/studio/commit/61b8bc3a32a9e9dcff06230f5f704d4aef86ed7d))
+* **pooltogether:** PoolTogether V5 Optimism Support ([#2992](https://github.com/Zapper-fi/studio/issues/2992)) ([ebb5882](https://github.com/Zapper-fi/studio/commit/ebb5882b6fe2599b6e72ecf5df431859cad11e0c))
+
+
+### Bug Fixes
+
+* **pool-together-v5:** Linting ([#2997](https://github.com/Zapper-fi/studio/issues/2997)) ([7bc1dc7](https://github.com/Zapper-fi/studio/commit/7bc1dc7e10680a1ddc89b2c7e42f84e5d517f2d2))
+
 ## [0.537.3](https://github.com/Zapper-fi/studio/compare/v0.537.2...v0.537.3) (2023-10-23)
 
 
