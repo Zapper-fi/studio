@@ -9,8 +9,8 @@ import {
   MakerGemJoin__factory,
   MakerGovernance__factory,
   MakerIlkRegistry__factory,
+  MakerMdcPot__factory,
   MakerProxyRegistry__factory,
-  MakerSDai__factory,
   MakerVat__factory,
 } from './ethers';
 
@@ -35,11 +35,11 @@ export class MakerContractFactory extends ContractFactory {
   makerIlkRegistry({ address, network }: ContractOpts) {
     return MakerIlkRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  makerMdcPot({ address, network }: ContractOpts) {
+    return MakerMdcPot__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   makerProxyRegistry({ address, network }: ContractOpts) {
     return MakerProxyRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  makerSDai({ address, network }: ContractOpts) {
-    return MakerSDai__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   makerVat({ address, network }: ContractOpts) {
     return MakerVat__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -50,6 +50,6 @@ export type { MakerCdpManager } from './ethers';
 export type { MakerGemJoin } from './ethers';
 export type { MakerGovernance } from './ethers';
 export type { MakerIlkRegistry } from './ethers';
+export type { MakerMdcPot } from './ethers';
 export type { MakerProxyRegistry } from './ethers';
-export type { MakerSDai } from './ethers';
 export type { MakerVat } from './ethers';
