@@ -1,18 +1,31 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
+import { range } from 'lodash';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Erc4626 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDefinition, GetAddressesParams, GetDataPropsParams, GetDefinitionsParams, GetDisplayPropsParams, GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
-import { PRIZE_VAULT_FACTORY_ADDRESSES } from './pool-together.v5.constants';
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import {
+  DefaultAppTokenDefinition,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
+import { Network } from '~types';
+
 import { PoolTogetherV5ContractFactory } from '../contracts';
 
-export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTemplatePositionFetcher<Erc4626> {
-  groupLabel: string;
+export const PRIZE_VAULT_FACTORY_ADDRESSES: Partial<Record<Network, string>> = {
+  [Network.OPTIMISM_MAINNET]: '0xf65fa202907d6046d1ef33c521889b54bde08081',
+};
 
+export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTemplatePositionFetcher<Erc4626> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV5ContractFactory) private readonly contractFactory: PoolTogetherV5ContractFactory
+    @Inject(PoolTogetherV5ContractFactory) private readonly contractFactory: PoolTogetherV5ContractFactory,
   ) {
     super(appToolkit);
   }
@@ -25,39 +38,33 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
     return definitions.map(def => def.address);
   }
 
-  async getDefinitions(params: GetDefinitionsParams): Promise<DefaultAppTokenDefinition[]> {
-    const { multicall } = params;
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<DefaultAppTokenDefinition[]> {
+    const vaultFactoryAddress = PRIZE_VAULT_FACTORY_ADDRESSES[this.network]!;
 
-    const vaultFactoryAddress = PRIZE_VAULT_FACTORY_ADDRESSES[this.network];
-    
-    if(!!vaultFactoryAddress) {
-      const vaultFactory = multicall.wrap(
-        this.contractFactory.poolTogetherV5VaultFactory(
-          { network: this.network, address: vaultFactoryAddress }
-        )
-      );
+    const vaultFactoryContract = this.contractFactory.poolTogetherV5VaultFactory({
+      address: vaultFactoryAddress,
+      network: this.network,
+    });
+    const vaultNumberRaw = await multicall.wrap(vaultFactoryContract).totalVaults();
 
-      const totalVaults = Number(await vaultFactory.totalVaults());
-      const vaultIndexes = [...Array(totalVaults).keys()];
-
-      const vaultAddresses = await Promise.all(vaultIndexes.map(index => vaultFactory.allVaults(index)));
-
-      return vaultAddresses.map(address => ({ address }));
-    } else {
-      return []
-    }
+    return Promise.all(
+      range(0, vaultNumberRaw.toNumber()).map(async index => {
+        const address = await multicall.wrap(vaultFactoryContract).allVaults(index);
+        return {
+          address,
+        };
+      }),
+    );
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Erc4626>) {
-    const underlyingToken = await contract.asset();
-    return [{ address: underlyingToken, network: this.network }];
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<Erc4626>) {
-    const oneShare = BigInt(10 ** appToken.tokens[0].decimals);
-    const exchangeRate = (await contract.convertToAssets(oneShare)).toBigInt();
-    const pricePerShare = Number(exchangeRate / oneShare);
-    return [pricePerShare];
+    const ratioRaw = await contract.convertToAssets(BigNumber.from((1e18).toString()));
+    const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
+    return [ratio];
   }
 
   async getLiquidity({ contract, appToken }: GetDataPropsParams<Erc4626>) {
@@ -80,5 +87,4 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
   async getLabelDetailed({ appToken }: GetDisplayPropsParams<Erc4626>) {
     return appToken.symbol;
   }
-
 }
