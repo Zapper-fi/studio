@@ -62,7 +62,7 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<Erc4626>) {
-    const ratioRaw = await contract.convertToAssets(BigNumber.from((1e18).toString()));
+    const ratioRaw = await contract.convertToAssets(BigNumber.from((10 ** appToken.decimals).toString()));
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];
   }
