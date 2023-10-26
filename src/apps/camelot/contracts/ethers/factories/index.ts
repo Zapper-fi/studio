@@ -5,5 +5,7 @@ export { CamelotDividend__factory } from './CamelotDividend__factory';
 export { CamelotFactory__factory } from './CamelotFactory__factory';
 export { CamelotMaster__factory } from './CamelotMaster__factory';
 export { CamelotNftPool__factory } from './CamelotNftPool__factory';
+export { CamelotNitroFactory__factory } from './CamelotNitroFactory__factory';
+export { CamelotNitroPool__factory } from './CamelotNitroPool__factory';
 export { CamelotPair__factory } from './CamelotPair__factory';
 export { CamelotXGrail__factory } from './CamelotXGrail__factory';

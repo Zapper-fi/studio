@@ -5,7 +5,8 @@ import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { ArbitrumCamelotDividendContractPositionFetcher } from './arbitrum/camelot.dividend.contract-position-fetcher';
 import { ArbitrumCamelotFarmContractPositionFetcher } from './arbitrum/camelot.farm.contract-position-fetcher';
-import { ArbitrumCamelotPoolTokenFetcher } from './arbitrum/camelot.pool.token-fetcher';
+import { ArbitrumCamelotNitroContractPositionFetcher } from './arbitrum/camelot.nitro.contract-position-fetcher';
+import { ArbitrumCamelotPoolV2TokenFetcher } from './arbitrum/camelot.pool-v2.token-fetcher';
 import { ArbitrumXGrailTokenFetcher } from './arbitrum/camelot.x-grail.token-fetcher';
 import { CamelotContractFactory } from './contracts';
 
@@ -14,10 +15,11 @@ import { CamelotContractFactory } from './contracts';
     CamelotContractFactory,
     UniswapV2ContractFactory,
     // Arbitrum
-    ArbitrumCamelotPoolTokenFetcher,
+    ArbitrumCamelotPoolV2TokenFetcher,
     ArbitrumXGrailTokenFetcher,
     ArbitrumCamelotDividendContractPositionFetcher,
     ArbitrumCamelotFarmContractPositionFetcher,
+    ArbitrumCamelotNitroContractPositionFetcher,
   ],
 })
 export class CamelotAppModule extends AbstractApp() {}
