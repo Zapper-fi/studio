@@ -2,7 +2,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { UniswapV2DefaultPoolSubgraphTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.default.subgraph.template.token-fetcher';
 
 @PositionTemplate()
-export class ArbitrumCamelotPoolTokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
+export class ArbitrumCamelotPoolV2TokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
   groupLabel = 'Pools';
 
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/camelotlabs/camelot-amm?source=zapper';

@@ -9,6 +9,8 @@ import {
   CamelotFactory__factory,
   CamelotMaster__factory,
   CamelotNftPool__factory,
+  CamelotNitroFactory__factory,
+  CamelotNitroPool__factory,
   CamelotPair__factory,
   CamelotXGrail__factory,
 } from './ethers';
@@ -34,6 +36,12 @@ export class CamelotContractFactory extends ContractFactory {
   camelotNftPool({ address, network }: ContractOpts) {
     return CamelotNftPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  camelotNitroFactory({ address, network }: ContractOpts) {
+    return CamelotNitroFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  camelotNitroPool({ address, network }: ContractOpts) {
+    return CamelotNitroPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   camelotPair({ address, network }: ContractOpts) {
     return CamelotPair__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -46,5 +54,7 @@ export type { CamelotDividend } from './ethers';
 export type { CamelotFactory } from './ethers';
 export type { CamelotMaster } from './ethers';
 export type { CamelotNftPool } from './ethers';
+export type { CamelotNitroFactory } from './ethers';
+export type { CamelotNitroPool } from './ethers';
 export type { CamelotPair } from './ethers';
 export type { CamelotXGrail } from './ethers';

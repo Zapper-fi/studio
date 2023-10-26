@@ -50,8 +50,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
     const farmDefinitions = await Promise.all(
       poolAddresses.map(async address => {
         const nftPoolContract = this.contractFactory.camelotNftPool({ address, network: this.network });
-        const poolInfo = await multicall.wrap(nftPoolContract).getPoolInfo();
-        const { lpToken, grailToken, xGrailToken } = poolInfo;
+        const { lpToken, grailToken, xGrailToken } = await multicall.wrap(nftPoolContract).getPoolInfo();
 
         return {
           address,
@@ -86,7 +85,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<CamelotNftPool>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   getTokenBalancesPerPosition(): never {
