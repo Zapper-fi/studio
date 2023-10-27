@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.539.0](https://github.com/Zapper-fi/studio/compare/v0.538.1...v0.539.0) (2023-10-26)
+
+
+### Features
+
+* **camelot:** Add Nitro positions ([#3000](https://github.com/Zapper-fi/studio/issues/3000)) ([3d9513e](https://github.com/Zapper-fi/studio/commit/3d9513e3deb4fce8994021254b1202d4c41c5a6f))
+
 ## [0.538.1](https://github.com/Zapper-fi/studio/compare/v0.538.0...v0.538.1) (2023-10-24)
 
 
