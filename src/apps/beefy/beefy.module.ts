@@ -16,7 +16,6 @@ import { BeefyContractFactory } from './contracts';
 import { EthereumBeefyVaultTokenFetcher } from './ethereum/beefy.vault.token-fetcher';
 import { FantomBeefyBoostVaultContractPositionFetcher } from './fantom/beefy.boost-vault.contract-position-fetcher';
 import { FantomBeefyVaultTokenFetcher } from './fantom/beefy.vault.token-fetcher';
-import { MoonriverBeefyVaultTokenFetcher } from './moonriver/beefy.vault.token-fetcher';
 import { OptimismBeefyBoostVaultContractPositionFetcher } from './optimism/beefy.boost-vault.contract-position-fetcher';
 import { OptimismBeefyVaultTokenFetcher } from './optimism/beefy.vault.token-fetcher';
 import { PolygonBeefyBoostVaultContractPositionFetcher } from './polygon/beefy.boost-vault.contract-position-fetcher';
@@ -45,8 +44,6 @@ import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetch
     // Fantom
     FantomBeefyVaultTokenFetcher,
     FantomBeefyBoostVaultContractPositionFetcher,
-    // Moonriver
-    MoonriverBeefyVaultTokenFetcher,
     // Optimism
     OptimismBeefyVaultTokenFetcher,
     OptimismBeefyBoostVaultContractPositionFetcher,

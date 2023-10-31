@@ -25,9 +25,7 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
   [Network.AVALANCHE_MAINNET]: 'avax',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
   [Network.ETHEREUM_MAINNET]: 'ethereum',
-  [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.CELO_MAINNET]: 'celo',
-  [Network.AURORA_MAINNET]: 'aurora',
   [Network.BASE_MAINNET]: 'base',
 };
 

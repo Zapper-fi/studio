@@ -6,7 +6,6 @@ import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 
 import { ArbitrumPickleJarTokenFetcher } from './arbitrum/pickle.jar.token-fetcher';
 import { ArbitrumPickleFarmContractPositionFetcher } from './arbitrum/pickle.masterchef-v2-farm.contract-position-fetcher';
-import { AuroraPickleJarTokenFetcher } from './aurora/pickle.jar.token-fetcher';
 import { PickleApiJarRegistry } from './common/pickle.api.jar-registry';
 import { PickleContractFactory } from './contracts';
 import { EthereumUniV3PickleJarTokenFetcher } from './ethereum/pickle.jar-univ3.token-fetcher';
@@ -16,7 +15,6 @@ import { EthereumPickleSingleRewardPositionFetcher } from './ethereum/pickle.sin
 import { EthereumPickleVotingEscrowContractPositionFetcher } from './ethereum/pickle.voting-escrow.contract-position-fetcher';
 import { FantomPickleJarTokenFetcher } from './fantom/pickle.jar.token-fetcher';
 import { GnosisPickleJarTokenFetcher } from './gnosis/pickle.jar.token-fetcher';
-import { MoonriverPickleJarTokenFetcher } from './moonriver/pickle.jar.token-fetcher';
 import { OptimismUniV3PickleJarTokenFetcher } from './optimism/pickle.jar-univ3.token-fetcher';
 import { OptimismPickleJarTokenFetcher } from './optimism/pickle.jar.token-fetcher';
 import { OptimismPickleFarmContractPositionFetcher } from './optimism/pickle.masterchef-v2-farm.contract-position-fetcher';
@@ -28,7 +26,6 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
   providers: [
     ArbitrumPickleFarmContractPositionFetcher,
     ArbitrumPickleJarTokenFetcher,
-    AuroraPickleJarTokenFetcher,
     EthereumPickleFarmContractPositionFetcher,
     EthereumPickleJarTokenFetcher,
     EthereumPickleSingleRewardPositionFetcher,
@@ -36,7 +33,6 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     EthereumUniV3PickleJarTokenFetcher,
     FantomPickleJarTokenFetcher,
     GnosisPickleJarTokenFetcher,
-    MoonriverPickleJarTokenFetcher,
     OptimismPickleFarmContractPositionFetcher,
     OptimismPickleJarTokenFetcher,
     OptimismUniV3PickleJarTokenFetcher,
