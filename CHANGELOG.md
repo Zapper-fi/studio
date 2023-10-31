@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.539.1](https://github.com/Zapper-fi/studio/compare/v0.539.0...v0.539.1) (2023-10-31)
+
+
+### Bug Fixes
+
+* **apps:** Removed apps on Aurora and Moonriver ([#3002](https://github.com/Zapper-fi/studio/issues/3002)) ([a014b91](https://github.com/Zapper-fi/studio/commit/a014b9132b5d248b35052c64c05db61b70401f44))
+
 ## [0.539.0](https://github.com/Zapper-fi/studio/compare/v0.538.1...v0.539.0) (2023-10-26)
 
 
