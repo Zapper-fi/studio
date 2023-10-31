@@ -5,7 +5,6 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import {
-  StargateAa__factory,
   StargateChef__factory,
   StargateChefBase__factory,
   StargateEth__factory,
@@ -23,9 +22,6 @@ export class StargateContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  stargateAa({ address, network }: ContractOpts) {
-    return StargateAa__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   stargateChef({ address, network }: ContractOpts) {
     return StargateChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -46,7 +42,6 @@ export class StargateContractFactory extends ContractFactory {
   }
 }
 
-export type { StargateAa } from './ethers';
 export type { StargateChef } from './ethers';
 export type { StargateChefBase } from './ethers';
 export type { StargateEth } from './ethers';
