@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.539.2](https://github.com/Zapper-fi/studio/compare/v0.539.1...v0.539.2) (2023-10-31)
+
+
+### Bug Fixes
+
+* **stargate:** Remove Auction Locked position ([#3004](https://github.com/Zapper-fi/studio/issues/3004)) ([35763a6](https://github.com/Zapper-fi/studio/commit/35763a60c0c0073671e8f40b9a6fd92e24aa5700))
+
 ## [0.539.1](https://github.com/Zapper-fi/studio/compare/v0.539.0...v0.539.1) (2023-10-31)
 
 
