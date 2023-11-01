@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.540.0](https://github.com/Zapper-fi/studio/compare/v0.539.2...v0.540.0) (2023-11-01)
+
+
+### Features
+
+* **mux:** Add MuxLP Staking ([#3006](https://github.com/Zapper-fi/studio/issues/3006)) ([b42cf52](https://github.com/Zapper-fi/studio/commit/b42cf522e40d9f683b927356e4c26fc2ecfeaa76))
+* **mux:** Add veMUX ([#3008](https://github.com/Zapper-fi/studio/issues/3008)) ([bb2ec32](https://github.com/Zapper-fi/studio/commit/bb2ec3226c9c171f450e325df945eef17e081a18))
+
 ## [0.539.2](https://github.com/Zapper-fi/studio/compare/v0.539.1...v0.539.2) (2023-10-31)
 
 
