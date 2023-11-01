@@ -10,6 +10,7 @@ import {
   MuxRewardRouter__factory,
   MuxRewardTracker__factory,
   MuxVault__factory,
+  MuxVeMux__factory,
 } from './ethers';
 
 // eslint-disable-next-line
@@ -36,6 +37,9 @@ export class MuxContractFactory extends ContractFactory {
   muxVault({ address, network }: ContractOpts) {
     return MuxVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  muxVeMux({ address, network }: ContractOpts) {
+    return MuxVeMux__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { MuxPool } from './ethers';
@@ -43,3 +47,4 @@ export type { MuxReader } from './ethers';
 export type { MuxRewardRouter } from './ethers';
 export type { MuxRewardTracker } from './ethers';
 export type { MuxVault } from './ethers';
+export type { MuxVeMux } from './ethers';
