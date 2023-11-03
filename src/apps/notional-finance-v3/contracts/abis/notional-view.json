@@ -1,0 +1,7494 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "AccountContextUpdate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "AccountSettled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "ApprovalForAll",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "supplyFactor",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "annualizedInterestRate",
+        "type": "uint256"
+      }
+    ],
+    "name": "CurrencyRebalanced",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "nTokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "DeployNToken",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "harvestAmount",
+        "type": "int256"
+      }
+    ],
+    "name": "ExcessReserveBalanceHarvested",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "migrationEmissionRate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "finalIntegralTotalSupply",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "migrationTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "IncentivesMigrated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidated",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "localCurrencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "collateralCurrencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netLocalFromLiquidator",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netCollateralTransfer",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netNTokenTransfer",
+        "type": "int256"
+      }
+    ],
+    "name": "LiquidateCollateralCurrency",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidated",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "localCurrencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netLocalFromLiquidator",
+        "type": "int256"
+      }
+    ],
+    "name": "LiquidateLocalCurrency",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidated",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "localCurrencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "fCashCurrency",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netLocalFromLiquidator",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "fCashMaturities",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256[]",
+        "name": "fCashNotionalTransfer",
+        "type": "int256[]"
+      }
+    ],
+    "name": "LiquidatefCashEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "newCurrencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "ListCurrency",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "MarketsInitialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "pauseRouter",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "pauseGuardian",
+        "type": "address"
+      }
+    ],
+    "name": "PauseRouterAndGuardianUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "PrimeCashCurveChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      }
+    ],
+    "name": "PrimeCashHoldingsOracleUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "underlyingScalar",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "supplyScalar",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "debtScalar",
+        "type": "uint256"
+      }
+    ],
+    "name": "PrimeCashInterestAccrued",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isCashProxy",
+        "type": "bool"
+      }
+    ],
+    "name": "PrimeProxyDeployed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint40",
+        "name": "cooldownTimeInSeconds",
+        "type": "uint40"
+      }
+    ],
+    "name": "RebalancingCooldownUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "holding",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "target",
+            "type": "uint8"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct NotionalTreasury.RebalancingTargetConfig[]",
+        "name": "targets",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "RebalancingTargetsUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "newBalance",
+        "type": "int256"
+      }
+    ],
+    "name": "ReserveBalanceUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bufferAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReserveBufferUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "currencyId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "supplyFactor",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "debtFactor",
+        "type": "int256"
+      }
+    ],
+    "name": "SetPrimeSettlementRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "cashIntoMarkets",
+        "type": "int256"
+      }
+    ],
+    "name": "SweepCashIntoMarkets",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "TokenMigrated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "values",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "TransferBatch",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "TransferSingle",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousManager",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newManager",
+        "type": "address"
+      }
+    ],
+    "name": "TreasuryManagerChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "value",
+        "type": "string"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "URI",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "UpdateAssetRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "UpdateAuthorizedCallbackContract",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "UpdateCashGroup",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "UpdateDepositParameters",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "UpdateETHRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "UpdateGlobalTransferOperator",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "newEmissionRate",
+        "type": "uint32"
+      }
+    ],
+    "name": "UpdateIncentiveEmissionRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "UpdateInitializationParameters",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint8",
+        "name": "marketIndex",
+        "type": "uint8"
+      }
+    ],
+    "name": "UpdateInterestRateCurve",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxUnderlyingSupply",
+        "type": "uint256"
+      }
+    ],
+    "name": "UpdateMaxUnderlyingSupply",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "rewarder",
+        "type": "address"
+      }
+    ],
+    "name": "UpdateSecondaryIncentiveRewarder",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "UpdateTokenCollateralParameters",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "fCashDeposit",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "cashToLiquidator",
+        "type": "int256"
+      }
+    ],
+    "name": "VaultAccountCashLiquidation",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "totalUsedBorrowCapacity",
+        "type": "uint256"
+      }
+    ],
+    "name": "VaultBorrowCapacityChange",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "vaultSharesToLiquidator",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "depositAmountPrimeCash",
+        "type": "int256"
+      }
+    ],
+    "name": "VaultDeleverageAccount",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "disableDeleverage",
+        "type": "bool"
+      }
+    ],
+    "name": "VaultDeleverageStatus",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "vaultSharesToLiquidator",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "transferSharesToLiquidator",
+        "type": "bool"
+      }
+    ],
+    "name": "VaultLiquidatorProfit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "VaultPauseStatus",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netUnderlyingDebt",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "netPrimeSupply",
+        "type": "int256"
+      }
+    ],
+    "name": "VaultSecondaryTransaction",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint80",
+        "name": "maxSecondaryBorrowCapacity",
+        "type": "uint80"
+      }
+    ],
+    "name": "VaultUpdateSecondaryBorrowCapacity",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint80",
+        "name": "maxPrimaryBorrowCapacity",
+        "type": "uint80"
+      }
+    ],
+    "name": "VaultUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "accruePrimeInterest",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "supplyFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "debtFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeRate",
+        "name": "pr",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "lastAccrueTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPrimeSupply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPrimeDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastTotalUnderlyingValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "debtScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rateOracleTimeWindow",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeCashFactors",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "balanceOfBatch",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "enum DepositActionType",
+            "name": "actionType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "depositActionAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withdrawAmountInternalPrecision",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "withdrawEntireCashBalance",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "redeemToUnderlying",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct BalanceAction[]",
+        "name": "actions",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "batchBalanceAction",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "enum DepositActionType",
+            "name": "actionType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "depositActionAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withdrawAmountInternalPrecision",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "withdrawEntireCashBalance",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "redeemToUnderlying",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "trades",
+            "type": "bytes32[]"
+          }
+        ],
+        "internalType": "struct BalanceActionWithTrades[]",
+        "name": "actions",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "batchBalanceAndTradeAction",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "enum DepositActionType",
+            "name": "actionType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "depositActionAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "withdrawAmountInternalPrecision",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "withdrawEntireCashBalance",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "redeemToUnderlying",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "trades",
+            "type": "bytes32[]"
+          }
+        ],
+        "internalType": "struct BalanceActionWithTrades[]",
+        "name": "actions",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "callbackData",
+        "type": "bytes"
+      }
+    ],
+    "name": "batchBalanceAndTradeActionWithCallback",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bool",
+            "name": "depositUnderlying",
+            "type": "bool"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "trades",
+            "type": "bytes32[]"
+          }
+        ],
+        "internalType": "struct BatchLend[]",
+        "name": "actions",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "batchLend",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "underlyingToBorrow",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint32[2]",
+        "name": "maxBorrowRate",
+        "type": "uint32[2]"
+      },
+      {
+        "internalType": "uint32[2]",
+        "name": "minRollLendRate",
+        "type": "uint32[2]"
+      }
+    ],
+    "name": "borrowSecondaryCurrencyToVault",
+    "outputs": [
+      {
+        "internalType": "int256[2]",
+        "name": "underlyingTokensTransferred",
+        "type": "int256[2]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "collateralCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint128",
+        "name": "maxCollateralLiquidation",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint96",
+        "name": "maxNTokenLiquidation",
+        "type": "uint96"
+      }
+    ],
+    "name": "calculateCollateralCurrencyLiquidation",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "currencyIndex",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "accountDebtUnderlying",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vaultShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "tempCashBalance",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastUpdateBlockTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultAccount",
+        "name": "vaultAccount",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vault",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "flags",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "borrowCurrencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "int256",
+            "name": "minAccountBorrowSize",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "feeRate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "minCollateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "liquidationRate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "reserveFeeShare",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxBorrowMarketIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "maxDeleverageCollateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint16[2]",
+            "name": "secondaryBorrowCurrencies",
+            "type": "uint16[2]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "int256",
+                "name": "supplyFactor",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "debtFactor",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "oracleSupplyRate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct PrimeRate",
+            "name": "primeRate",
+            "type": "tuple"
+          },
+          {
+            "internalType": "int256",
+            "name": "maxRequiredAccountCollateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256[2]",
+            "name": "minAccountSecondaryBorrow",
+            "type": "int256[2]"
+          },
+          {
+            "internalType": "int256",
+            "name": "excessCashLiquidationBonus",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct VaultConfig",
+        "name": "vaultConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalDebtUnderlying",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalVaultShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isSettled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct VaultState",
+        "name": "vaultState",
+        "type": "tuple"
+      },
+      {
+        "internalType": "int256",
+        "name": "depositUnderlyingInternal",
+        "type": "int256"
+      }
+    ],
+    "name": "calculateDepositAmountInDeleverage",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "depositInternal",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "vaultSharesToLiquidator",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "supplyFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "debtFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeRate",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint96",
+        "name": "maxNTokenLiquidation",
+        "type": "uint96"
+      }
+    ],
+    "name": "calculateLocalCurrencyLiquidation",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint88",
+        "name": "amountToDepositExternalPrecision",
+        "type": "uint88"
+      }
+    ],
+    "name": "calculateNTokensToMint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "fCashCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "fCashMaturities",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "maxfCashLiquidateAmounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "calculatefCashCrossCurrencyLiquidation",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "fCashMaturities",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "maxfCashLiquidateAmounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "calculatefCashLocalLiquidation",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "checkVaultAccountCollateralRatio",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "ctokens",
+        "type": "address[]"
+      }
+    ],
+    "name": "claimCOMPAndTransfer",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int256",
+        "name": "cashBalanceInternal",
+        "type": "int256"
+      },
+      {
+        "internalType": "bool",
+        "name": "useUnderlying",
+        "type": "bool"
+      }
+    ],
+    "name": "convertCashBalanceToExternal",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int256",
+        "name": "nTokenBalance",
+        "type": "int256"
+      }
+    ],
+    "name": "convertNTokenToUnderlying",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "fCashBalance",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "convertSettledfCash",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "signedPrimeSupplyValue",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int256",
+        "name": "underlyingExternal",
+        "type": "int256"
+      }
+    ],
+    "name": "convertUnderlyingToPrimeCash",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "decodeERC1155Id",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "assetType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "isfCashDebt",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "decodeToAssets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "notional",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "storageSlot",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum AssetStorageState",
+            "name": "storageState",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct PortfolioAsset[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyIndex",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int256",
+        "name": "depositUnderlyingInternal",
+        "type": "int256"
+      }
+    ],
+    "name": "deleverageAccount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "vaultSharesFromLiquidation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "depositAmountPrimeCash",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountExternalPrecision",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositAssetToken",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountExternalPrecision",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositUnderlyingToken",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "enableBitmapCurrency",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "maxMarketIndex",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "rateOracleTimeWindow5Min",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxDiscountFactor5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "reserveFeeShare",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "debtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "fCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minOracleRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationfCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationDebtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxOracleRate25BPS",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct CashGroupSettings",
+        "name": "cashGroup",
+        "type": "tuple"
+      },
+      {
+        "internalType": "string",
+        "name": "underlyingName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "underlyingSymbol",
+        "type": "string"
+      }
+    ],
+    "name": "enableCashGroup",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "allowPrimeBorrow",
+        "type": "bool"
+      }
+    ],
+    "name": "enablePrimeBorrow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "string",
+        "name": "underlyingName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "underlyingSymbol",
+        "type": "string"
+      }
+    ],
+    "name": "enablePrimeDebt",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "assetType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "isfCashDebt",
+        "type": "bool"
+      }
+    ],
+    "name": "encode",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint40",
+        "name": "maturity",
+        "type": "uint40"
+      },
+      {
+        "internalType": "uint8",
+        "name": "assetType",
+        "type": "uint8"
+      }
+    ],
+    "name": "encodeToId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "depositAmountExternal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fCash",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxBorrowRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "vaultData",
+        "type": "bytes"
+      }
+    ],
+    "name": "enterVault",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "strategyTokensAdded",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "vaultSharesToRedeem",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fCashToLend",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "minLendRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "exitVaultData",
+        "type": "bytes"
+      }
+    ],
+    "name": "exitVault",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "underlyingToReceiver",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getAccount",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint40",
+            "name": "nextSettleTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bytes1",
+            "name": "hasDebt",
+            "type": "bytes1"
+          },
+          {
+            "internalType": "uint8",
+            "name": "assetArrayLength",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "bitmapCurrencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bytes18",
+            "name": "activeCurrencies",
+            "type": "bytes18"
+          },
+          {
+            "internalType": "bool",
+            "name": "allowPrimeBorrow",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct AccountContext",
+        "name": "accountContext",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "int256",
+            "name": "cashBalance",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "nTokenBalance",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastClaimTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountIncentiveDebt",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct AccountBalance[]",
+        "name": "accountBalances",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "notional",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "storageSlot",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum AssetStorageState",
+            "name": "storageState",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct PortfolioAsset[]",
+        "name": "portfolio",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getAccountBalance",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "cashBalance",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "nTokenBalance",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastClaimTime",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getAccountContext",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint40",
+            "name": "nextSettleTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "bytes1",
+            "name": "hasDebt",
+            "type": "bytes1"
+          },
+          {
+            "internalType": "uint8",
+            "name": "assetArrayLength",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "bitmapCurrencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "bytes18",
+            "name": "activeCurrencies",
+            "type": "bytes18"
+          },
+          {
+            "internalType": "bool",
+            "name": "allowPrimeBorrow",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct AccountContext",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getAccountPortfolio",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "notional",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "storageSlot",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum AssetStorageState",
+            "name": "storageState",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct PortfolioAsset[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getAccountPrimeDebtBalance",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "debtBalance",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getActiveMarkets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "storageSlot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalfCash",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalPrimeCash",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalLiquidity",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastImpliedRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "previousTradeTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct MarketParameters[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint32",
+        "name": "blockTime",
+        "type": "uint32"
+      }
+    ],
+    "name": "getActiveMarketsAtBlockTime",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "storageSlot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalfCash",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalPrimeCash",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalLiquidity",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastImpliedRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "previousTradeTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct MarketParameters[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getAssetsBitmap",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "callback",
+        "type": "address"
+      }
+    ],
+    "name": "getAuthorizedCallbackContractStatus",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "isAuthorized",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getBalanceOfPrimeCash",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "cashBalance",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getBorrowCapacity",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "currentPrimeDebtUnderlying",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalfCashDebt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxBorrowCapacity",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int88",
+        "name": "fCashAmount",
+        "type": "int88"
+      },
+      {
+        "internalType": "uint256",
+        "name": "marketIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "getCashAmountGivenfCashAmount",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getCashGroup",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "maxMarketIndex",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "rateOracleTimeWindow5Min",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxDiscountFactor5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "reserveFeeShare",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "debtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "fCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minOracleRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationfCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationDebtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxOracleRate25BPS",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct CashGroupSettings",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getCashGroupAndAssetRate",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "maxMarketIndex",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "rateOracleTimeWindow5Min",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxDiscountFactor5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "reserveFeeShare",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "debtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "fCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minOracleRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationfCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationDebtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxOracleRate25BPS",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct CashGroupSettings",
+        "name": "cashGroup",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract AssetRateAdapter",
+            "name": "rateOracle",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "rate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "underlyingDecimals",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct Deprecated_AssetRateParameters",
+        "name": "assetRate",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getCurrency",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasTransferFee",
+            "type": "bool"
+          },
+          {
+            "internalType": "int256",
+            "name": "decimals",
+            "type": "int256"
+          },
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "deprecated_maxCollateralBalance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Token",
+        "name": "assetToken",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasTransferFee",
+            "type": "bool"
+          },
+          {
+            "internalType": "int256",
+            "name": "decimals",
+            "type": "int256"
+          },
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "deprecated_maxCollateralBalance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Token",
+        "name": "underlyingToken",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getCurrencyAndRates",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasTransferFee",
+            "type": "bool"
+          },
+          {
+            "internalType": "int256",
+            "name": "decimals",
+            "type": "int256"
+          },
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "deprecated_maxCollateralBalance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Token",
+        "name": "assetToken",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasTransferFee",
+            "type": "bool"
+          },
+          {
+            "internalType": "int256",
+            "name": "decimals",
+            "type": "int256"
+          },
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "deprecated_maxCollateralBalance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Token",
+        "name": "underlyingToken",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "rateDecimals",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "rate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "buffer",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "haircut",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "liquidationDiscount",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct ETHRate",
+        "name": "ethRate",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract AssetRateAdapter",
+            "name": "rateOracle",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "rate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "underlyingDecimals",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct Deprecated_AssetRateParameters",
+        "name": "assetRate",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getCurrencyId",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fCashAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "minLendRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "getDepositFromfCashLend",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "depositAmountUnderlying",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "depositAmountAsset",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "marketIndex",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "encodedTrade",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getDepositParameters",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "depositShares",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "int256[]",
+        "name": "leverageThresholds",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getFreeCollateral",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      }
+    ],
+    "name": "getGlobalTransferOperatorStatus",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "isAuthorized",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getImplementation",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getInitializationParameters",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "annualizedAnchorRates",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "int256[]",
+        "name": "proportions",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getInterestRateCurve",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "kinkUtilization1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkUtilization2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkRate1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkRate2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minFeeRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxFeeRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "feeRatePercent",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct InterestRateParameters[]",
+        "name": "nextInterestRateCurve",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "kinkUtilization1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkUtilization2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkRate1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkRate2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minFeeRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxFeeRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "feeRatePercent",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct InterestRateParameters[]",
+        "name": "activeInterestRateCurve",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "settlementDate",
+        "type": "uint256"
+      }
+    ],
+    "name": "getMarket",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "storageSlot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalfCash",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalPrimeCash",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalLiquidity",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastImpliedRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "previousTradeTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct MarketParameters",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "getMarketIndex",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "marketIndex",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMaxCurrencyId",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getNTokenAccount",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalSupply",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "incentiveAnnualEmissionRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastInitializedTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes5",
+        "name": "nTokenParameters",
+        "type": "bytes5"
+      },
+      {
+        "internalType": "int256",
+        "name": "cashBalance",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "accumulatedNOTEPerNToken",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastAccumulatedTime",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getNTokenPortfolio",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "notional",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "storageSlot",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum AssetStorageState",
+            "name": "storageState",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct PortfolioAsset[]",
+        "name": "liquidityTokens",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "currencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetType",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "notional",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "storageSlot",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum AssetStorageState",
+            "name": "storageState",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct PortfolioAsset[]",
+        "name": "netfCashAssets",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNoteToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getOwnershipStatus",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pendingOwner",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "notional",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "riskAdjusted",
+        "type": "bool"
+      }
+    ],
+    "name": "getPresentfCashValue",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "presentValue",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getPrimeCashHoldingsOracle",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPrimeFactors",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "supplyFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "debtFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeRate",
+        "name": "primeRate",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "lastAccrueTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPrimeSupply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPrimeDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastTotalUnderlyingValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "debtScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rateOracleTimeWindow",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeCashFactors",
+        "name": "factors",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxUnderlyingSupply",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalUnderlyingSupply",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getPrimeFactorsStored",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "lastAccrueTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPrimeSupply",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalPrimeDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastTotalUnderlyingValue",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "underlyingScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "supplyScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "debtScalar",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rateOracleTimeWindow",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeCashFactors",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getPrimeInterestRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "annualDebtRatePreFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "annualDebtRatePostFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "annualSupplyRate",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getPrimeInterestRateCurve",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "kinkUtilization1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkUtilization2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkRate1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "kinkRate2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minFeeRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxFeeRate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "feeRatePercent",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct InterestRateParameters",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fCashBorrow",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxBorrowRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "getPrincipalFromfCashBorrow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "borrowAmountUnderlying",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "borrowAmountAsset",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "marketIndex",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "encodedTrade",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getRateStorage",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "contract AggregatorV2V3Interface",
+            "name": "rateOracle",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "rateDecimalPlaces",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "mustInvert",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "buffer",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "haircut",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationDiscount",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct ETHRateStorage",
+        "name": "ethRate",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract AssetRateAdapter",
+            "name": "rateOracle",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "underlyingDecimalPlaces",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct AssetRateStorage",
+        "name": "assetRate",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getRebalancingCooldown",
+    "outputs": [
+      {
+        "internalType": "uint40",
+        "name": "",
+        "type": "uint40"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "holding",
+        "type": "address"
+      }
+    ],
+    "name": "getRebalancingTarget",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getReserveBalance",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "reserveBalance",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getReserveBuffer",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSecondaryBorrow",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "totalDebt",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "getSecondaryIncentiveRewarder",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "incentiveRewarder",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint40",
+        "name": "maturity",
+        "type": "uint40"
+      }
+    ],
+    "name": "getSettlementRate",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "supplyFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "debtFactor",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleSupplyRate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PrimeRate",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "tokens",
+        "type": "address[]"
+      }
+    ],
+    "name": "getStoredTokenBalances",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "balances",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTotalfCashDebtOutstanding",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "totalfCashDebt",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "fCashDebtHeldInSettlementReserve",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "primeCashHeldInSettlementReserve",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTreasuryManager",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "getVaultAccount",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "accountDebtUnderlying",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vaultShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "tempCashBalance",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastUpdateBlockTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultAccount",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "getVaultAccountHealthFactors",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "collateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalDebtOutstandingInPrimary",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "vaultShareValueUnderlying",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256[3]",
+            "name": "netDebtOutstanding",
+            "type": "int256[3]"
+          }
+        ],
+        "internalType": "struct VaultAccountHealthFactors",
+        "name": "h",
+        "type": "tuple"
+      },
+      {
+        "internalType": "int256[3]",
+        "name": "maxLiquidatorDepositUnderlying",
+        "type": "int256[3]"
+      },
+      {
+        "internalType": "uint256[3]",
+        "name": "vaultSharesToLiquidator",
+        "type": "uint256[3]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "getVaultAccountSecondaryDebt",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256[2]",
+        "name": "accountSecondaryDebt",
+        "type": "int256[2]"
+      },
+      {
+        "internalType": "int256[2]",
+        "name": "accountSecondaryCashHeld",
+        "type": "int256[2]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "getVaultAccountWithFeeAccrual",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "accountDebtUnderlying",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vaultShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "tempCashBalance",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastUpdateBlockTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct VaultAccount",
+        "name": "",
+        "type": "tuple"
+      },
+      {
+        "internalType": "int256",
+        "name": "accruedPrimeVaultFeeInUnderlying",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "getVaultConfig",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "vault",
+            "type": "address"
+          },
+          {
+            "internalType": "uint16",
+            "name": "flags",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "borrowCurrencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "int256",
+            "name": "minAccountBorrowSize",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "feeRate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "minCollateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "liquidationRate",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "reserveFeeShare",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxBorrowMarketIndex",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "maxDeleverageCollateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint16[2]",
+            "name": "secondaryBorrowCurrencies",
+            "type": "uint16[2]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "int256",
+                "name": "supplyFactor",
+                "type": "int256"
+              },
+              {
+                "internalType": "int256",
+                "name": "debtFactor",
+                "type": "int256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "oracleSupplyRate",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct PrimeRate",
+            "name": "primeRate",
+            "type": "tuple"
+          },
+          {
+            "internalType": "int256",
+            "name": "maxRequiredAccountCollateralRatio",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256[2]",
+            "name": "minAccountSecondaryBorrow",
+            "type": "int256[2]"
+          },
+          {
+            "internalType": "int256",
+            "name": "excessCashLiquidationBonus",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct VaultConfig",
+        "name": "vaultConfig",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getVaultState",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "maturity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalDebtUnderlying",
+            "type": "int256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalVaultShares",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "isSettled",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct VaultState",
+        "name": "vaultState",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int88",
+        "name": "netCashToAccount",
+        "type": "int88"
+      },
+      {
+        "internalType": "uint256",
+        "name": "marketIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "getfCashAmountGivenCashAmount",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "borrowedAmountExternal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxBorrowRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "useUnderlying",
+        "type": "bool"
+      }
+    ],
+    "name": "getfCashBorrowFromPrincipal",
+    "outputs": [
+      {
+        "internalType": "uint88",
+        "name": "fCashDebt",
+        "type": "uint88"
+      },
+      {
+        "internalType": "uint8",
+        "name": "marketIndex",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "encodedTrade",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "depositAmountExternal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "minLendRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "useUnderlying",
+        "type": "bool"
+      }
+    ],
+    "name": "getfCashLendFromDeposit",
+    "outputs": [
+      {
+        "internalType": "uint88",
+        "name": "fCashAmount",
+        "type": "uint88"
+      },
+      {
+        "internalType": "uint8",
+        "name": "marketIndex",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "encodedTrade",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      }
+    ],
+    "name": "getfCashNotional",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "vaultAccountCashBalance",
+        "type": "int256"
+      }
+    ],
+    "name": "getfCashRequiredToLiquidateCash",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "fCashRequired",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "discountFactor",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "bool",
+        "name": "isFirstInit",
+        "type": "bool"
+      }
+    ],
+    "name": "initializeMarkets",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      }
+    ],
+    "name": "isApprovedForAll",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "collateralCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint128",
+        "name": "maxCollateralLiquidation",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint96",
+        "name": "maxNTokenLiquidation",
+        "type": "uint96"
+      },
+      {
+        "internalType": "bool",
+        "name": "withdrawCollateral",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "redeemToUnderlying",
+        "type": "bool"
+      }
+    ],
+    "name": "liquidateCollateralCurrency",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "excessCashIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "debtIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_depositUnderlyingInternal",
+        "type": "uint256"
+      }
+    ],
+    "name": "liquidateExcessVaultCash",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "cashToLiquidator",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint96",
+        "name": "maxNTokenLiquidation",
+        "type": "uint96"
+      }
+    ],
+    "name": "liquidateLocalCurrency",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "liquidator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currencyIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "fCashDeposit",
+        "type": "int256"
+      }
+    ],
+    "name": "liquidateVaultCashBalance",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "cashToLiquidator",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "fCashCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "fCashMaturities",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "maxfCashLiquidateAmounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "liquidatefCashCrossCurrency",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "liquidateAccount",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "localCurrency",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "fCashMaturities",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "maxfCashLiquidateAmounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "liquidatefCashLocal",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      },
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "hasTransferFee",
+            "type": "bool"
+          },
+          {
+            "internalType": "enum TokenType",
+            "name": "tokenType",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "decimalPlaces",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint72",
+            "name": "deprecated_maxCollateralBalance",
+            "type": "uint72"
+          }
+        ],
+        "internalType": "struct TokenStorage",
+        "name": "underlyingToken",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract AggregatorV2V3Interface",
+            "name": "rateOracle",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "rateDecimalPlaces",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "mustInvert",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint8",
+            "name": "buffer",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "haircut",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationDiscount",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct ETHRateStorage",
+        "name": "ethRate",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "kinkUtilization1",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkUtilization2",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkRate1",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkRate2",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxRateUnits",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minFeeRate5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxFeeRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "feeRatePercent",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct InterestRateCurveSettings",
+        "name": "primeDebtCurve",
+        "type": "tuple"
+      },
+      {
+        "internalType": "contract IPrimeCashHoldingsOracle",
+        "name": "primeCashHoldingsOracle",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowPrimeCashDebt",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint8",
+        "name": "rateOracleTimeWindow5Min",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "underlyingName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "underlyingSymbol",
+        "type": "string"
+      }
+    ],
+    "name": "listCurrency",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "nTokenAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "nTokenBalanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "nTokenClaimIncentives",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "blockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "nTokenGetClaimableIncentives",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "nTokenPresentValueAssetDenominated",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "nTokenPresentValueUnderlyingDenominated",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "redeemer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint96",
+        "name": "tokensToRedeem_",
+        "type": "uint96"
+      },
+      {
+        "internalType": "bool",
+        "name": "sellTokenAssets",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "acceptResidualAssets",
+        "type": "bool"
+      }
+    ],
+    "name": "nTokenRedeem",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nTokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "nTokenTotalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "nTokenTransfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "nTokenTransferAllowance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "nTokenTransferApprove",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "nTokenTransferApproveAll",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "nTokenTransferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "pCashAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "pCashTransfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "pCashTransferAllowance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "pCashTransferApprove",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "pCashTransferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "pDebtAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pauseGuardian",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pauseRouter",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16[]",
+        "name": "currencyId",
+        "type": "uint16[]"
+      }
+    ],
+    "name": "rebalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "underlyingToRepay",
+        "type": "uint256[2]"
+      },
+      {
+        "internalType": "uint32[2]",
+        "name": "minLendRate",
+        "type": "uint32[2]"
+      }
+    ],
+    "name": "repaySecondaryCurrencyFromVault",
+    "outputs": [
+      {
+        "internalType": "int256[2]",
+        "name": "underlyingDepositExternal",
+        "type": "int256[2]"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fCashToBorrow",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maturity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "depositAmountExternal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "minLendRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxBorrowRate",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "enterVaultData",
+        "type": "bytes"
+      }
+    ],
+    "name": "rollVaultPosition",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "strategyTokensAdded",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint80",
+        "name": "maxVaultBorrowCapacity",
+        "type": "uint80"
+      }
+    ],
+    "name": "setMaxBorrowCapacity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxUnderlyingSupply",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxUnderlyingSupply",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "pauseRouter_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pauseGuardian_",
+        "type": "address"
+      }
+    ],
+    "name": "setPauseRouterAndGuardian",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint40",
+        "name": "cooldownTimeInSeconds",
+        "type": "uint40"
+      }
+    ],
+    "name": "setRebalancingCooldown",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "holding",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "target",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct NotionalTreasury.RebalancingTargetConfig[]",
+        "name": "targets",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setRebalancingTargets",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setReserveBuffer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "int256",
+        "name": "reserveBalance",
+        "type": "int256"
+      }
+    ],
+    "name": "setReserveCashBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      }
+    ],
+    "name": "setTreasuryManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "disableDeleverage",
+        "type": "bool"
+      }
+    ],
+    "name": "setVaultDeleverageStatus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "enable",
+        "type": "bool"
+      }
+    ],
+    "name": "setVaultPauseStatus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "settleAccount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "settleSecondaryBorrowForAccount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "name": "settleVaultAccount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "signedBalanceOf",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "accounts",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "signedBalanceOfBatch",
+    "outputs": [
+      {
+        "internalType": "int256[]",
+        "name": "",
+        "type": "int256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "signedBalanceOfVaultTokenId",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
+    ],
+    "name": "supportsInterface",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      }
+    ],
+    "name": "sweepCashIntoMarkets",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "direct",
+        "type": "bool"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16[]",
+        "name": "currencies",
+        "type": "uint16[]"
+      }
+    ],
+    "name": "transferReserveToTreasury",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "approved",
+        "type": "bool"
+      }
+    ],
+    "name": "updateAuthorizedCallbackContract",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "maxMarketIndex",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "rateOracleTimeWindow5Min",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxDiscountFactor5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "reserveFeeShare",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "debtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "fCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minOracleRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationfCashHaircut25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationDebtBuffer25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxOracleRate25BPS",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct CashGroupSettings",
+        "name": "cashGroup",
+        "type": "tuple"
+      }
+    ],
+    "name": "updateCashGroup",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "depositShares",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "leverageThresholds",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "updateDepositParameters",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "contract AggregatorV2V3Interface",
+        "name": "rateOracle",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "mustInvert",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint8",
+        "name": "buffer",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "haircut",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "liquidationDiscount",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateETHRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint32",
+        "name": "newEmissionRate",
+        "type": "uint32"
+      }
+    ],
+    "name": "updateIncentiveEmissionRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "annualizedAnchorRates",
+        "type": "uint32[]"
+      },
+      {
+        "internalType": "uint32[]",
+        "name": "proportions",
+        "type": "uint32[]"
+      }
+    ],
+    "name": "updateInitializationParameters",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint8[]",
+        "name": "marketIndices",
+        "type": "uint8[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "kinkUtilization1",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkUtilization2",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkRate1",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkRate2",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxRateUnits",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minFeeRate5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxFeeRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "feeRatePercent",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct InterestRateCurveSettings[]",
+        "name": "settings",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "updateInterestRateCurve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint8",
+            "name": "kinkUtilization1",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkUtilization2",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkRate1",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "kinkRate2",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxRateUnits",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "minFeeRate5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxFeeRate25BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "feeRatePercent",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct InterestRateCurveSettings",
+        "name": "primeDebtCurve",
+        "type": "tuple"
+      }
+    ],
+    "name": "updatePrimeCashCurve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "contract IPrimeCashHoldingsOracle",
+        "name": "primeCashHoldingsOracle",
+        "type": "address"
+      }
+    ],
+    "name": "updatePrimeCashHoldingsOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint16",
+        "name": "secondaryCurrencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint80",
+        "name": "maxBorrowCapacity",
+        "type": "uint80"
+      }
+    ],
+    "name": "updateSecondaryBorrowCapacity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint8",
+        "name": "residualPurchaseIncentive10BPS",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "pvHaircutPercentage",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "residualPurchaseTimeBufferHours",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "cashWithholdingBuffer10BPS",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "liquidationHaircutPercentage",
+        "type": "uint8"
+      }
+    ],
+    "name": "updateTokenCollateralParameters",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "vaultAddress",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint16",
+            "name": "flags",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16",
+            "name": "borrowCurrencyId",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minAccountBorrowSize",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint16",
+            "name": "minCollateralRatioBPS",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint8",
+            "name": "feeRate5BPS",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "liquidationRate",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "reserveFeeShare",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint8",
+            "name": "maxBorrowMarketIndex",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maxDeleverageCollateralRatioBPS",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint16[2]",
+            "name": "secondaryBorrowCurrencies",
+            "type": "uint16[2]"
+          },
+          {
+            "internalType": "uint16",
+            "name": "maxRequiredAccountCollateralRatioBPS",
+            "type": "uint16"
+          },
+          {
+            "internalType": "uint256[2]",
+            "name": "minAccountSecondaryBorrow",
+            "type": "uint256[2]"
+          },
+          {
+            "internalType": "uint8",
+            "name": "excessCashLiquidationBonus",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct VaultConfigParams",
+        "name": "vaultConfig",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint80",
+        "name": "maxPrimaryBorrowCapacity",
+        "type": "uint80"
+      }
+    ],
+    "name": "updateVault",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum Deployments.BeaconType",
+        "name": "proxy",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "newBeacon",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeBeacon",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "currencyId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint88",
+        "name": "amountInternalPrecision",
+        "type": "uint88"
+      },
+      {
+        "internalType": "bool",
+        "name": "redeemToUnderlying",
+        "type": "bool"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
