@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.541.0](https://github.com/Zapper-fi/studio/compare/v0.540.0...v0.541.0) (2023-11-04)
+
+
+### Features
+
+* **notional-finance-v3:** Added fCash, pCash, pDebt, nToken and lending markets ([#3009](https://github.com/Zapper-fi/studio/issues/3009)) ([d7b1e0e](https://github.com/Zapper-fi/studio/commit/d7b1e0e4315ec51c397e0207001ce308a13ac2c3))
+
 ## [0.540.0](https://github.com/Zapper-fi/studio/compare/v0.539.2...v0.540.0) (2023-11-01)
 
 
