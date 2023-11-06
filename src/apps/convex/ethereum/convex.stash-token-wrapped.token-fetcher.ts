@@ -29,6 +29,7 @@ export class EthereumConvexStashTokenWrappedTokenFetcher extends AppTokenTemplat
       '0x49b559563ab764381554feee9951e9ec899c5952',
       '0xad2074172e212dcf82ec94558209c88156764a93',
       '0xbb554e5e8ec27a2b8f6d5cd269fec43e9637018b',
+      '0xb82cfa4325568748506dc7cf267857ff1e3b8d39',
     ];
   }
 
