@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.543.0](https://github.com/Zapper-fi/studio/compare/v0.542.1...v0.543.0) (2023-11-06)
+
+
+### Features
+
+* **convex:** Add WstETH stash token ([#3016](https://github.com/Zapper-fi/studio/issues/3016)) ([6ead6d1](https://github.com/Zapper-fi/studio/commit/6ead6d1da5f15af09a31a02342ffaec7d488afd6))
+
 ## [0.542.1](https://github.com/Zapper-fi/studio/compare/v0.542.0...v0.542.1) (2023-11-06)
 
 
