@@ -61,7 +61,7 @@ export class ArbitrumNotionalFinanceV3PCashTokenFetcher extends AppTokenTemplate
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<NotionalPCash>) {
     const pricePerShareRaw = await contract.exchangeRate();
-    const pricePerShare = Number(pricePerShareRaw) / 10 ** 10 + appToken.tokens[0].decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** (10 + appToken.tokens[0].decimals);
 
     return [pricePerShare];
   }
