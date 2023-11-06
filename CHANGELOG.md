@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.542.0](https://github.com/Zapper-fi/studio/compare/v0.541.0...v0.542.0) (2023-11-06)
+
+
+### Features
+
+* **defiedge:** added support for base ([#3011](https://github.com/Zapper-fi/studio/issues/3011)) ([315595a](https://github.com/Zapper-fi/studio/commit/315595aa3c71ec4e2c47ec6eb51f147b81c5f29c))
+
+
+### Bug Fixes
+
+* **notional-finance-v3:** Cleanup ([#3013](https://github.com/Zapper-fi/studio/issues/3013)) ([dad27d3](https://github.com/Zapper-fi/studio/commit/dad27d334b45be0899ebeae6a60c7a2ad411bef6))
+
 ## [0.541.0](https://github.com/Zapper-fi/studio/compare/v0.540.0...v0.541.0) (2023-11-04)
 
 
