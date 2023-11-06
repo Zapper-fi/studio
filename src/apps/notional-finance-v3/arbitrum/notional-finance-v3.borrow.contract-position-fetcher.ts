@@ -34,7 +34,7 @@ export type NotionalBorrowingDataProps = {
 };
 
 @PositionTemplate()
-export class EthereumNotionalFinanceV3BorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   NotionalView,
   NotionalBorrowingDataProps,
   NotionalBorrowingDefinition
