@@ -6,7 +6,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDefinitionsParams,
@@ -17,17 +16,8 @@ import {
 
 import { NotionalFinanceV3ContractFactory, NotionalPCash } from '../contracts';
 
-export type NotionalFinanceV3PCashTokenDefinition = {
-  address: string;
-  currencyId: number;
-};
-
 @PositionTemplate()
-export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
-  NotionalPCash,
-  DefaultAppTokenDataProps,
-  NotionalFinanceV3PCashTokenDefinition
-> {
+export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplatePositionFetcher<NotionalPCash> {
   groupLabel = 'nTokens';
   notionalViewContractAddress = '0x1344a36a1b56144c3bc62e7757377d288fde0369';
 
@@ -42,7 +32,7 @@ export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplat
     return this.contractFactory.notionalPCash({ network: this.network, address });
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<NotionalFinanceV3PCashTokenDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<DefaultAppTokenDefinition[]> {
     const notionalViewContract = this.contractFactory.notionalView({
       address: this.notionalViewContractAddress,
       network: this.network,
@@ -60,7 +50,6 @@ export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplat
 
         return {
           address,
-          currencyId,
         };
       }),
     );
@@ -78,10 +67,7 @@ export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplat
     return [{ address: await contract.asset(), network: this.network }];
   }
 
-  async getPricePerShare({
-    appToken,
-    contract,
-  }: GetPricePerShareParams<NotionalPCash, DefaultAppTokenDataProps, NotionalFinanceV3PCashTokenDefinition>) {
+  async getPricePerShare({ appToken, contract }: GetPricePerShareParams<NotionalPCash>) {
     let pricePerShareRaw: BigNumber;
     try {
       pricePerShareRaw = await contract.exchangeRate();

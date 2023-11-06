@@ -31,8 +31,8 @@ export type NotionalFinanceLendingDataProps = {
   currencyId: number;
   tokenId: string;
   maturity: number;
-  type: string;
   positionKey: string;
+  type: string;
 };
 
 @PositionTemplate()
