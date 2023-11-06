@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.542.1](https://github.com/Zapper-fi/studio/compare/v0.542.0...v0.542.1) (2023-11-06)
+
+
+### Bug Fixes
+
+* **notional-finance-v3:** Fix pricePerShare ([#3014](https://github.com/Zapper-fi/studio/issues/3014)) ([79ce17b](https://github.com/Zapper-fi/studio/commit/79ce17b800d4d9df3262effc11febb25f6d44bca))
+
 ## [0.542.0](https://github.com/Zapper-fi/studio/compare/v0.541.0...v0.542.0) (2023-11-06)
 
 
