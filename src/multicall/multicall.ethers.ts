@@ -4,6 +4,7 @@ import { FunctionFragment, Interface } from 'ethers/lib/utils';
 
 import { Multicall } from '~contract/contracts';
 
+import { DEFAULT_DATALOADER_OPTIONS } from './multicall.constants';
 import { MulticallContract } from './multicall.contract';
 import { ContractCall, IMulticallWrapper, TargetContract } from './multicall.interface';
 
@@ -12,8 +13,6 @@ export const isMulticallUnderlyingError = (err: Error) => err.message.includes('
 export type MulticallCallbackHooks = {
   beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
 };
-
-const DEFAULT_DATALOADER_OPTIONS = { cache: false, maxBatchSize: 250 };
 
 export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;

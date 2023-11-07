@@ -4,7 +4,6 @@ import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
 
-import { AppService } from '~app/app.service';
 import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
@@ -24,7 +23,6 @@ import { IAppToolkit } from './app-toolkit.interface';
 export class AppToolkit implements IAppToolkit {
   private readonly contractFactory: ContractFactory;
   constructor(
-    @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(PositionKeyService)
