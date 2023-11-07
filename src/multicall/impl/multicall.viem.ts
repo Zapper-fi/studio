@@ -77,7 +77,7 @@ export class ViemMulticallDataLoader {
     }));
 
     if (this.beforeCallHook) this.beforeCallHook(calls, callRequests);
-    const res = await this.multicall.simulate.aggregate([callRequests, false]);
+    const { result: res } = await this.multicall.simulate.aggregate([callRequests, false]);
 
     if (res[1].length !== callRequests.length) {
       throw new Error(`Unexpected response length: received ${res[1].length}; expected ${callRequests.length}`);
