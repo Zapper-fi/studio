@@ -207,7 +207,7 @@ export abstract class AppTokenTemplatePositionFetcher<
               const isNetworkMatch = token.network === definition.network;
               const isMaybeTokenIdMatch =
                 isUndefined(definition.tokenId) ||
-                (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
+                (token.type === ContractType.APP_TOKEN && (token.dataProps as any).tokenId === definition.tokenId) ||
                 (token.type === ContractType.NON_FUNGIBLE_TOKEN && token.assets?.[0].tokenId === definition.tokenId);
 
               return isAddressMatch && isNetworkMatch && isMaybeTokenIdMatch;
