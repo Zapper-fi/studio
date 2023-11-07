@@ -6,7 +6,7 @@ import { UnderlyingTokenDefinition } from '~position/template/app-token.template
 
 import { RaftContractFactory, RaftToken } from '../contracts';
 
-export abstract class EthereumRaftDebtTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
+export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
   abstract collateral: string;
   abstract stablecoin: string;
   abstract positionManagerAddress: string;

@@ -16,7 +16,7 @@ export interface RaftDataProps extends DefaultDataProps {
   minCRatio: number;
 }
 
-export abstract class EthereumRaftContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class RaftPositionContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   RaftPositionManager,
   RaftDataProps
 > {
