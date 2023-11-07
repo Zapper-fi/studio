@@ -100,7 +100,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
           balancesRaw.push(paidAmount);
         }
 
-        const nonZeroBalancesRaw = balancesRaw.filter(balance => balance > 0);
+        const nonZeroBalancesRaw = balancesRaw.filter(balance => Number(balance) > 0);
         const allTokens = contractPosition.tokens.map((cp, idx) =>
           drillBalance(cp, nonZeroBalancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
         );
