@@ -55,7 +55,10 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
-    return contract.joePerSec();
+    return await contract.joePerSec().catch(err => {
+      if (isMulticallUnderlyingError(err)) return 0;
+      throw err;
+    });
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
