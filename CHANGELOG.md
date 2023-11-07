@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.544.0](https://github.com/Zapper-fi/studio/compare/v0.543.0...v0.544.0) (2023-11-07)
+
+
+### Features
+
+* **raft:** Add position v2 ([#3018](https://github.com/Zapper-fi/studio/issues/3018)) ([89e607c](https://github.com/Zapper-fi/studio/commit/89e607c16012792782096865300108d396d6ba73))
+
+
+### Bug Fixes
+
+* **trader-joe:** Fix chef v3 farms reward rate ([#3019](https://github.com/Zapper-fi/studio/issues/3019)) ([9d9ee54](https://github.com/Zapper-fi/studio/commit/9d9ee545c421ec425026a80c50d94753f93d0009))
+
 ## [0.543.0](https://github.com/Zapper-fi/studio/compare/v0.542.1...v0.543.0) (2023-11-06)
 
 
