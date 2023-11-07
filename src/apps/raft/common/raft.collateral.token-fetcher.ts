@@ -2,11 +2,11 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
+import { GetPricePerShareParams, UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
 
 import { RaftContractFactory, RaftToken } from '../contracts';
 
-export abstract class EthereumRaftCollateralTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
+export abstract class RaftCollateralTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
   abstract collateral: string;
   abstract positionManagerAddress: string;
 
@@ -35,7 +35,7 @@ export abstract class EthereumRaftCollateralTokenFetcher extends AppTokenTemplat
     return [{ address: this.collateral, network: this.network }];
   }
 
-  async getPricePerShare({ contract }): Promise<number[]> {
+  async getPricePerShare({ contract }: GetPricePerShareParams<RaftToken>): Promise<number[]> {
     const precision = Number(await contract.INDEX_PRECISION());
     const index = Number(await contract.currentIndex());
     return [index / precision];
