@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.544.1](https://github.com/Zapper-fi/studio/compare/v0.544.0...v0.544.1) (2023-11-07)
+
+
+### Bug Fixes
+
+* **trader-joe:** Fix reward balances ([#3022](https://github.com/Zapper-fi/studio/issues/3022)) ([531d503](https://github.com/Zapper-fi/studio/commit/531d50357cecd6fc0c131e87ce1f7468e81a500f))
+
 ## [0.544.0](https://github.com/Zapper-fi/studio/compare/v0.543.0...v0.544.0) (2023-11-07)
 
 
