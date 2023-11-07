@@ -11,7 +11,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';

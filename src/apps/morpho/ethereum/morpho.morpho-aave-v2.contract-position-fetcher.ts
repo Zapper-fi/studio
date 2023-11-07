@@ -7,7 +7,7 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoAaveV2, MorphoAaveV2Lens, MorphoContractFactory } from '~apps/morpho/contracts';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
 
 @PositionTemplate()

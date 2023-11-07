@@ -4,7 +4,7 @@ import { sumBy } from 'lodash';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import {

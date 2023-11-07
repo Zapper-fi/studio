@@ -5,7 +5,7 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { MorphoAaveV2Lens, MorphoAaveV3, MorphoCompoundLens, MorphoContractFactory } from '../contracts';

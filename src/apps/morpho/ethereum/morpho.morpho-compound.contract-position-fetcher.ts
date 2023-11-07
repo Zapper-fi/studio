@@ -6,7 +6,7 @@ import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoCompound, MorphoContractFactory } from '~apps/morpho/contracts';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
 
 @PositionTemplate()

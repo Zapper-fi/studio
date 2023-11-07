@@ -11,7 +11,7 @@ import {
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractFactory, Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,

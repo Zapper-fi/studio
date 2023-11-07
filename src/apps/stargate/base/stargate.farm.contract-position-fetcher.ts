@@ -1,7 +1,7 @@
 import { BigNumberish } from 'ethers';
 
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,

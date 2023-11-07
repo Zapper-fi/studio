@@ -10,6 +10,7 @@ import { strings } from '../../strings';
 
 import { generateEthersContract } from './generate-ethers-contract';
 import { generateEthersContractFactory } from './generate-ethers-contract-factory';
+import { generateIndex } from './generate-index';
 import { generateViemContract } from './generate-viem-contract';
 import { generateViemContractFactory } from './generate-viem-contract-factory';
 import { normalizeAbis } from './normalize-abis';
@@ -52,6 +53,9 @@ export default class GenerateContractFactory extends Command {
 
       await generateViemContractFactory(location);
       console.log(chalk.green(`Viem factory class generated at ${location}`));
+
+      await generateIndex(location);
+      console.log(chalk.green(`Index file generated at ${location}`));
 
       console.log(chalk.green(`Formatting newly generated files at ${location}`));
       execCodeFormatting(`${location}/contracts`);
