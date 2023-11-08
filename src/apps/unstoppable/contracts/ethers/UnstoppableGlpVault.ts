@@ -13,421 +13,263 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface UnstoppableGlpVaultInterface extends utils.Interface {
   functions: {
-    "GLP()": FunctionFragment;
-    "SGLP()": FunctionFragment;
-    "WETH()": FunctionFragment;
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "asset()": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "convertToAssets(uint256)": FunctionFragment;
-    "convertToShares(uint256)": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "decreaseAllowance(address,uint256)": FunctionFragment;
-    "deposit(uint256,address)": FunctionFragment;
-    "glpRewardRouterV2()": FunctionFragment;
-    "harvest()": FunctionFragment;
-    "harvestTransferAndCompound()": FunctionFragment;
-    "increaseAllowance(address,uint256)": FunctionFragment;
-    "lastHarvestTimestamp()": FunctionFragment;
-    "maxDeposit(address)": FunctionFragment;
-    "maxMint(address)": FunctionFragment;
-    "maxRedeem(address)": FunctionFragment;
-    "maxWithdraw(address)": FunctionFragment;
-    "mint(uint256,address)": FunctionFragment;
-    "name()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "previewDeposit(uint256)": FunctionFragment;
-    "previewMint(uint256)": FunctionFragment;
-    "previewRedeem(uint256)": FunctionFragment;
-    "previewWithdraw(uint256)": FunctionFragment;
-    "recover(address)": FunctionFragment;
-    "recoverETH(address)": FunctionFragment;
-    "redeem(uint256,address,address)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "rewardTracker()": FunctionFragment;
-    "sensibleMinimumWethToHarvest()": FunctionFragment;
-    "setGlpRewardRouter(address)": FunctionFragment;
-    "setGlpRewardTracker(address)": FunctionFragment;
-    "setSensibleMinimumWethToHarvest(uint256)": FunctionFragment;
-    "setYieldStrategy(address)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "totalAssets()": FunctionFragment;
-    "totalHarvested()": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
-    "transferHarvestedFundsToStrategy()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "withdraw(uint256,address,address)": FunctionFragment;
-    "yieldStrategy()": FunctionFragment;
+    'GLP()': FunctionFragment;
+    'SGLP()': FunctionFragment;
+    'WETH()': FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'asset()': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'convertToAssets(uint256)': FunctionFragment;
+    'convertToShares(uint256)': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'decreaseAllowance(address,uint256)': FunctionFragment;
+    'deposit(uint256,address)': FunctionFragment;
+    'glpRewardRouterV2()': FunctionFragment;
+    'harvest()': FunctionFragment;
+    'harvestTransferAndCompound()': FunctionFragment;
+    'increaseAllowance(address,uint256)': FunctionFragment;
+    'lastHarvestTimestamp()': FunctionFragment;
+    'maxDeposit(address)': FunctionFragment;
+    'maxMint(address)': FunctionFragment;
+    'maxRedeem(address)': FunctionFragment;
+    'maxWithdraw(address)': FunctionFragment;
+    'mint(uint256,address)': FunctionFragment;
+    'name()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'previewDeposit(uint256)': FunctionFragment;
+    'previewMint(uint256)': FunctionFragment;
+    'previewRedeem(uint256)': FunctionFragment;
+    'previewWithdraw(uint256)': FunctionFragment;
+    'recover(address)': FunctionFragment;
+    'recoverETH(address)': FunctionFragment;
+    'redeem(uint256,address,address)': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'rewardTracker()': FunctionFragment;
+    'sensibleMinimumWethToHarvest()': FunctionFragment;
+    'setGlpRewardRouter(address)': FunctionFragment;
+    'setGlpRewardTracker(address)': FunctionFragment;
+    'setSensibleMinimumWethToHarvest(uint256)': FunctionFragment;
+    'setYieldStrategy(address)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'totalAssets()': FunctionFragment;
+    'totalHarvested()': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
+    'transferHarvestedFundsToStrategy()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'withdraw(uint256,address,address)': FunctionFragment;
+    'yieldStrategy()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "GLP"
-      | "SGLP"
-      | "WETH"
-      | "allowance"
-      | "approve"
-      | "asset"
-      | "balanceOf"
-      | "convertToAssets"
-      | "convertToShares"
-      | "decimals"
-      | "decreaseAllowance"
-      | "deposit"
-      | "glpRewardRouterV2"
-      | "harvest"
-      | "harvestTransferAndCompound"
-      | "increaseAllowance"
-      | "lastHarvestTimestamp"
-      | "maxDeposit"
-      | "maxMint"
-      | "maxRedeem"
-      | "maxWithdraw"
-      | "mint"
-      | "name"
-      | "owner"
-      | "previewDeposit"
-      | "previewMint"
-      | "previewRedeem"
-      | "previewWithdraw"
-      | "recover"
-      | "recoverETH"
-      | "redeem"
-      | "renounceOwnership"
-      | "rewardTracker"
-      | "sensibleMinimumWethToHarvest"
-      | "setGlpRewardRouter"
-      | "setGlpRewardTracker"
-      | "setSensibleMinimumWethToHarvest"
-      | "setYieldStrategy"
-      | "symbol"
-      | "totalAssets"
-      | "totalHarvested"
-      | "totalSupply"
-      | "transfer"
-      | "transferFrom"
-      | "transferHarvestedFundsToStrategy"
-      | "transferOwnership"
-      | "withdraw"
-      | "yieldStrategy"
+      | 'GLP'
+      | 'SGLP'
+      | 'WETH'
+      | 'allowance'
+      | 'approve'
+      | 'asset'
+      | 'balanceOf'
+      | 'convertToAssets'
+      | 'convertToShares'
+      | 'decimals'
+      | 'decreaseAllowance'
+      | 'deposit'
+      | 'glpRewardRouterV2'
+      | 'harvest'
+      | 'harvestTransferAndCompound'
+      | 'increaseAllowance'
+      | 'lastHarvestTimestamp'
+      | 'maxDeposit'
+      | 'maxMint'
+      | 'maxRedeem'
+      | 'maxWithdraw'
+      | 'mint'
+      | 'name'
+      | 'owner'
+      | 'previewDeposit'
+      | 'previewMint'
+      | 'previewRedeem'
+      | 'previewWithdraw'
+      | 'recover'
+      | 'recoverETH'
+      | 'redeem'
+      | 'renounceOwnership'
+      | 'rewardTracker'
+      | 'sensibleMinimumWethToHarvest'
+      | 'setGlpRewardRouter'
+      | 'setGlpRewardTracker'
+      | 'setSensibleMinimumWethToHarvest'
+      | 'setYieldStrategy'
+      | 'symbol'
+      | 'totalAssets'
+      | 'totalHarvested'
+      | 'totalSupply'
+      | 'transfer'
+      | 'transferFrom'
+      | 'transferHarvestedFundsToStrategy'
+      | 'transferOwnership'
+      | 'withdraw'
+      | 'yieldStrategy',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "GLP", values?: undefined): string;
-  encodeFunctionData(functionFragment: "SGLP", values?: undefined): string;
-  encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'GLP', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SGLP', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'WETH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "allowance",
-    values: [string, string]
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [string, BigNumberish]
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: "asset", values?: undefined): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(functionFragment: 'glpRewardRouterV2', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'harvest', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'harvestTransferAndCompound', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "convertToAssets",
-    values: [BigNumberish]
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'lastHarvestTimestamp', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxDeposit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxMint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxRedeem', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxWithdraw', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'previewDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewMint', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewRedeem', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'recover', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'recoverETH', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "convertToShares",
-    values: [BigNumberish]
+    functionFragment: 'redeem',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardTracker', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sensibleMinimumWethToHarvest', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setGlpRewardRouter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setGlpRewardTracker', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "decreaseAllowance",
-    values: [string, BigNumberish]
+    functionFragment: 'setSensibleMinimumWethToHarvest',
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'setYieldStrategy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalHarvested', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "deposit",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "glpRewardRouterV2",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "harvest", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "harvestTransferAndCompound",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastHarvestTimestamp",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "maxDeposit", values: [string]): string;
-  encodeFunctionData(functionFragment: "maxMint", values: [string]): string;
-  encodeFunctionData(functionFragment: "maxRedeem", values: [string]): string;
-  encodeFunctionData(functionFragment: "maxWithdraw", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "mint",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "previewDeposit",
-    values: [BigNumberish]
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "previewMint",
-    values: [BigNumberish]
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'transferHarvestedFundsToStrategy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "previewRedeem",
-    values: [BigNumberish]
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "previewWithdraw",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "recover", values: [string]): string;
-  encodeFunctionData(functionFragment: "recoverETH", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "redeem",
-    values: [BigNumberish, string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "rewardTracker",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sensibleMinimumWethToHarvest",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setGlpRewardRouter",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setGlpRewardTracker",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSensibleMinimumWethToHarvest",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setYieldStrategy",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalAssets",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalHarvested",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transfer",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferHarvestedFundsToStrategy",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [BigNumberish, string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "yieldStrategy",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'yieldStrategy', values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: "GLP", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "SGLP", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "convertToAssets",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "convertToShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "glpRewardRouterV2",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "harvest", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "harvestTransferAndCompound",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseAllowance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastHarvestTimestamp",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "maxDeposit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "maxMint", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "maxRedeem", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "maxWithdraw",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "previewDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "previewMint",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "previewRedeem",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "previewWithdraw",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "recover", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "recoverETH", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardTracker",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "sensibleMinimumWethToHarvest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setGlpRewardRouter",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setGlpRewardTracker",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSensibleMinimumWethToHarvest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setYieldStrategy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalAssets",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalHarvested",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferHarvestedFundsToStrategy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "yieldStrategy",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'GLP', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SGLP', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'WETH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'glpRewardRouterV2', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'harvestTransferAndCompound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastHarvestTimestamp', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxMint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxRedeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewMint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewRedeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previewWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recover', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'recoverETH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardTracker', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sensibleMinimumWethToHarvest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setGlpRewardRouter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setGlpRewardTracker', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSensibleMinimumWethToHarvest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setYieldStrategy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalHarvested', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferHarvestedFundsToStrategy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'yieldStrategy', data: BytesLike): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
-    "Deposit(address,address,uint256,uint256)": EventFragment;
-    "GlpRewardRouterUpdated(address,address)": EventFragment;
-    "Harvest(uint256)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "RewardTrackerUpdated(address,address)": EventFragment;
-    "SensibleMinimumWethToHarvest(address,uint256)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
-    "Withdraw(address,address,address,uint256,uint256)": EventFragment;
-    "YieldStrategyUpdated(address,address)": EventFragment;
+    'Approval(address,address,uint256)': EventFragment;
+    'Deposit(address,address,uint256,uint256)': EventFragment;
+    'GlpRewardRouterUpdated(address,address)': EventFragment;
+    'Harvest(uint256)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'RewardTrackerUpdated(address,address)': EventFragment;
+    'SensibleMinimumWethToHarvest(address,uint256)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
+    'Withdraw(address,address,address,uint256,uint256)': EventFragment;
+    'YieldStrategyUpdated(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "GlpRewardRouterUpdated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RewardTrackerUpdated"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "SensibleMinimumWethToHarvest"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "YieldStrategyUpdated"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'GlpRewardRouterUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardTrackerUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SensibleMinimumWethToHarvest'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'YieldStrategyUpdated'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -435,10 +277,7 @@ export interface ApprovalEventObject {
   spender: string;
   value: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
+export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -448,10 +287,7 @@ export interface DepositEventObject {
   assets: BigNumber;
   shares: BigNumber;
 }
-export type DepositEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  DepositEventObject
->;
+export type DepositEvent = TypedEvent<[string, string, BigNumber, BigNumber], DepositEventObject>;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
@@ -459,13 +295,9 @@ export interface GlpRewardRouterUpdatedEventObject {
   updater: string;
   newRewardRouter: string;
 }
-export type GlpRewardRouterUpdatedEvent = TypedEvent<
-  [string, string],
-  GlpRewardRouterUpdatedEventObject
->;
+export type GlpRewardRouterUpdatedEvent = TypedEvent<[string, string], GlpRewardRouterUpdatedEventObject>;
 
-export type GlpRewardRouterUpdatedEventFilter =
-  TypedEventFilter<GlpRewardRouterUpdatedEvent>;
+export type GlpRewardRouterUpdatedEventFilter = TypedEventFilter<GlpRewardRouterUpdatedEvent>;
 
 export interface HarvestEventObject {
   amount: BigNumber;
@@ -478,25 +310,17 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RewardTrackerUpdatedEventObject {
   updater: string;
   newRewardTracker: string;
 }
-export type RewardTrackerUpdatedEvent = TypedEvent<
-  [string, string],
-  RewardTrackerUpdatedEventObject
->;
+export type RewardTrackerUpdatedEvent = TypedEvent<[string, string], RewardTrackerUpdatedEventObject>;
 
-export type RewardTrackerUpdatedEventFilter =
-  TypedEventFilter<RewardTrackerUpdatedEvent>;
+export type RewardTrackerUpdatedEventFilter = TypedEventFilter<RewardTrackerUpdatedEvent>;
 
 export interface SensibleMinimumWethToHarvestEventObject {
   updater: string;
@@ -507,18 +331,14 @@ export type SensibleMinimumWethToHarvestEvent = TypedEvent<
   SensibleMinimumWethToHarvestEventObject
 >;
 
-export type SensibleMinimumWethToHarvestEventFilter =
-  TypedEventFilter<SensibleMinimumWethToHarvestEvent>;
+export type SensibleMinimumWethToHarvestEventFilter = TypedEventFilter<SensibleMinimumWethToHarvestEvent>;
 
 export interface TransferEventObject {
   from: string;
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -529,10 +349,7 @@ export interface WithdrawEventObject {
   assets: BigNumber;
   shares: BigNumber;
 }
-export type WithdrawEvent = TypedEvent<
-  [string, string, string, BigNumber, BigNumber],
-  WithdrawEventObject
->;
+export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNumber], WithdrawEventObject>;
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
@@ -540,13 +357,9 @@ export interface YieldStrategyUpdatedEventObject {
   updater: string;
   newYieldStrategy: string;
 }
-export type YieldStrategyUpdatedEvent = TypedEvent<
-  [string, string],
-  YieldStrategyUpdatedEventObject
->;
+export type YieldStrategyUpdatedEvent = TypedEvent<[string, string], YieldStrategyUpdatedEventObject>;
 
-export type YieldStrategyUpdatedEventFilter =
-  TypedEventFilter<YieldStrategyUpdatedEvent>;
+export type YieldStrategyUpdatedEventFilter = TypedEventFilter<YieldStrategyUpdatedEvent>;
 
 export interface UnstoppableGlpVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -558,16 +371,12 @@ export interface UnstoppableGlpVault extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -582,146 +391,126 @@ export interface UnstoppableGlpVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<[string]>;
 
     allowance(
-      owner: string,
-      spender: string,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     asset(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     convertToAssets(
-      shares: BigNumberish,
-      overrides?: CallOverrides
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber] & { assets: BigNumber }>;
 
     convertToShares(
-      assets: BigNumberish,
-      overrides?: CallOverrides
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber] & { shares: BigNumber }>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     glpRewardRouterV2(overrides?: CallOverrides): Promise<[string]>;
 
-    harvest(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    harvestTransferAndCompound(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    harvestTransferAndCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastHarvestTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxDeposit(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxMint(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    previewDeposit(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    previewMint(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    previewRedeem(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    previewWithdraw(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     recover(
-      _tokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     recoverETH(
-      _to: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      _to: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardTracker(overrides?: CallOverrides): Promise<[string]>;
 
-    sensibleMinimumWethToHarvest(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    sensibleMinimumWethToHarvest(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setGlpRewardRouter(
-      _newAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGlpRewardTracker(
-      _newAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSensibleMinimumWethToHarvest(
-      _newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setYieldStrategy(
-      _newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -733,32 +522,32 @@ export interface UnstoppableGlpVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferHarvestedFundsToStrategy(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     yieldStrategy(overrides?: CallOverrides): Promise<[string]>;
@@ -771,144 +560,120 @@ export interface UnstoppableGlpVault extends BaseContract {
   WETH(overrides?: CallOverrides): Promise<string>;
 
   allowance(
-    owner: string,
-    spender: string,
-    overrides?: CallOverrides
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   asset(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  convertToAssets(
-    shares: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  convertToShares(
-    assets: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    assets: BigNumberish,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    assets: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   glpRewardRouterV2(overrides?: CallOverrides): Promise<string>;
 
-  harvest(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  harvestTransferAndCompound(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  harvestTransferAndCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastHarvestTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxDeposit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxMint(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxRedeem(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxWithdraw(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   mint(
-    shares: BigNumberish,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    shares: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  previewDeposit(
-    assets: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewMint(
-    shares: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewRedeem(
-    shares: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewWithdraw(
-    assets: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   recover(
-    _tokenAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _tokenAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   recoverETH(
-    _to: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    _to: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeem(
-    shares: BigNumberish,
-    receiver: string,
-    owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    shares: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardTracker(overrides?: CallOverrides): Promise<string>;
 
   sensibleMinimumWethToHarvest(overrides?: CallOverrides): Promise<BigNumber>;
 
   setGlpRewardRouter(
-    _newAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _newAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGlpRewardTracker(
-    _newAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _newAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSensibleMinimumWethToHarvest(
-    _newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setYieldStrategy(
-    _newStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _newStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -920,32 +685,32 @@ export interface UnstoppableGlpVault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferHarvestedFundsToStrategy(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    assets: BigNumberish,
-    receiver: string,
-    owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    assets: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   yieldStrategy(overrides?: CallOverrides): Promise<string>;
@@ -958,43 +723,37 @@ export interface UnstoppableGlpVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<string>;
 
     allowance(
-      owner: string,
-      spender: string,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     asset(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToAssets(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToShares(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: CallOverrides
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     deposit(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: CallOverrides
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     glpRewardRouterV2(overrides?: CallOverrides): Promise<string>;
@@ -1004,60 +763,48 @@ export interface UnstoppableGlpVault extends BaseContract {
     harvestTransferAndCompound(overrides?: CallOverrides): Promise<void>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: CallOverrides
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     lastHarvestTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxDeposit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxMint(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: CallOverrides
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    previewDeposit(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewMint(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewRedeem(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewWithdraw(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    recover(_tokenAddress: string, overrides?: CallOverrides): Promise<void>;
+    recover(_tokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    recoverETH(_to: string, overrides?: CallOverrides): Promise<void>;
+    recoverETH(_to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: CallOverrides
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
@@ -1066,25 +813,13 @@ export interface UnstoppableGlpVault extends BaseContract {
 
     sensibleMinimumWethToHarvest(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setGlpRewardRouter(
-      _newAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setGlpRewardRouter(_newAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setGlpRewardTracker(
-      _newAddress: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setGlpRewardTracker(_newAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSensibleMinimumWethToHarvest(
-      _newValue: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setSensibleMinimumWethToHarvest(_newValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setYieldStrategy(
-      _newStrategy: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setYieldStrategy(_newStrategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -1095,133 +830,112 @@ export interface UnstoppableGlpVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferHarvestedFundsToStrategy(overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     withdraw(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: CallOverrides
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     yieldStrategy(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "Approval(address,address,uint256)"(
-      owner?: string | null,
-      spender?: string | null,
-      value?: null
+    'Approval(address,address,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
     ): ApprovalEventFilter;
     Approval(
-      owner?: string | null,
-      spender?: string | null,
-      value?: null
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
     ): ApprovalEventFilter;
 
-    "Deposit(address,address,uint256,uint256)"(
-      caller?: string | null,
-      owner?: string | null,
+    'Deposit(address,address,uint256,uint256)'(
+      caller?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
-      shares?: null
+      shares?: null,
     ): DepositEventFilter;
     Deposit(
-      caller?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
-      shares?: null
+      shares?: null,
     ): DepositEventFilter;
 
-    "GlpRewardRouterUpdated(address,address)"(
+    'GlpRewardRouterUpdated(address,address)'(
       updater?: null,
-      newRewardRouter?: null
+      newRewardRouter?: null,
     ): GlpRewardRouterUpdatedEventFilter;
-    GlpRewardRouterUpdated(
-      updater?: null,
-      newRewardRouter?: null
-    ): GlpRewardRouterUpdatedEventFilter;
+    GlpRewardRouterUpdated(updater?: null, newRewardRouter?: null): GlpRewardRouterUpdatedEventFilter;
 
-    "Harvest(uint256)"(amount?: null): HarvestEventFilter;
+    'Harvest(uint256)'(amount?: null): HarvestEventFilter;
     Harvest(amount?: null): HarvestEventFilter;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+    'OwnershipTransferred(address,address)'(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    "RewardTrackerUpdated(address,address)"(
-      updater?: null,
-      newRewardTracker?: null
-    ): RewardTrackerUpdatedEventFilter;
-    RewardTrackerUpdated(
-      updater?: null,
-      newRewardTracker?: null
-    ): RewardTrackerUpdatedEventFilter;
+    'RewardTrackerUpdated(address,address)'(updater?: null, newRewardTracker?: null): RewardTrackerUpdatedEventFilter;
+    RewardTrackerUpdated(updater?: null, newRewardTracker?: null): RewardTrackerUpdatedEventFilter;
 
-    "SensibleMinimumWethToHarvest(address,uint256)"(
+    'SensibleMinimumWethToHarvest(address,uint256)'(
       updater?: null,
-      newMinimum?: null
+      newMinimum?: null,
     ): SensibleMinimumWethToHarvestEventFilter;
-    SensibleMinimumWethToHarvest(
-      updater?: null,
-      newMinimum?: null
-    ): SensibleMinimumWethToHarvestEventFilter;
+    SensibleMinimumWethToHarvest(updater?: null, newMinimum?: null): SensibleMinimumWethToHarvestEventFilter;
 
-    "Transfer(address,address,uint256)"(
-      from?: string | null,
-      to?: string | null,
-      value?: null
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
     ): TransferEventFilter;
     Transfer(
-      from?: string | null,
-      to?: string | null,
-      value?: null
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
     ): TransferEventFilter;
 
-    "Withdraw(address,address,address,uint256,uint256)"(
-      caller?: string | null,
-      receiver?: string | null,
-      owner?: string | null,
+    'Withdraw(address,address,address,uint256,uint256)'(
+      caller?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
-      shares?: null
+      shares?: null,
     ): WithdrawEventFilter;
     Withdraw(
-      caller?: string | null,
-      receiver?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
-      shares?: null
+      shares?: null,
     ): WithdrawEventFilter;
 
-    "YieldStrategyUpdated(address,address)"(
-      updater?: null,
-      newYieldStrategy?: null
-    ): YieldStrategyUpdatedEventFilter;
-    YieldStrategyUpdated(
-      updater?: null,
-      newYieldStrategy?: null
-    ): YieldStrategyUpdatedEventFilter;
+    'YieldStrategyUpdated(address,address)'(updater?: null, newYieldStrategy?: null): YieldStrategyUpdatedEventFilter;
+    YieldStrategyUpdated(updater?: null, newYieldStrategy?: null): YieldStrategyUpdatedEventFilter;
   };
 
   estimateGas: {
@@ -1232,144 +946,120 @@ export interface UnstoppableGlpVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowance(
-      owner: string,
-      spender: string,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToAssets(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToShares(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     glpRewardRouterV2(overrides?: CallOverrides): Promise<BigNumber>;
 
-    harvest(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    harvestTransferAndCompound(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    harvestTransferAndCompound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastHarvestTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxDeposit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxMint(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewDeposit(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewMint(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewRedeem(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewWithdraw(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     recover(
-      _tokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     recoverETH(
-      _to: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      _to: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardTracker(overrides?: CallOverrides): Promise<BigNumber>;
 
     sensibleMinimumWethToHarvest(overrides?: CallOverrides): Promise<BigNumber>;
 
     setGlpRewardRouter(
-      _newAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setGlpRewardTracker(
-      _newAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSensibleMinimumWethToHarvest(
-      _newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setYieldStrategy(
-      _newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1381,32 +1071,30 @@ export interface UnstoppableGlpVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    transferHarvestedFundsToStrategy(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    transferHarvestedFundsToStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     yieldStrategy(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1420,163 +1108,122 @@ export interface UnstoppableGlpVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allowance(
-      owner: string,
-      spender: string,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    convertToAssets(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    convertToShares(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     glpRewardRouterV2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    harvest(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     harvestTransferAndCompound(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    lastHarvestTimestamp(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastHarvestTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxDeposit(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxDeposit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxMint(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxMint(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxRedeem(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxWithdraw(
-      owner: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewDeposit(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewMint(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewRedeem(
-      shares: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewWithdraw(
-      assets: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recover(
-      _tokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     recoverETH(
-      _to: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      _to: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardTracker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sensibleMinimumWethToHarvest(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    sensibleMinimumWethToHarvest(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setGlpRewardRouter(
-      _newAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGlpRewardTracker(
-      _newAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSensibleMinimumWethToHarvest(
-      _newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setYieldStrategy(
-      _newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1588,32 +1235,32 @@ export interface UnstoppableGlpVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferHarvestedFundsToStrategy(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     yieldStrategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;

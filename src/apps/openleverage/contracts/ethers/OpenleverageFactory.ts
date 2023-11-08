@@ -13,351 +13,274 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface OpenleverageFactoryInterface extends utils.Interface {
   functions: {
-    "acceptAdmin()": FunctionFragment;
-    "activeTrades(address,uint16,bool)": FunctionFragment;
-    "addressConfig()": FunctionFragment;
-    "admin()": FunctionFragment;
-    "allowedDepositTokens(address)": FunctionFragment;
-    "calculateConfig()": FunctionFragment;
-    "developer()": FunctionFragment;
-    "implementation()": FunctionFragment;
-    "markets(uint16)": FunctionFragment;
-    "numPairs()": FunctionFragment;
-    "pendingAdmin()": FunctionFragment;
-    "setPendingAdmin(address)": FunctionFragment;
-    "supportDexs(uint8)": FunctionFragment;
-    "taxes(uint16,address,uint256)": FunctionFragment;
-    "totalHelds(address)": FunctionFragment;
-    "initialize(address,address,address[],address,address,uint8[])": FunctionFragment;
-    "addMarket(address,address,uint16,bytes)": FunctionFragment;
-    "marginTrade(uint16,bool,bool,uint256,uint256,uint256,bytes)": FunctionFragment;
-    "closeTrade(uint16,bool,uint256,uint256,bytes)": FunctionFragment;
-    "liquidate(address,uint16,bool,uint256,uint256,bytes)": FunctionFragment;
-    "marginRatio(address,uint16,bool,bytes)": FunctionFragment;
-    "shouldUpdatePrice(uint16,bytes)": FunctionFragment;
-    "updatePrice(uint16,bytes)": FunctionFragment;
-    "getMarketSupportDexs(uint16)": FunctionFragment;
-    "setCalculateConfig(uint16,uint8,uint16,uint16,uint16,uint16,uint128,uint16,uint8,uint16)": FunctionFragment;
-    "setAddressConfig(address,address)": FunctionFragment;
-    "setMarketConfig(uint16,uint16,uint16,uint16,uint32[])": FunctionFragment;
-    "moveInsurance(uint16,uint8,address,uint256)": FunctionFragment;
-    "setSupportDex(uint8,bool)": FunctionFragment;
-    "setTaxRate(uint16,address,uint256,uint24)": FunctionFragment;
+    'acceptAdmin()': FunctionFragment;
+    'activeTrades(address,uint16,bool)': FunctionFragment;
+    'addressConfig()': FunctionFragment;
+    'admin()': FunctionFragment;
+    'allowedDepositTokens(address)': FunctionFragment;
+    'calculateConfig()': FunctionFragment;
+    'developer()': FunctionFragment;
+    'implementation()': FunctionFragment;
+    'markets(uint16)': FunctionFragment;
+    'numPairs()': FunctionFragment;
+    'pendingAdmin()': FunctionFragment;
+    'setPendingAdmin(address)': FunctionFragment;
+    'supportDexs(uint8)': FunctionFragment;
+    'taxes(uint16,address,uint256)': FunctionFragment;
+    'totalHelds(address)': FunctionFragment;
+    'initialize(address,address,address[],address,address,uint8[])': FunctionFragment;
+    'addMarket(address,address,uint16,bytes)': FunctionFragment;
+    'marginTrade(uint16,bool,bool,uint256,uint256,uint256,bytes)': FunctionFragment;
+    'closeTrade(uint16,bool,uint256,uint256,bytes)': FunctionFragment;
+    'liquidate(address,uint16,bool,uint256,uint256,bytes)': FunctionFragment;
+    'marginRatio(address,uint16,bool,bytes)': FunctionFragment;
+    'shouldUpdatePrice(uint16,bytes)': FunctionFragment;
+    'updatePrice(uint16,bytes)': FunctionFragment;
+    'getMarketSupportDexs(uint16)': FunctionFragment;
+    'setCalculateConfig(uint16,uint8,uint16,uint16,uint16,uint16,uint128,uint16,uint8,uint16)': FunctionFragment;
+    'setAddressConfig(address,address)': FunctionFragment;
+    'setMarketConfig(uint16,uint16,uint16,uint16,uint32[])': FunctionFragment;
+    'moveInsurance(uint16,uint8,address,uint256)': FunctionFragment;
+    'setSupportDex(uint8,bool)': FunctionFragment;
+    'setTaxRate(uint16,address,uint256,uint24)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "acceptAdmin"
-      | "activeTrades"
-      | "addressConfig"
-      | "admin"
-      | "allowedDepositTokens"
-      | "calculateConfig"
-      | "developer"
-      | "implementation"
-      | "markets"
-      | "numPairs"
-      | "pendingAdmin"
-      | "setPendingAdmin"
-      | "supportDexs"
-      | "taxes"
-      | "totalHelds"
-      | "initialize"
-      | "addMarket"
-      | "marginTrade"
-      | "closeTrade"
-      | "liquidate"
-      | "marginRatio"
-      | "shouldUpdatePrice"
-      | "updatePrice"
-      | "getMarketSupportDexs"
-      | "setCalculateConfig"
-      | "setAddressConfig"
-      | "setMarketConfig"
-      | "moveInsurance"
-      | "setSupportDex"
-      | "setTaxRate"
+      | 'acceptAdmin'
+      | 'activeTrades'
+      | 'addressConfig'
+      | 'admin'
+      | 'allowedDepositTokens'
+      | 'calculateConfig'
+      | 'developer'
+      | 'implementation'
+      | 'markets'
+      | 'numPairs'
+      | 'pendingAdmin'
+      | 'setPendingAdmin'
+      | 'supportDexs'
+      | 'taxes'
+      | 'totalHelds'
+      | 'initialize'
+      | 'addMarket'
+      | 'marginTrade'
+      | 'closeTrade'
+      | 'liquidate'
+      | 'marginRatio'
+      | 'shouldUpdatePrice'
+      | 'updatePrice'
+      | 'getMarketSupportDexs'
+      | 'setCalculateConfig'
+      | 'setAddressConfig'
+      | 'setMarketConfig'
+      | 'moveInsurance'
+      | 'setSupportDex'
+      | 'setTaxRate',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'acceptAdmin', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "acceptAdmin",
-    values?: undefined
+    functionFragment: 'activeTrades',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
   ): string;
+  encodeFunctionData(functionFragment: 'addressConfig', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allowedDepositTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'calculateConfig', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'developer', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'implementation', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'markets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'numPairs', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pendingAdmin', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setPendingAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'supportDexs', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "activeTrades",
-    values: [string, BigNumberish, boolean]
+    functionFragment: 'taxes',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'totalHelds', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "addressConfig",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "admin", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "allowedDepositTokens",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "calculateConfig",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "developer", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "implementation",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "markets",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "numPairs", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "pendingAdmin",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setPendingAdmin",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "supportDexs",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "taxes",
-    values: [BigNumberish, string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "totalHelds", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
-    values: [string, string, string[], string, string, BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addMarket",
-    values: [string, string, BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "marginTrade",
+    functionFragment: 'initialize',
     values: [
-      BigNumberish,
-      boolean,
-      boolean,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BytesLike
-    ]
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "closeTrade",
-    values: [BigNumberish, boolean, BigNumberish, BigNumberish, BytesLike]
+    functionFragment: 'addMarket',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "liquidate",
+    functionFragment: 'marginTrade',
     values: [
-      string,
-      BigNumberish,
-      boolean,
-      BigNumberish,
-      BigNumberish,
-      BytesLike
-    ]
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "marginRatio",
-    values: [string, BigNumberish, boolean, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "shouldUpdatePrice",
-    values: [BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updatePrice",
-    values: [BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getMarketSupportDexs",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setCalculateConfig",
+    functionFragment: 'closeTrade',
     values: [
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ]
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "setAddressConfig",
-    values: [string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMarketConfig",
+    functionFragment: 'liquidate',
     values: [
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish[]
-    ]
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "moveInsurance",
-    values: [BigNumberish, BigNumberish, string, BigNumberish]
+    functionFragment: 'marginRatio',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>, PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setSupportDex",
-    values: [BigNumberish, boolean]
+    functionFragment: 'shouldUpdatePrice',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setTaxRate",
-    values: [BigNumberish, string, BigNumberish, BigNumberish]
+    functionFragment: 'updatePrice',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getMarketSupportDexs', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setCalculateConfig',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setAddressConfig',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setMarketConfig',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>[],
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'moveInsurance',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setSupportDex',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setTaxRate',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "acceptAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "activeTrades",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addressConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "admin", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "allowedDepositTokens",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "calculateConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "developer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "implementation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "markets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "numPairs", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "pendingAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setPendingAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "supportDexs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "taxes", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "totalHelds", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "addMarket", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marginTrade",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "closeTrade", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "liquidate", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "marginRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "shouldUpdatePrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updatePrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getMarketSupportDexs",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setCalculateConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setAddressConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMarketConfig",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "moveInsurance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSupportDex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setTaxRate", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'acceptAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'activeTrades', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addressConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowedDepositTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'developer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'implementation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'markets', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'numPairs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPendingAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supportDexs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'taxes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalHelds', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marginTrade', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closeTrade', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'marginRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'shouldUpdatePrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updatePrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getMarketSupportDexs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setCalculateConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setAddressConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMarketConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'moveInsurance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSupportDex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTaxRate', data: BytesLike): Result;
 
   events: {
-    "ChangeAllowedDepositTokens(address[],bool)": EventFragment;
-    "Liquidation(address,uint16,bool,bool,uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint32)": EventFragment;
-    "MarginTrade(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)": EventFragment;
-    "NewAddressConfig(address,address)": EventFragment;
-    "NewAdmin(address,address)": EventFragment;
-    "NewCalculateConfig(uint16,uint8,uint16,uint16,uint16,uint16,uint128,uint16,uint8,uint16)": EventFragment;
-    "NewMarketConfig(uint16,uint16,uint32,uint16,uint32[])": EventFragment;
-    "NewPendingAdmin(address,address)": EventFragment;
-    "TradeClosed(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)": EventFragment;
+    'ChangeAllowedDepositTokens(address[],bool)': EventFragment;
+    'Liquidation(address,uint16,bool,bool,uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint32)': EventFragment;
+    'MarginTrade(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)': EventFragment;
+    'NewAddressConfig(address,address)': EventFragment;
+    'NewAdmin(address,address)': EventFragment;
+    'NewCalculateConfig(uint16,uint8,uint16,uint16,uint16,uint16,uint128,uint16,uint8,uint16)': EventFragment;
+    'NewMarketConfig(uint16,uint16,uint32,uint16,uint32[])': EventFragment;
+    'NewPendingAdmin(address,address)': EventFragment;
+    'TradeClosed(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ChangeAllowedDepositTokens"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Liquidation"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "MarginTrade"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewAddressConfig"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewAdmin"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewCalculateConfig"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewMarketConfig"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewPendingAdmin"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TradeClosed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ChangeAllowedDepositTokens'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Liquidation'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MarginTrade'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewAddressConfig'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewAdmin'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewCalculateConfig'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewMarketConfig'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewPendingAdmin'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TradeClosed'): EventFragment;
 }
 
 export interface ChangeAllowedDepositTokensEventObject {
   token: string[];
   allowed: boolean;
 }
-export type ChangeAllowedDepositTokensEvent = TypedEvent<
-  [string[], boolean],
-  ChangeAllowedDepositTokensEventObject
->;
+export type ChangeAllowedDepositTokensEvent = TypedEvent<[string[], boolean], ChangeAllowedDepositTokensEventObject>;
 
-export type ChangeAllowedDepositTokensEventFilter =
-  TypedEventFilter<ChangeAllowedDepositTokensEvent>;
+export type ChangeAllowedDepositTokensEventFilter = TypedEventFilter<ChangeAllowedDepositTokensEvent>;
 
 export interface LiquidationEventObject {
   owner: string;
@@ -388,7 +311,7 @@ export type LiquidationEvent = TypedEvent<
     BigNumber,
     BigNumber,
     BigNumber,
-    number
+    number,
   ],
   LiquidationEventObject
 >;
@@ -408,18 +331,7 @@ export interface MarginTradeEventObject {
   dex: number;
 }
 export type MarginTradeEvent = TypedEvent<
-  [
-    string,
-    number,
-    boolean,
-    boolean,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    number
-  ],
+  [string, number, boolean, boolean, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number],
   MarginTradeEventObject
 >;
 
@@ -429,13 +341,9 @@ export interface NewAddressConfigEventObject {
   controller: string;
   dexAggregator: string;
 }
-export type NewAddressConfigEvent = TypedEvent<
-  [string, string],
-  NewAddressConfigEventObject
->;
+export type NewAddressConfigEvent = TypedEvent<[string, string], NewAddressConfigEventObject>;
 
-export type NewAddressConfigEventFilter =
-  TypedEventFilter<NewAddressConfigEvent>;
+export type NewAddressConfigEventFilter = TypedEventFilter<NewAddressConfigEvent>;
 
 export interface NewAdminEventObject {
   oldAdmin: string;
@@ -458,23 +366,11 @@ export interface NewCalculateConfigEventObject {
   twapDuration: number;
 }
 export type NewCalculateConfigEvent = TypedEvent<
-  [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    BigNumber,
-    number,
-    number,
-    number
-  ],
+  [number, number, number, number, number, number, BigNumber, number, number, number],
   NewCalculateConfigEventObject
 >;
 
-export type NewCalculateConfigEventFilter =
-  TypedEventFilter<NewCalculateConfigEvent>;
+export type NewCalculateConfigEventFilter = TypedEventFilter<NewCalculateConfigEvent>;
 
 export interface NewMarketConfigEventObject {
   marketId: number;
@@ -483,10 +379,7 @@ export interface NewMarketConfigEventObject {
   priceDiffientRatio: number;
   dexs: number[];
 }
-export type NewMarketConfigEvent = TypedEvent<
-  [number, number, number, number, number[]],
-  NewMarketConfigEventObject
->;
+export type NewMarketConfigEvent = TypedEvent<[number, number, number, number, number[]], NewMarketConfigEventObject>;
 
 export type NewMarketConfigEventFilter = TypedEventFilter<NewMarketConfigEvent>;
 
@@ -494,10 +387,7 @@ export interface NewPendingAdminEventObject {
   oldPendingAdmin: string;
   newPendingAdmin: string;
 }
-export type NewPendingAdminEvent = TypedEvent<
-  [string, string],
-  NewPendingAdminEventObject
->;
+export type NewPendingAdminEvent = TypedEvent<[string, string], NewPendingAdminEventObject>;
 
 export type NewPendingAdminEventFilter = TypedEventFilter<NewPendingAdminEvent>;
 
@@ -514,18 +404,7 @@ export interface TradeClosedEventObject {
   dex: number;
 }
 export type TradeClosedEvent = TypedEvent<
-  [
-    string,
-    number,
-    boolean,
-    boolean,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    number
-  ],
+  [string, number, boolean, boolean, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number],
   TradeClosedEventObject
 >;
 
@@ -541,16 +420,12 @@ export interface OpenleverageFactory extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -558,15 +433,13 @@ export interface OpenleverageFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptAdmin(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     activeTrades(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: boolean,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, boolean, BigNumber] & {
         deposited: BigNumber;
@@ -576,9 +449,7 @@ export interface OpenleverageFactory extends BaseContract {
       }
     >;
 
-    addressConfig(
-      overrides?: CallOverrides
-    ): Promise<
+    addressConfig(overrides?: CallOverrides): Promise<
       [string, string, string, string] & {
         dexAggregator: string;
         controller: string;
@@ -589,26 +460,10 @@ export interface OpenleverageFactory extends BaseContract {
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
-    allowedDepositTokens(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    allowedDepositTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    calculateConfig(
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        BigNumber,
-        number,
-        number,
-        number
-      ] & {
+    calculateConfig(overrides?: CallOverrides): Promise<
+      [number, number, number, number, number, number, BigNumber, number, number, number] & {
         defaultFeesRate: number;
         insuranceRatio: number;
         defaultMarginLimit: number;
@@ -627,21 +482,10 @@ export interface OpenleverageFactory extends BaseContract {
     implementation(overrides?: CallOverrides): Promise<[string]>;
 
     markets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
-      [
-        string,
-        string,
-        string,
-        string,
-        number,
-        number,
-        number,
-        string,
-        BigNumber,
-        BigNumber
-      ] & {
+      [string, string, string, string, number, number, number, string, BigNumber, BigNumber] & {
         pool0: string;
         pool1: string;
         token0: string;
@@ -660,78 +504,75 @@ export interface OpenleverageFactory extends BaseContract {
     pendingAdmin(overrides?: CallOverrides): Promise<[string]>;
 
     setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportDexs(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    supportDexs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     taxes(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[number]>;
 
-    totalHelds(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalHelds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      _controller: string,
-      _dexAggregator: string,
-      depositTokens: string[],
-      _wETH: string,
-      _xOLE: string,
-      _supportDexs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _controller: PromiseOrValue<string>,
+      _dexAggregator: PromiseOrValue<string>,
+      depositTokens: PromiseOrValue<string>[],
+      _wETH: PromiseOrValue<string>,
+      _xOLE: PromiseOrValue<string>,
+      _supportDexs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addMarket(
-      pool0: string,
-      pool1: string,
-      marginLimit: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      pool0: PromiseOrValue<string>,
+      pool1: PromiseOrValue<string>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     marginTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      depositToken: boolean,
-      deposit: BigNumberish,
-      borrow: BigNumberish,
-      minBuyAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      depositToken: PromiseOrValue<boolean>,
+      deposit: PromiseOrValue<BigNumberish>,
+      borrow: PromiseOrValue<BigNumberish>,
+      minBuyAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     closeTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      closeHeld: BigNumberish,
-      minOrMaxAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      closeHeld: PromiseOrValue<BigNumberish>,
+      minOrMaxAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidate(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      minBuy: BigNumberish,
-      maxSell: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      minBuy: PromiseOrValue<BigNumberish>,
+      maxSell: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     marginRatio(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, number] & {
         current: BigNumber;
@@ -742,83 +583,78 @@ export interface OpenleverageFactory extends BaseContract {
     >;
 
     shouldUpdatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     updatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getMarketSupportDexs(
-      marketId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[number[]]>;
+    getMarketSupportDexs(marketId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[number[]]>;
 
     setCalculateConfig(
-      defaultFeesRate: BigNumberish,
-      insuranceRatio: BigNumberish,
-      defaultMarginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      updatePriceDiscount: BigNumberish,
-      feesDiscount: BigNumberish,
-      feesDiscountThreshold: BigNumberish,
-      penaltyRatio: BigNumberish,
-      maxLiquidationPriceDiffientRatio: BigNumberish,
-      twapDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      defaultFeesRate: PromiseOrValue<BigNumberish>,
+      insuranceRatio: PromiseOrValue<BigNumberish>,
+      defaultMarginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      updatePriceDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscountThreshold: PromiseOrValue<BigNumberish>,
+      penaltyRatio: PromiseOrValue<BigNumberish>,
+      maxLiquidationPriceDiffientRatio: PromiseOrValue<BigNumberish>,
+      twapDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAddressConfig(
-      controller: string,
-      dexAggregator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      controller: PromiseOrValue<string>,
+      dexAggregator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMarketConfig(
-      marketId: BigNumberish,
-      feesRate: BigNumberish,
-      marginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      dexs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      feesRate: PromiseOrValue<BigNumberish>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      dexs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     moveInsurance(
-      marketId: BigNumberish,
-      poolIndex: BigNumberish,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      poolIndex: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSupportDex(
-      dex: BigNumberish,
-      support: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      dex: PromiseOrValue<BigNumberish>,
+      support: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTaxRate(
-      marketId: BigNumberish,
-      token: string,
-      index: BigNumberish,
-      tax: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      tax: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  acceptAdmin(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   activeTrades(
-    arg0: string,
-    arg1: BigNumberish,
-    arg2: boolean,
-    overrides?: CallOverrides
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    arg2: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, boolean, BigNumber] & {
       deposited: BigNumber;
@@ -828,9 +664,7 @@ export interface OpenleverageFactory extends BaseContract {
     }
   >;
 
-  addressConfig(
-    overrides?: CallOverrides
-  ): Promise<
+  addressConfig(overrides?: CallOverrides): Promise<
     [string, string, string, string] & {
       dexAggregator: string;
       controller: string;
@@ -841,26 +675,10 @@ export interface OpenleverageFactory extends BaseContract {
 
   admin(overrides?: CallOverrides): Promise<string>;
 
-  allowedDepositTokens(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  allowedDepositTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  calculateConfig(
-    overrides?: CallOverrides
-  ): Promise<
-    [
-      number,
-      number,
-      number,
-      number,
-      number,
-      number,
-      BigNumber,
-      number,
-      number,
-      number
-    ] & {
+  calculateConfig(overrides?: CallOverrides): Promise<
+    [number, number, number, number, number, number, BigNumber, number, number, number] & {
       defaultFeesRate: number;
       insuranceRatio: number;
       defaultMarginLimit: number;
@@ -879,21 +697,10 @@ export interface OpenleverageFactory extends BaseContract {
   implementation(overrides?: CallOverrides): Promise<string>;
 
   markets(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<
-    [
-      string,
-      string,
-      string,
-      string,
-      number,
-      number,
-      number,
-      string,
-      BigNumber,
-      BigNumber
-    ] & {
+    [string, string, string, string, number, number, number, string, BigNumber, BigNumber] & {
       pool0: string;
       pool1: string;
       token0: string;
@@ -912,75 +719,75 @@ export interface OpenleverageFactory extends BaseContract {
   pendingAdmin(overrides?: CallOverrides): Promise<string>;
 
   setPendingAdmin(
-    newPendingAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newPendingAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportDexs(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  supportDexs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   taxes(
-    arg0: BigNumberish,
-    arg1: string,
-    arg2: BigNumberish,
-    overrides?: CallOverrides
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<number>;
 
-  totalHelds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalHelds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    _controller: string,
-    _dexAggregator: string,
-    depositTokens: string[],
-    _wETH: string,
-    _xOLE: string,
-    _supportDexs: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _controller: PromiseOrValue<string>,
+    _dexAggregator: PromiseOrValue<string>,
+    depositTokens: PromiseOrValue<string>[],
+    _wETH: PromiseOrValue<string>,
+    _xOLE: PromiseOrValue<string>,
+    _supportDexs: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addMarket(
-    pool0: string,
-    pool1: string,
-    marginLimit: BigNumberish,
-    dexData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    pool0: PromiseOrValue<string>,
+    pool1: PromiseOrValue<string>,
+    marginLimit: PromiseOrValue<BigNumberish>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   marginTrade(
-    marketId: BigNumberish,
-    longToken: boolean,
-    depositToken: boolean,
-    deposit: BigNumberish,
-    borrow: BigNumberish,
-    minBuyAmount: BigNumberish,
-    dexData: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    marketId: PromiseOrValue<BigNumberish>,
+    longToken: PromiseOrValue<boolean>,
+    depositToken: PromiseOrValue<boolean>,
+    deposit: PromiseOrValue<BigNumberish>,
+    borrow: PromiseOrValue<BigNumberish>,
+    minBuyAmount: PromiseOrValue<BigNumberish>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   closeTrade(
-    marketId: BigNumberish,
-    longToken: boolean,
-    closeHeld: BigNumberish,
-    minOrMaxAmount: BigNumberish,
-    dexData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    marketId: PromiseOrValue<BigNumberish>,
+    longToken: PromiseOrValue<boolean>,
+    closeHeld: PromiseOrValue<BigNumberish>,
+    minOrMaxAmount: PromiseOrValue<BigNumberish>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidate(
-    owner: string,
-    marketId: BigNumberish,
-    longToken: boolean,
-    minBuy: BigNumberish,
-    maxSell: BigNumberish,
-    dexData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    owner: PromiseOrValue<string>,
+    marketId: PromiseOrValue<BigNumberish>,
+    longToken: PromiseOrValue<boolean>,
+    minBuy: PromiseOrValue<BigNumberish>,
+    maxSell: PromiseOrValue<BigNumberish>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   marginRatio(
-    owner: string,
-    marketId: BigNumberish,
-    longToken: boolean,
-    dexData: BytesLike,
-    overrides?: CallOverrides
+    owner: PromiseOrValue<string>,
+    marketId: PromiseOrValue<BigNumberish>,
+    longToken: PromiseOrValue<boolean>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, number] & {
       current: BigNumber;
@@ -991,81 +798,78 @@ export interface OpenleverageFactory extends BaseContract {
   >;
 
   shouldUpdatePrice(
-    marketId: BigNumberish,
-    dexData: BytesLike,
-    overrides?: CallOverrides
+    marketId: PromiseOrValue<BigNumberish>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   updatePrice(
-    marketId: BigNumberish,
-    dexData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    marketId: PromiseOrValue<BigNumberish>,
+    dexData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getMarketSupportDexs(
-    marketId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<number[]>;
+  getMarketSupportDexs(marketId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<number[]>;
 
   setCalculateConfig(
-    defaultFeesRate: BigNumberish,
-    insuranceRatio: BigNumberish,
-    defaultMarginLimit: BigNumberish,
-    priceDiffientRatio: BigNumberish,
-    updatePriceDiscount: BigNumberish,
-    feesDiscount: BigNumberish,
-    feesDiscountThreshold: BigNumberish,
-    penaltyRatio: BigNumberish,
-    maxLiquidationPriceDiffientRatio: BigNumberish,
-    twapDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    defaultFeesRate: PromiseOrValue<BigNumberish>,
+    insuranceRatio: PromiseOrValue<BigNumberish>,
+    defaultMarginLimit: PromiseOrValue<BigNumberish>,
+    priceDiffientRatio: PromiseOrValue<BigNumberish>,
+    updatePriceDiscount: PromiseOrValue<BigNumberish>,
+    feesDiscount: PromiseOrValue<BigNumberish>,
+    feesDiscountThreshold: PromiseOrValue<BigNumberish>,
+    penaltyRatio: PromiseOrValue<BigNumberish>,
+    maxLiquidationPriceDiffientRatio: PromiseOrValue<BigNumberish>,
+    twapDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAddressConfig(
-    controller: string,
-    dexAggregator: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    controller: PromiseOrValue<string>,
+    dexAggregator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMarketConfig(
-    marketId: BigNumberish,
-    feesRate: BigNumberish,
-    marginLimit: BigNumberish,
-    priceDiffientRatio: BigNumberish,
-    dexs: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    marketId: PromiseOrValue<BigNumberish>,
+    feesRate: PromiseOrValue<BigNumberish>,
+    marginLimit: PromiseOrValue<BigNumberish>,
+    priceDiffientRatio: PromiseOrValue<BigNumberish>,
+    dexs: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   moveInsurance(
-    marketId: BigNumberish,
-    poolIndex: BigNumberish,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    marketId: PromiseOrValue<BigNumberish>,
+    poolIndex: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSupportDex(
-    dex: BigNumberish,
-    support: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    dex: PromiseOrValue<BigNumberish>,
+    support: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTaxRate(
-    marketId: BigNumberish,
-    token: string,
-    index: BigNumberish,
-    tax: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    marketId: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    tax: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     acceptAdmin(overrides?: CallOverrides): Promise<void>;
 
     activeTrades(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: boolean,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, boolean, BigNumber] & {
         deposited: BigNumber;
@@ -1075,9 +879,7 @@ export interface OpenleverageFactory extends BaseContract {
       }
     >;
 
-    addressConfig(
-      overrides?: CallOverrides
-    ): Promise<
+    addressConfig(overrides?: CallOverrides): Promise<
       [string, string, string, string] & {
         dexAggregator: string;
         controller: string;
@@ -1088,26 +890,10 @@ export interface OpenleverageFactory extends BaseContract {
 
     admin(overrides?: CallOverrides): Promise<string>;
 
-    allowedDepositTokens(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    allowedDepositTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    calculateConfig(
-      overrides?: CallOverrides
-    ): Promise<
-      [
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        BigNumber,
-        number,
-        number,
-        number
-      ] & {
+    calculateConfig(overrides?: CallOverrides): Promise<
+      [number, number, number, number, number, number, BigNumber, number, number, number] & {
         defaultFeesRate: number;
         insuranceRatio: number;
         defaultMarginLimit: number;
@@ -1126,21 +912,10 @@ export interface OpenleverageFactory extends BaseContract {
     implementation(overrides?: CallOverrides): Promise<string>;
 
     markets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
-      [
-        string,
-        string,
-        string,
-        string,
-        number,
-        number,
-        number,
-        string,
-        BigNumber,
-        BigNumber
-      ] & {
+      [string, string, string, string, number, number, number, string, BigNumber, BigNumber] & {
         pool0: string;
         pool1: string;
         token0: string;
@@ -1158,79 +933,73 @@ export interface OpenleverageFactory extends BaseContract {
 
     pendingAdmin(overrides?: CallOverrides): Promise<string>;
 
-    setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setPendingAdmin(newPendingAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    supportDexs(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    supportDexs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     taxes(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<number>;
 
-    totalHelds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalHelds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _controller: string,
-      _dexAggregator: string,
-      depositTokens: string[],
-      _wETH: string,
-      _xOLE: string,
-      _supportDexs: BigNumberish[],
-      overrides?: CallOverrides
+      _controller: PromiseOrValue<string>,
+      _dexAggregator: PromiseOrValue<string>,
+      depositTokens: PromiseOrValue<string>[],
+      _wETH: PromiseOrValue<string>,
+      _xOLE: PromiseOrValue<string>,
+      _supportDexs: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     addMarket(
-      pool0: string,
-      pool1: string,
-      marginLimit: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      pool0: PromiseOrValue<string>,
+      pool1: PromiseOrValue<string>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<number>;
 
     marginTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      depositToken: boolean,
-      deposit: BigNumberish,
-      borrow: BigNumberish,
-      minBuyAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      depositToken: PromiseOrValue<boolean>,
+      deposit: PromiseOrValue<BigNumberish>,
+      borrow: PromiseOrValue<BigNumberish>,
+      minBuyAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     closeTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      closeHeld: BigNumberish,
-      minOrMaxAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      closeHeld: PromiseOrValue<BigNumberish>,
+      minOrMaxAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     liquidate(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      minBuy: BigNumberish,
-      maxSell: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      minBuy: PromiseOrValue<BigNumberish>,
+      maxSell: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     marginRatio(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, number] & {
         current: BigNumber;
@@ -1241,85 +1010,76 @@ export interface OpenleverageFactory extends BaseContract {
     >;
 
     shouldUpdatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     updatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    getMarketSupportDexs(
-      marketId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<number[]>;
+    getMarketSupportDexs(marketId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<number[]>;
 
     setCalculateConfig(
-      defaultFeesRate: BigNumberish,
-      insuranceRatio: BigNumberish,
-      defaultMarginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      updatePriceDiscount: BigNumberish,
-      feesDiscount: BigNumberish,
-      feesDiscountThreshold: BigNumberish,
-      penaltyRatio: BigNumberish,
-      maxLiquidationPriceDiffientRatio: BigNumberish,
-      twapDuration: BigNumberish,
-      overrides?: CallOverrides
+      defaultFeesRate: PromiseOrValue<BigNumberish>,
+      insuranceRatio: PromiseOrValue<BigNumberish>,
+      defaultMarginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      updatePriceDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscountThreshold: PromiseOrValue<BigNumberish>,
+      penaltyRatio: PromiseOrValue<BigNumberish>,
+      maxLiquidationPriceDiffientRatio: PromiseOrValue<BigNumberish>,
+      twapDuration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setAddressConfig(
-      controller: string,
-      dexAggregator: string,
-      overrides?: CallOverrides
+      controller: PromiseOrValue<string>,
+      dexAggregator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setMarketConfig(
-      marketId: BigNumberish,
-      feesRate: BigNumberish,
-      marginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      dexs: BigNumberish[],
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      feesRate: PromiseOrValue<BigNumberish>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      dexs: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     moveInsurance(
-      marketId: BigNumberish,
-      poolIndex: BigNumberish,
-      to: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      poolIndex: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setSupportDex(
-      dex: BigNumberish,
-      support: boolean,
-      overrides?: CallOverrides
+      dex: PromiseOrValue<BigNumberish>,
+      support: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setTaxRate(
-      marketId: BigNumberish,
-      token: string,
-      index: BigNumberish,
-      tax: BigNumberish,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      tax: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
-    "ChangeAllowedDepositTokens(address[],bool)"(
-      token?: null,
-      allowed?: null
-    ): ChangeAllowedDepositTokensEventFilter;
-    ChangeAllowedDepositTokens(
-      token?: null,
-      allowed?: null
-    ): ChangeAllowedDepositTokensEventFilter;
+    'ChangeAllowedDepositTokens(address[],bool)'(token?: null, allowed?: null): ChangeAllowedDepositTokensEventFilter;
+    ChangeAllowedDepositTokens(token?: null, allowed?: null): ChangeAllowedDepositTokensEventFilter;
 
-    "Liquidation(address,uint16,bool,bool,uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint32)"(
+    'Liquidation(address,uint16,bool,bool,uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,uint32)'(
       owner?: null,
       marketId?: null,
       longToken?: null,
@@ -1332,7 +1092,7 @@ export interface OpenleverageFactory extends BaseContract {
       fees?: null,
       token0Price?: null,
       penalty?: null,
-      dex?: null
+      dex?: null,
     ): LiquidationEventFilter;
     Liquidation(
       owner?: null,
@@ -1347,10 +1107,10 @@ export interface OpenleverageFactory extends BaseContract {
       fees?: null,
       token0Price?: null,
       penalty?: null,
-      dex?: null
+      dex?: null,
     ): LiquidationEventFilter;
 
-    "MarginTrade(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)"(
+    'MarginTrade(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)'(
       trader?: null,
       marketId?: null,
       longToken?: null,
@@ -1360,7 +1120,7 @@ export interface OpenleverageFactory extends BaseContract {
       held?: null,
       fees?: null,
       token0Price?: null,
-      dex?: null
+      dex?: null,
     ): MarginTradeEventFilter;
     MarginTrade(
       trader?: null,
@@ -1372,25 +1132,16 @@ export interface OpenleverageFactory extends BaseContract {
       held?: null,
       fees?: null,
       token0Price?: null,
-      dex?: null
+      dex?: null,
     ): MarginTradeEventFilter;
 
-    "NewAddressConfig(address,address)"(
-      controller?: null,
-      dexAggregator?: null
-    ): NewAddressConfigEventFilter;
-    NewAddressConfig(
-      controller?: null,
-      dexAggregator?: null
-    ): NewAddressConfigEventFilter;
+    'NewAddressConfig(address,address)'(controller?: null, dexAggregator?: null): NewAddressConfigEventFilter;
+    NewAddressConfig(controller?: null, dexAggregator?: null): NewAddressConfigEventFilter;
 
-    "NewAdmin(address,address)"(
-      oldAdmin?: null,
-      newAdmin?: null
-    ): NewAdminEventFilter;
+    'NewAdmin(address,address)'(oldAdmin?: null, newAdmin?: null): NewAdminEventFilter;
     NewAdmin(oldAdmin?: null, newAdmin?: null): NewAdminEventFilter;
 
-    "NewCalculateConfig(uint16,uint8,uint16,uint16,uint16,uint16,uint128,uint16,uint8,uint16)"(
+    'NewCalculateConfig(uint16,uint8,uint16,uint16,uint16,uint16,uint128,uint16,uint8,uint16)'(
       defaultFeesRate?: null,
       insuranceRatio?: null,
       defaultMarginLimit?: null,
@@ -1400,7 +1151,7 @@ export interface OpenleverageFactory extends BaseContract {
       feesDiscountThreshold?: null,
       penaltyRatio?: null,
       maxLiquidationPriceDiffientRatio?: null,
-      twapDuration?: null
+      twapDuration?: null,
     ): NewCalculateConfigEventFilter;
     NewCalculateConfig(
       defaultFeesRate?: null,
@@ -1412,34 +1163,28 @@ export interface OpenleverageFactory extends BaseContract {
       feesDiscountThreshold?: null,
       penaltyRatio?: null,
       maxLiquidationPriceDiffientRatio?: null,
-      twapDuration?: null
+      twapDuration?: null,
     ): NewCalculateConfigEventFilter;
 
-    "NewMarketConfig(uint16,uint16,uint32,uint16,uint32[])"(
+    'NewMarketConfig(uint16,uint16,uint32,uint16,uint32[])'(
       marketId?: null,
       feesRate?: null,
       marginLimit?: null,
       priceDiffientRatio?: null,
-      dexs?: null
+      dexs?: null,
     ): NewMarketConfigEventFilter;
     NewMarketConfig(
       marketId?: null,
       feesRate?: null,
       marginLimit?: null,
       priceDiffientRatio?: null,
-      dexs?: null
+      dexs?: null,
     ): NewMarketConfigEventFilter;
 
-    "NewPendingAdmin(address,address)"(
-      oldPendingAdmin?: null,
-      newPendingAdmin?: null
-    ): NewPendingAdminEventFilter;
-    NewPendingAdmin(
-      oldPendingAdmin?: null,
-      newPendingAdmin?: null
-    ): NewPendingAdminEventFilter;
+    'NewPendingAdmin(address,address)'(oldPendingAdmin?: null, newPendingAdmin?: null): NewPendingAdminEventFilter;
+    NewPendingAdmin(oldPendingAdmin?: null, newPendingAdmin?: null): NewPendingAdminEventFilter;
 
-    "TradeClosed(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)"(
+    'TradeClosed(address,uint16,bool,bool,uint256,uint256,uint256,uint256,uint256,uint32)'(
       owner?: null,
       marketId?: null,
       longToken?: null,
@@ -1449,7 +1194,7 @@ export interface OpenleverageFactory extends BaseContract {
       depositReturn?: null,
       fees?: null,
       token0Price?: null,
-      dex?: null
+      dex?: null,
     ): TradeClosedEventFilter;
     TradeClosed(
       owner?: null,
@@ -1461,30 +1206,25 @@ export interface OpenleverageFactory extends BaseContract {
       depositReturn?: null,
       fees?: null,
       token0Price?: null,
-      dex?: null
+      dex?: null,
     ): TradeClosedEventFilter;
   };
 
   estimateGas: {
-    acceptAdmin(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     activeTrades(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: boolean,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     addressConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowedDepositTokens(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    allowedDepositTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1492,176 +1232,165 @@ export interface OpenleverageFactory extends BaseContract {
 
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    markets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    markets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     numPairs(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
     setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportDexs(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    supportDexs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     taxes(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    totalHelds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalHelds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _controller: string,
-      _dexAggregator: string,
-      depositTokens: string[],
-      _wETH: string,
-      _xOLE: string,
-      _supportDexs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _controller: PromiseOrValue<string>,
+      _dexAggregator: PromiseOrValue<string>,
+      depositTokens: PromiseOrValue<string>[],
+      _wETH: PromiseOrValue<string>,
+      _xOLE: PromiseOrValue<string>,
+      _supportDexs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addMarket(
-      pool0: string,
-      pool1: string,
-      marginLimit: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      pool0: PromiseOrValue<string>,
+      pool1: PromiseOrValue<string>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     marginTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      depositToken: boolean,
-      deposit: BigNumberish,
-      borrow: BigNumberish,
-      minBuyAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      depositToken: PromiseOrValue<boolean>,
+      deposit: PromiseOrValue<BigNumberish>,
+      borrow: PromiseOrValue<BigNumberish>,
+      minBuyAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     closeTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      closeHeld: BigNumberish,
-      minOrMaxAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      closeHeld: PromiseOrValue<BigNumberish>,
+      minOrMaxAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidate(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      minBuy: BigNumberish,
-      maxSell: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      minBuy: PromiseOrValue<BigNumberish>,
+      maxSell: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     marginRatio(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     shouldUpdatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     updatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getMarketSupportDexs(
-      marketId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getMarketSupportDexs(marketId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setCalculateConfig(
-      defaultFeesRate: BigNumberish,
-      insuranceRatio: BigNumberish,
-      defaultMarginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      updatePriceDiscount: BigNumberish,
-      feesDiscount: BigNumberish,
-      feesDiscountThreshold: BigNumberish,
-      penaltyRatio: BigNumberish,
-      maxLiquidationPriceDiffientRatio: BigNumberish,
-      twapDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      defaultFeesRate: PromiseOrValue<BigNumberish>,
+      insuranceRatio: PromiseOrValue<BigNumberish>,
+      defaultMarginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      updatePriceDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscountThreshold: PromiseOrValue<BigNumberish>,
+      penaltyRatio: PromiseOrValue<BigNumberish>,
+      maxLiquidationPriceDiffientRatio: PromiseOrValue<BigNumberish>,
+      twapDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setAddressConfig(
-      controller: string,
-      dexAggregator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      controller: PromiseOrValue<string>,
+      dexAggregator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMarketConfig(
-      marketId: BigNumberish,
-      feesRate: BigNumberish,
-      marginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      dexs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      feesRate: PromiseOrValue<BigNumberish>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      dexs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     moveInsurance(
-      marketId: BigNumberish,
-      poolIndex: BigNumberish,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      poolIndex: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSupportDex(
-      dex: BigNumberish,
-      support: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      dex: PromiseOrValue<BigNumberish>,
+      support: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTaxRate(
-      marketId: BigNumberish,
-      token: string,
-      index: BigNumberish,
-      tax: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      tax: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptAdmin(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     activeTrades(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: boolean,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     addressConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowedDepositTokens(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    allowedDepositTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1669,159 +1398,150 @@ export interface OpenleverageFactory extends BaseContract {
 
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    markets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    markets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     numPairs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportDexs(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    supportDexs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     taxes(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    totalHelds(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalHelds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _controller: string,
-      _dexAggregator: string,
-      depositTokens: string[],
-      _wETH: string,
-      _xOLE: string,
-      _supportDexs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _controller: PromiseOrValue<string>,
+      _dexAggregator: PromiseOrValue<string>,
+      depositTokens: PromiseOrValue<string>[],
+      _wETH: PromiseOrValue<string>,
+      _xOLE: PromiseOrValue<string>,
+      _supportDexs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addMarket(
-      pool0: string,
-      pool1: string,
-      marginLimit: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      pool0: PromiseOrValue<string>,
+      pool1: PromiseOrValue<string>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     marginTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      depositToken: boolean,
-      deposit: BigNumberish,
-      borrow: BigNumberish,
-      minBuyAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      depositToken: PromiseOrValue<boolean>,
+      deposit: PromiseOrValue<BigNumberish>,
+      borrow: PromiseOrValue<BigNumberish>,
+      minBuyAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     closeTrade(
-      marketId: BigNumberish,
-      longToken: boolean,
-      closeHeld: BigNumberish,
-      minOrMaxAmount: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      closeHeld: PromiseOrValue<BigNumberish>,
+      minOrMaxAmount: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidate(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      minBuy: BigNumberish,
-      maxSell: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      minBuy: PromiseOrValue<BigNumberish>,
+      maxSell: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     marginRatio(
-      owner: string,
-      marketId: BigNumberish,
-      longToken: boolean,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      marketId: PromiseOrValue<BigNumberish>,
+      longToken: PromiseOrValue<boolean>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     shouldUpdatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     updatePrice(
-      marketId: BigNumberish,
-      dexData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      dexData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getMarketSupportDexs(
-      marketId: BigNumberish,
-      overrides?: CallOverrides
+      marketId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     setCalculateConfig(
-      defaultFeesRate: BigNumberish,
-      insuranceRatio: BigNumberish,
-      defaultMarginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      updatePriceDiscount: BigNumberish,
-      feesDiscount: BigNumberish,
-      feesDiscountThreshold: BigNumberish,
-      penaltyRatio: BigNumberish,
-      maxLiquidationPriceDiffientRatio: BigNumberish,
-      twapDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      defaultFeesRate: PromiseOrValue<BigNumberish>,
+      insuranceRatio: PromiseOrValue<BigNumberish>,
+      defaultMarginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      updatePriceDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscount: PromiseOrValue<BigNumberish>,
+      feesDiscountThreshold: PromiseOrValue<BigNumberish>,
+      penaltyRatio: PromiseOrValue<BigNumberish>,
+      maxLiquidationPriceDiffientRatio: PromiseOrValue<BigNumberish>,
+      twapDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAddressConfig(
-      controller: string,
-      dexAggregator: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      controller: PromiseOrValue<string>,
+      dexAggregator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMarketConfig(
-      marketId: BigNumberish,
-      feesRate: BigNumberish,
-      marginLimit: BigNumberish,
-      priceDiffientRatio: BigNumberish,
-      dexs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      feesRate: PromiseOrValue<BigNumberish>,
+      marginLimit: PromiseOrValue<BigNumberish>,
+      priceDiffientRatio: PromiseOrValue<BigNumberish>,
+      dexs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     moveInsurance(
-      marketId: BigNumberish,
-      poolIndex: BigNumberish,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      poolIndex: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSupportDex(
-      dex: BigNumberish,
-      support: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      dex: PromiseOrValue<BigNumberish>,
+      support: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTaxRate(
-      marketId: BigNumberish,
-      token: string,
-      index: BigNumberish,
-      tax: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      marketId: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      tax: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

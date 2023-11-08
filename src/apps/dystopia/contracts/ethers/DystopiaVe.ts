@@ -15,14 +15,14 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IVe {
   export type PointStruct = {
-    bias: BigNumberish;
-    slope: BigNumberish;
-    ts: BigNumberish;
-    blk: BigNumberish;
+    bias: PromiseOrValue<BigNumberish>;
+    slope: PromiseOrValue<BigNumberish>;
+    ts: PromiseOrValue<BigNumberish>;
+    blk: PromiseOrValue<BigNumberish>;
   };
 
   export type PointStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -143,63 +143,111 @@ export interface DystopiaVeInterface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'abstain', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'attachToken', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'attachments', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOfAtNFT', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOfNFT', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOfNFTAt', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'abstain', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'attachToken', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'attachments', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfAtNFT',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOfNFT', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfNFTAt',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'block_number', values?: undefined): string;
   encodeFunctionData(functionFragment: 'checkpoint', values?: undefined): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'createLock', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'createLockFor', values: [BigNumberish, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'createLock',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'createLockFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositFor', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'detachToken', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'detachToken', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'epoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getLastUserSlope', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAmount', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseUnlockTime', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isApprovedOrOwner', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'locked', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'lockedEnd', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'merge', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getLastUserSlope', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAmount',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseUnlockTime',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedOrOwner',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'locked', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'lockedEnd', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'merge',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'ownershipChange', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'pointHistory', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'ownershipChange', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'pointHistory', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'slopeChanges', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'slopeChanges', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'supply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenOfOwnerByIndex', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'tokenOfOwnerByIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSupplyAt', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'totalSupplyAtT', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userPointEpoch', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userPointHistory', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userPointHistoryTs', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'totalSupplyAt', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'totalSupplyAtT', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'userPointEpoch', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userPointHistory',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userPointHistoryTs',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'voted', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'voting', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'voted', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'voting', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'abstain', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -351,368 +399,428 @@ export interface DystopiaVe extends BaseContract {
 
   functions: {
     abstain(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
-      _approved: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _approved: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     attachToken(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    attachments(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    attachments(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOfAtNFT(_tokenId: BigNumberish, _block: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfAtNFT(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    balanceOfNFT(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfNFT(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOfNFTAt(_tokenId: BigNumberish, _t: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfNFTAt(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     block_number(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
     createLock(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createLockFor(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     depositFor(
-      _tokenId: BigNumberish,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     detachToken(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getApproved(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    getLastUserSlope(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getLastUserSlope(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAmount(
-      _tokenId: BigNumberish,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseUnlockTime(
-      _tokenId: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isApprovedForAll(_owner: string, _operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      _owner: PromiseOrValue<string>,
+      _operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    isApprovedOrOwner(_spender: string, _tokenId: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedOrOwner(
+      _spender: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     locked(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
-    lockedEnd(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lockedEnd(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     merge(
-      _from: BigNumberish,
-      _to: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    ownershipChange(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    ownershipChange(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pointHistory(_loc: BigNumberish, overrides?: CallOverrides): Promise<[IVe.PointStructOutput]>;
+    pointHistory(_loc: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[IVe.PointStructOutput]>;
 
     'safeTransferFrom(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      _operator: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    slopeChanges(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    slopeChanges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     supply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supportsInterface(_interfaceID: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(_interfaceID: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenOfOwnerByIndex(_owner: string, _tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenOfOwnerByIndex(
+      _owner: PromiseOrValue<string>,
+      _tokenIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    tokenURI(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tokenURI(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    userPointEpoch(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userPointEpoch(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     userPointHistory(
-      _tokenId: BigNumberish,
-      _loc: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _loc: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[IVe.PointStructOutput]>;
 
-    userPointHistoryTs(_tokenId: BigNumberish, _idx: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userPointHistoryTs(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     version(overrides?: CallOverrides): Promise<[string]>;
 
-    voted(arg0: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    voted(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     voting(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   abstain(
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approve(
-    _approved: string,
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _approved: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   attachToken(
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  attachments(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  attachments(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOfAtNFT(_tokenId: BigNumberish, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfAtNFT(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _block: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  balanceOfNFT(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfNFT(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOfNFTAt(_tokenId: BigNumberish, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfNFTAt(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _t: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   block_number(overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
   createLock(
-    _value: BigNumberish,
-    _lockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _lockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createLockFor(
-    _value: BigNumberish,
-    _lockDuration: BigNumberish,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _lockDuration: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   depositFor(
-    _tokenId: BigNumberish,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   detachToken(
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getApproved(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  getLastUserSlope(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getLastUserSlope(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAmount(
-    _tokenId: BigNumberish,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseUnlockTime(
-    _tokenId: BigNumberish,
-    _lockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _lockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isApprovedForAll(_owner: string, _operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    _owner: PromiseOrValue<string>,
+    _operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  isApprovedOrOwner(_spender: string, _tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedOrOwner(
+    _spender: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   locked(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
-  lockedEnd(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  lockedEnd(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   merge(
-    _from: BigNumberish,
-    _to: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  ownershipChange(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  ownershipChange(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  pointHistory(_loc: BigNumberish, overrides?: CallOverrides): Promise<IVe.PointStructOutput>;
+  pointHistory(_loc: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<IVe.PointStructOutput>;
 
   'safeTransferFrom(address,address,uint256)'(
-    _from: string,
-    _to: string,
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    _from: string,
-    _to: string,
-    _tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    _operator: string,
-    _approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _operator: PromiseOrValue<string>,
+    _approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  slopeChanges(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  slopeChanges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  supportsInterface(_interfaceID: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(_interfaceID: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   token(overrides?: CallOverrides): Promise<string>;
 
-  tokenOfOwnerByIndex(_owner: string, _tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenOfOwnerByIndex(
+    _owner: PromiseOrValue<string>,
+    _tokenIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  tokenURI(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    _from: string,
-    _to: string,
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  userPointEpoch(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  userPointEpoch(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   userPointHistory(
-    _tokenId: BigNumberish,
-    _loc: BigNumberish,
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _loc: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<IVe.PointStructOutput>;
 
-  userPointHistoryTs(_tokenId: BigNumberish, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  userPointHistoryTs(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _idx: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   version(overrides?: CallOverrides): Promise<string>;
 
-  voted(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  voted(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   voting(
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    abstain(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    abstain(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    approve(_approved: string, _tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      _approved: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    attachToken(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    attachToken(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    attachments(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    attachments(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfAtNFT(_tokenId: BigNumberish, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAtNFT(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfNFT(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfNFT(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfNFTAt(_tokenId: BigNumberish, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfNFTAt(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     block_number(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -720,138 +828,191 @@ export interface DystopiaVe extends BaseContract {
 
     controller(overrides?: CallOverrides): Promise<string>;
 
-    createLock(_value: BigNumberish, _lockDuration: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    createLock(
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     createLockFor(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      _to: string,
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    depositFor(_tokenId: BigNumberish, _value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositFor(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    detachToken(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    detachToken(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    getLastUserSlope(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getLastUserSlope(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAmount(_tokenId: BigNumberish, _value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increaseAmount(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    increaseUnlockTime(_tokenId: BigNumberish, _lockDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increaseUnlockTime(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    isApprovedForAll(_owner: string, _operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      _owner: PromiseOrValue<string>,
+      _operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isApprovedOrOwner(_spender: string, _tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedOrOwner(
+      _spender: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     locked(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
-    lockedEnd(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedEnd(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    merge(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    merge(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    ownershipChange(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownershipChange(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pointHistory(_loc: BigNumberish, overrides?: CallOverrides): Promise<IVe.PointStructOutput>;
+    pointHistory(_loc: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<IVe.PointStructOutput>;
 
     'safeTransferFrom(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      _data: BytesLike,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(_operator: string, _approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      _operator: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    slopeChanges(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slopeChanges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(_interfaceID: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(_interfaceID: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
-    tokenOfOwnerByIndex(_owner: string, _tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      _owner: PromiseOrValue<string>,
+      _tokenIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenURI(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(_from: string, _to: string, _tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    userPointEpoch(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userPointEpoch(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     userPointHistory(
-      _tokenId: BigNumberish,
-      _loc: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _loc: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<IVe.PointStructOutput>;
 
-    userPointHistoryTs(_tokenId: BigNumberish, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userPointHistoryTs(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<string>;
 
-    voted(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    voted(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-    voting(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    voting(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'Deposit(address,uint256,uint256,uint256,uint8,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenId?: null,
       value?: null,
-      locktime?: BigNumberish | null,
+      locktime?: PromiseOrValue<BigNumberish> | null,
       depositType?: null,
       ts?: null,
     ): DepositEventFilter;
     Deposit(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenId?: null,
       value?: null,
-      locktime?: BigNumberish | null,
+      locktime?: PromiseOrValue<BigNumberish> | null,
       depositType?: null,
       ts?: null,
     ): DepositEventFilter;
@@ -860,365 +1021,417 @@ export interface DystopiaVe extends BaseContract {
     Supply(prevSupply?: null, supply?: null): SupplyEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
 
     'Withdraw(address,uint256,uint256,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenId?: null,
       value?: null,
       ts?: null,
     ): WithdrawEventFilter;
-    Withdraw(provider?: string | null, tokenId?: null, value?: null, ts?: null): WithdrawEventFilter;
+    Withdraw(provider?: PromiseOrValue<string> | null, tokenId?: null, value?: null, ts?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
-    abstain(_tokenId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    abstain(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     approve(
-      _approved: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _approved: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     attachToken(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    attachments(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    attachments(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfAtNFT(_tokenId: BigNumberish, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAtNFT(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfNFT(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfNFT(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfNFTAt(_tokenId: BigNumberish, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfNFTAt(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     block_number(overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
     createLock(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createLockFor(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositFor(
-      _tokenId: BigNumberish,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     detachToken(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getLastUserSlope(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getLastUserSlope(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAmount(
-      _tokenId: BigNumberish,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseUnlockTime(
-      _tokenId: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isApprovedForAll(_owner: string, _operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      _owner: PromiseOrValue<string>,
+      _operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isApprovedOrOwner(_spender: string, _tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedOrOwner(
+      _spender: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    locked(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    locked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedEnd(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedEnd(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     merge(
-      _from: BigNumberish,
-      _to: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownershipChange(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownershipChange(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pointHistory(_loc: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pointHistory(_loc: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      _operator: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    slopeChanges(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slopeChanges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(_interfaceID: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(_interfaceID: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(_owner: string, _tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      _owner: PromiseOrValue<string>,
+      _tokenIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenURI(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userPointEpoch(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userPointEpoch(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userPointHistory(_tokenId: BigNumberish, _loc: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userPointHistory(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _loc: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    userPointHistoryTs(_tokenId: BigNumberish, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userPointHistoryTs(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
-    voted(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    voted(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    voting(_tokenId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    voting(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdraw(_tokenId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     abstain(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
-      _approved: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _approved: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     attachToken(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    attachments(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    attachments(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOfAtNFT(
-      _tokenId: BigNumberish,
-      _block: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _block: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOfNFT(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfNFT(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOfNFTAt(_tokenId: BigNumberish, _t: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfNFTAt(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     block_number(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createLock(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createLockFor(
-      _value: BigNumberish,
-      _lockDuration: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositFor(
-      _tokenId: BigNumberish,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     detachToken(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getApproved(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getLastUserSlope(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getLastUserSlope(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAmount(
-      _tokenId: BigNumberish,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseUnlockTime(
-      _tokenId: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(_owner: string, _operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isApprovedOrOwner(
-      _spender: string,
-      _tokenId: BigNumberish,
+    isApprovedForAll(
+      _owner: PromiseOrValue<string>,
+      _operator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    locked(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedOrOwner(
+      _spender: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    lockedEnd(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    locked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lockedEnd(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     merge(
-      _from: BigNumberish,
-      _to: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownershipChange(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownershipChange(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pointHistory(_loc: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pointHistory(_loc: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      _operator: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    slopeChanges(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    slopeChanges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(_interfaceID: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(
+      _interfaceID: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenOfOwnerByIndex(
-      _owner: string,
-      _tokenIndex: BigNumberish,
+      _owner: PromiseOrValue<string>,
+      _tokenIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    tokenURI(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userPointEpoch(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userPointEpoch(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     userPointHistory(
-      _tokenId: BigNumberish,
-      _loc: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _loc: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     userPointHistoryTs(
-      _tokenId: BigNumberish,
-      _idx: BigNumberish,
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _idx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    voted(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    voted(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     voting(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

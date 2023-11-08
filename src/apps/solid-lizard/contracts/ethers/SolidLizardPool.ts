@@ -12,25 +12,16 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IPair {
   export type ObservationStruct = {
-    timestamp: BigNumberish;
-    reserve0Cumulative: BigNumberish;
-    reserve1Cumulative: BigNumberish;
+    timestamp: PromiseOrValue<BigNumberish>;
+    reserve0Cumulative: PromiseOrValue<BigNumberish>;
+    reserve1Cumulative: PromiseOrValue<BigNumberish>;
   };
 
   export type ObservationStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -42,369 +33,289 @@ export declare namespace IPair {
 
 export interface SolidLizardPoolInterface extends utils.Interface {
   functions: {
-    "DOMAIN_SEPARATOR()": FunctionFragment;
-    "PERMIT_TYPEHASH()": FunctionFragment;
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "blockTimestampLast()": FunctionFragment;
-    "burn(address)": FunctionFragment;
-    "chainId()": FunctionFragment;
-    "claimFees()": FunctionFragment;
-    "claimable0(address)": FunctionFragment;
-    "claimable1(address)": FunctionFragment;
-    "current(address,uint256)": FunctionFragment;
-    "currentCumulativePrices()": FunctionFragment;
-    "decimals()": FunctionFragment;
-    "factory()": FunctionFragment;
-    "fees()": FunctionFragment;
-    "getAmountOut(uint256,address)": FunctionFragment;
-    "getReserves()": FunctionFragment;
-    "index0()": FunctionFragment;
-    "index1()": FunctionFragment;
-    "lastObservation()": FunctionFragment;
-    "metadata()": FunctionFragment;
-    "mint(address)": FunctionFragment;
-    "name()": FunctionFragment;
-    "nonces(address)": FunctionFragment;
-    "observationLength()": FunctionFragment;
-    "observations(uint256)": FunctionFragment;
-    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
-    "prices(address,uint256,uint256)": FunctionFragment;
-    "quote(address,uint256,uint256)": FunctionFragment;
-    "reserve0()": FunctionFragment;
-    "reserve0CumulativeLast()": FunctionFragment;
-    "reserve1()": FunctionFragment;
-    "reserve1CumulativeLast()": FunctionFragment;
-    "sample(address,uint256,uint256,uint256)": FunctionFragment;
-    "setSwapFee(uint256)": FunctionFragment;
-    "skim(address)": FunctionFragment;
-    "stable()": FunctionFragment;
-    "supplyIndex0(address)": FunctionFragment;
-    "supplyIndex1(address)": FunctionFragment;
-    "swap(uint256,uint256,address,bytes)": FunctionFragment;
-    "swapFee()": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "sync()": FunctionFragment;
-    "token0()": FunctionFragment;
-    "token1()": FunctionFragment;
-    "tokens()": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
-    "treasury()": FunctionFragment;
+    'DOMAIN_SEPARATOR()': FunctionFragment;
+    'PERMIT_TYPEHASH()': FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'blockTimestampLast()': FunctionFragment;
+    'burn(address)': FunctionFragment;
+    'chainId()': FunctionFragment;
+    'claimFees()': FunctionFragment;
+    'claimable0(address)': FunctionFragment;
+    'claimable1(address)': FunctionFragment;
+    'current(address,uint256)': FunctionFragment;
+    'currentCumulativePrices()': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'factory()': FunctionFragment;
+    'fees()': FunctionFragment;
+    'getAmountOut(uint256,address)': FunctionFragment;
+    'getReserves()': FunctionFragment;
+    'index0()': FunctionFragment;
+    'index1()': FunctionFragment;
+    'lastObservation()': FunctionFragment;
+    'metadata()': FunctionFragment;
+    'mint(address)': FunctionFragment;
+    'name()': FunctionFragment;
+    'nonces(address)': FunctionFragment;
+    'observationLength()': FunctionFragment;
+    'observations(uint256)': FunctionFragment;
+    'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'prices(address,uint256,uint256)': FunctionFragment;
+    'quote(address,uint256,uint256)': FunctionFragment;
+    'reserve0()': FunctionFragment;
+    'reserve0CumulativeLast()': FunctionFragment;
+    'reserve1()': FunctionFragment;
+    'reserve1CumulativeLast()': FunctionFragment;
+    'sample(address,uint256,uint256,uint256)': FunctionFragment;
+    'setSwapFee(uint256)': FunctionFragment;
+    'skim(address)': FunctionFragment;
+    'stable()': FunctionFragment;
+    'supplyIndex0(address)': FunctionFragment;
+    'supplyIndex1(address)': FunctionFragment;
+    'swap(uint256,uint256,address,bytes)': FunctionFragment;
+    'swapFee()': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'sync()': FunctionFragment;
+    'token0()': FunctionFragment;
+    'token1()': FunctionFragment;
+    'tokens()': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
+    'treasury()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DOMAIN_SEPARATOR"
-      | "PERMIT_TYPEHASH"
-      | "allowance"
-      | "approve"
-      | "balanceOf"
-      | "blockTimestampLast"
-      | "burn"
-      | "chainId"
-      | "claimFees"
-      | "claimable0"
-      | "claimable1"
-      | "current"
-      | "currentCumulativePrices"
-      | "decimals"
-      | "factory"
-      | "fees"
-      | "getAmountOut"
-      | "getReserves"
-      | "index0"
-      | "index1"
-      | "lastObservation"
-      | "metadata"
-      | "mint"
-      | "name"
-      | "nonces"
-      | "observationLength"
-      | "observations"
-      | "permit"
-      | "prices"
-      | "quote"
-      | "reserve0"
-      | "reserve0CumulativeLast"
-      | "reserve1"
-      | "reserve1CumulativeLast"
-      | "sample"
-      | "setSwapFee"
-      | "skim"
-      | "stable"
-      | "supplyIndex0"
-      | "supplyIndex1"
-      | "swap"
-      | "swapFee"
-      | "symbol"
-      | "sync"
-      | "token0"
-      | "token1"
-      | "tokens"
-      | "totalSupply"
-      | "transfer"
-      | "transferFrom"
-      | "treasury"
+      | 'DOMAIN_SEPARATOR'
+      | 'PERMIT_TYPEHASH'
+      | 'allowance'
+      | 'approve'
+      | 'balanceOf'
+      | 'blockTimestampLast'
+      | 'burn'
+      | 'chainId'
+      | 'claimFees'
+      | 'claimable0'
+      | 'claimable1'
+      | 'current'
+      | 'currentCumulativePrices'
+      | 'decimals'
+      | 'factory'
+      | 'fees'
+      | 'getAmountOut'
+      | 'getReserves'
+      | 'index0'
+      | 'index1'
+      | 'lastObservation'
+      | 'metadata'
+      | 'mint'
+      | 'name'
+      | 'nonces'
+      | 'observationLength'
+      | 'observations'
+      | 'permit'
+      | 'prices'
+      | 'quote'
+      | 'reserve0'
+      | 'reserve0CumulativeLast'
+      | 'reserve1'
+      | 'reserve1CumulativeLast'
+      | 'sample'
+      | 'setSwapFee'
+      | 'skim'
+      | 'stable'
+      | 'supplyIndex0'
+      | 'supplyIndex1'
+      | 'swap'
+      | 'swapFee'
+      | 'symbol'
+      | 'sync'
+      | 'token0'
+      | 'token1'
+      | 'tokens'
+      | 'totalSupply'
+      | 'transfer'
+      | 'transferFrom'
+      | 'treasury',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "DOMAIN_SEPARATOR",
-    values?: undefined
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'blockTimestampLast', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'chainId', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claimFees', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claimable0', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claimable1', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "PERMIT_TYPEHASH",
-    values?: undefined
+    functionFragment: 'current',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'currentCumulativePrices', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'factory', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'fees', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "allowance",
-    values: [string, string]
+    functionFragment: 'getAmountOut',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'getReserves', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'index0', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'index1', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'lastObservation', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'metadata', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'observationLength', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'observations', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "blockTimestampLast",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "burn", values: [string]): string;
-  encodeFunctionData(functionFragment: "chainId", values?: undefined): string;
-  encodeFunctionData(functionFragment: "claimFees", values?: undefined): string;
-  encodeFunctionData(functionFragment: "claimable0", values: [string]): string;
-  encodeFunctionData(functionFragment: "claimable1", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "current",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "currentCumulativePrices",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(functionFragment: "factory", values?: undefined): string;
-  encodeFunctionData(functionFragment: "fees", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getAmountOut",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getReserves",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "index0", values?: undefined): string;
-  encodeFunctionData(functionFragment: "index1", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "lastObservation",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "metadata", values?: undefined): string;
-  encodeFunctionData(functionFragment: "mint", values: [string]): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "nonces", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "observationLength",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "observations",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "permit",
+    functionFragment: 'permit',
     values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BytesLike,
-      BytesLike
-    ]
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "prices",
-    values: [string, BigNumberish, BigNumberish]
+    functionFragment: 'prices',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "quote",
-    values: [string, BigNumberish, BigNumberish]
+    functionFragment: 'quote',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "reserve0", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'reserve0', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'reserve0CumulativeLast', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'reserve1', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'reserve1CumulativeLast', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "reserve0CumulativeLast",
-    values?: undefined
+    functionFragment: 'sample',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: "reserve1", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setSwapFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'skim', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stable', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'supplyIndex0', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'supplyIndex1', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "reserve1CumulativeLast",
-    values?: undefined
+    functionFragment: 'swap',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
+  encodeFunctionData(functionFragment: 'swapFee', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'token0', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'token1', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'tokens', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "sample",
-    values: [string, BigNumberish, BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSwapFee",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "skim", values: [string]): string;
-  encodeFunctionData(functionFragment: "stable", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "supplyIndex0",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "supplyIndex1",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "swap",
-    values: [BigNumberish, BigNumberish, string, BytesLike]
-  ): string;
-  encodeFunctionData(functionFragment: "swapFee", values?: undefined): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(functionFragment: "sync", values?: undefined): string;
-  encodeFunctionData(functionFragment: "token0", values?: undefined): string;
-  encodeFunctionData(functionFragment: "token1", values?: undefined): string;
-  encodeFunctionData(functionFragment: "tokens", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "transfer",
-    values: [string, BigNumberish]
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "DOMAIN_SEPARATOR",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "PERMIT_TYPEHASH",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "blockTimestampLast",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "chainId", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimFees", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimable0", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimable1", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "current", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "currentCumulativePrices",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "fees", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAmountOut",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getReserves",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "index0", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "index1", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "lastObservation",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "metadata", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "observationLength",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "observations",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "prices", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "quote", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "reserve0", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "reserve0CumulativeLast",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "reserve1", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "reserve1CumulativeLast",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "sample", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setSwapFee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "skim", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "stable", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "supplyIndex0",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "supplyIndex1",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "swap", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "swapFee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "sync", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "token0", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "token1", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "tokens", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'PERMIT_TYPEHASH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'blockTimestampLast', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'chainId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimable0', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimable1', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'current', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'currentCumulativePrices', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'factory', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAmountOut', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getReserves', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'index0', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'index1', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastObservation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'metadata', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'observationLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'observations', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'permit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'prices', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'quote', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'reserve0', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'reserve0CumulativeLast', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'reserve1', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'reserve1CumulativeLast', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sample', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSwapFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'skim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supplyIndex0', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supplyIndex1', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'swap', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'swapFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sync', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'token0', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'token1', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
-    "Burn(address,uint256,uint256,address)": EventFragment;
-    "Claim(address,address,uint256,uint256)": EventFragment;
-    "Fees(address,uint256,uint256)": EventFragment;
-    "FeesChanged(uint256)": EventFragment;
-    "Mint(address,uint256,uint256)": EventFragment;
-    "Swap(address,uint256,uint256,uint256,uint256,address)": EventFragment;
-    "Sync(uint256,uint256)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
-    "Treasury(address,uint256,uint256)": EventFragment;
+    'Approval(address,address,uint256)': EventFragment;
+    'Burn(address,uint256,uint256,address)': EventFragment;
+    'Claim(address,address,uint256,uint256)': EventFragment;
+    'Fees(address,uint256,uint256)': EventFragment;
+    'FeesChanged(uint256)': EventFragment;
+    'Mint(address,uint256,uint256)': EventFragment;
+    'Swap(address,uint256,uint256,uint256,uint256,address)': EventFragment;
+    'Sync(uint256,uint256)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
+    'Treasury(address,uint256,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Claim"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Fees"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "FeesChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Swap"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Sync"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Treasury"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Fees'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'FeesChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Swap'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Sync'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Treasury'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -412,10 +323,7 @@ export interface ApprovalEventObject {
   spender: string;
   value: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
+export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -425,10 +333,7 @@ export interface BurnEventObject {
   amount1: BigNumber;
   to: string;
 }
-export type BurnEvent = TypedEvent<
-  [string, BigNumber, BigNumber, string],
-  BurnEventObject
->;
+export type BurnEvent = TypedEvent<[string, BigNumber, BigNumber, string], BurnEventObject>;
 
 export type BurnEventFilter = TypedEventFilter<BurnEvent>;
 
@@ -438,10 +343,7 @@ export interface ClaimEventObject {
   amount0: BigNumber;
   amount1: BigNumber;
 }
-export type ClaimEvent = TypedEvent<
-  [string, string, BigNumber, BigNumber],
-  ClaimEventObject
->;
+export type ClaimEvent = TypedEvent<[string, string, BigNumber, BigNumber], ClaimEventObject>;
 
 export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
 
@@ -450,10 +352,7 @@ export interface FeesEventObject {
   amount0: BigNumber;
   amount1: BigNumber;
 }
-export type FeesEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  FeesEventObject
->;
+export type FeesEvent = TypedEvent<[string, BigNumber, BigNumber], FeesEventObject>;
 
 export type FeesEventFilter = TypedEventFilter<FeesEvent>;
 
@@ -469,10 +368,7 @@ export interface MintEventObject {
   amount0: BigNumber;
   amount1: BigNumber;
 }
-export type MintEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  MintEventObject
->;
+export type MintEvent = TypedEvent<[string, BigNumber, BigNumber], MintEventObject>;
 
 export type MintEventFilter = TypedEventFilter<MintEvent>;
 
@@ -484,10 +380,7 @@ export interface SwapEventObject {
   amount1Out: BigNumber;
   to: string;
 }
-export type SwapEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber, BigNumber, string],
-  SwapEventObject
->;
+export type SwapEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber, BigNumber, string], SwapEventObject>;
 
 export type SwapEventFilter = TypedEventFilter<SwapEvent>;
 
@@ -504,10 +397,7 @@ export interface TransferEventObject {
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  TransferEventObject
->;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -516,10 +406,7 @@ export interface TreasuryEventObject {
   amount0: BigNumber;
   amount1: BigNumber;
 }
-export type TreasuryEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  TreasuryEventObject
->;
+export type TreasuryEvent = TypedEvent<[string, BigNumber, BigNumber], TreasuryEventObject>;
 
 export type TreasuryEventFilter = TypedEventFilter<TreasuryEvent>;
 
@@ -533,16 +420,12 @@ export interface SolidLizardPool extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -555,45 +438,41 @@ export interface SolidLizardPool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
     allowance(
-      arg0: string,
-      arg1: string,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burn(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     chainId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimFees(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     current(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amountOut: BigNumber }>;
 
-    currentCumulativePrices(
-      overrides?: CallOverrides
-    ): Promise<
+    currentCumulativePrices(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         reserve0Cumulative: BigNumber;
         reserve1Cumulative: BigNumber;
@@ -608,14 +487,12 @@ export interface SolidLizardPool extends BaseContract {
     fees(overrides?: CallOverrides): Promise<[string]>;
 
     getAmountOut(
-      amountIn: BigNumberish,
-      tokenIn: string,
-      overrides?: CallOverrides
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getReserves(
-      overrides?: CallOverrides
-    ): Promise<
+    getReserves(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, number] & {
         _reserve0: BigNumber;
         _reserve1: BigNumber;
@@ -627,13 +504,9 @@ export interface SolidLizardPool extends BaseContract {
 
     index1(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lastObservation(
-      overrides?: CallOverrides
-    ): Promise<[IPair.ObservationStructOutput]>;
+    lastObservation(overrides?: CallOverrides): Promise<[IPair.ObservationStructOutput]>;
 
-    metadata(
-      overrides?: CallOverrides
-    ): Promise<
+    metadata(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, boolean, string, string] & {
         dec0: BigNumber;
         dec1: BigNumber;
@@ -646,19 +519,19 @@ export interface SolidLizardPool extends BaseContract {
     >;
 
     mint(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     observationLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     observations(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         timestamp: BigNumber;
@@ -668,28 +541,28 @@ export interface SolidLizardPool extends BaseContract {
     >;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amountOut: BigNumber }>;
 
     reserve0(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -701,44 +574,42 @@ export interface SolidLizardPool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
     setSwapFee(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     skim(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stable(overrides?: CallOverrides): Promise<[boolean]>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     swapFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     token0(overrides?: CallOverrides): Promise<[string]>;
 
@@ -749,16 +620,16 @@ export interface SolidLizardPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
@@ -768,46 +639,38 @@ export interface SolidLizardPool extends BaseContract {
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-  allowance(
-    arg0: string,
-    arg1: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   blockTimestampLast(overrides?: CallOverrides): Promise<BigNumber>;
 
   burn(
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   chainId(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimFees(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  claimable0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimable1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   current(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    overrides?: CallOverrides
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  currentCumulativePrices(
-    overrides?: CallOverrides
-  ): Promise<
+  currentCumulativePrices(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber] & {
       reserve0Cumulative: BigNumber;
       reserve1Cumulative: BigNumber;
@@ -822,14 +685,12 @@ export interface SolidLizardPool extends BaseContract {
   fees(overrides?: CallOverrides): Promise<string>;
 
   getAmountOut(
-    amountIn: BigNumberish,
-    tokenIn: string,
-    overrides?: CallOverrides
+    amountIn: PromiseOrValue<BigNumberish>,
+    tokenIn: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getReserves(
-    overrides?: CallOverrides
-  ): Promise<
+  getReserves(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, number] & {
       _reserve0: BigNumber;
       _reserve1: BigNumber;
@@ -841,13 +702,9 @@ export interface SolidLizardPool extends BaseContract {
 
   index1(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lastObservation(
-    overrides?: CallOverrides
-  ): Promise<IPair.ObservationStructOutput>;
+  lastObservation(overrides?: CallOverrides): Promise<IPair.ObservationStructOutput>;
 
-  metadata(
-    overrides?: CallOverrides
-  ): Promise<
+  metadata(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, boolean, string, string] & {
       dec0: BigNumber;
       dec1: BigNumber;
@@ -860,19 +717,19 @@ export interface SolidLizardPool extends BaseContract {
   >;
 
   mint(
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   observationLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   observations(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
       timestamp: BigNumber;
@@ -882,28 +739,28 @@ export interface SolidLizardPool extends BaseContract {
   >;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   prices(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    points: BigNumberish,
-    overrides?: CallOverrides
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    points: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
   quote(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    granularity: BigNumberish,
-    overrides?: CallOverrides
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    granularity: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   reserve0(overrides?: CallOverrides): Promise<BigNumber>;
@@ -915,44 +772,42 @@ export interface SolidLizardPool extends BaseContract {
   reserve1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
   sample(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    points: BigNumberish,
-    window: BigNumberish,
-    overrides?: CallOverrides
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    points: PromiseOrValue<BigNumberish>,
+    window: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
   setSwapFee(
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   skim(
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stable(overrides?: CallOverrides): Promise<boolean>;
 
-  supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   swap(
-    amount0Out: BigNumberish,
-    amount1Out: BigNumberish,
-    to: string,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount0Out: PromiseOrValue<BigNumberish>,
+    amount1Out: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   swapFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   token0(overrides?: CallOverrides): Promise<string>;
 
@@ -963,16 +818,16 @@ export interface SolidLizardPool extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
@@ -983,49 +838,43 @@ export interface SolidLizardPool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
     allowance(
-      arg0: string,
-      arg1: string,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      to: string,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { amount0: BigNumber; amount1: BigNumber }
-    >;
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { amount0: BigNumber; amount1: BigNumber }>;
 
     chainId(overrides?: CallOverrides): Promise<BigNumber>;
 
     claimFees(
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { claimed0: BigNumber; claimed1: BigNumber }
-    >;
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { claimed0: BigNumber; claimed1: BigNumber }>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     current(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    currentCumulativePrices(
-      overrides?: CallOverrides
-    ): Promise<
+    currentCumulativePrices(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         reserve0Cumulative: BigNumber;
         reserve1Cumulative: BigNumber;
@@ -1040,14 +889,12 @@ export interface SolidLizardPool extends BaseContract {
     fees(overrides?: CallOverrides): Promise<string>;
 
     getAmountOut(
-      amountIn: BigNumberish,
-      tokenIn: string,
-      overrides?: CallOverrides
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getReserves(
-      overrides?: CallOverrides
-    ): Promise<
+    getReserves(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, number] & {
         _reserve0: BigNumber;
         _reserve1: BigNumber;
@@ -1059,13 +906,9 @@ export interface SolidLizardPool extends BaseContract {
 
     index1(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastObservation(
-      overrides?: CallOverrides
-    ): Promise<IPair.ObservationStructOutput>;
+    lastObservation(overrides?: CallOverrides): Promise<IPair.ObservationStructOutput>;
 
-    metadata(
-      overrides?: CallOverrides
-    ): Promise<
+    metadata(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, boolean, string, string] & {
         dec0: BigNumber;
         dec1: BigNumber;
@@ -1077,17 +920,17 @@ export interface SolidLizardPool extends BaseContract {
       }
     >;
 
-    mint(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     observationLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     observations(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         timestamp: BigNumber;
@@ -1097,28 +940,28 @@ export interface SolidLizardPool extends BaseContract {
     >;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: CallOverrides
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     reserve0(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1130,29 +973,29 @@ export interface SolidLizardPool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    setSwapFee(value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setSwapFee(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    skim(to: string, overrides?: CallOverrides): Promise<void>;
+    skim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     stable(overrides?: CallOverrides): Promise<boolean>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: CallOverrides
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     swapFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1170,125 +1013,113 @@ export interface SolidLizardPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "Approval(address,address,uint256)"(
-      owner?: string | null,
-      spender?: string | null,
-      value?: null
+    'Approval(address,address,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
     ): ApprovalEventFilter;
     Approval(
-      owner?: string | null,
-      spender?: string | null,
-      value?: null
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
     ): ApprovalEventFilter;
 
-    "Burn(address,uint256,uint256,address)"(
-      sender?: string | null,
+    'Burn(address,uint256,uint256,address)'(
+      sender?: PromiseOrValue<string> | null,
       amount0?: null,
       amount1?: null,
-      to?: string | null
+      to?: PromiseOrValue<string> | null,
     ): BurnEventFilter;
     Burn(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount0?: null,
       amount1?: null,
-      to?: string | null
+      to?: PromiseOrValue<string> | null,
     ): BurnEventFilter;
 
-    "Claim(address,address,uint256,uint256)"(
-      sender?: string | null,
-      recipient?: string | null,
+    'Claim(address,address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amount0?: null,
-      amount1?: null
+      amount1?: null,
     ): ClaimEventFilter;
     Claim(
-      sender?: string | null,
-      recipient?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amount0?: null,
-      amount1?: null
+      amount1?: null,
     ): ClaimEventFilter;
 
-    "Fees(address,uint256,uint256)"(
-      sender?: string | null,
+    'Fees(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
       amount0?: null,
-      amount1?: null
+      amount1?: null,
     ): FeesEventFilter;
-    Fees(
-      sender?: string | null,
-      amount0?: null,
-      amount1?: null
-    ): FeesEventFilter;
+    Fees(sender?: PromiseOrValue<string> | null, amount0?: null, amount1?: null): FeesEventFilter;
 
-    "FeesChanged(uint256)"(newValue?: null): FeesChangedEventFilter;
+    'FeesChanged(uint256)'(newValue?: null): FeesChangedEventFilter;
     FeesChanged(newValue?: null): FeesChangedEventFilter;
 
-    "Mint(address,uint256,uint256)"(
-      sender?: string | null,
+    'Mint(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
       amount0?: null,
-      amount1?: null
+      amount1?: null,
     ): MintEventFilter;
-    Mint(
-      sender?: string | null,
-      amount0?: null,
-      amount1?: null
-    ): MintEventFilter;
+    Mint(sender?: PromiseOrValue<string> | null, amount0?: null, amount1?: null): MintEventFilter;
 
-    "Swap(address,uint256,uint256,uint256,uint256,address)"(
-      sender?: string | null,
+    'Swap(address,uint256,uint256,uint256,uint256,address)'(
+      sender?: PromiseOrValue<string> | null,
       amount0In?: null,
       amount1In?: null,
       amount0Out?: null,
       amount1Out?: null,
-      to?: string | null
+      to?: PromiseOrValue<string> | null,
     ): SwapEventFilter;
     Swap(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount0In?: null,
       amount1In?: null,
       amount0Out?: null,
       amount1Out?: null,
-      to?: string | null
+      to?: PromiseOrValue<string> | null,
     ): SwapEventFilter;
 
-    "Sync(uint256,uint256)"(reserve0?: null, reserve1?: null): SyncEventFilter;
+    'Sync(uint256,uint256)'(reserve0?: null, reserve1?: null): SyncEventFilter;
     Sync(reserve0?: null, reserve1?: null): SyncEventFilter;
 
-    "Transfer(address,address,uint256)"(
-      from?: string | null,
-      to?: string | null,
-      value?: null
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
     ): TransferEventFilter;
     Transfer(
-      from?: string | null,
-      to?: string | null,
-      value?: null
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
     ): TransferEventFilter;
 
-    "Treasury(address,uint256,uint256)"(
-      sender?: string | null,
+    'Treasury(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
       amount0?: null,
-      amount1?: null
+      amount1?: null,
     ): TreasuryEventFilter;
-    Treasury(
-      sender?: string | null,
-      amount0?: null,
-      amount1?: null
-    ): TreasuryEventFilter;
+    Treasury(sender?: PromiseOrValue<string> | null, amount0?: null, amount1?: null): TreasuryEventFilter;
   };
 
   estimateGas: {
@@ -1297,40 +1128,35 @@ export interface SolidLizardPool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowance(
-      arg0: string,
-      arg1: string,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    burn(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     chainId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimFees(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     current(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     currentCumulativePrices(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1342,9 +1168,9 @@ export interface SolidLizardPool extends BaseContract {
     fees(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAmountOut(
-      amountIn: BigNumberish,
-      tokenIn: string,
-      overrides?: CallOverrides
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getReserves(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1357,45 +1183,39 @@ export interface SolidLizardPool extends BaseContract {
 
     metadata(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    mint(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     observationLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    observations(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    observations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     reserve0(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1407,44 +1227,39 @@ export interface SolidLizardPool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     setSwapFee(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    skim(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    skim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stable(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     swapFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     token0(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1455,16 +1270,16 @@ export interface SolidLizardPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1476,56 +1291,41 @@ export interface SolidLizardPool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allowance(
-      arg0: string,
-      arg1: string,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    blockTimestampLast(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    blockTimestampLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     chainId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimFees(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    claimable0(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimable1(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     current(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    currentCumulativePrices(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    currentCumulativePrices(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1534,9 +1334,9 @@ export interface SolidLizardPool extends BaseContract {
     fees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAmountOut(
-      amountIn: BigNumberish,
-      tokenIn: string,
-      overrides?: CallOverrides
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1550,106 +1350,88 @@ export interface SolidLizardPool extends BaseContract {
     metadata(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     observationLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    observations(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    observations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     reserve0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reserve0CumulativeLast(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    reserve0CumulativeLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reserve1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reserve1CumulativeLast(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    reserve1CumulativeLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
-      overrides?: CallOverrides
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     setSwapFee(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     skim(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supplyIndex0(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supplyIndex1(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     swapFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     token0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1660,16 +1442,16 @@ export interface SolidLizardPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -52,7 +52,7 @@ export const generateEthersContractFactory = async (location: string) => {
         ${imports.join('\n')}
         ${isRoot ? '' : "import { ContractFactory } from '~contract/contracts'"}
 
-        type ContractOpts = {address: string, network: Network};
+        ${abis.length ? `type ContractOpts = {address: string, network: Network};` : ''}
         ${!isRoot ? '' : 'type NetworkProviderResolver = (network: Network) => StaticJsonRpcProvider;'}
 
 ${

@@ -16,15 +16,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IStakefishTransactionFeePool {
   export type ComputationCacheStruct = {
-    lastCacheUpdateTime: BigNumberish;
-    totalValidatorUptime: BigNumberish;
-    totalUncollectedCommission: BigNumberish;
-    totalUncollectedUserBalance: BigNumberish;
-    totalUnsentUserRewards: BigNumberish;
+    lastCacheUpdateTime: PromiseOrValue<BigNumberish>;
+    totalValidatorUptime: PromiseOrValue<BigNumberish>;
+    totalUncollectedCommission: PromiseOrValue<BigNumberish>;
+    totalUncollectedUserBalance: PromiseOrValue<BigNumberish>;
+    totalUnsentUserRewards: PromiseOrValue<BigNumberish>;
   };
 
   export type ComputationCacheStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -82,25 +82,52 @@ export interface StakefishFeePoolInterface extends utils.Interface {
       | 'upgradeToAndCall',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'bulkJoinPool', values: [BytesLike, string[], BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'bulkPartPool', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'changeOperator', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'bulkJoinPool',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>[], PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'bulkPartPool',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'changeOperator', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'closePoolForWithdrawal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'collectPoolCommission', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'collectReward', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [string[], string[], BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'collectPoolCommission',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'collectReward',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'emergencyWithdraw',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>[], PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getPoolState', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'joinPool', values: [BytesLike, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'joinPool',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'openPoolForWithdrawal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'partPool', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'pendingReward', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'partPool',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'pendingReward', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setCommissionRate', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setCommissionRate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakefishCommissionRateBasisPoints', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalValidators', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'upgradeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'upgradeToAndCall', values: [string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'bulkJoinPool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'bulkPartPool', data: BytesLike): Result;
@@ -265,75 +292,75 @@ export interface StakefishFeePool extends BaseContract {
 
   functions: {
     bulkJoinPool(
-      validatorPubkeyArray: BytesLike,
-      depositorAddresses: string[],
-      ts: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      depositorAddresses: PromiseOrValue<string>[],
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     bulkPartPool(
-      validatorPubkeyArray: BytesLike,
-      ts: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     changeOperator(
-      newOperator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOperator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    closePoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    closePoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     collectPoolCommission(
-      beneficiary: string,
-      amountRequested: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     collectReward(
-      beneficiary: string,
-      amountRequested: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      depositorAddresses: string[],
-      beneficiaries: string[],
-      maxAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositorAddresses: PromiseOrValue<string>[],
+      beneficiaries: PromiseOrValue<string>[],
+      maxAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPoolState(overrides?: CallOverrides): Promise<[IStakefishTransactionFeePool.ComputationCacheStructOutput]>;
 
     initialize(
-      operatorAddress_: string,
-      adminAddress_: string,
-      devAddress_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operatorAddress_: PromiseOrValue<string>,
+      adminAddress_: PromiseOrValue<string>,
+      devAddress_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     joinPool(
-      validatorPubKey: BytesLike,
-      depositor: string,
-      joinTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      depositor: PromiseOrValue<string>,
+      joinTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    openPoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    openPoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     partPool(
-      validatorPubKey: BytesLike,
-      leaveTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      leaveTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    pendingReward(depositorAddress: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    pendingReward(depositorAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
 
     setCommissionRate(
-      commissionRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      commissionRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakefishCommissionRateBasisPoints(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -341,87 +368,87 @@ export interface StakefishFeePool extends BaseContract {
     totalValidators(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   bulkJoinPool(
-    validatorPubkeyArray: BytesLike,
-    depositorAddresses: string[],
-    ts: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    validatorPubkeyArray: PromiseOrValue<BytesLike>,
+    depositorAddresses: PromiseOrValue<string>[],
+    ts: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   bulkPartPool(
-    validatorPubkeyArray: BytesLike,
-    ts: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    validatorPubkeyArray: PromiseOrValue<BytesLike>,
+    ts: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   changeOperator(
-    newOperator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOperator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  closePoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  closePoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   collectPoolCommission(
-    beneficiary: string,
-    amountRequested: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    beneficiary: PromiseOrValue<string>,
+    amountRequested: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   collectReward(
-    beneficiary: string,
-    amountRequested: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    beneficiary: PromiseOrValue<string>,
+    amountRequested: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    depositorAddresses: string[],
-    beneficiaries: string[],
-    maxAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    depositorAddresses: PromiseOrValue<string>[],
+    beneficiaries: PromiseOrValue<string>[],
+    maxAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPoolState(overrides?: CallOverrides): Promise<IStakefishTransactionFeePool.ComputationCacheStructOutput>;
 
   initialize(
-    operatorAddress_: string,
-    adminAddress_: string,
-    devAddress_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operatorAddress_: PromiseOrValue<string>,
+    adminAddress_: PromiseOrValue<string>,
+    devAddress_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   joinPool(
-    validatorPubKey: BytesLike,
-    depositor: string,
-    joinTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    validatorPubKey: PromiseOrValue<BytesLike>,
+    depositor: PromiseOrValue<string>,
+    joinTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  openPoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  openPoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   partPool(
-    validatorPubKey: BytesLike,
-    leaveTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    validatorPubKey: PromiseOrValue<BytesLike>,
+    leaveTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  pendingReward(depositorAddress: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  pendingReward(depositorAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
   setCommissionRate(
-    commissionRate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    commissionRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakefishCommissionRateBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
@@ -429,82 +456,102 @@ export interface StakefishFeePool extends BaseContract {
   totalValidators(overrides?: CallOverrides): Promise<BigNumber>;
 
   upgradeTo(
-    newImplementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     bulkJoinPool(
-      validatorPubkeyArray: BytesLike,
-      depositorAddresses: string[],
-      ts: BigNumberish,
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      depositorAddresses: PromiseOrValue<string>[],
+      ts: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    bulkPartPool(validatorPubkeyArray: BytesLike, ts: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    bulkPartPool(
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    changeOperator(newOperator: string, overrides?: CallOverrides): Promise<void>;
+    changeOperator(newOperator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     closePoolForWithdrawal(overrides?: CallOverrides): Promise<void>;
 
-    collectPoolCommission(beneficiary: string, amountRequested: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    collectPoolCommission(
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    collectReward(beneficiary: string, amountRequested: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    collectReward(
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     emergencyWithdraw(
-      depositorAddresses: string[],
-      beneficiaries: string[],
-      maxAmount: BigNumberish,
+      depositorAddresses: PromiseOrValue<string>[],
+      beneficiaries: PromiseOrValue<string>[],
+      maxAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     getPoolState(overrides?: CallOverrides): Promise<IStakefishTransactionFeePool.ComputationCacheStructOutput>;
 
     initialize(
-      operatorAddress_: string,
-      adminAddress_: string,
-      devAddress_: string,
+      operatorAddress_: PromiseOrValue<string>,
+      adminAddress_: PromiseOrValue<string>,
+      devAddress_: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     joinPool(
-      validatorPubKey: BytesLike,
-      depositor: string,
-      joinTime: BigNumberish,
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      depositor: PromiseOrValue<string>,
+      joinTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     openPoolForWithdrawal(overrides?: CallOverrides): Promise<void>;
 
-    partPool(validatorPubKey: BytesLike, leaveTime: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    partPool(
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      leaveTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    pendingReward(depositorAddress: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    pendingReward(depositorAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
-    setCommissionRate(commissionRate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCommissionRate(commissionRate: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stakefishCommissionRateBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalValidators(overrides?: CallOverrides): Promise<BigNumber>;
 
-    upgradeTo(newImplementation: string, overrides?: CallOverrides): Promise<void>;
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    upgradeToAndCall(newImplementation: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
     AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
 
-    'BeaconUpgraded(address)'(beacon?: string | null): BeaconUpgradedEventFilter;
-    BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
 
     'CommissionRateChanged(uint256)'(newRate?: null): CommissionRateChangedEventFilter;
     CommissionRateChanged(newRate?: null): CommissionRateChangedEventFilter;
@@ -515,8 +562,8 @@ export interface StakefishFeePool extends BaseContract {
     'OperatorChanged(address)'(newOperator?: null): OperatorChangedEventFilter;
     OperatorChanged(newOperator?: null): OperatorChangedEventFilter;
 
-    'Upgraded(address)'(implementation?: string | null): UpgradedEventFilter;
-    Upgraded(implementation?: string | null): UpgradedEventFilter;
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
 
     'ValidatorBulkJoined(bytes,address[],uint256)'(
       validatorPubkeyArray?: null,
@@ -541,35 +588,35 @@ export interface StakefishFeePool extends BaseContract {
     ): ValidatorBulkPartedEventFilter;
 
     'ValidatorJoined(bytes,address,uint256)'(
-      validatorPubkey?: BytesLike | null,
-      depositorAddress?: string | null,
+      validatorPubkey?: PromiseOrValue<BytesLike> | null,
+      depositorAddress?: PromiseOrValue<string> | null,
       ts?: null,
     ): ValidatorJoinedEventFilter;
     ValidatorJoined(
-      validatorPubkey?: BytesLike | null,
-      depositorAddress?: string | null,
+      validatorPubkey?: PromiseOrValue<BytesLike> | null,
+      depositorAddress?: PromiseOrValue<string> | null,
       ts?: null,
     ): ValidatorJoinedEventFilter;
 
     'ValidatorParted(bytes,address,uint256)'(
-      validatorPubkey?: BytesLike | null,
-      depositorAddress?: string | null,
+      validatorPubkey?: PromiseOrValue<BytesLike> | null,
+      depositorAddress?: PromiseOrValue<string> | null,
       ts?: null,
     ): ValidatorPartedEventFilter;
     ValidatorParted(
-      validatorPubkey?: BytesLike | null,
-      depositorAddress?: string | null,
+      validatorPubkey?: PromiseOrValue<BytesLike> | null,
+      depositorAddress?: PromiseOrValue<string> | null,
       ts?: null,
     ): ValidatorPartedEventFilter;
 
     'ValidatorRewardCollected(address,address,uint256,address)'(
-      depositorAddress?: string | null,
+      depositorAddress?: PromiseOrValue<string> | null,
       beneficiary?: null,
       rewardAmount?: null,
       requester?: null,
     ): ValidatorRewardCollectedEventFilter;
     ValidatorRewardCollected(
-      depositorAddress?: string | null,
+      depositorAddress?: PromiseOrValue<string> | null,
       beneficiary?: null,
       rewardAmount?: null,
       requester?: null,
@@ -578,75 +625,75 @@ export interface StakefishFeePool extends BaseContract {
 
   estimateGas: {
     bulkJoinPool(
-      validatorPubkeyArray: BytesLike,
-      depositorAddresses: string[],
-      ts: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      depositorAddresses: PromiseOrValue<string>[],
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     bulkPartPool(
-      validatorPubkeyArray: BytesLike,
-      ts: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     changeOperator(
-      newOperator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOperator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    closePoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    closePoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     collectPoolCommission(
-      beneficiary: string,
-      amountRequested: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     collectReward(
-      beneficiary: string,
-      amountRequested: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      depositorAddresses: string[],
-      beneficiaries: string[],
-      maxAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositorAddresses: PromiseOrValue<string>[],
+      beneficiaries: PromiseOrValue<string>[],
+      maxAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getPoolState(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      operatorAddress_: string,
-      adminAddress_: string,
-      devAddress_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operatorAddress_: PromiseOrValue<string>,
+      adminAddress_: PromiseOrValue<string>,
+      devAddress_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     joinPool(
-      validatorPubKey: BytesLike,
-      depositor: string,
-      joinTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      depositor: PromiseOrValue<string>,
+      joinTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    openPoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    openPoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     partPool(
-      validatorPubKey: BytesLike,
-      leaveTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      leaveTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    pendingReward(depositorAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(depositorAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
     setCommissionRate(
-      commissionRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      commissionRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakefishCommissionRateBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
@@ -654,88 +701,88 @@ export interface StakefishFeePool extends BaseContract {
     totalValidators(overrides?: CallOverrides): Promise<BigNumber>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     bulkJoinPool(
-      validatorPubkeyArray: BytesLike,
-      depositorAddresses: string[],
-      ts: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      depositorAddresses: PromiseOrValue<string>[],
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     bulkPartPool(
-      validatorPubkeyArray: BytesLike,
-      ts: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubkeyArray: PromiseOrValue<BytesLike>,
+      ts: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     changeOperator(
-      newOperator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOperator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    closePoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    closePoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     collectPoolCommission(
-      beneficiary: string,
-      amountRequested: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     collectReward(
-      beneficiary: string,
-      amountRequested: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      beneficiary: PromiseOrValue<string>,
+      amountRequested: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      depositorAddresses: string[],
-      beneficiaries: string[],
-      maxAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositorAddresses: PromiseOrValue<string>[],
+      beneficiaries: PromiseOrValue<string>[],
+      maxAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getPoolState(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      operatorAddress_: string,
-      adminAddress_: string,
-      devAddress_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operatorAddress_: PromiseOrValue<string>,
+      adminAddress_: PromiseOrValue<string>,
+      devAddress_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     joinPool(
-      validatorPubKey: BytesLike,
-      depositor: string,
-      joinTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      depositor: PromiseOrValue<string>,
+      joinTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    openPoolForWithdrawal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    openPoolForWithdrawal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     partPool(
-      validatorPubKey: BytesLike,
-      leaveTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorPubKey: PromiseOrValue<BytesLike>,
+      leaveTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    pendingReward(depositorAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingReward(depositorAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setCommissionRate(
-      commissionRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      commissionRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakefishCommissionRateBasisPoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -743,14 +790,14 @@ export interface StakefishFeePool extends BaseContract {
     totalValidators(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

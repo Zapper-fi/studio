@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { TaiCollateralJoin__factory } from './TaiCollateralJoin__factory';
 export { TaiSafeJoin__factory } from './TaiSafeJoin__factory';
+export { TaiSafeManager__factory } from './TaiSafeManager__factory';
