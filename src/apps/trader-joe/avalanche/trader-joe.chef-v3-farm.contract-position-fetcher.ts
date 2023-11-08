@@ -97,7 +97,13 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<TraderJoeChefV3>) {
-    return contract.pendingTokens(contractPosition.dataProps.poolIndex, address).then(v => v.pendingJoe);
+    return contract
+      .pendingTokens(contractPosition.dataProps.poolIndex, address)
+      .then(v => v.pendingJoe)
+      .catch(e => {
+        if (isMulticallUnderlyingError(e)) return 0;
+        throw e;
+      });
   }
 
   async getExtraRewardTokenBalances({
@@ -105,6 +111,12 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefV2ExtraRewardTokenBalancesParams<TraderJoeChefV3, TraderJoeChefV2Rewarder>) {
-    return contract.pendingTokens(contractPosition.dataProps.poolIndex, address).then(v => v.pendingBonusToken);
+    return contract
+      .pendingTokens(contractPosition.dataProps.poolIndex, address)
+      .then(v => v.pendingBonusToken)
+      .catch(e => {
+        if (isMulticallUnderlyingError(e)) return 0;
+        throw e;
+      });
   }
 }
