@@ -27,10 +27,9 @@ export const generateViemContractFactory = async (location: string) => {
         `
         import { Injectable, Inject } from '@nestjs/common';
         import { PublicClient } from 'viem';
-        ${hasAppToolkitDep ? `import { APP_TOOLKIT } from '@zapper-fi/studio';` : ''}
 
         import { Network } from '~types/network.interface';
-        ${hasAppToolkitDep ? `import { IAppToolkitInternal } from '~app-toolkit/app-toolkit.types';` : ''}
+        ${hasAppToolkitDep ? `import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';` : ''}
         ${!hasAppToolkitDep ? `import { Web3Service } from '~web3/web3.service';` : ''}
         
         ${
@@ -40,13 +39,13 @@ export const generateViemContractFactory = async (location: string) => {
         }
         
         ${sortedAbis.length ? `type ContractOpts = {address: string, network: Network};` : ''}
-        type ViemNetworkProviderResolver = (network: Network) => PublicClient;
+        ${!hasAppToolkitDep ? `type ViemNetworkProviderResolver = (network: Network) => PublicClient;` : ''}
 
         @Injectable()
         export class ${className} {
           ${
             hasAppToolkitDep
-              ? `constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkitInternal) {}`
+              ? `constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}`
               : `constructor(protected readonly networkProviderResolver: ViemNetworkProviderResolver) {}`
           }
 

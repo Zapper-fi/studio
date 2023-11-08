@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
+import { PublicClient } from 'viem';
 
 import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
@@ -35,7 +36,6 @@ export class AppToolkit implements IAppToolkit {
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
-
   // Network Related
 
   get globalContracts() {
@@ -44,6 +44,10 @@ export class AppToolkit implements IAppToolkit {
 
   getNetworkProvider(network: Network) {
     return this.networkProviderService.getProvider(network);
+  }
+
+  getViemNetworkProvider(network: Network): PublicClient {
+    return this.networkProviderService.getViemProvider(network);
   }
 
   getMulticall(network: Network) {
