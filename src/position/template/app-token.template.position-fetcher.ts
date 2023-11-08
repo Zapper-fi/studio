@@ -11,7 +11,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
@@ -207,7 +207,7 @@ export abstract class AppTokenTemplatePositionFetcher<
               const isNetworkMatch = token.network === definition.network;
               const isMaybeTokenIdMatch =
                 isUndefined(definition.tokenId) ||
-                (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
+                (token.type === ContractType.APP_TOKEN && (token.dataProps as any).tokenId === definition.tokenId) ||
                 (token.type === ContractType.NON_FUNGIBLE_TOKEN && token.assets?.[0].tokenId === definition.tokenId);
 
               return isAddressMatch && isNetworkMatch && isMaybeTokenIdMatch;

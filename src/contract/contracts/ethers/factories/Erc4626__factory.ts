@@ -2,571 +2,571 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type { Erc4626, Erc4626Interface } from "../Erc4626";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type { Erc4626, Erc4626Interface } from '../Erc4626';
 
 const _abi = [
   {
     constant: true,
     inputs: [],
-    name: "name",
+    name: 'name',
     outputs: [
       {
-        name: "",
-        type: "string",
+        name: '',
+        type: 'string',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: false,
     inputs: [
       {
-        name: "_spender",
-        type: "address",
+        name: '_spender',
+        type: 'address',
       },
       {
-        name: "_value",
-        type: "uint256",
+        name: '_value',
+        type: 'uint256',
       },
     ],
-    name: "approve",
+    name: 'approve',
     outputs: [
       {
-        name: "",
-        type: "bool",
+        name: '',
+        type: 'bool',
       },
     ],
     payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "totalSupply",
+    name: 'totalSupply',
     outputs: [
       {
-        name: "",
-        type: "uint256",
+        name: '',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: false,
     inputs: [
       {
-        name: "_from",
-        type: "address",
+        name: '_from',
+        type: 'address',
       },
       {
-        name: "_to",
-        type: "address",
+        name: '_to',
+        type: 'address',
       },
       {
-        name: "_value",
-        type: "uint256",
+        name: '_value',
+        type: 'uint256',
       },
     ],
-    name: "transferFrom",
+    name: 'transferFrom',
     outputs: [
       {
-        name: "",
-        type: "bool",
+        name: '',
+        type: 'bool',
       },
     ],
     payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "decimals",
+    name: 'decimals',
     outputs: [
       {
-        name: "",
-        type: "uint8",
+        name: '',
+        type: 'uint8',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [
       {
-        name: "_owner",
-        type: "address",
+        name: '_owner',
+        type: 'address',
       },
     ],
-    name: "balanceOf",
+    name: 'balanceOf',
     outputs: [
       {
-        name: "balance",
-        type: "uint256",
+        name: 'balance',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [],
-    name: "symbol",
+    name: 'symbol',
     outputs: [
       {
-        name: "",
-        type: "string",
+        name: '',
+        type: 'string',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     constant: false,
     inputs: [
       {
-        name: "_to",
-        type: "address",
+        name: '_to',
+        type: 'address',
       },
       {
-        name: "_value",
-        type: "uint256",
+        name: '_value',
+        type: 'uint256',
       },
     ],
-    name: "transfer",
+    name: 'transfer',
     outputs: [
       {
-        name: "",
-        type: "bool",
+        name: '',
+        type: 'bool',
       },
     ],
     payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     constant: true,
     inputs: [
       {
-        name: "_owner",
-        type: "address",
+        name: '_owner',
+        type: 'address',
       },
       {
-        name: "_spender",
-        type: "address",
+        name: '_spender',
+        type: 'address',
       },
     ],
-    name: "allowance",
+    name: 'allowance',
     outputs: [
       {
-        name: "",
-        type: "uint256",
+        name: '',
+        type: 'uint256',
       },
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     payable: true,
-    stateMutability: "payable",
-    type: "fallback",
+    stateMutability: 'payable',
+    type: 'fallback',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        name: "owner",
-        type: "address",
+        name: 'owner',
+        type: 'address',
       },
       {
         indexed: true,
-        name: "spender",
-        type: "address",
+        name: 'spender',
+        type: 'address',
       },
       {
         indexed: false,
-        name: "value",
-        type: "uint256",
+        name: 'value',
+        type: 'uint256',
       },
     ],
-    name: "Approval",
-    type: "event",
+    name: 'Approval',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        name: "from",
-        type: "address",
+        name: 'from',
+        type: 'address',
       },
       {
         indexed: true,
-        name: "to",
-        type: "address",
+        name: 'to',
+        type: 'address',
       },
       {
         indexed: false,
-        name: "value",
-        type: "uint256",
+        name: 'value',
+        type: 'uint256',
       },
     ],
-    name: "Transfer",
-    type: "event",
+    name: 'Transfer',
+    type: 'event',
   },
   {
-    name: "asset",
-    type: "function",
-    stateMutability: "view",
+    name: 'asset',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [],
     outputs: [
       {
-        name: "assetTokenAddress",
-        type: "address",
+        name: 'assetTokenAddress',
+        type: 'address',
       },
     ],
   },
   {
-    name: "totalAssets",
-    type: "function",
-    stateMutability: "view",
+    name: 'totalAssets',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [],
     outputs: [
       {
-        name: "totalManagedAssets",
-        type: "uint256",
+        name: 'totalManagedAssets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "convertToShares",
-    type: "function",
-    stateMutability: "view",
+    name: 'convertToShares',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "convertToAssets",
-    type: "function",
-    stateMutability: "view",
+    name: 'convertToAssets',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "maxDeposit",
-    type: "function",
-    stateMutability: "view",
+    name: 'maxDeposit',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "receiver",
-        type: "address",
+        name: 'receiver',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "maxAssets",
-        type: "uint256",
+        name: 'maxAssets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "previewDeposit",
-    type: "function",
-    stateMutability: "view",
+    name: 'previewDeposit',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "deposit",
-    type: "function",
-    stateMutability: "nonpayable",
+    name: 'deposit',
+    type: 'function',
+    stateMutability: 'nonpayable',
     inputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
       {
-        name: "receiver",
-        type: "address",
+        name: 'receiver',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "maxMint",
-    type: "function",
-    stateMutability: "view",
+    name: 'maxMint',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "receiver",
-        type: "address",
+        name: 'receiver',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "maxShares",
-        type: "uint256",
+        name: 'maxShares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "previewMint",
-    type: "function",
-    stateMutability: "view",
+    name: 'previewMint',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "mint",
-    type: "function",
-    stateMutability: "nonpayable",
+    name: 'mint',
+    type: 'function',
+    stateMutability: 'nonpayable',
     inputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
       {
-        name: "receiver",
-        type: "address",
+        name: 'receiver',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "maxWithdraw",
-    type: "function",
-    stateMutability: "view",
+    name: 'maxWithdraw',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "owner",
-        type: "address",
+        name: 'owner',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "maxAssets",
-        type: "uint256",
+        name: 'maxAssets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "previewWithdraw",
-    type: "function",
-    stateMutability: "view",
+    name: 'previewWithdraw',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "withdraw",
-    type: "function",
-    stateMutability: "nonpayable",
+    name: 'withdraw',
+    type: 'function',
+    stateMutability: 'nonpayable',
     inputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
       {
-        name: "receiver",
-        type: "address",
+        name: 'receiver',
+        type: 'address',
       },
       {
-        name: "owner",
-        type: "address",
+        name: 'owner',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "maxRedeem",
-    type: "function",
-    stateMutability: "view",
+    name: 'maxRedeem',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "owner",
-        type: "address",
+        name: 'owner',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "maxShares",
-        type: "uint256",
+        name: 'maxShares',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "previewRedeem",
-    type: "function",
-    stateMutability: "view",
+    name: 'previewRedeem',
+    type: 'function',
+    stateMutability: 'view',
     inputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
     ],
     outputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "redeem",
-    type: "function",
-    stateMutability: "nonpayable",
+    name: 'redeem',
+    type: 'function',
+    stateMutability: 'nonpayable',
     inputs: [
       {
-        name: "shares",
-        type: "uint256",
+        name: 'shares',
+        type: 'uint256',
       },
       {
-        name: "receiver",
-        type: "address",
+        name: 'receiver',
+        type: 'address',
       },
       {
-        name: "owner",
-        type: "address",
+        name: 'owner',
+        type: 'address',
       },
     ],
     outputs: [
       {
-        name: "assets",
-        type: "uint256",
+        name: 'assets',
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "Deposit",
-    type: "event",
+    name: 'Deposit',
+    type: 'event',
     inputs: [
       {
-        name: "_caller",
+        name: '_caller',
         indexed: true,
-        type: "address",
+        type: 'address',
       },
       {
-        name: "owner",
+        name: 'owner',
         indexed: true,
-        type: "address",
+        type: 'address',
       },
       {
-        name: "assets",
+        name: 'assets',
         indexed: false,
-        type: "uint256",
+        type: 'uint256',
       },
       {
-        name: "shares",
+        name: 'shares',
         indexed: false,
-        type: "uint256",
+        type: 'uint256',
       },
     ],
   },
   {
-    name: "Withdraw",
-    type: "event",
+    name: 'Withdraw',
+    type: 'event',
     inputs: [
       {
-        name: "_caller",
+        name: '_caller',
         indexed: true,
-        type: "address",
+        type: 'address',
       },
       {
-        name: "receiver",
+        name: 'receiver',
         indexed: true,
-        type: "address",
+        type: 'address',
       },
       {
-        name: "owner",
+        name: 'owner',
         indexed: true,
-        type: "address",
+        type: 'address',
       },
       {
-        name: "assets",
+        name: 'assets',
         indexed: false,
-        type: "uint256",
+        type: 'uint256',
       },
       {
-        name: "shares",
+        name: 'shares',
         indexed: false,
-        type: "uint256",
+        type: 'uint256',
       },
     ],
   },
@@ -577,10 +577,7 @@ export class Erc4626__factory {
   static createInterface(): Erc4626Interface {
     return new utils.Interface(_abi) as Erc4626Interface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): Erc4626 {
+  static connect(address: string, signerOrProvider: Signer | Provider): Erc4626 {
     return new Contract(address, _abi, signerOrProvider) as Erc4626;
   }
 }

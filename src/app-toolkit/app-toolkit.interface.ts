@@ -1,6 +1,7 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
 import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { ethers } from 'ethers';
+import { PublicClient } from 'viem';
 
 import { IContractFactory } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
@@ -21,6 +22,7 @@ export interface IAppToolkit {
   get globalContracts(): IContractFactory;
 
   getNetworkProvider(network: Network): StaticJsonRpcProvider;
+  getViemNetworkProvider(network: Network): PublicClient;
 
   getMulticall(network: Network): IMulticallWrapper;
 

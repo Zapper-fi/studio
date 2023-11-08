@@ -7,7 +7,7 @@ import {
   buildPercentageDisplayItem,
   buildStringDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { BalanceDisplayMode, DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {

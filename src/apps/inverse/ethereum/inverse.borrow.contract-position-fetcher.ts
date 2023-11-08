@@ -9,7 +9,7 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { GetDataPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { InverseContractFactory, InverseController, InverseLendingPool } from '../contracts';
