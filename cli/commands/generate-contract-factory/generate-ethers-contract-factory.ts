@@ -1,9 +1,8 @@
 /* eslint no-console: 0 */
 import path from 'path';
 
+import { writeFileSync } from 'fs-extra';
 import { camelCase, sortBy, upperFirst } from 'lodash';
-
-import { formatAndWrite } from '../../generators/utils';
 
 import { getAbis } from './get-abis';
 
@@ -39,10 +38,11 @@ export const generateEthersContractFactory = async (location: string) => {
         return [`export type { ${typeName} } from './ethers'`];
       });
 
-      await formatAndWrite(
+      writeFileSync(
         path.join(location, `/contracts/ethers.contract-factory.ts`),
         `
-        import { Injectable, Inject } from '@nestjs/common';
+        import { Injectable } from '@nestjs/common';
+        import { Inject } from '@nestjs/common';
         import { StaticJsonRpcProvider } from '@ethersproject/providers';
         import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 
@@ -51,7 +51,7 @@ export const generateEthersContractFactory = async (location: string) => {
 
         ${imports.join('\n')}
         ${isRoot ? '' : "import { ContractFactory } from '~contract/contracts'"}
-        // eslint-disable-next-line
+
         type ContractOpts = {address: string, network: Network};
         ${!isRoot ? '' : 'type NetworkProviderResolver = (network: Network) => StaticJsonRpcProvider;'}
 
