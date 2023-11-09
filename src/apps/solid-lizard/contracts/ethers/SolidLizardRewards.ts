@@ -12,222 +12,150 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SolidLizardRewardsInterface extends utils.Interface {
   functions: {
-    "adjustToDistribute(uint256,uint256,uint256,uint256)": FunctionFragment;
-    "adjustVeSupply(uint256,uint256,int128,int128)": FunctionFragment;
-    "checkpointToken()": FunctionFragment;
-    "checkpointTotalSupply()": FunctionFragment;
-    "claim(uint256)": FunctionFragment;
-    "claimMany(uint256[])": FunctionFragment;
-    "claimable(uint256)": FunctionFragment;
-    "depositor()": FunctionFragment;
-    "findTimestampUserEpoch(address,uint256,uint256,uint256)": FunctionFragment;
-    "lastTokenTime()": FunctionFragment;
-    "setDepositor(address)": FunctionFragment;
-    "startTime()": FunctionFragment;
-    "timeCursor()": FunctionFragment;
-    "timeCursorOf(uint256)": FunctionFragment;
-    "timestamp()": FunctionFragment;
-    "token()": FunctionFragment;
-    "tokenLastBalance()": FunctionFragment;
-    "tokensPerWeek(uint256)": FunctionFragment;
-    "userEpochOf(uint256)": FunctionFragment;
-    "veForAt(uint256,uint256)": FunctionFragment;
-    "veSupply(uint256)": FunctionFragment;
-    "votingEscrow()": FunctionFragment;
+    'adjustToDistribute(uint256,uint256,uint256,uint256)': FunctionFragment;
+    'adjustVeSupply(uint256,uint256,int128,int128)': FunctionFragment;
+    'checkpointToken()': FunctionFragment;
+    'checkpointTotalSupply()': FunctionFragment;
+    'claim(uint256)': FunctionFragment;
+    'claimMany(uint256[])': FunctionFragment;
+    'claimable(uint256)': FunctionFragment;
+    'depositor()': FunctionFragment;
+    'findTimestampUserEpoch(address,uint256,uint256,uint256)': FunctionFragment;
+    'lastTokenTime()': FunctionFragment;
+    'setDepositor(address)': FunctionFragment;
+    'startTime()': FunctionFragment;
+    'timeCursor()': FunctionFragment;
+    'timeCursorOf(uint256)': FunctionFragment;
+    'timestamp()': FunctionFragment;
+    'token()': FunctionFragment;
+    'tokenLastBalance()': FunctionFragment;
+    'tokensPerWeek(uint256)': FunctionFragment;
+    'userEpochOf(uint256)': FunctionFragment;
+    'veForAt(uint256,uint256)': FunctionFragment;
+    'veSupply(uint256)': FunctionFragment;
+    'votingEscrow()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "adjustToDistribute"
-      | "adjustVeSupply"
-      | "checkpointToken"
-      | "checkpointTotalSupply"
-      | "claim"
-      | "claimMany"
-      | "claimable"
-      | "depositor"
-      | "findTimestampUserEpoch"
-      | "lastTokenTime"
-      | "setDepositor"
-      | "startTime"
-      | "timeCursor"
-      | "timeCursorOf"
-      | "timestamp"
-      | "token"
-      | "tokenLastBalance"
-      | "tokensPerWeek"
-      | "userEpochOf"
-      | "veForAt"
-      | "veSupply"
-      | "votingEscrow"
+      | 'adjustToDistribute'
+      | 'adjustVeSupply'
+      | 'checkpointToken'
+      | 'checkpointTotalSupply'
+      | 'claim'
+      | 'claimMany'
+      | 'claimable'
+      | 'depositor'
+      | 'findTimestampUserEpoch'
+      | 'lastTokenTime'
+      | 'setDepositor'
+      | 'startTime'
+      | 'timeCursor'
+      | 'timeCursorOf'
+      | 'timestamp'
+      | 'token'
+      | 'tokenLastBalance'
+      | 'tokensPerWeek'
+      | 'userEpochOf'
+      | 'veForAt'
+      | 'veSupply'
+      | 'votingEscrow',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "adjustToDistribute",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: 'adjustToDistribute',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "adjustVeSupply",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: 'adjustVeSupply',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
+  encodeFunctionData(functionFragment: 'checkpointToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'checkpointTotalSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'claimMany', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'claimable', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'depositor', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "checkpointToken",
-    values?: undefined
+    functionFragment: 'findTimestampUserEpoch',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
+  encodeFunctionData(functionFragment: 'lastTokenTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setDepositor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'timeCursor', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'timeCursorOf', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'timestamp', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'token', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'tokenLastBalance', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'tokensPerWeek', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'userEpochOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "checkpointTotalSupply",
-    values?: undefined
+    functionFragment: 'veForAt',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "claim", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "claimMany",
-    values: [BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimable",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "depositor", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "findTimestampUserEpoch",
-    values: [string, BigNumberish, BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lastTokenTime",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setDepositor",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "startTime", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "timeCursor",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "timeCursorOf",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "timestamp", values?: undefined): string;
-  encodeFunctionData(functionFragment: "token", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "tokenLastBalance",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokensPerWeek",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userEpochOf",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "veForAt",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "veSupply",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "votingEscrow",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'veSupply', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'votingEscrow', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "adjustToDistribute",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "adjustVeSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "checkpointToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "checkpointTotalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimMany", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claimable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "depositor", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "findTimestampUserEpoch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastTokenTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setDepositor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "startTime", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "timeCursor", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "timeCursorOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "timestamp", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenLastBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tokensPerWeek",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "userEpochOf",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "veForAt", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "veSupply", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "votingEscrow",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'adjustToDistribute', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adjustVeSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'checkpointToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'checkpointTotalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimMany', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'findTimestampUserEpoch', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastTokenTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setDepositor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'startTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'timeCursor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'timeCursorOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'timestamp', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'token', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokenLastBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokensPerWeek', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userEpochOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'veForAt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'veSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'votingEscrow', data: BytesLike): Result;
 
   events: {
-    "CheckpointToken(uint256,uint256)": EventFragment;
-    "Claimed(uint256,uint256,uint256,uint256)": EventFragment;
+    'CheckpointToken(uint256,uint256)': EventFragment;
+    'Claimed(uint256,uint256,uint256,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "CheckpointToken"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Claimed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'CheckpointToken'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Claimed'): EventFragment;
 }
 
 export interface CheckpointTokenEventObject {
   time: BigNumber;
   tokens: BigNumber;
 }
-export type CheckpointTokenEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  CheckpointTokenEventObject
->;
+export type CheckpointTokenEvent = TypedEvent<[BigNumber, BigNumber], CheckpointTokenEventObject>;
 
 export type CheckpointTokenEventFilter = TypedEventFilter<CheckpointTokenEvent>;
 
@@ -237,10 +165,7 @@ export interface ClaimedEventObject {
   claimEpoch: BigNumber;
   maxEpoch: BigNumber;
 }
-export type ClaimedEvent = TypedEvent<
-  [BigNumber, BigNumber, BigNumber, BigNumber],
-  ClaimedEventObject
->;
+export type ClaimedEvent = TypedEvent<[BigNumber, BigNumber, BigNumber, BigNumber], ClaimedEventObject>;
 
 export type ClaimedEventFilter = TypedEventFilter<ClaimedEvent>;
 
@@ -254,16 +179,12 @@ export interface SolidLizardRewards extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -272,69 +193,59 @@ export interface SolidLizardRewards extends BaseContract {
 
   functions: {
     adjustToDistribute(
-      toDistribute: BigNumberish,
-      t0: BigNumberish,
-      t1: BigNumberish,
-      sinceLastCall: BigNumberish,
-      overrides?: CallOverrides
+      toDistribute: PromiseOrValue<BigNumberish>,
+      t0: PromiseOrValue<BigNumberish>,
+      t1: PromiseOrValue<BigNumberish>,
+      sinceLastCall: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     adjustVeSupply(
-      t: BigNumberish,
-      ptTs: BigNumberish,
-      ptBias: BigNumberish,
-      ptSlope: BigNumberish,
-      overrides?: CallOverrides
+      t: PromiseOrValue<BigNumberish>,
+      ptTs: PromiseOrValue<BigNumberish>,
+      ptBias: PromiseOrValue<BigNumberish>,
+      ptSlope: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    checkpointToken(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    checkpointToken(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    checkpointTotalSupply(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    checkpointTotalSupply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claim(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimMany(
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimable(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    claimable(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     depositor(overrides?: CallOverrides): Promise<[string]>;
 
     findTimestampUserEpoch(
-      ve: string,
-      tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      maxUserEpoch: BigNumberish,
-      overrides?: CallOverrides
+      ve: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      maxUserEpoch: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     lastTokenTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setDepositor(
-      _depositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _depositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     timeCursor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    timeCursorOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    timeCursorOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     timestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -342,94 +253,75 @@ export interface SolidLizardRewards extends BaseContract {
 
     tokenLastBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokensPerWeek(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    tokensPerWeek(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userEpochOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    userEpochOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     veForAt(
-      _tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      overrides?: CallOverrides
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    veSupply(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    veSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     votingEscrow(overrides?: CallOverrides): Promise<[string]>;
   };
 
   adjustToDistribute(
-    toDistribute: BigNumberish,
-    t0: BigNumberish,
-    t1: BigNumberish,
-    sinceLastCall: BigNumberish,
-    overrides?: CallOverrides
+    toDistribute: PromiseOrValue<BigNumberish>,
+    t0: PromiseOrValue<BigNumberish>,
+    t1: PromiseOrValue<BigNumberish>,
+    sinceLastCall: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   adjustVeSupply(
-    t: BigNumberish,
-    ptTs: BigNumberish,
-    ptBias: BigNumberish,
-    ptSlope: BigNumberish,
-    overrides?: CallOverrides
+    t: PromiseOrValue<BigNumberish>,
+    ptTs: PromiseOrValue<BigNumberish>,
+    ptBias: PromiseOrValue<BigNumberish>,
+    ptSlope: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  checkpointToken(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  checkpointToken(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  checkpointTotalSupply(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  checkpointTotalSupply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   claim(
-    _tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimMany(
-    _tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimable(
-    _tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  claimable(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   depositor(overrides?: CallOverrides): Promise<string>;
 
   findTimestampUserEpoch(
-    ve: string,
-    tokenId: BigNumberish,
-    _timestamp: BigNumberish,
-    maxUserEpoch: BigNumberish,
-    overrides?: CallOverrides
+    ve: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    _timestamp: PromiseOrValue<BigNumberish>,
+    maxUserEpoch: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   lastTokenTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   setDepositor(
-    _depositor: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _depositor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   timeCursor(overrides?: CallOverrides): Promise<BigNumber>;
 
-  timeCursorOf(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  timeCursorOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   timestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -437,84 +329,66 @@ export interface SolidLizardRewards extends BaseContract {
 
   tokenLastBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokensPerWeek(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  tokensPerWeek(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  userEpochOf(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  userEpochOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   veForAt(
-    _tokenId: BigNumberish,
-    _timestamp: BigNumberish,
-    overrides?: CallOverrides
+    _tokenId: PromiseOrValue<BigNumberish>,
+    _timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  veSupply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  veSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   votingEscrow(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     adjustToDistribute(
-      toDistribute: BigNumberish,
-      t0: BigNumberish,
-      t1: BigNumberish,
-      sinceLastCall: BigNumberish,
-      overrides?: CallOverrides
+      toDistribute: PromiseOrValue<BigNumberish>,
+      t0: PromiseOrValue<BigNumberish>,
+      t1: PromiseOrValue<BigNumberish>,
+      sinceLastCall: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     adjustVeSupply(
-      t: BigNumberish,
-      ptTs: BigNumberish,
-      ptBias: BigNumberish,
-      ptSlope: BigNumberish,
-      overrides?: CallOverrides
+      t: PromiseOrValue<BigNumberish>,
+      ptTs: PromiseOrValue<BigNumberish>,
+      ptBias: PromiseOrValue<BigNumberish>,
+      ptSlope: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     checkpointToken(overrides?: CallOverrides): Promise<void>;
 
     checkpointTotalSupply(overrides?: CallOverrides): Promise<void>;
 
-    claim(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    claim(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimMany(
-      _tokenIds: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    claimMany(_tokenIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<boolean>;
 
-    claimable(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    claimable(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositor(overrides?: CallOverrides): Promise<string>;
 
     findTimestampUserEpoch(
-      ve: string,
-      tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      maxUserEpoch: BigNumberish,
-      overrides?: CallOverrides
+      ve: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      maxUserEpoch: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     lastTokenTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setDepositor(_depositor: string, overrides?: CallOverrides): Promise<void>;
+    setDepositor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     timeCursor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    timeCursorOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    timeCursorOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     timestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -522,113 +396,89 @@ export interface SolidLizardRewards extends BaseContract {
 
     tokenLastBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokensPerWeek(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    tokensPerWeek(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userEpochOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    userEpochOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     veForAt(
-      _tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      overrides?: CallOverrides
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    veSupply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    veSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     votingEscrow(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "CheckpointToken(uint256,uint256)"(
-      time?: null,
-      tokens?: null
-    ): CheckpointTokenEventFilter;
+    'CheckpointToken(uint256,uint256)'(time?: null, tokens?: null): CheckpointTokenEventFilter;
     CheckpointToken(time?: null, tokens?: null): CheckpointTokenEventFilter;
 
-    "Claimed(uint256,uint256,uint256,uint256)"(
+    'Claimed(uint256,uint256,uint256,uint256)'(
       tokenId?: null,
       amount?: null,
       claimEpoch?: null,
-      maxEpoch?: null
+      maxEpoch?: null,
     ): ClaimedEventFilter;
-    Claimed(
-      tokenId?: null,
-      amount?: null,
-      claimEpoch?: null,
-      maxEpoch?: null
-    ): ClaimedEventFilter;
+    Claimed(tokenId?: null, amount?: null, claimEpoch?: null, maxEpoch?: null): ClaimedEventFilter;
   };
 
   estimateGas: {
     adjustToDistribute(
-      toDistribute: BigNumberish,
-      t0: BigNumberish,
-      t1: BigNumberish,
-      sinceLastCall: BigNumberish,
-      overrides?: CallOverrides
+      toDistribute: PromiseOrValue<BigNumberish>,
+      t0: PromiseOrValue<BigNumberish>,
+      t1: PromiseOrValue<BigNumberish>,
+      sinceLastCall: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     adjustVeSupply(
-      t: BigNumberish,
-      ptTs: BigNumberish,
-      ptBias: BigNumberish,
-      ptSlope: BigNumberish,
-      overrides?: CallOverrides
+      t: PromiseOrValue<BigNumberish>,
+      ptTs: PromiseOrValue<BigNumberish>,
+      ptBias: PromiseOrValue<BigNumberish>,
+      ptSlope: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    checkpointToken(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    checkpointToken(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    checkpointTotalSupply(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    checkpointTotalSupply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claim(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimMany(
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimable(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    claimable(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositor(overrides?: CallOverrides): Promise<BigNumber>;
 
     findTimestampUserEpoch(
-      ve: string,
-      tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      maxUserEpoch: BigNumberish,
-      overrides?: CallOverrides
+      ve: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      maxUserEpoch: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     lastTokenTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     setDepositor(
-      _depositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _depositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     timeCursor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    timeCursorOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    timeCursorOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     timestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -636,92 +486,76 @@ export interface SolidLizardRewards extends BaseContract {
 
     tokenLastBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokensPerWeek(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    tokensPerWeek(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userEpochOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    userEpochOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     veForAt(
-      _tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      overrides?: CallOverrides
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    veSupply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    veSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     votingEscrow(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     adjustToDistribute(
-      toDistribute: BigNumberish,
-      t0: BigNumberish,
-      t1: BigNumberish,
-      sinceLastCall: BigNumberish,
-      overrides?: CallOverrides
+      toDistribute: PromiseOrValue<BigNumberish>,
+      t0: PromiseOrValue<BigNumberish>,
+      t1: PromiseOrValue<BigNumberish>,
+      sinceLastCall: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     adjustVeSupply(
-      t: BigNumberish,
-      ptTs: BigNumberish,
-      ptBias: BigNumberish,
-      ptSlope: BigNumberish,
-      overrides?: CallOverrides
+      t: PromiseOrValue<BigNumberish>,
+      ptTs: PromiseOrValue<BigNumberish>,
+      ptBias: PromiseOrValue<BigNumberish>,
+      ptSlope: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    checkpointToken(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    checkpointToken(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    checkpointTotalSupply(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    checkpointTotalSupply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     claim(
-      _tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimMany(
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimable(
-      _tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    claimable(_tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     findTimestampUserEpoch(
-      ve: string,
-      tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      maxUserEpoch: BigNumberish,
-      overrides?: CallOverrides
+      ve: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      maxUserEpoch: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     lastTokenTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDepositor(
-      _depositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _depositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     timeCursor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    timeCursorOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    timeCursorOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     timestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -729,26 +563,17 @@ export interface SolidLizardRewards extends BaseContract {
 
     tokenLastBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokensPerWeek(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    tokensPerWeek(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userEpochOf(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    userEpochOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     veForAt(
-      _tokenId: BigNumberish,
-      _timestamp: BigNumberish,
-      overrides?: CallOverrides
+      _tokenId: PromiseOrValue<BigNumberish>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    veSupply(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    veSupply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     votingEscrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

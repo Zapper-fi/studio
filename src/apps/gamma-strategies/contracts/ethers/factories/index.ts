@@ -7,4 +7,3 @@ export { GammaStrategiesHypervisorFactory__factory } from './GammaStrategiesHype
 export { GammaStrategiesQuickswapMasterchef__factory } from './GammaStrategiesQuickswapMasterchef__factory';
 export { GammaStrategiesUniOpMasterchef__factory } from './GammaStrategiesUniOpMasterchef__factory';
 export { GammaStrategiesZyberswapMasterchef__factory } from './GammaStrategiesZyberswapMasterchef__factory';
-export { GammaStrategiesZyberswapRewarder__factory } from './GammaStrategiesZyberswapRewarder__factory';

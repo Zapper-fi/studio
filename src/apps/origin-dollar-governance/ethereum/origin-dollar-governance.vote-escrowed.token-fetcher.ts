@@ -15,7 +15,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { OriginDollarContractFactory, Veogv } from '../contracts';
+import { OriginDollarGovernanceContractFactory, Veogv } from '../contracts';
 
 const oneEther = ethers.constants.WeiPerEther;
 // Daily emissions in format: start_timestamp, end_timestamp, daily emissions
@@ -40,7 +40,8 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarContractFactory) private readonly contractFactory: OriginDollarContractFactory,
+    @Inject(OriginDollarGovernanceContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceContractFactory,
   ) {
     super(appToolkit);
   }

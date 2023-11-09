@@ -12,7 +12,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { OriginDollarContractFactory, Veogv } from '../contracts';
+import { OriginDollarGovernanceContractFactory, Veogv } from '../contracts';
 
 @PositionTemplate()
 export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Veogv> {
@@ -20,7 +20,8 @@ export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extend
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarContractFactory) private readonly contractFactory: OriginDollarContractFactory,
+    @Inject(OriginDollarGovernanceContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceContractFactory,
   ) {
     super(appToolkit);
   }

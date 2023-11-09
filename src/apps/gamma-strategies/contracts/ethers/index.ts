@@ -7,7 +7,6 @@ export type { GammaStrategiesHypervisorFactory } from './GammaStrategiesHypervis
 export type { GammaStrategiesQuickswapMasterchef } from './GammaStrategiesQuickswapMasterchef';
 export type { GammaStrategiesUniOpMasterchef } from './GammaStrategiesUniOpMasterchef';
 export type { GammaStrategiesZyberswapMasterchef } from './GammaStrategiesZyberswapMasterchef';
-export type { GammaStrategiesZyberswapRewarder } from './GammaStrategiesZyberswapRewarder';
 export * as factories from './factories';
 export { GammaStrategiesFactory__factory } from './factories/GammaStrategiesFactory__factory';
 export { GammaStrategiesHypervisorFactory__factory } from './factories/GammaStrategiesHypervisorFactory__factory';
@@ -15,4 +14,3 @@ export { GammaStrategiesHypervisor__factory } from './factories/GammaStrategiesH
 export { GammaStrategiesQuickswapMasterchef__factory } from './factories/GammaStrategiesQuickswapMasterchef__factory';
 export { GammaStrategiesUniOpMasterchef__factory } from './factories/GammaStrategiesUniOpMasterchef__factory';
 export { GammaStrategiesZyberswapMasterchef__factory } from './factories/GammaStrategiesZyberswapMasterchef__factory';
-export { GammaStrategiesZyberswapRewarder__factory } from './factories/GammaStrategiesZyberswapRewarder__factory';
