@@ -30,11 +30,11 @@ export abstract class StargateFarmContractPositionFetcher<
   }
 
   async getPoolLength(contract: R): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: R, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: R): Promise<string> {
@@ -42,7 +42,7 @@ export abstract class StargateFarmContractPositionFetcher<
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<R>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<R>): Promise<BigNumberish> {

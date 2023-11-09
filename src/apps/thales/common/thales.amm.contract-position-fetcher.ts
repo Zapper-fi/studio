@@ -63,7 +63,7 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
       address: underlyingTokenAddress,
       network: this.network,
     });
-    const decimals = await multicall.wrap(underlyingTokenContract).decimals();
+    const decimals = await multicall.wrap(underlyingTokenContract).read.decimals();
     return {
       liquidity: Number(liquidityRaw) / 10 ** decimals,
     };

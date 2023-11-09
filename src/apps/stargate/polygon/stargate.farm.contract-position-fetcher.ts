@@ -15,10 +15,10 @@ export class PolygonStargateFarmContractPositionFetcher extends StargateFarmCont
     return this.contractFactory.stargateChef({ address, network: this.network });
   }
   getStargateTokenAddress(contract: StargateChef): Promise<string> {
-    return contract.stargate();
+    return contract.read.stargate();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StargateChef>): Promise<BigNumberish> {
-    return contract.stargatePerBlock();
+    return contract.read.stargatePerBlock();
   }
 }

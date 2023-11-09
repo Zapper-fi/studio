@@ -33,20 +33,20 @@ export class EthereumPieDaoVotingEscrowContractPositionFether extends VotingEscr
   }
 
   async getEscrowedTokenAddress(contract: PieDaoVoteLockedDough) {
-    return contract.depositToken();
+    return contract.read.depositToken();
   }
 
   async getRewardTokenAddress(contract: PieDaoVoteLockedDough) {
-    return contract.depositToken();
+    return contract.read.depositToken();
   }
 
   async getEscrowedTokenBalance(address: string, contract: PieDaoVoteLockedDough) {
-    const userData = await contract.getStakingData(address);
+    const userData = await contract.read.getStakingData([address]);
     return userData.accountVeTokenBalance;
   }
 
   async getRewardTokenBalance(address: string, contract: PieDaoVoteLockedDough): Promise<BigNumberish> {
-    const userData = await contract.getStakingData(address);
+    const userData = await contract.read.getStakingData([address]);
     return userData.accountWithdrawableRewards.sub(userData.accountWithdrawnRewards);
   }
 }

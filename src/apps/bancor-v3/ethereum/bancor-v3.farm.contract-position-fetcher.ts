@@ -29,7 +29,7 @@ export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTempl
   }
 
   async getPoolLength(contract: StandardRewards) {
-    return contract.programIds().then(ids => ids.length);
+    return contract.read.programIds().then(ids => ids.length);
   }
 
   async getStakedTokenAddress(contract: StandardRewards, poolIndex: number) {

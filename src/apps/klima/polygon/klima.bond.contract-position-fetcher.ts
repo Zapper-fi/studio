@@ -65,8 +65,8 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     contract,
   }: GetTokenBalancesParams<KlimaBondDepository>): Promise<BigNumberish> {
     const [bondInfo, pendingPayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
+      contract.read.bondInfo([address]),
+      contract.read.pendingPayoutFor([address]),
     ]);
 
     const vestingBalanceRaw = bondInfo.payout.gt(pendingPayout) ? bondInfo.payout.sub(pendingPayout) : 0;
@@ -77,6 +77,6 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     address,
     contract,
   }: GetTokenBalancesParams<KlimaBondDepository>): Promise<BigNumberish> {
-    return contract.pendingPayoutFor(address);
+    return contract.read.pendingPayoutFor([address]);
   }
 }

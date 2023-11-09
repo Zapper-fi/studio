@@ -51,8 +51,8 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LooksRareCompounder>) {
     const [shareBalanceRaw, pricePerShareRaw] = await Promise.all([
-      contract.userInfo(address),
-      contract.calculateSharePriceInLOOKS(),
+      contract.read.userInfo([address]),
+      contract.read.calculateSharePriceInLOOKS(),
     ]);
 
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;

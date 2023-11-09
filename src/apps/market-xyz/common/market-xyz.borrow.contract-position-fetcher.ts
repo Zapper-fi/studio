@@ -42,30 +42,30 @@ export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBor
   }
 
   getPools(contract: MarketXyzPoolDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.getAllPools();
+    return contract.read.getAllPools();
   }
 
   getMarketTokenAddresses(contract: MarketXyzComptroller): Promise<string[]> {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   getUnderlyingTokenAddress(contract: MarketXyzToken): Promise<string> {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   getBorrowRateRaw(contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.borrowRatePerBlock();
+    return contract.read.borrowRatePerBlock();
   }
 
   getTotalBorrows(contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.totalBorrows();
+    return contract.read.totalBorrows();
   }
 
   getBorrowBalance(address: string, contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.borrowBalanceCurrent(address);
+    return contract.read.borrowBalanceCurrent([address]);
   }
 
   getPoolsBySupplier(address: string, contract: MarketXyzPoolLens): Promise<[BigNumber[], { comptroller: string }[]]> {
-    return contract.getPoolsBySupplier(address);
+    return contract.read.getPoolsBySupplier([address]);
   }
 }

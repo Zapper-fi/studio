@@ -60,9 +60,9 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher extends Contract
       network: this.network,
     });
     const [userShare, vault, totalShare, rewardBalance] = await Promise.all([
-      contract.getShare(address),
-      contract.getVault(),
-      contract.getTotalShare(),
+      contract.read.getShare([address]),
+      contract.read.getVault(),
+      contract.read.getTotalShare(),
       multicall.wrap(rewardContract).getClaimableReward(address),
     ]);
 

@@ -25,25 +25,25 @@ export abstract class GainsNetworkStakingContractPositionFetcher extends SingleS
   }
 
   getRewardRates({ contract }: GetDataPropsParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    return contract.accDaiPerToken();
+    return contract.read.accDaiPerToken();
   }
 
   getIsActive({ contract }: GetDataPropsParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    return contract.accDaiPerToken().then(rate => rate.gt(0));
+    return contract.read.accDaiPerToken().then(rate => rate.gt(0));
   }
 
   async getStakedTokenBalance({
     address,
     contract,
   }: GetTokenBalancesParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    return (await contract.users(address)).stakedTokens;
+    return (await contract.read.users([address])).stakedTokens;
   }
 
   async getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    const [userPosition, rate] = await Promise.all([contract.users(address), contract.accDaiPerToken()]);
+    const [userPosition, rate] = await Promise.all([contract.read.users([address]), contract.read.accDaiPerToken()]);
     const rewardBalance =
       ((Number(userPosition.stakedTokens) + Number(userPosition.totalBoostTokens)) * Number(rate)) / 1e18 -
       Number(userPosition.debtDai);

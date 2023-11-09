@@ -101,15 +101,15 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
       definition.poolType === PoolType.Linear
     ) {
       const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getVirtualSupply();
+      return multicall.wrap(phantomPoolContract).read.getVirtualSupply();
     }
 
     if (definition.poolType === PoolType.ComposableStable) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getActualSupply();
+      return multicall.wrap(phantomPoolContract).read.getActualSupply();
     }
 
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getUnderlyingTokenDefinitions({ address, contract, multicall }: GetUnderlyingTokensParams<BalancerPool>) {
@@ -148,12 +148,12 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
 
     const { appToken, contract, definition } = params;
     const [poolId, feeRaw, weightsRaw] = await Promise.all([
-      contract.getPoolId(),
-      contract.getSwapFeePercentage().catch(err => {
+      contract.read.getPoolId(),
+      contract.read.getSwapFeePercentage().catch(err => {
         if (isMulticallUnderlyingError(err)) return '100000000000000000';
         throw err;
       }),
-      contract.getNormalizedWeights().catch(err => {
+      contract.read.getNormalizedWeights().catch(err => {
         if (isMulticallUnderlyingError(err)) return [];
         throw err;
       }),

@@ -52,11 +52,11 @@ export class EthereumStrikeBorrowContractPositionFetcher extends CompoundBorrowC
   }
 
   async getMarkets({ contract }: GetMarketsParams<StrikeComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<StrikeSToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<StrikeSToken>) {
@@ -64,19 +64,19 @@ export class EthereumStrikeBorrowContractPositionFetcher extends CompoundBorrowC
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<StrikeSToken>) {
-    return contract.borrowRatePerBlock();
+    return contract.read.borrowRatePerBlock();
   }
 
   async getCash({ contract }: GetDataPropsParams<StrikeSToken>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<StrikeSToken>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<StrikeSToken>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({ address, contract }: GetTokenBalancesParams<StrikeSToken>) {

@@ -66,6 +66,6 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<ReaperCrypt>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

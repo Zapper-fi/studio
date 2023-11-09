@@ -60,7 +60,10 @@ export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPos
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<VelodromeV2Gauge>) {
-    const [supplied, claimable] = await Promise.all([contract.balanceOf(address), contract.earned(address)]);
+    const [supplied, claimable] = await Promise.all([
+      contract.read.balanceOf([address]),
+      contract.read.earned([address]),
+    ]);
 
     return [supplied, claimable];
   }

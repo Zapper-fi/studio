@@ -47,12 +47,12 @@ export abstract class ConvexDepositTokenFetcher extends AppTokenTemplatePosition
       network: this.network,
     });
 
-    const poolsCount = await multicall.wrap(depositContract).poolLength();
+    const poolsCount = await multicall.wrap(depositContract).read.poolLength();
     const poolsRange = range(0, Number(poolsCount));
 
     return Promise.all(
       poolsRange.flatMap(async poolIndex => {
-        const poolInfo = await depositContract.poolInfo(poolIndex);
+        const poolInfo = await depositcontract.read.poolInfo([poolIndex]);
         return { address: poolInfo.token.toLowerCase(), poolIndex };
       }),
     );

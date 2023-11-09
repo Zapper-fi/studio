@@ -48,23 +48,23 @@ export class AvalancheHakuswapPoolTokenFetcher extends UniswapV2PoolOnChainTempl
   }
 
   getPoolsLength(contract: HakuswapFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+    return contract.read.allPairsLength();
   }
 
   getPoolAddress(contract: HakuswapFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+    return contract.read.allPairs([index]);
   }
 
   getPoolToken0(contract: HakuswapPool): Promise<string> {
-    return contract.token0();
+    return contract.read.token0();
   }
 
   getPoolToken1(contract: HakuswapPool): Promise<string> {
-    return contract.token1();
+    return contract.read.token1();
   }
 
   getPoolReserves(contract: HakuswapPool): Promise<BigNumberish[]> {
-    return contract.getReserves();
+    return contract.read.getReserves();
   }
 
   async getDecimals({

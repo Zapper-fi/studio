@@ -30,11 +30,11 @@ export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateCon
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<Veox>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<Veox>) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Veox>) {

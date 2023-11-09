@@ -36,7 +36,7 @@ export class ArbitrumDopexGmxSsovContractPositionFetcher extends DopexSsovContra
     contractPosition,
   }: GetTokenBalancesParams<DopexGmxSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.totalEpochStrikeGmxBalance(epoch, strike);
+    return contract.read.totalEpochStrikeGmxBalance([epoch, strike]);
   }
 
   async getTotalEpochStrikeRewardBalances({
@@ -45,9 +45,9 @@ export class ArbitrumDopexGmxSsovContractPositionFetcher extends DopexSsovContra
   }: GetTokenBalancesParams<DopexGmxSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch, strike } = contractPosition.dataProps;
     const [claimedFees, totalEpochStrikeDeposits, totalEpochDeposits] = await Promise.all([
-      contract.totalGmxFeesClaimed(strike),
-      contract.totalEpochStrikeDeposits(epoch, strike),
-      contract.totalEpochDeposits(epoch),
+      contract.read.totalGmxFeesClaimed([strike]),
+      contract.read.totalEpochStrikeDeposits([epoch, strike]),
+      contract.read.totalEpochDeposits([epoch]),
     ]);
 
     const totalFeesClaimableForStrike =

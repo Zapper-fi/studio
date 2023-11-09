@@ -45,7 +45,7 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getImages({

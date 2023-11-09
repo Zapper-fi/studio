@@ -33,11 +33,11 @@ export class OptimismSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   }
 
   async getMarkets({ contract }: GetMarketsParams<SonneComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<SonneSoToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<SonneSoToken>) {
@@ -45,6 +45,6 @@ export class OptimismSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.supplyRatePerBlock();
+    return contract.read.supplyRatePerBlock();
   }
 }

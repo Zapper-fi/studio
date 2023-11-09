@@ -21,14 +21,14 @@ export abstract class UniswapV2DefaultPoolSubgraphTemplateTokenFetcher extends U
   }
 
   getPoolToken0(contract: UniswapPair): Promise<string> {
-    return contract.token0();
+    return contract.read.token0();
   }
 
   getPoolToken1(contract: UniswapPair): Promise<string> {
-    return contract.token1();
+    return contract.read.token1();
   }
 
   getPoolReserves(contract: UniswapPair): Promise<BigNumberish[]> {
-    return contract.getReserves();
+    return contract.read.getReserves();
   }
 }

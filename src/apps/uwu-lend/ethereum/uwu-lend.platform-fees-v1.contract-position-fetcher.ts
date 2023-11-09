@@ -44,7 +44,7 @@ export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositi
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<UwuLendStakingV1>) {
     const [rewards, uwuTokenAddressRaw] = await Promise.all([
       contract.claimableRewards(ZERO_ADDRESS),
-      contract.rewardToken(),
+      contract.read.rewardToken(),
     ]);
     const rewardTokenAddressesRaw = rewards.map(x => x.token.toLowerCase()).filter(x => x !== this.NotSupportedToken);
 
@@ -84,9 +84,9 @@ export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositi
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<UwuLendStakingV1>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
-      contract.lockedBalances(address),
-      contract.withdrawableBalance(address),
-      contract.claimableRewards(address),
+      contract.read.lockedBalances([address]),
+      contract.read.withdrawableBalance([address]),
+      contract.read.claimableRewards([address]),
     ]);
 
     const withdrawableBalanceRaw = withdrawableDataRaw.amount.sub(withdrawableDataRaw.penaltyAmount).toString();

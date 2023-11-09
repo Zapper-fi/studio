@@ -46,17 +46,17 @@ export class EthereumKeeperKlpTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<KeeperKlp>) {
     const [poolAddress, position, tickLower, tickUpper] = await Promise.all([
-      contract.pool(),
-      contract.position(),
-      contract.tickLower(),
-      contract.tickUpper(),
+      contract.read.pool(),
+      contract.read.position(),
+      contract.read.tickLower(),
+      contract.read.tickUpper(),
     ]);
 
     const poolContract = this.uniswapV3ContractFactory.uniswapV3Pool({ address: poolAddress, network: this.network });
     const [slot, fee, liquidity] = await Promise.all([
-      multicall.wrap(poolContract).slot0(),
-      multicall.wrap(poolContract).fee(),
-      multicall.wrap(poolContract).liquidity(),
+      multicall.wrap(poolContract).read.slot0(),
+      multicall.wrap(poolContract).read.fee(),
+      multicall.wrap(poolContract).read.liquidity(),
     ]);
 
     const [token0, token1] = appToken.tokens;

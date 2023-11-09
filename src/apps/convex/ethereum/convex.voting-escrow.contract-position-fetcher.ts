@@ -33,18 +33,18 @@ export class EthereumConvexVotingEscrowContractPositionFetcher extends VotingEsc
   }
 
   async getEscrowedTokenAddress(contract: ConvexVotingEscrow): Promise<string> {
-    return contract.stakingToken();
+    return contract.read.stakingToken();
   }
 
   async getRewardTokenAddress(contract: ConvexVotingEscrow): Promise<string> {
-    return contract.rewardTokens(0);
+    return contract.read.rewardTokens([0]);
   }
 
   async getEscrowedTokenBalance(address: string, contract: ConvexVotingEscrow): Promise<BigNumberish> {
-    return contract.lockedBalances(address).then(v => v.total);
+    return contract.read.lockedBalances([address]).then(v => v.total);
   }
 
   async getRewardTokenBalance(address: string, contract: ConvexVotingEscrow): Promise<BigNumberish> {
-    return contract.claimableRewards(address).then(v => v[0].amount);
+    return contract.read.claimableRewards([address]).then(v => v[0].amount);
   }
 }

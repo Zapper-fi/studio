@@ -31,23 +31,23 @@ export class AvalancheHakuswapFarmContractPositionFetcher extends MasterChefTemp
   }
 
   async getPoolLength(contract: HakuswapMasterchef): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: HakuswapMasterchef, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: HakuswapMasterchef): Promise<string> {
-    return contract.cake();
+    return contract.read.cake();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<HakuswapMasterchef>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<HakuswapMasterchef>) {
-    return contract.cakePerSecond();
+    return contract.read.cakePerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<HakuswapMasterchef>) {

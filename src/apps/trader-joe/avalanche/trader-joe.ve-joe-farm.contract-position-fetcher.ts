@@ -33,11 +33,11 @@ export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTe
   }
 
   async getStakedTokenAddress(contract: TraderJoeVeJoeStaking) {
-    return contract.joe();
+    return contract.read.joe();
   }
 
   async getRewardTokenAddress(contract: TraderJoeVeJoeStaking) {
-    return contract.veJoe();
+    return contract.read.veJoe();
   }
 
   async getTotalAllocPoints(_params: GetMasterChefDataPropsParams<TraderJoeVeJoeStaking>) {
@@ -49,14 +49,14 @@ export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTe
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeVeJoeStaking>) {
-    return contract.veJoePerSharePerSec();
+    return contract.read.veJoePerSharePerSec();
   }
 
   async getStakedTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<TraderJoeVeJoeStaking>) {
-    return contract.userInfos(address).then(v => v.balance);
+    return contract.read.userInfos([address]).then(v => v.balance);
   }
 
   async getRewardTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<TraderJoeVeJoeStaking>) {
-    return contract.getPendingVeJoe(address);
+    return contract.read.getPendingVeJoe([address]);
   }
 }

@@ -41,7 +41,7 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
   }
 
   getRewardRates({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking>) {
@@ -52,13 +52,13 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
     address,
     contract,
   }: GetTokenBalancesParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

@@ -59,8 +59,8 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
     address,
     contract,
   }: GetTokenBalancesParams<CleverVesting, DefaultDataProps>): Promise<BigNumberish[]> {
-    const locked = await contract.locked(address);
-    const userVesting = await contract.getUserVest(address);
+    const locked = await contract.read.locked([address]);
+    const userVesting = await contract.read.getUserVest([address]);
     const toBeClaimbedRaw = userVesting.map(x => {
       return Number(x.vestingAmount) - Number(x.claimedAmount);
     });

@@ -49,26 +49,26 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
   }
 
   getPools(contract: RariFusePoolsDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.getAllPools();
+    return contract.read.getAllPools();
   }
 
   getMarketTokenAddresses(contract: RariFuseComptroller): Promise<string[]> {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   getUnderlyingTokenAddress(contract: RariFuseToken): Promise<string> {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   getExchangeRateCurrent(contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   getSupplyRateRaw(contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.supplyRatePerBlock();
+    return contract.read.supplyRatePerBlock();
   }
 
   getPoolsBySupplier(address: string, contract: RariFusePoolLens) {
-    return contract.getPoolsBySupplier(address);
+    return contract.read.getPoolsBySupplier([address]);
   }
 }

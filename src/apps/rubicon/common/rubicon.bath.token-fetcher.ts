@@ -65,7 +65,7 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
 
     const supplyRaw = await contract.read.totalSupply();
     const decimal = await contract.read.decimals();
-    const decimalsUnderlying = await multicall.wrap(underlyingAssetContract).decimals();
+    const decimalsUnderlying = await multicall.wrap(underlyingAssetContract).read.decimals();
     const supply = (Number(supplyRaw) / 10 ** decimalsUnderlying) * 10 ** decimal;
 
     return supply;

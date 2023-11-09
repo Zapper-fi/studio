@@ -60,9 +60,9 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
 
   getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StabilityPool>) {
     return Promise.all([
-      contract.getCompoundedLUSDDeposit(address),
-      contract.getDepositorETHGain(address),
-      contract.getDepositorLQTYGain(address),
+      contract.read.getCompoundedLUSDDeposit([address]),
+      contract.read.getDepositorETHGain([address]),
+      contract.read.getDepositorLQTYGain([address]),
     ]);
   }
 }

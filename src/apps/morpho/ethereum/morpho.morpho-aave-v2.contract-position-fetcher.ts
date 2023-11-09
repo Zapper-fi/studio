@@ -38,7 +38,7 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
       markets.map(async marketAddress => {
         const market = this.contractFactory.morphoAToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
-        const supplyTokenAddress = await marketContract.UNDERLYING_ASSET_ADDRESS().catch(err => {
+        const supplyTokenAddress = await marketcontract.read.UNDERLYING_ASSET_ADDRESS().catch(err => {
           if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
           throw err;
         });
@@ -58,11 +58,11 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
 
     const [supplyRateRaw, borrowRateRaw, totalMarketSupplyRaw, totalMarketBorrowRaw, marketConfiguration] =
       await Promise.all([
-        lensContract.getAverageSupplyRatePerYear(marketAddress),
-        lensContract.getAverageBorrowRatePerYear(marketAddress),
-        lensContract.getTotalMarketSupply(marketAddress),
-        lensContract.getTotalMarketBorrow(marketAddress),
-        lensContract.getMarketConfiguration(marketAddress),
+        lenscontract.read.getAverageSupplyRatePerYear([marketAddress]),
+        lenscontract.read.getAverageBorrowRatePerYear([marketAddress]),
+        lenscontract.read.getTotalMarketSupply([marketAddress]),
+        lenscontract.read.getTotalMarketBorrow([marketAddress]),
+        lenscontract.read.getMarketConfiguration([marketAddress]),
       ]);
 
     const secondsPerYear = 3600 * 24 * 365;

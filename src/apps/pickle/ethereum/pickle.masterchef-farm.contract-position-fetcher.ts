@@ -31,23 +31,23 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
   }
 
   async getPoolLength(contract: PickleJarMasterchef) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: PickleJarMasterchef, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: PickleJarMasterchef) {
-    return contract.pickle();
+    return contract.read.pickle();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.picklePerBlock();
+    return contract.read.picklePerBlock();
   }
 
   async getPoolAllocPoints({

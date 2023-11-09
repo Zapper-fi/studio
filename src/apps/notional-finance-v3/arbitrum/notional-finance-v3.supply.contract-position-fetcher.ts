@@ -64,7 +64,7 @@ export class ArbitrumNotionalFinanceV3SupplyContractPositionFetcher extends Cont
       network: this.network,
     });
 
-    const currencyCount = await multicall.wrap(notionalViewContract).getMaxCurrencyId();
+    const currencyCount = await multicall.wrap(notionalViewContract).read.getMaxCurrencyId();
     const currencyRange = range(1, currencyCount + 1);
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {
@@ -123,7 +123,7 @@ export class ArbitrumNotionalFinanceV3SupplyContractPositionFetcher extends Cont
     contract,
   }: GetTokenBalancesParams<NotionalView, NotionalFinanceLendingDataProps>): Promise<BigNumberish[]> {
     const { maturity, currencyId } = contractPosition.dataProps;
-    const portfolio = await contract.getAccountPortfolio(address);
+    const portfolio = await contract.read.getAccountPortfolio([address]);
     const supplyPositions = portfolio.filter(v => !v.notional.isNegative());
     const position = supplyPositions.find(v => Number(v.maturity) === maturity && Number(v.currencyId) === currencyId);
     if (!position) return [0];

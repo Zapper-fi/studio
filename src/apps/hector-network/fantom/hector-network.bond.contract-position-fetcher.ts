@@ -43,7 +43,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondDepository>) {
-    const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
+    const [principle, claimable] = await Promise.all([contract.read.principle(), contract.read.HEC()]);
 
     return [
       {
@@ -74,8 +74,8 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
+      contract.read.bondInfo([address]),
+      contract.read.pendingPayoutFor([address]),
     ]);
 
     return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];

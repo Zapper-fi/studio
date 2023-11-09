@@ -39,7 +39,7 @@ export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplat
       address: this.notionalViewContractAddress,
       network: this.network,
     });
-    const maxCurrencyId = await multicall.wrap(notionalViewContract).getMaxCurrencyId();
+    const maxCurrencyId = await multicall.wrap(notionalViewContract).read.getMaxCurrencyId();
 
     const definitions = await Promise.all(
       range(1, maxCurrencyId + 1).map(async currencyId => {

@@ -58,7 +58,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
   private async getRegularTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<ZhartaLendingPoolCore, ZhartaLendingPoolCoreContractPositionDefinition>) {
-    const [depositAddress] = await Promise.all([contract.erc20TokenContract()]);
+    const [depositAddress] = await Promise.all([contract.read.erc20TokenContract()]);
 
     return [
       {
@@ -86,8 +86,8 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
     multicall,
   }: GetTokenBalancesParams<ZhartaLendingPoolCore>) {
     const [lenderFundsRaw, withdrawableAmountRaw] = await Promise.all([
-      contract.funds(address),
-      contract.computeWithdrawableAmount(address),
+      contract.read.funds([address]),
+      contract.read.computeWithdrawableAmount([address]),
     ]);
 
     return [lenderFundsRaw.currentAmountDeposited, withdrawableAmountRaw.sub(lenderFundsRaw.currentAmountDeposited)];

@@ -87,7 +87,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
     const rewardToken = contractPosition.tokens.filter(isClaimable);
     if (!rewardToken) return [0, 0, 0, 0, 0];
 
-    const supplied = await contract.balanceOf(address);
+    const supplied = await contract.read.balanceOf([address]);
     const rewards = await Promise.all(
       rewardToken.map(token => {
         return contract.getClaimable(token.address, address);

@@ -37,18 +37,18 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
   }
 
   async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CompoundCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<CompoundCToken, DefaultAppTokenDataProps>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<CompoundCToken, DefaultAppTokenDataProps>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 }

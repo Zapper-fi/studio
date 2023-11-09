@@ -45,7 +45,7 @@ export class EthereumAaveSafetyModuleStkAbptClaimableContractPositionFetcher ext
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<AaveStkAbpt>) {
-    const rewardBalance = await contract.getTotalRewardsBalance(address);
+    const rewardBalance = await contract.read.getTotalRewardsBalance([address]);
     return [rewardBalance];
   }
 }

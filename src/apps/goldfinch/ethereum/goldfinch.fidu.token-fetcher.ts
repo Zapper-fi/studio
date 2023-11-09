@@ -36,7 +36,7 @@ export class EthereumGoldfinchFiduTokenFetcher extends AppTokenTemplatePositionF
   async getPricePerShare({ multicall }: GetPricePerShareParams<Erc20>) {
     const seniorPoolAddress = '0x8481a6ebaf5c7dabc3f7e09e44a89531fd31f822';
     const seniorPool = this.contractFactory.goldfinchSeniorPool({ address: seniorPoolAddress, network: this.network });
-    const sharePriceRaw = await multicall.wrap(seniorPool).sharePrice();
+    const sharePriceRaw = await multicall.wrap(seniorPool).read.sharePrice();
     return [Number(sharePriceRaw) / 10 ** 18];
   }
 }

@@ -28,18 +28,18 @@ export abstract class CurveFactoryV2PoolTokenFetcher extends CurvePoolDynamicV2T
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveTricryptoFactory>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveTokenAddress({ contract, poolIndex }: ResolveTokenAddressParams<CurveTricryptoFactory>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([poolIndex]);
   }
 
   async resolveCoinAddresses({ contract, tokenAddress }: ResolveCoinAddressesParams<CurveTricryptoFactory>) {
-    return contract.get_coins(tokenAddress);
+    return contract.read.get_coins([tokenAddress]);
   }
 
   async resolveReserves({ contract, tokenAddress }: ResolveReservesParams<CurveTricryptoFactory>) {
-    return contract.get_balances(tokenAddress);
+    return contract.read.get_balances([tokenAddress]);
   }
 }

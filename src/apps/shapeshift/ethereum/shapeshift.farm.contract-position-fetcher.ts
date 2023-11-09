@@ -70,7 +70,7 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
@@ -78,10 +78,10 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

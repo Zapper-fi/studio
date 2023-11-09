@@ -62,7 +62,7 @@ export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemp
       network: this.network,
     });
 
-    return [{ address: await multicall.wrap(vaultContract).UNDERLYING(), network: this.network }];
+    return [{ address: await multicall.wrap(vaultContract).read.UNDERLYING(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -79,7 +79,7 @@ export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemp
       network: this.network,
     });
 
-    const pricePerShareRaw = await multicall.wrap(vaultContract).getTokenPrice();
+    const pricePerShareRaw = await multicall.wrap(vaultContract).read.getTokenPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
 
     return [pricePerShare];

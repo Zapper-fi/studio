@@ -27,22 +27,22 @@ export abstract class UniswapV2DefaultPoolOnChainTemplateTokenFetcher extends Un
   }
 
   getPoolsLength(contract: UniswapFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+    return contract.read.allPairsLength();
   }
 
   getPoolAddress(contract: UniswapFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+    return contract.read.allPairs([index]);
   }
 
   getPoolToken0(contract: UniswapPair): Promise<string> {
-    return contract.token0();
+    return contract.read.token0();
   }
 
   getPoolToken1(contract: UniswapPair): Promise<string> {
-    return contract.token1();
+    return contract.read.token1();
   }
 
   getPoolReserves(contract: UniswapPair): Promise<BigNumberish[]> {
-    return contract.getReserves();
+    return contract.read.getReserves();
   }
 }

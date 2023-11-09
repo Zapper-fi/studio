@@ -35,7 +35,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
   }
 
   async getStakedTokenAddress(contract: RadiantCapitalStaking, poolIndex: number): Promise<string> {
-    return contract.registeredTokens(poolIndex);
+    return contract.read.registeredTokens([poolIndex]);
   }
 
   async getRewardTokenAddress(): Promise<string> {
@@ -43,11 +43,11 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    return contract.rewardsPerSecond();
+    return contract.read.rewardsPerSecond();
   }
 
   async getPoolAllocPoints({

@@ -42,7 +42,7 @@ export class ArbitrumDopexRdpxSsovContractPositionFetcher extends DopexSsovContr
     contractPosition,
   }: GetTokenBalancesParams<DopexRdpxSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.totalEpochStrikeBalance(epoch, strike);
+    return contract.read.totalEpochStrikeBalance([epoch, strike]);
   }
 
   getTotalEpochStrikeRewardBalances({
@@ -50,6 +50,6 @@ export class ArbitrumDopexRdpxSsovContractPositionFetcher extends DopexSsovContr
     contractPosition,
   }: GetTokenBalancesParams<DopexRdpxSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.totalEpochStrikeDpxBalance(epoch, strike);
+    return contract.read.totalEpochStrikeDpxBalance([epoch, strike]);
   }
 }

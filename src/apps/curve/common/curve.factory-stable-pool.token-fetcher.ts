@@ -30,11 +30,11 @@ export abstract class CurveFactoryStablePoolTokenFetcher extends CurvePoolDynami
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveStableFactory>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveStableFactory>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([poolIndex]);
   }
 
   async resolveTokenAddress({ swapAddress }: ResolveTokenAddressParams<CurveStableFactory>) {
@@ -42,14 +42,14 @@ export abstract class CurveFactoryStablePoolTokenFetcher extends CurvePoolDynami
   }
 
   async resolveCoinAddresses({ contract, swapAddress }: ResolveCoinAddressesParams<CurveStableFactory>) {
-    return contract.get_coins(swapAddress);
+    return contract.read.get_coins([swapAddress]);
   }
 
   async resolveReserves({ contract, swapAddress }: ResolveReservesParams<CurveStableFactory>) {
-    return contract.get_balances(swapAddress);
+    return contract.read.get_balances([swapAddress]);
   }
 
   async resolveFees({ contract, swapAddress }: ResolveFeesParams<CurveStableFactory>) {
-    return contract.get_fees(swapAddress);
+    return contract.read.get_fees([swapAddress]);
   }
 }

@@ -59,7 +59,7 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
       network: this.network,
     });
 
-    const pricePerShareRaw = await multicall.wrap(tenderSwapContract).getVirtualPrice();
+    const pricePerShareRaw = await multicall.wrap(tenderSwapContract).read.getVirtualPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [pricePerShare];
   }

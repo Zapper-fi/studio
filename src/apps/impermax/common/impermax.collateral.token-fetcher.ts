@@ -27,11 +27,11 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
       this.contractFactory.factory({ network: this.network, address: this.factoryAddress }),
     );
 
-    const poolLength = await factoryContract.allLendingPoolsLength().then(length => Number(length));
+    const poolLength = await factorycontract.read.allLendingPoolsLength().then(length => Number(length));
     const collateralAddresses = await Promise.all(
       _.range(poolLength).map(async i => {
-        const poolAddress = await factoryContract.allLendingPools(i);
-        const { initialized, collateral } = await factoryContract.getLendingPool(poolAddress);
+        const poolAddress = await factorycontract.read.allLendingPools([i]);
+        const { initialized, collateral } = await factorycontract.read.getLendingPool([poolAddress]);
         return initialized ? collateral : null;
       }),
     );

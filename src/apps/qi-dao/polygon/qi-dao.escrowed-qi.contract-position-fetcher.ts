@@ -25,10 +25,10 @@ export class PolygonQiDaoEscrowedQiContractPositionFetcher extends VotingEscrowT
   }
 
   async getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<QiDaoEscrowedQi>) {
-    return contract.Qi();
+    return contract.read.Qi();
   }
 
   async getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<QiDaoEscrowedQi>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 }

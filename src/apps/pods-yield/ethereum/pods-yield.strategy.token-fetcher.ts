@@ -38,7 +38,7 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PodsYieldVault>) {
-    const [assetsRaw, supplyRaw] = await Promise.all([contract.totalAssets(), contract.totalSupply()]);
+    const [assetsRaw, supplyRaw] = await Promise.all([contract.read.totalAssets(), contract.read.totalSupply()]);
     const supply = Number(supplyRaw) / 10 ** appToken.decimals;
     const assets = Number(assetsRaw) / 10 ** appToken.tokens[0].decimals;
 

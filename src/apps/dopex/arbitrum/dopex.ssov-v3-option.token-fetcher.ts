@@ -51,8 +51,8 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
       addresses.map(async address => {
         const ssovV3Contract = this.contractFactory.dopexSsovV3({ address, network: this.network });
         const [epoch, collateralTokenAddressRaw] = await Promise.all([
-          multicall.wrap(ssovV3Contract).currentEpoch(),
-          multicall.wrap(ssovV3Contract).collateralToken(),
+          multicall.wrap(ssovV3Contract).read.currentEpoch(),
+          multicall.wrap(ssovV3Contract).read.collateralToken(),
         ]);
         const epochData = await multicall.wrap(ssovV3Contract).getEpochData(epoch);
 
@@ -68,7 +68,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
               address: strikeTokenAddress,
               network: this.network,
             });
-            const isExpired = await multicall.wrap(strikeToken).hasExpired();
+            const isExpired = await multicall.wrap(strikeToken).read.hasExpired();
             if (isExpired) return null;
 
             return { address: strikeTokenAddress, collateralTokenAddress };
@@ -91,7 +91,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getLabel({ appToken, contract }: GetDisplayPropsParams<DopexOptionToken>) {
-    const [isPut, strikeRaw] = await Promise.all([contract.isPut(), contract.strike()]);
+    const [isPut, strikeRaw] = await Promise.all([contract.read.isPut(), contract.read.strike()]);
     const optionType = isPut ? 'PUT' : 'CALL';
     const strike = Number(strikeRaw) / 10 ** 8;
     return `${optionType} - ${getLabelFromToken(appToken.tokens[0])} - ${strike}$`;

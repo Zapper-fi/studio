@@ -42,7 +42,7 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
     address,
     contract,
   }: GetTokenBalancesParams<BottoGovernance, SingleStakingFarmDataProps>) {
-    return contract.userStakes(address);
+    return contract.read.userStakes([address]);
   }
 
   async getRewardTokenBalances() {

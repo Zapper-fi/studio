@@ -52,7 +52,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<EnzymeFinanceVault>): Promise<string> {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {

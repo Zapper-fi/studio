@@ -29,11 +29,11 @@ export class EthereumConcentratorLegacyVaultContractPositionFetcher extends Mast
   }
 
   async getPoolLength(contract: AladdinConcentratorLegacyVault): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: AladdinConcentratorLegacyVault, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress() {

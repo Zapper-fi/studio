@@ -50,8 +50,8 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<InverseDcaVaultToken>) {
     const [totalRaw, withdrawnRaw] = await Promise.all([
-      contract.accumulativeDividendOf(address),
-      contract.withdrawnDividendOf(address),
+      contract.read.accumulativeDividendOf([address]),
+      contract.read.withdrawnDividendOf([address]),
     ]);
 
     return [totalRaw.sub(withdrawnRaw)];

@@ -33,7 +33,7 @@ export class EthereumConcentratorVotingEscrowContractPositionFetcher extends Vot
   }
 
   getEscrowedTokenAddress(contract: AladdinConcentratorVe): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewards): Promise<BigNumberish> {
@@ -41,10 +41,10 @@ export class EthereumConcentratorVotingEscrowContractPositionFetcher extends Vot
   }
 
   getRewardTokenAddress(contract: AladdinConcentratorVeRewards): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance(address: string, contract: AladdinConcentratorVe): Promise<BigNumberish> {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 }

@@ -31,23 +31,23 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
   }
 
   async getPoolLength(contract: AuraMasterchef): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: AuraMasterchef, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: AuraMasterchef): Promise<string> {
-    return contract.cvx();
+    return contract.read.cvx();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>) {
-    return contract.rewardPerBlock();
+    return contract.read.rewardPerBlock();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<AuraMasterchef>) {
@@ -72,11 +72,11 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
 
     const { poolIndex } = contractPosition.dataProps;
     const [poolInfo, userInfo, totalAllocPoint, rewardPerBlock, endBlock] = await Promise.all([
-      contract.poolInfo(poolIndex),
-      contract.userInfo(poolIndex, address),
-      contract.totalAllocPoint(),
-      contract.rewardPerBlock(),
-      contract.endBlock(),
+      contract.read.poolInfo([poolIndex]),
+      contract.read.userInfo([poolIndex, address]),
+      contract.read.totalAllocPoint(),
+      contract.read.rewardPerBlock(),
+      contract.read.endBlock(),
     ]);
 
     if (userInfo.amount.eq(0)) {

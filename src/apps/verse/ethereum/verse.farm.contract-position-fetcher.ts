@@ -78,6 +78,6 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
     address,
     contract,
   }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
-    return [await contract.balanceOf(address), await contract.earned(address)];
+    return [await contract.read.balanceOf([address]), await contract.read.earned([address])];
   }
 }

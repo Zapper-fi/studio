@@ -46,7 +46,7 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
       network: this.network,
     });
 
-    const numRewardToken = await multicall.wrap(dividenContract).distributedTokensLength();
+    const numRewardToken = await multicall.wrap(dividenContract).read.distributedTokensLength();
 
     const rewardTokenAddresses = await Promise.all(
       range(0, numRewardToken.toNumber()).map(async index => {
@@ -55,7 +55,7 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
       }),
     );
 
-    const suppliedTokenAddress = await multicall.wrap(dividenContract).xGrailToken();
+    const suppliedTokenAddress = await multicall.wrap(dividenContract).read.xGrailToken();
 
     return [{ address: this.dividendContractAddress, suppliedTokenAddress, rewardTokenAddresses }];
   }
@@ -80,7 +80,7 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<CamelotDividend>) {
-    const allocation = await contract.usersAllocation(address);
+    const allocation = await contract.read.usersAllocation([address]);
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
 
     const claimableBalances = await Promise.all(

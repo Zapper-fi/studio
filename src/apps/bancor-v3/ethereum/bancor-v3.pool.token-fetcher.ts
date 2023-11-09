@@ -34,13 +34,13 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
 
   async getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>) {
     const bancorContract = this.contractFactory.bancorNetwork({ address: this.bancorAddress, network: this.network });
-    const poolCollectionAddress = (await multicall.wrap(bancorContract).poolCollections()).at(-1)!; // TODO: support multiple pool collections
+    const poolCollectionAddress = (await multicall.wrap(bancorContract).read.poolCollections()).at(-1)!; // TODO: support multiple pool collections
     const poolContract = this.contractFactory.poolCollection({
       address: poolCollectionAddress,
       network: this.network,
     });
 
-    const pools = await multicall.wrap(bancorContract).liquidityPools();
+    const pools = await multicall.wrap(bancorContract).read.liquidityPools();
     const addresses = await Promise.all(pools.map(async pool => multicall.wrap(poolContract).poolToken(pool)));
     return addresses;
   }
@@ -58,7 +58,7 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
     if (appToken.supply === 0) return [0];
 
     const bancorContract = this.contractFactory.bancorNetwork({ address: this.bancorAddress, network: this.network });
-    const poolCollectionAddress = (await multicall.wrap(bancorContract).poolCollections()).at(-1)!;
+    const poolCollectionAddress = (await multicall.wrap(bancorContract).read.poolCollections()).at(-1)!;
     const poolContract: PoolCollection = this.contractFactory.poolCollection({
       address: poolCollectionAddress,
       network: this.network,

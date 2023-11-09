@@ -31,23 +31,23 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
   }
 
   async getPoolLength(contract: StakeDaoFarm): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: StakeDaoFarm, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: StakeDaoFarm): Promise<string> {
-    return contract.sdt();
+    return contract.read.sdt();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.sdtPerBlock();
+    return contract.read.sdtPerBlock();
   }
 
   async getPoolAllocPoints({

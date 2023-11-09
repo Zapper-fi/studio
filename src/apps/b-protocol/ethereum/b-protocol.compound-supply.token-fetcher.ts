@@ -40,12 +40,12 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
 
   async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
     const cTokenAddresses = await contract.read.getAllMarkets();
-    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
+    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.read.c2b([cTokenAddress])));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<BProtocolCompoundToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<BProtocolCompoundToken>) {

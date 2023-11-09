@@ -44,6 +44,6 @@ export class EthereumRocketPoolStakingContractPositionFetcher extends ContractPo
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<RocketNodeStaking>) {
-    return [await contract.getNodeRPLStake(address)];
+    return [await contract.read.getNodeRPLStake([address])];
   }
 }

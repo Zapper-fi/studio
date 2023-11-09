@@ -44,7 +44,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
           network: this.network,
         });
 
-        const synthAddress = await multicall.wrap(poolContract).syntheticToken();
+        const synthAddress = await multicall.wrap(poolContract).read.syntheticToken();
         return { address: synthAddress, poolAddress };
       }),
     );
@@ -73,7 +73,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
       network: this.network,
     });
 
-    const finderAddress = await multicall.wrap(poolContract).synthereumFinder();
+    const finderAddress = await multicall.wrap(poolContract).read.synthereumFinder();
     const finder = this.contractFactory.jarvisSynthereumFinder({ address: finderAddress, network: this.network });
 
     const priceFeedName = ethers.utils.formatBytes32String('PriceFeed');
@@ -84,7 +84,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
     });
 
     // Multicall crashes for some reason
-    const priceFeedIdentifier = await multicall.wrap(poolContract).priceFeedIdentifier();
+    const priceFeedIdentifier = await multicall.wrap(poolContract).read.priceFeedIdentifier();
     const priceRaw = await priceFeed.getLatestPrice(priceFeedIdentifier).catch(() => 0);
 
     return Number(priceRaw) / 10 ** 18;

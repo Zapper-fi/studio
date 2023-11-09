@@ -110,7 +110,7 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
       const earned = new BigNumber(earnedRaw, 16);
       if (earned.eq(0)) return [];
 
-      const claimedRaw = await contract.claimedAmount(address);
+      const claimedRaw = await contract.read.claimedAmount([address]);
       const claimed = new BigNumber(claimedRaw.toString());
       const claimableBalanceRaw = earned.minus(claimed).toFixed(0);
       return [claimableBalanceRaw];

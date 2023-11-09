@@ -25,10 +25,10 @@ export class OptimismKwentaEscrowV2ContractPositionFetcher extends VotingEscrowT
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<KwentaStakingV2>) {
-    return contract.kwenta();
+    return contract.read.kwenta();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<KwentaStakingV2>) {
-    return await contract.unstakedEscrowedBalanceOf(address);
+    return await contract.read.unstakedEscrowedBalanceOf([address]);
   }
 }

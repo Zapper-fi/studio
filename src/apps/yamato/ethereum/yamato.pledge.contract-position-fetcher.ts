@@ -58,7 +58,7 @@ export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositio
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Yamato>): Promise<BigNumberish[]> {
-    const pledge = await contract.getPledge(address);
+    const pledge = await contract.read.getPledge([address]);
     const coll = pledge[0];
     const debt = pledge[1];
     return [coll, debt];

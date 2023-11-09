@@ -66,16 +66,16 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
       (definition.poolType === 'WEIGHTED' && this.weightedPoolV2Factories.includes(definition.factory))
     ) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getActualSupply();
+      return multicall.wrap(phantomPoolContract).read.getActualSupply();
     } else if (definition.poolType === 'LINEAR' || definition.poolType === 'PHANTOM_STABLE') {
       const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getVirtualSupply();
+      return multicall.wrap(phantomPoolContract).read.getVirtualSupply();
     }
 
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<BalancerPool>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

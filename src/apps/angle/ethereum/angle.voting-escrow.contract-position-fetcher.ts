@@ -35,15 +35,15 @@ export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWit
   }
 
   async getEscrowedTokenAddress(contract: AngleVeAngle): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getRewardTokenAddress(contract: AngleLiquidityGauge): Promise<string> {
-    return contract.staking_token();
+    return contract.read.staking_token();
   }
 
   async getEscrowedTokenBalance(address: string, contract: AngleVeAngle): Promise<BigNumberish> {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance(address: string, _contract: AngleLiquidityGauge): Promise<BigNumberish> {

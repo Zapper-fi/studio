@@ -78,6 +78,6 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     address,
     contract,
   }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

@@ -39,7 +39,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
       address: this.masterContractAddress,
       network: this.network,
     });
-    const poolLength = await multicall.wrap(masterContract).poolsLength();
+    const poolLength = await multicall.wrap(masterContract).read.poolsLength();
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
@@ -51,7 +51,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
     const farmDefinitions = await Promise.all(
       poolAddresses.map(async address => {
         const nftPoolContract = this.contractFactory.camelotNftPool({ address, network: this.network });
-        const { lpToken, grailToken, xGrailToken } = await multicall.wrap(nftPoolContract).getPoolInfo();
+        const { lpToken, grailToken, xGrailToken } = await multicall.wrap(nftPoolContract).read.getPoolInfo();
 
         return {
           address,
@@ -110,7 +110,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
         });
         const [numPositionsRaw, xGrailRewardsShareRaw] = await Promise.all([
           multicall.wrap(nftPoolContract).balanceOf(address),
-          multicall.wrap(nftPoolContract).xGrailRewardsShare(),
+          multicall.wrap(nftPoolContract).read.xGrailRewardsShare(),
         ]);
 
         return await Promise.all(

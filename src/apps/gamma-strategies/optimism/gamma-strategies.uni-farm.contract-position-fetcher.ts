@@ -31,11 +31,11 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
   }
 
   async getPoolLength(contract: GammaStrategiesUniOpMasterchef) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterchef, poolIndex: number) {
-    return contract.lpToken(poolIndex);
+    return contract.read.lpToken([poolIndex]);
   }
 
   async getRewardTokenAddress() {
@@ -46,13 +46,13 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
   async getTotalAllocPoints({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.sushiPerSecond();
+    return contract.read.sushiPerSecond();
   }
 
   async getPoolAllocPoints({

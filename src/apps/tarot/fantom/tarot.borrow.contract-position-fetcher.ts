@@ -96,7 +96,7 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<TarotBorrowable>) {
-    const balanceRaw = await contract.borrowBalance(address);
+    const balanceRaw = await contract.read.borrowBalance([address]);
     return [balanceRaw];
   }
 }

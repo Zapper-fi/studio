@@ -63,10 +63,10 @@ export class ArbitrumPlutusFarmPlsArbContractPositionFetcher extends SingleStaki
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsArb>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsArb>) {
-    return contract.pendingRewards(address);
+    return contract.read.pendingRewards([address]);
   }
 }

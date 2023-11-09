@@ -57,6 +57,6 @@ export class EthereumAuraAuraBalCompounderContractPositionFetcher extends Contra
     address,
     contract,
   }: GetTokenBalancesParams<AuraBalVirtualRewardPool>): Promise<BigNumberish[]> {
-    return Promise.all([contract.balanceOf(address), contract.earned(address)]);
+    return Promise.all([contract.read.balanceOf([address]), contract.read.earned([address])]);
   }
 }

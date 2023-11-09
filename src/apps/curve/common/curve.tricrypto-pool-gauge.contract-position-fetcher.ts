@@ -13,14 +13,14 @@ export abstract class CurveTricryptoPoolGaugeContractPositionFetcher extends Cur
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveTricryptoFactory>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveTokenAddress({ contract, poolIndex }: ResolveTokenAddressParams<CurveTricryptoFactory>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([poolIndex]);
   }
 
   async resolveGaugeAddress({ contract, tokenAddress }: ResolveGaugeAddressParams<CurveTricryptoFactory>) {
-    return contract.get_gauge(tokenAddress);
+    return contract.read.get_gauge([tokenAddress]);
   }
 }

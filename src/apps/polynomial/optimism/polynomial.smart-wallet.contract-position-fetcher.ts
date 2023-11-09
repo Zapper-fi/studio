@@ -67,7 +67,7 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Erc20>) {
-    return [await contract.balanceOf(address)];
+    return [await contract.read.balanceOf([address])];
   }
 
   async getDataProps({ contract }): Promise<PolynomialSmartWalletDataProp> {

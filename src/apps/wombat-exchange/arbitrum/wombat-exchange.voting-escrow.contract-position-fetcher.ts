@@ -25,10 +25,10 @@ export class ArbitrumWombatExchangeVotingEscrowContractPositionFetcher extends V
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<WombatExchangeVotingEscrow>) {
-    return contract.wom();
+    return contract.read.wom();
   }
 
   getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<WombatExchangeVotingEscrow>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 }

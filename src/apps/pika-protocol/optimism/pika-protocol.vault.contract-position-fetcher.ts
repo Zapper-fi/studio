@@ -60,7 +60,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
       network: this.network,
     });
     const [stakedBalanceRaw, rewardBalance] = await Promise.all([
-      contract.getShareBalance(address),
+      contract.read.getShareBalance([address]),
       multicall.wrap(rewardContract).getClaimableReward(address),
     ]);
     const stakedBalance = stakedBalanceRaw.div(100);

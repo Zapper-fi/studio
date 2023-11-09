@@ -67,8 +67,8 @@ export abstract class BeefyBoostVaultContractPositionFetcher extends ContractPos
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<BeefyBoostVault>) {
     const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.earned(address),
+      contract.read.balanceOf([address]),
+      contract.read.earned([address]),
     ]);
     return [stakedBalanceRaw, rewardBalanceRaw];
   }

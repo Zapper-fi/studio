@@ -106,7 +106,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
     });
 
     const contract = multicall.wrap(this.getContract(lsdCnv.address));
-    const balanceRaw = await contract.balanceOf(address);
+    const balanceRaw = await contract.read.balanceOf([address]);
     if (Number(balanceRaw) === 0) return [];
 
     const lockData = await gqlFetch<ConcaveStakingV1LockData>({

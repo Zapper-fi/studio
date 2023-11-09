@@ -53,17 +53,17 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
       network: this.network,
     });
 
-    const creditManagerAddresses = await multicall.wrap(contractsRegister).getCreditManagers();
+    const creditManagerAddresses = await multicall.wrap(contractsRegister).read.getCreditManagers();
 
     const CreditManagerV2AddressesRaw = await Promise.all(
       creditManagerAddresses.map(async address => {
         const creditManagerV2Contract = this.contractFactory.creditManagerV2({ address, network: this.network });
-        const version = await multicall.wrap(creditManagerV2Contract).version();
+        const version = await multicall.wrap(creditManagerV2Contract).read.version();
         if (Number(version) !== 2) return null;
 
         const [underlyingTokenAddressRaw, collateralTokensCount] = await Promise.all([
-          multicall.wrap(creditManagerV2Contract).underlying(),
-          multicall.wrap(creditManagerV2Contract).collateralTokensCount(),
+          multicall.wrap(creditManagerV2Contract).read.underlying(),
+          multicall.wrap(creditManagerV2Contract).read.collateralTokensCount(),
         ]);
 
         const collateralTokenAddresses = await Promise.all(
@@ -127,7 +127,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     }
 
     try {
-      creditAccountAddress = await contract.getCreditAccountOrRevert(address);
+      creditAccountAddress = await contract.read.getCreditAccountOrRevert([address]);
     } catch (err) {
       return emptyBalances;
     }
@@ -135,7 +135,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     const balances = await Promise.all(
       contractPosition.tokens.map(async token => {
         if (token.metaType === MetaType.BORROWED) {
-          const debt = await contract.calcCreditAccountAccruedInterest(creditAccountAddress);
+          const debt = await contract.read.calcCreditAccountAccruedInterest([creditAccountAddress]);
           return debt.borrowedAmountWithInterestAndFees;
         }
 

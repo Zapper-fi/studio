@@ -48,10 +48,10 @@ export class EthereumRariFarmContractPositionFetcher extends SingleStakingFarmTe
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
-    return contract.stakingBalances(address);
+    return contract.read.stakingBalances([address]);
   }
 
   getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
-    return contract.getUnclaimedRgt(address);
+    return contract.read.getUnclaimedRgt([address]);
   }
 }

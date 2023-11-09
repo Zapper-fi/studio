@@ -40,19 +40,19 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getPoolLength(contract: TraderJoeChefV3) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: TraderJoeChefV3, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: TraderJoeChefV3) {
-    return contract.JOE();
+    return contract.read.JOE();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
@@ -67,7 +67,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getExtraRewarder(contract: TraderJoeChefV3, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.rewarder);
+    return contract.read.poolInfo([poolIndex]).then(v => v.rewarder);
   }
 
   async getExtraRewardTokenAddresses(contract: TraderJoeChefV2Rewarder): Promise<string[]> {
@@ -78,7 +78,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     rewarderContract,
   }: GetMasterChefV2ExtraRewardTokenRewardRates<TraderJoeChefV3, TraderJoeChefV2Rewarder>) {
     return [
-      await rewarderContract.rewardPerSecond().catch(err => {
+      await rewardercontract.read.rewardPerSecond().catch(err => {
         if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       }),

@@ -48,13 +48,13 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
       address: this.mvlpManagerAddress,
       network: this.network,
     });
-    const vaultAddressRaw = await multicall.wrap(mvlpManagerContract).vault();
+    const vaultAddressRaw = await multicall.wrap(mvlpManagerContract).read.vault();
     const vaultContract = this.contractFactory.metavaultTradeVault({
       address: vaultAddressRaw.toLowerCase(),
       network: this.network,
     });
 
-    const numTokens = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const numTokens = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const underlyingTokenAddressesRaw = await Promise.all(
       range(0, Number(numTokens)).map(async i => await multicall.wrap(vaultContract).allWhitelistedTokens(i)),
     );

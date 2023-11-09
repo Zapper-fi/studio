@@ -64,9 +64,9 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
     UnderlyingTokenDefinition[] | null
   > {
     const [stakingToken, tokenIdRaw, rewardsToken] = await Promise.all([
-      contract.stakingToken(),
-      contract.id(),
-      contract.rewardsToken(),
+      contract.read.stakingToken(),
+      contract.read.id(),
+      contract.read.rewardsToken(),
     ]);
 
     return [

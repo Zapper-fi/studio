@@ -46,7 +46,7 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
       network: this.network,
     });
 
-    const anatomy = await multicall.wrap(managerContract).anatomy();
+    const anatomy = await multicall.wrap(managerContract).read.anatomy();
 
     const underlyingTokenAddresses = anatomy._assets.map(underlyingTokenAddress =>
       underlyingTokenAddress.toLowerCase(),
@@ -83,6 +83,6 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<PhutureManagedIndex>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

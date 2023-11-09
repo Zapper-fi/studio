@@ -52,8 +52,8 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
           address: appToken.address.toLowerCase(),
         });
         const [managerAddressRaw, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(poolContract).manager(),
-          multicall.wrap(poolContract).asset(),
+          multicall.wrap(poolContract).read.manager(),
+          multicall.wrap(poolContract).read.asset(),
         ]);
 
         const poolManagerContract = this.contractFactory.maplePoolManager({
@@ -61,7 +61,7 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
           address: managerAddressRaw.toLowerCase(),
         });
 
-        const withdrawlManagerAddressRaw = await multicall.wrap(poolManagerContract).withdrawalManager();
+        const withdrawlManagerAddressRaw = await multicall.wrap(poolManagerContract).read.withdrawalManager();
 
         return {
           address: withdrawlManagerAddressRaw.toLowerCase(),
@@ -91,6 +91,6 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
     address,
     contract,
   }: GetTokenBalancesParams<MapleWithdrawalManager>): Promise<BigNumberish[]> {
-    return [await contract.lockedShares(address)];
+    return [await contract.read.lockedShares([address])];
   }
 }

@@ -28,15 +28,15 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
   }
 
   async getPoolLength(contract: PieDaoStaking) {
-    return contract.poolCount();
+    return contract.read.poolCount();
   }
 
   async getStakedTokenAddress(contract: PieDaoStaking, poolIndex: number) {
-    return contract.getPoolToken(poolIndex);
+    return contract.read.getPoolToken([poolIndex]);
   }
 
   async getRewardTokenAddress(contract: PieDaoStaking) {
-    return contract.reward();
+    return contract.read.reward();
   }
 
   async getTotalAllocPoints() {

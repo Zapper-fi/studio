@@ -35,23 +35,23 @@ export class ArbitrumRamsesPoolTokenFetcher extends UniswapV2PoolOnChainTemplate
   }
 
   async getPoolsLength(contract: UniswapFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+    return contract.read.allPairsLength();
   }
 
   async getPoolAddress(contract: UniswapFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+    return contract.read.allPairs([index]);
   }
 
   async getPoolToken0(contract: UniswapPair) {
-    return contract.token0();
+    return contract.read.token0();
   }
 
   async getPoolToken1(contract: UniswapPair) {
-    return contract.token1();
+    return contract.read.token1();
   }
 
   async getPoolReserves(contract: UniswapPair) {
-    return contract.getReserves();
+    return contract.read.getReserves();
   }
 
   async getTertiaryLabel({

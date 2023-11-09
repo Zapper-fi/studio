@@ -43,30 +43,30 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
   }
 
   async getPoolLength(contract: PenguinChefV2) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: PenguinChefV2, poolIndex: number) {
-    return (await contract.poolInfo(poolIndex)).poolToken;
+    return (await contract.read.poolInfo([poolIndex])).poolToken;
   }
 
   async getRewardTokenAddress(contract: PenguinChefV2) {
-    return contract.pefi();
+    return contract.read.pefi();
   }
 
   async getExtraRewarder(contract: PenguinChefV2, poolIndex: number) {
-    return (await contract.poolInfo(poolIndex)).rewarder;
+    return (await contract.read.poolInfo([poolIndex])).rewarder;
   }
 
   async getExtraRewardTokenAddresses(contract: PenguinExtraRewarder, poolIndex: number) {
     return contract.pendingTokens(poolIndex, ZERO_ADDRESS, 0).then(v => [v[0][0]]);
   }
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PenguinChefV2>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PenguinChefV2>) {
-    return contract.pefiEmissionPerSecond();
+    return contract.read.pefiEmissionPerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PenguinChefV2>) {
@@ -83,7 +83,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
       address: rewarderAddressRaw.toLowerCase(),
       network: this.network,
     });
-    return multicall.wrap(rewarderRateContract).tokensPerSecond();
+    return multicall.wrap(rewarderRateContract).read.tokensPerSecond();
   }
 
   async getStakedTokenBalance({

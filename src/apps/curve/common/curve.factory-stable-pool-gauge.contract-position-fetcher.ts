@@ -14,11 +14,11 @@ export abstract class CurveFactoryStablePoolGaugeContractPositionFetcher extends
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveStableFactory>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveStableFactory>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([poolIndex]);
   }
 
   async resolveTokenAddress({ swapAddress }: ResolveTokenAddressParams<CurveStableFactory>) {
@@ -26,6 +26,6 @@ export abstract class CurveFactoryStablePoolGaugeContractPositionFetcher extends
   }
 
   async resolveGaugeAddresses({ contract, swapAddress }: ResolveGaugeAddressParams<CurveStableFactory>) {
-    return contract.get_gauge(swapAddress).then(v => [v]);
+    return contract.read.get_gauge([swapAddress]).then(v => [v]);
   }
 }

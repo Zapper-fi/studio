@@ -43,19 +43,19 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
   }
 
   async getPoolLength(contract: PickleMiniChefV2) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: PickleMiniChefV2, poolIndex: number) {
-    return contract.lpToken(poolIndex);
+    return contract.read.lpToken([poolIndex]);
   }
 
   async getRewardTokenAddress(contract: PickleMiniChefV2) {
-    return contract.PICKLE();
+    return contract.read.PICKLE();
   }
 
   async getExtraRewarder(contract: PickleMiniChefV2, poolIndex: number) {
-    return contract.rewarder(poolIndex);
+    return contract.read.rewarder([poolIndex]);
   }
 
   async getExtraRewardTokenAddresses(contract: PickleRewarder, poolIndex: number) {
@@ -63,11 +63,11 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PickleMiniChefV2>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PickleMiniChefV2>) {
-    return contract.picklePerSecond();
+    return contract.read.picklePerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PickleMiniChefV2>) {
@@ -77,7 +77,7 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
   async getExtraRewardTokenRewardRates({
     rewarderContract,
   }: GetMasterChefV2ExtraRewardTokenRewardRates<PickleMiniChefV2, PickleRewarder>) {
-    return rewarderContract.rewardPerSecond();
+    return rewardercontract.read.rewardPerSecond();
   }
 
   async getStakedTokenBalance({

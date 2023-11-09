@@ -67,12 +67,12 @@ export abstract class DopexSsovContractPositionFetcher<
         const currentEpoch = Number(await contract.read.currentEpoch());
 
         const nextEpoch = currentEpoch + 1;
-        const nextEpochStartTime = await contract.epochStartTimes(nextEpoch).then(Number);
+        const nextEpochStartTime = await contract.read.epochStartTimes([nextEpoch]).then(Number);
         const lastValidEpoch = nextEpochStartTime > 0 ? nextEpoch : currentEpoch;
 
         const definitions = await Promise.all(
           range(1, lastValidEpoch + 1).map(async epoch => {
-            const strikes = await contract.getEpochStrikes(epoch);
+            const strikes = await contract.read.getEpochStrikes([epoch]);
             return strikes.map(strike => ({
               address,
               depositTokenAddress,
@@ -129,8 +129,8 @@ export abstract class DopexSsovContractPositionFetcher<
 
     const userStrike = ethers.utils.solidityKeccak256(['address', 'uint256'], [address, strike]);
     const [totalDepositBalanceRaw, userDepositBalanceRaw] = await Promise.all([
-      contract.totalEpochStrikeDeposits(epoch, strike),
-      contract.userEpochDeposits(epoch, userStrike),
+      contract.read.totalEpochStrikeDeposits([epoch, strike]),
+      contract.read.userEpochDeposits([epoch, userStrike]),
     ]);
 
     const share = Number(userDepositBalanceRaw) / Number(totalDepositBalanceRaw) || 0;
@@ -152,8 +152,8 @@ export abstract class DopexSsovContractPositionFetcher<
 
     const userStrike = ethers.utils.solidityKeccak256(['address', 'uint256'], [address, strike]);
     const [totalDepositBalanceRaw, userDepositBalanceRaw] = await Promise.all([
-      contract.totalEpochStrikeDeposits(epoch, strike),
-      contract.userEpochDeposits(epoch, userStrike),
+      contract.read.totalEpochStrikeDeposits([epoch, strike]),
+      contract.read.userEpochDeposits([epoch, userStrike]),
     ]);
 
     const share = Number(userDepositBalanceRaw) / Number(totalDepositBalanceRaw) || 0;

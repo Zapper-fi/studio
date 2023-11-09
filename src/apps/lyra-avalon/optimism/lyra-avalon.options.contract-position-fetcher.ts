@@ -217,7 +217,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     LyraAvalonOptionTokenDefinition
   >) {
     const baseContract = this.contractFactory.erc20({ address: definition.baseAddress, network: this.network });
-    const baseSymbol = await multicall.wrap(baseContract).symbol();
+    const baseSymbol = await multicall.wrap(baseContract).read.symbol();
     const optionLabel = OPTION_TYPES[definition.optionType];
     return `${optionLabel} ${baseSymbol} @ $${definition.strikePriceReadable}`;
   }
@@ -231,7 +231,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     const { strikeId, optionType, callPrice, putPrice } = contractPosition.dataProps;
 
     // Find matching user position for contract position
-    const ownerPositions = await contract.getOwnerPositions(address);
+    const ownerPositions = await contract.read.getOwnerPositions([address]);
     const userPosition = ownerPositions
       .filter(p => Number(p.strikeId) === strikeId)
       .find(p => p.optionType === optionType);

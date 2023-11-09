@@ -58,28 +58,28 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleYieldTokenDefinition[]> {
     const pendleData = this.contractFactory.pendleData({ address: this.pendleDataAddress, network: this.network });
-    const numMarkets = await multicall.wrap(pendleData).allMarketsLength();
+    const numMarkets = await multicall.wrap(pendleData).read.allMarketsLength();
 
     const definitions = await Promise.all(
       range(0, Number(numMarkets)).map(async i => {
         const marketAddress = await pendleData.allMarkets(i);
         const market = this.contractFactory.pendleMarket({ address: marketAddress, network: this.network });
         const [baseTokenAddress, yieldTokenAddress, expiryRaw] = await Promise.all([
-          multicall.wrap(market).token(),
-          multicall.wrap(market).xyt(),
-          multicall.wrap(market).expiry(),
+          multicall.wrap(market).read.token(),
+          multicall.wrap(market).read.xyt(),
+          multicall.wrap(market).read.expiry(),
         ]);
 
         const expiry = Number(expiryRaw);
         const yieldToken = this.contractFactory.pendleYieldToken({ address: yieldTokenAddress, network: this.network });
         const [underlyingAddress, underlyingYieldAddress, forgeAddress] = await Promise.all([
-          multicall.wrap(yieldToken).underlyingAsset(),
-          multicall.wrap(yieldToken).underlyingYieldToken(),
-          multicall.wrap(yieldToken).forge(),
+          multicall.wrap(yieldToken).read.underlyingAsset(),
+          multicall.wrap(yieldToken).read.underlyingYieldToken(),
+          multicall.wrap(yieldToken).read.forge(),
         ]);
 
         const forge = this.contractFactory.pendleForge({ address: forgeAddress, network: this.network });
-        const forgeId = await multicall.wrap(forge).forgeId();
+        const forgeId = await multicall.wrap(forge).read.forgeId();
 
         const ownershipTokenAddress = await multicall.wrap(pendleData).otTokens(forgeId, baseTokenAddress, expiry);
 
@@ -124,7 +124,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
     if (!baseToken || Date.now() / 1000 > Number(expiry)) return [0];
 
-    const reserves = await multicall.wrap(market).getReserves();
+    const reserves = await multicall.wrap(market).read.getReserves();
 
     const price = new BigNumber(10)
       .pow(appToken.decimals - baseToken.decimals)

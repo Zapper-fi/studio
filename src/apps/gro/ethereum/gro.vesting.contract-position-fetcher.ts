@@ -56,6 +56,6 @@ export class EthereumGroVestingContractPositionFetcher extends ContractPositionT
     address,
     contract,
   }: GetTokenBalancesParams<GroVesting, DefaultDataProps>): Promise<BigNumberish[]> {
-    return Promise.all([contract.vestedBalance(address), contract.vestingBalance(address)]);
+    return Promise.all([contract.read.vestedBalance([address]), contract.read.vestingBalance([address])]);
   }
 }

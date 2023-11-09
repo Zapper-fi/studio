@@ -48,13 +48,13 @@ export class ArbitrumMyceliumMlpTokenFetcher extends AppTokenTemplatePositionFet
       address: this.mlpManagerAddress,
       network: this.network,
     });
-    const vaultAddressRaw = await multicall.wrap(mlpManagerContract).vault();
+    const vaultAddressRaw = await multicall.wrap(mlpManagerContract).read.vault();
     const vaultContract = this.contractFactory.myceliumVault({
       address: vaultAddressRaw.toLowerCase(),
       network: this.network,
     });
 
-    const numTokens = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const numTokens = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const underlyingTokenAddressesRaw = await Promise.all(
       range(0, Number(numTokens)).map(async i => await multicall.wrap(vaultContract).allWhitelistedTokens(i)),
     );

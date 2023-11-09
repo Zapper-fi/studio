@@ -139,7 +139,7 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
       address: definition.prizePool,
     });
 
-    return [{ address: await multicall.wrap(prizePool).token(), network: this.network }];
+    return [{ address: await multicall.wrap(prizePool).read.token(), network: this.network }];
   }
 
   async getPricePerShare() {

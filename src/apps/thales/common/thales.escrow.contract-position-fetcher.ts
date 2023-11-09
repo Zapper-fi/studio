@@ -23,10 +23,10 @@ export abstract class ThalesEscrowContractPositionFetcher extends VotingEscrowTe
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<EscrowThales>) {
-    return contract.vestingToken();
+    return contract.read.vestingToken();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<EscrowThales>) {
-    return contract.totalAccountEscrowedAmount(address);
+    return contract.read.totalAccountEscrowedAmount([address]);
   }
 }

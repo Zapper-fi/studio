@@ -84,7 +84,7 @@ export abstract class LyraAvalonPoolTokenFetcher extends AppTokenTemplatePositio
   }: GetPricePerShareParams<LyraLiquidityToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
     const pool = await contract.read.liquidityPool();
     const poolContract = this.contractFactory.lyraLiquidityPool({ address: pool, network: this.network });
-    const ratioRaw = await multicall.wrap(poolContract).getTokenPrice();
+    const ratioRaw = await multicall.wrap(poolContract).read.getTokenPrice();
     const ratio = Number(ratioRaw) / 10 ** 18;
 
     return [ratio];

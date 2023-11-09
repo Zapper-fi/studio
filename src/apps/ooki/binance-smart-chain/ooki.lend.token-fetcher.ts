@@ -31,7 +31,7 @@ export class BinanceSmartChainOokiLendTokenFetcher extends AppTokenTemplatePosit
       address: this.tokenRegistryAddress,
     });
 
-    const tokenAddresses = await registryContract.getTokens(0, 100);
+    const tokenAddresses = await registrycontract.read.getTokens([0, 100]);
     return tokenAddresses.map(v => v.token);
   }
 

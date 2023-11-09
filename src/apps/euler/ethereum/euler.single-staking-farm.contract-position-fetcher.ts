@@ -38,8 +38,8 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
           network: this.network,
         });
         const [stakedTokenAddress, rewardTokenAddress] = await Promise.all([
-          multicall.wrap(vaultContract).stakingToken(),
-          multicall.wrap(vaultContract).rewardsToken(),
+          multicall.wrap(vaultContract).read.stakingToken(),
+          multicall.wrap(vaultContract).read.rewardsToken(),
         ]);
 
         return {
@@ -52,7 +52,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
   }
 
   getRewardRates({ contract }: GetDataPropsParams<EulerStakingRewardsContract, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({
@@ -69,13 +69,13 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     address,
     contract,
   }: GetTokenBalancesParams<EulerStakingRewardsContract, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<EulerStakingRewardsContract, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

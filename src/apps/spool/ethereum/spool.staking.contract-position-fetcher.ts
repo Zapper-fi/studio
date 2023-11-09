@@ -83,7 +83,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     const voSpoolContract = this.contractFactory.spoolVospool(voSpoolToken);
 
     const totalStaked = await multicall.wrap(spoolContract).balanceOf(STAKING_ADDRESS);
-    const votingPowerRaw = await multicall.wrap(voSpoolContract).getTotalGradualVotingPower();
+    const votingPowerRaw = await multicall.wrap(voSpoolContract).read.getTotalGradualVotingPower();
 
     const spoolStaked = totalStaked.div(BigNumber.from(10).pow(spoolToken.decimals)).toNumber();
     const totalAccVoSpool = votingPowerRaw.div(BigNumber.from(10).pow(voSpoolToken.decimals)).toNumber();

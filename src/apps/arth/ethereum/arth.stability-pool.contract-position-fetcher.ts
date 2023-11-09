@@ -56,9 +56,9 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StabilityPool, DefaultDataProps>) {
     return Promise.all([
-      contract.getCompoundedARTHDeposit(address),
-      contract.getDepositorETHGain(address),
-      contract.getDepositorMAHAGain(address),
+      contract.read.getCompoundedARTHDeposit([address]),
+      contract.read.getDepositorETHGain([address]),
+      contract.read.getDepositorMAHAGain([address]),
     ]);
   }
 }

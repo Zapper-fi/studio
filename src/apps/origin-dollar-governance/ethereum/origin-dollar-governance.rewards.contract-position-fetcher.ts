@@ -53,7 +53,7 @@ export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extend
     address,
     contract,
   }: GetTokenBalancesParams<Veogv, DefaultDataProps>): Promise<BigNumberish[]> {
-    const rewardBalance = await contract.previewRewards(address);
+    const rewardBalance = await contract.read.previewRewards([address]);
     return [rewardBalance];
   }
 }

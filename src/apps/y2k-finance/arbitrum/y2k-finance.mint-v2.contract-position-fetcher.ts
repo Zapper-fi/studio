@@ -61,9 +61,9 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
   async getTokenDefinitions(
     params: GetTokenDefinitionsParams<Y2KFinanceCarousel, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const epochIdsRaw = await params.contract.getAllEpochs();
-    const claimableAsset = await params.contract.asset();
-    const emission = await params.contract.emissionsToken();
+    const epochIdsRaw = await params.contract.read.getAllEpochs();
+    const claimableAsset = await params.contract.read.asset();
+    const emission = await params.contract.read.emissionsToken();
     const epochIds = epochIdsRaw.map(x => x.toString());
     return epochIds
       .map(tokenId => [
@@ -91,14 +91,14 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
   async getLabel(
     params: GetDisplayPropsParams<Y2KFinanceCarousel, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    const name = await params.contract.name();
+    const name = await params.contract.read.name();
     return name;
   }
 
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<Y2KFinanceCarousel, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const epochIds = await params.contract.getAllEpochs();
+    const epochIds = await params.contract.read.getAllEpochs();
     const vault = params.multicall.wrap(params.contract);
     const results = await Promise.all(
       epochIds.map(async id => {

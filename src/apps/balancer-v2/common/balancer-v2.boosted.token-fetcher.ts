@@ -58,7 +58,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
   async getSupply({
     contract,
   }: GetTokenPropsParams<BalancerBoostedPool, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
-    return contract.getVirtualSupply();
+    return contract.read.getVirtualSupply();
   }
 
   async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<BalancerBoostedPool>) {

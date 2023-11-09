@@ -35,7 +35,7 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
       network: this.network,
     });
 
-    const numPools = await multicall.wrap(factory).allPoolsLength();
+    const numPools = await multicall.wrap(factory).read.allPoolsLength();
     return Promise.all(range(0, Number(numPools)).map(pid => multicall.wrap(factory).allPools(pid)));
   }
 
@@ -46,9 +46,9 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<StargatePool, DefaultDataProps>) {
     const lpAmount = new BigNumber(10 ** appToken.tokens[0].decimals).toFixed(0);
     const [convertRate, localDecimalsRaw, pricePerShareRaw] = await Promise.all([
-      contract.convertRate(),
-      contract.localDecimals(),
-      contract.amountLPtoLD(lpAmount).catch(() => 0),
+      contract.read.convertRate(),
+      contract.read.localDecimals(),
+      contract.read.amountLPtoLD([lpAmount]).catch(() => 0),
     ]);
 
     const pricePerShare = this.useLocalDecimals

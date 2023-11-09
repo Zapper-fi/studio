@@ -28,19 +28,19 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
   }
 
   async getPoolLength(contract: JonesMillinerV2) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: JonesMillinerV2, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: JonesMillinerV2) {
-    return contract.jones();
+    return contract.read.jones();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<JonesMillinerV2>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<JonesMillinerV2>) {
@@ -48,7 +48,7 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JonesMillinerV2>) {
-    return contract.jonesPerSecond();
+    return contract.read.jonesPerSecond();
   }
 
   async getStakedTokenBalance({

@@ -40,11 +40,11 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
     const registryContract = multicall.wrap(
       this.contractFactory.poolTogetherV3PodRegistry({ address: this.registryAddress, network: this.network }),
     );
-    return registryContract.getAddresses();
+    return registrycontract.read.getAddresses();
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<PoolTogetherV3Pod>) {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PoolTogetherV3Pod>) {

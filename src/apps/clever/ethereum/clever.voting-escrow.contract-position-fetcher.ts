@@ -50,7 +50,7 @@ export class EthereumCleverVotingEscrowContractPositionFetcher extends ContractP
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverVotingEscrow>) {
-    const lockedBalance = await contract.locked(address);
+    const lockedBalance = await contract.read.locked([address]);
     return [lockedBalance.amount];
   }
 }

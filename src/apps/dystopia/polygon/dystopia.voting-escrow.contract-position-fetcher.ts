@@ -26,16 +26,16 @@ export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEs
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<DystopiaVe>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<DystopiaVe>) {
-    const veCount = Number(await contract.balanceOf(address));
+    const veCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-        const balance = await contract.balanceOfNFT(tokenId);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, i]);
+        const balance = await contract.read.balanceOfNFT([tokenId]);
         return Number(balance);
       }),
     );

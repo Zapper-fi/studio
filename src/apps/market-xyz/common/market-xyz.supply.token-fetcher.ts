@@ -39,26 +39,26 @@ export abstract class MarketXyzSupplyTokenFetcher extends RariFuseSupplyTokenFet
   }
 
   getPools(contract: MarketXyzPoolDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.getAllPools();
+    return contract.read.getAllPools();
   }
 
   getMarketTokenAddresses(contract: MarketXyzComptroller): Promise<string[]> {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   getUnderlyingTokenAddress(contract: MarketXyzToken): Promise<string> {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   getExchangeRateCurrent(contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   getSupplyRateRaw(contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.supplyRatePerBlock();
+    return contract.read.supplyRatePerBlock();
   }
 
   getPoolsBySupplier(address: string, contract: MarketXyzPoolLens): Promise<[BigNumber[], { comptroller: string }[]]> {
-    return contract.getPoolsBySupplier(address);
+    return contract.read.getPoolsBySupplier([address]);
   }
 }

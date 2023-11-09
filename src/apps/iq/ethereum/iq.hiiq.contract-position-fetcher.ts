@@ -52,7 +52,7 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<IqHiiq>) {
-    const earned = await contract.earned(address);
+    const earned = await contract.read.earned([address]);
     return [earned];
   }
 }

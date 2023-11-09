@@ -25,7 +25,7 @@ export class EthereumKeeperVestContractPositionFetcher extends VotingEscrowTempl
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<KeeperVest>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<KeeperVest>) {

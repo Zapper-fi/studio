@@ -39,15 +39,15 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
   }
 
   async getMarkets({ contract }: GetMarketsParams<InverseController>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<InverseLendingPool>) {
-    return contract.underlying().catch(() => ZERO_ADDRESS);
+    return contract.read.underlying().catch(() => ZERO_ADDRESS);
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getExchangeRateMantissa({
@@ -59,19 +59,19 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.borrowRatePerBlock().catch(() => 0);
+    return contract.read.borrowRatePerBlock().catch(() => 0);
   }
 
   async getCash({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({
@@ -81,7 +81,7 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
     address: string;
     contract: InverseLendingPool;
   }): Promise<BigNumberish> {
-    return contract.borrowBalanceCurrent(address).catch(err => {
+    return contract.read.borrowBalanceCurrent([address]).catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });

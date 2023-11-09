@@ -103,7 +103,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
       }),
     );
 
-    const reserveConfigurationData = await pool.getReserveConfigurationData(appToken.tokens[0].address);
+    const reserveConfigurationData = await pool.read.getReserveConfigurationData([appToken.tokens[0].address]);
     const liquidationThreshold = Number(reserveConfigurationData.liquidationThreshold) / 10 ** 4;
     const enabledAsCollateral = reserveConfigurationData.usageAsCollateralEnabled;
 

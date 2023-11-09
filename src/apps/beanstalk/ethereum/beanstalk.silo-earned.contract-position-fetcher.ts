@@ -69,7 +69,7 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Beanstalk>): Promise<BigNumberish[]> {
-    const earnedBeans = await contract.balanceOfEarnedBeans(address);
+    const earnedBeans = await contract.read.balanceOfEarnedBeans([address]);
     return [earnedBeans];
   }
 }

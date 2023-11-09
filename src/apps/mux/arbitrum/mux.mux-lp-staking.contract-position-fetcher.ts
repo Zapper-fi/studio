@@ -75,7 +75,7 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
     });
 
     const [staked, mlpRewards, muxRewards] = await Promise.all([
-      contract.stakedMlpAmount(address),
+      contract.read.stakedMlpAmount([address]),
       multicall.wrap(mlpRewardTracker).callStatic.claimable(address),
       multicall.wrap(muxRewardTracker).callStatic.claimable(address),
     ]);

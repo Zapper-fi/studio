@@ -34,7 +34,7 @@ export class OptimismVelodromeV2VotingEscrowContractPositionFetcher extends Voti
   }
 
   getEscrowedTokenAddress(contract: VelodromeV2Ve): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getRewardTokenBalance(address: string, contract: VelodromeV2Rewards): Promise<BigNumberish> {
@@ -45,7 +45,7 @@ export class OptimismVelodromeV2VotingEscrowContractPositionFetcher extends Voti
     const balances = await Promise.all(
       range(veCount).map(async i => {
         const tokenId = await escrow.ownerToNFTokenIdList(address, i);
-        const balance = await contract.claimable(tokenId);
+        const balance = await contract.read.claimable([tokenId]);
         return Number(balance);
       }),
     );
@@ -54,16 +54,16 @@ export class OptimismVelodromeV2VotingEscrowContractPositionFetcher extends Voti
   }
 
   getRewardTokenAddress(contract: VelodromeV2Rewards): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance(address: string, contract: VelodromeV2Ve): Promise<BigNumberish> {
-    const veCount = Number(await contract.balanceOf(address));
+    const veCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await contract.ownerToNFTokenIdList(address, i);
-        const balance = await contract.locked(tokenId);
+        const tokenId = await contract.read.ownerToNFTokenIdList([address, i]);
+        const balance = await contract.read.locked([tokenId]);
         return Number(balance.amount);
       }),
     );

@@ -81,7 +81,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
 
     if (rewardToken.address === this.diggTokenAddress) {
       const diggTokenContract = this.contractFactory.badgerDiggToken(rewardToken);
-      const sharesPerFragment = await multicall.wrap(diggTokenContract)._sharesPerFragment();
+      const sharesPerFragment = await multicall.wrap(diggTokenContract).read._sharesPerFragment();
       cumulativeAmount = new BigNumber(cumulativeAmount)
         .dividedBy(new BigNumber(sharesPerFragment.toString()))
         .toFixed(0);

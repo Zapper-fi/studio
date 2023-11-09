@@ -39,11 +39,11 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
   }
 
   async getStakedTokenAddress(contract: PancakeswapIfoChef) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getRewardTokenAddress(contract: PancakeswapIfoChef) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getReserve({ contractPosition, multicall }: GetDataPropsParams<PancakeswapIfoChef>) {
@@ -53,14 +53,14 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
       network: this.network,
     });
 
-    const reserveRaw = await multicall.wrap(cakeChefContract).balanceOf();
+    const reserveRaw = await multicall.wrap(cakeChefContract).read.balanceOf();
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     return reserve;
   }
 
   async getTotalAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapIfoChef>) {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    return multicall.wrap(mainChef).totalAllocPoint();
+    return multicall.wrap(mainChef).read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapIfoChef>) {
@@ -71,13 +71,13 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
 
   async getTotalRewardRate({ multicall }: GetMasterChefDataPropsParams<PancakeswapIfoChef>) {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    return multicall.wrap(mainChef).cakePerBlock();
+    return multicall.wrap(mainChef).read.cakePerBlock();
   }
 
   async getStakedTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<PancakeswapIfoChef>) {
     const [userInfo, pricePerShareRaw] = await Promise.all([
-      contract.userInfo(address),
-      contract.getPricePerFullShare(),
+      contract.read.userInfo([address]),
+      contract.read.getPricePerFullShare(),
     ]);
 
     const shares = userInfo.shares.toString();

@@ -40,7 +40,7 @@ export class EthereumLyraAvalonStakingContractPositionFetcher extends SingleStak
   }
 
   getRewardRates({ contract }: GetDataPropsParams<LyraLpStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<LyraLpStaking>) {
@@ -48,10 +48,10 @@ export class EthereumLyraAvalonStakingContractPositionFetcher extends SingleStak
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LyraLpStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<LyraLpStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

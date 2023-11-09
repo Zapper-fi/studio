@@ -50,7 +50,7 @@ export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPo
     address,
     contract,
   }: GetTokenBalancesParams<ArtGobblers>): Promise<BigNumberish[]> {
-    const gooBalance = await contract.gooBalance(address);
+    const gooBalance = await contract.read.gooBalance([address]);
 
     return [gooBalance];
   }

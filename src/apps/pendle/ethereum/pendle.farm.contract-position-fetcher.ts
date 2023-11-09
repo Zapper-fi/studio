@@ -45,7 +45,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
       network: this.network,
     });
 
-    const rewardRate = await multicall.wrap(stakingManager).rewardPerBlock();
+    const rewardRate = await multicall.wrap(stakingManager).read.rewardPerBlock();
     return new BigNumber(rewardRate.toString()).times(BLOCKS_PER_DAY[this.network] / 86_400).toString();
   }
 
@@ -56,12 +56,12 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
       network: this.network,
     });
 
-    const rewardRate = await multicall.wrap(stakingManager).rewardPerBlock();
+    const rewardRate = await multicall.wrap(stakingManager).read.rewardPerBlock();
     return rewardRate.gt(0);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PendleStaking>) {
-    return contract.balances(address);
+    return contract.read.balances([address]);
   }
 
   async getRewardTokenBalances() {

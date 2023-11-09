@@ -45,8 +45,8 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
 
   async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<AngleSanToken>) {
     const [stableMasterAddress, poolManagerAddress] = await Promise.all([
-      contract.stableMaster(),
-      contract.poolManager(),
+      contract.read.stableMaster(),
+      contract.read.poolManager(),
     ]);
 
     const stableMaster = this.contractFactory.angleStablemaster({
@@ -60,8 +60,8 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
 
   async getPricePerShare({ contract, multicall }: GetPricePerShareParams<AngleSanToken>) {
     const [stableMasterAddress, poolManagerAddress] = await Promise.all([
-      contract.stableMaster(),
-      contract.poolManager(),
+      contract.read.stableMaster(),
+      contract.read.poolManager(),
     ]);
 
     const stableMaster = this.contractFactory.angleStablemaster({

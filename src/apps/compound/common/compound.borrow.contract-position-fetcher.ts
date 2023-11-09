@@ -128,7 +128,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
       address: params.contractPosition.address,
       network: this.network,
     });
-    const symbol = await multicall.wrap(erc20).symbol();
+    const symbol = await multicall.wrap(erc20).read.symbol();
 
     const [decimals, supplyRaw, pricePerShare, apy, cashRaw, exchangeRate] = await Promise.all([
       this.getCTokenDecimals(params),

@@ -50,7 +50,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
       address: this.boosterContractAddress,
       network: this.network,
     });
-    const numPools = await multicall.wrap(depositContract).poolLength().then(Number);
+    const numPools = await multicall.wrap(depositContract).read.poolLength().then(Number);
     return Promise.all(
       range(0, numPools).map(async v => {
         const pool = await multicall.wrap(depositContract).poolInfo(v);
@@ -60,7 +60,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
           address,
           network: this.network,
         });
-        const rewardLength = await multicall.wrap(convexRewardPoolContract).rewardLength();
+        const rewardLength = await multicall.wrap(convexRewardPoolContract).read.rewardLength();
         const rewardAddresses = await Promise.all(
           range(0, Number(rewardLength)).map(v =>
             multicall
@@ -100,7 +100,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ConvexRewardPool>) {
-    const deposit = await contract.balanceOf(address);
+    const deposit = await contract.read.balanceOf([address]);
 
     const rewards = await contract.callStatic.earned(address);
     const rewardBalances = rewards.map(rewardToken => {

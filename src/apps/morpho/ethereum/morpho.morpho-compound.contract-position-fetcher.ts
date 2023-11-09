@@ -38,7 +38,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
       markets.map(async marketAddress => {
         const market = this.contractFactory.morphoCToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
-        const supplyTokenAddress = await marketContract.underlying().catch(err => {
+        const supplyTokenAddress = await marketcontract.read.underlying().catch(err => {
           if (isMulticallUnderlyingError(err)) return this.wEthAddress;
           throw err;
         });
@@ -59,11 +59,11 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
 
     const [supplyRateRaw, borrowRateRaw, totalMarketSupplyRaw, totalMarketBorrowRaw, marketConfiguration] =
       await Promise.all([
-        lensContract.getAverageSupplyRatePerBlock(marketAddress),
-        lensContract.getAverageBorrowRatePerBlock(marketAddress),
-        lensContract.getTotalMarketSupply(marketAddress),
-        lensContract.getTotalMarketBorrow(marketAddress),
-        lensContract.getMarketConfiguration(marketAddress),
+        lenscontract.read.getAverageSupplyRatePerBlock([marketAddress]),
+        lenscontract.read.getAverageBorrowRatePerBlock([marketAddress]),
+        lenscontract.read.getTotalMarketSupply([marketAddress]),
+        lenscontract.read.getTotalMarketBorrow([marketAddress]),
+        lenscontract.read.getMarketConfiguration([marketAddress]),
       ]);
 
     const blocksPerDay = BLOCKS_PER_DAY[this.network];

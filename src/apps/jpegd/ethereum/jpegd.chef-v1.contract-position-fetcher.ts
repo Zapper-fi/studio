@@ -29,23 +29,23 @@ export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTempla
   }
 
   async getPoolLength(contract: JpegdLpFarm): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: JpegdLpFarm, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: JpegdLpFarm): Promise<string> {
-    return contract.jpeg();
+    return contract.read.jpeg();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
-    return contract.epoch().then(v => v.rewardPerBlock);
+    return contract.read.epoch().then(v => v.rewardPerBlock);
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {

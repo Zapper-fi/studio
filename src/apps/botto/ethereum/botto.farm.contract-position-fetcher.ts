@@ -40,9 +40,9 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
 
   async getRewardRates({ contract }: GetDataPropsParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
     const [totalRewards, startTime, endTime] = await Promise.all([
-      contract.totalRewards(),
-      contract.firstStakeTime(),
-      contract.endTime(),
+      contract.read.totalRewards(),
+      contract.read.firstStakeTime(),
+      contract.read.endTime(),
     ]);
 
     return totalRewards.div(endTime.sub(startTime));
@@ -62,7 +62,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     address,
     contract,
   }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
-    return contract.totalUserStake(address);
+    return contract.read.totalUserStake([address]);
   }
 
   getRewardTokenBalances({

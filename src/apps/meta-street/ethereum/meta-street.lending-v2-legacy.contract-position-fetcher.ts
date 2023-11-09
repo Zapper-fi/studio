@@ -129,7 +129,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<PoolV2Legacy, ContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const currencyTokenAddress: string = await _params.contract.currencyToken();
+    const currencyTokenAddress: string = await _params.contract.read.currencyToken();
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -176,14 +176,19 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     contractPosition,
     address,
   }: GetTokenBalancesParams<PoolV2Legacy, DataProps>): Promise<BigNumberish[]> {
-    const tick: BigNumber = contractPosition.dataProps.tick;
+    const tick = BigInt(contractPosition.dataProps.tick.toString());
 
     /* Get account's deposit logs and compute deposited amount and received shares */
-    const depositLogs = await contract.queryFilter(contract.filters.Deposited(address, tick), START_BLOCK_NUMBER);
+
+    const depositLogs = await contract.getEvents.Deposited(
+      { account: address, tick },
+      { fromBlock: BigInt(START_BLOCK_NUMBER), toBlock: 'latest' },
+    );
+
     const deposited: Deposited = depositLogs.reduce(
       (deposited: Deposited, l) => {
-        if (l.args.tick.eq(tick) && l.args.account.toLowerCase() === address) {
-          return { amount: deposited.amount.add(l.args.amount), shares: deposited.shares.add(l.args.shares) };
+        if (l.args.tick!.eq(tick) && l.args.account!.toLowerCase() === address) {
+          return { amount: deposited.amount.add(l.args.amount!), shares: deposited.shares.add(l.args.shares!) };
         } else {
           return deposited;
         }
@@ -192,12 +197,17 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     );
 
     /* Get account's withdrawal logs and compute withdrawn amount and burned shares */
-    const firstDepositBlockNumber: number = depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER;
-    const withdrawLogs = await contract.queryFilter(contract.filters.Withdrawn(address, tick), firstDepositBlockNumber);
+    const firstDepositBlockNumber = BigInt(depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER);
+
+    const withdrawLogs = await contract.getEvents.Withdrawn(
+      { account: address, tick },
+      { fromBlock: firstDepositBlockNumber, toBlock: 'latest' },
+    );
+
     const withdrawn: Withdrawn = withdrawLogs.reduce(
       (withdrawn: Withdrawn, l) => {
-        if (l.args.tick.eq(tick) && l.args.account.toLowerCase() === address) {
-          return { amount: withdrawn.amount.add(l.args.amount), shares: withdrawn.shares.add(l.args.shares) };
+        if (l.args.tick === tick && l.args.account!.toLowerCase() === address) {
+          return { amount: withdrawn.amount.add(l.args.amount!), shares: withdrawn.shares.add(l.args.shares!) };
         } else {
           return withdrawn;
         }
@@ -206,13 +216,13 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     );
 
     /* Get redemption available */
-    const redemptionAvailable = await contract.redemptionAvailable(address, tick);
+    const redemptionAvailable = await contract.read.redemptionAvailable([address, tick]);
 
     /* Compute active shares in tick */
     const activeShares = deposited.shares.sub(redemptionAvailable.shares).sub(withdrawn.shares);
 
     /* Compute current position balance from tick data in addition to redeemed amount available */
-    const tickData = await contract.liquidityNode(tick);
+    const tickData = await contract.read.liquidityNode([tick]);
     const currentPosition = tickData.shares.eq(constants.Zero)
       ? redemptionAvailable.amount
       : activeShares.mul(tickData.value).div(tickData.shares).add(redemptionAvailable.amount);

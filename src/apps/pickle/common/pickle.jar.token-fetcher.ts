@@ -44,7 +44,7 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PickleJar, DefaultDataProps>) {
-    return contract.getRatio().then(v => [Number(v) / 10 ** 18]);
+    return contract.read.getRatio().then(v => [Number(v) / 10 ** 18]);
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<PickleJar>) {

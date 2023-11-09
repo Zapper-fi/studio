@@ -33,8 +33,8 @@ export class OptimismVelodromeFeesContractPositionFetcher extends VotingRewardsC
     );
 
     return [
-      { metaType: MetaType.CLAIMABLE, address: await poolContract.token0(), network: this.network },
-      { metaType: MetaType.CLAIMABLE, address: await poolContract.token1(), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await poolcontract.read.token0(), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await poolcontract.read.token1(), network: this.network },
     ];
   }
 

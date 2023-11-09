@@ -40,11 +40,11 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
   }
 
   async getMarkets({ contract }: GetMarketsParams<LodestarV0Comptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<LodestarV0IToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
@@ -52,19 +52,19 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.borrowRatePerBlock().catch(() => 0);
+    return contract.read.borrowRatePerBlock().catch(() => 0);
   }
 
   async getCash({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({

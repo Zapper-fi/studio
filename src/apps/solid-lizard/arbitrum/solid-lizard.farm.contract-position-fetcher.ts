@@ -39,12 +39,12 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<SolidLizardGauge>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<SolidLizardGauge>) {
     const numRewards = Number(await contract.read.rewardTokensLength());
-    return Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([n])));
   }
 
   // @TODO: Find rewards rates which matches the APY returned from their API
@@ -57,7 +57,7 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
     address,
     contract,
   }: GetTokenBalancesParams<SolidLizardGauge, SingleStakingFarmDataProps>) {
-    const balance = await contract.balanceOf(address);
+    const balance = await contract.read.balanceOf([address]);
     return balance;
   }
 

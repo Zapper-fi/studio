@@ -62,7 +62,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
       network: this.network,
     });
 
-    const gaugeCount = await multicall.wrap(factory).get_gauge_count();
+    const gaugeCount = await multicall.wrap(factory).read.get_gauge_count();
     const gaugeRange = range(0, Number(gaugeCount));
     const gaugeDefinitions = await Promise.all(
       gaugeRange.map(async index => {
@@ -79,7 +79,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const definitions = [{ metaType: MetaType.SUPPLIED, address: lpTokenAddress, network: this.network }];
     definitions.push({ metaType: MetaType.CLAIMABLE, address: this.crvTokenAddress, network: this.network });
 
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.reward_tokens(i)));
+    const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.read.reward_tokens([i])));
     const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
     filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));
 
@@ -109,11 +109,11 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
 
     // Calculate annual CRV rewards
     const period = await contract.read.period();
-    const periodTimestamp = await contract.period_timestamp(period);
+    const periodTimestamp = await contract.read.period_timestamp([period]);
     const periodWeek = Math.floor(periodTimestamp.toNumber() / moment.duration(7, 'days').asSeconds()); // num weeks
 
     const crvToken = rewardTokens.find(v => v.address === this.crvTokenAddress)!;
-    const crvInflationRateRaw = await contract.inflation_rate(periodWeek);
+    const crvInflationRateRaw = await contract.read.inflation_rate([periodWeek]);
     const crvInflationRate = Number(crvInflationRateRaw) / 10 ** crvToken.decimals;
     const crvYearlyReward = crvInflationRate * moment.duration(1, 'year').asSeconds();
     const crvYearlyRewardInUSD = crvYearlyReward * crvToken.price;
@@ -122,12 +122,12 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const rewardTokenCount = await contract.read.reward_count();
     const individualRewardsInUSD = await Promise.all(
       range(0, Number(rewardTokenCount)).map(async index => {
-        const rewardTokenAddressRaw = await contract.reward_tokens(index);
+        const rewardTokenAddressRaw = await contract.read.reward_tokens([index]);
         const rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
         const rewardToken = rewardTokens.find(p => p.address === rewardTokenAddress);
         if (!rewardToken) return 0;
 
-        const rewardData = await contract.reward_data(rewardTokenAddress);
+        const rewardData = await contract.read.reward_data([rewardTokenAddress]);
         if (Number(rewardData.period_finish) < Date.now() / 1000) return 0;
 
         return new BigNumber(rewardData.rate.toString())
@@ -161,7 +161,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
     const balances = [
-      await contract.balanceOf(address),
+      await contract.read.balanceOf([address]),
       await contract.callStatic.claimable_tokens(address),
       ...(await Promise.all(rewardTokens.slice(1).map(t => contract.claimable_reward(address, t.address)))),
     ];

@@ -48,7 +48,7 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
           address: booster,
           network: this.network,
         });
-        const numOfPools = await boosterContract.poolLength();
+        const numOfPools = await boostercontract.read.poolLength();
 
         return Promise.all(
           range(0, Number(numOfPools)).flatMap(async poolIndex => {

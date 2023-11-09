@@ -64,7 +64,7 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<VelodromePool, DefaultDataProps>) {
     const [token0, token1] = appToken.tokens;
-    const [reserve0, reserve1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
+    const [reserve0, reserve1] = await Promise.all([contract.read.reserve0(), contract.read.reserve1()]);
     const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;

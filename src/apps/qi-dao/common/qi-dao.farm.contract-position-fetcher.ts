@@ -44,23 +44,23 @@ export abstract class QiDaoFarmContractPositionFetcher extends MasterChefTemplat
   }
 
   async getPoolLength(contract: QiDaoMasterChef): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: QiDaoMasterChef, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: QiDaoMasterChef) {
-    return contract.erc20();
+    return contract.read.erc20();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<QiDaoMasterChef>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<QiDaoMasterChef>) {
-    return contract.rewardPerBlock();
+    return contract.read.rewardPerBlock();
   }
 
   async getPoolAllocPoints({

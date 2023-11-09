@@ -39,7 +39,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
       address: this.nitroPoolFactoryContractAddress,
       network: this.network,
     });
-    const poolLength = await multicall.wrap(nitroPoolFactoryContract).publishedNitroPoolsLength();
+    const poolLength = await multicall.wrap(nitroPoolFactoryContract).read.publishedNitroPoolsLength();
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
@@ -52,14 +52,14 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
       poolAddresses.map(async address => {
         const nitroContract = this.contractFactory.camelotNitroPool({ address, network: this.network });
         const [nftPoolAddress, rewardToken1, rewardToken2, grailTokenAddress] = await Promise.all([
-          await multicall.wrap(nitroContract).nftPool(),
-          await multicall.wrap(nitroContract).rewardsToken1(),
-          await multicall.wrap(nitroContract).rewardsToken2(),
-          await multicall.wrap(nitroContract).grailToken(),
+          await multicall.wrap(nitroContract).read.nftPool(),
+          await multicall.wrap(nitroContract).read.rewardsToken1(),
+          await multicall.wrap(nitroContract).read.rewardsToken2(),
+          await multicall.wrap(nitroContract).read.grailToken(),
         ]);
 
         const nftPoolContract = this.contractFactory.camelotNftPool({ address: nftPoolAddress, network: this.network });
-        const { lpToken } = await multicall.wrap(nftPoolContract).getPoolInfo();
+        const { lpToken } = await multicall.wrap(nftPoolContract).read.getPoolInfo();
 
         return {
           address,
@@ -122,7 +122,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
         });
         const [numPositionsRaw, nftPoolAddress, { totalDepositAmount }, { pending1, pending2 }] = await Promise.all([
           multicall.wrap(nitroContract).userTokenIdsLength(address),
-          multicall.wrap(nitroContract).nftPool(),
+          multicall.wrap(nitroContract).read.nftPool(),
           multicall.wrap(nitroContract).userInfo(address),
           multicall.wrap(nitroContract).pendingRewards(address),
         ]);

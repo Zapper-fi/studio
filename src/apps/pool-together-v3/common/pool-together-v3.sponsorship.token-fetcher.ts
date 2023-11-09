@@ -44,7 +44,10 @@ export abstract class PoolTogetherV3SponsorshipTokenFetcher extends PoolTogether
       address: definition.ticketAddress,
     });
 
-    const [supplyRaw, ticketDecimals] = await Promise.all([contract.totalSupply(), ticketContract.decimals()]);
+    const [supplyRaw, ticketDecimals] = await Promise.all([
+      contract.read.totalSupply(),
+      ticketcontract.read.decimals(),
+    ]);
     return Number(supplyRaw) / 10 ** ticketDecimals;
   }
 }

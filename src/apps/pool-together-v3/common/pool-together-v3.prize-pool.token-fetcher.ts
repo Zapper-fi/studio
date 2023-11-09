@@ -66,10 +66,10 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
     const sponsorshipTokenContract = this.contractFactory.erc20({ address: sponsorshipAddress, network: this.network });
     const ticketTokenContract = this.contractFactory.erc20({ address: ticketAddress, network: this.network });
     const [sponsorshipSupplyRaw, sponsorshipDecimals, ticketSupplyRaw, ticketDecimals] = await Promise.all([
-      sponsorshipTokenContract.totalSupply(),
-      sponsorshipTokenContract.decimals(),
-      ticketTokenContract.totalSupply(),
-      ticketTokenContract.decimals(),
+      sponsorshipTokencontract.read.totalSupply(),
+      sponsorshipTokencontract.read.decimals(),
+      ticketTokencontract.read.totalSupply(),
+      ticketTokencontract.read.decimals(),
     ]);
 
     const sponsorshipSupply = Number(sponsorshipSupplyRaw) / 10 ** sponsorshipDecimals;
@@ -92,10 +92,10 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
         });
 
         const [_dripRatePerSecond, totalUnclaimed, faucetBalance, decimals, tokenDependency] = await Promise.all([
-          multicall.wrap(tokenFaucetContract).dripRatePerSecond(),
-          multicall.wrap(tokenFaucetContract).totalUnclaimed(),
+          multicall.wrap(tokenFaucetContract).read.dripRatePerSecond(),
+          multicall.wrap(tokenFaucetContract).read.totalUnclaimed(),
           multicall.wrap(assetContract).balanceOf(tokenFaucetAddress),
-          multicall.wrap(assetContract).decimals(),
+          multicall.wrap(assetContract).read.decimals(),
           tokenLoader.getOne({ address: assetAddress, network: this.network }),
         ]);
         const dripRatePerSecond = Number(_dripRatePerSecond) / 10 ** decimals;

@@ -26,7 +26,7 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<KwentaEscrow>) {
-    return contract.getKwentaAddress();
+    return contract.read.getKwentaAddress();
   }
 
   async getEscrowedTokenBalance({ multicall, contract, address }: GetTokenBalancesParams<KwentaEscrow>) {
@@ -35,9 +35,9 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
       network: this.network,
     });
     const mcStakingContract = multicall.wrap(stakingContract);
-    const stakedBalance = await mcStakingContract.balanceOf(address);
-    const stakedNonEscrowedBalance = await mcStakingContract.nonEscrowedBalanceOf(address);
-    const escrowBalance = await contract.balanceOf(address);
+    const stakedBalance = await mcStakingcontract.read.balanceOf([address]);
+    const stakedNonEscrowedBalance = await mcStakingcontract.read.nonEscrowedBalanceOf([address]);
+    const escrowBalance = await contract.read.balanceOf([address]);
     const stakedEscrowBalance = stakedBalance.sub(stakedNonEscrowedBalance);
     return escrowBalance.sub(stakedEscrowBalance);
   }

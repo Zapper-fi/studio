@@ -67,7 +67,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
       network: this.network,
     });
 
-    const currencyCount = await multicall.wrap(notionalViewContract).getMaxCurrencyId();
+    const currencyCount = await multicall.wrap(notionalViewContract).read.getMaxCurrencyId();
     const currencyRange = range(1, currencyCount + 1);
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {

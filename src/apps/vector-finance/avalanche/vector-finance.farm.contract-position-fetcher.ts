@@ -49,7 +49,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   }
 
   async getPoolLength(contract: VectorFinanceMasterChef) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(
@@ -57,8 +57,8 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     poolIndex: number,
     multicall: IMulticallWrapper,
   ): Promise<string> {
-    const registeredToken = await contract.registeredToken(poolIndex);
-    const poolInfo = await contract.addressToPoolInfo(registeredToken);
+    const registeredToken = await contract.read.registeredToken([poolIndex]);
+    const poolInfo = await contract.read.addressToPoolInfo([registeredToken]);
 
     const _helper = this.contractFactory.vectorFinanceMasterChefPoolHelper({
       address: poolInfo.helper,
@@ -69,19 +69,19 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   }
 
   getRewardTokenAddress(contract: VectorFinanceMasterChef): Promise<string> {
-    return contract.vtx();
+    return contract.read.vtx();
   }
 
   async getExtraRewarder(contract: VectorFinanceMasterChef, poolIndex: number): Promise<string> {
-    const registeredToken = await contract.registeredToken(poolIndex);
-    const poolInfo = await contract.addressToPoolInfo(registeredToken);
+    const registeredToken = await contract.read.registeredToken([poolIndex]);
+    const poolInfo = await contract.read.addressToPoolInfo([registeredToken]);
     return poolInfo.rewarder;
   }
 
   async getExtraRewardTokenAddresses(contract: VectorFinanceMasterChefRewarder) {
     const rewardTokens = await Promise.all(
       range(0, 2).map(i => {
-        return contract.rewardTokens(i).catch(err => {
+        return contract.read.rewardTokens([i]).catch(err => {
           if (isMulticallUnderlyingError(err)) return null;
           throw err;
         });
@@ -102,21 +102,21 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   >): Promise<number> {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const registeredToken = await contract.registeredToken(definition.poolIndex);
-    const poolInfo = await contract.getPoolInfo(registeredToken);
+    const poolInfo = await contract.read.getPoolInfo([registeredToken]);
     return Number(poolInfo.sizeOfPool) / 10 ** stakedToken.decimals;
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<VectorFinanceMasterChef>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<VectorFinanceMasterChef>) {
-    return contract.vtxPerSec();
+    return contract.read.vtxPerSec();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<VectorFinanceMasterChef>) {
     const registeredToken = await contract.registeredToken(definition.poolIndex);
-    const poolInfo = await contract.addressToPoolInfo(registeredToken);
+    const poolInfo = await contract.read.addressToPoolInfo([registeredToken]);
     return poolInfo.allocPoint;
   }
 
@@ -134,7 +134,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     contractPosition,
   }: GetTokenBalancesParams<VectorFinanceMasterChef, MasterChefContractPositionDataProps>): Promise<BigNumberish> {
     const registeredToken = await contract.registeredToken(contractPosition.dataProps.poolIndex);
-    return contract.depositInfo(registeredToken, address);
+    return contract.read.depositInfo([registeredToken, address]);
   }
 
   async getRewardTokenBalance({

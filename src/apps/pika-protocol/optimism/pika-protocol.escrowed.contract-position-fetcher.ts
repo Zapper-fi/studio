@@ -53,7 +53,7 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
     address,
     contract,
   }: GetTokenBalancesParams<PikaProtocolVester>): Promise<BigNumberish[]> {
-    const lockedBalance = await contract.depositedAll(address);
+    const lockedBalance = await contract.read.depositedAll([address]);
 
     return [lockedBalance];
   }

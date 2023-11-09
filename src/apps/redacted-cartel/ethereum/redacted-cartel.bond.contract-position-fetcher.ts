@@ -38,7 +38,7 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RedactedBondDepository>) {
-    const [principle, claimable] = await Promise.all([contract.principal(), contract.BTRFLY()]);
+    const [principle, claimable] = await Promise.all([contract.read.principal(), contract.read.BTRFLY()]);
 
     return [
       {

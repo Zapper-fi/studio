@@ -81,8 +81,8 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     const multicall = this.appToolkit.getMulticall(network);
     const poolContract = this._getPoolContract(params.definition);
     const [liquidity, underlyingToken] = await Promise.all([
-      multicall.wrap(poolContract).expectedLiquidity(),
-      multicall.wrap(poolContract).underlyingToken(),
+      multicall.wrap(poolContract).read.expectedLiquidity(),
+      multicall.wrap(poolContract).read.underlyingToken(),
     ]);
     const underlyingTokenDecimals = await this.gearboxContractFactory
       .erc20({ address: underlyingToken, network })
@@ -111,14 +111,14 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     const poolContract = this._getPoolContract(definition);
 
     const [underlying, underlyingToken, dieselTokenTotalSupply, dieselTokenDecimals] = await Promise.all([
-      multicall.wrap(poolContract).expectedLiquidity(),
-      multicall.wrap(poolContract).underlyingToken(),
-      multicall.wrap(dieselTokenContract).totalSupply(),
-      multicall.wrap(dieselTokenContract).decimals(),
+      multicall.wrap(poolContract).read.expectedLiquidity(),
+      multicall.wrap(poolContract).read.underlyingToken(),
+      multicall.wrap(dieselTokenContract).read.totalSupply(),
+      multicall.wrap(dieselTokenContract).read.decimals(),
     ]);
 
     const underlyingTokenContract = this.gearboxContractFactory.erc20({ address: underlyingToken, network });
-    const underlyingTokenDecimals = await underlyingTokenContract.decimals();
+    const underlyingTokenDecimals = await underlyingTokencontract.read.decimals();
     const pricePerShare =
       +formatUnits(underlying, underlyingTokenDecimals) / +formatUnits(dieselTokenTotalSupply, dieselTokenDecimals);
 

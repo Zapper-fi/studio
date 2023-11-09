@@ -45,7 +45,7 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
     const countArray = Array(activeVaultsCount).fill(0);
     const addresses = await Promise.all(
       countArray.map(async (value, position) => {
-        const address = await contract.activeVaults(position);
+        const address = await contract.read.activeVaults([position]);
         return { address };
       }),
     );
@@ -55,9 +55,9 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<OlympusBoostedLiquidityManager, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const pairTokenAddress = await _params.contract.pairToken();
-    const reserveTokenAddress = await _params.contract.ohm();
-    const rewardTokens = await _params.contract.getRewardTokens();
+    const pairTokenAddress = await _params.contract.read.pairToken();
+    const reserveTokenAddress = await _params.contract.read.ohm();
+    const rewardTokens = await _params.contract.read.getRewardTokens();
     const rewardTokenMap = rewardTokens.map(token => {
       return { metaType: MetaType.CLAIMABLE, address: token, network: this.network };
     });
@@ -94,9 +94,9 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
     _params: GetTokenBalancesParams<OlympusBoostedLiquidityManager, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
     const balance = await _params.contract.getUserPairShare(_params.address);
-    const ohmPrice = (await _params.contract.getOhmTknPoolPrice()).div(1e9);
+    const ohmPrice = (await _params.contract.read.getOhmTknPoolPrice()).div(1e9);
     const ohmBalance = balance.mul(ohmPrice).div(1e9);
-    const rewardTokens = await _params.contract.getRewardTokens();
+    const rewardTokens = await _params.contract.read.getRewardTokens();
     const rewardBalances = await Promise.all(
       rewardTokens.map(async token => {
         const rewards = await _params.contract.getOutstandingRewards(_params.address);

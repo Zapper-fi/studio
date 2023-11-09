@@ -35,7 +35,7 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
   async getPricePerShare({ multicall }: GetPricePerShareParams<PStakeStkToken>) {
     const stakePoolAddress = '0xc228cefdf841defdbd5b3a18dfd414cc0dbfa0d8';
     const stakePool = this.contractFactory.pStakePool({ address: stakePoolAddress, network: this.network });
-    const exchangeRateRaw = await multicall.wrap(stakePool).exchangeRate();
+    const exchangeRateRaw = await multicall.wrap(stakePool).read.exchangeRate();
     const exchangeRate = Number(exchangeRateRaw.totalWei) / Number(exchangeRateRaw.poolTokenSupply);
     return [exchangeRate];
   }

@@ -43,29 +43,29 @@ export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleSta
 
   async getRewardRates({ contract }: GetDataPropsParams<SaddleCommunalFarm>) {
     return Promise.all([
-      contract.rewardRates(0),
-      contract.rewardRates(1),
-      contract.rewardRates(2),
-      contract.rewardRates(3),
+      contract.read.rewardRates([0]),
+      contract.read.rewardRates([1]),
+      contract.read.rewardRates([2]),
+      contract.read.rewardRates([3]),
     ]);
   }
 
   async getIsActive({ contract }: GetDataPropsParams<SaddleCommunalFarm>): Promise<boolean> {
     const rewardRates = await Promise.all([
-      contract.rewardRates(0),
-      contract.rewardRates(1),
-      contract.rewardRates(2),
-      contract.rewardRates(3),
+      contract.read.rewardRates([0]),
+      contract.read.rewardRates([1]),
+      contract.read.rewardRates([2]),
+      contract.read.rewardRates([3]),
     ]);
 
     return rewardRates.some(rate => rate.gt(0));
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
-    return contract.lockedLiquidityOf(address);
+    return contract.read.lockedLiquidityOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

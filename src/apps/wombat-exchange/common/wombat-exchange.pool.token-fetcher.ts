@@ -28,8 +28,8 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
         const _poolContract = this.contractFactory.wombatExchangePool({ address: poolAddress, network: this.network });
         const poolContract = multicall.wrap(_poolContract);
 
-        const paymentTokenAddresses = await poolContract.getTokens();
-        const tokenAddresses = await Promise.all(paymentTokenAddresses.map(v => poolContract.addressOfAsset(v)));
+        const paymentTokenAddresses = await poolcontract.read.getTokens();
+        const tokenAddresses = await Promise.all(paymentTokenAddresses.map(v => poolcontract.read.addressOfAsset([v])));
 
         return tokenAddresses;
       }),

@@ -80,7 +80,7 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
     if (!rewardsData) return [0];
 
     const { index, amount } = rewardsData;
-    const isClaimed = await contract.isClaimed(index);
+    const isClaimed = await contract.read.isClaimed([index]);
     if (isClaimed) return [0];
 
     return [amount];

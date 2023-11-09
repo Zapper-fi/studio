@@ -27,23 +27,23 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
   }
 
   async getPoolLength(contract: PopsicleChef): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: PopsicleChef, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.stakingToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.stakingToken);
   }
 
   async getRewardTokenAddress(contract: PopsicleChef): Promise<string> {
-    return contract.ice();
+    return contract.read.ice();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PopsicleChef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PopsicleChef>): Promise<BigNumberish> {
-    return contract.icePerSecond();
+    return contract.read.icePerSecond();
   }
 
   async getPoolAllocPoints({

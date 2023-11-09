@@ -45,7 +45,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<GeistStaking>) {
     const rewardTokenAddresses = await Promise.all(
       range(50).map(idx =>
-        contract.rewardTokens(idx).catch(e => {
+        contract.read.rewardTokens([idx]).catch(e => {
           if (isMulticallUnderlyingError(e)) return null;
           throw e;
         }),
@@ -88,9 +88,9 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<GeistStaking>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
-      contract.lockedBalances(address),
-      contract.withdrawableBalance(address),
-      contract.claimableRewards(address),
+      contract.read.lockedBalances([address]),
+      contract.read.withdrawableBalance([address]),
+      contract.read.claimableRewards([address]),
     ]);
 
     const withdrawableBalanceRaw = withdrawableDataRaw.amount.add(withdrawableDataRaw.penaltyAmount).toString();

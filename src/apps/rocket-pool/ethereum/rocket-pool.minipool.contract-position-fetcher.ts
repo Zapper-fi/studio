@@ -78,10 +78,10 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
           network: this.network,
         });
 
-        const isFinalized = await multicall.wrap(miniPoolContract).getFinalised();
+        const isFinalized = await multicall.wrap(miniPoolContract).read.getFinalised();
         if (isFinalized) return null;
 
-        const depositAmountRaw = await multicall.wrap(miniPoolContract).getNodeDepositBalance();
+        const depositAmountRaw = await multicall.wrap(miniPoolContract).read.getNodeDepositBalance();
         const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());
 
         return {
@@ -126,10 +126,10 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
           .map(async address => {
             const minipoolContract = this.contractFactory.rocketMinipool({ address, network: this.network });
 
-            const isFinalized = await multicall.wrap(minipoolContract).getFinalised();
+            const isFinalized = await multicall.wrap(minipoolContract).read.getFinalised();
             if (isFinalized) return null;
 
-            const nodeDepositBalance = await multicall.wrap(minipoolContract).getNodeDepositBalance();
+            const nodeDepositBalance = await multicall.wrap(minipoolContract).read.getNodeDepositBalance();
 
             return [
               {

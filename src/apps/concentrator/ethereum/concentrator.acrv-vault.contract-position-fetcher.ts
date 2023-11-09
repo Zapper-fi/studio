@@ -30,11 +30,11 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
   }
 
   async getPoolLength(contract: AladdinConcentratorAcrvVault): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: AladdinConcentratorAcrvVault, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(
@@ -42,7 +42,7 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
     _poolIndex: number,
     multicall: IMulticallWrapper,
   ) {
-    return Promise.all([multicall.wrap(contract).ctr(), multicall.wrap(contract).aladdinCRV()]);
+    return Promise.all([multicall.wrap(contract).read.ctr(), multicall.wrap(contract).read.aladdinCRV()]);
   }
 
   async getTotalAllocPoints() {
@@ -71,8 +71,8 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorAcrvVault>) {
     const poolIndex = contractPosition.dataProps.poolIndex;
-    const ctrBalanceRaw = await contract.pendingCTR(poolIndex, address);
-    const aCrvBalanceRaw = await contract.pendingReward(poolIndex, address);
+    const ctrBalanceRaw = await contract.read.pendingCTR([poolIndex, address]);
+    const aCrvBalanceRaw = await contract.read.pendingReward([poolIndex, address]);
     return [ctrBalanceRaw, aCrvBalanceRaw];
   }
 }

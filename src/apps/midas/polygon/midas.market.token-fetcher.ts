@@ -65,7 +65,7 @@ export class PolygonMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
   }
 
   getUnderlyingTokenAddress(contract: MidasCErc20Token): Promise<string> {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   getExchangeRateCurrent(contract: MidasCErc20Token): Promise<BigNumberish> {
@@ -73,6 +73,6 @@ export class PolygonMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
   }
 
   getSupplyRateRaw(contract: MidasCErc20Token): Promise<BigNumberish> {
-    return contract.supplyRatePerBlock();
+    return contract.read.supplyRatePerBlock();
   }
 }

@@ -37,7 +37,7 @@ export abstract class ClearpoolPoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<ClearpoolPool>) {
-    return contract.getCurrentExchangeRate().then(v => [Number(v) / 10 ** 18]);
+    return contract.read.getCurrentExchangeRate().then(v => [Number(v) / 10 ** 18]);
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<ClearpoolPool>) {
@@ -52,6 +52,6 @@ export abstract class ClearpoolPoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   getLabel({ contract }: GetDisplayPropsParams<ClearpoolPool>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

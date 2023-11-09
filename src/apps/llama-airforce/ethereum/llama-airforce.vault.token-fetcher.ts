@@ -48,7 +48,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
   }: GetUnderlyingTokensParams<LlamaAirforceUnionVault>) {
     if (address === '0x8659fc767cad6005de79af65dafe4249c57927af') {
       const pirexContract = this.contractFactory.llamaAirforceUnionVaultPirex({ address, network: this.network });
-      return [{ address: await multicall.wrap(pirexContract).asset(), network: this.network }];
+      return [{ address: await multicall.wrap(pirexContract).read.asset(), network: this.network }];
     }
 
     return [{ address: await contract.read.underlying(), network: this.network }];
@@ -61,7 +61,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
         network: this.network,
       });
 
-      const reserveRaw = await multicall.wrap(pirexContract).totalAssets();
+      const reserveRaw = await multicall.wrap(pirexContract).read.totalAssets();
       const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
       const pricePerShare = reserve / appToken.supply;
       return [pricePerShare];

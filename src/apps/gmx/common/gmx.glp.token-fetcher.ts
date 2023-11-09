@@ -39,10 +39,10 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
       network: this.network,
     });
 
-    const vaultAddress = await multicall.wrap(glpManagerContract).vault();
+    const vaultAddress = await multicall.wrap(glpManagerContract).read.vault();
     const vault = this.contractFactory.gmxVault({ address: vaultAddress, network: this.network });
 
-    const tokenCount = await multicall.wrap(vault).allWhitelistedTokensLength();
+    const tokenCount = await multicall.wrap(vault).read.allWhitelistedTokensLength();
     const tokenRange = range(0, Number(tokenCount));
     const tokenAddresses = await Promise.all(tokenRange.map(i => multicall.wrap(vault).allWhitelistedTokens(i)));
 
@@ -56,7 +56,7 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
       network: this.network,
     });
 
-    const vaultAddress = await multicall.wrap(glpManagerContract).vault();
+    const vaultAddress = await multicall.wrap(glpManagerContract).read.vault();
     const vault = this.contractFactory.gmxVault({ address: vaultAddress, network: this.network });
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {

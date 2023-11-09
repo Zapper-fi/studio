@@ -25,10 +25,10 @@ export class EthereumYearnVeYfiContractPositionFetcher extends VotingEscrowTempl
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<YearnVeYfi>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnVeYfi>) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 }

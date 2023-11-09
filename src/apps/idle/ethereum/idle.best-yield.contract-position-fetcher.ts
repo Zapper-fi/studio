@@ -51,10 +51,10 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
     const definitions = await Promise.all(
       appTokens.map(async appToken => {
         const idleTokenContract = this.contractFactory.idleToken({ address: appToken.address, network: this.network });
-        const isRiskAdjusted = await multicall.wrap(idleTokenContract).isRiskAdjusted();
+        const isRiskAdjusted = await multicall.wrap(idleTokenContract).read.isRiskAdjusted();
         if (isRiskAdjusted == true) return null;
 
-        const rewardTokenAddressesRaw = await multicall.wrap(idleTokenContract).getGovTokens();
+        const rewardTokenAddressesRaw = await multicall.wrap(idleTokenContract).read.getGovTokens();
         const rewardTokenAddresses = rewardTokenAddressesRaw.map(x => x.toLowerCase());
         return {
           address: appToken.address,
@@ -87,8 +87,8 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<IdleToken>) {
     const [balanceRaw, rewardBalancesRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.getGovTokensAmounts(address),
+      contract.read.balanceOf([address]),
+      contract.read.getGovTokensAmounts([address]),
     ]);
 
     return [balanceRaw, ...rewardBalancesRaw];

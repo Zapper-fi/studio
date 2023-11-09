@@ -60,7 +60,7 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
     params: GetTokenDefinitionsParams<Y2KFinanceVaultV1, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     const epochIdsRaw = await this.getEpochIds(params.multicall, params.contract);
-    const claimableAsset = await params.contract.asset();
+    const claimableAsset = await params.contract.read.asset();
     const epochIds = epochIdsRaw.map(x => x.toString());
     return epochIds
       .map(tokenId => [
@@ -82,7 +82,7 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
   async getLabel(
     params: GetDisplayPropsParams<Y2KFinanceVaultV1, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    const name = await params.contract.name();
+    const name = await params.contract.read.name();
     return name;
   }
 

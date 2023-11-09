@@ -30,19 +30,19 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
   }
 
   async getPoolLength(contract: GroLpTokenStaker): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: GroLpTokenStaker, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: GroLpTokenStaker) {
-    return contract.poolInfo(0).then(v => v.lpToken);
+    return contract.read.poolInfo([0]).then(v => v.lpToken);
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<GroLpTokenStaker>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<GroLpTokenStaker>) {
@@ -50,7 +50,7 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<GroLpTokenStaker>): Promise<BigNumberish> {
-    return contract.groPerBlock();
+    return contract.read.groPerBlock();
   }
 
   async getStakedTokenBalance({

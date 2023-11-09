@@ -61,7 +61,7 @@ export abstract class OriginStorySeriesContractPositionFetcher extends ContractP
     address,
     contract,
   }: GetTokenBalancesParams<Series, DefaultDataProps>): Promise<BigNumberish[]> {
-    const balances = await contract.balanceOf(address);
+    const balances = await contract.read.balanceOf([address]);
     return [balances];
   }
 }

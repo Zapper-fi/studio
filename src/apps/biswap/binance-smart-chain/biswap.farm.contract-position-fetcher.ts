@@ -29,23 +29,23 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
   }
 
   async getPoolLength(contract: BiswapMasterchef): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: BiswapMasterchef, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: BiswapMasterchef): Promise<string> {
-    return contract.BSW();
+    return contract.read.BSW();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.BSWPerBlock();
+    return contract.read.BSWPerBlock();
   }
 
   async getPoolAllocPoints({

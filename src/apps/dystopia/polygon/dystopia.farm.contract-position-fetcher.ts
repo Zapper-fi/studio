@@ -44,12 +44,12 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<DystopiaGauge>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<DystopiaGauge>) {
     const numRewards = Number(await contract.read.rewardTokensLength());
-    return Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([n])));
   }
 
   getRewardRates({ contract, contractPosition }: GetDataPropsParams<DystopiaGauge, SingleStakingFarmDataProps>) {
@@ -61,7 +61,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
     address,
     contract,
   }: GetTokenBalancesParams<DystopiaGauge, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({

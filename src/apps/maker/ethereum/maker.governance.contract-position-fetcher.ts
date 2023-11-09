@@ -28,7 +28,7 @@ export class EthereumMakerGovernanceContractPositionFetcher extends SingleStakin
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<MakerGovernance>) {
-    return contract.GOV();
+    return contract.read.GOV();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<MakerGovernance>) {
@@ -40,7 +40,7 @@ export class EthereumMakerGovernanceContractPositionFetcher extends SingleStakin
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MakerGovernance>) {
-    return contract.deposits(address);
+    return contract.read.deposits([address]);
   }
 
   async getRewardTokenBalances() {

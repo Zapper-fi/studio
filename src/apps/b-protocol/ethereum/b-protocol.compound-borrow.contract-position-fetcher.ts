@@ -44,12 +44,12 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
 
   async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
     const cTokenAddresses = await contract.read.getAllMarkets();
-    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
+    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.read.c2b([cTokenAddress])));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<BProtocolCompoundToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
@@ -78,11 +78,11 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({

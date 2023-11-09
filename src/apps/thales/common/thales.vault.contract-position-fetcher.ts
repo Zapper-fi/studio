@@ -58,13 +58,13 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
 
   async getDataProps({ contract, multicall }): Promise<ThalesVaultDataProp> {
     const currentRound = await contract.read.round();
-    const liquidityRaw = await contract.allocationPerRound(currentRound);
+    const liquidityRaw = await contract.read.allocationPerRound([currentRound]);
     const underlyingTokenAddress = await contract.read.sUSD();
     const underlyingTokenContract = this.appToolkit.globalContracts.erc20({
       address: underlyingTokenAddress,
       network: this.network,
     });
-    const decimals = await multicall.wrap(underlyingTokenContract).decimals();
+    const decimals = await multicall.wrap(underlyingTokenContract).read.decimals();
     return {
       liquidity: Number(liquidityRaw) / 10 ** decimals,
     };

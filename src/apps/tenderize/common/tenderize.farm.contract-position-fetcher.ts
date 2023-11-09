@@ -39,11 +39,11 @@ export abstract class FarmContractPositionFetcher extends SingleStakingFarmTempl
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<TenderFarm, SingleStakingFarmDataProps>) {
-    return contract.stakeOf(address);
+    return contract.read.stakeOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<TenderFarm, SingleStakingFarmDataProps>) {
-    return contract.availableRewards(address);
+    return contract.read.availableRewards([address]);
   }
 
   async getRewardRates({ address }: GetDataPropsParams<TenderFarm, SingleStakingFarmDataProps>) {

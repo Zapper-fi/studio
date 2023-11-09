@@ -42,7 +42,7 @@ export class EthereumGearboxRewardsPositionFetcher extends MerkleTemplateContrac
     if (!rewardsData) return [0];
 
     const { amount } = rewardsData;
-    const totalClaimed = await contract.claimed(address);
+    const totalClaimed = await contract.read.claimed([address]);
     return [BigNumber.from(amount).sub(totalClaimed)];
   }
 }

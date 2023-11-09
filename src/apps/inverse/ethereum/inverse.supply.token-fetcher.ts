@@ -38,15 +38,15 @@ export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetche
   }
 
   async getMarkets({ contract }: GetMarketsParams<InverseController>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<InverseLendingPool>) {
-    return contract.underlying().catch(() => ZERO_ADDRESS);
+    return contract.read.underlying().catch(() => ZERO_ADDRESS);
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<InverseLendingPool>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getExchangeRateMantissa({ appToken }: GetPricePerShareParams<InverseLendingPool>) {
@@ -54,6 +54,6 @@ export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetche
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<InverseLendingPool>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 }

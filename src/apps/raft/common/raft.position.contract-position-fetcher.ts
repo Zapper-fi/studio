@@ -69,7 +69,7 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
     });
 
     const collateralToken = contractPosition.tokens[0];
-    const minCRatio = Number(await multicall.wrap(liquidationContract).MCR()) / 10 ** collateralToken.decimals;
+    const minCRatio = Number(await multicall.wrap(liquidationContract).read.MCR()) / 10 ** collateralToken.decimals;
 
     return { minCRatio };
   }

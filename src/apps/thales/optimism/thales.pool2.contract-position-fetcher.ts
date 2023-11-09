@@ -52,6 +52,6 @@ export class OptimismThalesPool2ContractPositionFetcher extends ContractPosition
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LpStaking>): Promise<BigNumberish[]> {
-    return Promise.all([contract.balanceOf(address), contract.earned(address)]);
+    return Promise.all([contract.read.balanceOf([address]), contract.read.earned([address])]);
   }
 }

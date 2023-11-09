@@ -30,26 +30,26 @@ export abstract class CurveCryptoPoolTokenFetcher extends CurvePoolDynamicTokenF
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveCryptoRegistry>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveCryptoRegistry>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([poolIndex]);
   }
 
   async resolveTokenAddress({ contract, swapAddress }: ResolveTokenAddressParams<CurveCryptoRegistry>) {
-    return contract.get_lp_token(swapAddress);
+    return contract.read.get_lp_token([swapAddress]);
   }
 
   async resolveCoinAddresses({ contract, swapAddress }: ResolveCoinAddressesParams<CurveCryptoRegistry>) {
-    return contract.get_coins(swapAddress);
+    return contract.read.get_coins([swapAddress]);
   }
 
   async resolveReserves({ contract, swapAddress }: ResolveReservesParams<CurveCryptoRegistry>) {
-    return contract.get_balances(swapAddress);
+    return contract.read.get_balances([swapAddress]);
   }
 
   async resolveFees({ contract, swapAddress }: ResolveFeesParams<CurveCryptoRegistry>) {
-    return contract.get_fees(swapAddress);
+    return contract.read.get_fees([swapAddress]);
   }
 }

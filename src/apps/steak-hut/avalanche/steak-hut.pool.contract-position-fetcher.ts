@@ -28,15 +28,15 @@ export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemp
   }
 
   async getPoolLength(contract: SteakHutPool): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: SteakHutPool, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: SteakHutPool): Promise<string> {
-    return contract.JOE();
+    return contract.read.JOE();
   }
 
   async getTotalAllocPoints(): Promise<BigNumberish> {

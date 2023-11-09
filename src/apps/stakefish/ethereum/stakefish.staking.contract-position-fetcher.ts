@@ -74,7 +74,7 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakefishFeePool>) {
-    const [pending, claimed] = await contract.pendingReward(address);
+    const [pending, claimed] = await contract.read.pendingReward([address]);
     const [staked, total] = await this.getStakedBalances(address, Number(pending) + Number(claimed));
     return [staked, total - staked, pending];
   }

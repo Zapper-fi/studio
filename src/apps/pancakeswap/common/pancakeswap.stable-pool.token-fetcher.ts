@@ -36,28 +36,28 @@ export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolD
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<PancakeswapStablePoolRegistry>) {
-    return contract.pairLength();
+    return contract.read.pairLength();
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<PancakeswapStablePoolRegistry>) {
-    return contract.swapPairContract(poolIndex);
+    return contract.read.swapPairContract([poolIndex]);
   }
 
   async resolveTokenAddress({ contract }: ResolveTokenAddressParams<PancakeswapStablePool>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async resolveCoinAddresses({ contract }: ResolveCoinAddressesParams<PancakeswapStablePool>) {
     const coinCount = await contract.read.N_COINS();
-    return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.coins(coinIndex)));
+    return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.read.coins([coinIndex])));
   }
 
   async resolveReserves({ contract }: ResolveReservesParams<PancakeswapStablePool>) {
     const coinCount = await contract.read.N_COINS();
-    return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.balances(coinIndex)));
+    return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.read.balances([coinIndex])));
   }
 
   async resolveFees({ contract }: ResolveFeesParams<PancakeswapStablePool>) {
-    return contract.fee();
+    return contract.read.fee();
   }
 }

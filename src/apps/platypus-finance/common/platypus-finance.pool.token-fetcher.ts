@@ -32,8 +32,8 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
         const _poolContract = this.contractFactory.platypusFinancePool({ address: poolAddress, network: this.network });
         const poolContract = multicall.wrap(_poolContract);
 
-        const paymentTokenAddresses = await poolContract.getTokenAddresses();
-        const tokenAddresses = await Promise.all(paymentTokenAddresses.map(v => poolContract.assetOf(v)));
+        const paymentTokenAddresses = await poolcontract.read.getTokenAddresses();
+        const tokenAddresses = await Promise.all(paymentTokenAddresses.map(v => poolcontract.read.assetOf([v])));
 
         return tokenAddresses;
       }),

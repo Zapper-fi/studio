@@ -45,7 +45,7 @@ export class AvalanchePenguinVaultClaimableContractPositionFetcher extends Contr
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PenguinVault>) {
-    const rewardBalance = await contract.pendingXPefi(address).catch(err => {
+    const rewardBalance = await contract.read.pendingXPefi([address]).catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });

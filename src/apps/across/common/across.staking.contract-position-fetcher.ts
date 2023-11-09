@@ -51,7 +51,7 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
       address: this.acceleratingDistributorAddress,
       network: this.network,
     });
-    const rewardTokenAddress = await multicall.wrap(acceleratingDistributorContract).rewardToken();
+    const rewardTokenAddress = await multicall.wrap(acceleratingDistributorContract).read.rewardToken();
 
     return appTokens.map(pool => {
       return {

@@ -44,13 +44,13 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
     contract,
   }: GetPriceParams<AlphaBank, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
     const ethPrice = appToken.tokens[0].price;
-    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.totalETH(), contract.totalSupply()]);
+    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.read.totalETH(), contract.read.totalSupply()]);
 
     return (ethPrice * Number(totalEthRaw)) / Number(totalSupplyRaw);
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AlphaBank>) {
-    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.totalETH(), contract.totalSupply()]);
+    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.read.totalETH(), contract.read.totalSupply()]);
     return [Number(totalEthRaw) / Number(totalSupplyRaw)];
   }
 
@@ -64,7 +64,7 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getApy({ contract }: GetDataPropsParams<AlphaBank>) {
-    const [totalEthRaw, totalDebtValueRaw] = await Promise.all([contract.totalETH(), contract.glbDebtVal()]);
+    const [totalEthRaw, totalDebtValueRaw] = await Promise.all([contract.read.totalETH(), contract.read.glbDebtVal()]);
 
     const utilizationRate = new BigNumber(totalDebtValueRaw.div(totalEthRaw).toString());
 

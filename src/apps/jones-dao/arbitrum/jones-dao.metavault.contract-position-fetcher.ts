@@ -79,6 +79,6 @@ export class ArbitrumJonesDaoMetavaultTokenFetcher extends ContractPositionTempl
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<JonesMetavault, DefaultDataProps>) {
-    return Promise.all([contract.balanceOf(address)]);
+    return Promise.all([contract.read.balanceOf([address])]);
   }
 }

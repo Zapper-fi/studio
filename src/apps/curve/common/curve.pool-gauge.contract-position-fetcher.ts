@@ -146,7 +146,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     // Legacy "double" gauge supports one extra reward token
     if (definition.gaugeType === GaugeType.DOUBLE) {
       const doubleGauge = this.contractFactory.curveDoubleGauge({ address, network: this.network });
-      const rewardTokenAddress = await multicall.wrap(doubleGauge).rewarded_token();
+      const rewardTokenAddress = await multicall.wrap(doubleGauge).read.rewarded_token();
       definitions.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress, network: this.network });
     }
 
@@ -217,7 +217,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     multicall,
   }: GetTokenBalancesParams<CurveGauge, CurvePoolGaugeDataProps>): Promise<BigNumberish[]> {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    const balances = [await contract.balanceOf(address), await contract.claimable_tokens(address)];
+    const balances = [await contract.read.balanceOf([address]), await contract.read.claimable_tokens([address])];
 
     // Legacy "double" gauge supports one extra reward token
     if (contractPosition.dataProps.gaugeType === GaugeType.DOUBLE && rewardTokens.length > 1) {

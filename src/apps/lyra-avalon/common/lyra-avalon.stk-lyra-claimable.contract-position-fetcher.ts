@@ -49,7 +49,7 @@ export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends 
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LyraStkLyra>) {
-    const rewardBalance = await contract.getTotalRewardsBalance(address);
+    const rewardBalance = await contract.read.getTotalRewardsBalance([address]);
     return [rewardBalance];
   }
 }

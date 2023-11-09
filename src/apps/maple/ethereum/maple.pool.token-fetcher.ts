@@ -59,8 +59,8 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
     appToken,
   }: GetPricePerShareParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {
     const [totalAssetsRaw, unrealizedLossesRaw] = await Promise.all([
-      contract.totalAssets(),
-      contract.unrealizedLosses(),
+      contract.read.totalAssets(),
+      contract.read.unrealizedLosses(),
     ]);
 
     const totalAssets = Number(totalAssetsRaw) / 10 ** appToken.decimals;

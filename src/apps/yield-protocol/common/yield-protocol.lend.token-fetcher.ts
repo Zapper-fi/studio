@@ -154,7 +154,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
 
   async getDataProps(params: GetDataPropsParams<YieldProtocolLendToken, FyTokenDataProps, FyTokenDefinition>) {
     const defaultDataProps = await super.getDataProps(params);
-    const maturity = await params.contract.maturity();
+    const maturity = await params.contract.read.maturity();
     return { ...defaultDataProps, maturity: Number(maturity) };
   }
 

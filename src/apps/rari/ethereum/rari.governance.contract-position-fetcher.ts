@@ -52,6 +52,6 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<RariGovernanceTokenDistributor>) {
-    return contract.getUnclaimedRgt(address);
+    return contract.read.getUnclaimedRgt([address]);
   }
 }

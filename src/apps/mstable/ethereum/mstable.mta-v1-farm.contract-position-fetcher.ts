@@ -42,7 +42,7 @@ export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStaki
   }
 
   getRewardRates({ contract }: GetDataPropsParams<MstableVmta, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableVmta>) {
@@ -57,6 +57,6 @@ export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStaki
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

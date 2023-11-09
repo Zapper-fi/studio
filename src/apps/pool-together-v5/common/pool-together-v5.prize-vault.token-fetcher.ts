@@ -45,7 +45,7 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
       address: vaultFactoryAddress,
       network: this.network,
     });
-    const vaultNumberRaw = await multicall.wrap(vaultFactoryContract).totalVaults();
+    const vaultNumberRaw = await multicall.wrap(vaultFactoryContract).read.totalVaults();
 
     return Promise.all(
       range(0, vaultNumberRaw.toNumber()).map(async index => {
@@ -81,7 +81,7 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<Erc4626>) {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getLabelDetailed({ appToken }: GetDisplayPropsParams<Erc4626>) {

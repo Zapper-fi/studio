@@ -53,7 +53,7 @@ export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractP
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakeDaoMultiGauge>) {
-    const stakes = await contract.lockedStakesOf(address);
+    const stakes = await contract.read.lockedStakesOf([address]);
     const balanceRaw = stakes.map(x => x.liquidity);
 
     const sum = balanceRaw.reduce((sum, cur) => sum.add(cur), BigNumber.from(0));

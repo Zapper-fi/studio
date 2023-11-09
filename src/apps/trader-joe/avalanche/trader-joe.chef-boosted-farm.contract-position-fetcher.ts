@@ -40,23 +40,23 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
   }
 
   async getPoolLength(contract: TraderJoeChefBoosted) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: TraderJoeChefBoosted, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: TraderJoeChefBoosted) {
-    return contract.JOE();
+    return contract.read.JOE();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<TraderJoeChefBoosted>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeChefBoosted>) {
-    return contract.joePerSec();
+    return contract.read.joePerSec();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<TraderJoeChefBoosted>) {
@@ -64,7 +64,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
   }
 
   async getExtraRewarder(contract: TraderJoeChefBoosted, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.rewarder);
+    return contract.read.poolInfo([poolIndex]).then(v => v.rewarder);
   }
 
   async getExtraRewardTokenAddresses(contract: TraderJoeChefBoostedRewarder): Promise<string[]> {
@@ -74,7 +74,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
   async getExtraRewardTokenRewardRates({
     rewarderContract,
   }: GetMasterChefV2ExtraRewardTokenRewardRates<TraderJoeChefBoosted, TraderJoeChefBoostedRewarder>) {
-    return [await rewarderContract.tokenPerSec()];
+    return [await rewardercontract.read.tokenPerSec()];
   }
 
   async getStakedTokenBalance({

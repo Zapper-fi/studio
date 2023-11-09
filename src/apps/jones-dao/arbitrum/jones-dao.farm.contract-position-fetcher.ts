@@ -55,7 +55,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
           address,
           network: this.network,
         });
-        const stakedTokenAddress = await multicall.wrap(jonesStakingContract).stakingToken();
+        const stakedTokenAddress = await multicall.wrap(jonesStakingContract).read.stakingToken();
 
         return {
           address,
@@ -67,7 +67,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
   }
 
   getRewardRates({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.rewardRateJONES();
+    return contract.read.rewardRateJONES();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
@@ -78,13 +78,13 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
     address,
     contract,
   }: GetTokenBalancesParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

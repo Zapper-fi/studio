@@ -51,18 +51,18 @@ export class OptimismKwentaStakingV2ContractPositionFetcher extends SingleStakin
   }
 
   getRewardRates({ contract }: GetDataPropsParams<KwentaStakingV2, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({ contract }: GetDataPropsParams<KwentaStakingV2>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate.gt(0));
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<KwentaStakingV2, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<KwentaStakingV2, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

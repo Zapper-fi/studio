@@ -37,7 +37,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
       network: this.network,
     });
 
-    const poolLength = await multicall.wrap(factoryContract).allPoolsLength();
+    const poolLength = await multicall.wrap(factoryContract).read.allPoolsLength();
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
@@ -63,7 +63,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<VelodromeV2Pool>) {
-    const [reserveRaw0, reserveRaw1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
+    const [reserveRaw0, reserveRaw1] = await Promise.all([contract.read.reserve0(), contract.read.reserve1()]);
 
     const reserves = [reserveRaw0, reserveRaw1].map((v, i) => Number(v) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(v => v / appToken.supply);

@@ -32,11 +32,11 @@ export class EthereumSaddlePoolTokenFetcher extends CurvePoolStaticTokenFetcher<
   }
 
   async resolvePoolCoinAddress({ contract, index }: ResolvePoolCoinAddressParams<SaddleSwap>) {
-    return contract.getToken(index);
+    return contract.read.getToken([index]);
   }
 
   async resolvePoolReserve({ contract, index }: ResolvePoolReserveParams<SaddleSwap>) {
-    return contract.getTokenBalance(index);
+    return contract.read.getTokenBalance([index]);
   }
 
   async resolvePoolFee() {

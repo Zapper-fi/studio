@@ -49,30 +49,30 @@ export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorro
   }
 
   getPools(contract: RariFusePoolsDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.getAllPools();
+    return contract.read.getAllPools();
   }
 
   getMarketTokenAddresses(contract: RariFuseComptroller): Promise<string[]> {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   getUnderlyingTokenAddress(contract: RariFuseToken): Promise<string> {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   getBorrowRateRaw(contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.borrowRatePerBlock();
+    return contract.read.borrowRatePerBlock();
   }
 
   getTotalBorrows(contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.totalBorrows();
+    return contract.read.totalBorrows();
   }
 
   getBorrowBalance(address: string, contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.borrowBalanceCurrent(address);
+    return contract.read.borrowBalanceCurrent([address]);
   }
 
   getPoolsBySupplier(address: string, contract: RariFusePoolLens): Promise<[BigNumber[], { comptroller: string }[]]> {
-    return contract.getPoolsBySupplier(address);
+    return contract.read.getPoolsBySupplier([address]);
   }
 }

@@ -57,7 +57,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
   }
 
   getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<ConvexSingleStakingRewards>) {
-    return contract.stakingToken();
+    return contract.read.stakingToken();
   }
 
   async getRewardTokenAddresses({ multicall, contract }: GetTokenDefinitionsParams<ConvexSingleStakingRewards>) {
@@ -71,9 +71,9 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const numExtraRewards = await contract.read.extraRewardsLength();
     const extraRewardTokenAddresses = await Promise.all(
       range(0, Number(numExtraRewards)).map(async v => {
-        const vbpAddress = await contract.extraRewards(v);
+        const vbpAddress = await contract.read.extraRewards([v]);
         const vbp = this.contractFactory.convexVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
-        const rewardTokenAddressRaw = await multicall.wrap(vbp).rewardToken();
+        const rewardTokenAddressRaw = await multicall.wrap(vbp).read.rewardToken();
         let rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
 
         const stashTokenWrapper = this.contractFactory.convexStashTokenWrapper({
@@ -88,7 +88,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
           .catch(() => false);
 
         if (isWrapper) {
-          const rewardTokenAddressRaw = await multicall.wrap(stashTokenWrapper).token();
+          const rewardTokenAddressRaw = await multicall.wrap(stashTokenWrapper).read.token();
           rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
         }
 
@@ -111,12 +111,12 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const [, cvxRewardToken] = rewardTokens;
 
     const cvxTokenContract = this.contractFactory.erc20(cvxRewardToken);
-    const cvxSupplyRaw = await multicall.wrap(cvxTokenContract).totalSupply();
+    const cvxSupplyRaw = await multicall.wrap(cvxTokenContract).read.totalSupply();
 
-    const crvRewardRate = await multicall.wrap(contract).rewardRate();
+    const crvRewardRate = await multicall.wrap(contract).read.rewardRate();
     let cvxRewardRate = claimedCrvToMintedCvx(crvRewardRate.toString(), cvxSupplyRaw.toString());
 
-    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
+    const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardRates = await Promise.all(
       range(0, Number(numExtraRewards)).map(async v => {
         const vbpAddress = await multicall.wrap(contract).extraRewards(v);
@@ -126,8 +126,8 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
           network: Network.ETHEREUM_MAINNET,
         });
 
-        const extraRewardRate = await multicall.wrap(vbpContract).rewardRate();
-        const extraRewardTokenAddressRaw = await multicall.wrap(vbpContract).rewardToken();
+        const extraRewardRate = await multicall.wrap(vbpContract).read.rewardRate();
+        const extraRewardTokenAddressRaw = await multicall.wrap(vbpContract).read.rewardToken();
         const extraRewardTokenAddress = extraRewardTokenAddressRaw.toLowerCase();
 
         // We will combine CVX extra rewards with the amount minted
@@ -147,7 +147,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     address,
     contract,
   }: GetTokenBalancesParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({
@@ -162,16 +162,16 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const [, cvxRewardToken] = rewardTokens;
 
     const cvxTokenContract = multicall.wrap(this.contractFactory.erc20(cvxRewardToken));
-    const currentCvxSupply = await cvxTokenContract.totalSupply();
+    const currentCvxSupply = await cvxTokencontract.read.totalSupply();
 
-    const crvBalanceBN = await contract.earned(address);
+    const crvBalanceBN = await contract.read.earned([address]);
     const crvBalanceRaw = crvBalanceBN.toString();
     let cvxBalanceRaw = claimedCrvToMintedCvx(crvBalanceRaw, currentCvxSupply.toString());
 
-    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
+    const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardBalances = await Promise.all(
       range(0, Number(numExtraRewards)).map(async (_, i) => {
-        const vbpAddress = await contract.extraRewards(i);
+        const vbpAddress = await contract.read.extraRewards([i]);
 
         const vbpContract = this.contractFactory.convexVirtualBalanceRewardPool({
           address: vbpAddress,
@@ -179,7 +179,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
         });
 
         const earnedBN = await multicall.wrap(vbpContract).earned(address);
-        const extraRewardTokenAddressRaw = await multicall.wrap(vbpContract).rewardToken();
+        const extraRewardTokenAddressRaw = await multicall.wrap(vbpContract).read.rewardToken();
         const extraRewardTokenAddress = extraRewardTokenAddressRaw.toLowerCase();
 
         // We will combine CVX extra rewards with the amount minted

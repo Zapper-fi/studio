@@ -66,12 +66,12 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
       }),
     );
 
-    const vaultTokenAddress = await collateralTokenContract.underlying();
+    const vaultTokenAddress = await collateralTokencontract.read.underlying();
     const vaultTokenContract = multicall.wrap(
       this.contractFactory.tarotBorrowable({ network: this.network, address: vaultTokenAddress }),
     );
 
-    return await multicall.wrap(vaultTokenContract).underlying();
+    return await multicall.wrap(vaultTokenContract).read.underlying();
   }
 
   async getDefinitions({ multicall, tokenLoader }: GetDefinitionsParams): Promise<Definition[]> {

@@ -44,23 +44,23 @@ export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTempl
   }
 
   getPoolsLength(contract: DolomiteAmmFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+    return contract.read.allPairsLength();
   }
 
   getPoolAddress(contract: DolomiteAmmFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+    return contract.read.allPairs([index]);
   }
 
   getPoolToken0(contract: DolomiteAmmPair): Promise<string> {
-    return contract.token0();
+    return contract.read.token0();
   }
 
   getPoolToken1(contract: DolomiteAmmPair): Promise<string> {
-    return contract.token1();
+    return contract.read.token1();
   }
 
   getPoolReserves(contract: DolomiteAmmPair): Promise<BigNumberish[]> {
-    return contract.getReservesWei();
+    return contract.read.getReservesWei();
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<DolomiteAmmPair, UniswapV2TokenDataProps>): Promise<string> {

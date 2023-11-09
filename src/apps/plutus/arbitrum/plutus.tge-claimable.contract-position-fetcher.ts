@@ -49,7 +49,7 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
-    const pendingClaims = await contract.pendingClaims(address);
+    const pendingClaims = await contract.read.pendingClaims([address]);
     return [pendingClaims._allocation.sub(pendingClaims._claimed)];
   }
 }

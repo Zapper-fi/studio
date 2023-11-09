@@ -44,6 +44,6 @@ export class EthereumMakerDsrContractPositionFetcher extends ContractPositionTem
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<MakerMdcPot>) {
-    return [await contract.pie(address)];
+    return [await contract.read.pie([address])];
   }
 }

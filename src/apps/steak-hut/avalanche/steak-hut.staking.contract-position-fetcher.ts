@@ -32,22 +32,22 @@ export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStaki
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<SteakHutStaking>) {
-    return contract.inputToken();
+    return contract.read.inputToken();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<SteakHutStaking>) {
-    return contract.rewardToken();
+    return contract.read.rewardToken();
   }
 
   getRewardRates({ contract }: GetDataPropsParams<SteakHutStaking>) {
-    return contract.tokenPerSec();
+    return contract.read.tokenPerSec();
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SteakHutStaking>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SteakHutStaking>) {
-    return contract.pendingTokens(address);
+    return contract.read.pendingTokens([address]);
   }
 }

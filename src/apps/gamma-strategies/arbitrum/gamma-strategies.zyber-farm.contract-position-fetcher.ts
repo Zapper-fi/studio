@@ -31,11 +31,11 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
   }
 
   async getPoolLength(contract: GammaStrategiesZyberswapMasterchef) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: GammaStrategiesZyberswapMasterchef, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken.toLowerCase());
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken.toLowerCase());
   }
 
   async getRewardTokenAddress(contract: GammaStrategiesZyberswapMasterchef) {
@@ -45,13 +45,13 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
   async getTotalAllocPoints({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesZyberswapMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesZyberswapMasterchef>): Promise<BigNumberish> {
-    return contract.zyberPerSec();
+    return contract.read.zyberPerSec();
   }
 
   async getPoolAllocPoints({

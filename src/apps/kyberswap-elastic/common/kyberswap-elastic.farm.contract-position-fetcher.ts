@@ -66,7 +66,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
       network: this.network,
     });
 
-    const poolLengthRaw = await multicall.wrap(kyberswapElasticLmContract).poolLength();
+    const poolLengthRaw = await multicall.wrap(kyberswapElasticLmContract).read.poolLength();
 
     const definitionsRaw = await Promise.all(
       range(0, poolLengthRaw.toNumber()).map(async index => {
@@ -83,9 +83,9 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
           return;
         }
         const [token0Raw, token1Raw, feeTier] = await Promise.all([
-          multicall.wrap(poolContract).token0(),
-          multicall.wrap(poolContract).token1(),
-          multicall.wrap(poolContract).swapFeeUnits(),
+          multicall.wrap(poolContract).read.token0(),
+          multicall.wrap(poolContract).read.token1(),
+          multicall.wrap(poolContract).read.swapFeeUnits(),
         ]);
 
         if (Number(poolInfos.numStakes) === 0) return null;

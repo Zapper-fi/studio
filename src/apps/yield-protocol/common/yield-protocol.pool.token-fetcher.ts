@@ -64,8 +64,8 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     if (baseReserves.isZero()) return [0];
 
     const [fyTokenReserves, poolTotalSupply] = await Promise.all([
-      multicall.wrap(poolContract).getFYTokenBalance(),
-      multicall.wrap(poolContract).totalSupply(),
+      multicall.wrap(poolContract).read.getFYTokenBalance(),
+      multicall.wrap(poolContract).read.totalSupply(),
     ]);
 
     const realFyTokenReserves = fyTokenReserves.sub(poolTotalSupply);
@@ -83,7 +83,7 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
     if (poolAddress === ZERO_ADDRESS) return { ...defaultDataProps, maturity: 0 };
 
-    const maturity = await multicall.wrap(poolContract).maturity();
+    const maturity = await multicall.wrap(poolContract).read.maturity();
     return { ...defaultDataProps, maturity: Number(maturity) };
   }
 

@@ -39,8 +39,8 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<OlympusGOhmToken>) {
     const oneOhm = BigNumber.from(1).mul(10).pow(appToken.tokens[0].decimals);
     const [gOhmDecimalsRaw, gOhmConvertedAmountRaw] = await Promise.all([
-      contract.decimals(),
-      contract.balanceTo(oneOhm),
+      contract.read.decimals(),
+      contract.read.balanceTo([oneOhm]),
     ]);
 
     const convertedAmount = Number(gOhmConvertedAmountRaw) / 10 ** gOhmDecimalsRaw;

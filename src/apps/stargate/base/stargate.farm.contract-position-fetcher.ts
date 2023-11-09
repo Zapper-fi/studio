@@ -22,11 +22,11 @@ export class BaseStargateFarmContractPositionFetcher extends StargateFarmContrac
   }
 
   getStargateTokenAddress(contract: StargateChefBase): Promise<string> {
-    return contract.eToken();
+    return contract.read.eToken();
   }
 
   getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StargateChefBase>): Promise<BigNumberish> {
-    return contract.eTokenPerSecond();
+    return contract.read.eTokenPerSecond();
   }
 
   getRewardTokenBalance({

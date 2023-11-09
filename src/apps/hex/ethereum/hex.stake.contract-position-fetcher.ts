@@ -51,9 +51,9 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
     const hexToken = contractPosition.tokens.find(isSupplied)!;
 
     const [stakedAndUnstakedSupply, unstakedSupply, currentDay] = await Promise.all([
-      contract.allocatedSupply(),
-      contract.totalSupply(),
-      contract.currentDay(),
+      contract.read.allocatedSupply(),
+      contract.read.totalSupply(),
+      contract.read.currentDay(),
     ]);
 
     const stakedSupply = Number(stakedAndUnstakedSupply.toBigInt() - unstakedSupply.toBigInt());
@@ -75,10 +75,10 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Hex, DefaultDataProps>) {
-    const stakeCount = await contract.stakeCount(address);
+    const stakeCount = await contract.read.stakeCount([address]);
     if (stakeCount.isZero()) return [0];
 
-    const allStakes = await Promise.all(range(0, +stakeCount).map(i => contract.stakeLists(address, i)));
+    const allStakes = await Promise.all(range(0, +stakeCount).map(i => contract.read.stakeLists([address, i])));
     const totalStaked = allStakes.reduce((acc, v) => acc.add(v.stakedHearts), BigNumber.from(0));
     return [totalStaked.toString()];
   }

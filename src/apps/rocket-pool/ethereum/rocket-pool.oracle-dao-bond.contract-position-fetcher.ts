@@ -43,6 +43,6 @@ export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends Cont
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<RocketDaoNodeTrusted>) {
-    return [await contract.getMemberRPLBondAmount(address)];
+    return [await contract.read.getMemberRPLBondAmount([address])];
   }
 }

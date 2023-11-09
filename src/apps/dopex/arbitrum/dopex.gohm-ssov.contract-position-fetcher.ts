@@ -37,7 +37,7 @@ export class ArbitrumDopexGOhmSsovContractPositionFetcher extends DopexSsovContr
     contractPosition,
   }: GetTokenBalancesParams<DopexGOhmSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.totalEpochStrikeGohmBalance(epoch, strike);
+    return contract.read.totalEpochStrikeGohmBalance([epoch, strike]);
   }
 
   async getTotalEpochStrikeRewardBalances(_params: GetTokenBalancesParams<DopexGOhmSsov, DopexSsovDataProps>) {

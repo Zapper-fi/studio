@@ -38,11 +38,11 @@ export class ArbitrumLodestarV0SupplyTokenFetcher extends CompoundSupplyTokenFet
   }
 
   async getMarkets({ contract }: GetMarketsParams<LodestarV0Comptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<LodestarV0IToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<LodestarV0IToken>) {
@@ -50,12 +50,12 @@ export class ArbitrumLodestarV0SupplyTokenFetcher extends CompoundSupplyTokenFet
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<LodestarV0IToken>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 
   async getLabel({ appToken, contract }: GetDisplayPropsParams<LodestarV0IToken>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
-    const [symbol, name] = await Promise.all([contract.symbol(), contract.name()]);
+    const [symbol, name] = await Promise.all([contract.read.symbol(), contract.read.name()]);
     if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;
     const triggerLabel = name.replace(`${symbol}-`, '');
     return `${underlyingToken.symbol} - ${triggerLabel}`;

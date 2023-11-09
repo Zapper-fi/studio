@@ -50,6 +50,6 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
   }
 
   getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<TroveManager>) {
-    return Promise.all([contract.getTroveColl(address), contract.getTroveDebt(address)]);
+    return Promise.all([contract.read.getTroveColl([address]), contract.read.getTroveDebt([address])]);
   }
 }

@@ -25,10 +25,10 @@ export class EthereumStakeDaoEscrowedQiContractPositionFetcher extends VotingEsc
   }
 
   async getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<StakeDaoVotingEscrow>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<StakeDaoVotingEscrow>) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 }

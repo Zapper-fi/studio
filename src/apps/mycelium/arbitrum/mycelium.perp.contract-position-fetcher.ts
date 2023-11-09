@@ -56,7 +56,7 @@ export class ArbitrumMycellilumPerpContractPositionFetcher extends ContractPosit
       address: this.vaultAddress,
       network: this.network,
     });
-    const tokensCount = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const tokensCount = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const tokensRange = _.range(0, Number(tokensCount));
 
     const whitelistedTokens = await Promise.all(

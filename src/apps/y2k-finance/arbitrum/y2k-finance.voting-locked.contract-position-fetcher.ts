@@ -52,17 +52,17 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await params.contract.lockToken(),
+        address: await params.contract.read.lockToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: (await params.contract.rewardToken(0)).addr,
+        address: (await params.contract.read.rewardToken([0])).addr,
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: (await params.contract.rewardToken(1)).addr,
+        address: (await params.contract.read.rewardToken([1])).addr,
         network: this.network,
       },
     ];
@@ -71,7 +71,7 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
   async getLabel(
     params: GetDisplayPropsParams<Y2KFinanceVotingLocked, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    const epochs = await params.contract.minEpochs();
+    const epochs = await params.contract.read.minEpochs();
     return `Lock${epochs.toString()}Rewards`;
   }
 

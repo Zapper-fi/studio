@@ -30,11 +30,11 @@ export class EthereumConcentratorAfrxethVaultContractPositionFetcher extends Mas
   }
 
   async getPoolLength(contract: AladdinConcentratorAfrxEthVault): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: AladdinConcentratorAfrxEthVault, poolIndex: number): Promise<string> {
-    return contract.underlying(poolIndex);
+    return contract.read.underlying([poolIndex]);
   }
 
   async getRewardTokenAddress(
@@ -42,7 +42,7 @@ export class EthereumConcentratorAfrxethVaultContractPositionFetcher extends Mas
     _poolIndex: number,
     multicall: IMulticallWrapper,
   ) {
-    return multicall.wrap(contract).rewardToken();
+    return multicall.wrap(contract).read.rewardToken();
   }
 
   async getTotalAllocPoints() {
@@ -71,6 +71,6 @@ export class EthereumConcentratorAfrxethVaultContractPositionFetcher extends Mas
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorAfrxEthVault>) {
     const poolIndex = contractPosition.dataProps.poolIndex;
-    return contract.pendingReward(poolIndex, address);
+    return contract.read.pendingReward([poolIndex, address]);
   }
 }

@@ -36,7 +36,7 @@ export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePosi
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AbcCvx>) {
     const supply = await contract.read.totalSupply();
-    const reserves = await Promise.all([contract.totalCurveLpToken(), contract.totalDebtToken()]);
+    const reserves = await Promise.all([contract.read.totalCurveLpToken(), contract.read.totalDebtToken()]);
     return reserves.map(r => Number(r) / Number(supply));
   }
 }

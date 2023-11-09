@@ -25,10 +25,10 @@ export class AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher extends
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<PlatypusFinanceVotingEscrow>) {
-    return contract.ptp();
+    return contract.read.ptp();
   }
 
   getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<PlatypusFinanceVotingEscrow>) {
-    return contract.getStakedPtp(address);
+    return contract.read.getStakedPtp([address]);
   }
 }

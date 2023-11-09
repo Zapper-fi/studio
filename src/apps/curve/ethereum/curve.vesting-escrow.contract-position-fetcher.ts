@@ -25,14 +25,14 @@ export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEs
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<CurveVestingEscrow>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   getLockedTokenBalance({ address, contract }: GetTokenBalancesParams<CurveVestingEscrow>) {
-    return contract.lockedOf(address);
+    return contract.read.lockedOf([address]);
   }
 
   getUnlockedTokenBalance({ address, contract }: GetTokenBalancesParams<CurveVestingEscrow>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 }

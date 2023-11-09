@@ -38,24 +38,24 @@ export class ArbitrumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
   }
 
   async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CozyFinanceCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<CozyFinanceCToken>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<CozyFinanceCToken>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 
   async getLabel({ appToken, contract }: GetDisplayPropsParams<CozyFinanceCToken>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
-    const [symbol, name] = await Promise.all([contract.symbol(), contract.name()]);
+    const [symbol, name] = await Promise.all([contract.read.symbol(), contract.read.name()]);
     if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;
     const triggerLabel = name.replace(`${symbol}-`, '');
     return `${underlyingToken.symbol} - ${triggerLabel}`;

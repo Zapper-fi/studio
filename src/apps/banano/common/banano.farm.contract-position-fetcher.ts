@@ -27,23 +27,23 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
   }
 
   async getPoolLength(contract: Benis): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: Benis, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.stakingToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.stakingToken);
   }
 
   async getRewardTokenAddress(contract: Benis): Promise<string> {
-    return contract.wban();
+    return contract.read.wban();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.wbanPerSecond();
+    return contract.read.wbanPerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {

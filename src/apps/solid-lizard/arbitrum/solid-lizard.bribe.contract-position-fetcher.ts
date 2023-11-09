@@ -27,7 +27,7 @@ export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewar
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<SolidLizardBribe>) {
     const numRewards = Number(await contract.read.rewardTokensLength());
-    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
+    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([n])));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());

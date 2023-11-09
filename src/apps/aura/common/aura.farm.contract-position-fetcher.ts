@@ -85,7 +85,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<AuraBaseRewardPool>) {
-    return contract.stakingToken();
+    return contract.read.stakingToken();
   }
 
   async getRewardTokenAddresses({ contract, multicall }: GetTokenDefinitionsParams<AuraBaseRewardPool>) {
@@ -98,9 +98,9 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     // Extra rewards
     const extraRewardTokenAddresses = await Promise.all(
       range(0, Number(await contract.read.extraRewardsLength())).map(async v => {
-        const vbpAddress = await contract.extraRewards(v);
+        const vbpAddress = await contract.read.extraRewards([v]);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
-        const stashTokenAddressRaw = await multicall.wrap(vbp).rewardToken();
+        const stashTokenAddressRaw = await multicall.wrap(vbp).read.rewardToken();
         let rewardTokenAddress = stashTokenAddressRaw.toLowerCase();
 
         const stashTokenContract = this.contractFactory.auraStashToken({
@@ -115,7 +115,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
           .catch(() => false);
 
         if (isStash) {
-          const rewardTokenAddressRaw = await multicall.wrap(stashTokenContract).baseToken();
+          const rewardTokenAddressRaw = await multicall.wrap(stashTokenContract).read.baseToken();
           rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
         }
 
@@ -136,17 +136,17 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
   }: GetDataPropsParams<AuraBaseRewardPool, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const auraToken = contractPosition.tokens.find(v => v.symbol === 'AURA')!;
     const auraTokenContract = this.contractFactory.erc20(auraToken);
-    const auraSupplyRaw = await multicall.wrap(auraTokenContract).totalSupply();
+    const auraSupplyRaw = await multicall.wrap(auraTokenContract).read.totalSupply();
 
-    const balRewardRate = await multicall.wrap(contract).rewardRate();
+    const balRewardRate = await multicall.wrap(contract).read.rewardRate();
     const auraRewardRate = claimedBalToMintedAura(balRewardRate.toString(), auraSupplyRaw.toString());
 
-    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength().then(Number);
+    const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength().then(Number);
     const extraRewardRates = await Promise.all(
       range(0, numExtraRewards).map(async v => {
         const vbpAddress = await multicall.wrap(contract).extraRewards(v);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
-        return multicall.wrap(vbp).rewardRate();
+        return multicall.wrap(vbp).read.rewardRate();
       }),
     );
 
@@ -154,7 +154,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AuraBaseRewardPool>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({
@@ -167,9 +167,9 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     const [, auraRewardToken] = rewardTokens;
 
     const auraTokenContract = multicall.wrap(this.contractFactory.erc20(auraRewardToken));
-    const currentAuraSupply = await auraTokenContract.totalSupply();
+    const currentAuraSupply = await auraTokencontract.read.totalSupply();
 
-    const balBalanceBN = await contract.earned(address);
+    const balBalanceBN = await contract.read.earned([address]);
     const balBalanceRaw = balBalanceBN.toString();
     const auraBalanceMintedRaw = claimedBalToMintedAura(balBalanceRaw, currentAuraSupply.toString());
     const boosterMultiplierContract = this.contractFactory.auraBoosterV2({
@@ -178,23 +178,23 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     });
 
     const [rewardMultiplierDenominator, rewardMultipleRaw] = await Promise.all([
-      multicall.wrap(boosterMultiplierContract).REWARD_MULTIPLIER_DENOMINATOR(),
+      multicall.wrap(boosterMultiplierContract).read.REWARD_MULTIPLIER_DENOMINATOR(),
       multicall.wrap(boosterMultiplierContract).getRewardMultipliers(contractPosition.address),
     ]);
 
     let auraBalanceRaw = auraBalanceMintedRaw.mul(rewardMultipleRaw).div(rewardMultiplierDenominator);
 
-    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
+    const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardBalances = await Promise.all(
       range(0, Number(numExtraRewards)).map(async (_, i) => {
-        const extraRewardAddress = await contract.extraRewards(i);
+        const extraRewardAddress = await contract.read.extraRewards([i]);
         const extraRewardContract = this.contractFactory.auraVirtualBalanceRewardPool({
           address: extraRewardAddress,
           network: this.network,
         });
 
         const earnedBN = await multicall.wrap(extraRewardContract).earned(address);
-        const extraRewardStashTokenAddressRaw = await multicall.wrap(extraRewardContract).rewardToken();
+        const extraRewardStashTokenAddressRaw = await multicall.wrap(extraRewardContract).read.rewardToken();
         let extraRewardStashTokenAddress = extraRewardStashTokenAddressRaw.toLowerCase();
         const stashTokenContract = this.contractFactory.auraStashToken({
           address: extraRewardStashTokenAddress,
@@ -208,7 +208,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
           .catch(() => false);
 
         if (isStash) {
-          const extraRewardTokenAddressRaw = await multicall.wrap(stashTokenContract).baseToken();
+          const extraRewardTokenAddressRaw = await multicall.wrap(stashTokenContract).read.baseToken();
           extraRewardStashTokenAddress = extraRewardTokenAddressRaw.toLowerCase();
         }
 

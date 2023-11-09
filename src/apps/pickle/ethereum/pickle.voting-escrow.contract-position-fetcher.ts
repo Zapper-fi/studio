@@ -42,15 +42,15 @@ export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEsc
   }
 
   getEscrowedTokenAddress(contract: PickleVotingEscrow): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   getRewardTokenAddress(contract: PickleVotingEscrowReward): Promise<string> {
-    return contract.token();
+    return contract.read.token();
   }
 
   getEscrowedTokenBalance(address: string, contract: PickleVotingEscrow): Promise<BigNumberish> {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 
   getRewardTokenBalance(address: string, contract: PickleVotingEscrowReward): Promise<BigNumberish> {

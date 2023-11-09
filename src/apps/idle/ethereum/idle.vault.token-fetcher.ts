@@ -43,7 +43,7 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
     const liveVaultTokens = await Promise.all(
       vaultTokens.map(async address => {
         const contract = this.contractFactory.idleToken({ network: this.network, address });
-        const isPaused = await multicall.wrap(contract).paused();
+        const isPaused = await multicall.wrap(contract).read.paused();
         return isPaused ? null : address;
       }),
     );

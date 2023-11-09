@@ -119,8 +119,8 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     contract,
   }: GetTokenDefinitionsParams<AbracadabraCauldron, AbracadabraCauldronContractPositionDefinition>) {
     const [collateralAddressRaw, debtAddressRaw] = await Promise.all([
-      contract.collateral(),
-      contract.magicInternetMoney(),
+      contract.read.collateral(),
+      contract.read.magicInternetMoney(),
     ]);
 
     return [
@@ -141,7 +141,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     contract,
     multicall,
   }: GetTokenDefinitionsParams<AbracadabraCauldron, AbracadabraCauldronContractPositionDefinition>) {
-    const convexWrapperPromise = contract.collateral().then(collateralTokenAddress =>
+    const convexWrapperPromise = contract.read.collateral().then(collateralTokenAddress =>
       multicall.wrap(
         this.contractFactory.abracadabraConvexWrapper({
           address: collateralTokenAddress.toLowerCase(),
@@ -152,7 +152,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
 
     const [collateralTokenAddress, debtTokenAddress, convexToken, rewardTokens] = await Promise.all([
       convexWrapperPromise.then(convexWrapper => convexWrapper.convexToken()),
-      contract.magicInternetMoney(),
+      contract.read.magicInternetMoney(),
       convexWrapperPromise.then(convexWrapper => convexWrapper.cvx()),
       convexWrapperPromise.then(async convexWrapper => {
         const poolCount = await convexWrapper.rewardLength();
@@ -191,8 +191,8 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     multicall,
   }: GetTokenDefinitionsParams<AbracadabraCauldron, AbracadabraCauldronContractPositionDefinition>) {
     const [collateralTokenAddress, debtTokenAddress] = await Promise.all([
-      contract.collateral(),
-      contract.magicInternetMoney(),
+      contract.read.collateral(),
+      contract.read.magicInternetMoney(),
     ]);
 
     const glpWrapper = multicall.wrap(
@@ -483,9 +483,9 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition(params: GetTokenBalancesParams<AbracadabraCauldron, AbracadabraCauldronDataProps>) {
     const { address, contractPosition, contract, multicall } = params;
     const [borrowPartRaw, totalBorrowRaw, suppliedBalanceRaw, claimableTokens] = await Promise.all([
-      contract.userBorrowPart(address),
-      contract.totalBorrow(),
-      Promise.all([contract.userCollateralShare(address), contract.bentoBox()]).then(
+      contract.read.userBorrowPart([address]),
+      contract.read.totalBorrow(),
+      Promise.all([contract.read.userCollateralShare([address]), contract.read.bentoBox()]).then(
         ([collateralShareRaw, bentoBoxAddress]) => {
           const bentoBoxContract = multicall.wrap(
             this.contractFactory.abracadabraBentoBoxTokenContract({

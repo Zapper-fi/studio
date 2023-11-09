@@ -47,7 +47,7 @@ export abstract class TempusAmmTokenFetcher extends AppTokenTemplatePositionFetc
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusAmm>) {
     const totalSupply = await contract.read.totalSupply();
-    const reservesRaw = await contract.getExpectedTokensOutGivenBPTIn(totalSupply);
+    const reservesRaw = await contract.read.getExpectedTokensOutGivenBPTIn([totalSupply]);
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(r => r / appToken.supply);
   }

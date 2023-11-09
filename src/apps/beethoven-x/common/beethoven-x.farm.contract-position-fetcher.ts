@@ -64,11 +64,11 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<BeethovenXGauge>) {
-    return contract.lp_token();
+    return contract.read.lp_token();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<BeethovenXGauge>) {
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
+    const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.read.reward_tokens([i])));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
 
@@ -85,7 +85,7 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
     address,
     contract,
   }: GetTokenBalancesParams<BeethovenXGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({

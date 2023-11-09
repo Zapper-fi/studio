@@ -29,23 +29,23 @@ export class AvalanchePlatypusFinanceFarmContractPositionFetcher extends MasterC
   }
 
   async getPoolLength(contract: PlatypusFinanceMasterPlatypusV1) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: PlatypusFinanceMasterPlatypusV1, poolIndex: number): Promise<string> {
-    return (await contract.poolInfo(poolIndex)).lpToken;
+    return (await contract.read.poolInfo([poolIndex])).lpToken;
   }
 
   async getRewardTokenAddress(contract: PlatypusFinanceMasterPlatypusV1): Promise<string> {
-    return contract.ptp();
+    return contract.read.ptp();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PlatypusFinanceMasterPlatypusV1>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PlatypusFinanceMasterPlatypusV1>) {
-    return contract.ptpPerSec();
+    return contract.read.ptpPerSec();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PlatypusFinanceMasterPlatypusV1>) {

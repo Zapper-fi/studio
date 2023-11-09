@@ -48,7 +48,7 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<TokemakTokeStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances() {

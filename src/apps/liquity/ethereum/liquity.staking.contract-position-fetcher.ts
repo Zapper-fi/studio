@@ -48,10 +48,10 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
-    return contract.stakes(address);
+    return contract.read.stakes([address]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
-    return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
+    return Promise.all([contract.read.getPendingLUSDGain([address]), contract.read.getPendingETHGain([address])]);
   }
 }

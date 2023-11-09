@@ -115,18 +115,18 @@ export class EthereumSynthetixFarmContractPositionFetcher extends SingleStakingF
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<SynthetixRewards>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<SynthetixRewards>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate.gt(0));
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

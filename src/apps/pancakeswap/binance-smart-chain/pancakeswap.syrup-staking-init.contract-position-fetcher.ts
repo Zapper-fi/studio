@@ -211,7 +211,7 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChefInit>) {
-    return contract.stakedToken();
+    return contract.read.stakedToken();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChefInit>) {
@@ -229,10 +229,10 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChefInit>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChefInit>) {
-    return contract.pendingReward(address);
+    return contract.read.pendingReward([address]);
   }
 }

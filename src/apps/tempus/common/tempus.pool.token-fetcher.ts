@@ -50,7 +50,7 @@ export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFet
     const kindLabel = (await contract.read.kind()) === 1 ? 'Yield' : 'Principal';
     const poolAddress = await contract.read.pool();
     const pool = this.contractFactory.tempusPool({ address: poolAddress, network: this.network });
-    const maturity = await multicall.wrap(pool).maturityTime();
+    const maturity = await multicall.wrap(pool).read.maturityTime();
     return `${getLabelFromToken(appToken.tokens[0])} ${kindLabel} Share - ${unix(Number(maturity)).format('L')}`;
   }
 }

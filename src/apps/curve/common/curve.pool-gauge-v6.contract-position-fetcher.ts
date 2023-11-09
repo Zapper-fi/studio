@@ -90,7 +90,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
           network: this.network,
         });
 
-        const rewardTokenCount = await multicall.wrap(gaugeV6Contract).reward_count();
+        const rewardTokenCount = await multicall.wrap(gaugeV6Contract).read.reward_count();
         const rewardTokenAddressesRaw = await Promise.all(
           _.range(Number(rewardTokenCount)).map(async i => {
             return multicall.wrap(gaugeV6Contract).reward_tokens(i);
@@ -184,7 +184,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
     contractPosition,
   }: GetTokenBalancesParams<CurveGaugeV6, CurvePoolGaugeDataProps>): Promise<BigNumberish[]> {
     const [supplied, claimable] = await Promise.all([
-      contract.balanceOf(address),
+      contract.read.balanceOf([address]),
       contract.callStatic.claimable_tokens(address),
     ]);
 

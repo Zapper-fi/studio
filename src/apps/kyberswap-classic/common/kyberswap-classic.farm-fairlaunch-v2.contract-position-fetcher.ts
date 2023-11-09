@@ -44,15 +44,15 @@ export abstract class KyberSwapClassicFarmFairlaunchV2ContractPositionFetcher ex
   }
 
   async getPoolLength(contract: KyberSwapClassicMasterchefV2): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: KyberSwapClassicMasterchefV2, poolIndex: number): Promise<string> {
-    return contract.getPoolInfo(poolIndex).then(v => v.stakeToken);
+    return contract.read.getPoolInfo([poolIndex]).then(v => v.stakeToken);
   }
 
   async getRewardTokenAddress(contract: KyberSwapClassicMasterchefV2): Promise<string> {
-    return contract.getRewardTokens().then(v => v[0]);
+    return contract.read.getRewardTokens().then(v => v[0]);
   }
 
   async getTotalAllocPoints(

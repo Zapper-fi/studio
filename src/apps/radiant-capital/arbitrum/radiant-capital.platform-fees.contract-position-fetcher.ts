@@ -40,7 +40,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RadiantCapitalPlatformFees>) {
     const [rewards, radiantTokenAddressRaw] = await Promise.all([
       contract.claimableRewards(ZERO_ADDRESS),
-      contract.stakingToken(),
+      contract.read.stakingToken(),
     ]);
     const rewardTokenAddressesRaw = rewards
       .map(x => x.token.toLowerCase())
@@ -88,9 +88,9 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
     contractPosition,
   }: GetTokenBalancesParams<RadiantCapitalPlatformFees>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
-      contract.lockedBalances(address),
-      contract.withdrawableBalance(address),
-      contract.claimableRewards(address),
+      contract.read.lockedBalances([address]),
+      contract.read.withdrawableBalance([address]),
+      contract.read.claimableRewards([address]),
     ]);
 
     const withdrawableBalanceRaw = withdrawableDataRaw.amount.sub(withdrawableDataRaw.penaltyAmount).toString();

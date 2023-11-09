@@ -30,20 +30,20 @@ export class BinanceSmartChainPancakeswapFarmV2ContractPositionFetcher extends M
   }
 
   async getPoolLength(contract: PancakeswapChefV2) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: PancakeswapChefV2, poolIndex: number) {
-    return contract.lpToken(poolIndex);
+    return contract.read.lpToken([poolIndex]);
   }
 
   async getRewardTokenAddress(contract: PancakeswapChefV2) {
-    return contract.CAKE();
+    return contract.read.CAKE();
   }
 
   async getTotalAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PancakeswapChefV2>) {
     const poolInfo = await contract.poolInfo(definition.poolIndex);
-    return poolInfo.isRegular ? contract.totalRegularAllocPoint() : contract.totalSpecialAllocPoint();
+    return poolInfo.isRegular ? contract.read.totalRegularAllocPoint() : contract.read.totalSpecialAllocPoint();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PancakeswapChefV2>) {

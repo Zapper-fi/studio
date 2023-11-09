@@ -79,7 +79,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusLock>) {
-    return contract.stakedDetails(address).then(details => details.amount);
+    return contract.read.stakedDetails([address]).then(details => details.amount);
   }
 
   async getRewardTokenBalances({ contractPosition, contract, address, multicall }: GetTokenBalancesParams<PlutusLock>) {
@@ -89,7 +89,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
       network: this.network,
     });
 
-    const currentEpoch = await multicall.wrap(contract).currentEpoch();
+    const currentEpoch = await multicall.wrap(contract).read.currentEpoch();
     const epochsToClaim = range(0, Number(currentEpoch));
     const claimAmounts = await Promise.all(
       epochsToClaim.map(async epoch => {

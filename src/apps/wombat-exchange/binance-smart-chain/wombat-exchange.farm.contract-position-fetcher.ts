@@ -29,23 +29,23 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
   }
 
   async getPoolLength(contract: WombatExchangeMasterWombat) {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: WombatExchangeMasterWombat, poolIndex: number): Promise<string> {
-    return (await contract.poolInfo(poolIndex)).lpToken;
+    return (await contract.read.poolInfo([poolIndex])).lpToken;
   }
 
   async getRewardTokenAddress(contract: WombatExchangeMasterWombat): Promise<string> {
-    return contract.wom();
+    return contract.read.wom();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<WombatExchangeMasterWombat>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<WombatExchangeMasterWombat>) {
-    return contract.womPerSec();
+    return contract.read.womPerSec();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<WombatExchangeMasterWombat>) {

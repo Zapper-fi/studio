@@ -32,8 +32,8 @@ export abstract class DfxCurveTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<DfxCurve>) {
     return [
-      { address: await contract.numeraires(0), network: this.network },
-      { address: await contract.numeraires(1), network: this.network },
+      { address: await contract.read.numeraires([0]), network: this.network },
+      { address: await contract.read.numeraires([1]), network: this.network },
     ];
   }
 

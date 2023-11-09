@@ -50,7 +50,7 @@ export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends Contr
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<BalancerVeBal>) {
-    const lockedBalance = await contract.locked(address);
+    const lockedBalance = await contract.read.locked([address]);
     return [lockedBalance.amount];
   }
 }

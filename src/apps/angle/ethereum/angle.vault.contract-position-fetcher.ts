@@ -64,7 +64,7 @@ export class EthereumAngleVaultsContractPositionFetcher extends ContractPosition
     address,
     contract,
   }: GetTokenBalancesParams<AngleVaultManager>): Promise<BigNumberish[]> {
-    const userBalanceCount = await contract.balanceOf(address);
+    const userBalanceCount = await contract.read.balanceOf([address]);
 
     if (Number(userBalanceCount) < 1) return [0, 0];
 
@@ -73,8 +73,8 @@ export class EthereumAngleVaultsContractPositionFetcher extends ContractPosition
     const balances = await Promise.all(
       vaultIds.map(async vaultId => {
         const [collateralData, vaultDebt] = await Promise.all([
-          contract.vaultData(vaultId),
-          contract.getVaultDebt(vaultId),
+          contract.read.vaultData([vaultId]),
+          contract.read.getVaultDebt([vaultId]),
         ]);
 
         return {

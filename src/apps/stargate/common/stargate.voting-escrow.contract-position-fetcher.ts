@@ -20,10 +20,10 @@ export abstract class StargateVotingEscrowContractPositionFetcher extends Voting
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<StargateVe>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<StargateVe>) {
-    return (await contract.locked(address)).amount;
+    return (await contract.read.locked([address])).amount;
   }
 }

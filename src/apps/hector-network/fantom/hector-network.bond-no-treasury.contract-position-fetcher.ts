@@ -40,7 +40,7 @@ export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends Co
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondNoTreasury>) {
-    const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
+    const [principle, claimable] = await Promise.all([contract.read.principle(), contract.read.HEC()]);
 
     return [
       {
@@ -70,10 +70,10 @@ export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends Co
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondNoTreasury>) {
-    const count = await contract.depositCounts(address);
-    const depositIds = await Promise.all(range(0, Number(count)).map(i => contract.ownedDeposits(address, i)));
-    const bondInfos = await Promise.all(depositIds.map(id => contract.bondInfo(id)));
-    const claimablePayouts = await Promise.all(depositIds.map(id => contract.pendingPayoutFor(id)));
+    const count = await contract.read.depositCounts([address]);
+    const depositIds = await Promise.all(range(0, Number(count)).map(i => contract.read.ownedDeposits([address, i])));
+    const bondInfos = await Promise.all(depositIds.map(id => contract.read.bondInfo([id])));
+    const claimablePayouts = await Promise.all(depositIds.map(id => contract.read.pendingPayoutFor([id])));
 
     const totalPayout = bondInfos.reduce((acc, v) => acc.add(v.payout), BigNumber.from(0));
     const totalClaimablePayout = claimablePayouts.reduce((acc, v) => acc.add(v), BigNumber.from(0));

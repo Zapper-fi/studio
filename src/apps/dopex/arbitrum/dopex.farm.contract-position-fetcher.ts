@@ -43,20 +43,20 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
   }
 
   getRewardRates({ contract }: GetDataPropsParams<DopexDualRewardStaking>) {
-    return Promise.all([contract.rewardRateDPX(), contract.rewardRateRDPX()]);
+    return Promise.all([contract.read.rewardRateDPX(), contract.read.rewardRateRDPX()]);
   }
 
   getIsActive({ contract }: GetDataPropsParams<DopexDualRewardStaking>) {
-    return Promise.all([contract.rewardRateDPX(), contract.rewardRateRDPX()]).then(([rateDPX, rateRDPX]) => {
+    return Promise.all([contract.read.rewardRateDPX(), contract.read.rewardRateRDPX()]).then(([rateDPX, rateRDPX]) => {
       return rateDPX.gt(0) || rateRDPX.gt(0);
     });
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {
-    return contract.earned(address).then(v => [v.DPXtokensEarned, v.RDPXtokensEarned]);
+    return contract.read.earned([address]).then(v => [v.DPXtokensEarned, v.RDPXtokensEarned]);
   }
 }

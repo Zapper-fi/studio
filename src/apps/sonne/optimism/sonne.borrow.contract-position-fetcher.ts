@@ -52,11 +52,11 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
   }
 
   async getMarkets({ contract }: GetMarketsParams<SonneComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets();
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<SonneSoToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<SonneSoToken>) {
@@ -64,19 +64,19 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.borrowRatePerBlock();
+    return contract.read.borrowRatePerBlock();
   }
 
   async getCash({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({ address, contract }: GetTokenBalancesParams<SonneSoToken>) {

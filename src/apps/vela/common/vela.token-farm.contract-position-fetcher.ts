@@ -77,7 +77,7 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
   }: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>): Promise<
     BigNumberish | BigNumberish[]
   > {
-    const { rewardsPerSec } = await contract.poolRewardsPerSec(poolId);
+    const { rewardsPerSec } = await contract.read.poolRewardsPerSec([poolId]);
     return rewardsPerSec;
   }
 
@@ -85,7 +85,7 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
     definition: { poolId },
     contract,
   }: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>): Promise<boolean> {
-    return (await contract.poolRewardsPerSec(poolId)).rewardsPerSec.some(v => v.gt(0));
+    return (await contract.read.poolRewardsPerSec([poolId])).rewardsPerSec.some(v => v.gt(0));
   }
 
   async getDataProps(
@@ -104,7 +104,7 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
       dataProps: { poolId },
     },
   }: GetTokenBalancesParams<VelaTokenFarm, VelaTokenFarmDataProps>): Promise<BigNumberish> {
-    const { amount: stakedTokenBalance } = await contract.userInfo(poolId, address);
+    const { amount: stakedTokenBalance } = await contract.read.userInfo([poolId, address]);
     return stakedTokenBalance;
   }
 
@@ -131,7 +131,7 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
     multicall: IMulticallWrapper,
     poolId: number,
   ): Promise<VelaComplexRewarder[]> {
-    const poolRewarderAddresses = await contract.poolRewarders(poolId);
+    const poolRewarderAddresses = await contract.read.poolRewarders([poolId]);
     const poolRewarders = poolRewarderAddresses.map(poolRewarderAddress => {
       return multicall.wrap(
         this.velaContractFactory.velaComplexRewarder({

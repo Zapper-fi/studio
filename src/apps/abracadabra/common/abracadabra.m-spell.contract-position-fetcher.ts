@@ -29,11 +29,11 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<AbracadabraMspell>) {
-    return contract.spell();
+    return contract.read.spell();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<AbracadabraMspell>) {
-    return contract.mim();
+    return contract.read.mim();
   }
 
   async getRewardRates() {
@@ -41,10 +41,10 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
-    return contract.pendingReward(address);
+    return contract.read.pendingReward([address]);
   }
 }

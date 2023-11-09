@@ -62,7 +62,7 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
       network: this.network,
     });
 
-    const emissions = await rewardsDistroContract.getEmissions();
+    const emissions = await rewardsDistrocontract.read.getEmissions();
     const lastRewardSecond = await contract.read.lastRewardSecond();
     const duration = Date.now() / 1000 - lastRewardSecond;
     const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
@@ -78,7 +78,7 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
       network: this.network,
     });
 
-    const emissions = await rewardsDistroContract.getEmissions();
+    const emissions = await rewardsDistrocontract.read.getEmissions();
     const lastRewardSecond = await contract.read.lastRewardSecond();
     const duration = Date.now() / 1000 - lastRewardSecond;
     const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
@@ -93,10 +93,10 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpxV2>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpxV2>) {
-    return contract.pendingRewards(address);
+    return contract.read.pendingRewards([address]);
   }
 }

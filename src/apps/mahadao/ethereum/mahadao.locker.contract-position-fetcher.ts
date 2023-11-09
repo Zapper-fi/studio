@@ -30,12 +30,12 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<MahadoMahaxLocker>) {
-    const positionCount = Number(await contract.balanceOf(address));
+    const positionCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(positionCount).map(async i => {
-        const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-        const lockedAmount = await contract.locked(tokenId);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, i]);
+        const lockedAmount = await contract.read.locked([tokenId]);
 
         return Number(lockedAmount.amount);
       }),

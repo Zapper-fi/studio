@@ -38,7 +38,7 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<AuraLocker>) {
     const stakedTokenAddress = await contract.read.stakingToken();
-    const rewardTokenAddress = await contract.rewardTokens(0);
+    const rewardTokenAddress = await contract.read.rewardTokens([0]);
 
     return [
       {
@@ -64,8 +64,8 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
     contract,
   }: GetTokenBalancesParams<AuraLocker, DefaultDataProps>): Promise<BigNumberish[]> {
     return Promise.all([
-      contract.lockedBalances(address).then(v => v.total),
-      contract.claimableRewards(address).then(v => v[0].amount),
+      contract.read.lockedBalances([address]).then(v => v.total),
+      contract.read.claimableRewards([address]).then(v => v[0].amount),
     ]);
   }
 }

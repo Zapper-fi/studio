@@ -78,13 +78,17 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
       network: this.network,
     });
 
-    const logs = await dolaBorrowRightContract.queryFilter(dolaBorrowRightContract.filters.AddMarket(), 16155757);
-    const markets = uniq(logs.map(l => l.args.market.toLowerCase()));
+    const logs = await dolaBorrowRightContract.getEvents.AddMarket(
+      {},
+      { fromBlock: BigInt(16155757), toBlock: 'latest' },
+    );
+
+    const markets = uniq(logs.map(l => l.args.market!.toLowerCase()));
 
     const definitions = await Promise.all(
       markets.map(async address => {
         const simpleMarketContract = this.contractFactory.simpleMarket({ address, network: this.network });
-        const collateralTokenAddressRaw = await multicall.wrap(simpleMarketContract).collateral();
+        const collateralTokenAddressRaw = await multicall.wrap(simpleMarketContract).read.collateral();
 
         return {
           address,
@@ -132,7 +136,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     contractPosition,
     multicall,
   }: GetTokenBalancesParams<SimpleMarket>): Promise<BigNumberish[]> {
-    const personalEscrow = await contract.escrows(address);
+    const personalEscrow = await contract.read.escrows([address]);
     if (personalEscrow === ZERO_ADDRESS) return contractPosition.tokens.map(() => 0);
 
     const escrowContract = this.contractFactory.rewardableEscrow({
@@ -141,7 +145,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     });
 
     const [supplied, borrowed] = await Promise.all([
-      multicall.wrap(escrowContract).balance(),
+      multicall.wrap(escrowContract).read.balance(),
       multicall.wrap(contract).debts(address),
     ]);
 
@@ -164,7 +168,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     const rewardBalances = await Promise.all(
       rewardTokens.map(token => {
         if (DBR === token.address.toLowerCase()) {
-          return multicall.wrap(escrowContract).claimable();
+          return multicall.wrap(escrowContract).read.claimable();
         } else if (claimablesAsTuple.length > 0) {
           const rewardData = claimablesAsTuple.find(
             claimableData => claimableData[0].toLowerCase() === token.address.toLowerCase(),
@@ -203,9 +207,9 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     });
 
     const [rewardRate, dbrDistributorSupply, xinvExRate] = await Promise.all([
-      multicall.wrap(dbrDistributorContract).rewardRate(),
-      multicall.wrap(dbrDistributorContract).totalSupply(),
-      multicall.wrap(xinvContract).exchangeRateStored(),
+      multicall.wrap(dbrDistributorContract).read.rewardRate(),
+      multicall.wrap(dbrDistributorContract).read.totalSupply(),
+      multicall.wrap(xinvContract).read.exchangeRateStored(),
     ]);
 
     const [dbrtoken, invToken] = await Promise.all([

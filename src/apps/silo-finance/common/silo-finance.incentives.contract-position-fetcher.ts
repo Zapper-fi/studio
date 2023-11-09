@@ -84,6 +84,6 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
   }: GetTokenBalancesParams<SiloIncentives, SiloFinanceIncentivesContractPositionDataProps>): Promise<BigNumberish[]> {
     const sTokenAddresses = contractPosition.dataProps.sTokenAddresses;
 
-    return [await contract.getRewardsBalance(sTokenAddresses, address)];
+    return [await contract.read.getRewardsBalance([sTokenAddresses, address])];
   }
 }

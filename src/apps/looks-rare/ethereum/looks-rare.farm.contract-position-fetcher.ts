@@ -58,8 +58,8 @@ export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositi
     contract,
   }: GetTokenBalancesParams<LooksRareFeeSharing, DefaultDataProps>): Promise<BigNumberish[]> {
     const [suppliedBalance, claimableBalance] = await Promise.all([
-      contract.calculateSharesValueInLOOKS(address),
-      contract.calculatePendingRewards(address),
+      contract.read.calculateSharesValueInLOOKS([address]),
+      contract.read.calculatePendingRewards([address]),
     ]);
 
     return [suppliedBalance, claimableBalance];

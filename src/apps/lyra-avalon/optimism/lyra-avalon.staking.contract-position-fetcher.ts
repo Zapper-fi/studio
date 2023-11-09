@@ -40,7 +40,7 @@ export class OptimismLyraAvalonStakingContractPositionFetcher extends SingleStak
   }
 
   getRewardRates({ contract }: GetDataPropsParams<LyraLpStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<LyraLpStaking>) {
@@ -48,10 +48,10 @@ export class OptimismLyraAvalonStakingContractPositionFetcher extends SingleStak
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<LyraLpStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<LyraLpStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

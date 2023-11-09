@@ -82,7 +82,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
     address,
     contract,
   }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
-    const { total } = await contract.lockedBalances(address);
+    const { total } = await contract.read.lockedBalances([address]);
 
     const [claimableBTRFLY, claimableETH, claimableWETH] = await this.earningsResolver.getClaimableAmount(
       address,

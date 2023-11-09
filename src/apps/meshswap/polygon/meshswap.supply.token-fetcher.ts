@@ -36,7 +36,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
       address: '0x504722a6eabb3d1573bada9abd585ae177d52e7a',
     });
 
-    const poolCountRaw = await multicall.wrap(singlePoolFactoryContract).getPoolCount();
+    const poolCountRaw = await multicall.wrap(singlePoolFactoryContract).read.getPoolCount();
     const poolCount = Number(poolCountRaw);
 
     const poolAddresses = await Promise.all(
@@ -58,7 +58,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<string> {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<MeshswapSinglePool>) {

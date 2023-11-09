@@ -82,8 +82,8 @@ export class OptimismLemmaFinanceXSynthTokenFetcher extends AppTokenTemplatePosi
     });
 
     const [collateralTokenAddress, usdcAddress] = await Promise.all([
-      multicall.wrap(perpContract).usdlCollateral(),
-      multicall.wrap(perpContract).usdc(),
+      multicall.wrap(perpContract).read.usdlCollateral(),
+      multicall.wrap(perpContract).read.usdc(),
     ]);
 
     return [

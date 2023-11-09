@@ -69,8 +69,8 @@ export abstract class DfxStakingContractPositionFetcher extends ContractPosition
     contract,
   }: GetTokenBalancesParams<DfxStaking>): Promise<BigNumberish[]> {
     const [stakedBalanceRaw, earnedBalanceRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.earned(address),
+      contract.read.balanceOf([address]),
+      contract.read.earned([address]),
     ]);
 
     return [stakedBalanceRaw, earnedBalanceRaw];

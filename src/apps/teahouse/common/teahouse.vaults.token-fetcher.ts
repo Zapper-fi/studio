@@ -6,9 +6,10 @@ import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/tem
 
 import { TeahouseViemContractFactory } from '../contracts';
 import { TeahouseVault } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<TeahouseVault> {
-  queryFilterFromBlock: number | null;
+  fromBlock: number | null;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -30,19 +31,19 @@ export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositio
     const shareDecimals = await contract.read.decimals();
     const globalState = await contract.read.globalState();
     const currentIndex = globalState[2];
-    const enterNextCycleEventFilter = contract.filters.EnterNextCycle(null, currentIndex - 1);
-    const enterNextCycleEvent = await contract.queryFilter(
-      enterNextCycleEventFilter,
-      this.queryFilterFromBlock ?? undefined,
-      undefined,
+
+    const enterNextCycleEvent = await contract.getEvents.EnterNextCycle(
+      { cycleIndex: currentIndex - 1 },
+      { fromBlock: this.fromBlock ? BigInt(this.fromBlock) : undefined, toBlock: 'latest' },
     );
+
     const priceNumerator = enterNextCycleEvent[0].args.priceNumerator;
     const priceDenominator = enterNextCycleEvent[0].args.priceDenominator;
     const pricePerShare =
-      priceNumerator
+      BigNumber.from(priceNumerator)
         .mul('1' + '0'.repeat(shareDecimals))
         .mul(100000000)
-        .div(priceDenominator)
+        .div(BigNumber.from(priceDenominator))
         .div('1' + '0'.repeat(assetDecimals))
         .toNumber() / 100000000;
     return [pricePerShare];

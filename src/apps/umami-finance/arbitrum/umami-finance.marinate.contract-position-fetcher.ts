@@ -61,7 +61,7 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
     const rewardToken = contractPosition.tokens[1];
 
     const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
-      contract.balanceOf(address),
+      contract.read.balanceOf([address]),
       contract.getAvailableTokenRewards(address, rewardToken.address),
     ]);
 

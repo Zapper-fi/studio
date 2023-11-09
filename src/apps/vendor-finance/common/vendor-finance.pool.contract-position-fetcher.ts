@@ -149,7 +149,10 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const [borrowPosition, mintRatioRaw] = await Promise.all([contract.debt(address), contract.mintRatio()]);
+    const [borrowPosition, mintRatioRaw] = await Promise.all([
+      contract.read.debt([address]),
+      contract.read.mintRatio(),
+    ]);
 
     const poolRate = Number(mintRatioRaw) / 10 ** 18;
     const suppliedBalance = Number(borrowPosition.borrowAmount) / 10 ** lentToken.decimals / poolRate;

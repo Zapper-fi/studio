@@ -48,6 +48,6 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Api3Staking>) {
-    return [await contract.userStake(address)];
+    return [await contract.read.userStake([address])];
   }
 }

@@ -55,6 +55,6 @@ export abstract class ThalesStakingContractPositionFetcher extends ContractPosit
     address,
     contract,
   }: GetTokenBalancesParams<StakingThales>): Promise<BigNumberish[]> {
-    return Promise.all([contract.stakedBalanceOf(address), contract.getRewardsAvailable(address)]);
+    return Promise.all([contract.read.stakedBalanceOf([address]), contract.read.getRewardsAvailable([address])]);
   }
 }

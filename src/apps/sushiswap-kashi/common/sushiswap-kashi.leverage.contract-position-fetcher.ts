@@ -77,8 +77,8 @@ export class SushiswapKashiLeverageContractPositionFetcher extends ContractPosit
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SushiswapKashiLendingToken>) {
     const [debtBalanceRaw, collateralBalanceRaw] = await Promise.all([
-      contract.userBorrowPart(address),
-      contract.userCollateralShare(address),
+      contract.read.userBorrowPart([address]),
+      contract.read.userCollateralShare([address]),
     ]);
 
     return [debtBalanceRaw, collateralBalanceRaw];

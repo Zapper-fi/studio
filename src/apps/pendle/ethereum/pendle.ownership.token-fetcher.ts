@@ -60,16 +60,16 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleOwnershipTokenDefinition[]> {
     const pendleData = this.contractFactory.pendleData({ address: this.pendleDataAddress, network: this.network });
-    const numMarkets = await multicall.wrap(pendleData).allMarketsLength();
+    const numMarkets = await multicall.wrap(pendleData).read.allMarketsLength();
 
     const definitions = await Promise.all(
       range(0, Number(numMarkets)).map(async i => {
         const marketAddress = await pendleData.allMarkets(i);
         const market = this.contractFactory.pendleMarket({ address: marketAddress, network: this.network });
         const [baseTokenAddress, yieldTokenAddress, expiryRaw] = await Promise.all([
-          multicall.wrap(market).token(),
-          multicall.wrap(market).xyt(),
-          multicall.wrap(market).expiry(),
+          multicall.wrap(market).read.token(),
+          multicall.wrap(market).read.xyt(),
+          multicall.wrap(market).read.expiry(),
         ]);
 
         const expiry = Number(expiryRaw);
@@ -78,13 +78,13 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
           network: this.network,
         });
         const [underlyingAddress, underlyingYieldAddress, forgeAddress] = await Promise.all([
-          multicall.wrap(yieldToken).underlyingAsset(),
-          multicall.wrap(yieldToken).underlyingYieldToken(),
-          multicall.wrap(yieldToken).forge(),
+          multicall.wrap(yieldToken).read.underlyingAsset(),
+          multicall.wrap(yieldToken).read.underlyingYieldToken(),
+          multicall.wrap(yieldToken).read.forge(),
         ]);
 
         const forge = this.contractFactory.pendleForge({ address: forgeAddress, network: this.network });
-        const forgeId = await multicall.wrap(forge).forgeId();
+        const forgeId = await multicall.wrap(forge).read.forgeId();
         const ownershipTokenAddress = await multicall.wrap(pendleData).otTokens(forgeId, underlyingAddress, expiry);
 
         return {
@@ -135,7 +135,10 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     if (pairAddress === ZERO_ADDRESS) return [0];
 
     const pair = this.contractFactory.pendleDexPair({ address: pairAddress, network: this.network });
-    const [token0, reserves] = await Promise.all([multicall.wrap(pair).token0(), multicall.wrap(pair).getReserves()]);
+    const [token0, reserves] = await Promise.all([
+      multicall.wrap(pair).read.token0(),
+      multicall.wrap(pair).read.getReserves(),
+    ]);
 
     const [baseReserve, otReserve] =
       token0.toLowerCase() === baseTokenAddress

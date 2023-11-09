@@ -69,11 +69,11 @@ export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakin
   }
 
   getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsJonesLp, SingleStakingFarmDataProps>) {
-    return contract.plsPerSecond();
+    return contract.read.plsPerSecond();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PlutusFarmPlsJonesLp>) {
-    return contract.plsPerSecond().then(v => v.gt(0));
+    return contract.read.plsPerSecond().then(v => v.gt(0));
   }
 
   async getLabel({
@@ -83,10 +83,10 @@ export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakin
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJonesLp>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v.amount);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJonesLp>) {
-    return contract.pendingRewards(address);
+    return contract.read.pendingRewards([address]);
   }
 }

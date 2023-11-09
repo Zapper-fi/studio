@@ -54,7 +54,7 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
   }
 
   async getDataProps({ contract }: GetDataPropsParams<PodsYieldVault>): Promise<PodsYieldQueueDataProps> {
-    const [queuedAssets] = await Promise.all([contract.totalIdleAssets()]);
+    const [queuedAssets] = await Promise.all([contract.read.totalIdleAssets()]);
     const totalValueQueued = Number(queuedAssets) / 10 ** 18;
     return { totalValueQueued };
   }
@@ -65,6 +65,6 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PodsYieldVault>) {
-    return Promise.all([contract.idleAssetsOf(address)]);
+    return Promise.all([contract.read.idleAssetsOf([address])]);
   }
 }

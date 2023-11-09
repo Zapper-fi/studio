@@ -55,7 +55,7 @@ export class EthereumCleverLockContractPositionFetcher extends ContractPositionT
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverLocker>) {
-    const userInfo = await contract.userInfo(address);
+    const userInfo = await contract.read.userInfo([address]);
     return [userInfo.totalLocked, userInfo.totalUnlocked, userInfo.totalDebt];
   }
 }

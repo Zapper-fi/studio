@@ -104,7 +104,7 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerp>) {
-    const remainingMargin = await contract.remainingMargin(address);
+    const remainingMargin = await contract.read.remainingMargin([address]);
     return [remainingMargin.marginRemaining];
   }
 }

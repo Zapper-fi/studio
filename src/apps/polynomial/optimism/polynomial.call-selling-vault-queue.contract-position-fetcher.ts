@@ -56,17 +56,17 @@ export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher exte
     contract,
   }: GetTokenBalancesParams<PolynomialCoveredCall, DefaultDataProps>): Promise<BigNumberish[]> {
     const [depositHead, depositTail, withdrawalHead, withdrawalTail] = await Promise.all([
-      contract.queuedDepositHead(),
-      contract.nextQueuedDepositId(),
-      contract.queuedWithdrawalHead(),
-      contract.nextQueuedWithdrawalId(),
+      contract.read.queuedDepositHead(),
+      contract.read.nextQueuedDepositId(),
+      contract.read.queuedWithdrawalHead(),
+      contract.read.nextQueuedWithdrawalId(),
     ]);
 
     // Note: ignores pending withdrawals/deposits when queue is large (>250)
     const depositRange = range(Number(depositHead), min([Number(depositHead) + 250, Number(depositTail)]));
     const withdrawalRange = range(Number(withdrawalHead), min([Number(withdrawalHead) + 250, Number(withdrawalTail)]));
-    const pendingDeposits = await Promise.all(depositRange.map(async i => contract.depositQueue(i)));
-    const pendingWithdrawals = await Promise.all(withdrawalRange.map(async i => contract.withdrawalQueue(i)));
+    const pendingDeposits = await Promise.all(depositRange.map(async i => contract.read.depositQueue([i])));
+    const pendingWithdrawals = await Promise.all(withdrawalRange.map(async i => contract.read.withdrawalQueue([i])));
 
     const userPendingDeposits = pendingDeposits
       .filter(deposit => deposit.user.toLowerCase() === address.toLowerCase())

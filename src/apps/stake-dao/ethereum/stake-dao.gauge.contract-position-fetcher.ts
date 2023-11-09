@@ -93,11 +93,11 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<StakeDaoGauge>) {
-    return contract.staking_token();
+    return contract.read.staking_token();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<StakeDaoGauge>) {
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
+    const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.read.reward_tokens([i])));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
 
@@ -111,7 +111,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
     address,
     contract,
   }: GetTokenBalancesParams<StakeDaoGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({

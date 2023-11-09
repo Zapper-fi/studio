@@ -13,6 +13,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { AaveSafetyModuleViemContractFactory } from '../contracts';
+import { AaveStkAave } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AaveStkAave> {
@@ -49,7 +50,7 @@ export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher ext
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<AaveStkAave>) {
-    const rewardBalance = await contract.getTotalRewardsBalance(address);
+    const rewardBalance = await contract.read.getTotalRewardsBalance([address]);
     return [rewardBalance];
   }
 }

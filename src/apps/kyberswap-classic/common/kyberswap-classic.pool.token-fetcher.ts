@@ -29,22 +29,22 @@ export abstract class KyberSwapClassicPoolTokenFetcher extends UniswapV2PoolOnCh
   }
 
   getPoolsLength(contract: KyberSwapClassicFactory): Promise<BigNumberish> {
-    return contract.allPoolsLength();
+    return contract.read.allPoolsLength();
   }
 
   getPoolAddress(contract: KyberSwapClassicFactory, index: number): Promise<string> {
-    return contract.allPools(index);
+    return contract.read.allPools([index]);
   }
 
   getPoolToken0(contract: KyberSwapClassicPool): Promise<string> {
-    return contract.token0();
+    return contract.read.token0();
   }
 
   getPoolToken1(contract: KyberSwapClassicPool): Promise<string> {
-    return contract.token1();
+    return contract.read.token1();
   }
 
   getPoolReserves(contract: KyberSwapClassicPool): Promise<BigNumberish[]> {
-    return contract.getReserves();
+    return contract.read.getReserves();
   }
 }

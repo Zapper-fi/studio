@@ -32,15 +32,15 @@ export class EthereumCurveVotingEscrowContractPositionFetcher extends VotingEscr
   }
 
   async getEscrowedTokenAddress(contract: CurveVotingEscrow) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getRewardTokenAddress(contract: CurveVotingEscrowReward) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance(address: string, contract: CurveVotingEscrow) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance(address: string, contract: CurveVotingEscrowReward) {

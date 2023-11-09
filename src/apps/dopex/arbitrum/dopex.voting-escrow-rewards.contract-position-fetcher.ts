@@ -50,6 +50,6 @@ export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends Con
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<DopexVotingEscrowRewards>) {
-    return [await contract.earned(address)];
+    return [await contract.read.earned([address])];
   }
 }

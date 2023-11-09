@@ -36,8 +36,8 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
 
   async resolveVestingBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
     const [bondInfo, pendingPayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
+      contract.read.bondInfo([address]),
+      contract.read.pendingPayoutFor([address]),
     ]);
 
     const vestingBalanceRaw = bondInfo.payout.gt(pendingPayout) ? bondInfo.payout.sub(pendingPayout) : 0;
@@ -45,6 +45,6 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
   }
 
   resolveClaimableBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
-    return contract.pendingPayoutFor(address);
+    return contract.read.pendingPayoutFor([address]);
   }
 }

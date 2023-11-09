@@ -54,7 +54,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<GmxOptionContractPositionDefinition[]> {
     const vaultContract = this.contractFactory.gmxVault({ address: this.vaultAddress, network: this.network });
-    const tokensCount = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const tokensCount = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const tokensRange = _.range(0, Number(tokensCount));
 
     const whitelistedTokens = await Promise.all(
@@ -137,7 +137,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
 
         const [leverageRaw, basisPointDivisor] = await Promise.all([
           contract.getPositionLeverage(address, collateralToken.address, indexToken.address, isLong),
-          contract.BASIS_POINTS_DIVISOR(),
+          contract.read.BASIS_POINTS_DIVISOR(),
         ]);
         const leverage = (Number(leverageRaw) / Number(basisPointDivisor)).toFixed(2);
         const size = Number(position[0]) / 10 ** 30;

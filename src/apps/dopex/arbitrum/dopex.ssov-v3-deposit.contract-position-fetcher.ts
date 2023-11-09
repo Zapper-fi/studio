@@ -59,7 +59,7 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<DopexSsovV3>) {
-    return contract.name();
+    return contract.read.name();
   }
 
   getTokenBalancesPerPosition(): never {

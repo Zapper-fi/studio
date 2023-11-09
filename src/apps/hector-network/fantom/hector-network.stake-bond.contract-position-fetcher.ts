@@ -42,7 +42,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkStakeBondDepository>) {
-    const [principle, claimable] = await Promise.all([contract.principle(), contract.sHEC()]);
+    const [principle, claimable] = await Promise.all([contract.read.principle(), contract.read.sHEC()]);
 
     return [
       {

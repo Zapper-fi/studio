@@ -30,11 +30,11 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
   }
 
   async getPoolLength(contract: AladdinConcentratorAfxsVault): Promise<BigNumberish> {
-    return contract.poolLength();
+    return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(contract: AladdinConcentratorAfxsVault, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(
@@ -42,7 +42,7 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
     _poolIndex: number,
     multicall: IMulticallWrapper,
   ) {
-    return multicall.wrap(contract).aladdinFXS();
+    return multicall.wrap(contract).read.aladdinFXS();
   }
 
   async getTotalAllocPoints() {
@@ -71,6 +71,6 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorAfxsVault>) {
     const poolIndex = contractPosition.dataProps.poolIndex;
-    return contract.pendingReward(poolIndex, address);
+    return contract.read.pendingReward([poolIndex, address]);
   }
 }

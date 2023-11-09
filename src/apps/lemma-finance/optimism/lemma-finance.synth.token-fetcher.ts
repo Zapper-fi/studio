@@ -80,8 +80,8 @@ export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePosit
     const perpContract = this.contractFactory.lemmaPerp({ address: definition.perpAddress, network: this.network });
 
     const [collateralTokenAddress, usdcAddress] = await Promise.all([
-      multicall.wrap(synthContract).tailCollateral(),
-      multicall.wrap(perpContract).usdc(),
+      multicall.wrap(synthContract).read.tailCollateral(),
+      multicall.wrap(perpContract).read.usdc(),
     ]);
 
     return [
@@ -96,7 +96,7 @@ export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePosit
     appToken,
   }: GetPricePerShareParams<LemmaSynth, DefaultAppTokenDataProps, LemmaFinanceSynthDefinition>) {
     const perpContract = this.contractFactory.lemmaPerp({ address: definition.perpAddress, network: this.network });
-    const indexPriceRaw = await multicall.wrap(perpContract).getIndexPrice();
+    const indexPriceRaw = await multicall.wrap(perpContract).read.getIndexPrice();
     const indexPrice = Number(indexPriceRaw) / 10 ** appToken.decimals;
     return [indexPrice, 0];
   }
