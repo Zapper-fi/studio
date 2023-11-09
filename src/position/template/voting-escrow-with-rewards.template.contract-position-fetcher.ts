@@ -10,21 +10,28 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from './contract-position.template.types';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export abstract class VotingEscrowWithRewardsTemplateContractPositionFetcher<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > extends ContractPositionTemplatePositionFetcher<T> {
   abstract veTokenAddress: string;
   abstract rewardAddress: string;
-  abstract getEscrowContract(address: string): T;
-  abstract getRewardContract(address: string): V;
-  abstract getEscrowedTokenAddress(contract: T): Promise<string>;
-  abstract getRewardTokenAddress(contract: V): Promise<string>;
-  abstract getEscrowedTokenBalance(address: string, contract: T): Promise<BigNumberish>;
-  abstract getRewardTokenBalance(address: string, contract: V): Promise<BigNumberish>;
+  abstract getEscrowContract(address: string): GetContractReturnType<T, PublicClient>;
+  abstract getRewardContract(address: string): GetContractReturnType<V, PublicClient>;
+  abstract getEscrowedTokenAddress(contract: GetContractReturnType<T, PublicClient>): Promise<string>;
+  abstract getRewardTokenAddress(contract: GetContractReturnType<V, PublicClient>): Promise<string>;
+  abstract getEscrowedTokenBalance(
+    address: string,
+    contract: GetContractReturnType<T, PublicClient>,
+  ): Promise<BigNumberish>;
+  abstract getRewardTokenBalance(
+    address: string,
+    contract: GetContractReturnType<V, PublicClient>,
+  ): Promise<BigNumberish>;
 
-  getContract(address: string): T {
+  getContract(address: string): GetContractReturnType<T, PublicClient> {
     return this.getEscrowContract(address);
   }
 

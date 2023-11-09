@@ -65,8 +65,7 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
 
   async getApy({ contract }: GetDataPropsParams<AlphaBank>) {
     const [totalEthRaw, totalDebtValueRaw] = await Promise.all([contract.read.totalETH(), contract.read.glbDebtVal()]);
-
-    const utilizationRate = new BigNumber(totalDebtValueRaw.div(totalEthRaw).toString());
+    const utilizationRate = new BigNumber(totalDebtValueRaw.toString()).div(totalEthRaw.toString());
 
     const tripleSlope = utilizationRate.lt(new BigNumber(0.8))
       ? utilizationRate.times(new BigNumber(0.1)).div(new BigNumber(0.8))

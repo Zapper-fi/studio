@@ -105,7 +105,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     const arrakisPool = this.contractFactory.arrakisPool(appToken);
     const arrakisFeeRaw = await multicall
       .wrap(arrakisPool)
-      .arrakisFeeBPS()
+      .read.arrakisFeeBPS()
       .catch(e => {
         if (isMulticallUnderlyingError(e)) return null;
         throw e;

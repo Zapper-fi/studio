@@ -73,12 +73,12 @@ export class EthereumAngleVaultsContractPositionFetcher extends ContractPosition
     const balances = await Promise.all(
       vaultIds.map(async vaultId => {
         const [collateralData, vaultDebt] = await Promise.all([
-          contract.read.vaultData([vaultId]),
-          contract.read.getVaultDebt([vaultId]),
+          contract.read.vaultData([BigInt(vaultId)]),
+          contract.read.getVaultDebt([BigInt(vaultId)]),
         ]);
 
         return {
-          supplied: collateralData.collateralAmount,
+          supplied: collateralData[0],
           borrowed: vaultDebt,
         };
       }),

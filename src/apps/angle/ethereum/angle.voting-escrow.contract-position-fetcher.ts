@@ -8,6 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 import { AngleApiHelper } from '../common/angle.api';
 import { AngleViemContractFactory } from '../contracts';
 import { AngleVeAngle, AngleLiquidityGauge } from '../contracts/viem';
+import { AngleVeAngleContract } from '../contracts/viem/AngleVeAngle';
+import { AngleLiquidityGaugeContract } from '../contracts/viem/AngleLiquidityGauge';
 
 @PositionTemplate()
 export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -26,27 +28,27 @@ export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWit
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): AngleVeAngle {
+  getEscrowContract(address: string) {
     return this.contractFactory.angleVeAngle({ address, network: this.network });
   }
 
-  getRewardContract(address: string): AngleLiquidityGauge {
+  getRewardContract(address: string) {
     return this.contractFactory.angleLiquidityGauge({ address, network: this.network });
   }
 
-  async getEscrowedTokenAddress(contract: AngleVeAngle): Promise<string> {
+  async getEscrowedTokenAddress(contract: AngleVeAngleContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getRewardTokenAddress(contract: AngleLiquidityGauge): Promise<string> {
+  async getRewardTokenAddress(contract: AngleLiquidityGaugeContract): Promise<string> {
     return contract.read.staking_token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: AngleVeAngle): Promise<BigNumberish> {
-    return contract.read.locked([address]).then(v => v.amount);
+  async getEscrowedTokenBalance(address: string, contract: AngleVeAngleContract): Promise<BigNumberish> {
+    return contract.read.locked([address]).then(v => v[0]);
   }
 
-  async getRewardTokenBalance(address: string, _contract: AngleLiquidityGauge): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string, _contract: AngleLiquidityGaugeContract): Promise<BigNumberish> {
     const { rewardsData } = await this.angleApiHelper.getRewardsData(address, this.network);
     return rewardsData.totalClaimable;
   }
