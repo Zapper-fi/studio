@@ -54,7 +54,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     contract,
     definition,
   }: GetMasterChefDataPropsParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.address).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.address]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

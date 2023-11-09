@@ -141,8 +141,8 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
     const { tokens } = contractPosition;
 
     const [reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(this.contractFactory.erc20(tokens[0])).balanceOf(poolAddress),
-      multicall.wrap(this.contractFactory.erc20(tokens[1])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[0])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[1])).balanceOf(poolAddress),
     ]);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];

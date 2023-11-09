@@ -86,8 +86,8 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<AcrossStaking>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const [supplied, rewards] = await Promise.all([
-      contract.getUserStake(stakedToken.address, address),
-      contract.getOutstandingRewards(stakedToken.address, address),
+      contract.read.getUserStake([stakedToken.address, address]),
+      contract.read.getOutstandingRewards([stakedToken.address, address]),
     ]);
     return [supplied.cumulativeBalance, rewards];
   }

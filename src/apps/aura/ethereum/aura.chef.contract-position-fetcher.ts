@@ -51,7 +51,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<AuraMasterchef>) {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

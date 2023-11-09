@@ -44,7 +44,7 @@ export abstract class KyberSwapClassicFarmContractPositionFetcher extends Master
   }
 
   async getTotalRewardRate({ contract, definition }: GetMasterChefDataPropsParams<KyberSwapClassicMasterchef>) {
-    return contract.getPoolInfo(definition.poolIndex).then(v => v.rewardPerBlocks[0]);
+    return contract.read.getPoolInfo([definition.poolIndex]).then(v => v.rewardPerBlocks[0]);
   }
 
   async getStakedTokenBalance({
@@ -52,7 +52,7 @@ export abstract class KyberSwapClassicFarmContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<KyberSwapClassicMasterchef>) {
-    return contract.getUserInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.getUserInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({

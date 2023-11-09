@@ -67,6 +67,6 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
     contractPosition,
   }: GetTokenBalancesParams<SolidLizardGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.earned(rt.address, address)));
+    return Promise.all(rewardTokens.map(rt => contract.read.earned([rt.address, address])));
   }
 }

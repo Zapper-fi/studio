@@ -41,7 +41,7 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getPricePerShare({ appToken }: GetPricePerShareParams<QiDaoYieldToken>) {
     const underlyingToken = appToken.tokens[0];
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingToken.address,
       network: this.network,
     });

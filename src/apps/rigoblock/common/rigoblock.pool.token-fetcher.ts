@@ -151,8 +151,11 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     const heldTokens: WhitelistedTokenDefinition[] = [];
     for (let i = 0; i !== tokens.length; i++) {
       if (tokens[i].address !== ZERO_ADDRESS) {
-        const uTokenContract = this.contractFactory.erc20({ address: tokens[i].address, network: this.network });
-        const poolTokenBalance = await multicall.wrap(uTokenContract).balanceOf(definition.address);
+        const uTokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: tokens[i].address,
+          network: this.network,
+        });
+        const poolTokenBalance = await multicall.wrap(uTokenContract).read.balanceOf([definition.address]);
         if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) {
           heldTokens[i] = tokens[i];
         }
@@ -179,8 +182,11 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
           const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(appToken.address);
           return Number(ethBalance) / 10 ** 18;
         }
-        const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        const reserveRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
+        const uTokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
+        const reserveRaw = await multicall.wrap(uTokenContract).read.balanceOf([appToken.address]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),

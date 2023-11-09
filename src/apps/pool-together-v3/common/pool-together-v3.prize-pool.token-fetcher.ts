@@ -63,8 +63,14 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
   }: GetDataPropsParams<T, PoolTogetherV3PrizePoolDataProps, PoolTogetherV3PrizePoolDefinition>) {
     const { tokenFaucets, sponsorshipAddress, ticketAddress } = definition;
 
-    const sponsorshipTokenContract = this.contractFactory.erc20({ address: sponsorshipAddress, network: this.network });
-    const ticketTokenContract = this.contractFactory.erc20({ address: ticketAddress, network: this.network });
+    const sponsorshipTokenContract = this.appToolkit.globalViemContracts.erc20({
+      address: sponsorshipAddress,
+      network: this.network,
+    });
+    const ticketTokenContract = this.appToolkit.globalViemContracts.erc20({
+      address: ticketAddress,
+      network: this.network,
+    });
     const [sponsorshipSupplyRaw, sponsorshipDecimals, ticketSupplyRaw, ticketDecimals] = await Promise.all([
       sponsorshipTokencontract.read.totalSupply(),
       sponsorshipTokencontract.read.decimals(),
@@ -86,7 +92,7 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
           address: tokenFaucetAddress,
           network: this.network,
         });
-        const assetContract = this.contractFactory.erc20({
+        const assetContract = this.appToolkit.globalViemContracts.erc20({
           address: assetAddress,
           network: this.network,
         });

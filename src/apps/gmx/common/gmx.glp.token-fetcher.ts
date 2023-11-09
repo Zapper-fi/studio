@@ -26,7 +26,7 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
   }
 
   getContract(address: string) {
-    return this.contractFactory.erc20({ address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getAddresses() {
@@ -60,7 +60,7 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
     const vault = this.contractFactory.gmxVault({ address: vaultAddress, network: this.network });
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const reserveRaw = await multicall.wrap(vault).getRedemptionCollateral(token.address);
+        const reserveRaw = await multicall.wrap(vault).read.getRedemptionCollateral([token.address]);
         return Number(reserveRaw) / 10 ** token.decimals;
       }),
     );

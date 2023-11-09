@@ -118,12 +118,12 @@ export class ArbitrumMycellilumPerpContractPositionFetcher extends ContractPosit
     const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
     const isLong = contractPosition.dataProps.isLong;
 
-    const position = await contract.getPosition(address, collateralToken.address, indexToken.address, isLong);
+    const position = await contract.read.getPosition([address, collateralToken.address, indexToken.address, isLong]);
     // non existing position returns size and collateral = 0
     if (Number(position[0]) == 0 && Number(position[1]) == 0) return [0, 0, 0];
 
-    // const leverage = await contract.getPositionLeverage(address, collateralToken.address, indexToken.address, isLong);
-    const delta = await contract.getPositionDelta(address, collateralToken.address, indexToken.address, isLong);
+    // const leverage = await contract.read.getPositionLeverage([address, collateralToken.address, indexToken.address, isLong]);
+    const delta = await contract.read.getPositionDelta([address, collateralToken.address, indexToken.address, isLong]);
 
     const initialCollateralRaw = position[1];
     const initialCollateral = Number(initialCollateralRaw) / 10 ** 30;

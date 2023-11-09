@@ -83,7 +83,7 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
     const [totalInsurPerBlock, totalPoolWeight, poolWeight] = await Promise.all([
       multicall.wrap(stakersPool).read.rewardPerBlock(),
       multicall.wrap(stakersPool).read.totalPoolWeight(),
-      multicall.wrap(stakersPool).poolWeightPT(appToken.address),
+      multicall.wrap(stakersPool).read.poolWeightPT([appToken.address]),
     ]);
 
     if (totalPoolWeight.lte(0)) return 0;

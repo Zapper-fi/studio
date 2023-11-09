@@ -84,7 +84,7 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
       this.contractFactory.klimaDistributor({ address: distributorAddress, network: this.network }),
     );
     const underlyingToken = multicall.wrap(
-      this.contractFactory.erc20({ address: underlyingAddress, network: this.network }),
+      this.appToolkit.globalViemContracts.erc20({ address: underlyingAddress, network: this.network }),
     );
 
     const [info, circulatingSupply, decimals, reserveRaw, blockRate] = await Promise.all([

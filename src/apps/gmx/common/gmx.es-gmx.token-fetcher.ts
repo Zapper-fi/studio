@@ -18,7 +18,7 @@ export abstract class GmxEsGmxTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   getContract(address: string) {
-    return this.contractFactory.erc20({ address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getAddresses() {

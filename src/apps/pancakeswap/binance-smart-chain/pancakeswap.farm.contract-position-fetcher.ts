@@ -46,7 +46,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends Mas
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PancakeswapChef>) {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PancakeswapChef>) {

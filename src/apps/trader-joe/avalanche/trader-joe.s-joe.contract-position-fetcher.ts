@@ -48,7 +48,7 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
 
   async getStakedTokenBalance({ address, contract, contractPosition }: GetTokenBalancesParams<TraderJoeStableStaking>) {
     const supplied = contractPosition.tokens.find(isSupplied)!;
-    return contract.getUserInfo(address, supplied.address).then(v => v[0]);
+    return contract.read.getUserInfo([address, supplied.address]).then(v => v[0]);
   }
 
   getRewardTokenBalances({ address, contract, contractPosition }: GetTokenBalancesParams<TraderJoeStableStaking>) {

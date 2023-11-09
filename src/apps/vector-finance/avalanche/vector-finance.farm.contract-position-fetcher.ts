@@ -101,7 +101,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     MasterChefContractPositionDefinition
   >): Promise<number> {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const registeredToken = await contract.registeredToken(definition.poolIndex);
+    const registeredToken = await contract.read.registeredToken([definition.poolIndex]);
     const poolInfo = await contract.read.getPoolInfo([registeredToken]);
     return Number(poolInfo.sizeOfPool) / 10 ** stakedToken.decimals;
   }
@@ -115,7 +115,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<VectorFinanceMasterChef>) {
-    const registeredToken = await contract.registeredToken(definition.poolIndex);
+    const registeredToken = await contract.read.registeredToken([definition.poolIndex]);
     const poolInfo = await contract.read.addressToPoolInfo([registeredToken]);
     return poolInfo.allocPoint;
   }
@@ -133,7 +133,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     contract,
     contractPosition,
   }: GetTokenBalancesParams<VectorFinanceMasterChef, MasterChefContractPositionDataProps>): Promise<BigNumberish> {
-    const registeredToken = await contract.registeredToken(contractPosition.dataProps.poolIndex);
+    const registeredToken = await contract.read.registeredToken([contractPosition.dataProps.poolIndex]);
     return contract.read.depositInfo([registeredToken, address]);
   }
 
@@ -143,7 +143,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     contractPosition,
   }: GetTokenBalancesParams<VectorFinanceMasterChef, MasterChefContractPositionDataProps>): Promise<BigNumberish> {
     const anyClaimable = contractPosition.tokens.find(isClaimable)!;
-    const registeredToken = await contract.registeredToken(contractPosition.dataProps.poolIndex);
+    const registeredToken = await contract.read.registeredToken([contractPosition.dataProps.poolIndex]);
     const pendingTokens = await contract.pendingTokens(registeredToken, address, anyClaimable?.address);
     return pendingTokens.pendingVTX;
   }

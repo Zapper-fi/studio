@@ -102,14 +102,14 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
     definition,
     multicall,
   }: GetDataPropsParams<MakerGemJoin, MakerVaultDataProps, MakerVaultDefinition>) {
-    const collateralTokenContract = this.contractFactory.erc20({
+    const collateralTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: definition.collateralTokenAddress,
       network: this.network,
     });
 
     const balanceRaw = await (definition.collateralTokenAddress === ZERO_ADDRESS
       ? multicall.wrap(multicall.contract).getEthBalance(definition.address)
-      : multicall.wrap(collateralTokenContract).balanceOf(definition.address));
+      : multicall.wrap(collateralTokenContract).read.balanceOf([definition.address]));
 
     const collateralToken = contractPosition.tokens[0];
 

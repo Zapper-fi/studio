@@ -100,14 +100,14 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
   }: GetDataPropsParams<QiDaoVaultNft, QiDaoVaultDataProps, QiDaoVaultDefinition>): Promise<QiDaoVaultDataProps> {
     const vaultInfoAddress = definition.vaultInfoAddress;
     const collateralToken = contractPosition.tokens[0];
-    const collateralTokenContract = this.contractFactory.erc20({
+    const collateralTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: collateralToken.address,
       network: this.network,
     });
 
     const reserveRaw = await (contractPosition.tokens[0].address === ZERO_ADDRESS
       ? multicall.wrap(multicall.contract).getEthBalance(contractPosition.address)
-      : multicall.wrap(collateralTokenContract).balanceOf(contractPosition.address));
+      : multicall.wrap(collateralTokenContract).read.balanceOf([contractPosition.address]));
 
     const reserve = Number(reserveRaw) / 10 ** collateralToken.decimals;
     const liquidity = reserve * collateralToken.price;
@@ -152,7 +152,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
         if (numOfVaults === 0) return [];
 
         const tokenIds = await Promise.all(
-          range(0, numOfVaults).map(i => multicall.wrap(vaultNftContract).tokenOfOwnerByIndex(address, i)),
+          range(0, numOfVaults).map(i => multicall.wrap(vaultNftContract).read.tokenOfOwnerByIndex([address, i])),
         );
 
         const positionBalances = await Promise.all(

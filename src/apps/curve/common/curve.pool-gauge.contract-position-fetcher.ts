@@ -178,7 +178,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
     // Derive liquidity as the amount of the staked token held by the gauge contract
-    const stakedTokenContract = this.contractFactory.erc20(stakedToken);
+    const stakedTokenContract = this.appToolkit.globalViemContracts.erc20(stakedToken);
     const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     const liquidity = reserve * stakedToken.price;
@@ -237,7 +237,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     if (contractPosition.dataProps.gaugeType === GaugeType.N_GAUGE) {
       const nGauge = this.contractFactory.curveNGauge(contractPosition);
       const rewardTokenBalances = await Promise.all(
-        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).claimable_reward(address, t.address)),
+        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).read.claimable_reward([address, t.address])),
       );
       balances.push(...rewardTokenBalances);
     }
@@ -246,7 +246,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     if (contractPosition.dataProps.gaugeType === GaugeType.GAUGE_V4) {
       const nGauge = this.contractFactory.curveGaugeV2(contractPosition);
       const rewardTokenBalances = await Promise.all(
-        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).claimable_reward_write(address, t.address)),
+        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).read.claimable_reward_write([address, t.address])),
       );
       balances.push(...rewardTokenBalances);
     }

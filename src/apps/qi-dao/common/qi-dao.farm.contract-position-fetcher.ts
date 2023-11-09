@@ -67,7 +67,7 @@ export abstract class QiDaoFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     definition,
   }: GetMasterChefDataPropsParams<QiDaoMasterChef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

@@ -103,8 +103,8 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<Y2KFinanceStakingRewards, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const supply = await params.contract.balanceOf(params.address);
-    const rewards = await params.contract.earned(params.address);
+    const supply = await params.contract.read.balanceOf([params.address]);
+    const rewards = await params.contract.read.earned([params.address]);
     return [supply, rewards];
   }
 }

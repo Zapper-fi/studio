@@ -103,7 +103,9 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
         const supplyRaw = await Promise.all(
           accountAddresses.map(address =>
             multicall
-              .wrap(this.contractFactory.erc20({ address: underlyingTokenAddress, network: this.network }))
+              .wrap(
+                this.appToolkit.globalViemContracts.erc20({ address: underlyingTokenAddress, network: this.network }),
+              )
               .balanceOf(address),
           ),
         );

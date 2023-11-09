@@ -139,7 +139,10 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
           return debt.borrowedAmountWithInterestAndFees;
         }
 
-        const tokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
+        const tokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
         return multicall.wrap(tokenContract).read.balanceOf([creditAccountAddress]);
       }),
     );

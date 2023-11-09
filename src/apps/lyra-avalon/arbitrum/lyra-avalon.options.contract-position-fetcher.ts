@@ -216,7 +216,10 @@ export class ArbitrumLyraAvalonOptionsContractPositionFetcher extends ContractPo
     LyraAvalonOptionContractPositionDataProps,
     LyraAvalonOptionTokenDefinition
   >) {
-    const baseContract = this.contractFactory.erc20({ address: definition.baseAddress, network: this.network });
+    const baseContract = this.appToolkit.globalViemContracts.erc20({
+      address: definition.baseAddress,
+      network: this.network,
+    });
     const baseSymbol = await multicall.wrap(baseContract).read.symbol();
     const optionLabel = OPTION_TYPES[definition.optionType];
     return `${optionLabel} ${baseSymbol} @ $${definition.strikePriceReadable}`;

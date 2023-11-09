@@ -79,7 +79,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
 
   async getDataProps({ multicall, contractPosition }: GetDataPropsParams<SpoolStaking, SpoolStakingDataProps>) {
     const [spoolToken, voSpoolToken] = contractPosition.tokens;
-    const spoolContract = this.contractFactory.erc20(spoolToken);
+    const spoolContract = this.appToolkit.globalViemContracts.erc20(spoolToken);
     const voSpoolContract = this.contractFactory.spoolVospool(voSpoolToken);
 
     const totalStaked = await multicall.wrap(spoolContract).balanceOf(STAKING_ADDRESS);
@@ -123,7 +123,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     const [votingPowerRaw, voSpoolRewards, ...tokenRewards] = await Promise.all([
       multicall.wrap(voSpool).read.getUserGradualVotingPower([address]),
       multicall.wrap(staking).callStatic.getUpdatedVoSpoolRewardAmount({ from: address }),
-      ...rewardTokens.map(reward => multicall.wrap(staking).earned(reward.address, address)),
+      ...rewardTokens.map(reward => multicall.wrap(staking).read.earned([reward.address, address])),
     ]);
 
     const stakedSpool = await gqlFetch<UserSpoolStaking>({

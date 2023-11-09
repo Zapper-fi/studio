@@ -82,7 +82,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
 
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index => {
-        const bondId = await multicall.wrap(bondNftContract).tokenOfOwnerByIndex(address, index);
+        const bondId = await multicall.wrap(bondNftContract).read.tokenOfOwnerByIndex([address, index]);
 
         const bondStatus = await multicall.wrap(bondNftContract).read.getBondStatus([bondId]);
         if (bondStatus !== BondStatus.PENDING) return null;

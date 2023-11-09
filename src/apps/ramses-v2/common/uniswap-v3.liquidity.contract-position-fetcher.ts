@@ -131,8 +131,8 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
     const { tokens } = contractPosition;
 
     const [reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(this.contractFactory.erc20(tokens[0])).balanceOf(poolAddress),
-      multicall.wrap(this.contractFactory.erc20(tokens[1])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[0])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[1])).balanceOf(poolAddress),
     ]);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];
@@ -177,7 +177,7 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index =>
         this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
-          positionId: await multicall.wrap(positionManager).tokenOfOwnerByIndex(address, index),
+          positionId: await multicall.wrap(positionManager).read.tokenOfOwnerByIndex([address, index]),
           network: this.network,
           multicall,
           tokenLoader,

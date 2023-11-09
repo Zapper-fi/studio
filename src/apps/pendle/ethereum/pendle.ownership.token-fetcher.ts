@@ -85,7 +85,9 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
 
         const forge = this.contractFactory.pendleForge({ address: forgeAddress, network: this.network });
         const forgeId = await multicall.wrap(forge).read.forgeId();
-        const ownershipTokenAddress = await multicall.wrap(pendleData).otTokens(forgeId, underlyingAddress, expiry);
+        const ownershipTokenAddress = await multicall
+          .wrap(pendleData)
+          .read.otTokens([forgeId, underlyingAddress, expiry]);
 
         return {
           address: ownershipTokenAddress.toLowerCase(),
@@ -131,7 +133,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
       network: this.network,
     });
 
-    const pairAddress = await multicall.wrap(dexFactory).getPair(appToken.address, baseTokenAddress);
+    const pairAddress = await multicall.wrap(dexFactory).read.getPair([appToken.address, baseTokenAddress]);
     if (pairAddress === ZERO_ADDRESS) return [0];
 
     const pair = this.contractFactory.pendleDexPair({ address: pairAddress, network: this.network });

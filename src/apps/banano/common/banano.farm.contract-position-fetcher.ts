@@ -47,7 +47,7 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

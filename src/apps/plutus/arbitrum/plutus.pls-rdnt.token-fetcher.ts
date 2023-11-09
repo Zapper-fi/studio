@@ -60,7 +60,7 @@ export class ArbitrumPlutusPlsRdntTokenFetcher extends AppTokenTemplatePositionF
       network: this.network,
     });
     const oneUnit = BigNumber.from(10).pow(18);
-    const pricePerShare = await multicall.wrap(chronosPairContract).getAmountOut(oneUnit, appToken.address);
+    const pricePerShare = await multicall.wrap(chronosPairContract).read.getAmountOut([oneUnit, appToken.address]);
 
     return [Number(pricePerShare) / 10 ** appToken.decimals];
   }

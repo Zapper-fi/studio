@@ -54,7 +54,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
 
   getRewardRates({ contract, contractPosition }: GetDataPropsParams<DystopiaGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.rewardPerToken(rt.address)));
+    return Promise.all(rewardTokens.map(rt => contract.read.rewardPerToken([rt.address])));
   }
 
   async getStakedTokenBalance({
@@ -70,6 +70,6 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
     contractPosition,
   }: GetTokenBalancesParams<DystopiaGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.earned(rt.address, address)));
+    return Promise.all(rewardTokens.map(rt => contract.read.earned([rt.address, address])));
   }
 }

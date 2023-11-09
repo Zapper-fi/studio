@@ -175,8 +175,8 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
         if (!contractPosition) return null;
 
         const [positionInfo, positionDebt] = await Promise.all([
-          multicall.wrap(bankContract).getPositionInfo(position.id),
-          multicall.wrap(bankContract).getPositionDebts(position.id),
+          multicall.wrap(bankContract).read.getPositionInfo([position.id]),
+          multicall.wrap(bankContract).read.getPositionDebts([position.id]),
         ]);
 
         const collateralAmount = positionInfo.collateralSize;

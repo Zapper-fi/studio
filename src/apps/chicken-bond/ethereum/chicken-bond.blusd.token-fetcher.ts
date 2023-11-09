@@ -44,7 +44,7 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     });
     const oneUnit = BigNumber.from(10).pow(18);
 
-    const priceRaw = await multicall.wrap(curvePoolContract).get_dy(0, 1, oneUnit);
+    const priceRaw = await multicall.wrap(curvePoolContract).read.get_dy([0, 1, oneUnit]);
     const price = Number(priceRaw) / 10 ** 18;
 
     return price;

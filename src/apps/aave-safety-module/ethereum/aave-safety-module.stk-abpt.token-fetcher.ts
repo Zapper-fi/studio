@@ -45,7 +45,7 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
       address: this.stkApyHelperAddress,
     });
 
-    const stkAaveData = await multicall.wrap(stkApyHelperContract).getStkBptData(ZERO_ADDRESS);
+    const stkAaveData = await multicall.wrap(stkApyHelperContract).read.getStkBptData([ZERO_ADDRESS]);
 
     const apy = (+stkAaveData[5] / 1e4) * 100;
     return apy;

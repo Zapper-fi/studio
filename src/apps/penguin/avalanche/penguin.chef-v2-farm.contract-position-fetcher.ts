@@ -70,7 +70,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PenguinChefV2>) {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
   }
 
   async getExtraRewardTokenRewardRates({
@@ -78,7 +78,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
     definition,
     multicall,
   }: GetMasterChefV2ExtraRewardTokenRewardRates<PenguinChefV2, PenguinExtraRewarder>) {
-    const rewarderAddressRaw = await (await contract.poolInfo(definition.poolIndex)).rewarder;
+    const rewarderAddressRaw = await (await contract.read.poolInfo([definition.poolIndex])).rewarder;
     const rewarderRateContract = this.contractFactory.penguinRewarderRate({
       address: rewarderAddressRaw.toLowerCase(),
       network: this.network,

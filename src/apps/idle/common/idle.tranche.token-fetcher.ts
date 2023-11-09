@@ -35,7 +35,7 @@ export abstract class EthereumIdleTranchesPoolTokenFetcher extends AppTokenTempl
   }
 
   getContract(address: string) {
-    return this.contractFactory.erc20({ network: this.network, address });
+    return this.appToolkit.globalViemContracts.erc20({ network: this.network, address });
   }
 
   async getAddresses({ definitions }: GetAddressesParams<IdleAppTokenDefinition>): Promise<string[]> {
@@ -55,7 +55,7 @@ export abstract class EthereumIdleTranchesPoolTokenFetcher extends AppTokenTempl
       address: definition.cdoAddress,
       network: this.network,
     });
-    const pricePerShareRaw = await multicall.wrap(perpYieldTrancheContract).tranchePrice(appToken.address);
+    const pricePerShareRaw = await multicall.wrap(perpYieldTrancheContract).read.tranchePrice([appToken.address]);
     const decimals = appToken.tokens[0].decimals;
 
     return [Number(pricePerShareRaw) / 10 ** decimals];

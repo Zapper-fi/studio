@@ -45,7 +45,7 @@ export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplat
       network: this.network,
     });
 
-    const stkAaveData = await multicall.wrap(stkApyHelperContract).getStkAaveData(ZERO_ADDRESS);
+    const stkAaveData = await multicall.wrap(stkApyHelperContract).read.getStkAaveData([ZERO_ADDRESS]);
     const apy = (+stkAaveData[5] / 1e4) * 100;
     return apy;
   }

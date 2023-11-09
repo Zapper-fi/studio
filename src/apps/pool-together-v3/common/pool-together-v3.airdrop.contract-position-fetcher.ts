@@ -76,7 +76,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
     const airdropData = await this.getAirdropData(this.network, address);
     if (!airdropData) return [0];
 
-    const isClaimed = await contract.isClaimed(airdropData.index);
+    const isClaimed = await contract.read.isClaimed([airdropData.index]);
     if (isClaimed) return [0];
 
     const claimableBalanceRaw = String(parseInt(airdropData.amount, 16));

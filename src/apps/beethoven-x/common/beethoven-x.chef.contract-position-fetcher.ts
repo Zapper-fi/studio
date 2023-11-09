@@ -47,7 +47,7 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     contract,
     definition,
   }: GetMasterChefDataPropsParams<BeethovenXMasterchef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

@@ -78,7 +78,7 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<Y2KFinanceVotingLocked, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const info = await params.contract.getAccount(params.address);
+    const info = await params.contract.read.getAccount([params.address]);
     return [info.balance, info.rewards1, info.rewards2];
   }
 }

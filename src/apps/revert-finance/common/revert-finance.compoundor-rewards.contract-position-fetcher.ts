@@ -71,7 +71,7 @@ export abstract class RevertFinanceCompoundorRewardsContractPositionFetcher exte
 
     const maybeTokens = await Promise.all(
       range(0, balance).map(async i => {
-        const positionId = await multicall.wrap(compoundor).accountTokens(address, i);
+        const positionId = await multicall.wrap(compoundor).read.accountTokens([address, i]);
         return this.uniswapV3LiquidityContractPositionBuilder.getTokensForPosition({
           positionId,
           multicall,
@@ -85,7 +85,7 @@ export abstract class RevertFinanceCompoundorRewardsContractPositionFetcher exte
     const uniqueTokens = uniqBy(tokens, v => v.address);
     const tokenBalances = await Promise.all(
       uniqueTokens.map(async token => {
-        const balanceRaw = await multicall.wrap(compoundor).accountBalances(address, token.address);
+        const balanceRaw = await multicall.wrap(compoundor).read.accountBalances([address, token.address]);
         return drillBalance(claimable(token), balanceRaw.toString());
       }),
     );

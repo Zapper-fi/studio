@@ -96,7 +96,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
         const EPOCH_DURATION = 2_628_000; // seconds
 
         const rewardsForEpoch = await multicall.wrap(rewardsContract).read.epochRewards([epoch]);
-        const claimDetails = await multicall.wrap(rewardsContract).claimDetails(address, epoch);
+        const claimDetails = await multicall.wrap(rewardsContract).read.claimDetails([address, epoch]);
 
         const userPlsDpxShare = await multicall
           .wrap(rewardsContract)

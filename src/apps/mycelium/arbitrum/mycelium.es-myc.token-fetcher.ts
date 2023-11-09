@@ -19,7 +19,7 @@ export class ArbitrumMyceliumEsMycTokenFetcher extends AppTokenTemplatePositionF
   }
 
   getContract(address: string) {
-    return this.contractFactory.erc20({ network: this.network, address });
+    return this.appToolkit.globalViemContracts.erc20({ network: this.network, address });
   }
 
   async getAddresses() {

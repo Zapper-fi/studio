@@ -79,7 +79,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
     const balances = await Promise.all(
       result.pouches.map(async pouch => {
         const contract = this.getContract(contractPositions[0].address);
-        const claimableAmountRaw = await multicall.wrap(contract).amountAvailable(pouch.id);
+        const claimableAmountRaw = await multicall.wrap(contract).read.amountAvailable([pouch.id]);
 
         const tokenBalance = drillBalance(contractPositions[0].tokens[0], claimableAmountRaw.toString());
         return { ...contractPositions[0], tokens: [tokenBalance], balanceUSD: tokenBalance.balanceUSD };

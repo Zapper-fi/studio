@@ -91,7 +91,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
       network: this.network,
     });
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const reserveRaw = await multicall.wrap(cvxCrvStakingContract).balanceOf(contractPosition.address);
+    const reserveRaw = await multicall.wrap(cvxCrvStakingContract).read.balanceOf([contractPosition.address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     return reserve;
   }

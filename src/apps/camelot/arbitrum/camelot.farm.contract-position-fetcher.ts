@@ -115,7 +115,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
 
         return await Promise.all(
           range(0, Number(numPositionsRaw)).map(async i => {
-            const tokenId = await multicall.wrap(nftPoolContract).tokenOfOwnerByIndex(address, i);
+            const tokenId = await multicall.wrap(nftPoolContract).read.tokenOfOwnerByIndex([address, i]);
             const [stakingPosition, rewardAmountsCombined] = await Promise.all([
               multicall.wrap(nftPoolContract).read.getStakingPosition([tokenId]),
               multicall.wrap(nftPoolContract).read.pendingRewards([tokenId]),

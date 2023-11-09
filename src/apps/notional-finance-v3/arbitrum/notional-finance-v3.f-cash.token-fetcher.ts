@@ -131,7 +131,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
       network: this.network,
     });
 
-    const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(definition.currencyId);
+    const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([definition.currencyId]);
     const market = activeMarkets.find(v => Number(v.maturity) === definition.maturity);
     const apy = Number(market?.lastImpliedRate ?? 0) / NOTIONAL_CONSTANT;
 
@@ -160,7 +160,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
       network: this.network,
     });
 
-    const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(definition.currencyId);
+    const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([definition.currencyId]);
     const market = activeMarkets.find(v => Number(v.maturity) === definition.maturity);
     return Number(market?.lastImpliedRate ?? 0) / NOTIONAL_CONSTANT;
   }

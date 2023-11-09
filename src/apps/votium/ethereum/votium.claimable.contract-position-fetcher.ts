@@ -45,7 +45,7 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
     if (!rewardsData?.index) return [0];
 
     const { index, amount } = rewardsData;
-    const isClaimed = await contract.isClaimed(rewardToken.address, index);
+    const isClaimed = await contract.read.isClaimed([rewardToken.address, index]);
     return isClaimed ? [0] : [amount];
   }
 }

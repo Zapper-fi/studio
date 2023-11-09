@@ -124,7 +124,9 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
     if (balance === 0) return [];
 
     // get withdrawal token id of user
-    const tokenId = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).tokenOfOwnerByIndex(address, 0);
+    const tokenId = await multicall
+      .wrap(goldfinchWithdrawalRequestTokenContract)
+      .read.tokenOfOwnerByIndex([address, 0]);
 
     const positionData = await multicall.wrap(goldfinchSeniorPoolContract).read.withdrawalRequest([tokenId]);
 

@@ -52,7 +52,7 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition({ address, contractPosition }: GetTokenBalancesParams<BProtocolBamm>) {
     const bammLensAddress = '0xfae2e2d3f11bab10ee0ddd0332f6dfe957414ccb';
     const contract = this.contractFactory.bProtocolBammLens({ address: bammLensAddress, network: this.network });
-    const userDeposit = await contract.getUserDeposit(address, contractPosition.address);
+    const userDeposit = await contract.read.getUserDeposit([address, contractPosition.address]);
     return [userDeposit.lusd, userDeposit.eth];
   }
 }

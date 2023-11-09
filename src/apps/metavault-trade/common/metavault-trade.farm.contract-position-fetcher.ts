@@ -75,7 +75,7 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
       address: this.readerAddress,
       network: this.network,
     });
-    const stakingInfo = await multicall.wrap(readerContract).getStakingInfo(address, rewardTrackers);
+    const stakingInfo = await multicall.wrap(readerContract).read.getStakingInfo([address, rewardTrackers]);
     return [stakingInfo[0].toString(), stakingInfo[5].toString()];
   }
 }

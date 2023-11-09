@@ -51,7 +51,7 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
   async getLiquidity({ appToken, multicall }: GetDataPropsParams<OlympusGOhmToken>) {
     const underlyingToken = appToken.tokens[0];
     const reserveAddress = '0xb63cac384247597756545b500253ff8e607a8020';
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingToken.address,
       network: this.network,
     });
@@ -64,7 +64,7 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
   async getReserves({ appToken, multicall }: GetDataPropsParams<OlympusGOhmToken>) {
     const underlyingToken = appToken.tokens[0];
     const reserveAddress = '0xb63cac384247597756545b500253ff8e607a8020';
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingToken.address,
       network: this.network,
     });

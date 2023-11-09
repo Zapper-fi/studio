@@ -49,7 +49,7 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
   async getReserve({ contractPosition, multicall }: GetDataPropsParams<PancakeswapCakeChef>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const userInfo = await multicall.wrap(mainChef).userInfo(0, contractPosition.address);
+    const userInfo = await multicall.wrap(mainChef).read.userInfo([0, contractPosition.address]);
     const reserve = Number(userInfo.amount) / 10 ** stakedToken.decimals;
     return reserve;
   }

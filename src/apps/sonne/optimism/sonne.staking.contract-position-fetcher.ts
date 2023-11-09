@@ -90,7 +90,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
     const supplied = await contract.read.balanceOf([address]);
     const rewards = await Promise.all(
       rewardToken.map(token => {
-        return contract.getClaimable(token.address, address);
+        return contract.read.getClaimable([token.address, address]);
       }),
     );
 

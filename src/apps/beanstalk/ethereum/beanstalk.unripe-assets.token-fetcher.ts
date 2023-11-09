@@ -66,7 +66,7 @@ export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplateP
       network: this.network,
     });
 
-    const rateRaw = await multicall.wrap(beanstalkContract).getPercentPenalty(appToken.address);
+    const rateRaw = await multicall.wrap(beanstalkContract).read.getPercentPenalty([appToken.address]);
     const rate = Number(rateRaw) / 10 ** 6;
 
     return [rate];

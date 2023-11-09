@@ -135,7 +135,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     contractPosition,
   }: GetDataPropsParams<AuraBaseRewardPool, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const auraToken = contractPosition.tokens.find(v => v.symbol === 'AURA')!;
-    const auraTokenContract = this.contractFactory.erc20(auraToken);
+    const auraTokenContract = this.appToolkit.globalViemContracts.erc20(auraToken);
     const auraSupplyRaw = await multicall.wrap(auraTokenContract).read.totalSupply();
 
     const balRewardRate = await multicall.wrap(contract).read.rewardRate();
@@ -166,7 +166,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     const [, auraRewardToken] = rewardTokens;
 
-    const auraTokenContract = multicall.wrap(this.contractFactory.erc20(auraRewardToken));
+    const auraTokenContract = multicall.wrap(this.appToolkit.globalViemContracts.erc20(auraRewardToken));
     const currentAuraSupply = await auraTokencontract.read.totalSupply();
 
     const balBalanceBN = await contract.read.earned([address]);
@@ -179,7 +179,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
 
     const [rewardMultiplierDenominator, rewardMultipleRaw] = await Promise.all([
       multicall.wrap(boosterMultiplierContract).read.REWARD_MULTIPLIER_DENOMINATOR(),
-      multicall.wrap(boosterMultiplierContract).getRewardMultipliers(contractPosition.address),
+      multicall.wrap(boosterMultiplierContract).read.getRewardMultipliers([contractPosition.address]),
     ]);
 
     let auraBalanceRaw = auraBalanceMintedRaw.mul(rewardMultipleRaw).div(rewardMultiplierDenominator);

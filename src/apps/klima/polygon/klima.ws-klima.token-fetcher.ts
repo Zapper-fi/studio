@@ -32,7 +32,9 @@ export class PolygonKlimaWsKlimaTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<KlimaWsKlima>) {
-    const reserveRaw = await multicall.wrap(this.contractFactory.erc20(appToken.tokens[0])).balanceOf(appToken.address);
+    const reserveRaw = await multicall
+      .wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]))
+      .balanceOf(appToken.address);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

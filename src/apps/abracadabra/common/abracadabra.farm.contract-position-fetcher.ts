@@ -11,6 +11,7 @@ import {
 
 import { AbracadabraViemContractFactory } from '../contracts';
 import { PopsicleChef } from '../contracts/viem';
+import { PopsicleChefContract } from '../contracts/viem/PopsicleChef';
 
 export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PopsicleChef> {
   rewardRateUnit = RewardRateUnit.SECOND;
@@ -26,15 +27,15 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
     return this.contractFactory.popsicleChef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PopsicleChef): Promise<BigNumberish> {
+  async getPoolLength(contract: PopsicleChefContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PopsicleChef, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.stakingToken);
+  async getStakedTokenAddress(contract: PopsicleChefContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: PopsicleChef): Promise<string> {
+  async getRewardTokenAddress(contract: PopsicleChefContract): Promise<string> {
     return contract.read.ice();
   }
 
@@ -50,7 +51,7 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
     contract,
     definition,
   }: GetMasterChefDataPropsParams<PopsicleChef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[4]);
   }
 
   async getStakedTokenBalance({
@@ -58,7 +59,7 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PopsicleChef>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -66,6 +67,6 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PopsicleChef>): Promise<BigNumberish> {
-    return contract.read.pendingIce([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingIce([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

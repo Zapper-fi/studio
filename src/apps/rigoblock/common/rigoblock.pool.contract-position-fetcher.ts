@@ -136,7 +136,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index =>
         this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
-          positionId: await multicall.wrap(positionManager).tokenOfOwnerByIndex(address, index),
+          positionId: await multicall.wrap(positionManager).read.tokenOfOwnerByIndex([address, index]),
           network: this.network,
           multicall,
           tokenLoader,

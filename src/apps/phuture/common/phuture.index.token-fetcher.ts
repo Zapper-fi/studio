@@ -68,12 +68,12 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
 
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const vTokenAddressRaw = await multicall.wrap(vTokenFactoryContract).vTokenOf(token.address);
+        const vTokenAddressRaw = await multicall.wrap(vTokenFactoryContract).read.vTokenOf([token.address]);
         const vTokenContract = this.contractFactory.phutureVToken({
           address: vTokenAddressRaw.toLowerCase(),
           network: this.network,
         });
-        const reserveRaw = await multicall.wrap(vTokenContract).assetBalanceOf(this.managerAddress);
+        const reserveRaw = await multicall.wrap(vTokenContract).read.assetBalanceOf([this.managerAddress]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),

@@ -48,7 +48,7 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
   }
 
   async getTotalRewardRate({ contract, definition }: GetMasterChefDataPropsParams<PieDaoStaking>) {
-    return contract.getPoolRewardRate(definition.poolIndex);
+    return contract.read.getPoolRewardRate([definition.poolIndex]);
   }
 
   async getStakedTokenBalance({
@@ -56,7 +56,7 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PieDaoStaking>) {
-    return contract.getStakeTotalDeposited(address, contractPosition.dataProps.poolIndex);
+    return contract.read.getStakeTotalDeposited([address, contractPosition.dataProps.poolIndex]);
   }
 
   async getRewardTokenBalance({
@@ -64,6 +64,6 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PieDaoStaking>) {
-    return contract.getStakeTotalUnclaimed(address, contractPosition.dataProps.poolIndex);
+    return contract.read.getStakeTotalUnclaimed([address, contractPosition.dataProps.poolIndex]);
   }
 }

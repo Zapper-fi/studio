@@ -73,7 +73,7 @@ export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends C
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<MeanFinanceOptimismAirdrop, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const claimed = await params.contract.claimed(params.address);
+    const claimed = await params.contract.read.claimed([params.address]);
 
     if (claimed) {
       return [BigNumber.from(0)];

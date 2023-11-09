@@ -67,8 +67,11 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
 
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        const reserveRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
+        const uTokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
+        const reserveRaw = await multicall.wrap(uTokenContract).read.balanceOf([appToken.address]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),

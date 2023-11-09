@@ -101,7 +101,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
     // Derive liquidity as the amount of the staked token held by the gauge contract
-    const stakedTokenContract = this.contractFactory.erc20(stakedToken);
+    const stakedTokenContract = this.appToolkit.globalViemContracts.erc20(stakedToken);
     const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     const liquidity = reserve * stakedToken.price;
@@ -163,7 +163,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const balances = [
       await contract.read.balanceOf([address]),
       await contract.callStatic.claimable_tokens(address),
-      ...(await Promise.all(rewardTokens.slice(1).map(t => contract.claimable_reward(address, t.address)))),
+      ...(await Promise.all(rewardTokens.slice(1).map(t => contract.read.claimable_reward([address, t.address])))),
     ];
 
     return balances;

@@ -71,7 +71,7 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
 
   async getRewardRates({ contract, contractPosition }: GetDataPropsParams<BalancerGauge, SingleStakingFarmDataProps>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
-    const rewardData = await Promise.all(claimableTokens.map(ct => contract.reward_data(ct.address)));
+    const rewardData = await Promise.all(claimableTokens.map(ct => contract.read.reward_data([ct.address])));
     return rewardData.map(v => v.rate);
   }
 
@@ -90,6 +90,6 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     if (!rewardTokens) return 0;
 
-    return Promise.all(rewardTokens.map(v => contract.claimable_reward(address, v.address)));
+    return Promise.all(rewardTokens.map(v => contract.read.claimable_reward([address, v.address])));
   }
 }

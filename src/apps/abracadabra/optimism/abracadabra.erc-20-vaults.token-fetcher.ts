@@ -45,7 +45,7 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
           }),
         );
 
-        return cauldron.collateral();
+        return cauldron.read.collateral();
       }),
     );
   }
@@ -60,24 +60,24 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
   }
 
   async getPricePerShare({ multicall, address, appToken }: GetPricePerShareParams<AbracadabraErc20Vault>) {
-    const underlying = multicall.wrap(this.contractFactory.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(address);
+    const underlying = multicall.wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];
   }
 
   async getLiquidity({ multicall, address, appToken }: GetDataPropsParams<AbracadabraErc20Vault>) {
-    const underlying = multicall.wrap(this.contractFactory.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(address);
+    const underlying = multicall.wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
     return liquidity;
   }
 
   async getReserves({ multicall, address, appToken }: GetDataPropsParams<AbracadabraErc20Vault>) {
-    const underlying = multicall.wrap(this.contractFactory.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(address);
+    const underlying = multicall.wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }

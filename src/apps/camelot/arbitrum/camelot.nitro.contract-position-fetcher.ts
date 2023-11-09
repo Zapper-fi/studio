@@ -131,7 +131,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
 
         const grailRewardsRaw = await Promise.all(
           range(0, Number(numPositionsRaw)).map(async i => {
-            const tokenId = await multicall.wrap(nitroContract).userTokenId(address, i);
+            const tokenId = await multicall.wrap(nitroContract).read.userTokenId([address, i]);
 
             return await multicall.wrap(nftPoolContract).read.pendingRewards([tokenId]);
           }),

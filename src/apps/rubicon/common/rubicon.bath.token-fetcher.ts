@@ -58,7 +58,7 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     definition,
     contract,
   }: GetTokenPropsParams<BathToken, DefaultAppTokenDataProps, RubiconPoolDefinition>) {
-    const underlyingAssetContract = this.contractFactory.erc20({
+    const underlyingAssetContract = this.appToolkit.globalViemContracts.erc20({
       address: definition.underlyingTokenAddress,
       network: this.network,
     });

@@ -90,7 +90,7 @@ export class ReflexerSaviorContractPositionFetcher extends CustomContractPositio
       safesResponse.safes.map(async safe => {
         const contractPosition = contractPositions[0];
         const contract = multicall.wrap(this.getContract(contractPosition.address));
-        const balanceRaw = await contract.lpTokenCover(safe.safeHandler);
+        const balanceRaw = await contract.read.lpTokenCover([safe.safeHandler]);
 
         const allTokens = [drillBalance(contractPosition.tokens[0], balanceRaw.toString())];
         const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);

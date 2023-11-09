@@ -41,7 +41,7 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
-    return contract.read.userInfo([address]).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {

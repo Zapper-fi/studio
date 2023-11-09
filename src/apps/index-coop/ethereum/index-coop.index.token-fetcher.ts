@@ -53,7 +53,7 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({ appToken, contract }: GetDataPropsParams<IndexCoopToken>) {
     const pricePerShare = await Promise.all(
       appToken.tokens.map(async underlyingToken => {
-        const ratio = await contract.getTotalComponentRealUnits(underlyingToken.address);
+        const ratio = await contract.read.getTotalComponentRealUnits([underlyingToken.address]);
         return Number(ratio) / 10 ** underlyingToken.decimals;
       }),
     );

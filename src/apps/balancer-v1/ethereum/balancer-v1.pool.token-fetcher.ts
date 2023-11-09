@@ -87,7 +87,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BalancerPoolToken>) {
     if (appToken.supply === 0) return appToken.tokens.map(() => 0);
-    const reservesRaw = await Promise.all(appToken.tokens.map(t => contract.getBalance(t.address)));
+    const reservesRaw = await Promise.all(appToken.tokens.map(t => contract.read.getBalance([t.address])));
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;
@@ -118,7 +118,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
 
     const { appToken, contract } = params;
     const fee = (Number(await contract.read.getSwapFee()) / 10 ** 18) * 100;
-    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
+    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.read.getNormalizedWeight([t.address])));
     const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
     const volume = await this.volumeDataLoader.load(appToken.address);
 

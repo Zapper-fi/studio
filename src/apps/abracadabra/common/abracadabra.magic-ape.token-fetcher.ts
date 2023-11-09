@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts/viem';
+import { Erc20, Erc4626 } from '~contract/contracts/viem';
 import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
@@ -28,20 +28,20 @@ export abstract class AbracadabraMagicApeTokenFetcher extends Erc4626VaultTempla
     super(appToolkit);
   }
 
-  async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
+  async getLabel({ contract }: GetDisplayPropsParams<Erc4626>): Promise<string> {
     return contract.read.name();
   }
 
   async getImages({
     appToken,
-  }: GetDisplayPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
+  }: GetDisplayPropsParams<Erc4626, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
   }
 
   async getApy({
     multicall,
     appToken,
-  }: GetDataPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
+  }: GetDataPropsParams<Erc4626, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
     const [magicApeLensAddress, magicApeAnnualHarvests] = await Promise.all([
       this.magicApeLensAddress,
       this.magicApeAnnualHarvests,
@@ -60,8 +60,8 @@ export abstract class AbracadabraMagicApeTokenFetcher extends Erc4626VaultTempla
     );
 
     const [feePercent, apr] = await Promise.all([
-      magicApe.feePercentBips().then(feeBips => feeBips / BASIS_POINTS_DIVISOR),
-      magicApeLens.getApeCoinInfo().then(apeCoinInfo => Number(apeCoinInfo.apr) / BASIS_POINTS_DIVISOR),
+      magicApe.read.feePercentBips().then(feeBips => feeBips / BASIS_POINTS_DIVISOR),
+      magicApeLens.read.getApeCoinInfo().then(apeCoinInfo => Number(apeCoinInfo.apr) / BASIS_POINTS_DIVISOR),
     ]);
 
     const apy = Math.pow(1 + apr / magicApeAnnualHarvests, magicApeAnnualHarvests) - 1;

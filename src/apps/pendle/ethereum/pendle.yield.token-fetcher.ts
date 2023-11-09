@@ -81,7 +81,9 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
         const forge = this.contractFactory.pendleForge({ address: forgeAddress, network: this.network });
         const forgeId = await multicall.wrap(forge).read.forgeId();
 
-        const ownershipTokenAddress = await multicall.wrap(pendleData).otTokens(forgeId, baseTokenAddress, expiry);
+        const ownershipTokenAddress = await multicall
+          .wrap(pendleData)
+          .read.otTokens([forgeId, baseTokenAddress, expiry]);
 
         return {
           address: yieldTokenAddress.toLowerCase(),

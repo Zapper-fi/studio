@@ -40,7 +40,7 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
   }
 
   async getTokenDefinitions({ contract }): Promise<UnderlyingTokenDefinition[]> {
-    const { collateralToken, debtToken } = await contract.collateralInfo(this.collateral);
+    const { collateralToken, debtToken } = await contract.read.collateralInfo([this.collateral]);
     return [
       {
         metaType: MetaType.SUPPLIED,

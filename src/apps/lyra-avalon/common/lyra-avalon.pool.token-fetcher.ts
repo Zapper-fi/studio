@@ -68,7 +68,7 @@ export abstract class LyraAvalonPoolTokenFetcher extends AppTokenTemplatePositio
     });
 
     const markets = await Promise.all(
-      marketsResponse.markets.map(market => multicall.wrap(registryContract).marketAddresses(market.id)),
+      marketsResponse.markets.map(market => multicall.wrap(registryContract).read.marketAddresses([market.id])),
     );
 
     return markets.map(market => market.liquidityToken);
