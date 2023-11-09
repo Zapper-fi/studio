@@ -63,7 +63,7 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -71,6 +71,6 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.pendingRewards(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingRewards([contractPosition.dataProps.poolIndex, address]);
   }
 }

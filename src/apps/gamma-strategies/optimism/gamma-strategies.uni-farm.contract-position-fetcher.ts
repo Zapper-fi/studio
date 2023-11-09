@@ -67,7 +67,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance(): Promise<BigNumberish> {

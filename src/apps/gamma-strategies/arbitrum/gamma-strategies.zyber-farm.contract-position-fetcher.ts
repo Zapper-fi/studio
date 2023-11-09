@@ -66,7 +66,7 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesZyberswapMasterchef>): Promise<BigNumberish> {
-    const result = await contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    const result = await contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
     return result;
   }
 

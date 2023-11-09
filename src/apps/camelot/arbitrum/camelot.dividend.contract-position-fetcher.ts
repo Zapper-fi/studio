@@ -85,7 +85,7 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
 
     const claimableBalances = await Promise.all(
       claimableTokens.map(token => {
-        return contract.pendingDividendsAmount(token.address, address);
+        return contract.read.pendingDividendsAmount([token.address, address]);
       }),
     );
 

@@ -84,7 +84,7 @@ export class ArbitrumPickleFarmContractPositionFetcher extends MasterChefV2Templ
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleMiniChefV2>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -92,7 +92,7 @@ export class ArbitrumPickleFarmContractPositionFetcher extends MasterChefV2Templ
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleMiniChefV2>) {
-    return contract.pendingPickle(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingPickle([contractPosition.dataProps.poolIndex, address]);
   }
 
   async getExtraRewardTokenBalances({

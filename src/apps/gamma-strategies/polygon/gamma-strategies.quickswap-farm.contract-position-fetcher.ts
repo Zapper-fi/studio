@@ -67,7 +67,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance(): Promise<BigNumberish> {

@@ -55,7 +55,7 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<BeethovenXMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -63,6 +63,6 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<BeethovenXMasterchef>): Promise<BigNumberish> {
-    return contract.pendingBeets(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingBeets([contractPosition.dataProps.poolIndex, address]);
   }
 }

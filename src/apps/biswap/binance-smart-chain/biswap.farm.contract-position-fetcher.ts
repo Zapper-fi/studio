@@ -60,7 +60,7 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -68,6 +68,6 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.pendingBSW(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingBSW([contractPosition.dataProps.poolIndex, address]);
   }
 }

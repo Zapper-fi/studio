@@ -55,7 +55,7 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<Benis>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -63,6 +63,6 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<Benis>): Promise<BigNumberish> {
-    return contract.pendingWBAN(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingWBAN([contractPosition.dataProps.poolIndex, address]);
   }
 }

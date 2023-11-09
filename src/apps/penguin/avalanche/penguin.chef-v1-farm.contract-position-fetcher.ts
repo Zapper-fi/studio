@@ -59,7 +59,7 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PenguinChef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -67,6 +67,6 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PenguinChef>): Promise<BigNumberish> {
-    return contract.pendingPEFI(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingPEFI([contractPosition.dataProps.poolIndex, address]);
   }
 }

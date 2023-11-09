@@ -90,7 +90,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<TraderJoeChefV3>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({

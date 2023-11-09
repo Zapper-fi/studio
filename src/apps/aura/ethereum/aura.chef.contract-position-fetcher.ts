@@ -59,7 +59,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AuraMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({

@@ -75,7 +75,7 @@ export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<QiDaoMasterChefV3>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -83,6 +83,6 @@ export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<QiDaoMasterChefV3>): Promise<BigNumberish | BigNumberish[]> {
-    return contract.pending(contractPosition.dataProps.poolIndex, address).catch(() => '0');
+    return contract.read.pending([contractPosition.dataProps.poolIndex, address]).catch(() => '0');
   }
 }

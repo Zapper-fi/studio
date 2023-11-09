@@ -83,7 +83,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<SaddleMiniChefV2>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -91,7 +91,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<SaddleMiniChefV2>) {
-    return contract.pendingSaddle(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingSaddle([contractPosition.dataProps.poolIndex, address]);
   }
 
   async getExtraRewardTokenBalances({

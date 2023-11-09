@@ -62,7 +62,7 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorAfxsVault>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v[0]);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

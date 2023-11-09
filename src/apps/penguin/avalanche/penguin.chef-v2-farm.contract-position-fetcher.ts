@@ -91,7 +91,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PenguinChefV2>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -99,7 +99,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PenguinChefV2>) {
-    return contract.pendingPEFI(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingPEFI([contractPosition.dataProps.poolIndex, address]);
   }
 
   async getExtraRewardTokenBalances({
@@ -109,6 +109,6 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
   }: GetMasterChefV2ExtraRewardTokenBalancesParams<PenguinChefV2, PenguinExtraRewarder>): Promise<
     BigNumberish | BigNumberish[]
   > {
-    return rewarderContract.pendingTokens(contractPosition.dataProps.poolIndex, address, 0).then(v => v[1][0]);
+    return rewardercontract.read.pendingTokens([contractPosition.dataProps.poolIndex, address, 0]).then(v => v[1][0]);
   }
 }

@@ -62,7 +62,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.tokens[0].address, address).then(v => v.amount);
+    return contract.read.userInfocontractPosition.tokens[0].address, address).then(v => v.amount);
   }
 
   async getRewardTokenBalance({

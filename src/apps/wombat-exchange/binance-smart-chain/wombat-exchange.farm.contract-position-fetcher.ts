@@ -57,7 +57,7 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<WombatExchangeMasterWombat>) {
-    return (await contract.userInfo(contractPosition.dataProps.poolIndex, address)).amount;
+    return (await contract.read.userInfo([contractPosition.dataProps.poolIndex, address])).amount;
   }
 
   async getRewardTokenBalance({

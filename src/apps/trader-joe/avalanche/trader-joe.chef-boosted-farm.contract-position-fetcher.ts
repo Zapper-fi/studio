@@ -82,7 +82,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<TraderJoeChefBoosted>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -90,7 +90,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<TraderJoeChefBoosted>) {
-    return contract.pendingTokens(contractPosition.dataProps.poolIndex, address).then(v => v.pendingJoe);
+    return contract.read.pendingTokens([contractPosition.dataProps.poolIndex, address]).then(v => v.pendingJoe);
   }
 
   async getExtraRewardTokenBalances({
@@ -98,6 +98,6 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
     contract,
     contractPosition,
   }: GetMasterChefV2ExtraRewardTokenBalancesParams<TraderJoeChefBoosted, TraderJoeChefBoostedRewarder>) {
-    return contract.pendingTokens(contractPosition.dataProps.poolIndex, address).then(v => v.pendingBonusToken);
+    return contract.read.pendingTokens([contractPosition.dataProps.poolIndex, address]).then(v => v.pendingBonusToken);
   }
 }
