@@ -40,7 +40,7 @@ export class BinanceSmartChainMidasMarketTokenFetcher extends MidasMarketTokenFe
   }
 
   getPools(contract: MidasPoolDirectory): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]> {
-    return contract.callStatic.getActivePools();
+    return contract.simulate.getActivePools().then(v => v.result);
   }
 
   getPool(
@@ -55,11 +55,11 @@ export class BinanceSmartChainMidasMarketTokenFetcher extends MidasMarketTokenFe
       timestampPosted: BigNumber;
     }
   > {
-    return contract.callStatic.pools(poolId);
+    return contract.simulate.pools([poolId]).then(v => v.result);
   }
 
   async getMarketTokenAddresses(contract: MidasPoolLens, poolAddress: string): Promise<string[]> {
-    const assets = await contract.callStatic.getPoolAssetsWithData(poolAddress);
+    const assets = await contract.simulate.getPoolAssetsWithData([poolAddress]).then(v => v.result);
 
     return assets.map(asset => asset.cToken);
   }
@@ -69,7 +69,7 @@ export class BinanceSmartChainMidasMarketTokenFetcher extends MidasMarketTokenFe
   }
 
   getExchangeRateCurrent(contract: MidasCErc20Token): Promise<BigNumberish> {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   getSupplyRateRaw(contract: MidasCErc20Token): Promise<BigNumberish> {

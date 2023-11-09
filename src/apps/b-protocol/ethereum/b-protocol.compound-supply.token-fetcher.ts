@@ -49,7 +49,7 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<BProtocolCompoundToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getSupplyRate({ contract, multicall }: GetDataPropsParams<BProtocolCompoundToken>) {

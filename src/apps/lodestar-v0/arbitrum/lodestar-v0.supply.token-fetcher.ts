@@ -46,7 +46,7 @@ export class ArbitrumLodestarV0SupplyTokenFetcher extends CompoundSupplyTokenFet
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<LodestarV0IToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<LodestarV0IToken>) {

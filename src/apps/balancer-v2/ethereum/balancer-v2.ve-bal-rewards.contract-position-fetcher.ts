@@ -65,7 +65,9 @@ export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends Contr
   }: GetTokenBalancesParams<BalancerFeeDistributor>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const claimableTokenAddresses = claimableTokens.map(x => x.address);
-    const claimableBalances = await contract.callStatic.claimTokens(address, claimableTokenAddresses);
+    const claimableBalances = await contract.simulate
+      .claimTokens([address, claimableTokenAddresses])
+      .then(v => v.result);
 
     return [...claimableBalances];
   }

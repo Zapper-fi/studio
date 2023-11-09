@@ -26,7 +26,7 @@ export abstract class BalancerV2StaticYieldTokenFetcher extends AppTokenTemplate
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BalancerStaticAToken>) {
-    return [{ address: await contract.callStatic.ATOKEN(), network: this.network }];
+    return [{ address: await contract.simulate.ATOKEN().then(v => v.result), network: this.network }];
   }
 
   async getPricePerShare() {

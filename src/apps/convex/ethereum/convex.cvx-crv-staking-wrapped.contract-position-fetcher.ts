@@ -74,7 +74,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ConvexCvxCrvStakingWrapped>) {
-    const rewards = await contract.callStatic.earned(address);
+    const rewards = await contract.simulate.earned([address]).then(v => v.result);
     return rewards.map(reward => Number(reward.amount));
   }
 

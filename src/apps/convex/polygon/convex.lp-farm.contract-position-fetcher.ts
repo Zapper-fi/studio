@@ -102,7 +102,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ConvexRewardPool>) {
     const deposit = await contract.read.balanceOf([address]);
 
-    const rewards = await contract.callStatic.earned(address);
+    const rewards = await contract.simulate.earned([address]).then(v => v.result);
     const rewardBalances = rewards.map(rewardToken => {
       return Number(rewardToken.amount);
     });

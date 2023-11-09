@@ -41,7 +41,7 @@ export class OptimismSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<SonneSoToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<SonneSoToken>) {

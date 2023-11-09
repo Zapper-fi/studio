@@ -60,7 +60,7 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<SonneSoToken>) {
@@ -80,7 +80,7 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
   }
 
   async getBorrowBalance({ address, contract }: GetTokenBalancesParams<SonneSoToken>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 
   async getDataProps(

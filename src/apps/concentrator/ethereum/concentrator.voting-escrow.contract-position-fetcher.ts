@@ -37,7 +37,7 @@ export class EthereumConcentratorVotingEscrowContractPositionFetcher extends Vot
   }
 
   async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewards): Promise<BigNumberish> {
-    return contract.callStatic.claim(address);
+    return contract.simulate.claim([address]).then(v => v.result);
   }
 
   getRewardTokenAddress(contract: AladdinConcentratorVeRewards): Promise<string> {

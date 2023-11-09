@@ -48,7 +48,7 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
@@ -71,6 +71,6 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
     address,
     contract,
   }: GetTokenBalancesParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 }

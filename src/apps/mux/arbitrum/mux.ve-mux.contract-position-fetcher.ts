@@ -81,8 +81,14 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
 
     const [staked, feeRewards, muxRewards] = await Promise.all([
       contract.read.depositedBalances([address]),
-      multicall.wrap(veFeeRewardTracker).callStatic.claimable(address),
-      multicall.wrap(veMuxRewardTracker).callStatic.claimable(address),
+      multicall
+        .wrap(veFeeRewardTracker)
+        .simulate.claimable([address])
+        .then(v => v.result),
+      multicall
+        .wrap(veMuxRewardTracker)
+        .simulate.claimable([address])
+        .then(v => v.result),
     ]);
 
     return [staked.mcbAmount, staked.muxAmount, muxRewards, feeRewards];

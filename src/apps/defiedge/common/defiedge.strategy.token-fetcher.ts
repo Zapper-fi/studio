@@ -95,7 +95,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     appToken,
   }: GetPriceParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>): Promise<number> {
     const [aumWithFee, totalSupplyBN] = await Promise.all([
-      contract.callStatic.getAUMWithFees(false),
+      contract.simulate.getAUMWithFees([false]).then(v => v.result),
       contract.read.totalSupply(),
     ]);
 
@@ -118,7 +118,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     appToken,
   }: GetPricePerShareParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
     const [aumWithFee, totalSupplyBN] = await Promise.all([
-      contract.callStatic.getAUMWithFees(false),
+      contract.simulate.getAUMWithFees([false]).then(v => v.result),
       contract.read.totalSupply(),
     ]);
 
@@ -142,7 +142,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
 
     const { contract, appToken } = params;
     const [aumWithFee, totalSupplyBN] = await Promise.all([
-      contract.callStatic.getAUMWithFees(true),
+      contract.simulate.getAUMWithFees([true]).then(v => v.result),
       contract.read.totalSupply(),
     ]);
     const [token0, token1] = appToken.tokens;

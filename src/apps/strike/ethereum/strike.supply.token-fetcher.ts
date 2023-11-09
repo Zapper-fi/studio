@@ -41,7 +41,7 @@ export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<StrikeSToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<StrikeSToken>) {

@@ -63,7 +63,7 @@ export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends Con
     address,
     contract,
   }: GetTokenBalancesParams<PoolTogetherV3TokenFaucet>): Promise<BigNumberish[]> {
-    const claimableBalanceRaw = await contract.callStatic.claim(address);
+    const claimableBalanceRaw = await contract.simulate.claim([address]).then(v => v.result);
     return [claimableBalanceRaw];
   }
 }

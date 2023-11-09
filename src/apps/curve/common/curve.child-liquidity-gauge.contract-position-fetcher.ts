@@ -162,7 +162,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
 
     const balances = [
       await contract.read.balanceOf([address]),
-      await contract.callStatic.claimable_tokens(address),
+      await contract.simulate.claimable_tokens([address]).then(v => v.result),
       ...(await Promise.all(rewardTokens.slice(1).map(t => contract.read.claimable_reward([address, t.address])))),
     ];
 

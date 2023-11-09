@@ -60,7 +60,7 @@ export class EthereumStrikeBorrowContractPositionFetcher extends CompoundBorrowC
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<StrikeSToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<StrikeSToken>) {
@@ -80,7 +80,7 @@ export class EthereumStrikeBorrowContractPositionFetcher extends CompoundBorrowC
   }
 
   async getBorrowBalance({ address, contract }: GetTokenBalancesParams<StrikeSToken>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 
   async getDataProps(

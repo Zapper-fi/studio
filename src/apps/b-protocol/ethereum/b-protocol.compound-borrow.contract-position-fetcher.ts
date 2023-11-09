@@ -53,7 +53,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({
@@ -89,6 +89,6 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
     address,
     contract,
   }: GetTokenBalancesParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 }

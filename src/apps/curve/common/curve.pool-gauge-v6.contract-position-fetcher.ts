@@ -185,7 +185,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
   }: GetTokenBalancesParams<CurveGaugeV6, CurvePoolGaugeDataProps>): Promise<BigNumberish[]> {
     const [supplied, claimable] = await Promise.all([
       contract.read.balanceOf([address]),
-      contract.callStatic.claimable_tokens(address),
+      contract.simulate.claimable_tokens([address]).then(v => v.result),
     ]);
 
     const rewardTokens = contractPosition.tokens.filter(isClaimable);

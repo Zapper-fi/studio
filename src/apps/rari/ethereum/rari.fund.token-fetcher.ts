@@ -74,7 +74,10 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
       network: this.network,
     });
 
-    const symbols = await multicall.wrap(managerContract).callStatic.getAcceptedCurrencies();
+    const symbols = await multicall
+      .wrap(managerContract)
+      .simulate.getAcceptedCurrencies()
+      .then(v => v.result);
     return symbols.map(v => ({ address: SYMBOL_TO_ADDRESS[v]!, network: this.network }));
   }
 
@@ -86,7 +89,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
       network: this.network,
     });
 
-    const liquidityRaw = await managerContract.callStatic.getFundBalance();
+    const liquidityRaw = await managerContract.simulate.getFundBalance().then(v => v.result);
     const liquidity = Number(liquidityRaw) / 10 ** 18;
     const reserves = appToken.tokens.map(() => liquidity / appToken.tokens.length);
     const pricePerShare = reserves.map(v => v / appToken.supply);
