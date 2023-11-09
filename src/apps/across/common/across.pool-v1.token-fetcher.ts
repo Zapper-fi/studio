@@ -38,7 +38,7 @@ export abstract class AcrossPoolV1TokenFetcher extends AppTokenTemplatePositionF
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<AcrossPoolV1>) {
     const pricePerShareRaw = await multicall
       .wrap(contract)
-      .simulate.exchangeRateCurrent()
+      .read.simulate.exchangeRateCurrent()
       .then(v => v.result);
     const decimals = appToken.tokens[0].decimals;
     return [Number(pricePerShareRaw) / 10 ** decimals];

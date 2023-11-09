@@ -128,7 +128,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
     const capitalBalanceRaw = await multicall.wrap(goldfinchVaultContract).read.totalCapitalHeldBy([address]); // response denominated in USDC
     const fiduBalanceRaw = await multicall
       .wrap(seniorPoolContract)
-      .getNumShares(capitalBalanceRaw.totalAmount.toString());
+      .read.getNumShares(capitalBalanceRaw.totalAmount.toString());
     const fiduTokens = [drillBalance(fiduPosition.tokens[0], fiduBalanceRaw.toString())];
     const fiduBalanceUSD = sumBy(fiduTokens, v => v.balanceUSD);
     const fiduContractPositionBalance = { ...fiduPosition, tokens: fiduTokens, balanceUSD: fiduBalanceUSD };

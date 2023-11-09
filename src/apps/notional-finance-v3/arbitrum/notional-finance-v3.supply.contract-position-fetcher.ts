@@ -78,7 +78,7 @@ export class ArbitrumNotionalFinanceV3SupplyContractPositionFetcher extends Cont
             const maturity = Number(activeMarket.maturity);
             const tokenId = await multicall
               .wrap(notionalViewContract)
-              .encodeToId(currencyId, maturity, 0)
+              .read.encodeToId(currencyId, maturity, 0)
               .then(v => v.toString());
 
             return {

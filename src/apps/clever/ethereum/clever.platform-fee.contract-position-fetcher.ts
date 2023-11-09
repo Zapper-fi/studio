@@ -51,7 +51,7 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverFeeDistributor>) {
-    const claimableAmount = await contract.callStatic['claim(address)'](address);
+    const { result: claimableAmount } = await contract.simulate.claim([address]);
     return [claimableAmount];
   }
 }

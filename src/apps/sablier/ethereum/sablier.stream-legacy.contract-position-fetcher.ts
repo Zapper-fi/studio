@@ -6,7 +6,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -101,7 +101,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
     const salaries = await Promise.all(
       streams.map(async stream =>
         sablierSalary.getSalary(stream.salaryId).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
       ),
@@ -117,7 +117,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
     const positions = await Promise.all(
       streams.map(async stream => {
         const salaryRaw = await sablierSalary.getSalary(stream.salaryId).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
         if (!salaryRaw) return null;

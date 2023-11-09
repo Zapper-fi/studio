@@ -74,8 +74,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory)
-    protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -98,7 +97,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     // Extra rewards
     const extraRewardTokenAddresses = await Promise.all(
       range(0, Number(await contract.read.extraRewardsLength())).map(async v => {
-        const vbpAddress = await contract.read.extraRewards([v]);
+        const vbpAddress = await contract.read.extraRewards([BigInt(v)]);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
         const stashTokenAddressRaw = await multicall.wrap(vbp).read.rewardToken();
         let rewardTokenAddress = stashTokenAddressRaw.toLowerCase();
@@ -110,7 +109,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
 
         const isStash = await multicall
           .wrap(stashTokenContract)
-          .stash()
+          .read.stash()
           .then(() => true)
           .catch(() => false);
 
@@ -144,7 +143,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength().then(Number);
     const extraRewardRates = await Promise.all(
       range(0, numExtraRewards).map(async v => {
-        const vbpAddress = await multicall.wrap(contract).read.extraRewards([v]);
+        const vbpAddress = await multicall.wrap(contract).read.extraRewards([BigInt(v)]);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
         return multicall.wrap(vbp).read.rewardRate();
       }),
@@ -167,7 +166,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     const [, auraRewardToken] = rewardTokens;
 
     const auraTokenContract = multicall.wrap(this.appToolkit.globalViemContracts.erc20(auraRewardToken));
-    const currentAuraSupply = await auraTokencontract.read.totalSupply();
+    const currentAuraSupply = await auraTokenContract.read.totalSupply();
 
     const balBalanceBN = await contract.read.earned([address]);
     const balBalanceRaw = balBalanceBN.toString();
@@ -187,7 +186,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardBalances = await Promise.all(
       range(0, Number(numExtraRewards)).map(async (_, i) => {
-        const extraRewardAddress = await contract.read.extraRewards([i]);
+        const extraRewardAddress = await contract.read.extraRewards([BigInt(i)]);
         const extraRewardContract = this.contractFactory.auraVirtualBalanceRewardPool({
           address: extraRewardAddress,
           network: this.network,
@@ -203,7 +202,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
 
         const isStash = await multicall
           .wrap(stashTokenContract)
-          .stash()
+          .read.stash()
           .then(() => true)
           .catch(() => false);
 

@@ -7,7 +7,7 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoAaveV2, MorphoAaveV2Lens, MorphoContractFactory } from '~apps/morpho/contracts';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
 
 @PositionTemplate()
@@ -39,7 +39,7 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
         const market = this.contractFactory.morphoAToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
         const supplyTokenAddress = await marketcontract.read.UNDERLYING_ASSET_ADDRESS().catch(err => {
-          if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+          if (isViemMulticallUnderlyingError(err)) return ZERO_ADDRESS;
           throw err;
         });
         return {

@@ -64,11 +64,11 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
         const [ticketTokenAddress, underlyingTokenAddress] = await Promise.all([
           multicall
             .wrap(poolContract)
-            .getTicket()
+            .read.getTicket()
             .then(addr => addr.toLowerCase()),
           multicall
             .wrap(poolContract)
-            .getToken()
+            .read.getToken()
             .then(addr => addr.toLowerCase()),
         ]);
 

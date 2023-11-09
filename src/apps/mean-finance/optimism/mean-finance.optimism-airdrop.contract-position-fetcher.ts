@@ -36,26 +36,26 @@ export interface OptimismAirdropCampaingResponse {
 }
 
 @PositionTemplate()
-export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
+export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MeanFinanceOptimismAirdrop> {
   groupLabel = 'Airdrop';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MeanFinanceContractFactory)
-    protected readonly meanFinanceContractFactory: MeanFinanceContractFactory,
+    @Inject(MeanFinanceViemContractFactory)
+    protected readonly contractFactory: MeanFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
   getContract(_address: string) {
-    return this.meanFinanceContractFactory.meanFinanceOptimismAirdrop({
+    return this.contractFactory.meanFinanceOptimismAirdrop({
       address: _address,
       network: this.network,
     });
   }
 
   async getLabel(
-    _params: GetDisplayPropsParams<Contract, DefaultDataProps, DefaultContractPositionDefinition>,
+    _params: GetDisplayPropsParams<MeanFinanceOptimismAirdrop, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
     return 'Optimism Airdrop';
   }
@@ -65,7 +65,7 @@ export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends C
   }
 
   async getTokenDefinitions(
-    _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
+    _params: GetTokenDefinitionsParams<MeanFinanceOptimismAirdrop, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return [{ metaType: MetaType.CLAIMABLE, address: OP_TOKEN, network: this.network }];
   }

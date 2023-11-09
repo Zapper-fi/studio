@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -92,7 +92,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
         const streamBalanceRaw = await llamapay
           .withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec)
           .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
+            if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
           });
 

@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
@@ -46,7 +46,7 @@ export class AvalanchePenguinVaultClaimableContractPositionFetcher extends Contr
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PenguinVault>) {
     const rewardBalance = await contract.read.pendingXPefi([address]).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
 

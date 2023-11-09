@@ -56,7 +56,7 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
             const tarotVault = this.contractFactory.tarotVault({ network: this.network, address: tarotVaultAddress });
             const isVault = await multicall
               .wrap(tarotVault)
-              .isVaultToken()
+              .read.isVaultToken()
               .catch(() => false);
             if (!isVault) return null;
 

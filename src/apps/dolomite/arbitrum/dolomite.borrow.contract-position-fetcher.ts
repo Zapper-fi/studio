@@ -12,9 +12,9 @@ export class ArbitrumDolomiteBorrowContractPositionFetcher extends DolomiteContr
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,
-    @Inject(DolomiteContractFactory) dolomiteContractFactory: DolomiteContractFactory,
+    @Inject(DolomiteViemContractFactory) contractFactory: DolomiteViemContractFactory,
   ) {
-    super(appToolkit, dolomiteContractFactory);
+    super(appToolkit, contractFactory);
   }
 
   protected isFetchingDolomiteBalances(): boolean {

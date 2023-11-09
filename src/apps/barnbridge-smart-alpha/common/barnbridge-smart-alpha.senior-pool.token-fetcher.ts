@@ -31,8 +31,8 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BarnbridgeSmartAlphaContractFactory)
-    protected readonly contractFactory: BarnbridgeSmartAlphaContractFactory,
+    @Inject(BarnbridgeSmartAlphaViemContractFactory)
+    protected readonly contractFactory: BarnbridgeSmartAlphaViemContractFactory,
   ) {
     super(appToolkit);
   }

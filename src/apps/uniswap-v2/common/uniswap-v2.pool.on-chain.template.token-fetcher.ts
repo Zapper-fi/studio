@@ -6,7 +6,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -51,7 +51,7 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher<
     const poolAddresses = await Promise.all(
       range(0, Number(poolsLength)).map(async poolIndex => {
         const poolAddressRaw = await this.getPoolAddress(factoryContract, poolIndex).catch(e => {
-          if (isMulticallUnderlyingError(e)) return null;
+          if (isViemMulticallUnderlyingError(e)) return null;
           throw e;
         });
 

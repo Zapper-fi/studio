@@ -65,13 +65,13 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     return contract.read.totalUserStake([address]);
   }
 
-  getRewardTokenBalances({
+  async getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
-    return contract.callStatic
-      .withdraw({ from: address })
-      .then(res => res.reward)
+    return contract.simulate
+      .withdraw({ account: address })
+      .then(({ result }) => result[1])
       .catch(() => 0);
   }
 }

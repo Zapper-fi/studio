@@ -2,7 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix/contracts';
+import { SynthetixViemContractFactory } from '~apps/synthetix/contracts';
+import { SynthetixRewards } from '~apps/synthetix/contracts/viem';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
@@ -42,7 +43,7 @@ export class EthereumInverseFarmContractPositionFetcher extends SingleStakingFar
   }
 
   async getIsActive({ contract }: GetDataPropsParams<SynthetixRewards>): Promise<boolean> {
-    return (await contract.read.rewardRate()) > 0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {

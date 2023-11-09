@@ -6,7 +6,7 @@ import moment, { unix } from 'moment';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -132,9 +132,9 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
     const poolBalance = await multicall
       .wrap(pool)
-      .read.getBaseBalance()
+      .read.read.getBaseBalance()
       .catch(err => {
-        if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+        if (isViemMulticallUnderlyingError(err)) return BigNumber.from(0);
         throw err;
       });
     if (poolBalance === BigInt(0)) return [0];
@@ -148,11 +148,11 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
       appToken.tokens[0].symbol === 'WETH'
         ? (await multicall
             .wrap(pool)
-            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('.01', appToken.decimals).toString())])) *
+            .read.read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('.01', appToken.decimals).toString())])) *
           BigInt(100)
         : await multicall
             .wrap(pool)
-            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('1', appToken.decimals).toString())]);
+            .read.read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('1', appToken.decimals).toString())]);
 
     return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }

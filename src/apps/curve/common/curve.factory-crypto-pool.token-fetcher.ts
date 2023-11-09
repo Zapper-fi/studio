@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveCryptoFactory } from '../contracts/viem';
@@ -54,9 +54,9 @@ export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynami
     const swapContract = this.contractFactory.curvePool({ address: swapAddress, network: this.network });
     const fee = await multicall
       .wrap(swapContract)
-      .fee()
+      .read.fee()
       .catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
+        if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;
       });
 

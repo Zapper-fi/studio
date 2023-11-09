@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import {
   GetMasterChefV2ExtraRewardTokenBalancesParams,
   GetMasterChefV2ExtraRewardTokenRewardRates,
@@ -57,7 +57,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
     return await contract.read.joePerSec().catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
   }
@@ -79,7 +79,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }: GetMasterChefV2ExtraRewardTokenRewardRates<TraderJoeChefV3, TraderJoeChefV2Rewarder>) {
     return [
       await rewardercontract.read.rewardPerSecond().catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
+        if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
     ];
@@ -102,7 +102,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
       .pendingTokens(contractPosition.dataProps.poolIndex, address)
       .then(v => v.pendingJoe)
       .catch(e => {
-        if (isMulticallUnderlyingError(e)) return 0;
+        if (isViemMulticallUnderlyingError(e)) return 0;
         throw e;
       });
   }
@@ -116,7 +116,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
       .pendingTokens(contractPosition.dataProps.poolIndex, address)
       .then(v => v.pendingBonusToken)
       .catch(e => {
-        if (isMulticallUnderlyingError(e)) return 0;
+        if (isViemMulticallUnderlyingError(e)) return 0;
         throw e;
       });
   }

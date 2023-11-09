@@ -6,6 +6,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveVotingEscrow, CurveVotingEscrowReward } from '../contracts/viem';
+import { CurveVotingEscrowContract } from '../contracts/viem/CurveVotingEscrow';
+import { CurveVotingEscrowRewardContract } from '../contracts/viem/CurveVotingEscrowReward';
 
 @PositionTemplate()
 export class EthereumCurveVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -23,27 +25,28 @@ export class EthereumCurveVotingEscrowContractPositionFetcher extends VotingEscr
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): CurveVotingEscrow {
+  getEscrowContract(address: string) {
     return this.contractFactory.curveVotingEscrow({ address, network: this.network });
   }
 
-  getRewardContract(address: string): CurveVotingEscrowReward {
+  getRewardContract(address: string) {
     return this.contractFactory.curveVotingEscrowReward({ address, network: this.network });
   }
 
-  async getEscrowedTokenAddress(contract: CurveVotingEscrow) {
+  async getEscrowedTokenAddress(contract: CurveVotingEscrowContract) {
     return contract.read.token();
   }
 
-  async getRewardTokenAddress(contract: CurveVotingEscrowReward) {
+  async getRewardTokenAddress(contract: CurveVotingEscrowRewardContract) {
     return contract.read.token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: CurveVotingEscrow) {
-    return contract.read.locked([address]).then(v => v.amount);
+  async getEscrowedTokenBalance(address: string, contract: CurveVotingEscrowContract) {
+    return contract.read.locked([address]).then(v => v[0]);
   }
 
-  async getRewardTokenBalance(address: string, contract: CurveVotingEscrowReward) {
-    return contract.callStatic['claim()']({ from: address });
+  async getRewardTokenBalance(address: string, contract: CurveVotingEscrowRewardContract) {
+    // @ts-ignore
+    return contract.simulate.earned([address]).then(v => v.result);
   }
 }

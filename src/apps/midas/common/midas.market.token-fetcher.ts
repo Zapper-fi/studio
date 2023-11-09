@@ -6,7 +6,7 @@ import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -106,7 +106,7 @@ export abstract class MidasMarketTokenFetcher<
     appToken,
   }: GetPricePerShareParams<CT, MidasMarketTokenDataProps, MidasMarketTokenDefinition>) {
     const supplyRateRaw = await this.getExchangeRateCurrent(contract).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
 

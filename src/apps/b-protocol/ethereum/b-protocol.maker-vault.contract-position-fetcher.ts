@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { MakerContractFactory, MakerGemJoin } from '~apps/maker/contracts';
+import { MakerViemContractFactory } from '~apps/maker/contracts';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -16,6 +16,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { BProtocolViemContractFactory } from '../contracts';
+import { MakerGemJoin } from '~apps/maker/contracts/viem';
 
 export type BProtocolVaultDefinition = {
   address: string;
@@ -120,9 +121,9 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
       network: this.network,
     });
 
-    const userInfo = await multicall
+    const { result: userInfo } = await multicall
       .wrap(infoContract)
-      .callStatic.getInfo(
+      .simulate.getInfo([
         address,
         contractPosition.dataProps.ilk,
         this.BCDP_MANGER,
@@ -132,7 +133,7 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
         this.MCD_SPOT,
         this.PROXY_REGISTRY,
         this.JAR,
-      );
+      ]);
 
     const debt = userInfo.bCdpInfo.daiDebt.toString();
     const collateral = new BigNumber(userInfo.bCdpInfo.ethDeposit.toString())

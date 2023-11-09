@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
@@ -63,7 +63,7 @@ export abstract class StargateFarmContractPositionFetcher<
     contractPosition,
   }: GetMasterChefTokenBalancesParams<R>): Promise<BigNumberish> {
     return contract.read.pendingStargate([contractPosition.dataProps.poolIndex, address]).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
   }

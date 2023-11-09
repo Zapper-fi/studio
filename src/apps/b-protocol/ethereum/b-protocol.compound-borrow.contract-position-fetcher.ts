@@ -64,7 +64,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)
-      .borrowRatePerBlock()
+      .read.borrowRatePerBlock()
       .catch(() => 0);
   }
 
@@ -73,7 +73,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)
-      .getCash()
+      .read.getCash()
       .catch(() => 0);
   }
 

@@ -3,13 +3,14 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { EulerApiStakingRegistry } from '~apps/euler/common/euler.api.staking-registry';
-import { EulerContractFactory, EulerStakingRewardsContract } from '~apps/euler/contracts';
+import { EulerViemContractFactory } from '~apps/euler/contracts';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
+import { EulerStakingRewardsContract } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumEulerSingleStakingFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<EulerStakingRewardsContract> {
@@ -62,7 +63,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    return (await contract.read.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    return (await contract.read.periodFinish()) > Math.floor(Date.now() / 1000);
   }
 
   getStakedTokenBalance({

@@ -87,7 +87,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
         const forgeId = await multicall.wrap(forge).read.forgeId();
         const ownershipTokenAddress = await multicall
           .wrap(pendleData)
-          .read.otTokens([forgeId, underlyingAddress, expiry]);
+          .read.read.otTokens([forgeId, underlyingAddress, expiry]);
 
         return {
           address: ownershipTokenAddress.toLowerCase(),

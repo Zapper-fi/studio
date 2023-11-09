@@ -6,7 +6,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { StatsItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -98,16 +98,16 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     contract,
   }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
     const gelatoFeeRaw = await contract.read.gelatoFeeBPS().catch(e => {
-      if (isMulticallUnderlyingError(e)) return null;
+      if (isViemMulticallUnderlyingError(e)) return null;
       throw e;
     });
 
     const arrakisPool = this.contractFactory.arrakisPool(appToken);
     const arrakisFeeRaw = await multicall
       .wrap(arrakisPool)
-      .read.arrakisFeeBPS()
+      .read.read.arrakisFeeBPS()
       .catch(e => {
-        if (isMulticallUnderlyingError(e)) return null;
+        if (isViemMulticallUnderlyingError(e)) return null;
         throw e;
       });
 

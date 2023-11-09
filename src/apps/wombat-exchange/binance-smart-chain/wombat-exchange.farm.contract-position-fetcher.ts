@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
@@ -69,7 +69,7 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
       .pendingTokens(contractPosition.dataProps.poolIndex, address)
       .then(v => v.pendingRewards)
       .catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
+        if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;
       });
   }

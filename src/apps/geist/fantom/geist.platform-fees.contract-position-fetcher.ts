@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -46,7 +46,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     const rewardTokenAddresses = await Promise.all(
       range(50).map(idx =>
         contract.read.rewardTokens([idx]).catch(e => {
-          if (isMulticallUnderlyingError(e)) return null;
+          if (isViemMulticallUnderlyingError(e)) return null;
           throw e;
         }),
       ),

@@ -57,7 +57,7 @@ export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingF
   }
 
   async getIsActive({ contract }: GetDataPropsParams<IndexCoopStaking, SingleStakingFarmDataProps>): Promise<boolean> {
-    return (await contract.read.rewardRate()) > 0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<IndexCoopStaking, SingleStakingFarmDataProps>) {

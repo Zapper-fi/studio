@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
 import {
@@ -63,16 +63,16 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
     const [collateralTokenAddressRaw, debtTokenAddressRaw] = await Promise.all([
       multicall
         .wrap(infoContract)
-        .collateral()
+        .read.collateral()
         .catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
       multicall
         .wrap(infoContract)
-        .mai()
+        .read.mai()
         .catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
     ]);
@@ -106,7 +106,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
     });
 
     const reserveRaw = await (contractPosition.tokens[0].address === ZERO_ADDRESS
-      ? multicall.wrap(multicall.contract).getEthBalance(contractPosition.address)
+      ? multicall.wrap(multicall.contract).getEthBalance(contractPosition.address).read
       : multicall.wrap(collateralTokenContract).read.balanceOf([contractPosition.address]));
 
     const reserve = Number(reserveRaw) / 10 ** collateralToken.decimals;

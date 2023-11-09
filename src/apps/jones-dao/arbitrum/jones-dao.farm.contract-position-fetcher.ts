@@ -39,7 +39,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
         async i =>
           await multicall
             .wrap(factoryContract)
-            .stakingID(i)
+            .read.stakingID(i)
             .catch(() => null),
       ),
     );

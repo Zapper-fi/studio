@@ -4,13 +4,12 @@ import { BigNumberish, BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { RariFuseBorrowContractPositionFetcher } from '~apps/rari-fuse/common/rari-fuse.borrow.contract-position-fetcher';
 
-import {
-  MarketXyzComptroller,
-  MarketXyzContractFactory,
-  MarketXyzPoolDirectory,
-  MarketXyzPoolLens,
-  MarketXyzToken,
-} from '../contracts';
+import { MarketXyzViemContractFactory } from '../contracts';
+import { MarketXyzPoolDirectory, MarketXyzComptroller, MarketXyzToken, MarketXyzPoolLens } from '../contracts/viem';
+import { MarketXyzPoolDirectoryContract } from '../contracts/viem/MarketXyzPoolDirectory';
+import { MarketXyzComptrollerContract } from '../contracts/viem/MarketXyzComptroller';
+import { MarketXyzTokenContract } from '../contracts/viem/MarketXyzToken';
+import { MarketXyzPoolLensContract } from '../contracts/viem/MarketXyzPoolLens';
 
 export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
   MarketXyzPoolDirectory,
@@ -25,47 +24,52 @@ export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBor
     super(appToolkit);
   }
 
-  getPoolDirectoryContract(address: string): MarketXyzPoolDirectory {
+  getPoolDirectoryContract(address: string): MarketXyzPoolDirectoryContract {
     return this.contractFactory.marketXyzPoolDirectory({ address, network: this.network });
   }
 
-  getComptrollerContract(address: string): MarketXyzComptroller {
+  getComptrollerContract(address: string): MarketXyzComptrollerContract {
     return this.contractFactory.marketXyzComptroller({ address, network: this.network });
   }
 
-  getTokenContract(address: string): MarketXyzToken {
+  getTokenContract(address: string): MarketXyzTokenContract {
     return this.contractFactory.marketXyzToken({ address, network: this.network });
   }
 
-  getLensContract(address: string): MarketXyzPoolLens {
+  getLensContract(address: string): MarketXyzPoolLensContract {
     return this.contractFactory.marketXyzPoolLens({ address, network: this.network });
   }
 
-  getPools(contract: MarketXyzPoolDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.read.getAllPools();
+  getPools(contract: MarketXyzPoolDirectoryContract): Promise<{ name: string; comptroller: string }[]> {
+    return contract.read.getAllPools().then(v => v.map(pool => ({ name: pool.name, comptroller: pool.comptroller })));
   }
 
-  getMarketTokenAddresses(contract: MarketXyzComptroller): Promise<string[]> {
-    return contract.read.getAllMarkets();
+  getMarketTokenAddresses(contract: MarketXyzComptrollerContract): Promise<string[]> {
+    return contract.read.getAllMarkets().then(v => v.map(market => market));
   }
 
-  getUnderlyingTokenAddress(contract: MarketXyzToken): Promise<string> {
+  getUnderlyingTokenAddress(contract: MarketXyzTokenContract): Promise<string> {
     return contract.read.underlying();
   }
 
-  getBorrowRateRaw(contract: MarketXyzToken): Promise<BigNumberish> {
+  getBorrowRateRaw(contract: MarketXyzTokenContract): Promise<BigNumberish> {
     return contract.read.borrowRatePerBlock();
   }
 
-  getTotalBorrows(contract: MarketXyzToken): Promise<BigNumberish> {
+  getTotalBorrows(contract: MarketXyzTokenContract): Promise<BigNumberish> {
     return contract.read.totalBorrows();
   }
 
-  getBorrowBalance(address: string, contract: MarketXyzToken): Promise<BigNumberish> {
+  getBorrowBalance(address: string, contract: MarketXyzTokenContract): Promise<BigNumberish> {
     return contract.read.borrowBalanceCurrent([address]);
   }
 
-  getPoolsBySupplier(address: string, contract: MarketXyzPoolLens): Promise<[BigNumber[], { comptroller: string }[]]> {
-    return contract.read.getPoolsBySupplier([address]);
+  async getPoolsBySupplier(
+    address: string,
+    contract: MarketXyzPoolLensContract,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]> {
+    return contract.read
+      .getPoolsBySupplier([address])
+      .then(([pools, comptrollers]) => [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))]);
   }
 }

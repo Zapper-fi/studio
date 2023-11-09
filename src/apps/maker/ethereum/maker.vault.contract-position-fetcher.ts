@@ -108,7 +108,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
     });
 
     const balanceRaw = await (definition.collateralTokenAddress === ZERO_ADDRESS
-      ? multicall.wrap(multicall.contract).getEthBalance(definition.address)
+      ? multicall.wrap(multicall.contract).getEthBalance(definition.address).read
       : multicall.wrap(collateralTokenContract).read.balanceOf([definition.address]));
 
     const collateralToken = contractPosition.tokens[0];

@@ -3,7 +3,7 @@ import { compact, isArray, sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -55,7 +55,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
         const underlyingTokenDefinitions = await this.getUnderlyingTokenDefinitions(context)
           .then(v => v.map(t => ({ address: t.address.toLowerCase(), network: t.network })))
           .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
+            if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
           });
 
@@ -74,7 +74,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
           .tokenId()
           .then(x => x?.toString())
           .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
+            if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
           });
         if (!tokenId) return null;

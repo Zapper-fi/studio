@@ -49,7 +49,7 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
       vaultTokenAddresses.map(async vaultTokenAddress => {
         const stakingPoolAddressesRaw = await multicall
           .wrap(stakingRewardRegistryContract)
-          .stakingPool(vaultTokenAddress);
+          .read.stakingPool(vaultTokenAddress);
         return stakingPoolAddressesRaw.toLowerCase();
       }),
     );

@@ -83,11 +83,11 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
       contract.read.depositedBalances([address]),
       multicall
         .wrap(veFeeRewardTracker)
-        .simulate.claimable([address])
+        .read.simulate.claimable([address])
         .then(v => v.result),
       multicall
         .wrap(veMuxRewardTracker)
-        .simulate.claimable([address])
+        .read.simulate.claimable([address])
         .then(v => v.result),
     ]);
 

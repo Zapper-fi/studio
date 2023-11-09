@@ -57,7 +57,7 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)
-      .supplyRatePerBlock()
+      .read.supplyRatePerBlock()
       .catch(() => 0);
   }
 }

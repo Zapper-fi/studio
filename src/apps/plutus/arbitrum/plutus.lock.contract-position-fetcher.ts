@@ -100,10 +100,10 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
 
         const userPlsDpxShare = await multicall
           .wrap(rewardsContract)
-          .calculateShare(address, epoch, rewardsForEpoch.plsDpx);
+          .read.calculateShare(address, epoch, rewardsForEpoch.plsDpx);
         const userPlsJonesShare = await multicall
           .wrap(rewardsContract)
-          .calculateShare(address, epoch, rewardsForEpoch.plsJones);
+          .read.calculateShare(address, epoch, rewardsForEpoch.plsJones);
         if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0)
           return [new BigNumber(0), new BigNumber(0)];
 

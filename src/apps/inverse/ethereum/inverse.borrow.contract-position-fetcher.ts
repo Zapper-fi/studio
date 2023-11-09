@@ -9,7 +9,7 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { GetDataPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { InverseViemContractFactory } from '../contracts';
@@ -82,7 +82,7 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
     contract: InverseLendingPool;
   }): Promise<BigNumberish> {
     return contract.read.borrowBalanceCurrent([address]).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
   }

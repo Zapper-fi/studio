@@ -62,7 +62,7 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
     });
     const liquidiationContractAddress = await multicall
       .wrap(positionManager)
-      .splitLiquidationCollateral(this.collateral);
+      .read.splitLiquidationCollateral(this.collateral);
     const liquidationContract = this.raftContractFactory.raftLiquiditation({
       address: liquidiationContractAddress,
       network: this.network,

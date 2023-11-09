@@ -6,7 +6,7 @@ import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoCompound, MorphoContractFactory } from '~apps/morpho/contracts';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
 
 @PositionTemplate()
@@ -39,7 +39,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
         const market = this.contractFactory.morphoCToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
         const supplyTokenAddress = await marketcontract.read.underlying().catch(err => {
-          if (isMulticallUnderlyingError(err)) return this.wEthAddress;
+          if (isViemMulticallUnderlyingError(err)) return this.wEthAddress;
           throw err;
         });
 

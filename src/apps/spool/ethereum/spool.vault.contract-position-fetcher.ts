@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import { uniq } from 'lodash';
 
@@ -13,7 +13,6 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { SpoolContractFactory, SpoolVault } from '~apps/spool/contracts';
 import { ANALYTICS_API_BASE_URL, SUBGRAPH_API_BASE_URL } from '~apps/spool/ethereum/spool.constants';
 import { WithMetaType } from '~position/display.interface';
 import { MetaType, Token } from '~position/position.interface';
@@ -28,6 +27,8 @@ import {
 import { BaseToken } from '~position/token.interface';
 
 import { Platform, RewardAnalytics, VaultDetails, SpoolVaults, StrategyAnalytics, VaultAnalytics } from './spool.types';
+import { SpoolVault } from '../contracts/viem';
+import { SpoolViemContractFactory } from '../contracts';
 
 const platformQuery = gql`
   query {
@@ -233,15 +234,12 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
     multicall,
   }: GetTokenBalancesParams<SpoolVault, SpoolVaultDataProps>): Promise<BigNumberish[]> {
     const strategies = contractPosition.dataProps.strategies;
-
-    const [balanceRaw] = await Promise.all([
-      multicall.wrap(contract).callStatic.getUpdatedUser(strategies, { from: address }),
-    ]);
+    const { result } = await contract.simulate.getUpdatedUser([strategies], { account: address });
 
     // balanceRaw[5] + balanceRaw[7]: pending deposits
     // balanceRaw[4]: user's funds in underlying asset
-    const pendingDeposit = balanceRaw[5].add(balanceRaw[7]);
-    const balance = balanceRaw[4].add(pendingDeposit);
+    const pendingDeposit = BigNumber.from(result[5]).add(result[7]);
+    const balance = BigNumber.from(result[4]).add(pendingDeposit);
     return [balance.toString(), ...contractPosition.tokens.slice(1).map(() => '0')];
   }
 

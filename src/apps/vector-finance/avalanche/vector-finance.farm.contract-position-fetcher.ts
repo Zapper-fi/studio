@@ -5,7 +5,7 @@ import { compact, range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
@@ -82,7 +82,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     const rewardTokens = await Promise.all(
       range(0, 2).map(i => {
         return contract.read.rewardTokens([i]).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
       }),

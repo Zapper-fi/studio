@@ -11,6 +11,7 @@ import { ContractPosition } from '~position/position.interface';
 
 import { LodestarV0ViemContractFactory } from '../contracts';
 import { LodestarV0Comptroller, LodestarV0Lens } from '../contracts/viem';
+import { LodestarV0LensContract } from '../contracts/viem/LodestarV0Lens';
 
 @PositionTemplate()
 export class ArbitrumLodestarV0ClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
@@ -30,11 +31,11 @@ export class ArbitrumLodestarV0ClaimableContractPositionFetcher extends Compound
     super(appToolkit);
   }
 
-  getCompoundComptrollerContract(address: string): LodestarV0Comptroller {
+  getCompoundComptrollerContract(address: string) {
     return this.contractFactory.lodestarV0Comptroller({ address, network: this.network });
   }
 
-  getCompoundLensContract(address: string): LodestarV0Lens {
+  getCompoundLensContract(address: string) {
     return this.contractFactory.lodestarV0Lens({ address, network: this.network });
   }
 
@@ -43,16 +44,19 @@ export class ArbitrumLodestarV0ClaimableContractPositionFetcher extends Compound
     {
       contract,
       contractPosition,
-    }: { contract: LodestarV0Lens; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
+    }: {
+      contract: LodestarV0LensContract;
+      contractPosition: ContractPosition<CompoundClaimablePositionDataProps>;
+    },
   ): Promise<BigNumberish> {
     const [rewardToken] = contractPosition.tokens;
     const { address: comptrollerAddress } = contractPosition;
 
-    const rewardMetadata = await contract.callStatic.getCompBalanceMetadataExt(
+    const { result: rewardMetadata } = await contract.simulate.getCompBalanceMetadataExt([
       rewardToken.address,
       comptrollerAddress,
       address,
-    );
+    ]);
 
     return rewardMetadata[3];
   }

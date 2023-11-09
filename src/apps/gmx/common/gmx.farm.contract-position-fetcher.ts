@@ -48,7 +48,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
 
     const depositBalances = await multicall
       .wrap(readerContract)
-      .getDepositBalances(address, [stakedToken.address], [contractPosition.address]);
+      .read.getDepositBalances(address, [stakedToken.address], [contractPosition.address]);
 
     return depositBalances[0];
   }

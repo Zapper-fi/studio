@@ -58,7 +58,7 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
 
     const ratioRaw =
       contract.address === '0x4b92d19c11435614cd49af1b589001b7c08cd4d5'
-        ? await multicall.wrap(yVaultContract).read.pricePerShare()
+        ? await multicall.wrap(yVaultContract).read.pricePerShare().read
         : await multicall.wrap(contract).read.getPricePerFullShare();
 
     const ratio = Number(ratioRaw) / 10 ** decimals;

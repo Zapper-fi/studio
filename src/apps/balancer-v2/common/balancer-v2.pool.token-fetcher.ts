@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -150,11 +150,11 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const [poolId, feeRaw, weightsRaw] = await Promise.all([
       contract.read.getPoolId(),
       contract.read.getSwapFeePercentage().catch(err => {
-        if (isMulticallUnderlyingError(err)) return '100000000000000000';
+        if (isViemMulticallUnderlyingError(err)) return '100000000000000000';
         throw err;
       }),
       contract.read.getNormalizedWeights().catch(err => {
-        if (isMulticallUnderlyingError(err)) return [];
+        if (isViemMulticallUnderlyingError(err)) return [];
         throw err;
       }),
     ]);

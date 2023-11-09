@@ -1,7 +1,7 @@
 import { BigNumberish } from 'ethers';
 
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
@@ -35,7 +35,7 @@ export class BaseStargateFarmContractPositionFetcher extends StargateFarmContrac
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StargateChefBase>): Promise<BigNumberish> {
     return contract.read.pendingEmissionToken([contractPosition.dataProps.poolIndex, address]).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
   }

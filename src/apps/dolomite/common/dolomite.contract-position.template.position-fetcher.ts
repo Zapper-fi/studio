@@ -24,8 +24,8 @@ import {
   mapTokensToDolomiteDataProps,
   DOLOMITE_MARGIN_ADDRESSES,
 } from '~apps/dolomite/common/utils';
-import { DolomiteContractFactory, DolomiteMargin } from '~apps/dolomite/contracts';
-import { IMulticallWrapper } from '~multicall';
+import { DolomiteViemContractFactory } from '~apps/dolomite/contracts';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import {
@@ -37,6 +37,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
+import { DolomiteMargin } from '../contracts/viem';
 
 type MarginAccountsResponseType = {
   marginAccounts: {
@@ -71,21 +72,23 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       network: this.network,
     });
 
-    const marketsCount = await multicall.wrap(dolomiteMarginContract).getNumMarkets();
+    const marketsCount = await multicall.wrap(dolomiteMarginContract).read.getNumMarkets();
     const underlyingTokenAddresses = await Promise.all(
-      range(0, marketsCount.toNumber()).map(async index => {
-        const underlyingTokenAddressRaw = await multicall.wrap(dolomiteMarginContract).getMarketTokenAddress(index);
+      range(0, Number(marketsCount)).map(async index => {
+        const underlyingTokenAddressRaw = await multicall
+          .wrap(dolomiteMarginContract)
+          .read.getMarketTokenAddress([BigInt(index)]);
         return underlyingTokenAddressRaw.toLowerCase();
       }),
     );
 
     const tokenNames = await Promise.all(
       underlyingTokenAddresses.map(async underlyingTokenAddress => {
-        const underlyingTokenContract = this.contractFactory.erc20({
+        const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
           address: underlyingTokenAddress,
           network: this.network,
         });
-        return multicall.wrap(underlyingTokenContract).name();
+        return multicall.wrap(underlyingTokenContract).read.name();
       }),
     );
 
@@ -110,7 +113,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
           underlyingTokenAddresses[i] = '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258';
         } else {
           underlyingTokenAddresses[i] = (
-            await multicall.wrap(isolationModeTokenContract).UNDERLYING_TOKEN()
+            await multicall.wrap(isolationModeTokenContract).read.UNDERLYING_TOKEN()
           ).toLowerCase();
         }
       } else {
@@ -135,7 +138,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     return [
       {
         address: dolomiteMarginContract.address,
-        marketsCount: marketsCount.toNumber(),
+        marketsCount: Number(marketsCount),
         marketIdToMarketMap: marketIdToMarketMap,
       },
     ];
@@ -204,7 +207,10 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
     );
   }
 
-  async getPositionsForBalances(account: string, multicall: IMulticallWrapper): Promise<DolomiteContractPosition[]> {
+  async getPositionsForBalances(
+    account: string,
+    multicall: ViemMulticallDataLoader,
+  ): Promise<DolomiteContractPosition[]> {
     const defaultContractPositions = await this.appToolkit.getAppContractPositions<DolomiteDataProps>({
       appId: this.appId,
       network: this.network,
@@ -216,7 +222,9 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
         account,
         defaultContractPositions,
         multicall,
+        this.contractFactory,
       );
+
       const isolationModeAccountStructs = isolationModeVaults.map<AccountStruct>(vault => ({
         accountOwner: vault,
         accountNumber: '0',
@@ -226,7 +234,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
         tags: { network: this.network, context: `${this.appId}__template` },
       });
       const definitions = await this.getDefinitions({ multicall, tokenLoader });
-      const tokenCount = (await this.getContract(definitions[0].address).getNumMarkets()).toNumber();
+      const tokenCount = await this.getContract(definitions[0].address).read.getNumMarkets();
       const accounts: AccountStruct[] = [];
       for (let i = 0; i < tokenCount; i += CHUNK_SIZE) {
         accounts.push({ accountOwner: account, accountNumber: BigNumber.from(i).div(CHUNK_SIZE).toString() });
@@ -246,7 +254,9 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
         account,
         defaultContractPositions,
         multicall,
+        this.contractFactory,
       );
+
       const query = gql`
         query getMarginAccounts($walletAddress: String!) {
           marginAccounts(

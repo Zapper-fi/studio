@@ -65,7 +65,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
           range(0, Number(rewardLength)).map(v =>
             multicall
               .wrap(convexRewardPoolContract)
-              .rewards(v)
+              .read.rewards(v)
               .then(p => p.reward_token.toLowerCase()),
           ),
         );

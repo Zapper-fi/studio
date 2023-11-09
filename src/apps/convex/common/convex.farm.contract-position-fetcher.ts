@@ -83,7 +83,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
 
         const isWrapper = await multicall
           .wrap(stashTokenWrapper)
-          .booster()
+          .read.booster()
           .then(() => true)
           .catch(() => false);
 

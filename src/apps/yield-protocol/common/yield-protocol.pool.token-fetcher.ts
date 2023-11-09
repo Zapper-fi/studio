@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -55,9 +55,9 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
     const baseReserves = await multicall
       .wrap(poolContract)
-      .getBaseBalance()
+      .read.getBaseBalance()
       .catch(err => {
-        if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+        if (isViemMulticallUnderlyingError(err)) return BigNumber.from(0);
         throw err;
       });
 
