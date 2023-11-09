@@ -24,7 +24,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ChickenBondContractFactory) protected readonly contractFactory: ChickenBondContractFactory,
+    @Inject(ChickenBondViemContractFactory) protected readonly contractFactory: ChickenBondViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -61,7 +61,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const bondManagerContract = this.contractFactory.chickenBondManager({
       address: '0x57619fe9c539f890b19c61812226f9703ce37137',
       network: this.network,

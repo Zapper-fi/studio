@@ -20,7 +20,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }

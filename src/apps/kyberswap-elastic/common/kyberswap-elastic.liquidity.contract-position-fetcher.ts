@@ -68,7 +68,8 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
     @Inject(KyberswapElasticLiquidityContractPositionBuilder)
     protected readonly kyberElasticLiquidityContractPositionBuilder: KyberswapElasticLiquidityContractPositionBuilder,
     @Inject(KyberswapElasticApyDataLoader)
@@ -164,7 +165,7 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
 
   async getBalances(address: string): Promise<ContractPositionBalance<KyberswapElasticLiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });

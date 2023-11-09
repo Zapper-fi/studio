@@ -42,7 +42,7 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DystopiaContractFactory) private readonly contractFactory: DystopiaContractFactory,
+    @Inject(DystopiaViemContractFactory) private readonly contractFactory: DystopiaViemContractFactory,
   ) {
     super(appToolkit);
   }

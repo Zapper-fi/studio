@@ -18,8 +18,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CurveContractFactory } from '../contracts';
-import { CurveGaugeV6 } from '../contracts/ethers/CurveGaugeV6';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveGaugeV6 } from '../contracts/viem/CurveGaugeV6';
 
 export type CurvePoolGaugeDataProps = {
   liquidity: number;
@@ -64,7 +64,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { IqContractFactory } from './contracts';
+import { IqViemContractFactory } from './contracts';
 import { EthereumIqHiiqContractPositionFetcher } from './ethereum/iq.hiiq.contract-position-fetcher';
 
 @Module({

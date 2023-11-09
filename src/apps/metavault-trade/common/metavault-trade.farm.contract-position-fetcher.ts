@@ -20,7 +20,7 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetavaultTradeContractFactory) protected readonly contractFactory: MetavaultTradeContractFactory,
+    @Inject(MetavaultTradeViemContractFactory) protected readonly contractFactory: MetavaultTradeViemContractFactory,
   ) {
     super(appToolkit);
   }

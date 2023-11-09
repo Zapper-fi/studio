@@ -21,7 +21,7 @@ export class EthereumSaddlePoolTokenFetcher extends CurvePoolStaticTokenFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+    @Inject(SaddleViemContractFactory) protected readonly contractFactory: SaddleViemContractFactory,
   ) {
     super(appToolkit, contractFactory);
   }

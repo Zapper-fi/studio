@@ -4,13 +4,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { IdleContractFactory } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
 
 @Injectable()
 export class IdleTranchesDefinitionsResolver {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
   ) {}
 
   @Cache({

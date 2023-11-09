@@ -14,7 +14,7 @@ export class EthereumYearnVeYfiContractPositionFetcher extends VotingEscrowTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
+    @Inject(YearnViemContractFactory) protected readonly contractFactory: YearnViemContractFactory,
   ) {
     super(appToolkit);
   }

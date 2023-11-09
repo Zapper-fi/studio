@@ -13,9 +13,9 @@ import {
   GetMasterChefTokenBalancesParams,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { SaddleContractFactory } from '../contracts';
-import { SaddleMiniChefV2 } from '../contracts/ethers/SaddleMiniChefV2';
-import { SaddleMiniChefV2Rewarder } from '../contracts/ethers/SaddleMiniChefV2Rewarder';
+import { SaddleViemContractFactory } from '../contracts';
+import { SaddleMiniChefV2 } from '../contracts/viem/SaddleMiniChefV2';
+import { SaddleMiniChefV2Rewarder } from '../contracts/viem/SaddleMiniChefV2Rewarder';
 
 @PositionTemplate()
 export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -27,7 +27,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+    @Inject(SaddleViemContractFactory) protected readonly contractFactory: SaddleViemContractFactory,
   ) {
     super(appToolkit);
   }

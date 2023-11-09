@@ -20,7 +20,7 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JpegdContractFactory) protected readonly contractFactory: JpegdContractFactory,
+    @Inject(JpegdViemContractFactory) protected readonly contractFactory: JpegdViemContractFactory,
   ) {
     super(appToolkit);
   }

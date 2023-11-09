@@ -24,7 +24,7 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EnsuroApiRegistry) protected readonly ensuroRegistry: EnsuroApiRegistry,
-    @Inject(EnsuroContractFactory) private readonly ensuroContractFactory: EnsuroContractFactory,
+    @Inject(EnsuroViemContractFactory) private readonly ensuroContractFactory: EnsuroViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -27,7 +27,7 @@ export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplateP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeanstalkContractFactory) private readonly contractFactory: BeanstalkContractFactory,
+    @Inject(BeanstalkViemContractFactory) private readonly contractFactory: BeanstalkViemContractFactory,
   ) {
     super(appToolkit);
   }

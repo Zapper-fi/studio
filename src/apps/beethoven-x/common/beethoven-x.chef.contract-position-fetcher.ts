@@ -13,7 +13,7 @@ import { BeethovenXContractFactory, BeethovenXMasterchef } from '../contracts';
 export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BeethovenXMasterchef> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeethovenXContractFactory) protected readonly contractFactory: BeethovenXContractFactory,
+    @Inject(BeethovenXViemContractFactory) protected readonly contractFactory: BeethovenXViemContractFactory,
   ) {
     super(appToolkit);
   }

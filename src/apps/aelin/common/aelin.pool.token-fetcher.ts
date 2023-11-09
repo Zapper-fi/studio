@@ -29,7 +29,7 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AelinContractFactory) protected readonly contractFactory: AelinContractFactory,
+    @Inject(AelinViemContractFactory) protected readonly contractFactory: AelinViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -54,7 +54,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
 > {
   protected constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DolomiteContractFactory) protected readonly contractFactory: DolomiteContractFactory,
+    @Inject(DolomiteViemContractFactory) protected readonly contractFactory: DolomiteViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -150,7 +150,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
   async getDataProps(
     params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps, DolomiteContractPositionDefinition>,
   ): Promise<DolomiteDataProps> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     return mapTokensToDolomiteDataProps(params, this.isFetchingDolomiteBalances(), multicall);
   }
 
@@ -162,7 +162,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       return [];
     }
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.getPositionsForBalances(address, multicall);
 
     return await Promise.all(

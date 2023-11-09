@@ -17,7 +17,7 @@ export class EthereumCleverFurnaceContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }

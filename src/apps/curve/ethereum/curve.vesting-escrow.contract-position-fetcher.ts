@@ -14,7 +14,7 @@ export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEs
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -10,7 +10,7 @@ import { UniswapV2PoolSubgraphTemplateTokenFetcher } from './uniswap-v2.pool.sub
 export abstract class UniswapV2DefaultPoolSubgraphTemplateTokenFetcher extends UniswapV2PoolSubgraphTemplateTokenFetcher<UniswapPair> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
+    @Inject(UniswapV2ViemContractFactory) protected readonly contractFactory: UniswapV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

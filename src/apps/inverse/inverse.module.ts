@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixContractFactory } from '~apps/synthetix/contracts';
+import { SynthetixViemContractFactory } from '~apps/synthetix/contracts';
 
-import { InverseContractFactory } from './contracts';
+import { InverseViemContractFactory } from './contracts';
 import { EthereumInverseBorrowContractPositionFetcher } from './ethereum/inverse.borrow.contract-position-fetcher';
 import { EthereumInverseClaimableContractPositionFetcher } from './ethereum/inverse.claimable.contract-position-fetcher';
 import { EthereumInverseDcaVaultDividendContractPositionFetcher } from './ethereum/inverse.dca-vault-dividend.contract-position-fetcher';

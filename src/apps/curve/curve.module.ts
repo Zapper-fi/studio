@@ -6,7 +6,7 @@ import { ARBITRUM_CURVE_PROVIDERS } from './arbitrum';
 import { AVALANCHE_CURVE_PROVIDERS } from './avalanche';
 import { BASE_CURVE_PROVIDERS } from './base';
 import { CurveVolumeDataLoader } from './common/curve.volume.data-loader';
-import { CurveContractFactory } from './contracts';
+import { CurveViemContractFactory } from './contracts';
 import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
 import { FANTOM_CURVE_PROVIDERS } from './fantom';
 import { GNOSIS_CURVE_PROVIDERS } from './gnosis';

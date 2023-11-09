@@ -13,7 +13,7 @@ import {
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { TraderJoeChefBoosted, TraderJoeContractFactory } from '../contracts';
-import { TraderJoeChefBoostedRewarder } from '../contracts/ethers/TraderJoeChefBoostedRewarder';
+import { TraderJoeChefBoostedRewarder } from '../contracts/viem/TraderJoeChefBoostedRewarder';
 
 @PositionTemplate()
 export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -25,7 +25,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) protected readonly traderJoeContractFactory: TraderJoeContractFactory,
+    @Inject(TraderJoeViemContractFactory) protected readonly traderJoeContractFactory: TraderJoeViemContractFactory,
   ) {
     super(appToolkit);
   }

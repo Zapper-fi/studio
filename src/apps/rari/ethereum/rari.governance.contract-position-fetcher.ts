@@ -25,7 +25,7 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariContractFactory) protected readonly contractFactory: RariContractFactory,
+    @Inject(RariViemContractFactory) protected readonly contractFactory: RariViemContractFactory,
   ) {
     super(appToolkit);
   }

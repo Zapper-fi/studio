@@ -28,7 +28,7 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV4ContractFactory) private readonly contractFactory: PoolTogetherV4ContractFactory,
+    @Inject(PoolTogetherV4ViemContractFactory) private readonly contractFactory: PoolTogetherV4ViemContractFactory,
     @Inject(PoolTogetherV4ApiPrizePoolRegistry)
     private readonly poolTogetherV4ApiPrizePoolRegistry: PoolTogetherV4ApiPrizePoolRegistry,
   ) {

@@ -16,7 +16,7 @@ export abstract class DfxCurveTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DfxContractFactory) protected readonly contractFactory: DfxContractFactory,
+    @Inject(DfxViemContractFactory) protected readonly contractFactory: DfxViemContractFactory,
   ) {
     super(appToolkit);
   }

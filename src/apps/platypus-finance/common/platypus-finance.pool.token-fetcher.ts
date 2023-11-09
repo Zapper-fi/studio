@@ -14,7 +14,7 @@ import { PlatypusFinanceContractFactory, PlatypusFinancePoolToken } from '../con
 export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePositionFetcher<PlatypusFinancePoolToken> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlatypusFinanceContractFactory) protected readonly contractFactory: PlatypusFinanceContractFactory,
+    @Inject(PlatypusFinanceViemContractFactory) protected readonly contractFactory: PlatypusFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

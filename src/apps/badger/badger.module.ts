@@ -6,7 +6,7 @@ import { ArbitrumBadgerClaimableContractPositionFetcher } from './arbitrum/badge
 import { ArbitrumBadgerVaultTokenFetcher } from './arbitrum/badger.vault.token-fetcher';
 import { BadgerClaimableRewardsResolver } from './common/badger.claimable.rewards-resolver';
 import { BadgerVaultTokenDefinitionsResolver } from './common/badger.vault.token-definition-resolver';
-import { BadgerContractFactory } from './contracts';
+import { BadgerViemContractFactory } from './contracts';
 import { EthereumBadgerClaimableContractPositionFetcher } from './ethereum/badger.claimable.contract-position-fetcher';
 import { EthereumBadgerVaultTokenFetcher } from './ethereum/badger.vault.token-fetcher';
 import { PolygonBadgerClaimableContractPositionFetcher } from './polygon/badger.claimable.contract-position-fetcher';

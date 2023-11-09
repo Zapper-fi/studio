@@ -19,7 +19,8 @@ export abstract class KyberSwapClassicFarmFairlaunchV2ContractPositionFetcher ex
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapClassicContractFactory) protected readonly contractFactory: KyberswapClassicContractFactory,
+    @Inject(KyberswapClassicViemContractFactory)
+    protected readonly contractFactory: KyberswapClassicViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -62,7 +62,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(FurucomboContractFactory) protected readonly contractFactory: FurucomboContractFactory,
+    @Inject(FurucomboViemContractFactory) protected readonly contractFactory: FurucomboViemContractFactory,
   ) {
     super(appToolkit);
   }

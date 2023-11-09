@@ -16,7 +16,7 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArthContractFactory) protected readonly contractFactory: ArthContractFactory,
+    @Inject(ArthViemContractFactory) protected readonly contractFactory: ArthViemContractFactory,
   ) {
     super(appToolkit);
   }

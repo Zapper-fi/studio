@@ -20,7 +20,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GammaStrategiesContractFactory) protected readonly contractFactory: GammaStrategiesContractFactory,
+    @Inject(GammaStrategiesViemContractFactory) protected readonly contractFactory: GammaStrategiesViemContractFactory,
   ) {
     super(appToolkit);
   }

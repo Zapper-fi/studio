@@ -94,7 +94,7 @@ export class TaiSafeContractPositionFetcher extends CustomContractPositionTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TaiContractFactory) protected readonly contractFactory: TaiContractFactory,
+    @Inject(TaiViemContractFactory) protected readonly contractFactory: TaiViemContractFactory,
     @Inject(TaiCollateralResolver) protected readonly collateralResolver: TaiCollateralResolver,
   ) {
     super(appToolkit);

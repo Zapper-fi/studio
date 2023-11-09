@@ -40,7 +40,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(QiDaoContractFactory) protected readonly contractFactory: QiDaoContractFactory,
+    @Inject(QiDaoViemContractFactory) protected readonly contractFactory: QiDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -128,7 +128,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<QiDaoVaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<QiDaoVaultDataProps>({
       appId: this.appId,
       network: this.network,

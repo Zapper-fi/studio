@@ -23,7 +23,7 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
   ) {
     super(appToolkit);
   }

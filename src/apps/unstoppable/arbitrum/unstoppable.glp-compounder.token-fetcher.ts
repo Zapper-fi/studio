@@ -17,7 +17,7 @@ export class ArbitrumUnstoppableGlpCompounderTokenFetcher extends AppTokenTempla
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(UnstoppableContractFactory) private readonly unstoppableContractFactory: UnstoppableContractFactory,
+    @Inject(UnstoppableViemContractFactory) private readonly unstoppableContractFactory: UnstoppableViemContractFactory,
   ) {
     super(appToolkit);
   }

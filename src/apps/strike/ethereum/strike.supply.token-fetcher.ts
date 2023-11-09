@@ -18,7 +18,7 @@ export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StrikeContractFactory) protected readonly contractFactory: StrikeContractFactory,
+    @Inject(StrikeViemContractFactory) protected readonly contractFactory: StrikeViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -5,13 +5,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
-import { PancakeswapContractFactory } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
 
 @Injectable()
 export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {}
 
   @CacheOnInterval({

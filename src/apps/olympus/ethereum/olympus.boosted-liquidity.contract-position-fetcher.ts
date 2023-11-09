@@ -26,7 +26,7 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OlympusContractFactory) protected readonly olympusContractFactory: OlympusContractFactory,
+    @Inject(OlympusViemContractFactory) protected readonly olympusContractFactory: OlympusViemContractFactory,
   ) {
     super(appToolkit);
   }

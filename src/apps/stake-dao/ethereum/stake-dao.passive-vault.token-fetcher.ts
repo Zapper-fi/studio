@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { StakeDaoContractFactory } from '../contracts';
-import { StakeDaoPassiveVault } from '../contracts/ethers/StakeDaoPassiveVault';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoPassiveVault } from '../contracts/viem/StakeDaoPassiveVault';
 
 @PositionTemplate()
 export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePositionFetcher<StakeDaoPassiveVault> {
@@ -14,7 +14,7 @@ export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }

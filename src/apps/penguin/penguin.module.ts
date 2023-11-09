@@ -8,7 +8,7 @@ import { AvalanchePenguinIPefiTokenFetcher } from './avalanche/penguin.i-pefi.to
 import { AvalanchePenguinVaultClaimableContractPositionFetcher } from './avalanche/penguin.vault-claimable.contract-position-fetcher';
 import { AvalanchePenguinVaultTokenFetcher } from './avalanche/penguin.vault.token-fetcher';
 import { AvalanchePenguinXPefiTokenFetcher } from './avalanche/penguin.x-pefi.token-fetcher';
-import { PenguinContractFactory } from './contracts';
+import { PenguinViemContractFactory } from './contracts';
 
 @Module({
   providers: [

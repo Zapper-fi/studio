@@ -16,8 +16,8 @@ import {
 
 import { UmamiFinanceGlpVaultAddress } from '../common/umami-finance.constants';
 import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
-import { UmamiFinanceContractFactory } from '../contracts';
-import { UmamiFinanceGlpVault } from '../contracts/ethers/UmamiFinanceGlpVault';
+import { UmamiFinanceViemContractFactory } from '../contracts';
+import { UmamiFinanceGlpVault } from '../contracts/viem/UmamiFinanceGlpVault';
 
 export type UmamiFinanceGlpVaultAppTokenDefinition = {
   address: string;
@@ -37,7 +37,8 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UmamiFinanceYieldResolver)
     private readonly yieldResolver: UmamiFinanceYieldResolver,
-    @Inject(UmamiFinanceContractFactory) private readonly umamiFinanceContractFactory: UmamiFinanceContractFactory,
+    @Inject(UmamiFinanceViemContractFactory)
+    private readonly umamiFinanceContractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

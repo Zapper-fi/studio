@@ -26,7 +26,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JarvisContractFactory) protected readonly contractFactory: JarvisContractFactory,
+    @Inject(JarvisViemContractFactory) protected readonly contractFactory: JarvisViemContractFactory,
   ) {
     super(appToolkit);
   }

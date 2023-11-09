@@ -33,7 +33,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
     @Inject(DopexSsovV3DefinitionsResolver) protected readonly ssovDefinitionResolver: DopexSsovV3DefinitionsResolver,
   ) {
     super(appToolkit);

@@ -14,7 +14,7 @@ export class OptimismLemmaFinanceUsdlTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LemmaFinanceContractFactory) protected readonly contractFactory: LemmaFinanceContractFactory,
+    @Inject(LemmaFinanceViemContractFactory) protected readonly contractFactory: LemmaFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

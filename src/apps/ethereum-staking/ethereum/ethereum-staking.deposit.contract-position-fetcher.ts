@@ -68,7 +68,7 @@ export class EthereumEthereumStakingDepositContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(EthereumStakingContractFactory) protected readonly contractFactory: EthereumStakingContractFactory,
+    @Inject(EthereumStakingViemContractFactory) protected readonly contractFactory: EthereumStakingViemContractFactory,
   ) {
     super(appToolkit);
   }

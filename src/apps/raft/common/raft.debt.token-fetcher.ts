@@ -15,7 +15,7 @@ export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RaftContractFactory) protected readonly contractFactory: RaftContractFactory,
+    @Inject(RaftViemContractFactory) protected readonly contractFactory: RaftViemContractFactory,
   ) {
     super(appToolkit);
   }

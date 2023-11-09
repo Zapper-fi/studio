@@ -19,7 +19,7 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(Api3ContractFactory) protected readonly contractFactory: Api3ContractFactory,
+    @Inject(Api3ViemContractFactory) protected readonly contractFactory: Api3ViemContractFactory,
   ) {
     super(appToolkit);
   }

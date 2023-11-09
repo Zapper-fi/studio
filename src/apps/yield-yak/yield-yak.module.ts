@@ -4,7 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheYieldyakFarmContractPositionFetcher } from './avalanche/yield-yak.farm.contract-position-fetcher';
 import { AvalancheYieldyakVaultTokenFetcher } from './avalanche/yield-yak.vault.token-fetcher';
-import { YieldYakContractFactory } from './contracts';
+import { YieldYakViemContractFactory } from './contracts';
 
 @Module({
   providers: [

@@ -4,8 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { KeeperContractFactory } from '../contracts';
-import { KeeperRedeemableToken } from '../contracts/ethers/KeeperRedeemableToken';
+import { KeeperViemContractFactory } from '../contracts';
+import { KeeperRedeemableToken } from '../contracts/viem/KeeperRedeemableToken';
 
 @PositionTemplate()
 export class EthereumKeeperRedeemableTokenFetcher extends AppTokenTemplatePositionFetcher<KeeperRedeemableToken> {
@@ -13,7 +13,7 @@ export class EthereumKeeperRedeemableTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KeeperContractFactory) protected readonly contractFactory: KeeperContractFactory,
+    @Inject(KeeperViemContractFactory) protected readonly contractFactory: KeeperViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -17,7 +17,7 @@ export class EthereumMoonrockIndexTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MoonrockContractFactory) protected readonly contractFactory: MoonrockContractFactory,
+    @Inject(MoonrockViemContractFactory) protected readonly contractFactory: MoonrockViemContractFactory,
   ) {
     super(appToolkit);
   }

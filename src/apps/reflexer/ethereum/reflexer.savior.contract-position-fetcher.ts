@@ -12,8 +12,8 @@ import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ReflexerContractFactory } from '../contracts';
-import { ReflexerUniswapV2SafeSavior } from '../contracts/ethers/ReflexerUniswapV2SafeSavior';
+import { ReflexerViemContractFactory } from '../contracts';
+import { ReflexerUniswapV2SafeSavior } from '../contracts/viem/ReflexerUniswapV2SafeSavior';
 
 type ReflexerSafesResponse = {
   safes: {
@@ -41,7 +41,7 @@ export class ReflexerSaviorContractPositionFetcher extends CustomContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReflexerContractFactory) protected readonly contractFactory: ReflexerContractFactory,
+    @Inject(ReflexerViemContractFactory) protected readonly contractFactory: ReflexerViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -77,7 +77,7 @@ export class ReflexerSaviorContractPositionFetcher extends CustomContractPositio
       variables: { address: address.toLowerCase() },
     });
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,

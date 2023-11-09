@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { TempusContractFactory } from './contracts';
+import { TempusViemContractFactory } from './contracts';
 import { EthereumTempusAmmTokenFetcher } from './ethereum/tempus.amm.token-fetcher';
 import { EthereumTempusPoolTokenFetcher } from './ethereum/tempus.pool.token-fetcher';
 import { FantomTempusAmmTokenFetcher } from './fantom/tempus.amm.token-fetcher';

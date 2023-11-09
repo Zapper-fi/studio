@@ -20,7 +20,7 @@ export abstract class VotingRewardsContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SolidLizardContractFactory) protected readonly contractFactory: SolidLizardContractFactory,
+    @Inject(SolidLizardViemContractFactory) protected readonly contractFactory: SolidLizardViemContractFactory,
     @Inject(SolidLizardDefinitionsResolver) protected readonly definitionsResolver: SolidLizardDefinitionsResolver,
   ) {
     super(appToolkit);
@@ -48,7 +48,7 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     // Get ve token IDs
     const escrow = this.contractFactory.solidLizardVe({ address: this.veTokenAddress, network: this.network });
@@ -88,7 +88,7 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     // Get ve token IDs
     const escrow = this.contractFactory.solidLizardVe({ address: this.veTokenAddress, network: this.network });

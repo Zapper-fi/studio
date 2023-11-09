@@ -46,7 +46,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MakerContractFactory) protected readonly contractFactory: MakerContractFactory,
+    @Inject(MakerViemContractFactory) protected readonly contractFactory: MakerViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -127,7 +127,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<MakerVaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<MakerVaultDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],

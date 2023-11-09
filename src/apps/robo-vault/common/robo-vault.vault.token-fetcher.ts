@@ -15,7 +15,7 @@ import { RoboVaultApiClient } from './robo-vault.api.client';
 export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositionFetcher<RoboVault> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RoboVaultContractFactory) protected readonly contractFactory: RoboVaultContractFactory,
+    @Inject(RoboVaultViemContractFactory) protected readonly contractFactory: RoboVaultViemContractFactory,
     @Inject(RoboVaultApiClient) protected readonly apiClient: RoboVaultApiClient,
   ) {
     super(appToolkit);

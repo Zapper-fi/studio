@@ -4,7 +4,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Network } from '~types';
 
-import { PolynomialContractFactory } from '../contracts';
+import { PolynomialViemContractFactory } from '../contracts';
 
 @Injectable()
 export class PolynomialAccountResolver {
@@ -13,11 +13,11 @@ export class PolynomialAccountResolver {
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PolynomialContractFactory) protected readonly polynomialContractFactory: PolynomialContractFactory,
+    @Inject(PolynomialViemContractFactory) protected readonly polynomialContractFactory: PolynomialViemContractFactory,
   ) {}
 
   async getSmartWalletAddress(address: string): Promise<string> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const accountResolver = this.polynomialContractFactory.polynomialAccountResolver({
       address: this.polynomialAccountResolverAddress,
       network: this.network,

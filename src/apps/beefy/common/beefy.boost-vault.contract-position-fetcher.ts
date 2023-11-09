@@ -30,7 +30,7 @@ export abstract class BeefyBoostVaultContractPositionFetcher extends ContractPos
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BeefyBoostVaultDefinitionsResolver)
     private readonly boostDefinitionsResolver: BeefyBoostVaultDefinitionsResolver,
-    @Inject(BeefyContractFactory) protected readonly contractFactory: BeefyContractFactory,
+    @Inject(BeefyViemContractFactory) protected readonly contractFactory: BeefyViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -20,7 +20,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolContractFactory) protected readonly contractFactory: PikaProtocolContractFactory,
+    @Inject(PikaProtocolViemContractFactory) protected readonly contractFactory: PikaProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -53,7 +53,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PikaProtocolVault>) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const rewardContract = this.contractFactory.pikaProtocolVaultReward({
       address: '0x58488bb666d2da33f8e8938dbdd582d2481d4183',
       network: this.network,

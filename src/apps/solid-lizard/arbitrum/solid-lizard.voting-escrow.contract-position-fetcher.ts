@@ -19,7 +19,7 @@ export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends Voti
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SolidLizardContractFactory) protected readonly contractFactory: SolidLizardContractFactory,
+    @Inject(SolidLizardViemContractFactory) protected readonly contractFactory: SolidLizardViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -37,7 +37,7 @@ export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends Voti
   }
 
   async getRewardTokenBalance(address: string, contract: SolidLizardRewards): Promise<BigNumberish> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
     const veCount = Number(await escrow.balanceOf(address));
 

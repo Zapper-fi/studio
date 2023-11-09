@@ -22,7 +22,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RocketPoolContractFactory) protected readonly contractFactory: RocketPoolContractFactory,
+    @Inject(RocketPoolViemContractFactory) protected readonly contractFactory: RocketPoolViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -54,7 +54,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const miniPoolManager = this.contractFactory.rocketMinipoolManager({
       address: this.minipoolManagerAddress,
       network: this.network,
@@ -95,7 +95,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
   }
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,

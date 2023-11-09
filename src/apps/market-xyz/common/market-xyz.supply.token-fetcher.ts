@@ -5,8 +5,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { RariFuseSupplyTokenFetcher } from '~apps/rari-fuse/common/rari-fuse.supply.token-fetcher';
 
 import { MarketXyzContractFactory, MarketXyzPoolDirectory, MarketXyzPoolLens } from '../contracts';
-import { MarketXyzComptroller } from '../contracts/ethers/MarketXyzComptroller';
-import { MarketXyzToken } from '../contracts/ethers/MarketXyzToken';
+import { MarketXyzComptroller } from '../contracts/viem/MarketXyzComptroller';
+import { MarketXyzToken } from '../contracts/viem/MarketXyzToken';
 
 export abstract class MarketXyzSupplyTokenFetcher extends RariFuseSupplyTokenFetcher<
   MarketXyzPoolDirectory,
@@ -16,7 +16,7 @@ export abstract class MarketXyzSupplyTokenFetcher extends RariFuseSupplyTokenFet
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MarketXyzContractFactory) protected readonly contractFactory: MarketXyzContractFactory,
+    @Inject(MarketXyzViemContractFactory) protected readonly contractFactory: MarketXyzViemContractFactory,
   ) {
     super(appToolkit);
   }

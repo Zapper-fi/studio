@@ -13,7 +13,7 @@ import { AvalancheAbracadabraMspellContractPositionFetcher } from './avalanche/a
 import { AvalancheAbracadabraMagicGlpTokenFetcher } from './avalanche/abracadabra.magic-glp.token-fetcher';
 import { AvalancheAbracadabraStakedSpellTokenFetcher } from './avalanche/abracadabra.staked-spell.token-fetcher';
 import { BinanceSmartChainAbracadabraCauldronContractPositionFetcher } from './binance-smart-chain/abracadabra.cauldron.contract-position-fetcher';
-import { AbracadabraContractFactory } from './contracts';
+import { AbracadabraViemContractFactory } from './contracts';
 import { EthereumAbracadabraCauldronContractPositionFetcher } from './ethereum/abracadabra.cauldron.contract-position-fetcher';
 import { EthereumAbracadabraFarmContractPositionFetcher } from './ethereum/abracadabra.farm.contract-position-fetcher';
 import { EthereumAbracadabraMspellContractPositionFetcher } from './ethereum/abracadabra.m-spell.contract-position-fetcher';

@@ -11,8 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { SonneContractFactory } from '../contracts';
-import { SonneStakedSonne } from '../contracts/ethers/SonneStakedSonne';
+import { SonneViemContractFactory } from '../contracts';
+import { SonneStakedSonne } from '../contracts/viem/SonneStakedSonne';
 
 export type SonneStakingContractPositionDefinition = {
   address: string;
@@ -26,7 +26,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SonneContractFactory) protected readonly contractFactory: SonneContractFactory,
+    @Inject(SonneViemContractFactory) protected readonly contractFactory: SonneViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -18,7 +18,7 @@ export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IronBankContractFactory) protected readonly contractFactory: IronBankContractFactory,
+    @Inject(IronBankViemContractFactory) protected readonly contractFactory: IronBankViemContractFactory,
   ) {
     super(appToolkit);
   }

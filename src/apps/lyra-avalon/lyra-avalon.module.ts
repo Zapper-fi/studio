@@ -5,7 +5,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { ArbitrumLyraAvalonOptionsContractPositionFetcher } from './arbitrum/lyra-avalon.options.contract-position-fetcher';
 import { ArbitrumLyraAvalonPoolTokenFetcher } from './arbitrum/lyra-avalon.pool.token-fetcher';
 import { ArbitrumLyraAvalonStkLyraTokenFetcher } from './arbitrum/lyra-avalon.stk-lyra.token-fetcher';
-import { LyraAvalonContractFactory } from './contracts';
+import { LyraAvalonViemContractFactory } from './contracts';
 import { EthereumLyraAvalonStakingContractPositionFetcher } from './ethereum/lyra-avalon.staking.contract-position-fetcher';
 import { EthereumLyraAvalonStkLyraClaimableContractPositionFetcher } from './ethereum/lyra-avalon.stk-lyra-claimable.contract-position-fetcher';
 import { EthereumLyraAvalonStkLyraTokenFetcher } from './ethereum/lyra-avalon.stk-lyra.token-fetcher';

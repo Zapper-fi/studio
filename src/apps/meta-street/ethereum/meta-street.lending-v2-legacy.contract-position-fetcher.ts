@@ -96,7 +96,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetaStreetContractFactory) protected readonly contractFactory: MetaStreetContractFactory,
+    @Inject(MetaStreetViemContractFactory) protected readonly contractFactory: MetaStreetViemContractFactory,
   ) {
     super(appToolkit);
   }

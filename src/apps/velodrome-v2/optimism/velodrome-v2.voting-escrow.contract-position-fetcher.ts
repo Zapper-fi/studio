@@ -19,7 +19,7 @@ export class OptimismVelodromeV2VotingEscrowContractPositionFetcher extends Voti
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) protected readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) protected readonly contractFactory: VelodromeV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -37,7 +37,7 @@ export class OptimismVelodromeV2VotingEscrowContractPositionFetcher extends Voti
   }
 
   async getRewardTokenBalance(address: string, contract: VelodromeV2Rewards): Promise<BigNumberish> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
     const veCount = Number(await escrow.balanceOf(address));
 

@@ -20,8 +20,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MuxContractFactory } from '../contracts';
-import { MuxVault } from '../contracts/ethers/MuxVault';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxVault } from '../contracts/viem/MuxVault';
 
 export type MuxPerpContractPositionDefinition = {
   address: string;
@@ -54,7 +54,7 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }

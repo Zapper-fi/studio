@@ -13,7 +13,7 @@ export class ArbitrumXGrailTokenFetcher extends AppTokenTemplatePositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) private readonly contractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) private readonly contractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }

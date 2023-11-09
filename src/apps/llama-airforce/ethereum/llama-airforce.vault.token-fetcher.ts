@@ -18,7 +18,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamaAirforceContractFactory) protected readonly contractFactory: LlamaAirforceContractFactory,
+    @Inject(LlamaAirforceViemContractFactory) protected readonly contractFactory: LlamaAirforceViemContractFactory,
   ) {
     super(appToolkit);
   }

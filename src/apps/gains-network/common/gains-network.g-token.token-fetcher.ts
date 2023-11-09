@@ -11,7 +11,7 @@ export abstract class GainsNetworkGTokenTokenFetcher extends AppTokenTemplatePos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
+    @Inject(GainsNetworkViemContractFactory) protected readonly contractFactory: GainsNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }

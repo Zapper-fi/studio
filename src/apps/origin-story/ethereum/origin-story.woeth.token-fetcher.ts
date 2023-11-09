@@ -14,7 +14,7 @@ export class EthereumOriginStoryWoethTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginStoryContractFactory) protected readonly contractFactory: OriginStoryContractFactory,
+    @Inject(OriginStoryViemContractFactory) protected readonly contractFactory: OriginStoryViemContractFactory,
   ) {
     super(appToolkit);
   }

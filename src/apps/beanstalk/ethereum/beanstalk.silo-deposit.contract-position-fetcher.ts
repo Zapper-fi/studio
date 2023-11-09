@@ -51,7 +51,7 @@ export class EthereumBeanstalkSiloDepositContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeanstalkContractFactory) protected readonly contractFactory: BeanstalkContractFactory,
+    @Inject(BeanstalkViemContractFactory) protected readonly contractFactory: BeanstalkViemContractFactory,
     @Inject(BeanstalkBalanceResolver) protected readonly beanstalkBalanceResolver: BeanstalkBalanceResolver,
   ) {
     super(appToolkit);

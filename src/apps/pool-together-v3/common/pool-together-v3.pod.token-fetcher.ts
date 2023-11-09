@@ -26,7 +26,7 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) private readonly contractFactory: PoolTogetherV3ViemContractFactory,
   ) {
     super(appToolkit);
   }

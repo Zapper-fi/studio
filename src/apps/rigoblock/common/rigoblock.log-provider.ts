@@ -5,7 +5,7 @@ import { duration } from 'moment';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { RigoblockContractFactory } from '../contracts';
+import { RigoblockViemContractFactory } from '../contracts';
 
 export enum PoolLogType {
   REGISTERED = 'registered',

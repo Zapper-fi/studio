@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { PoolTogetherV5ContractFactory } from './contracts';
+import { PoolTogetherV5ViemContractFactory } from './contracts';
 import { OptimismPoolTogetherV5PrizeVaultTokenFetcher } from './optimism/pool-together-v5.prize-vault.token-fetcher';
 
 @Module({

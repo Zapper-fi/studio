@@ -14,7 +14,7 @@ export class ArbitrumWombatExchangeVotingEscrowContractPositionFetcher extends V
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(WombatExchangeContractFactory) protected readonly contractFactory: WombatExchangeContractFactory,
+    @Inject(WombatExchangeViemContractFactory) protected readonly contractFactory: WombatExchangeViemContractFactory,
   ) {
     super(appToolkit);
   }

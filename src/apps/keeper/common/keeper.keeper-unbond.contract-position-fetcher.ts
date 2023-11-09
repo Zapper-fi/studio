@@ -46,7 +46,7 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KeeperContractFactory) protected readonly contractFactory: KeeperContractFactory,
+    @Inject(KeeperViemContractFactory) protected readonly contractFactory: KeeperViemContractFactory,
   ) {
     super(appToolkit);
   }

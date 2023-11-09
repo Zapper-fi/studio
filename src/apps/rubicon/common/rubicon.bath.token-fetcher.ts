@@ -31,7 +31,7 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(RubiconBathTokenDefinitionResolver)
     private readonly bathTokenDefinitionResolver: RubiconBathTokenDefinitionResolver,
-    @Inject(RubiconContractFactory) private readonly contractFactory: RubiconContractFactory,
+    @Inject(RubiconViemContractFactory) private readonly contractFactory: RubiconViemContractFactory,
   ) {
     super(appToolkit);
   }

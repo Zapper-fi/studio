@@ -16,8 +16,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { AtlendisV1ContractFactory } from '../contracts';
-import { AtlendisPositionManager } from '../contracts/ethers/AtlendisPositionManager';
+import { AtlendisV1ViemContractFactory } from '../contracts';
+import { AtlendisPositionManager } from '../contracts/viem/AtlendisPositionManager';
 
 export const GET_USER_POSITIONS = gql`
   query getUserPositions($address: String!) {
@@ -91,7 +91,7 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AtlendisV1ContractFactory) protected readonly contractFactory: AtlendisV1ContractFactory,
+    @Inject(AtlendisV1ViemContractFactory) protected readonly contractFactory: AtlendisV1ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -137,7 +137,7 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<AtlendisV1PoolDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const userPositionsData = await gqlFetch<GetUserPositionsResponse>({
       endpoint: this.subgraphUrl,

@@ -25,7 +25,7 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PhutureContractFactory) protected readonly contractFactory: PhutureContractFactory,
+    @Inject(PhutureViemContractFactory) protected readonly contractFactory: PhutureViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -39,7 +39,7 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const managerContract = this.contractFactory.phutureManagedIndex({
       address: this.managerAddress,
       network: this.network,

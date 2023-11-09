@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { ChronosContractFactory } from '~apps/chronos/contracts';
+import { ChronosViemContractFactory } from '~apps/chronos/contracts';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -28,7 +28,7 @@ export class ArbitrumPlutusPlsRdntTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ChronosContractFactory) protected readonly chronosContractFactory: ChronosContractFactory,
+    @Inject(ChronosViemContractFactory) protected readonly chronosContractFactory: ChronosViemContractFactory,
   ) {
     super(appToolkit);
   }

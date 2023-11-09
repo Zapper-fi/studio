@@ -21,7 +21,7 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) private readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) private readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }

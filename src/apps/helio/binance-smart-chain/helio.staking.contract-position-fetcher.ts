@@ -25,7 +25,7 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HelioContractFactory) protected readonly contractFactory: HelioContractFactory,
+    @Inject(HelioViemContractFactory) protected readonly contractFactory: HelioViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -20,7 +20,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RadiantCapitalContractFactory) protected readonly contractFactory: RadiantCapitalContractFactory,
+    @Inject(RadiantCapitalViemContractFactory) protected readonly contractFactory: RadiantCapitalViemContractFactory,
   ) {
     super(appToolkit);
   }

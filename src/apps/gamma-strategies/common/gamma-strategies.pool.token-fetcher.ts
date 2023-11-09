@@ -18,7 +18,7 @@ import { GammaStrategiesDefinitionResolver } from './gamma-strategies.definition
 export abstract class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFetcher<GammaStrategiesHypervisor> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GammaStrategiesContractFactory) protected readonly contractFactory: GammaStrategiesContractFactory,
+    @Inject(GammaStrategiesViemContractFactory) protected readonly contractFactory: GammaStrategiesViemContractFactory,
     @Inject(GammaStrategiesDefinitionResolver) protected readonly definitionResolver: GammaStrategiesDefinitionResolver,
   ) {
     super(appToolkit);

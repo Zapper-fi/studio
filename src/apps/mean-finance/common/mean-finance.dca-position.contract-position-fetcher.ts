@@ -53,7 +53,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MeanFinanceContractFactory) protected readonly contractFactory: MeanFinanceContractFactory,
+    @Inject(MeanFinanceViemContractFactory) protected readonly contractFactory: MeanFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -136,7 +136,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<MeanFinanceDcaPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const positions = await this.appToolkit.getAppContractPositions<MeanFinanceDcaPositionDataProps>({
       network: this.network,

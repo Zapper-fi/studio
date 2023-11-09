@@ -20,7 +20,7 @@ export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBor
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MarketXyzContractFactory) protected readonly contractFactory: MarketXyzContractFactory,
+    @Inject(MarketXyzViemContractFactory) protected readonly contractFactory: MarketXyzViemContractFactory,
   ) {
     super(appToolkit);
   }

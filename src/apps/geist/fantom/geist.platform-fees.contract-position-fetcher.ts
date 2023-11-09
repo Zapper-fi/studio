@@ -27,7 +27,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GeistContractFactory) private readonly contractFactory: GeistContractFactory,
+    @Inject(GeistViemContractFactory) private readonly contractFactory: GeistViemContractFactory,
   ) {
     super(appToolkit);
   }

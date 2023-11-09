@@ -6,8 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { PStakeContractFactory } from '../contracts';
-import { PStakeStkToken } from '../contracts/ethers/PStakeStkToken';
+import { PStakeViemContractFactory } from '../contracts';
+import { PStakeStkToken } from '../contracts/viem/PStakeStkToken';
 
 @PositionTemplate()
 export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePositionFetcher<PStakeStkToken> {
@@ -15,7 +15,7 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PStakeContractFactory) protected readonly contractFactory: PStakeContractFactory,
+    @Inject(PStakeViemContractFactory) protected readonly contractFactory: PStakeViemContractFactory,
   ) {
     super(appToolkit);
   }

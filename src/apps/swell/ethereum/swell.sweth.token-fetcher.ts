@@ -20,7 +20,7 @@ export class EthereumSwellSwethTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SwellContractFactory) protected readonly contractFactory: SwellContractFactory,
+    @Inject(SwellViemContractFactory) protected readonly contractFactory: SwellViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -12,7 +12,8 @@ import { KyberswapClassicContractFactory, KyberSwapClassicMasterchef } from '../
 export abstract class KyberSwapClassicFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<KyberSwapClassicMasterchef> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapClassicContractFactory) protected readonly contractFactory: KyberswapClassicContractFactory,
+    @Inject(KyberswapClassicViemContractFactory)
+    protected readonly contractFactory: KyberswapClassicViemContractFactory,
   ) {
     super(appToolkit);
   }

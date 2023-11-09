@@ -16,7 +16,7 @@ export class AvalancheHedgefarmAlphaTwoTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HedgefarmContractFactory) protected readonly contractFactory: HedgefarmContractFactory,
+    @Inject(HedgefarmViemContractFactory) protected readonly contractFactory: HedgefarmViemContractFactory,
   ) {
     super(appToolkit);
   }

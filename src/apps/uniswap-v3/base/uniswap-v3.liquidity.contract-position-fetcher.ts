@@ -19,7 +19,7 @@ export class BaseUniswapV3LiquidityContractPositionFetcher extends CustomContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly contractFactory: UniswapV3ViemContractFactory,
     @Inject(BaseUniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: BaseUniswapV3LiquidityContractPositionBuilder,
   ) {
@@ -53,7 +53,7 @@ export class BaseUniswapV3LiquidityContractPositionFetcher extends CustomContrac
 
   async getBalances(address: string): Promise<ContractPositionBalance[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });

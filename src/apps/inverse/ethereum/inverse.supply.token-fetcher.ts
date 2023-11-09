@@ -11,7 +11,7 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { InverseContractFactory, InverseController } from '../contracts';
-import { InverseLendingPool } from '../contracts/ethers/InverseLendingPool';
+import { InverseLendingPool } from '../contracts/viem/InverseLendingPool';
 
 @PositionTemplate()
 export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
@@ -23,7 +23,7 @@ export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }

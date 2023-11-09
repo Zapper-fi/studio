@@ -5,7 +5,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { CleverContractFactory } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
 
 import { CVX, CLEVCVX } from './addresses';
 
@@ -15,7 +15,7 @@ export class EthereumCleverLeverTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }

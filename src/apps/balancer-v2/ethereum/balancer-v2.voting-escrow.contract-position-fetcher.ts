@@ -20,7 +20,7 @@ export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
+    @Inject(BalancerV2ViemContractFactory) protected readonly contractFactory: BalancerV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

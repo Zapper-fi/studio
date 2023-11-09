@@ -27,7 +27,7 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
     @Inject(AuraBalancerPoolResolver)
     private readonly balancerPoolResolver: AuraBalancerPoolResolver,
   ) {

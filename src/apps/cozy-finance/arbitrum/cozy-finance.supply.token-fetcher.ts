@@ -23,7 +23,7 @@ export class ArbitrumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CozyFinanceContractFactory) protected readonly contractFactory: CozyFinanceContractFactory,
+    @Inject(CozyFinanceViemContractFactory) protected readonly contractFactory: CozyFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

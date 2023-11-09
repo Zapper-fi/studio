@@ -8,8 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { HectorNetworkContractFactory } from '../contracts';
-import { HectorNetworkStakingRewards } from '../contracts/ethers/HectorNetworkStakingRewards';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkStakingRewards } from '../contracts/viem/HectorNetworkStakingRewards';
 
 // NOTE: Hector Network also has two other pools staked in the SpookySwap MasterChef
 const FARMS = [
@@ -26,7 +26,7 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HectorNetworkContractFactory) protected readonly contractFactory: HectorNetworkContractFactory,
+    @Inject(HectorNetworkViemContractFactory) protected readonly contractFactory: HectorNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -42,7 +42,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -113,7 +113,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<GmxOptionContractPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<GmxOptionContractPositionDataProps>({
       appId: this.appId,
       network: this.network,

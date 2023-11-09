@@ -20,7 +20,8 @@ export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher ext
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveSafetyModuleContractFactory) protected readonly contractFactory: AaveSafetyModuleContractFactory,
+    @Inject(AaveSafetyModuleViemContractFactory)
+    protected readonly contractFactory: AaveSafetyModuleViemContractFactory,
   ) {
     super(appToolkit);
   }

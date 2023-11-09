@@ -5,7 +5,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { BaseHalofiGameContractPositionFetcher } from './base/halofi.game.contract-position-fetcher';
 import { CeloHalofiGameContractPositionFetcher } from './celo/halofi.game.contract-position-fetcher';
 import { HalofiGameGamesApiSource } from './common/halofi.game.games.api-source';
-import { HalofiContractFactory } from './contracts';
+import { HalofiViemContractFactory } from './contracts';
 import { PolygonHalofiGameContractPositionFetcher } from './polygon/halofi.game.contract-position-fetcher';
 
 @Module({

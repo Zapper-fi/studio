@@ -19,7 +19,7 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RedactedCartelContractFactory) protected readonly contractFactory: RedactedCartelContractFactory,
+    @Inject(RedactedCartelViemContractFactory) protected readonly contractFactory: RedactedCartelViemContractFactory,
   ) {
     super(appToolkit);
   }

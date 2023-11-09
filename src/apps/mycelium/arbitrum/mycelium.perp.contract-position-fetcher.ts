@@ -41,7 +41,7 @@ export class ArbitrumMycellilumPerpContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MyceliumContractFactory) protected readonly contractFactory: MyceliumContractFactory,
+    @Inject(MyceliumViemContractFactory) protected readonly contractFactory: MyceliumViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -26,7 +26,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -20,7 +20,7 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(AmpStakingResolver) protected readonly ampStakingResolver: AmpStakingResolver,
-    @Inject(AmpContractFactory) protected readonly contractFactory: AmpContractFactory,
+    @Inject(AmpViemContractFactory) protected readonly contractFactory: AmpViemContractFactory,
   ) {
     super(appToolkit);
   }

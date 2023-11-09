@@ -6,7 +6,7 @@ import { ArbitrumQiDaoVaultPositionFetcher } from './arbitrum/qi-dao.vault.contr
 import { AvalancheQiDaoFarmV3ContractPositionFetcher } from './avalanche/qi-dao.farm-v3.contract-position-fetcher';
 import { AvalancheQiDaoVaultPositionFetcher } from './avalanche/qi-dao.vault.contract-position-fetcher';
 import { BinanceSmartChainQiDaoVaultPositionFetcher } from './binance-smart-chain/qi-dao.vault.contract-position-fetcher';
-import { QiDaoContractFactory } from './contracts';
+import { QiDaoViemContractFactory } from './contracts';
 import { EthereumQiDaoVaultPositionFetcher } from './ethereum/qi-dao.vault.contract-position-fetcher';
 import { FantomQiDaoFarmV3ContractPositionFetcher } from './fantom/qi-dao.farm-v3.contract-position-fetcher';
 import { FantomQiDaoFarmContractPositionFetcher } from './fantom/qi-dao.farm.contract-position-fetcher';

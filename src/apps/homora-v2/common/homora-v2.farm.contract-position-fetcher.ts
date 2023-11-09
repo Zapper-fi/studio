@@ -35,7 +35,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HomoraV2ContractFactory) protected readonly contractFactory: HomoraV2ContractFactory,
+    @Inject(HomoraV2ViemContractFactory) protected readonly contractFactory: HomoraV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -161,7 +161,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
     if (!userPositions.length) return [];
 
     const bankContract = this.contractFactory.homoraBank({ address: this.homoraBankAddress, network: this.network });
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<HomoraV2FarmingPositionDataProps>({
       appId: this.appId,
       network: this.network,

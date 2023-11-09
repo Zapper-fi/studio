@@ -20,7 +20,7 @@ export class EthereumAuraAuraBalCompounderContractPositionFetcher extends Contra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }

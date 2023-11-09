@@ -28,7 +28,7 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
   ) {
     super(appToolkit);
   }

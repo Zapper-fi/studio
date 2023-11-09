@@ -23,7 +23,7 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DhedgeV2ContractFactory) protected readonly contractFactory: DhedgeV2ContractFactory,
+    @Inject(DhedgeV2ViemContractFactory) protected readonly contractFactory: DhedgeV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

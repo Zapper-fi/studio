@@ -22,7 +22,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -32,7 +32,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
   }
 
   async getDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefAddress, network: this.network });
     const poolLength = await chefV2.poolLength();
 

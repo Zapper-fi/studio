@@ -15,7 +15,7 @@ import { claimable, supplied } from '~position/position.utils';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
-import { KyberswapElasticContractFactory } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
 
 import { KyberswapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
 import {
@@ -40,7 +40,8 @@ export class KyberswapElasticFarmContractPositionBuilder {
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
   ) {}
 
   async buildPosition({

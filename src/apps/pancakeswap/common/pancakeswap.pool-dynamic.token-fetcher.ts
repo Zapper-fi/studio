@@ -23,7 +23,7 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { PancakeswapContractFactory } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
 
 export type PancakeswapPoolTokenDataProps = DefaultAppTokenDataProps & {
   swapAddress: string;
@@ -83,7 +83,7 @@ export abstract class PancakeswapPoolDynamicTokenFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }

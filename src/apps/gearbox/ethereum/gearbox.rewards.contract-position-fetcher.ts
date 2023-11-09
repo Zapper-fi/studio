@@ -22,7 +22,7 @@ export class EthereumGearboxRewardsPositionFetcher extends MerkleTemplateContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) protected readonly contractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) protected readonly contractFactory: GearboxViemContractFactory,
     @Inject(EthereumGearboxRewardsMerkleCache) private readonly merkleCache: EthereumGearboxRewardsMerkleCache,
   ) {
     super(appToolkit);

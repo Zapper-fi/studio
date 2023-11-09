@@ -24,7 +24,7 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -30,7 +30,7 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamaAirforceContractFactory) protected readonly contractFactory: LlamaAirforceContractFactory,
+    @Inject(LlamaAirforceViemContractFactory) protected readonly contractFactory: LlamaAirforceViemContractFactory,
     @Inject(EthereumLlamaAirforceMerkleCache) private readonly merkleCache: EthereumLlamaAirforceMerkleCache,
   ) {
     super(appToolkit);

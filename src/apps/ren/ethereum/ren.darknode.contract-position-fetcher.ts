@@ -21,7 +21,7 @@ export class EthereumRenDarknodeContractPositionFetcher extends CustomContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RenContractFactory) protected readonly contractFactory: RenContractFactory,
+    @Inject(RenViemContractFactory) protected readonly contractFactory: RenViemContractFactory,
     @Inject(RenApiClient) protected readonly apiClient: RenApiClient,
   ) {
     super(appToolkit);

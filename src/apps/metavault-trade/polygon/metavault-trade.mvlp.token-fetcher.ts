@@ -14,7 +14,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { MetavaultTradeContractFactory } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
 
 export type MetavaultTradeMvlpTokenDefinition = {
   address: string;
@@ -33,7 +33,7 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetavaultTradeContractFactory) protected readonly contractFactory: MetavaultTradeContractFactory,
+    @Inject(MetavaultTradeViemContractFactory) protected readonly contractFactory: MetavaultTradeViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -43,7 +43,7 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getDefinitions(): Promise<MetavaultTradeMvlpTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const mvlpManagerContract = this.contractFactory.metavaultTradeMvlpManager({
       address: this.mvlpManagerAddress,
       network: this.network,

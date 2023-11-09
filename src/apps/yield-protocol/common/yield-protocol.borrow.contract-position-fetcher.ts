@@ -143,7 +143,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) protected readonly contractFactory: YieldProtocolContractFactory,
+    @Inject(YieldProtocolViemContractFactory) protected readonly contractFactory: YieldProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -223,7 +223,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<YieldProtocolBorrowDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
 
     const cauldron = this.contractFactory.yieldProtocolCauldron({

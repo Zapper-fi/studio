@@ -14,7 +14,7 @@ export class EthereumPendleV2VotingEscrowContractPositionFetcher extends VotingE
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
+    @Inject(PendleV2ViemContractFactory) protected readonly pendleV2ContractFactory: PendleV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

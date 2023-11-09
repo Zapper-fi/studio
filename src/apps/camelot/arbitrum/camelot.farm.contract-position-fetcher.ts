@@ -28,7 +28,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly contractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) protected readonly contractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -93,7 +93,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,

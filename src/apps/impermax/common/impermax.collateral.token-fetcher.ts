@@ -12,7 +12,7 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(ImpermaxContractFactory) private readonly contractFactory: ImpermaxContractFactory,
+    @Inject(ImpermaxViemContractFactory) private readonly contractFactory: ImpermaxViemContractFactory,
   ) {
     super(appToolkit);
   }

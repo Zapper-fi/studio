@@ -31,7 +31,7 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InsuraceContractFactory) protected readonly contractFactory: InsuraceContractFactory,
+    @Inject(InsuraceViemContractFactory) protected readonly contractFactory: InsuraceViemContractFactory,
   ) {
     super(appToolkit);
   }

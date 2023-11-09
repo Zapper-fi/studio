@@ -23,7 +23,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeContractFactory) protected readonly contractFactory: VelodromeContractFactory,
+    @Inject(VelodromeViemContractFactory) protected readonly contractFactory: VelodromeViemContractFactory,
     @Inject(VelodromeDefinitionsResolver) protected readonly definitionsResolver: VelodromeDefinitionsResolver,
   ) {
     super(appToolkit);

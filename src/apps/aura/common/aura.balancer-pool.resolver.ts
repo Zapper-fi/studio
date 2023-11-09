@@ -7,7 +7,7 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { AuraContractFactory } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
 
 export type BalancerPool = {
   id: string;
@@ -87,7 +87,7 @@ const network = Network.ETHEREUM_MAINNET;
 export class AuraBalancerPoolResolver {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) private readonly contractFactory: AuraViemContractFactory,
   ) {}
 
   @Cache({

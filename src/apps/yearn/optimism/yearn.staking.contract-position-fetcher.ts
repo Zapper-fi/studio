@@ -13,8 +13,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { YearnContractFactory } from '../contracts';
-import { YearnStaking } from '../contracts/ethers/YearnStaking';
+import { YearnViemContractFactory } from '../contracts';
+import { YearnStaking } from '../contracts/viem/YearnStaking';
 
 @PositionTemplate()
 export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnStaking> {
@@ -22,7 +22,7 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
+    @Inject(YearnViemContractFactory) protected readonly contractFactory: YearnViemContractFactory,
   ) {
     super(appToolkit);
   }

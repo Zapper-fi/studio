@@ -16,8 +16,8 @@ import {
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { Network } from '~types';
 
-import { ConvexContractFactory } from '../contracts';
-import { ConvexSingleStakingRewards } from '../contracts/ethers/ConvexSingleStakingRewards';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexSingleStakingRewards } from '../contracts/viem/ConvexSingleStakingRewards';
 
 // CVX is minted whenever CRV is claimed.
 // We're dealing with floating poing arithmetic, so use BigNumber.js, but return an ethers.BigNumber
@@ -47,7 +47,7 @@ export const claimedCrvToMintedCvx = (claimedCrvAmount: string, currentCvxSupply
 export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<ConvexSingleStakingRewards> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }

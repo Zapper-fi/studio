@@ -44,7 +44,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory,
+    @Inject(RigoblockViemContractFactory) private readonly contractFactory: RigoblockViemContractFactory,
     @Inject(RigoblockLogProvider) private readonly logProvider: RigoblockLogProvider,
   ) {
     super(appToolkit);

@@ -37,7 +37,7 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(OpenleveragePoolAPYHelper)
     private readonly openleveragePoolAPYHelper: OpenleveragePoolAPYHelper,
-    @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
+    @Inject(OpenleverageViemContractFactory) protected readonly contractFactory: OpenleverageViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -25,7 +25,7 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RaftContractFactory) protected readonly raftContractFactory: RaftContractFactory,
+    @Inject(RaftViemContractFactory) protected readonly raftContractFactory: RaftViemContractFactory,
   ) {
     super(appToolkit);
   }

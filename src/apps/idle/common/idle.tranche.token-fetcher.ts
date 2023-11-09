@@ -10,7 +10,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { IdleContractFactory } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
 
 import { IdleTranchesDefinitionsResolver } from './idle.tranche.token-definitions-resolver';
 
@@ -27,7 +27,7 @@ export abstract class EthereumIdleTranchesPoolTokenFetcher extends AppTokenTempl
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
     @Inject(IdleTranchesDefinitionsResolver)
     protected readonly trancheDefinitionResolver: IdleTranchesDefinitionsResolver,
   ) {

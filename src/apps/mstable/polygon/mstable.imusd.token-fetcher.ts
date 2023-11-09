@@ -5,7 +5,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { MstableContractFactory } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
 import { MstableAsset } from '../contracts/ethers';
 
 @PositionTemplate()
@@ -14,7 +14,7 @@ export class PolygonMstableImusdTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }

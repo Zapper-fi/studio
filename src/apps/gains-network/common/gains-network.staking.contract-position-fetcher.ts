@@ -14,7 +14,7 @@ export abstract class GainsNetworkStakingContractPositionFetcher extends SingleS
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
+    @Inject(GainsNetworkViemContractFactory) protected readonly contractFactory: GainsNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }

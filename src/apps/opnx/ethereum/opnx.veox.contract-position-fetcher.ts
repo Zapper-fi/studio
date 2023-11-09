@@ -19,7 +19,7 @@ export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateCon
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OpnxContractFactory) private readonly opnxContractFactory: OpnxContractFactory,
+    @Inject(OpnxViemContractFactory) private readonly opnxContractFactory: OpnxViemContractFactory,
   ) {
     super(appToolkit);
   }

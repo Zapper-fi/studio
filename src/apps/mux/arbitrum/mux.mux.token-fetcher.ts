@@ -6,7 +6,7 @@ import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.presen
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { MuxContractFactory } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class ArbitrumMuxMuxTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
@@ -14,7 +14,7 @@ export class ArbitrumMuxMuxTokenFetcher extends AppTokenTemplatePositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }

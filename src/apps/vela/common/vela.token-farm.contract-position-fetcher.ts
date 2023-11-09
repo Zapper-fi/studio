@@ -36,7 +36,7 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelaContractFactory) protected readonly velaContractFactory: VelaContractFactory,
+    @Inject(VelaViemContractFactory) protected readonly velaContractFactory: VelaViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -10,7 +10,7 @@ import {
 import { ContractPosition } from '~position/position.interface';
 
 import { InverseContractFactory, InverseController } from '../contracts';
-import { InverseLens } from '../contracts/ethers/InverseLens';
+import { InverseLens } from '../contracts/viem/InverseLens';
 
 @PositionTemplate()
 export class EthereumInverseClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
@@ -25,7 +25,7 @@ export class EthereumInverseClaimableContractPositionFetcher extends CompoundCla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }

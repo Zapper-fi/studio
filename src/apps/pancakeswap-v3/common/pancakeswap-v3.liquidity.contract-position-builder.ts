@@ -36,7 +36,7 @@ export class PancakeswapV3LiquidityContractPositionBuilder extends AbstractUnisw
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapV3ContractFactory) protected readonly contractFactory: PancakeswapV3ContractFactory,
+    @Inject(PancakeswapV3ViemContractFactory) protected readonly contractFactory: PancakeswapV3ViemContractFactory,
   ) {
     super();
   }

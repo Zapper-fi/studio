@@ -19,7 +19,7 @@ export abstract class FarmContractPositionFetcher extends SingleStakingFarmTempl
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(TenderizeTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: TenderizeTokenDefinitionsResolver,
-    @Inject(TenderizeContractFactory) protected readonly contractFactory: TenderizeContractFactory,
+    @Inject(TenderizeViemContractFactory) protected readonly contractFactory: TenderizeViemContractFactory,
   ) {
     super(appToolkit);
   }

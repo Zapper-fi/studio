@@ -21,7 +21,7 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolContractFactory) private readonly contractFactory: PikaProtocolContractFactory,
+    @Inject(PikaProtocolViemContractFactory) private readonly contractFactory: PikaProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

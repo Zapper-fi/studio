@@ -5,7 +5,7 @@ import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
 
-import { VelaContractFactory } from '../contracts';
+import { VelaViemContractFactory } from '../contracts';
 
 export abstract class VelaEsVelaTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   groupLabel = 'esVELA';
@@ -15,7 +15,7 @@ export abstract class VelaEsVelaTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelaContractFactory) private readonly velaContractFactory: VelaContractFactory,
+    @Inject(VelaViemContractFactory) private readonly velaContractFactory: VelaViemContractFactory,
   ) {
     super(appToolkit);
   }

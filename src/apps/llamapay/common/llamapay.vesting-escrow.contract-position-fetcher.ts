@@ -36,7 +36,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamapayContractFactory) protected readonly contractFactory: LlamapayContractFactory,
+    @Inject(LlamapayViemContractFactory) protected readonly contractFactory: LlamapayViemContractFactory,
     @Inject(LlamapayStreamApiClient) protected readonly apiClient: LlamapayStreamApiClient,
   ) {
     super(appToolkit);
@@ -76,7 +76,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const vestingEscrows = await this.apiClient.getVestingEscrows(address, this.subgraph);
     if (vestingEscrows.length === 0) return [];
 

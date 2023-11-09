@@ -5,7 +5,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { PieDaoContractFactory } from '../contracts';
+import { PieDaoViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class EthereumPieDaoEDoughTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
@@ -13,7 +13,7 @@ export class EthereumPieDaoEDoughTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PieDaoContractFactory) protected readonly contractFactory: PieDaoContractFactory,
+    @Inject(PieDaoViemContractFactory) protected readonly contractFactory: PieDaoViemContractFactory,
   ) {
     super(appToolkit);
   }

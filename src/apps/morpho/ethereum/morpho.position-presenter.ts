@@ -23,13 +23,13 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
+    @Inject(MorphoViemContractFactory) protected readonly contractFactory: MorphoViemContractFactory,
   ) {
     super();
   }
 
   override async dataProps(address: string): Promise<EthereumMorphoPositionPresenterDataProps | undefined> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const aaveV2Lens = multicall.wrap(
       this.contractFactory.morphoAaveV2Lens({
         address: this.morphoAaveLensAddress,

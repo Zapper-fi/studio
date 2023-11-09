@@ -31,7 +31,7 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -13,7 +13,7 @@ export class EthereumAirswapSAstV2TokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AirswapContractFactory) private readonly contractFactory: AirswapContractFactory,
+    @Inject(AirswapViemContractFactory) private readonly contractFactory: AirswapViemContractFactory,
   ) {
     super(appToolkit);
   }

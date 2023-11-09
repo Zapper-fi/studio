@@ -60,7 +60,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcaveContractFactory) protected readonly concaveContractFactory: ConcaveContractFactory,
+    @Inject(ConcaveViemContractFactory) protected readonly concaveContractFactory: ConcaveViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -97,7 +97,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<ConcaveLsdcnvContractPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const [lsdCnv] = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,

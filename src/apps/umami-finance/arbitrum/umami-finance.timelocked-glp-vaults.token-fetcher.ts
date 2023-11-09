@@ -16,8 +16,8 @@ import {
 
 import { UmamiFinanceTimelockedGlpVaultAddress } from '../common/umami-finance.constants';
 import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
-import { UmamiFinanceContractFactory } from '../contracts';
-import { UmamiFinanceTimelockedGlpVault } from '../contracts/ethers/UmamiFinanceTimelockedGlpVault';
+import { UmamiFinanceViemContractFactory } from '../contracts';
+import { UmamiFinanceTimelockedGlpVault } from '../contracts/viem/UmamiFinanceTimelockedGlpVault';
 
 @PositionTemplate()
 export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<UmamiFinanceTimelockedGlpVault> {
@@ -27,7 +27,8 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UmamiFinanceYieldResolver)
     private readonly yieldResolver: UmamiFinanceYieldResolver,
-    @Inject(UmamiFinanceContractFactory) private readonly umamiFinanceContractFactory: UmamiFinanceContractFactory,
+    @Inject(UmamiFinanceViemContractFactory)
+    private readonly umamiFinanceContractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

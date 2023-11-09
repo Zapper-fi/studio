@@ -21,7 +21,7 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AlphaV1ContractFactory) protected readonly contractFactory: AlphaV1ContractFactory,
+    @Inject(AlphaV1ViemContractFactory) protected readonly contractFactory: AlphaV1ViemContractFactory,
   ) {
     super(appToolkit);
   }

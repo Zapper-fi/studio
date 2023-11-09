@@ -18,7 +18,7 @@ export class EthereumPieDaoVotingEscrowContractPositionFether extends VotingEscr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PieDaoContractFactory) protected readonly contractFactory: PieDaoContractFactory,
+    @Inject(PieDaoViemContractFactory) protected readonly contractFactory: PieDaoViemContractFactory,
   ) {
     super(appToolkit);
   }

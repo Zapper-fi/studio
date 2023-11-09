@@ -5,7 +5,7 @@ import { mapKeys, map, pickBy, toPairs } from 'lodash';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { TaiContractFactory } from '../contracts';
+import { TaiViemContractFactory } from '../contracts';
 
 @Injectable()
 export class TaiCollateralResolver {

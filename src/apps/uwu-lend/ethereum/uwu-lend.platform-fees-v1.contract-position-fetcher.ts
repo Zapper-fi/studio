@@ -26,7 +26,7 @@ export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UwuLendContractFactory) private readonly contractFactory: UwuLendContractFactory,
+    @Inject(UwuLendViemContractFactory) private readonly contractFactory: UwuLendViemContractFactory,
   ) {
     super(appToolkit);
   }

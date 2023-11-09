@@ -37,7 +37,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) private readonly contractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) private readonly contractFactory: GearboxViemContractFactory,
   ) {
     super(appToolkit);
   }

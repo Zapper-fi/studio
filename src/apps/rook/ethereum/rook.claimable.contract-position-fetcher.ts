@@ -68,7 +68,7 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RookContractFactory) protected readonly contractFactory: RookContractFactory,
+    @Inject(RookViemContractFactory) protected readonly contractFactory: RookViemContractFactory,
   ) {
     super(appToolkit);
   }

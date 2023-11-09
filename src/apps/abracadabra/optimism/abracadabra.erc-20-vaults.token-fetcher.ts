@@ -22,7 +22,7 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }

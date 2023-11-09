@@ -17,7 +17,7 @@ export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SteakHutContractFactory) protected readonly contractFactory: SteakHutContractFactory,
+    @Inject(SteakHutViemContractFactory) protected readonly contractFactory: SteakHutViemContractFactory,
   ) {
     super(appToolkit);
   }

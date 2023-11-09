@@ -11,8 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { AuraContractFactory } from '../contracts';
-import { AuraBalStakingToken } from '../contracts/ethers/AuraBalStakingToken';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraBalStakingToken } from '../contracts/viem/AuraBalStakingToken';
 
 @PositionTemplate()
 export class EthereumAuraStakedAuraBalTokenFetcher extends AppTokenTemplatePositionFetcher<AuraBalStakingToken> {
@@ -23,7 +23,7 @@ export class EthereumAuraStakedAuraBalTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -28,7 +28,7 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UnagiiContractFactory) protected readonly contractFactory: UnagiiContractFactory,
+    @Inject(UnagiiViemContractFactory) protected readonly contractFactory: UnagiiViemContractFactory,
   ) {
     super(appToolkit);
   }

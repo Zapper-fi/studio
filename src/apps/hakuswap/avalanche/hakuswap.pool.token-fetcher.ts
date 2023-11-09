@@ -33,7 +33,7 @@ export class AvalancheHakuswapPoolTokenFetcher extends UniswapV2PoolOnChainTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HakuswapContractFactory) protected readonly contractFactory: HakuswapContractFactory,
+    @Inject(HakuswapViemContractFactory) protected readonly contractFactory: HakuswapViemContractFactory,
   ) {
     super(appToolkit);
   }

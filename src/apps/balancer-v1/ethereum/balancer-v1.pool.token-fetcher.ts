@@ -57,7 +57,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV1ContractFactory) protected readonly contractFactory: BalancerV1ContractFactory,
+    @Inject(BalancerV1ViemContractFactory) protected readonly contractFactory: BalancerV1ViemContractFactory,
     @Inject(EthereumBalancerV1PoolSubgraphVolumeDataLoader)
     protected readonly volumeDataLoaderBuilder: EthereumBalancerV1PoolSubgraphVolumeDataLoader,
   ) {

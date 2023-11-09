@@ -30,7 +30,7 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly contractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) protected readonly contractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }

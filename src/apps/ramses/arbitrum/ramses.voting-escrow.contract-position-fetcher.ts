@@ -19,7 +19,7 @@ export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEsc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RamsesContractFactory) protected readonly contractFactory: RamsesContractFactory,
+    @Inject(RamsesViemContractFactory) protected readonly contractFactory: RamsesViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -37,7 +37,7 @@ export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEsc
   }
 
   async getRewardTokenBalance(address: string, contract: RamsesRewards): Promise<BigNumberish> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
     const veCount = Number(await escrow.balanceOf(address));
 

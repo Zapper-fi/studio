@@ -14,8 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AaveAmmContractFactory } from '../contracts';
-import { AaveAmmAToken } from '../contracts/ethers/AaveAmmAToken';
+import { AaveAmmViemContractFactory } from '../contracts';
+import { AaveAmmAToken } from '../contracts/viem/AaveAmmAToken';
 
 const LT_MASK = Number('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000ffff');
 const LT_START_BIT_POSITION = 16;
@@ -26,7 +26,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveAmmContractFactory) protected readonly contractFactory: AaveAmmContractFactory,
+    @Inject(AaveAmmViemContractFactory) protected readonly contractFactory: AaveAmmViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -40,7 +40,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
   }
 
   async getAddresses(): Promise<string[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const pool = multicall.wrap(
       this.contractFactory.aaveAmmLendingPool({
         network: this.network,

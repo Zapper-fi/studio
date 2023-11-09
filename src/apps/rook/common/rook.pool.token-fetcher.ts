@@ -15,7 +15,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RookContractFactory) protected readonly contractFactory: RookContractFactory,
+    @Inject(RookViemContractFactory) protected readonly contractFactory: RookViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -27,7 +27,7 @@ export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorro
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariFuseContractFactory) protected readonly contractFactory: RariFuseContractFactory,
+    @Inject(RariFuseViemContractFactory) protected readonly contractFactory: RariFuseViemContractFactory,
   ) {
     super(appToolkit);
   }

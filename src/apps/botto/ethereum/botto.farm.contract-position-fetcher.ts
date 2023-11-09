@@ -18,7 +18,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BottoContractFactory) protected readonly contractFactory: BottoContractFactory,
+    @Inject(BottoViemContractFactory) protected readonly contractFactory: BottoViemContractFactory,
   ) {
     super(appToolkit);
   }

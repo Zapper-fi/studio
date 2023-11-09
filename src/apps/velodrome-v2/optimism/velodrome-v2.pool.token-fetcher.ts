@@ -12,8 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { VelodromeV2ContractFactory } from '../contracts';
-import { VelodromeV2Pool } from '../contracts/ethers/VelodromeV2Pool';
+import { VelodromeV2ViemContractFactory } from '../contracts';
+import { VelodromeV2Pool } from '../contracts/viem/VelodromeV2Pool';
 
 @PositionTemplate()
 export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<VelodromeV2Pool> {
@@ -21,7 +21,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) protected readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) protected readonly contractFactory: VelodromeV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -31,7 +31,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const factoryContract = this.contractFactory.velodromeV2PoolFactory({
       address: '0xf1046053aa5682b4f9a81b5481394da16be5ff5a',
       network: this.network,

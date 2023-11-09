@@ -14,8 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BalancerV2ContractFactory } from '../contracts';
-import { BalancerBoostedPool } from '../contracts/ethers/BalancerBoostedPool';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerBoostedPool } from '../contracts/viem/BalancerBoostedPool';
 
 type GetBoostedResponse = {
   pools: {
@@ -34,7 +34,7 @@ const GET_BOOSTED_QUERY = gql`
 export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<BalancerBoostedPool> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
+    @Inject(BalancerV2ViemContractFactory) protected readonly contractFactory: BalancerV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

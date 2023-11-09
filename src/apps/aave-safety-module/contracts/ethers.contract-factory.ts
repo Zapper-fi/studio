@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ContractFactory } from '~contract/contracts';
+import { ViemContractFactory }from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import {

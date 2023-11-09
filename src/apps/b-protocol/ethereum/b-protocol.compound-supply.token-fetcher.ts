@@ -4,7 +4,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
-import { CompoundContractFactory } from '~apps/compound/contracts';
+import { CompoundViemContractFactory } from '~apps/compound/contracts';
 import {
   GetDataPropsParams,
   GetPricePerShareParams,
@@ -23,8 +23,8 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
-    @Inject(CompoundContractFactory) protected readonly compoundContractFactory: CompoundContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly contractFactory: BProtocolViemContractFactory,
+    @Inject(CompoundViemContractFactory) protected readonly compoundContractFactory: CompoundViemContractFactory,
   ) {
     super(appToolkit);
   }

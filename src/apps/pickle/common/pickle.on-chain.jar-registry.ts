@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
-import { PickleContractFactory } from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
 
 type GetJarDefinitionsParams = {
   network: Network;
@@ -18,7 +18,7 @@ const SUPPORTED_REGISTRIES = {
 export class PickleOnChainJarRegistry {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly pickleContractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly pickleContractFactory: PickleViemContractFactory,
   ) {}
 
   async getJarDefinitions({ network }: GetJarDefinitionsParams) {

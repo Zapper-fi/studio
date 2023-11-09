@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { MakerContractFactory } from './contracts';
+import { MakerViemContractFactory } from './contracts';
 import { EthereumMakerDsrContractPositionFetcher } from './ethereum/maker.dsr.contract-position-fetcher';
 import { EthereumMakerGovernanceContractPositionFetcher } from './ethereum/maker.governance.contract-position-fetcher';
 import { EthereumMakerVaultContractPositionFetcher } from './ethereum/maker.vault.contract-position-fetcher';

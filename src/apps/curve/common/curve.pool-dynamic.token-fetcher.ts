@@ -24,7 +24,7 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { CurveContractFactory } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
@@ -96,7 +96,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
     @Inject(CurveVolumeDataLoader) protected readonly curveVolumeDataLoader: CurveVolumeDataLoader,
   ) {
     super(appToolkit);

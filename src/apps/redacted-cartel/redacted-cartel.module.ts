@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { RedactedEarningsResolver } from './common/redacted.earnings-resolver';
-import { RedactedCartelContractFactory } from './contracts';
+import { RedactedCartelViemContractFactory } from './contracts';
 import { EthereumRedactedCartelBondContractPositionFetcher } from './ethereum/redacted-cartel.bond.contract-position-fetcher';
 import { EthereumRedactedCartelRevenueLockContractPositionFetcher } from './ethereum/redacted-cartel.revenue-lock.contract-position-fetcher';
 import { EthereumRedactedCartelWxBtrflyV1TokenFetcher } from './ethereum/redacted-cartel.wx-btrfly-v1.token-fetcher';

@@ -12,7 +12,7 @@ import { BinanceSmartChainBeefyBoostVaultContractPositionFetcher } from './binan
 import { BinanceSmartChainBeefyVaultTokenFetcher } from './binance-smart-chain/beefy.vault.token-fetcher';
 import { BeefyBoostVaultDefinitionsResolver } from './common/beefy.boost-vault.definition-resolver';
 import { BeefyVaultTokenDefinitionsResolver } from './common/beefy.vault.token-definition-resolver';
-import { BeefyContractFactory } from './contracts';
+import { BeefyViemContractFactory } from './contracts';
 import { EthereumBeefyVaultTokenFetcher } from './ethereum/beefy.vault.token-fetcher';
 import { FantomBeefyBoostVaultContractPositionFetcher } from './fantom/beefy.boost-vault.contract-position-fetcher';
 import { FantomBeefyVaultTokenFetcher } from './fantom/beefy.vault.token-fetcher';

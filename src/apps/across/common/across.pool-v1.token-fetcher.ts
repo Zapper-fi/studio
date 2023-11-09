@@ -10,15 +10,15 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AcrossContractFactory } from '../contracts';
-import { AcrossPoolV1 } from '../contracts/ethers/AcrossPoolV1';
+import { AcrossViemContractFactory } from '../contracts';
+import { AcrossPoolV1 } from '../contracts/viem/AcrossPoolV1';
 
 export abstract class AcrossPoolV1TokenFetcher extends AppTokenTemplatePositionFetcher<AcrossPoolV1> {
   abstract poolAddresses: string[];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AcrossContractFactory) protected readonly contractFactory: AcrossContractFactory,
+    @Inject(AcrossViemContractFactory) protected readonly contractFactory: AcrossViemContractFactory,
   ) {
     super(appToolkit);
   }

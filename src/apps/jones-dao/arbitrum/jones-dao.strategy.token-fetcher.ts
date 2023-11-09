@@ -18,7 +18,7 @@ export class ArbitrumJonesDaoStrategyTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JonesDaoContractFactory) protected readonly contractFactory: JonesDaoContractFactory,
+    @Inject(JonesDaoViemContractFactory) protected readonly contractFactory: JonesDaoViemContractFactory,
   ) {
     super(appToolkit);
   }

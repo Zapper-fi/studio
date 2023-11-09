@@ -19,7 +19,7 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) protected readonly contractFactory: TraderJoeContractFactory,
+    @Inject(TraderJoeViemContractFactory) protected readonly contractFactory: TraderJoeViemContractFactory,
   ) {
     super(appToolkit);
   }

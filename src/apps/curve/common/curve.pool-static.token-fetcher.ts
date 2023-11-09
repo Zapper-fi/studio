@@ -66,7 +66,7 @@ export abstract class CurvePoolStaticTokenFetcher<T extends Contract> extends Ap
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ContractFactory) protected readonly contractFactory: ContractFactory,
+    @Inject(ViemContractFactory) protected readonly contractFactory: ViemContractFactory,
   ) {
     super(appToolkit);
   }

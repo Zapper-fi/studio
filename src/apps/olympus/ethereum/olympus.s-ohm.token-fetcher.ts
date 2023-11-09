@@ -13,7 +13,7 @@ export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OlympusContractFactory) protected readonly contractFactory: OlympusContractFactory,
+    @Inject(OlympusViemContractFactory) protected readonly contractFactory: OlympusViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -17,7 +17,7 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(TarotContractFactory) private readonly contractFactory: TarotContractFactory,
+    @Inject(TarotViemContractFactory) private readonly contractFactory: TarotViemContractFactory,
   ) {
     super(appToolkit);
   }

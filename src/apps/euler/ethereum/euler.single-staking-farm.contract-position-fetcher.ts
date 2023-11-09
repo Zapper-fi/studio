@@ -17,7 +17,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(EulerContractFactory) protected readonly contractFactory: EulerContractFactory,
+    @Inject(EulerViemContractFactory) protected readonly contractFactory: EulerViemContractFactory,
     @Inject(EulerApiStakingRegistry) protected readonly stakingCacheManager: EulerApiStakingRegistry,
   ) {
     super(appToolkit);
@@ -28,7 +28,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const markets = await this.stakingCacheManager.getStakingDefinitions({ network: this.network });
 
     return await Promise.all(

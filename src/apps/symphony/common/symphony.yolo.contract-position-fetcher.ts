@@ -52,7 +52,7 @@ export abstract class SymphonyYoloContractPositionFetcher extends CustomContract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SymphonyContractFactory) protected readonly contractFactory: SymphonyContractFactory,
+    @Inject(SymphonyViemContractFactory) protected readonly contractFactory: SymphonyViemContractFactory,
   ) {
     super(appToolkit);
   }

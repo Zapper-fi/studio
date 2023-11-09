@@ -20,7 +20,7 @@ export class AvalancheHakuswapFarmContractPositionFetcher extends MasterChefTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HakuswapContractFactory) private readonly contractFactory: HakuswapContractFactory,
+    @Inject(HakuswapViemContractFactory) private readonly contractFactory: HakuswapViemContractFactory,
   ) {
     super(appToolkit);
   }

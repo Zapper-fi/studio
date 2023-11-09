@@ -14,7 +14,7 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ChickenBondContractFactory) protected readonly contractFactory: ChickenBondContractFactory,
+    @Inject(ChickenBondViemContractFactory) protected readonly contractFactory: ChickenBondViemContractFactory,
   ) {
     super(appToolkit);
   }

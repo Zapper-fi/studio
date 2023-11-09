@@ -29,7 +29,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RedactedCartelContractFactory) protected readonly contractFactory: RedactedCartelContractFactory,
+    @Inject(RedactedCartelViemContractFactory) protected readonly contractFactory: RedactedCartelViemContractFactory,
     @Inject(RedactedEarningsResolver) protected readonly earningsResolver: RedactedEarningsResolver,
   ) {
     super(appToolkit);

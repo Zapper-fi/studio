@@ -19,7 +19,7 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GroContractFactory) private readonly contractFactory: GroContractFactory,
+    @Inject(GroViemContractFactory) private readonly contractFactory: GroViemContractFactory,
   ) {
     super(appToolkit);
   }

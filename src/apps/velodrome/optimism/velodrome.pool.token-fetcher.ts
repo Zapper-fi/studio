@@ -36,7 +36,7 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeContractFactory) private readonly contractFactory: VelodromeContractFactory,
+    @Inject(VelodromeViemContractFactory) private readonly contractFactory: VelodromeViemContractFactory,
     @Inject(VelodromeDefinitionsResolver) protected readonly definitionsResolver: VelodromeDefinitionsResolver,
   ) {
     super(appToolkit);

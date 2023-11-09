@@ -7,7 +7,7 @@ import { CeloPoolTogetherV3SponsorshipTokenFetcher } from './celo/pool-together-
 import { CeloPoolTogetherV3TicketTokenFetcher } from './celo/pool-together-v3.ticket.token-fetcher';
 import { PoolTogetherV3ApiPrizePoolRegistry } from './common/pool-together-v3.api.prize-pool-registry';
 import { PoolTogetherV3LogProvider } from './common/pool-together-v3.log-provider';
-import { PoolTogetherV3ContractFactory } from './contracts';
+import { PoolTogetherV3ViemContractFactory } from './contracts';
 import { EthereumPoolTogetherV3AirdropTokenFetcher } from './ethereum/pool-together-v3.airdrop.contract-position-fetcher';
 import { EthereumPoolTogetherV3ClaimableContractPositionFetcher } from './ethereum/pool-together-v3.claimable.contract-position-fetcher';
 import { EthereumPoolTogetherV3CommunityTicketTokenFetcher } from './ethereum/pool-together-v3.community-ticket.token-fetcher';

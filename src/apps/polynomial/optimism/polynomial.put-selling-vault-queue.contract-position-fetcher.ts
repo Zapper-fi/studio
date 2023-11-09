@@ -23,7 +23,7 @@ export class OptimismPolynomialPutSellingVaultQueueContractPositionFetcher exten
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PolynomialContractFactory) protected readonly contractFactory: PolynomialContractFactory,
+    @Inject(PolynomialViemContractFactory) protected readonly contractFactory: PolynomialViemContractFactory,
     @Inject(PolynomialApiHelper) protected readonly apiHelper: PolynomialApiHelper,
   ) {
     super(appToolkit);

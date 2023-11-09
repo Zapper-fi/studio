@@ -17,7 +17,7 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { FusePoolDirectory } from '../contracts/ethers/MidasPoolDirectory';
+import { FusePoolDirectory } from '../contracts/viem/MidasPoolDirectory';
 
 export type MidasMarketTokenDataProps = DefaultAppTokenDataProps & {
   marketName: string;

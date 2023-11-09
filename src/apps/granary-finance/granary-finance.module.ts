@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
+import { AaveV2ViemContractFactory } from '~apps/aave-v2/contracts';
 
 import { ArbitrumGranaryFinancePositionPresenter } from './arbitrum/granary-finance.position-presenter';
 import { ArbitrumGranaryFinanceSupplyTokenFetcher } from './arbitrum/granary-finance.supply.token-fetcher';
 import { ArbitrumGranaryFinanceVariableDebtTokenFetcher } from './arbitrum/granary-finance.variable-debt.token-fetcher';
 import { BaseGranaryFinancePositionPresenter } from './base/granary-finance.position-presenter';
 import { BaseGranaryFinanceVariableDebtTokenFetcher } from './base/granary-finance.variable-debt.token-fetcher';
-import { GranaryFinanceContractFactory } from './contracts';
+import { GranaryFinanceViemContractFactory } from './contracts';
 import { EthereumGranaryFinancePositionPresenter } from './ethereum/granary-finance.position-presenter';
 import { EthereumGranaryFinanceSupplyTokenFetcher } from './ethereum/granary-finance.supply.token-fetcher';
 import { EthereumGranaryFinanceVariableDebtTokenFetcher } from './ethereum/granary-finance.variable-debt.token-fetcher';

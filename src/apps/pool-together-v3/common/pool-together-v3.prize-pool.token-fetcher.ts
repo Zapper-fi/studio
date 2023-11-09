@@ -12,7 +12,7 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
 
 export type PoolTogetherV3PrizePoolDefinition = DefaultAppTokenDefinition & {
   ticketAddress: string;
@@ -36,7 +36,7 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) protected readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) protected readonly contractFactory: PoolTogetherV3ViemContractFactory,
   ) {
     super(appToolkit);
   }

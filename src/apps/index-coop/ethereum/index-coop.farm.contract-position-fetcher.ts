@@ -38,7 +38,7 @@ export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IndexCoopContractFactory) protected readonly contractFactory: IndexCoopContractFactory,
+    @Inject(IndexCoopViemContractFactory) protected readonly contractFactory: IndexCoopViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -111,7 +111,8 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapV3ContractFactory) protected readonly pancakeswapV3ContractFactory: PancakeswapV3ContractFactory,
+    @Inject(PancakeswapV3ViemContractFactory)
+    protected readonly pancakeswapV3ContractFactory: PancakeswapV3ViemContractFactory,
     @Inject(PancakeswapV3LiquidityContractPositionBuilder)
     protected readonly pancakeswapV3LiquidityContractPositionBuilder: PancakeswapV3LiquidityContractPositionBuilder,
   ) {
@@ -200,7 +201,7 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<NonFungiblePancakeswapV3PositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },

@@ -10,7 +10,7 @@ import {
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { SynthetixContractFactory } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
 
 export type SynthetixPositionPresenterDataProps = {
   snxPrice: number;
@@ -25,7 +25,7 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
   abstract sUSDAddress: string;
 
   constructor(
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
   ) {
     super();

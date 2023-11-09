@@ -70,7 +70,7 @@ export abstract class SushiswapKashiLendingTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SushiswapKashiContractFactory) protected readonly contractFactory: SushiswapKashiContractFactory,
+    @Inject(SushiswapKashiViemContractFactory) protected readonly contractFactory: SushiswapKashiViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -12,8 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { YamatoContractFactory } from '../contracts';
-import { Yamato } from '../contracts/ethers/Yamato';
+import { YamatoViemContractFactory } from '../contracts';
+import { Yamato } from '../contracts/viem/Yamato';
 
 @PositionTemplate()
 export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -25,7 +25,7 @@ export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YamatoContractFactory) protected readonly yamatoContractFactory: YamatoContractFactory,
+    @Inject(YamatoViemContractFactory) protected readonly yamatoContractFactory: YamatoViemContractFactory,
   ) {
     super(appToolkit);
   }

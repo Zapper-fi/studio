@@ -13,7 +13,7 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(QiDaoContractFactory) protected readonly contractFactory: QiDaoContractFactory,
+    @Inject(QiDaoViemContractFactory) protected readonly contractFactory: QiDaoViemContractFactory,
   ) {
     super(appToolkit);
   }

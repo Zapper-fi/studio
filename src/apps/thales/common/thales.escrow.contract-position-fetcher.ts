@@ -12,7 +12,7 @@ export abstract class ThalesEscrowContractPositionFetcher extends VotingEscrowTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ThalesContractFactory) protected readonly contractFactory: ThalesContractFactory,
+    @Inject(ThalesViemContractFactory) protected readonly contractFactory: ThalesViemContractFactory,
   ) {
     super(appToolkit);
   }

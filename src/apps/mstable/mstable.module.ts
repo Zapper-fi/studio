@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { MstableContractFactory } from './contracts';
+import { MstableViemContractFactory } from './contracts';
 import { EthereumMstableEarnContractPositionFetcher } from './ethereum/mstable.earn.contract-position-fetcher';
 import { EthereumMstableImusdTokenFetcher } from './ethereum/mstable.imusd.token-fetcher';
 import { EthereumMstableMetaVaultTokenFetcher } from './ethereum/mstable.meta-vault.token-fetcher';

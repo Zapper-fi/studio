@@ -15,7 +15,7 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MahadaoContractFactory) protected readonly contractFactory: MahadaoContractFactory,
+    @Inject(MahadaoViemContractFactory) protected readonly contractFactory: MahadaoViemContractFactory,
   ) {
     super(appToolkit);
   }

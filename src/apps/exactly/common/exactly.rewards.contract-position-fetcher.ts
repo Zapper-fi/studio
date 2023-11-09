@@ -34,7 +34,7 @@ export abstract class ExactlyRewardsFetcher extends ContractPositionTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ExactlyContractFactory) protected readonly contractFactory: ExactlyContractFactory,
+    @Inject(ExactlyViemContractFactory) protected readonly contractFactory: ExactlyViemContractFactory,
     @Inject(ExactlyDefinitionsResolver) protected readonly definitionsResolver: ExactlyDefinitionsResolver,
   ) {
     super(appToolkit);

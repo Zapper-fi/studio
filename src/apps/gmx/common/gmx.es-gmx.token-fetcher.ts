@@ -4,7 +4,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { GmxContractFactory } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
 
 export abstract class GmxEsGmxTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract esGmxAddress: string;
@@ -12,7 +12,7 @@ export abstract class GmxEsGmxTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }

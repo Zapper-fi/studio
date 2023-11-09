@@ -5,7 +5,7 @@ import { Pool, Position } from '@uniswap/v3-sdk';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
+import { UniswapV3ViemContractFactory } from '~apps/uniswap-v3/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDisplayPropsParams,
@@ -22,8 +22,8 @@ export class EthereumKeeperKlpTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KeeperContractFactory) protected readonly contractFactory: KeeperContractFactory,
-    @Inject(UniswapV3ContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ContractFactory,
+    @Inject(KeeperViemContractFactory) protected readonly contractFactory: KeeperViemContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ViemContractFactory,
   ) {
     super(appToolkit);
   }

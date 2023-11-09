@@ -14,7 +14,7 @@ import { AvalancheMuxMlpTokenFetcher } from './avalanche/mux.mlp.token-fetcher';
 import { AvalancheMuxPerpContractPositionFetcher } from './avalanche/mux.perp.contract-position-fetcher';
 import { BinanceSmartChainMuxMlpTokenFetcher } from './binance-smart-chain/mux.mlp.token-fetcher';
 import { BinanceSmartChainMuxPerpContractPositionFetcher } from './binance-smart-chain/mux.perp.contract-position-fetcher';
-import { MuxContractFactory } from './contracts';
+import { MuxViemContractFactory } from './contracts';
 import { FantomMuxMlpTokenFetcher } from './fantom/mux.mlp.token-fetcher';
 import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract-position-fetcher';
 

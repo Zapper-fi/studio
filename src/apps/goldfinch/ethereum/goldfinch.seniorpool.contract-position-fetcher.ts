@@ -33,7 +33,7 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoldfinchContractFactory) protected readonly contractFactory: GoldfinchContractFactory,
+    @Inject(GoldfinchViemContractFactory) protected readonly contractFactory: GoldfinchViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -98,7 +98,7 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
     const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
     const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<GoldfinchSeniorPoolDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],

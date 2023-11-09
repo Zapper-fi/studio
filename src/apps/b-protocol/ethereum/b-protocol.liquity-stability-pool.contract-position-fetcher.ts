@@ -20,7 +20,7 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly contractFactory: BProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

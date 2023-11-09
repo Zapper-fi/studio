@@ -16,7 +16,7 @@ export abstract class ThalesStakingContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ThalesContractFactory) private readonly contractFactory: ThalesContractFactory,
+    @Inject(ThalesViemContractFactory) private readonly contractFactory: ThalesViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -11,7 +11,7 @@ import {
 } from '~position/template/app-token.template.types';
 import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
 
-import { AbracadabraContractFactory } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
 
 const BASIS_POINTS_DIVISOR = 10000;
 
@@ -23,7 +23,7 @@ export abstract class AbracadabraMagicApeTokenFetcher extends Erc4626VaultTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }

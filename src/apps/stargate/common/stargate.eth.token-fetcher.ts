@@ -11,7 +11,7 @@ export abstract class StargateEthTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+    @Inject(StargateViemContractFactory) protected readonly contractFactory: StargateViemContractFactory,
   ) {
     super(appToolkit);
   }

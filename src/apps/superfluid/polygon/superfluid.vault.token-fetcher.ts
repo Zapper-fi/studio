@@ -34,7 +34,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
   ignoredPools = ['0x263026e7e53dbfdce5ae55ade22493f828922965']; // RIC
 
   constructor(
-    @Inject(SuperfluidContractFactory) private readonly contractFactory: SuperfluidContractFactory,
+    @Inject(SuperfluidViemContractFactory) private readonly contractFactory: SuperfluidViemContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
   ) {
     super(appToolkit);

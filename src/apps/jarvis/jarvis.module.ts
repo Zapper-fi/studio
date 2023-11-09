@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { JarvisContractFactory } from './contracts';
+import { JarvisViemContractFactory } from './contracts';
 import { PolygonJarvisSynthTokenFetcher } from './polygon/jarvis.synth.token-fetcher';
 
 @Module({

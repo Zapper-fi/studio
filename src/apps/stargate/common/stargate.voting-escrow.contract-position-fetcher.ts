@@ -9,7 +9,7 @@ import { StargateContractFactory, StargateVe } from '../contracts';
 export abstract class StargateVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<StargateVe> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+    @Inject(StargateViemContractFactory) protected readonly contractFactory: StargateViemContractFactory,
   ) {
     super(appToolkit);
   }

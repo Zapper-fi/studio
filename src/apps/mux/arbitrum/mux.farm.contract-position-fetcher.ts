@@ -32,7 +32,7 @@ export class ArbitrumMuxFarmContractPositionFetcher extends SingleStakingFarmTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }

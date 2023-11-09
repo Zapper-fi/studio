@@ -18,7 +18,7 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UmamiFinanceYieldResolver)
     private readonly yieldResolver: UmamiFinanceYieldResolver,
-    @Inject(UmamiFinanceContractFactory) protected readonly contractFactory: UmamiFinanceContractFactory,
+    @Inject(UmamiFinanceViemContractFactory) protected readonly contractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

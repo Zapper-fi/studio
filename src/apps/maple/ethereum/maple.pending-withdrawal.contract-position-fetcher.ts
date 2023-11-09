@@ -26,7 +26,7 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MapleContractFactory) protected readonly contractFactory: MapleContractFactory,
+    @Inject(MapleViemContractFactory) protected readonly contractFactory: MapleViemContractFactory,
   ) {
     super(appToolkit);
   }

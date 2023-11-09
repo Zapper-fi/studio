@@ -25,7 +25,7 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveV2ContractFactory) protected readonly contractFactory: AaveV2ContractFactory,
+    @Inject(AaveV2ViemContractFactory) protected readonly contractFactory: AaveV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

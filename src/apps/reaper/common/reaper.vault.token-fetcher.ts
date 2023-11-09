@@ -29,7 +29,7 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReaperContractFactory) protected readonly contractFactory: ReaperContractFactory,
+    @Inject(ReaperViemContractFactory) protected readonly contractFactory: ReaperViemContractFactory,
     @Inject(ReaperVaultCacheManager) protected readonly cacheManager: ReaperVaultCacheManager,
   ) {
     super(appToolkit);

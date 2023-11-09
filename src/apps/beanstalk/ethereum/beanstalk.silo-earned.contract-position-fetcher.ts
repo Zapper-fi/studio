@@ -31,7 +31,7 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeanstalkContractFactory) protected readonly beanstalkContractFactory: BeanstalkContractFactory,
+    @Inject(BeanstalkViemContractFactory) protected readonly beanstalkContractFactory: BeanstalkViemContractFactory,
   ) {
     super(appToolkit);
   }

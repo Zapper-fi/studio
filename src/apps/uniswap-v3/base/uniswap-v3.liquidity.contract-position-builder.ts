@@ -32,7 +32,7 @@ export class BaseUniswapV3LiquidityContractPositionBuilder extends AbstractUnisw
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly contractFactory: UniswapV3ViemContractFactory,
   ) {
     super();
   }

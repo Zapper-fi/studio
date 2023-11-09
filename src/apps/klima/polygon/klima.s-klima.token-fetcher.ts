@@ -36,7 +36,7 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KlimaContractFactory) protected readonly contractFactory: KlimaContractFactory,
+    @Inject(KlimaViemContractFactory) protected readonly contractFactory: KlimaViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -35,7 +35,7 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BeefyVaultTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: BeefyVaultTokenDefinitionsResolver,
-    @Inject(BeefyContractFactory) protected readonly contractFactory: BeefyContractFactory,
+    @Inject(BeefyViemContractFactory) protected readonly contractFactory: BeefyViemContractFactory,
   ) {
     super(appToolkit);
   }

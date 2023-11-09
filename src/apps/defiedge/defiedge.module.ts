@@ -6,7 +6,7 @@ import { ArbitrumDefiedgeStrategyTokenFetcher } from './arbitrum/defiedge.strate
 import { BaseDefiedgeStrategyTokenFetcher } from './base/defiedge.strategy.token-fetcher';
 import { BinanceSmartChainDefiedgeStrategyTokenFetcher } from './binance-smart-chain/defiedge.strategy.token-fetcher';
 import { DefiedgeStrategyDefinitionsResolver } from './common/defiedge.strategy.definitions-resolver';
-import { DefiedgeContractFactory } from './contracts';
+import { DefiedgeViemContractFactory } from './contracts';
 import { EthereumDefiedgeStrategyTokenFetcher } from './ethereum/defiedge.strategy.token-fetcher';
 import { OptimismDefiedgeStrategyTokenFetcher } from './optimism/defiedge.strategy.token-fetcher';
 import { PolygonDefiedgeStrategyTokenFetcher } from './polygon/defiedge.strategy.token-fetcher';

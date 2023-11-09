@@ -8,7 +8,7 @@ import { ArbitrumNotionalFinanceV3NTokenTokenFetcher } from './arbitrum/notional
 import { ArbitrumNotionalFinanceV3PCashTokenFetcher } from './arbitrum/notional-finance-v3.p-cash.token-fetcher';
 import { ArbitrumNotionalFinanceV3PDebtTokenFetcher } from './arbitrum/notional-finance-v3.p-debt.token-fetcher';
 import { ArbitrumNotionalFinanceV3SupplyContractPositionFetcher } from './arbitrum/notional-finance-v3.supply.contract-position-fetcher';
-import { NotionalFinanceV3ContractFactory } from './contracts';
+import { NotionalFinanceV3ViemContractFactory } from './contracts';
 
 @Module({
   providers: [

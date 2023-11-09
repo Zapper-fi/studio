@@ -25,7 +25,7 @@ export abstract class EulerDTokenTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EulerTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: EulerTokenDefinitionsResolver,
-    @Inject(EulerContractFactory) protected readonly contractFactory: EulerContractFactory,
+    @Inject(EulerViemContractFactory) protected readonly contractFactory: EulerViemContractFactory,
   ) {
     super(appToolkit);
   }

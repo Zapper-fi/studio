@@ -29,7 +29,7 @@ export abstract class DfxStakingContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DfxContractFactory) private readonly contractFactory: DfxContractFactory,
+    @Inject(DfxViemContractFactory) private readonly contractFactory: DfxViemContractFactory,
   ) {
     super(appToolkit);
   }

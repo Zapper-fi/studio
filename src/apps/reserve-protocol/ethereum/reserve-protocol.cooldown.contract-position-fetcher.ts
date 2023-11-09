@@ -15,8 +15,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { ReserveProtocolContractFactory } from '../contracts';
-import { StakedRsr } from '../contracts/ethers/StakedRsr';
+import { ReserveProtocolViemContractFactory } from '../contracts';
+import { StakedRsr } from '../contracts/viem/StakedRsr';
 
 import { getRTokens, RTokens } from './reserve-protocol.staked-rsr.queries';
 
@@ -99,7 +99,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakedRsr>): Promise<BigNumberish[]> {
     // Get FacadeRead
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const facadeRead = multicall.wrap(
       this.contractFactory.facadeRead({
         network: this.network,

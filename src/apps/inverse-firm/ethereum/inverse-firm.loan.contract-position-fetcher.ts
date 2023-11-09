@@ -18,8 +18,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { InverseFirmContractFactory, SimpleMarket } from '../contracts';
-import { CvxCrvStakingWrapper } from '../contracts/ethers/StCvxCrv';
-import { CvxFxsStaking } from '../contracts/ethers/StCvxFxs';
+import { CvxCrvStakingWrapper } from '../contracts/viem/StCvxCrv';
+import { CvxFxsStaking } from '../contracts/viem/StCvxFxs';
 
 const DBR = '0xad038eb671c44b853887a7e32528fab35dc5d710';
 const CVX = '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b';
@@ -60,7 +60,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseFirmContractFactory) private readonly contractFactory: InverseFirmContractFactory,
+    @Inject(InverseFirmViemContractFactory) private readonly contractFactory: InverseFirmViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -70,7 +70,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
   }
 
   async getDefinitions(): Promise<InverseFirmLoanContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const dolaBorrowRightContract = this.contractFactory.dbr({
       address: this.dbrAddress,

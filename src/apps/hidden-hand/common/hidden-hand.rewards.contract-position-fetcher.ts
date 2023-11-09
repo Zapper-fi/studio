@@ -28,7 +28,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HiddenHandContractFactory) protected readonly contractFactory: HiddenHandContractFactory,
+    @Inject(HiddenHandViemContractFactory) protected readonly contractFactory: HiddenHandViemContractFactory,
     @Inject(HiddenHandRewardsResolver) protected readonly rewardsResolver: HiddenHandRewardsResolver,
   ) {
     super(appToolkit);

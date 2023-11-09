@@ -6,7 +6,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 
 import { MidasMarketTokenFetcher } from '../common/midas.market.token-fetcher';
 import { MidasCErc20Token, MidasContractFactory, MidasPoolDirectory, MidasPoolLens } from '../contracts';
-import { FusePoolDirectory } from '../contracts/ethers/MidasPoolDirectory';
+import { FusePoolDirectory } from '../contracts/viem/MidasPoolDirectory';
 
 @PositionTemplate()
 export class PolygonMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
@@ -21,7 +21,7 @@ export class PolygonMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MidasContractFactory) protected readonly midasContractFactory: MidasContractFactory,
+    @Inject(MidasViemContractFactory) protected readonly midasContractFactory: MidasViemContractFactory,
   ) {
     super(appToolkit);
   }

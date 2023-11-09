@@ -15,7 +15,7 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { BProtocolContractFactory } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
 
 export type BProtocolVaultDefinition = {
   address: string;
@@ -49,8 +49,8 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MakerContractFactory) protected readonly makerContractFactory: MakerContractFactory,
-    @Inject(BProtocolContractFactory) protected readonly bProtocolContractFactory: BProtocolContractFactory,
+    @Inject(MakerViemContractFactory) protected readonly makerContractFactory: MakerViemContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly bProtocolContractFactory: BProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

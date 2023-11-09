@@ -30,7 +30,7 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly convexContractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly convexContractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }

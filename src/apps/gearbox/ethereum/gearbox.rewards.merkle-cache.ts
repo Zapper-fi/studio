@@ -6,7 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { MerkleCache } from '~position/template/merkle.cache';
 import { Network } from '~types';
 
-import { GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
 
 type GearboxMerkleClaim = {
   amount: string;
@@ -31,7 +31,7 @@ export class EthereumGearboxRewardsMerkleCache extends MerkleCache<GearboxMerkle
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) private readonly contractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) private readonly contractFactory: GearboxViemContractFactory,
   ) {
     super(appToolkit);
   }

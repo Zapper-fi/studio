@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheSymphonyYoloContractPositionFetcher } from './avalanche/symphony.yolo.contract-position-fetcher';
-import { SymphonyContractFactory } from './contracts';
+import { SymphonyViemContractFactory } from './contracts';
 import { OptimismSymphonyYoloContractPositionFetcher } from './optimism/symphony.yolo.contract-position-fetcher';
 import { PolygonSymphonyYoloContractPositionFetcher } from './polygon/symphony.yolo.contract-position-fetcher';
 

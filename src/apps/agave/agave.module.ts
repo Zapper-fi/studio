@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
+import { AaveV2ViemContractFactory } from '~apps/aave-v2/contracts';
 
-import { AgaveContractFactory } from './contracts';
+import { AgaveViemContractFactory } from './contracts';
 import { GnosisAgaveClaimableContractPositionFetcher } from './gnosis/agave.claimable.contract-position-fetcher';
 import { GnosisAgaveDepositTokenFetcher } from './gnosis/agave.deposit.token-fetcher';
 import { GnosisAgavePositionPresenter } from './gnosis/agave.position-presenter';

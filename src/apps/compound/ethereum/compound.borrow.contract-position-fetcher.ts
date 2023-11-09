@@ -25,7 +25,7 @@ export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorro
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CompoundContractFactory) protected readonly contractFactory: CompoundContractFactory,
+    @Inject(CompoundViemContractFactory) protected readonly contractFactory: CompoundViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -5,7 +5,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { MyceliumContractFactory } from '../contracts';
+import { MyceliumViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class ArbitrumMyceliumEsMycTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
@@ -13,7 +13,7 @@ export class ArbitrumMyceliumEsMycTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MyceliumContractFactory) protected readonly contractFactory: MyceliumContractFactory,
+    @Inject(MyceliumViemContractFactory) protected readonly contractFactory: MyceliumViemContractFactory,
   ) {
     super(appToolkit);
   }

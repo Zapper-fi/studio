@@ -24,7 +24,7 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HexContractFactory) protected readonly contractFactory: HexContractFactory,
+    @Inject(HexViemContractFactory) protected readonly contractFactory: HexViemContractFactory,
   ) {
     super(appToolkit);
   }

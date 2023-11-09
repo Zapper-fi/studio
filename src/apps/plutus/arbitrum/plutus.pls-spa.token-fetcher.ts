@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
+import { UniswapV3ViemContractFactory } from '~apps/uniswap-v3/contracts';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -27,7 +27,7 @@ export class ArbitrumPlutusPlsSpaTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV3ContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -30,7 +30,7 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -40,7 +40,7 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
   }
 
   async getDefinitions(): Promise<IdleBestYieldTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       groupIds: ['vault'],

@@ -14,7 +14,7 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { ConvexContractFactory } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
 import { ConvexRewardPool } from '../contracts/ethers';
 
 export type ConvexLpFarmDefinition = {
@@ -35,7 +35,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -45,7 +45,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
   }
 
   async getDefinitions(): Promise<ConvexLpFarmDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const depositContract = this.contractFactory.convexBoosterSidechain({
       address: this.boosterContractAddress,
       network: this.network,

@@ -26,7 +26,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ZhartaContractFactory) protected readonly contractFactory: ZhartaContractFactory,
+    @Inject(ZhartaViemContractFactory) protected readonly contractFactory: ZhartaViemContractFactory,
   ) {
     super(appToolkit);
   }

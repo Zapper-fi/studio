@@ -20,7 +20,7 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceContractFactory) protected readonly contractFactory: UmamiFinanceContractFactory,
+    @Inject(UmamiFinanceViemContractFactory) protected readonly contractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -18,7 +18,7 @@ export class EthereumConcentratorVestingContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) private readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) private readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }

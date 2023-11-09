@@ -36,7 +36,7 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) private readonly contractFactory: PoolTogetherV3ViemContractFactory,
     @Inject(PoolTogetherV3LogProvider) private readonly logProvider: PoolTogetherV3LogProvider,
   ) {
     super(appToolkit);

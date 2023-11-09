@@ -30,7 +30,7 @@ export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsCon
       groupIds: ['pool'],
     });
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const ramsesVoter = this.contractFactory.ramsesVoter({ network: this.network, address: this.voterAddress });
 
     const gauges = await Promise.all(pools.map(p => multicall.wrap(ramsesVoter).gauges(p.address)));

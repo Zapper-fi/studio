@@ -19,7 +19,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MeshswapContractFactory) private readonly contractFactory: MeshswapContractFactory,
+    @Inject(MeshswapViemContractFactory) private readonly contractFactory: MeshswapViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -29,7 +29,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getAddresses(): Promise<string[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const singlePoolFactoryContract = this.contractFactory.meshswapSinglePoolFactory({
       network: this.network,
       address: '0x504722a6eabb3d1573bada9abd585ae177d52e7a',

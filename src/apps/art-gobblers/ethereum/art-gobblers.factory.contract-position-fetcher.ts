@@ -18,7 +18,7 @@ export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArtGobblersContractFactory) private readonly contractFactory: ArtGobblersContractFactory,
+    @Inject(ArtGobblersViemContractFactory) private readonly contractFactory: ArtGobblersViemContractFactory,
   ) {
     super(appToolkit);
   }

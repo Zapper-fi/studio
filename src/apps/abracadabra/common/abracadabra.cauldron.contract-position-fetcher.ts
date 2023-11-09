@@ -21,7 +21,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { AbracadabraContractFactory, AbracadabraCauldron, AbracadabraMarketLens } from '../contracts';
-import { MarketLens } from '../contracts/ethers/AbracadabraMarketLens';
+import { MarketLens } from '../contracts/viem/AbracadabraMarketLens';
 
 import { CAULDRON_V1_RISK_CONSTANTS, MARKET_LENS_ADDRESS } from './abracadabra.common.constants';
 
@@ -85,7 +85,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }

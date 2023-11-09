@@ -4,7 +4,7 @@ import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { AaveV2ContractFactory } from '../contracts';
+import { AaveV2ViemContractFactory } from '../contracts';
 
 export type AaveV2PositionPresenterDataProps = { healthFactor: number };
 export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<AaveV2PositionPresenterDataProps> {

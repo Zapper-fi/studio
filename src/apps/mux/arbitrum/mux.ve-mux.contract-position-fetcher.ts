@@ -13,8 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MuxContractFactory } from '../contracts';
-import { MuxVeMux } from '../contracts/ethers/MuxVeMux';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxVeMux } from '../contracts/viem/MuxVeMux';
 
 @PositionTemplate()
 export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MuxVeMux> {
@@ -22,7 +22,7 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }

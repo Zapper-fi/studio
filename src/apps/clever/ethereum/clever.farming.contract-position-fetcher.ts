@@ -31,7 +31,7 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -41,7 +41,7 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
   }
 
   async getDefinitions(): Promise<CleverFarmingContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const gaugeAddresses = [
       '0xc5022291ca8281745d173bb855dcd34dda67f2f0', // abcCVX
       '0x86e917ad6cb44f9e6c8d9fa012acf0d0cfcf114f', // CLEV/ETH

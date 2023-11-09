@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
 
 export enum PoolWithMultipleWinnersBuilderCreatedType {
   STAKE = 'stake',

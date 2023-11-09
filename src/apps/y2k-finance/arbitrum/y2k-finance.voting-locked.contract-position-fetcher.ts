@@ -32,7 +32,7 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(Y2KFinanceContractFactory) protected readonly contractFactory: Y2KFinanceContractFactory,
+    @Inject(Y2KFinanceViemContractFactory) protected readonly contractFactory: Y2KFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -21,7 +21,7 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
+    @Inject(MorphoViemContractFactory) protected readonly contractFactory: MorphoViemContractFactory,
   ) {
     super(appToolkit);
   }

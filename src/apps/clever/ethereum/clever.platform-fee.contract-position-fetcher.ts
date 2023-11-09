@@ -11,8 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory } from '../contracts';
-import { CleverFeeDistributor } from '../contracts/ethers/CleverFeeDistributor';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverFeeDistributor } from '../contracts/viem/CleverFeeDistributor';
 
 @PositionTemplate()
 export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CleverFeeDistributor> {
@@ -20,7 +20,7 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }

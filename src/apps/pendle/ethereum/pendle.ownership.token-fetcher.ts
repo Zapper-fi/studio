@@ -52,7 +52,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleContractFactory) protected readonly contractFactory: PendleContractFactory,
+    @Inject(PendleViemContractFactory) protected readonly contractFactory: PendleViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -126,7 +126,7 @@ export abstract class RariFuseBorrowContractPositionFetcher<
     const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
     const participatedComptrollers = poolsBySupplier[1].map(p => p.comptroller.toLowerCase());
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<RariFuseBorrowContractPositionDataProps>({
       appId: this.appId,
       network: this.network,

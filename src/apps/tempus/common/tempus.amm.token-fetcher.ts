@@ -17,7 +17,7 @@ import { getTempusData } from './tempus.datasource';
 export abstract class TempusAmmTokenFetcher extends AppTokenTemplatePositionFetcher<TempusAmm> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TempusContractFactory) protected readonly contractFactory: TempusContractFactory,
+    @Inject(TempusViemContractFactory) protected readonly contractFactory: TempusViemContractFactory,
   ) {
     super(appToolkit);
   }

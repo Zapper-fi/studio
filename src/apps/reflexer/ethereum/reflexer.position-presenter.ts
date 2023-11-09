@@ -6,7 +6,7 @@ import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { ReflexerContractFactory } from '../contracts';
+import { ReflexerViemContractFactory } from '../contracts';
 
 @PresenterTemplate()
 export class EthereumReflexerPositionPresenter extends PositionPresenterTemplate {

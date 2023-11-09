@@ -15,7 +15,7 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IqContractFactory) protected readonly iqContractFactory: IqContractFactory,
+    @Inject(IqViemContractFactory) protected readonly iqContractFactory: IqViemContractFactory,
   ) {
     super(appToolkit);
   }

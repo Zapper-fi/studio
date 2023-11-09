@@ -10,7 +10,7 @@ import { MetaType } from '~position/position.interface';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { VelodromeV2ContractFactory } from '../contracts';
+import { VelodromeV2ViemContractFactory } from '../contracts';
 
 import { VelodromeV2AddressesResolver } from './velodrome-v2.addresses-resolver';
 
@@ -21,7 +21,7 @@ export abstract class VotingRewardsContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) protected readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) protected readonly contractFactory: VelodromeV2ViemContractFactory,
     @Inject(VelodromeV2AddressesResolver) protected readonly definitionsResolver: VelodromeV2AddressesResolver,
   ) {
     super(appToolkit);
@@ -49,7 +49,7 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     // Get ve token IDs
     const escrow = this.contractFactory.velodromeV2Ve({ address: this.veTokenAddress, network: this.network });
@@ -90,7 +90,7 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     // Get ve token IDs
     const escrow = this.contractFactory.velodromeV2Ve({ address: this.veTokenAddress, network: this.network });

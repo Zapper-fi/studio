@@ -28,7 +28,7 @@ export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AcrossContractFactory) protected readonly contractFactory: AcrossContractFactory,
+    @Inject(AcrossViemContractFactory) protected readonly contractFactory: AcrossViemContractFactory,
   ) {
     super(appToolkit);
   }

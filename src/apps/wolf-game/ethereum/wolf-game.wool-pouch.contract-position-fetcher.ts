@@ -33,7 +33,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
   groupLabel = 'Wool Pouches';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(WolfGameContractFactory) protected readonly contractFactory: WolfGameContractFactory,
+    @Inject(WolfGameViemContractFactory) protected readonly contractFactory: WolfGameViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -64,7 +64,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,

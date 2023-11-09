@@ -18,7 +18,7 @@ export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BancorV3ContractFactory) protected readonly contractFactory: BancorV3ContractFactory,
+    @Inject(BancorV3ViemContractFactory) protected readonly contractFactory: BancorV3ViemContractFactory,
   ) {
     super(appToolkit);
   }

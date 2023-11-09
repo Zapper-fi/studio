@@ -15,7 +15,7 @@ export class OptimismOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OokiContractFactory) protected readonly contractFactory: OokiContractFactory,
+    @Inject(OokiViemContractFactory) protected readonly contractFactory: OokiViemContractFactory,
   ) {
     super(appToolkit);
   }

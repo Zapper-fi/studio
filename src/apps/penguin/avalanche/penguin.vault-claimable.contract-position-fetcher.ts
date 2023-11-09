@@ -16,7 +16,7 @@ export class AvalanchePenguinVaultClaimableContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PenguinContractFactory) protected readonly contractFactory: PenguinContractFactory,
+    @Inject(PenguinViemContractFactory) protected readonly contractFactory: PenguinViemContractFactory,
   ) {
     super(appToolkit);
   }

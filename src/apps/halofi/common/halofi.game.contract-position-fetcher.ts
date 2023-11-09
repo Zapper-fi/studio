@@ -36,7 +36,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HalofiContractFactory) protected readonly contractFactory: HalofiContractFactory,
+    @Inject(HalofiViemContractFactory) protected readonly contractFactory: HalofiViemContractFactory,
     @Inject(HalofiGameGamesApiSource) protected readonly gamesApiSource: HalofiGameGamesApiSource,
   ) {
     super(appToolkit);
@@ -82,7 +82,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
       groupIds: [this.groupId],
       network: this.network,
     });
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {

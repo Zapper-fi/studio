@@ -14,7 +14,7 @@ export abstract class KyberSwapClassicPoolTokenFetcher extends UniswapV2PoolOnCh
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapClassicContractFactory) private readonly contractFactory: KyberswapClassicContractFactory,
+    @Inject(KyberswapClassicViemContractFactory) private readonly contractFactory: KyberswapClassicViemContractFactory,
   ) {
     super(appToolkit);
   }

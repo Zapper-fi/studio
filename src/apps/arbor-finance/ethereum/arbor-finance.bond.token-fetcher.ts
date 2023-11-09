@@ -31,7 +31,7 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArborFinanceContractFactory) protected readonly contractFactory: ArborFinanceContractFactory,
+    @Inject(ArborFinanceViemContractFactory) protected readonly contractFactory: ArborFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -18,7 +18,7 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VotiumContractFactory) protected readonly contractFactory: VotiumContractFactory,
+    @Inject(VotiumViemContractFactory) protected readonly contractFactory: VotiumViemContractFactory,
     @Inject(EthereumVotiumMerkleCache) private readonly merkleCache: EthereumVotiumMerkleCache,
   ) {
     super(appToolkit);

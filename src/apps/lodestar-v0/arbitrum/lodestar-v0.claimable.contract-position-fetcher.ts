@@ -24,7 +24,7 @@ export class ArbitrumLodestarV0ClaimableContractPositionFetcher extends Compound
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LodestarV0ContractFactory) protected readonly contractFactory: LodestarV0ContractFactory,
+    @Inject(LodestarV0ViemContractFactory) protected readonly contractFactory: LodestarV0ViemContractFactory,
   ) {
     super(appToolkit);
   }

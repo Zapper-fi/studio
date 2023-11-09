@@ -16,7 +16,7 @@ import {
 } from '~position/template/app-token.template.types';
 import { Network } from '~types';
 
-import { PoolTogetherV5ContractFactory } from '../contracts';
+import { PoolTogetherV5ViemContractFactory } from '../contracts';
 
 export const PRIZE_VAULT_FACTORY_ADDRESSES: Partial<Record<Network, string>> = {
   [Network.OPTIMISM_MAINNET]: '0xf65fa202907d6046d1ef33c521889b54bde08081',
@@ -25,7 +25,7 @@ export const PRIZE_VAULT_FACTORY_ADDRESSES: Partial<Record<Network, string>> = {
 export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTemplatePositionFetcher<Erc4626> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV5ContractFactory) private readonly contractFactory: PoolTogetherV5ContractFactory,
+    @Inject(PoolTogetherV5ViemContractFactory) private readonly contractFactory: PoolTogetherV5ViemContractFactory,
   ) {
     super(appToolkit);
   }

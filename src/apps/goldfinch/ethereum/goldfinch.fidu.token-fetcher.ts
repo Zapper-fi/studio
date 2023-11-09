@@ -6,7 +6,7 @@ import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { GoldfinchContractFactory } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class EthereumGoldfinchFiduTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
@@ -14,7 +14,7 @@ export class EthereumGoldfinchFiduTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoldfinchContractFactory) protected readonly contractFactory: GoldfinchContractFactory,
+    @Inject(GoldfinchViemContractFactory) protected readonly contractFactory: GoldfinchViemContractFactory,
   ) {
     super(appToolkit);
   }

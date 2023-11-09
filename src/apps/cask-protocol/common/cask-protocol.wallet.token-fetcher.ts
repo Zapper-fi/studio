@@ -11,7 +11,7 @@ export abstract class CaskProtocolWalletTokenFetcher extends AppTokenTemplatePos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CaskProtocolContractFactory) protected readonly contractFactory: CaskProtocolContractFactory,
+    @Inject(CaskProtocolViemContractFactory) protected readonly contractFactory: CaskProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

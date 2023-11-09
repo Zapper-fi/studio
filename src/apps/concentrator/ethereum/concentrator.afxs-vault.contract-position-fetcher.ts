@@ -19,7 +19,7 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) protected readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) protected readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }

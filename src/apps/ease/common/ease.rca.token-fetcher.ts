@@ -29,7 +29,7 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EaseRcaDefinitionsResolver)
     private readonly vaultDefinitionsResolver: EaseRcaDefinitionsResolver,
-    @Inject(EaseContractFactory) protected readonly contractFactory: EaseContractFactory,
+    @Inject(EaseViemContractFactory) protected readonly contractFactory: EaseViemContractFactory,
   ) {
     super(appToolkit);
   }

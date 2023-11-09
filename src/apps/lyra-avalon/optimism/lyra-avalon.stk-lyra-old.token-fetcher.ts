@@ -12,7 +12,7 @@ export class OptimismLyraAvalonStkLyraOldTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LyraAvalonContractFactory) protected readonly contractFactory: LyraAvalonContractFactory,
+    @Inject(LyraAvalonViemContractFactory) protected readonly contractFactory: LyraAvalonViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -18,7 +18,7 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BiswapContractFactory) protected readonly contractFactory: BiswapContractFactory,
+    @Inject(BiswapViemContractFactory) protected readonly contractFactory: BiswapViemContractFactory,
   ) {
     super(appToolkit);
   }

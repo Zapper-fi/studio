@@ -14,8 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { RadiantCapitalContractFactory } from '../contracts';
-import { RadiantCapitalPlatformFees } from '../contracts/ethers/RadiantCapitalPlatformFees';
+import { RadiantCapitalViemContractFactory } from '../contracts';
+import { RadiantCapitalPlatformFees } from '../contracts/viem/RadiantCapitalPlatformFees';
 
 @PositionTemplate()
 export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<RadiantCapitalPlatformFees> {
@@ -23,7 +23,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RadiantCapitalContractFactory) private readonly contractFactory: RadiantCapitalContractFactory,
+    @Inject(RadiantCapitalViemContractFactory) private readonly contractFactory: RadiantCapitalViemContractFactory,
   ) {
     super(appToolkit);
   }

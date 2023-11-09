@@ -13,7 +13,7 @@ import {
 export abstract class PoolTogetherV3TicketTokenFetcher extends PoolTogetherV3PrizePoolTokenFetcher<PoolTogetherV3Ticket> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) protected readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) protected readonly contractFactory: PoolTogetherV3ViemContractFactory,
     @Inject(PoolTogetherV3ApiPrizePoolRegistry)
     protected readonly poolTogetherV3ApiPrizePoolRegistry: PoolTogetherV3ApiPrizePoolRegistry,
   ) {

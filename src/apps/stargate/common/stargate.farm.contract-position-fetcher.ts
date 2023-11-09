@@ -9,7 +9,7 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { StargateContractFactory } from '../contracts';
+import { StargateViemContractFactory } from '../contracts';
 
 export abstract class StargateFarmContractPositionFetcher<
   R extends Contract,
@@ -20,7 +20,7 @@ export abstract class StargateFarmContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+    @Inject(StargateViemContractFactory) protected readonly contractFactory: StargateViemContractFactory,
   ) {
     super(appToolkit);
   }

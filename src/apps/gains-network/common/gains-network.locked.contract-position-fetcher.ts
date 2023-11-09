@@ -23,7 +23,7 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
+    @Inject(GainsNetworkViemContractFactory) protected readonly contractFactory: GainsNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -55,7 +55,7 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const lockedDepositNftContract = this.contractFactory.gainsNetworkLockedDepositNft({
       address: this.gTokenLockedDepositAddress,
       network: this.network,

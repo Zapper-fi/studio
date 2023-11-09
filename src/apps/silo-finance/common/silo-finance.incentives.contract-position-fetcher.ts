@@ -31,7 +31,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SiloFinanceContractFactory) protected readonly contractFactory: SiloFinanceContractFactory,
+    @Inject(SiloFinanceViemContractFactory) protected readonly contractFactory: SiloFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

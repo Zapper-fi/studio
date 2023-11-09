@@ -18,7 +18,7 @@ import {
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
-import { MuxContractFactory } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
 
 interface ReaderAssets {
   symbol: string;

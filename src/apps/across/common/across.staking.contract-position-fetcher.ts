@@ -29,7 +29,7 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AcrossContractFactory) protected readonly contractFactory: AcrossContractFactory,
+    @Inject(AcrossViemContractFactory) protected readonly contractFactory: AcrossViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -39,7 +39,7 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
   }
 
   async getDefinitions(): Promise<AcrossStakingContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       network: this.network,

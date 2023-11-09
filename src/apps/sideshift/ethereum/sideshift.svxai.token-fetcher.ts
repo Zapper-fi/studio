@@ -6,7 +6,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
-import { SideshiftContractFactory } from '../contracts';
+import { SideshiftViemContractFactory } from '../contracts';
 import { SvxaiVault } from '../contracts/ethers';
 
 const network = Network.ETHEREUM_MAINNET;
@@ -17,7 +17,7 @@ export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(SideshiftContractFactory) private readonly contractFactory: SideshiftContractFactory,
+    @Inject(SideshiftViemContractFactory) private readonly contractFactory: SideshiftViemContractFactory,
   ) {
     super(appToolkit);
   }

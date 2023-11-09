@@ -4,7 +4,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Erc20 } from '~contract/contracts';
 import { DefaultAppTokenDataProps, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
 
 import { PoolTogetherV3ApiPrizePoolRegistry } from './pool-together-v3.api.prize-pool-registry';
 import {
@@ -15,7 +15,7 @@ import {
 export abstract class PoolTogetherV3SponsorshipTokenFetcher extends PoolTogetherV3PrizePoolTokenFetcher<Erc20> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) protected readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) protected readonly contractFactory: PoolTogetherV3ViemContractFactory,
     @Inject(PoolTogetherV3ApiPrizePoolRegistry)
     protected readonly poolTogetherV3ApiPrizePoolRegistry: PoolTogetherV3ApiPrizePoolRegistry,
   ) {

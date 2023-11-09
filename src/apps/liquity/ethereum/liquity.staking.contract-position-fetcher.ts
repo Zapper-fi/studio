@@ -25,7 +25,7 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory) protected readonly contractFactory: LiquityContractFactory,
+    @Inject(LiquityViemContractFactory) protected readonly contractFactory: LiquityViemContractFactory,
   ) {
     super(appToolkit);
   }

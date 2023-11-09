@@ -13,7 +13,7 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { RariContractFactory } from '../contracts';
+import { RariViemContractFactory } from '../contracts';
 
 const SYMBOL_TO_ADDRESS = {
   DAI: '0x6b175474e89094c44da98b954eedeac495271d0f',
@@ -52,7 +52,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariContractFactory) protected readonly contractFactory: RariContractFactory,
+    @Inject(RariViemContractFactory) protected readonly contractFactory: RariViemContractFactory,
   ) {
     super(appToolkit);
   }

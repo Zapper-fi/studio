@@ -7,7 +7,7 @@ import { ArbitrumWombatExchangeVotingEscrowContractPositionFetcher } from './arb
 import { BinanceSmartChainWombatExchangeFarmContractPositionFetcher } from './binance-smart-chain/wombat-exchange.farm.contract-position-fetcher';
 import { BinanceSmartChainWombatExchangePoolTokenFetcher } from './binance-smart-chain/wombat-exchange.pool.token-fetcher';
 import { BinanceSmartChainWombatExchangeVotingEscrowContractPositionFetcher } from './binance-smart-chain/wombat-exchange.voting-escrow.contract-position-fetcher';
-import { WombatExchangeContractFactory } from './contracts';
+import { WombatExchangeViemContractFactory } from './contracts';
 
 @Module({
   providers: [

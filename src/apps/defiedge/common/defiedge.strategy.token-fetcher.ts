@@ -51,7 +51,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DefiedgeContractFactory) protected readonly contractFactory: DefiedgeContractFactory,
+    @Inject(DefiedgeViemContractFactory) protected readonly contractFactory: DefiedgeViemContractFactory,
     @Inject(DefiedgeStrategyDefinitionsResolver)
     protected readonly definitionResolver: DefiedgeStrategyDefinitionsResolver,
   ) {

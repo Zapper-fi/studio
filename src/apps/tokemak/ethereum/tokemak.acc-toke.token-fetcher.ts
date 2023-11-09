@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { TokemakContractFactory } from '../contracts';
-import { TokemakAccToke } from '../contracts/ethers/TokemakAccToke';
+import { TokemakViemContractFactory } from '../contracts';
+import { TokemakAccToke } from '../contracts/viem/TokemakAccToke';
 
 @PositionTemplate()
 export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePositionFetcher<TokemakAccToke> {
@@ -14,7 +14,7 @@ export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
+    @Inject(TokemakViemContractFactory) private readonly contractFactory: TokemakViemContractFactory,
   ) {
     super(appToolkit);
   }

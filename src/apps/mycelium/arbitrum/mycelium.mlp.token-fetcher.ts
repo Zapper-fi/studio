@@ -14,7 +14,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { MyceliumContractFactory } from '../contracts';
+import { MyceliumViemContractFactory } from '../contracts';
 
 export type MyceliumMlpTokenDefinition = {
   address: string;
@@ -33,7 +33,7 @@ export class ArbitrumMyceliumMlpTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MyceliumContractFactory) protected readonly contractFactory: MyceliumContractFactory,
+    @Inject(MyceliumViemContractFactory) protected readonly contractFactory: MyceliumViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -43,7 +43,7 @@ export class ArbitrumMyceliumMlpTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getDefinitions(): Promise<MyceliumMlpTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const mlpManagerContract = this.contractFactory.myceliumMlpManager({
       address: this.mlpManagerAddress,
       network: this.network,

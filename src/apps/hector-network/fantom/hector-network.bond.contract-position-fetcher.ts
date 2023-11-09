@@ -19,7 +19,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HectorNetworkContractFactory) protected readonly contractFactory: HectorNetworkContractFactory,
+    @Inject(HectorNetworkViemContractFactory) protected readonly contractFactory: HectorNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }

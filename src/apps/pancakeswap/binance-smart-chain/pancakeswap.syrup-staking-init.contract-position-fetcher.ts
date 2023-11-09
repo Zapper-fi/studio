@@ -11,8 +11,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { PancakeswapContractFactory } from '../contracts';
-import { PancakeswapSmartChefInit } from '../contracts/ethers/PancakeswapSmartChefInit';
+import { PancakeswapViemContractFactory } from '../contracts';
+import { PancakeswapSmartChefInit } from '../contracts/viem/PancakeswapSmartChefInit';
 
 // @TODO: Should be indexed from BQ events or logs
 // https://github.com/pancakeswap/pancake-frontend/blob/develop/packages/pools/src/constants/pools/56.ts
@@ -194,7 +194,7 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }

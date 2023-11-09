@@ -20,7 +20,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) private readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }

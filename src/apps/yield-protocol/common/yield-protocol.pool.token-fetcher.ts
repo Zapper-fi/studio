@@ -30,7 +30,7 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) protected readonly contractFactory: YieldProtocolContractFactory,
+    @Inject(YieldProtocolViemContractFactory) protected readonly contractFactory: YieldProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

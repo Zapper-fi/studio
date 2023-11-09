@@ -29,7 +29,7 @@ export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTempl
   groupLabel = 'Pools';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DolomiteContractFactory) private readonly dolomiteContractFactory: DolomiteContractFactory,
+    @Inject(DolomiteViemContractFactory) private readonly dolomiteContractFactory: DolomiteViemContractFactory,
   ) {
     super(appToolkit);
   }

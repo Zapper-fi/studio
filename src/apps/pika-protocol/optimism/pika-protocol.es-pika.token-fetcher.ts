@@ -13,7 +13,7 @@ export class OptimismPikaProtocolEsPikaTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolContractFactory) protected readonly contractFactory: PikaProtocolContractFactory,
+    @Inject(PikaProtocolViemContractFactory) protected readonly contractFactory: PikaProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

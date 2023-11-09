@@ -15,7 +15,7 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KwentaContractFactory) protected readonly contractFactory: KwentaContractFactory,
+    @Inject(KwentaViemContractFactory) protected readonly contractFactory: KwentaViemContractFactory,
   ) {
     super(appToolkit);
   }

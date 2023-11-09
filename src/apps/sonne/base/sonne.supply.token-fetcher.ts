@@ -18,7 +18,7 @@ export class BaseSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<Sonn
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SonneContractFactory) protected readonly contractFactory: SonneContractFactory,
+    @Inject(SonneViemContractFactory) protected readonly contractFactory: SonneViemContractFactory,
   ) {
     super(appToolkit);
   }

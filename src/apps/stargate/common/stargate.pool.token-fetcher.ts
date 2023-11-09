@@ -16,7 +16,7 @@ import { StargatePool, StargateContractFactory } from '../contracts';
 export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionFetcher<StargatePool> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+    @Inject(StargateViemContractFactory) protected readonly contractFactory: StargateViemContractFactory,
   ) {
     super(appToolkit);
   }

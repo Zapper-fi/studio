@@ -30,7 +30,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SentimentContractFactory) private readonly contractFactory: SentimentContractFactory,
+    @Inject(SentimentViemContractFactory) private readonly contractFactory: SentimentViemContractFactory,
     @Inject(SentimentAccountsResolver) private readonly accountResolver: SentimentAccountsResolver,
   ) {
     super(appToolkit);
@@ -76,7 +76,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,

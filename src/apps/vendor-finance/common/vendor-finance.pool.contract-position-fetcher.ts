@@ -32,7 +32,7 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VendorFinanceContractFactory) protected readonly contractFactory: VendorFinanceContractFactory,
+    @Inject(VendorFinanceViemContractFactory) protected readonly contractFactory: VendorFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

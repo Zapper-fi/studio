@@ -16,7 +16,7 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IlluviumContractFactory) protected readonly contractFactory: IlluviumContractFactory,
+    @Inject(IlluviumViemContractFactory) protected readonly contractFactory: IlluviumViemContractFactory,
   ) {
     super(appToolkit);
   }

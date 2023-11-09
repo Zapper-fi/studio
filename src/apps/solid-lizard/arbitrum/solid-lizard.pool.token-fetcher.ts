@@ -34,7 +34,7 @@ export class ArbitrumSolidLizardPoolsTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SolidLizardContractFactory) private readonly contractFactory: SolidLizardContractFactory,
+    @Inject(SolidLizardViemContractFactory) private readonly contractFactory: SolidLizardViemContractFactory,
     @Inject(SolidLizardDefinitionsResolver) protected readonly definitionsResolver: SolidLizardDefinitionsResolver,
   ) {
     super(appToolkit);

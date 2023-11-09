@@ -34,7 +34,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VectorFinanceContractFactory) protected readonly contractFactory: VectorFinanceContractFactory,
+    @Inject(VectorFinanceViemContractFactory) protected readonly contractFactory: VectorFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

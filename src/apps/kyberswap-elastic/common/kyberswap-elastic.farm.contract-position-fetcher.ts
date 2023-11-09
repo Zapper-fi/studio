@@ -47,7 +47,8 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
     @Inject(KyberswapElasticFarmContractPositionBuilder)
     protected readonly kyberElasticFarmContractPositionBuilder: KyberswapElasticFarmContractPositionBuilder,
   ) {
@@ -170,7 +171,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<KyberswapElasticFarmPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });

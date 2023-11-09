@@ -42,7 +42,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SpoolContractFactory) protected readonly contractFactory: SpoolContractFactory,
+    @Inject(SpoolViemContractFactory) protected readonly contractFactory: SpoolViemContractFactory,
   ) {
     super(appToolkit);
   }

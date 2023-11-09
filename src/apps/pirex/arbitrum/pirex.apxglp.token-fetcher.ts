@@ -19,7 +19,7 @@ export class ArbitrumPirexApxglpTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(PirexContractFactory) private readonly pirexContractFactory: PirexContractFactory,
+    @Inject(PirexViemContractFactory) private readonly pirexContractFactory: PirexViemContractFactory,
   ) {
     super(appToolkit);
   }

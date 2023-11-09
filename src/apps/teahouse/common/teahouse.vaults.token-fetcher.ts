@@ -11,7 +11,7 @@ export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TeahouseContractFactory) protected readonly contractFactory: TeahouseContractFactory,
+    @Inject(TeahouseViemContractFactory) protected readonly contractFactory: TeahouseViemContractFactory,
   ) {
     super(appToolkit);
   }

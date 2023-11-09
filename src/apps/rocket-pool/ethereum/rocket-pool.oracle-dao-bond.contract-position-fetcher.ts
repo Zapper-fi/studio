@@ -14,7 +14,7 @@ export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RocketPoolContractFactory) protected readonly contractFactory: RocketPoolContractFactory,
+    @Inject(RocketPoolViemContractFactory) protected readonly contractFactory: RocketPoolViemContractFactory,
   ) {
     super(appToolkit);
   }

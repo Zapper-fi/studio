@@ -13,7 +13,7 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { CozyFinanceContractFactory } from '../contracts';
+import { CozyFinanceViemContractFactory } from '../contracts';
 import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/ethers';
 
 @PositionTemplate()
@@ -26,7 +26,7 @@ export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CozyFinanceContractFactory) protected readonly contractFactory: CozyFinanceContractFactory,
+    @Inject(CozyFinanceViemContractFactory) protected readonly contractFactory: CozyFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

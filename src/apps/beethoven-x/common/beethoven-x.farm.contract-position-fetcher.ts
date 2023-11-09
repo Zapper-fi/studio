@@ -17,8 +17,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { BeethovenXContractFactory } from '../contracts';
-import { BeethovenXGauge } from '../contracts/ethers/BeethovenXGauge';
+import { BeethovenXViemContractFactory } from '../contracts';
+import { BeethovenXGauge } from '../contracts/viem/BeethovenXGauge';
 
 export const GAUGES_QUERY = gql`
   {
@@ -41,7 +41,7 @@ export type GaugesResponse = {
 export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<BeethovenXGauge> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeethovenXContractFactory) protected readonly contractFactory: BeethovenXContractFactory,
+    @Inject(BeethovenXViemContractFactory) protected readonly contractFactory: BeethovenXViemContractFactory,
   ) {
     super(appToolkit);
   }

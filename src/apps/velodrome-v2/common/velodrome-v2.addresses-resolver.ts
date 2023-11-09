@@ -5,7 +5,7 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { VelodromeV2ContractFactory } from '../contracts';
+import { VelodromeV2ViemContractFactory } from '../contracts';
 
 type VelodromeV2OnChainAddresses = {
   poolAddress: string;
@@ -17,7 +17,7 @@ type VelodromeV2OnChainAddresses = {
 export class VelodromeV2AddressesResolver {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) private readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) private readonly contractFactory: VelodromeV2ViemContractFactory,
   ) {}
 
   @Cache({

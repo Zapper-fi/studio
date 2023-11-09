@@ -50,7 +50,8 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(NotionalFinanceV3ContractFactory) protected readonly contractFactory: NotionalFinanceV3ContractFactory,
+    @Inject(NotionalFinanceV3ViemContractFactory)
+    protected readonly contractFactory: NotionalFinanceV3ViemContractFactory,
   ) {
     super(appToolkit);
   }

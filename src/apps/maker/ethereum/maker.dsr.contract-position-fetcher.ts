@@ -15,7 +15,7 @@ export class EthereumMakerDsrContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MakerContractFactory) protected readonly contractFactory: MakerContractFactory,
+    @Inject(MakerViemContractFactory) protected readonly contractFactory: MakerViemContractFactory,
   ) {
     super(appToolkit);
   }

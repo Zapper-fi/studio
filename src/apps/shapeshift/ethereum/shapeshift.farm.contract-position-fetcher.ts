@@ -55,7 +55,7 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ShapeshiftContractFactory) protected readonly contractFactory: ShapeshiftContractFactory,
+    @Inject(ShapeshiftViemContractFactory) protected readonly contractFactory: ShapeshiftViemContractFactory,
   ) {
     super(appToolkit);
   }

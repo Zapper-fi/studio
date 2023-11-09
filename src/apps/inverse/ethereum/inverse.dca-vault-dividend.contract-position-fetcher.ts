@@ -21,7 +21,7 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }

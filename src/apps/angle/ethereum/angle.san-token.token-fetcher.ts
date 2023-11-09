@@ -21,7 +21,7 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AngleContractFactory) protected readonly contractFactory: AngleContractFactory,
+    @Inject(AngleViemContractFactory) protected readonly contractFactory: AngleViemContractFactory,
     @Inject(AngleApiHelper) protected readonly angleApiHelper: AngleApiHelper,
   ) {
     super(appToolkit);

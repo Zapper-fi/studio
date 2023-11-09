@@ -37,7 +37,7 @@ export type UwuLendReserveConfigurationData = {
 export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositionFetcher<UwuLendUToken> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UwuLendContractFactory) protected readonly contractFactory: UwuLendContractFactory,
+    @Inject(UwuLendViemContractFactory) protected readonly contractFactory: UwuLendViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -51,7 +51,7 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getAddresses(): Promise<string[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const pool = multicall.wrap(
       this.contractFactory.uwuLendDataProvider({

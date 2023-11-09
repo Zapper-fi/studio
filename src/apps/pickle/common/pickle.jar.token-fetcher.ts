@@ -18,7 +18,7 @@ import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetcher<PickleJar> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
     @Inject(PickleApiJarRegistry) protected readonly jarRegistry: PickleApiJarRegistry,
   ) {
     super(appToolkit);

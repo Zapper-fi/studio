@@ -28,7 +28,7 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BadgerVaultTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: BadgerVaultTokenDefinitionsResolver,
-    @Inject(BadgerContractFactory) protected readonly contractFactory: BadgerContractFactory,
+    @Inject(BadgerViemContractFactory) protected readonly contractFactory: BadgerViemContractFactory,
   ) {
     super(appToolkit);
   }

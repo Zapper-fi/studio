@@ -5,8 +5,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { ConvexContractFactory } from '../contracts';
-import { ConvexVotingEscrow } from '../contracts/ethers/ConvexVotingEscrow';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexVotingEscrow } from '../contracts/viem/ConvexVotingEscrow';
 
 @PositionTemplate()
 export class EthereumConvexVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -19,7 +19,7 @@ export class EthereumConvexVotingEscrowContractPositionFetcher extends VotingEsc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }

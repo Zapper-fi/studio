@@ -32,7 +32,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BadgerContractFactory) protected readonly contractFactory: BadgerContractFactory,
+    @Inject(BadgerViemContractFactory) protected readonly contractFactory: BadgerViemContractFactory,
     @Inject(BadgerClaimableRewardsResolver)
     protected readonly badgerClaimableRewardsResolver: BadgerClaimableRewardsResolver,
   ) {

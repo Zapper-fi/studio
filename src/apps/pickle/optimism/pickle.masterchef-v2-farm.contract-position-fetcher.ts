@@ -28,7 +28,7 @@ export class OptimismPickleFarmContractPositionFetcher extends MasterChefV2Templ
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -33,7 +33,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldYakContractFactory) private readonly contractFactory: YieldYakContractFactory,
+    @Inject(YieldYakViemContractFactory) private readonly contractFactory: YieldYakViemContractFactory,
   ) {
     super(appToolkit);
   }

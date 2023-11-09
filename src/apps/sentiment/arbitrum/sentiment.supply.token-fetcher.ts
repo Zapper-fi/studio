@@ -30,7 +30,7 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SentimentContractFactory) protected readonly contractFactory: SentimentContractFactory,
+    @Inject(SentimentViemContractFactory) protected readonly contractFactory: SentimentViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -40,7 +40,7 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getDefinitions(): Promise<SentimentSupplyAppTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const registryContract = this.contractFactory.sentimentRegistry({
       address: '0x17b07cfbab33c0024040e7c299f8048f4a49679b',
       network: this.network,

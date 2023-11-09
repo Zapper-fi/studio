@@ -17,8 +17,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { YieldProtocolContractFactory } from '../contracts';
-import { YieldProtocolLendToken } from '../contracts/ethers/YieldProtocolLendToken';
+import { YieldProtocolViemContractFactory } from '../contracts';
+import { YieldProtocolLendToken } from '../contracts/viem/YieldProtocolLendToken';
 
 export const formatMaturity = (maturity: number) => {
   return moment(unix(maturity)).format('MMMM D, yyyy');
@@ -92,7 +92,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) protected readonly contractFactory: YieldProtocolContractFactory,
+    @Inject(YieldProtocolViemContractFactory) protected readonly contractFactory: YieldProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

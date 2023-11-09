@@ -21,7 +21,7 @@ import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositionFetcher<PickleJarUniv3> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
     @Inject(PickleApiJarRegistry) protected readonly jarRegistry: PickleApiJarRegistry,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     private readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
@@ -34,7 +34,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
   }
 
   async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { SuperfluidContractFactory } from './contracts';
+import { SuperfluidViemContractFactory } from './contracts';
 import { PolygonSuperfluidVaultTokenFetcher } from './polygon/superfluid.vault.token-fetcher';
 
 @Module({

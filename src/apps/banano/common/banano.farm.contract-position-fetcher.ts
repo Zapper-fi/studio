@@ -16,7 +16,7 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BananoContractFactory) protected readonly contractFactory: BananoContractFactory,
+    @Inject(BananoViemContractFactory) protected readonly contractFactory: BananoViemContractFactory,
   ) {
     super(appToolkit);
   }

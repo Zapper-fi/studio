@@ -24,7 +24,7 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VerseContractFactory) protected readonly contractFactory: VerseContractFactory,
+    @Inject(VerseViemContractFactory) protected readonly contractFactory: VerseViemContractFactory,
   ) {
     super(appToolkit);
   }

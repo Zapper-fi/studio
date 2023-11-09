@@ -25,7 +25,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) protected readonly traderJoeContractFactory: TraderJoeContractFactory,
+    @Inject(TraderJoeViemContractFactory) protected readonly traderJoeContractFactory: TraderJoeViemContractFactory,
   ) {
     super(appToolkit);
   }

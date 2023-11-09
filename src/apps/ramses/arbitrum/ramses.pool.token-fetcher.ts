@@ -21,7 +21,7 @@ export class ArbitrumRamsesPoolTokenFetcher extends UniswapV2PoolOnChainTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
+    @Inject(UniswapV2ViemContractFactory) protected readonly contractFactory: UniswapV2ViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -36,7 +36,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SablierContractFactory) protected readonly contractFactory: SablierContractFactory,
+    @Inject(SablierViemContractFactory) protected readonly contractFactory: SablierViemContractFactory,
     @Inject(SablierStreamApiClient) protected readonly apiClient: SablierStreamApiClient,
   ) {
     super(appToolkit);
@@ -75,7 +75,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const streams = await this.apiClient.getLegacyStreams(address, this.network);
     if (streams.length === 0) return [];
 

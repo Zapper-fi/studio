@@ -14,7 +14,7 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { SpiceFinanceContractFactory } from '../contracts';
+import { SpiceFinanceViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositionFetcher<Erc721> {
@@ -25,7 +25,8 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) public readonly appToolkit: IAppToolkit,
-    @Inject(SpiceFinanceContractFactory) private readonly spiceFinanceContractFactory: SpiceFinanceContractFactory,
+    @Inject(SpiceFinanceViemContractFactory)
+    private readonly spiceFinanceContractFactory: SpiceFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }

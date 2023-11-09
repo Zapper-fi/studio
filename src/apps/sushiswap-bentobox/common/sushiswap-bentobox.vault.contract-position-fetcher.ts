@@ -26,7 +26,8 @@ export abstract class SushiswapBentoboxVaultContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SushiswapBentoboxContractFactory) private readonly contractFactory: SushiswapBentoboxContractFactory,
+    @Inject(SushiswapBentoboxViemContractFactory)
+    private readonly contractFactory: SushiswapBentoboxViemContractFactory,
     @Inject(SushiswapBentoboxVaultTokensResolver)
     private readonly vaultTokenResolver: SushiswapBentoboxVaultTokensResolver,
   ) {

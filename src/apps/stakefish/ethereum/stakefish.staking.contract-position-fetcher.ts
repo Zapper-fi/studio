@@ -26,7 +26,7 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakefishContractFactory) protected readonly contractFactory: StakefishContractFactory,
+    @Inject(StakefishViemContractFactory) protected readonly contractFactory: StakefishViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -21,7 +21,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { VendorFinanceContractFactory, VendorFinancePoolV2 } from '../contracts';
-import { IPositionTracker } from '../contracts/ethers/VendorFinancePositionTracker';
+import { IPositionTracker } from '../contracts/viem/VendorFinancePositionTracker';
 
 import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
 import {
@@ -36,7 +36,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VendorFinanceContractFactory) protected readonly contractFactory: VendorFinanceContractFactory,
+    @Inject(VendorFinanceViemContractFactory) protected readonly contractFactory: VendorFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -148,7 +148,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
 
     // --- Borrower logic ----
     const startKey = '0x'.padEnd(66, '0');
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positionTracker = multicall.wrap(
       this.contractFactory.vendorFinancePositionTracker({
         address: this.positionTrackerAddr,

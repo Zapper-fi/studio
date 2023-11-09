@@ -11,7 +11,7 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { GmxContractFactory } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
 
 export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract glmManagerAddress: string;
@@ -20,7 +20,7 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }

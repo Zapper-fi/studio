@@ -20,7 +20,7 @@ import { PoolTogetherV3ApiPrizePoolRegistry } from './pool-together-v3.api.prize
 export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolTogetherV3TokenFaucet> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) private readonly contractFactory: PoolTogetherV3ViemContractFactory,
     @Inject(PoolTogetherV3ApiPrizePoolRegistry)
     private readonly poolTogetherV3ApiPrizePoolRegistry: PoolTogetherV3ApiPrizePoolRegistry,
   ) {

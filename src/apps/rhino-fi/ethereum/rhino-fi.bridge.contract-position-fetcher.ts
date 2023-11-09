@@ -12,7 +12,7 @@ export class EthereumRhinoFiBridgeContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RhinoFiContractFactory) protected readonly contractFactory: RhinoFiContractFactory,
+    @Inject(RhinoFiViemContractFactory) protected readonly contractFactory: RhinoFiViemContractFactory,
   ) {
     super(appToolkit);
   }

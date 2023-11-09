@@ -23,7 +23,7 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SolidLizardContractFactory) protected readonly contractFactory: SolidLizardContractFactory,
+    @Inject(SolidLizardViemContractFactory) protected readonly contractFactory: SolidLizardViemContractFactory,
     @Inject(SolidLizardDefinitionsResolver) protected readonly definitionsResolver: SolidLizardDefinitionsResolver,
   ) {
     super(appToolkit);

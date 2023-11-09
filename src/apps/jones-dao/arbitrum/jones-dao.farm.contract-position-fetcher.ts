@@ -18,7 +18,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JonesDaoContractFactory) protected readonly contractFactory: JonesDaoContractFactory,
+    @Inject(JonesDaoViemContractFactory) protected readonly contractFactory: JonesDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -28,7 +28,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const factoryContract = this.contractFactory.jonesStakingRewardsFactory({
       address: '0x2c2082e4062bfd02141adc86cbd5e437201a1cf3',
       network: this.network,

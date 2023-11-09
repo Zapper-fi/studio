@@ -31,7 +31,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamapayContractFactory) protected readonly contractFactory: LlamapayContractFactory,
+    @Inject(LlamapayViemContractFactory) protected readonly contractFactory: LlamapayViemContractFactory,
     @Inject(LlamapayStreamApiClient) protected readonly apiClient: LlamapayStreamApiClient,
   ) {
     super(appToolkit);
@@ -66,7 +66,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const streams = await this.apiClient.getStreams(address, this.subgraph);
     if (streams.length === 0) return [];
 

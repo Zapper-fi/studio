@@ -30,7 +30,7 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
     @Inject(SynthetixMintrSnxHoldersCache) protected readonly holdersCache: SynthetixMintrSnxHoldersCache,
   ) {
     super(appToolkit);

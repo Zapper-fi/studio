@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CamelotContractFactory } from '~apps/camelot/contracts';
+import { CamelotViemContractFactory } from '~apps/camelot/contracts';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -28,7 +28,7 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly camelotContractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) protected readonly camelotContractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }

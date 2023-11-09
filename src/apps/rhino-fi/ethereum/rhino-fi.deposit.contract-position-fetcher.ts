@@ -32,7 +32,7 @@ export class EthereumRhinoFiDepositContractPositionFetcher extends CustomContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RhinoFiContractFactory) protected readonly contractFactory: RhinoFiContractFactory,
+    @Inject(RhinoFiViemContractFactory) protected readonly contractFactory: RhinoFiViemContractFactory,
     @Inject(RhinoFiCacheManager) protected readonly cacheManager: RhinoFiCacheManager,
     @Inject(RhinoFiApiClient) protected readonly apiClient: RhinoFiApiClient,
   ) {

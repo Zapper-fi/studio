@@ -31,7 +31,7 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
 > {
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) private readonly gearboxContractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) private readonly gearboxContractFactory: GearboxViemContractFactory,
   ) {
     super(appToolkit);
   }

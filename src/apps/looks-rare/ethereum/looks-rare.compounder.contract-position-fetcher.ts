@@ -21,7 +21,7 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LooksRareContractFactory) protected readonly contractFactory: LooksRareContractFactory,
+    @Inject(LooksRareViemContractFactory) protected readonly contractFactory: LooksRareViemContractFactory,
   ) {
     super(appToolkit);
   }

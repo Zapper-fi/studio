@@ -41,7 +41,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(ArrakisPoolDefinitionsResolver)
     private readonly poolDefinitionsResolver: ArrakisPoolDefinitionsResolver,
-    @Inject(ArrakisContractFactory) private readonly contractFactory: ArrakisContractFactory,
+    @Inject(ArrakisViemContractFactory) private readonly contractFactory: ArrakisViemContractFactory,
   ) {
     super(appToolkit);
   }

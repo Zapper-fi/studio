@@ -17,7 +17,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { DopexContractFactory } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
 
 export type DopexSsovDefinition = {
   address: string;
@@ -52,7 +52,7 @@ export abstract class DopexSsovContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
   ) {
     super(appToolkit);
   }

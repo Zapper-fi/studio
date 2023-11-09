@@ -55,7 +55,7 @@ export class EthereumMstableEarnContractPositionFetcher extends SingleStakingFar
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }

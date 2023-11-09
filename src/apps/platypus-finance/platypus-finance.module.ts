@@ -6,7 +6,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 //import { AvalanchePlatypusFinanceFarmContractPositionFetcher } from './avalanche/platypus-finance.farm.contract-position-fetcher';
 //import { AvalanchePlatypusFinancePoolTokenFetcher } from './avalanche/platypus-finance.pool.token-fetcher';
 import { AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher } from './avalanche/platypus-finance.voting-escrow.contract-position-fetcher';
-import { PlatypusFinanceContractFactory } from './contracts';
+import { PlatypusFinanceViemContractFactory } from './contracts';
 
 @Module({
   providers: [

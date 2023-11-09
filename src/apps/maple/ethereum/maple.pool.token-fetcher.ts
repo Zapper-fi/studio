@@ -31,7 +31,7 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MapleContractFactory) protected readonly contractFactory: MapleContractFactory,
+    @Inject(MapleViemContractFactory) protected readonly contractFactory: MapleViemContractFactory,
     @Inject(MaplePoolDefinitionResolver) protected readonly maplePoolDefinitionResolver: MaplePoolDefinitionResolver,
   ) {
     super(appToolkit);

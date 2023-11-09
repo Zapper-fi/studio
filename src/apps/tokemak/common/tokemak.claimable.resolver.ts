@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { TokemakContractFactory } from '../contracts';
+import { TokemakViemContractFactory } from '../contracts';
 
 type ClaimableDataResponse = {
   payload: {
@@ -20,7 +20,7 @@ type ClaimableDataResponse = {
 export class TokemakClaimableResolver {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
+    @Inject(TokemakViemContractFactory) private readonly contractFactory: TokemakViemContractFactory,
   ) {}
 
   @Cache({

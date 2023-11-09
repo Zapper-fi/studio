@@ -19,7 +19,7 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PodsYieldContractFactory) protected readonly contractFactory: PodsYieldContractFactory,
+    @Inject(PodsYieldViemContractFactory) protected readonly contractFactory: PodsYieldViemContractFactory,
   ) {
     super(appToolkit);
   }

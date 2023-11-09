@@ -16,7 +16,7 @@ import { ClearpoolPoolDefinitionsResolver } from './clearpool.pool-definition-re
 export abstract class ClearpoolPoolTokenFetcher extends AppTokenTemplatePositionFetcher<ClearpoolPool> {
   constructor(
     @Inject(APP_TOOLKIT) protected appToolkit: IAppToolkit,
-    @Inject(ClearpoolContractFactory) protected clearpoolContractFactory: ClearpoolContractFactory,
+    @Inject(ClearpoolViemContractFactory) protected clearpoolContractFactory: ClearpoolViemContractFactory,
     @Inject(ClearpoolPoolDefinitionsResolver)
     protected poolDefinitionResolver: ClearpoolPoolDefinitionsResolver,
   ) {

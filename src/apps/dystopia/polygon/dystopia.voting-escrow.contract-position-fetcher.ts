@@ -15,7 +15,7 @@ export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEs
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DystopiaContractFactory) protected readonly contractFactory: DystopiaContractFactory,
+    @Inject(DystopiaViemContractFactory) protected readonly contractFactory: DystopiaViemContractFactory,
   ) {
     super(appToolkit);
   }

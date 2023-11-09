@@ -6,7 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { NETWORK_IDS, Network } from '~types';
 
-import { HiddenHandContractFactory } from '../contracts';
+import { HiddenHandViemContractFactory } from '../contracts';
 
 type PROTOCOL = {
   identifier: string;
@@ -194,7 +194,7 @@ export const REWARD_DISTRIBUTOR: Record<string, Partial<Record<Network, string>>
 export class HiddenHandRewardsResolver {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HiddenHandContractFactory) protected readonly contractFactory: HiddenHandContractFactory,
+    @Inject(HiddenHandViemContractFactory) protected readonly contractFactory: HiddenHandViemContractFactory,
   ) {}
 
   @Cache({

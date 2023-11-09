@@ -16,7 +16,7 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { MuxContractFactory } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
 
 export type LiquidityAsset = {
   muxLPTotalBalance: number;
@@ -61,7 +61,7 @@ export abstract class MuxMlpTokenFetcher extends AppTokenTemplatePositionFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { SideshiftContractFactory } from './contracts';
+import { SideshiftViemContractFactory } from './contracts';
 import { EthereumSideshiftSvxaiTokenFetcher } from './ethereum/sideshift.svxai.token-fetcher';
 
 @Module({

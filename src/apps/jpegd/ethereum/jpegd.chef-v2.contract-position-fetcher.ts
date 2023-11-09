@@ -18,7 +18,7 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JpegdContractFactory) protected readonly contractFactory: JpegdContractFactory,
+    @Inject(JpegdViemContractFactory) protected readonly contractFactory: JpegdViemContractFactory,
   ) {
     super(appToolkit);
   }

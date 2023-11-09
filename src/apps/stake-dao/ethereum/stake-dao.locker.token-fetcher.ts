@@ -7,7 +7,7 @@ import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { StakeDaoContractFactory } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
 
 export const LOCKERS = [
   {
@@ -71,7 +71,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }

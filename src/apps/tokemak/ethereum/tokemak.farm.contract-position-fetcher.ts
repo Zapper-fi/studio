@@ -25,7 +25,7 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
+    @Inject(TokemakViemContractFactory) private readonly contractFactory: TokemakViemContractFactory,
   ) {
     super(appToolkit);
   }

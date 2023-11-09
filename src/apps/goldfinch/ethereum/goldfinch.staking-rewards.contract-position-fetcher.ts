@@ -39,7 +39,7 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoldfinchContractFactory) protected readonly contractFactory: GoldfinchContractFactory,
+    @Inject(GoldfinchViemContractFactory) protected readonly contractFactory: GoldfinchViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -105,7 +105,7 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
     const GFI = '0xdab396ccf3d84cf2d07c4454e10c8a6f5b008d2b';
     const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
     const CURVE_FIDU_USDC = '0x42ec68ca5c2c80036044f3eead675447ab3a8065';
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<GoldfinchStakingRewardsDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],

@@ -20,7 +20,7 @@ export abstract class RevertFinanceCompoundorRewardsContractPositionFetcher exte
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RevertFinanceContractFactory) protected readonly contractFactory: RevertFinanceContractFactory,
+    @Inject(RevertFinanceViemContractFactory) protected readonly contractFactory: RevertFinanceViemContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {
@@ -48,7 +48,7 @@ export abstract class RevertFinanceCompoundorRewardsContractPositionFetcher exte
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector();
 
     const [position] = await this.appToolkit.getAppContractPositions({

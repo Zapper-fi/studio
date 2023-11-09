@@ -4,7 +4,7 @@ import { compact, range, sumBy } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3LiquidityPositionDataProps } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-fetcher';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
+import { UniswapV3ViemContractFactory } from '~apps/uniswap-v3/contracts';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -39,8 +39,8 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RigoblockContractFactory) protected readonly rigoblockContractFactory: RigoblockContractFactory,
-    @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
+    @Inject(RigoblockViemContractFactory) protected readonly rigoblockContractFactory: RigoblockViemContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly contractFactory: UniswapV3ViemContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {
@@ -121,7 +121,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
     address: string,
   ): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });

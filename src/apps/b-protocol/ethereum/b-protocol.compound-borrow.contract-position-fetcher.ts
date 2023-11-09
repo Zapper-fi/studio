@@ -8,7 +8,7 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { CompoundContractFactory } from '~apps/compound/contracts';
+import { CompoundViemContractFactory } from '~apps/compound/contracts';
 import {
   GetTokenDefinitionsParams,
   GetDataPropsParams,
@@ -27,8 +27,8 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
-    @Inject(CompoundContractFactory) protected readonly compoundContractFactory: CompoundContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly contractFactory: BProtocolViemContractFactory,
+    @Inject(CompoundViemContractFactory) protected readonly compoundContractFactory: CompoundViemContractFactory,
   ) {
     super(appToolkit);
   }

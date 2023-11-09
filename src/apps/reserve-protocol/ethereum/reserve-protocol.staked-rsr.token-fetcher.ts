@@ -6,8 +6,8 @@ import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { ReserveProtocolContractFactory } from '../contracts';
-import { StakedRsr } from '../contracts/ethers/StakedRsr';
+import { ReserveProtocolViemContractFactory } from '../contracts';
+import { StakedRsr } from '../contracts/viem/StakedRsr';
 
 import { getRTokens, RTokens } from './reserve-protocol.staked-rsr.queries';
 
