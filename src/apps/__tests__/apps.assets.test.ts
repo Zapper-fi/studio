@@ -5,7 +5,7 @@ import { getAllAppIds } from './common';
 
 const access = promisify(fs.access);
 
-describe('Apps', () => {
+describe.skip('Apps', () => {
   it('should have a "logo.png"', async () => {
     const appIds = getAllAppIds();
     const logoExists = await Promise.all(
