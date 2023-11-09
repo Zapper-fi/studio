@@ -46,7 +46,7 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
   getIsActive({
     contract,
   }: GetDataPropsParams<HelioJar, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.read.rate().then(v => v.gt(0));
+    return contract.read.rate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HelioJar, SingleStakingFarmDataProps>) {

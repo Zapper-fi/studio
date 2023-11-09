@@ -60,7 +60,7 @@ export class OptimismKwentaStakingContractPositionFetcher extends SingleStakingF
   }
 
   getIsActive({ contract }: GetDataPropsParams<KwentaStaking>) {
-    return contract.read.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<KwentaStaking, SingleStakingFarmDataProps>) {

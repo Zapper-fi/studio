@@ -46,7 +46,7 @@ export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStaki
   getIsActive({
     contract,
   }: GetDataPropsParams<ConvexCvxStaking, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.read.rewardRate().then(v => v.gt(0));
+    return contract.read.rewardRate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {

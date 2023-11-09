@@ -76,7 +76,7 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
   }
 
   async getIsActive({ contract }: GetDataPropsParams<YearnStaking>) {
-    return contract.read.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnStaking>) {

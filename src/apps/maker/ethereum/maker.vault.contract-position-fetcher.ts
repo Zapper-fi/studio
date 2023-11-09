@@ -170,7 +170,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
         const balances = await Promise.all(
           positions.map(async position => {
             const ilk = ethers.utils.formatBytes32String(position.dataProps.ilkName);
-            const { ink, art } = await multicall.wrap(vatContract).urns(ilk, urn.toLowerCase());
+            const { ink, art } = await multicall.wrap(vatContract).read.urns([ilk, urn.toLowerCase()]);
 
             const collateralToken = position.tokens.find(isSupplied);
             const debtToken = position.tokens.find(isBorrowed);

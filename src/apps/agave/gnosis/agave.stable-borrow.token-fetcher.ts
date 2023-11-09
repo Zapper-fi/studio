@@ -5,7 +5,7 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/common/aave-v2.lending.token-fetcher';
-import { AaveV2AToken } from '~apps/aave-v2/contracts';
+import { AaveV2AToken } from '~apps/aave-v2/contracts/viem';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 @PositionTemplate()

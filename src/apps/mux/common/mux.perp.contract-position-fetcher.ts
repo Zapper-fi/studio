@@ -158,7 +158,7 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
     if (!subAccountId) return [0, 0, 0];
 
     const reader = this.contractFactory.muxReader({ address: this.readerAddress, network: this.network });
-    const subAccounts = await multicall.wrap(reader).getSubAccounts([subAccountId]);
+    const subAccounts = await multicall.wrap(reader).read.getSubAccounts([[subAccountId]]);
     const [{ collateral, size, entryPrice, lastIncreasedTime }] = subAccounts;
 
     const { pnlUsd } = computePositionPnlUsd(
@@ -176,7 +176,7 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
 
     const collateralAmountUsd = collateralAmount.times(collateralToken.price);
 
-    const hasProfit = pnlUsd.gt(0);
+    const hasProfit = pnlUsd > 0);
     const profitToken = isLong ? indexToken : usdcToken;
 
     const collateralBalanceRaw = hasProfit

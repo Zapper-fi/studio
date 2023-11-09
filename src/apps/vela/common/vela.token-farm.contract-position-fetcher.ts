@@ -85,7 +85,7 @@ export abstract class VelaTokenFarmContractPositionFetcher extends SingleStaking
     definition: { poolId },
     contract,
   }: GetDataPropsParams<VelaTokenFarm, VelaTokenFarmDataProps, VelaTokenFarmDefinition>): Promise<boolean> {
-    return (await contract.read.poolRewardsPerSec([poolId])).rewardsPerSec.some(v => v.gt(0));
+    return (await contract.read.poolRewardsPerSec([poolId])).rewardsPerSec.some(v => v > 0);
   }
 
   async getDataProps(

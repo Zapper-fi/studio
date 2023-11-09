@@ -87,7 +87,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
     const lpSupply = await lpToken.balanceOf(contract.address);
 
     let { accCvxPerShare } = poolInfo;
-    if (poolInfo.lastRewardBlock.lt(block) && lpSupply.gt(0)) {
+    if (poolInfo.lastRewardBlock.lt(block) && lpSupply > 0) {
       const clampedTo = Math.min(block, Number(endBlock));
       const clampedFrom = Math.min(Number(poolInfo.lastRewardBlock), Number(endBlock));
       const multiplier = BigNumber.from(clampedTo - clampedFrom);

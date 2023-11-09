@@ -87,31 +87,27 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
     );
 
     // Resolve all supply, stable debt, and variable debt token addresses
-    const reserveTokens = await lendingcontract.read.getAllReservesTokens();
+    const reserveTokens = await lendingContract.read.getAllReservesTokens();
     const reserveTokenAddresses = reserveTokens.map(v => v[1].toLowerCase());
     const tokenAddresses = await Promise.all(
       reserveTokenAddresses.map(async reserveTokenAddress => {
-        const tokenAddresses = await lendingcontract.read.getReserveTokensAddresses([reserveTokenAddress]);
+        const tokenAddresses = await lendingContract.read.getReserveTokensAddresses([reserveTokenAddress]);
 
-        return [
-          tokenAddresses.aTokenAddress.toLowerCase(),
-          tokenAddresses.stableDebtTokenAddress.toLowerCase(),
-          tokenAddresses.variableDebtTokenAddress.toLowerCase(),
-        ];
+        return [tokenAddresses[0].toLowerCase(), tokenAddresses[1].toLowerCase(), tokenAddresses[2].toLowerCase()];
       }),
     );
 
     // Retrieve emissions for each token address
     const tokenAddressesFlat = tokenAddresses.flat();
-    const tokenEmissions = await Promise.all(
+    const tokenEmissionsPerSecond = await Promise.all(
       tokenAddressesFlat.map(async reserveTokenAddress => {
         const assetDetails = await contract.read.assets([reserveTokenAddress]);
-        return Number(assetDetails.emissionPerSecond);
+        return Number(assetDetails[0]);
       }),
     );
 
     // For assets earning non-zero emissions, retrieve claimable balances
-    const earningAddresses = tokenAddressesFlat.filter((_, i) => tokenEmissions[i] > 0);
+    const earningAddresses = tokenAddressesFlat.filter((_, i) => tokenEmissionsPerSecond[i] > 0);
     const balanceRaw = await contract.read.getRewardsBalance([earningAddresses, address]);
     return [balanceRaw];
   }

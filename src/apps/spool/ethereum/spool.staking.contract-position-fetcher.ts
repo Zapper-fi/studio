@@ -82,7 +82,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     const spoolContract = this.appToolkit.globalViemContracts.erc20(spoolToken);
     const voSpoolContract = this.contractFactory.spoolVospool(voSpoolToken);
 
-    const totalStaked = await multicall.wrap(spoolContract).balanceOf(STAKING_ADDRESS);
+    const totalStaked = await multicall.wrap(spoolContract).read.balanceOf([STAKING_ADDRESS]);
     const votingPowerRaw = await multicall.wrap(voSpoolContract).read.getTotalGradualVotingPower();
 
     const spoolStaked = totalStaked.div(BigNumber.from(10).pow(spoolToken.decimals)).toNumber();

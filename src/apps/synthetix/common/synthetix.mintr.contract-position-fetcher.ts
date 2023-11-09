@@ -86,7 +86,7 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
     const [collateralRaw, transferableRaw, debtBalanceRaw] = await Promise.all([
       multicall.wrap(contract).read.collateral([address]),
       multicall.wrap(contract).read.transferableSynthetix([address]),
-      multicall.wrap(contract).debtBalanceOf(address, formatBytes32String('sUSD')),
+      multicall.wrap(contract).read.debtBalanceOf([address, formatBytes32String('sUSD')]),
     ]);
 
     const feePool = this.contractFactory.synthetixFeePool({

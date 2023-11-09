@@ -46,7 +46,7 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
   getIsActive({
     contract,
   }: GetDataPropsParams<HectorNetworkStakingRewards, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.read.rewardRate().then(v => v.gt(0));
+    return contract.read.rewardRate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HectorNetworkStakingRewards>) {

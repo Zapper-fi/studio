@@ -63,7 +63,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
 
     const definitions = await Promise.all(
       whitelistedTokens.flatMap(async v => {
-        const isShortable = await multicall.wrap(vaultContract).shortableTokens(v.toLowerCase());
+        const isShortable = await multicall.wrap(vaultContract).read.shortableTokens([v.toLowerCase()]);
         if (!isShortable) return null;
         return whitelistedTokens.flatMap(t => {
           const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };

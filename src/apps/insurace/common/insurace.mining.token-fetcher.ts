@@ -60,7 +60,7 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
       network: this.network,
     });
 
-    const reserveRaw = await multicall.wrap(stakersPool).stakedAmountPT(appToken.tokens[0].address);
+    const reserveRaw = await multicall.wrap(stakersPool).read.stakedAmountPT([appToken.tokens[0].address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
 
     const pricePerShare = reserve / appToken.supply;

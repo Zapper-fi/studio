@@ -228,7 +228,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
       : activeShares.mul(tickData.value).div(tickData.shares).add(redemptionAvailable.amount);
 
     /* Compute deposit position based on remaining shares */
-    const depositPosition = deposited.shares.gt(0)
+    const depositPosition = deposited.shares > 0)
       ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
       : constants.Zero;
 

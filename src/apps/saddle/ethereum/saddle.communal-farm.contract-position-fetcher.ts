@@ -58,7 +58,7 @@ export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleSta
       contract.read.rewardRates([3]),
     ]);
 
-    return rewardRates.some(rate => rate.gt(0));
+    return rewardRates.some(rate => rate > 0);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {

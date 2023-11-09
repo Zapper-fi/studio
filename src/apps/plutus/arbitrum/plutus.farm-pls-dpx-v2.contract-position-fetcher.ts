@@ -83,7 +83,7 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
     const duration = Date.now() / 1000 - lastRewardSecond;
     const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
 
-    return emissions.pls_.gt(0) || emissions.plsDpx_.gt(0) || emissions.plsJones_.gt(0) || dpxEmissions > 0;
+    return emissions.pls_ > 0) || emissions.plsDpx_ > 0) || emissions.plsJones_ > 0) || dpxEmissions > 0;
   }
 
   async getLabel({

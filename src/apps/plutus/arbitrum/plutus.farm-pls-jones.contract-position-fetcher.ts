@@ -76,7 +76,7 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
     });
 
     const emissions = await rewardsDistrocontract.read.getEmissions();
-    return emissions.pls_.gt(0) || emissions.plsDpx_.gt(0) || emissions.plsJones_.gt(0) || emissions.jones_.gt(0);
+    return emissions.pls_ > 0) || emissions.plsDpx_ > 0) || emissions.plsJones_ > 0) || emissions.jones_ > 0);
   }
 
   async getLabel({

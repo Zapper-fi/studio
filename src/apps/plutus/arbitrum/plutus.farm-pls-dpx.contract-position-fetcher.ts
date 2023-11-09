@@ -78,11 +78,11 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
 
     const emissions = await rewardsDistrocontract.read.getEmissions();
     return (
-      emissions.pls_.gt(0) ||
-      emissions.plsDpx_.gt(0) ||
-      emissions.plsJones_.gt(0) ||
-      emissions.dpx_.gt(0) ||
-      emissions.rdpx_.gt(0)
+      emissions.pls_ > 0) ||
+      emissions.plsDpx_ > 0) ||
+      emissions.plsJones_ > 0) ||
+      emissions.dpx_ > 0) ||
+      emissions.rdpx_ > 0)
     );
   }
 
