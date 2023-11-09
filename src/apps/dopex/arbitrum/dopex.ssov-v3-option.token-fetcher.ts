@@ -54,7 +54,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
           multicall.wrap(ssovV3Contract).read.currentEpoch(),
           multicall.wrap(ssovV3Contract).read.collateralToken(),
         ]);
-        const epochData = await multicall.wrap(ssovV3Contract).getEpochData(epoch);
+        const epochData = await multicall.wrap(ssovV3Contract).read.getEpochData([epoch]);
 
         const strikesRaw = epochData.strikes;
 

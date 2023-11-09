@@ -84,7 +84,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
     if (!contractPosition) return [];
 
     const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    const positions = await multicall.wrap(stakingContract).read.getAllStakes([address]);
     if (positions.length === 0) return [];
 
     const allPositions = await Promise.all(
@@ -131,7 +131,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
     if (!contractPosition) return [];
 
     const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    const positions = await multicall.wrap(stakingContract).read.getAllStakes([address]);
     if (positions.length === 0) return [];
 
     return (

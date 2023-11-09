@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
@@ -77,7 +77,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
   }
 
   getContract(address: string) {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   getAddresses() {
@@ -94,11 +94,13 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
     if (!locker.poolAddress) return [1];
 
     const pool = this.contractFactory.stakeDaoCurvePool({ address: locker.poolAddress, network: this.network });
-    const token0 = await multicall.wrap(pool).coins(0);
+    const token0 = await multicall.wrap(pool).read.coins([BigInt(0)]);
     const knownIndex = locker.underlyingTokenAddress === token0.toLowerCase() ? 0 : 1;
     const amount = new BigNumber(1e18).toFixed(0);
 
-    const pricePerShareRaw = await multicall.wrap(pool).get_dy(1 - knownIndex, knownIndex, amount);
+    const pricePerShareRaw = await multicall
+      .wrap(pool)
+      .read.get_dy([BigInt(1 - knownIndex), BigInt(knownIndex), BigInt(amount)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return [pricePerShare];
   }

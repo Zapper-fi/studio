@@ -59,7 +59,7 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
   async getDataProps({ contract, multicall }): Promise<ThalesAMMDataProp> {
     const liquidityRaw = await contract.read.totalDeposited();
     const underlyingTokenAddress = await contract.read.sUSD();
-    const underlyingTokenContract = this.appToolkit.globalContracts.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingTokenAddress,
       network: this.network,
     });

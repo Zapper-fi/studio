@@ -119,14 +119,14 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
     });
 
     // get balance of user
-    const balanceRaw = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).balanceOf(address);
+    const balanceRaw = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
     // get withdrawal token id of user
     const tokenId = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).tokenOfOwnerByIndex(address, 0);
 
-    const positionData = await multicall.wrap(goldfinchSeniorPoolContract).withdrawalRequest(tokenId);
+    const positionData = await multicall.wrap(goldfinchSeniorPoolContract).read.withdrawalRequest([tokenId]);
 
     // get FIDU amount supplied
     const suppliedFIDU = [drillBalance(fiduPosition.tokens[0], positionData.fiduRequested.toString())];

@@ -61,7 +61,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
     });
     const [stakedBalanceRaw, rewardBalance] = await Promise.all([
       contract.read.getShareBalance([address]),
-      multicall.wrap(rewardContract).getClaimableReward(address),
+      multicall.wrap(rewardContract).read.getClaimableReward([address]),
     ]);
     const stakedBalance = stakedBalanceRaw.div(100);
     return [stakedBalance, rewardBalance];

@@ -91,7 +91,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
           address: contractPosition.address,
           network: this.network,
         });
-        const player = await multicall.wrap(halofiContract).players(address);
+        const player = await multicall.wrap(halofiContract).read.players([address]);
 
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const balancesRaw: BigNumberish[] = [];

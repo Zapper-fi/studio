@@ -77,8 +77,8 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     multicall,
   }: GetTokenBalancesParams<HectorNetworkStakeBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      multicall.wrap(contract).bondInfo(address),
-      multicall.wrap(contract).pendingPayoutFor(address),
+      multicall.wrap(contract).read.bondInfo([address]),
+      multicall.wrap(contract).read.pendingPayoutFor([address]),
     ]);
 
     return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];

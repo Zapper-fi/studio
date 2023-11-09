@@ -67,7 +67,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(miniPoolManager).getNodeMinipoolCount(address);
+    const numPositionsRaw = await multicall.wrap(miniPoolManager).read.getNodeMinipoolCount([address]);
 
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index => {
@@ -111,7 +111,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
       address: this.minipoolManagerAddress,
       network: this.network,
     });
-    const minipoolCount = await multicall.wrap(minipoolManagerContract).getNodeMinipoolCount(address);
+    const minipoolCount = await multicall.wrap(minipoolManagerContract).read.getNodeMinipoolCount([address]);
 
     const minipoolAddresses = await Promise.all(
       range(0, minipoolCount.toNumber()).map(async i =>

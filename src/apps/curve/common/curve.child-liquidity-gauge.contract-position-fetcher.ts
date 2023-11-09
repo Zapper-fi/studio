@@ -66,7 +66,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const gaugeRange = range(0, Number(gaugeCount));
     const gaugeDefinitions = await Promise.all(
       gaugeRange.map(async index => {
-        const gaugeAddress = await multicall.wrap(factory).get_gauge(index);
+        const gaugeAddress = await multicall.wrap(factory).read.get_gauge([index]);
         return { address: gaugeAddress.toLowerCase(), gaugeType: GaugeType.CHILD as const };
       }),
     );
@@ -102,7 +102,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
 
     // Derive liquidity as the amount of the staked token held by the gauge contract
     const stakedTokenContract = this.contractFactory.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(address);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     const liquidity = reserve * stakedToken.price;
     const gaugeType = definition.gaugeType;

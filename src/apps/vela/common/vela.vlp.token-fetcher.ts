@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
@@ -22,7 +22,7 @@ export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   getContract(address: string) {
-    return this.appToolkit.globalContracts.erc20({
+    return this.appToolkit.globalViemContracts.erc20({
       address,
       network: this.network,
     });

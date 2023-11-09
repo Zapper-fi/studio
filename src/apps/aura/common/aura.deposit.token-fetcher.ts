@@ -52,7 +52,7 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
 
         return Promise.all(
           range(0, Number(numOfPools)).flatMap(async poolIndex => {
-            const poolInfo = await multicall.wrap(boosterContract).poolInfo(poolIndex);
+            const poolInfo = await multicall.wrap(boosterContract).read.poolInfo([poolIndex]);
             return {
               address: poolInfo.token.toLowerCase(),
               poolIndex,

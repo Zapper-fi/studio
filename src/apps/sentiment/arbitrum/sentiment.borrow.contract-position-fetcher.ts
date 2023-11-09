@@ -98,7 +98,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
         ]);
 
         const borrowRaw = await Promise.all(
-          accountAddresses.map(address => multicall.wrap(supplyTokenContract).getBorrowBalance(address)),
+          accountAddresses.map(address => multicall.wrap(supplyTokenContract).read.getBorrowBalance([address])),
         );
         const supplyRaw = await Promise.all(
           accountAddresses.map(address =>

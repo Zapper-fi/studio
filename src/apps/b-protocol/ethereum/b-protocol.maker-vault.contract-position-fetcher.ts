@@ -76,8 +76,8 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
     const definitions = await Promise.all(
       supportedIlks.map(async ilk => {
         const [gem, join] = await Promise.all([
-          multicall.wrap(ilkRegContract).gem(ilk),
-          multicall.wrap(ilkRegContract).join(ilk),
+          multicall.wrap(ilkRegContract).read.gem([ilk]),
+          multicall.wrap(ilkRegContract).read.join([ilk]),
         ]);
 
         const ilkName = ethers.utils.parseBytes32String(ilk);

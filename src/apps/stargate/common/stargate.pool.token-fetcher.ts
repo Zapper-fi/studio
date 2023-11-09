@@ -36,7 +36,7 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
     });
 
     const numPools = await multicall.wrap(factory).read.allPoolsLength();
-    return Promise.all(range(0, Number(numPools)).map(pid => multicall.wrap(factory).allPools(pid)));
+    return Promise.all(range(0, Number(numPools)).map(pid => multicall.wrap(factory).read.allPools([pid])));
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StargatePool>) {

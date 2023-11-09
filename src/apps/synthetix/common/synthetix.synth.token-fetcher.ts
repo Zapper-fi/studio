@@ -58,7 +58,7 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
 
     const addresses = await Promise.all(
       synthSymbolBytes.map(async byte => {
-        const implAddressRaw = await multicall.wrap(addressResolverContract).getSynth(byte);
+        const implAddressRaw = await multicall.wrap(addressResolverContract).read.getSynth([byte]);
         const implAddress = implAddressRaw.toLowerCase();
         const implContract = this.contractFactory.synthetixNetworkToken({
           address: implAddress,
@@ -101,7 +101,7 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     });
 
     const key = await contract.read.currencyKey();
-    const rate = await multicall.wrap(synthExchangeRatesContract).rateForCurrency(key);
+    const rate = await multicall.wrap(synthExchangeRatesContract).read.rateForCurrency([key]);
     const price = (Number(rate) * sUSDToken!.price) / 10 ** appToken.decimals;
     return price;
   }

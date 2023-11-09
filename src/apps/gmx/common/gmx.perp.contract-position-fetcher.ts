@@ -58,7 +58,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
     const tokensRange = _.range(0, Number(tokensCount));
 
     const whitelistedTokens = await Promise.all(
-      tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).allWhitelistedTokens(tokenIndex)),
+      tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).read.allWhitelistedTokens([tokenIndex])),
     );
 
     const definitions = await Promise.all(

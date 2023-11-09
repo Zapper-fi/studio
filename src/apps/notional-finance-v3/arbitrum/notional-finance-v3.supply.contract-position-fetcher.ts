@@ -68,9 +68,9 @@ export class ArbitrumNotionalFinanceV3SupplyContractPositionFetcher extends Cont
     const currencyRange = range(1, currencyCount + 1);
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {
-        const currency = await multicall.wrap(notionalViewContract).getCurrency(currencyId);
+        const currency = await multicall.wrap(notionalViewContract).read.getCurrency([currencyId]);
         const underlyingTokenAddress = currency.underlyingToken.tokenAddress.toLowerCase();
-        const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(currencyId);
+        const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([currencyId]);
 
         const markets = await Promise.all(
           activeMarkets.map(async activeMarket => {

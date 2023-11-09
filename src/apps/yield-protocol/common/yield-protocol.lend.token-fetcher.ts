@@ -132,12 +132,12 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
     const poolBalance = await multicall
       .wrap(pool)
-      .getBaseBalance()
+      .read.getBaseBalance()
       .catch(err => {
         if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
         throw err;
       });
-    if (poolBalance.isZero()) return [0];
+    if (poolBalance === BigInt(0)) return [0];
 
     const maturity = await contract.read.maturity();
     const isMatured = Math.floor(new Date().getTime() / 1000) > Number(maturity);
@@ -146,8 +146,13 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     // use smaller unit for weth
     const estimateRaw =
       appToken.tokens[0].symbol === 'WETH'
-        ? (await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('.01', appToken.decimals))).mul(100)
-        : await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('1', appToken.decimals));
+        ? (await multicall
+            .wrap(pool)
+            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('.01', appToken.decimals).toString())])) *
+          BigInt(100)
+        : await multicall
+            .wrap(pool)
+            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('1', appToken.decimals).toString())]);
 
     return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }

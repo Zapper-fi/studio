@@ -69,8 +69,8 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
 
   async getTokenBalancesPerPosition({ address, contract, multicall }: GetTokenBalancesParams<RedactedBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      multicall.wrap(contract).bondInfo(address),
-      multicall.wrap(contract).pendingPayoutFor(address),
+      multicall.wrap(contract).read.bondInfo([address]),
+      multicall.wrap(contract).read.pendingPayoutFor([address]),
     ]);
 
     return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];

@@ -72,13 +72,13 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(lockedDepositNftContract).balanceOf(address);
+    const numPositionsRaw = await multicall.wrap(lockedDepositNftContract).read.balanceOf([address]);
 
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index => {
         const depositId = await multicall.wrap(lockedDepositNftContract).tokenOfOwnerByIndex(address, index);
 
-        const deposit = await multicall.wrap(gTokenContract).lockedDeposits(depositId);
+        const deposit = await multicall.wrap(gTokenContract).read.lockedDeposits([depositId]);
 
         const depositAmount = drillBalance(contractPositions[0].tokens[0], deposit.shares.toString());
 

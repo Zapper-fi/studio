@@ -193,8 +193,8 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
         });
 
         const [balanceRaw, claimableBalanceRaw] = await Promise.all([
-          multicall.wrap(contract).balanceOf(address),
-          multicall.wrap(contract).getLiquidRewards(address),
+          multicall.wrap(contract).read.balanceOf([address]),
+          multicall.wrap(contract).read.getLiquidRewards([address]),
         ]);
 
         const suppliedToken = position.tokens.find(isSupplied)!;

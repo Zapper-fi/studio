@@ -146,7 +146,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
 
     const [supplied, borrowed] = await Promise.all([
       multicall.wrap(escrowContract).read.balance(),
-      multicall.wrap(contract).debts(address),
+      multicall.wrap(contract).read.debts([address]),
     ]);
 
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
@@ -158,7 +158,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     if (isCvxFxsMarket || isCvxCrvMarket) {
       if (isCvxFxsMarket) {
         const stakeContract = this.contractFactory.stCvxFxs({ address: this.stCvxFxsAddress, network: this.network });
-        claimablesAsTuple = await multicall.wrap(stakeContract).claimableRewards(personalEscrow);
+        claimablesAsTuple = await multicall.wrap(stakeContract).read.claimableRewards([personalEscrow]);
       } else {
         const stakeContract = this.contractFactory.stCvxCrv({ address: this.stCvxCrvAddress, network: this.network });
         claimablesAsTuple = await multicall.wrap(stakeContract).callStatic.earned(personalEscrow);

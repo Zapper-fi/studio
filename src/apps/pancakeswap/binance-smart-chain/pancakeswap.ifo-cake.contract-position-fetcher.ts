@@ -65,7 +65,7 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
 
   async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapIfoChef>) {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const poolInfo = await multicall.wrap(mainChef).poolInfo(0);
+    const poolInfo = await multicall.wrap(mainChef).read.poolInfo([0]);
     return poolInfo.allocPoint;
   }
 

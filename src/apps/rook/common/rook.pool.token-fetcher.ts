@@ -44,14 +44,14 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
         network: this.network,
       });
       const underlyingTokenAddress = appToken.tokens[0].address.replace(ZERO_ADDRESS, ETH_ADDR_ALIAS);
-      reserveRaw = await multicall.wrap(pool).totalValueLocked(underlyingTokenAddress);
+      reserveRaw = await multicall.wrap(pool).read.totalValueLocked([underlyingTokenAddress]);
     } else {
       const pool = this.contractFactory.rookLiquidityPoolV2({
         address: this.liquidityPoolAddress,
         network: this.network,
       });
       const underlyingTokenAddress = appToken.tokens[0].address.replace(ZERO_ADDRESS, ETH_ADDR_ALIAS);
-      reserveRaw = await multicall.wrap(pool).borrowableBalance(underlyingTokenAddress);
+      reserveRaw = await multicall.wrap(pool).read.borrowableBalance([underlyingTokenAddress]);
     }
 
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;

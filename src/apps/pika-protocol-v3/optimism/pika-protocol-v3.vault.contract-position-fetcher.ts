@@ -63,7 +63,7 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher extends Contract
       contract.read.getShare([address]),
       contract.read.getVault(),
       contract.read.getTotalShare(),
-      multicall.wrap(rewardContract).getClaimableReward(address),
+      multicall.wrap(rewardContract).read.getClaimableReward([address]),
     ]);
 
     const stakedBalanceRaw = userShare.mul(vault.balance).div(totalShare);

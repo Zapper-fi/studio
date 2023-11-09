@@ -119,7 +119,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardRates = await Promise.all(
       range(0, Number(numExtraRewards)).map(async v => {
-        const vbpAddress = await multicall.wrap(contract).extraRewards(v);
+        const vbpAddress = await multicall.wrap(contract).read.extraRewards([v]);
 
         const vbpContract = this.contractFactory.convexVirtualBalanceRewardPool({
           address: vbpAddress,
@@ -178,7 +178,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
           network: this.network,
         });
 
-        const earnedBN = await multicall.wrap(vbpContract).earned(address);
+        const earnedBN = await multicall.wrap(vbpContract).read.earned([address]);
         const extraRewardTokenAddressRaw = await multicall.wrap(vbpContract).read.rewardToken();
         const extraRewardTokenAddress = extraRewardTokenAddressRaw.toLowerCase();
 

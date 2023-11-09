@@ -144,7 +144,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength().then(Number);
     const extraRewardRates = await Promise.all(
       range(0, numExtraRewards).map(async v => {
-        const vbpAddress = await multicall.wrap(contract).extraRewards(v);
+        const vbpAddress = await multicall.wrap(contract).read.extraRewards([v]);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
         return multicall.wrap(vbp).read.rewardRate();
       }),
@@ -193,7 +193,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
           network: this.network,
         });
 
-        const earnedBN = await multicall.wrap(extraRewardContract).earned(address);
+        const earnedBN = await multicall.wrap(extraRewardContract).read.earned([address]);
         const extraRewardStashTokenAddressRaw = await multicall.wrap(extraRewardContract).read.rewardToken();
         let extraRewardStashTokenAddress = extraRewardStashTokenAddressRaw.toLowerCase();
         const stashTokenContract = this.contractFactory.auraStashToken({

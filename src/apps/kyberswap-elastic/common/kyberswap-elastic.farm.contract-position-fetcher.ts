@@ -70,7 +70,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
 
     const definitionsRaw = await Promise.all(
       range(0, poolLengthRaw.toNumber()).map(async index => {
-        const poolInfos = await multicall.wrap(kyberswapElasticLmContract).getPoolInfo(index);
+        const poolInfos = await multicall.wrap(kyberswapElasticLmContract).read.getPoolInfo([index]);
         const poolContract = this.contractFactory.pool({ address: poolInfos.poolAddress, network: this.network });
         // filtering out pool '0xf2057f0231bedcecf32436e3cd6b0b93c6675e0a' on Polygon, this
         // seems to not exist on Polygon and is actually on Arbitrum. KyberSwap is even filtering it out
@@ -182,11 +182,11 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
       network: this.network,
     });
 
-    const nftIds = await multicall.wrap(kyberswapElasticLmContract).getDepositedNFTs(address);
+    const nftIds = await multicall.wrap(kyberswapElasticLmContract).read.getDepositedNFTs([address]);
 
     const balances = await Promise.all(
       nftIds.map(async nftId => {
-        const poolIds = await multicall.wrap(kyberswapElasticLmContract).getJoinedPools(nftId);
+        const poolIds = await multicall.wrap(kyberswapElasticLmContract).read.getJoinedPools([nftId]);
 
         const position = await Promise.all(
           poolIds.map(poolId => {

@@ -83,7 +83,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
       return 0;
     }
 
-    const lpToken = this.appToolkit.globalContracts.erc20({ address: poolInfo.lpToken, network: this.network });
+    const lpToken = this.appToolkit.globalViemContracts.erc20({ address: poolInfo.lpToken, network: this.network });
     const lpSupply = await lpToken.balanceOf(contract.address);
 
     let { accCvxPerShare } = poolInfo;

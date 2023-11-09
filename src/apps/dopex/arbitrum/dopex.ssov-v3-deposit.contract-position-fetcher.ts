@@ -81,20 +81,20 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
           address: contractPosition.address,
           network: this.network,
         });
-        const numPositionsRaw = await multicall.wrap(ssovV3Contract).balanceOf(address);
+        const numPositionsRaw = await multicall.wrap(ssovV3Contract).read.balanceOf([address]);
 
         return await Promise.all(
           range(0, numPositionsRaw.toNumber()).map(async index => {
             const tokenId = await multicall.wrap(ssovV3Contract).tokenOfOwnerByIndex(address, index);
 
-            const writePosition = await multicall.wrap(ssovV3Contract).writePosition(tokenId);
+            const writePosition = await multicall.wrap(ssovV3Contract).read.writePosition([tokenId]);
             const suppliedAmountRaw = writePosition.collateralAmount;
 
             const suppliedAmount = drillBalance(contractPosition.tokens[0], suppliedAmountRaw.toString());
 
             const strike = Number(writePosition.strike) / 10 ** 8;
             const epoch = Number(writePosition.epoch);
-            const epochTimes = await multicall.wrap(ssovV3Contract).getEpochTimes(epoch);
+            const epochTimes = await multicall.wrap(ssovV3Contract).read.getEpochTimes([epoch]);
             const epochEndDate = unix(Number(epochTimes.end)).format('MMMM D, yyyy');
 
             const dataProps = {

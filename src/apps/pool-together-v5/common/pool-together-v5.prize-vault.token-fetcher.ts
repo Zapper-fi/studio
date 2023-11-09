@@ -31,7 +31,7 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
   }
 
   getContract(address: string) {
-    return this.appToolkit.globalContracts.erc4626({ address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc4626({ address, network: this.network });
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
@@ -49,7 +49,7 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
 
     return Promise.all(
       range(0, vaultNumberRaw.toNumber()).map(async index => {
-        const address = await multicall.wrap(vaultFactoryContract).allVaults(index);
+        const address = await multicall.wrap(vaultFactoryContract).read.allVaults([index]);
         return {
           address,
         };

@@ -41,7 +41,7 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
     });
 
     const pools = await multicall.wrap(bancorContract).read.liquidityPools();
-    const addresses = await Promise.all(pools.map(async pool => multicall.wrap(poolContract).poolToken(pool)));
+    const addresses = await Promise.all(pools.map(async pool => multicall.wrap(poolContract).read.poolToken([pool])));
     return addresses;
   }
 

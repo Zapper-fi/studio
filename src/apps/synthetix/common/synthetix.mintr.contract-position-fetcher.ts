@@ -84,8 +84,8 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
 
   async getTokenBalancesPerPosition({ address, contract, multicall }: GetTokenBalancesParams<SynthetixNetworkToken>) {
     const [collateralRaw, transferableRaw, debtBalanceRaw] = await Promise.all([
-      multicall.wrap(contract).collateral(address),
-      multicall.wrap(contract).transferableSynthetix(address),
+      multicall.wrap(contract).read.collateral([address]),
+      multicall.wrap(contract).read.transferableSynthetix([address]),
       multicall.wrap(contract).debtBalanceOf(address, formatBytes32String('sUSD')),
     ]);
 
@@ -94,7 +94,7 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
       network: this.network,
     });
 
-    const userFees = await multicall.wrap(feePool).feesByPeriod(address);
+    const userFees = await multicall.wrap(feePool).read.feesByPeriod([address]);
 
     const collateralBalanceRaw = new BigNumber(collateralRaw.toString()).minus(transferableRaw.toString()).toFixed(0);
     return [collateralBalanceRaw, debtBalanceRaw.toString(), userFees[1][1]];

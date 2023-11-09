@@ -63,10 +63,10 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
 
     const definitions = await Promise.all(
       range(0, Number(numIlks)).map(async ilkIndex => {
-        const ilk = await multicall.wrap(ilkRegContract).get(ilkIndex);
+        const ilk = await multicall.wrap(ilkRegContract).read.get([ilkIndex]);
         const [gem, join] = await Promise.all([
-          multicall.wrap(ilkRegContract).gem(ilk),
-          multicall.wrap(ilkRegContract).join(ilk),
+          multicall.wrap(ilkRegContract).read.gem([ilk]),
+          multicall.wrap(ilkRegContract).read.join([ilk]),
         ]);
 
         const ilkName = ethers.utils.parseBytes32String(ilk);

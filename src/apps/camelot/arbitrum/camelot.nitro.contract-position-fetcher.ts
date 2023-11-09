@@ -43,7 +43,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const poolAddressRaw = await multicall.wrap(nitroPoolFactoryContract).getPublishedNitroPool(i);
+        const poolAddressRaw = await multicall.wrap(nitroPoolFactoryContract).read.getPublishedNitroPool([i]);
         return poolAddressRaw.toLowerCase();
       }),
     );
@@ -121,10 +121,10 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
           network: this.network,
         });
         const [numPositionsRaw, nftPoolAddress, { totalDepositAmount }, { pending1, pending2 }] = await Promise.all([
-          multicall.wrap(nitroContract).userTokenIdsLength(address),
+          multicall.wrap(nitroContract).read.userTokenIdsLength([address]),
           multicall.wrap(nitroContract).read.nftPool(),
-          multicall.wrap(nitroContract).userInfo(address),
-          multicall.wrap(nitroContract).pendingRewards(address),
+          multicall.wrap(nitroContract).read.userInfo([address]),
+          multicall.wrap(nitroContract).read.pendingRewards([address]),
         ]);
 
         const nftPoolContract = this.contractFactory.camelotNftPool({ address: nftPoolAddress, network: this.network });
@@ -133,7 +133,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
           range(0, Number(numPositionsRaw)).map(async i => {
             const tokenId = await multicall.wrap(nitroContract).userTokenId(address, i);
 
-            return await multicall.wrap(nftPoolContract).pendingRewards(tokenId);
+            return await multicall.wrap(nftPoolContract).read.pendingRewards([tokenId]);
           }),
         );
         const grailRewards = sum(grailRewardsRaw.map(x => Number(x)));

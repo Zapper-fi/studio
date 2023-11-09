@@ -122,8 +122,8 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
         const label = `Liquid Staking (#${positionId}) - Unlock: ${unlockDate}`;
 
         const [positionInfo, positionRewardInfo] = await Promise.all([
-          multicall.wrap(contract).positions(positionId),
-          multicall.wrap(contract).viewPositionRewards(positionId),
+          multicall.wrap(contract).read.positions([positionId]),
+          multicall.wrap(contract).read.viewPositionRewards([positionId]),
         ]);
 
         const stakedToken = lsdCnv.tokens.find(isSupplied)!;

@@ -3,7 +3,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -44,7 +44,7 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
 
     const tokenCount = await multicall.wrap(vault).read.allWhitelistedTokensLength();
     const tokenRange = range(0, Number(tokenCount));
-    const tokenAddresses = await Promise.all(tokenRange.map(i => multicall.wrap(vault).allWhitelistedTokens(i)));
+    const tokenAddresses = await Promise.all(tokenRange.map(i => multicall.wrap(vault).read.allWhitelistedTokens([i])));
 
     const validTokenAddresses = tokenAddresses.filter(v => !this.blockedTokenAddresses.includes(v.toLowerCase()));
     return validTokenAddresses.map(address => ({ address, network: this.network }));

@@ -4,7 +4,7 @@ import Axios from 'axios';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -39,7 +39,7 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
   }
 
   getContract(address: string) {
-    return this.appToolkit.globalContracts.erc20({ address: address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc20({ address: address, network: this.network });
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {

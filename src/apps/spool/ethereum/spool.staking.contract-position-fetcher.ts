@@ -121,7 +121,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     const voSpool = this.contractFactory.spoolVospool({ address: VOSPOOL_ADDRESS, network: this.network });
 
     const [votingPowerRaw, voSpoolRewards, ...tokenRewards] = await Promise.all([
-      multicall.wrap(voSpool).getUserGradualVotingPower(address),
+      multicall.wrap(voSpool).read.getUserGradualVotingPower([address]),
       multicall.wrap(staking).callStatic.getUpdatedVoSpoolRewardAmount({ from: address }),
       ...rewardTokens.map(reward => multicall.wrap(staking).earned(reward.address, address)),
     ]);

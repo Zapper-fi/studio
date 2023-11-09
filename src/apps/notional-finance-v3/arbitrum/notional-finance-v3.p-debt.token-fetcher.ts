@@ -45,7 +45,7 @@ export class ArbitrumNotionalFinanceV3PDebtTokenFetcher extends AppTokenTemplate
 
     return await Promise.all(
       range(1, maxCurrencyId + 1).map(async currencyId => {
-        const address = await multicall.wrap(notionalViewContract).pDebtAddress(currencyId);
+        const address = await multicall.wrap(notionalViewContract).read.pDebtAddress([currencyId]);
 
         return {
           address,

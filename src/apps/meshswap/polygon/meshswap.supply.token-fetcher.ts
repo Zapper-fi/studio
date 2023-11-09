@@ -41,7 +41,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
 
     const poolAddresses = await Promise.all(
       _.range(0, poolCount).map(async index => {
-        return await multicall.wrap(singlePoolFactoryContract).getPoolAddressByIndex(index);
+        return await multicall.wrap(singlePoolFactoryContract).read.getPoolAddressByIndex([index]);
       }),
     );
     return poolAddresses;

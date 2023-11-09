@@ -32,7 +32,7 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
   }
 
   getContract(address: string) {
-    return this.appToolkit.globalContracts.erc721({ address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc721({ address, network: this.network });
   }
 
   async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {

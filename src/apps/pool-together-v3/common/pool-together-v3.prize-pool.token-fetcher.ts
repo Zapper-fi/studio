@@ -94,7 +94,7 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
         const [_dripRatePerSecond, totalUnclaimed, faucetBalance, decimals, tokenDependency] = await Promise.all([
           multicall.wrap(tokenFaucetContract).read.dripRatePerSecond(),
           multicall.wrap(tokenFaucetContract).read.totalUnclaimed(),
-          multicall.wrap(assetContract).balanceOf(tokenFaucetAddress),
+          multicall.wrap(assetContract).read.balanceOf([tokenFaucetAddress]),
           multicall.wrap(assetContract).read.decimals(),
           tokenLoader.getOne({ address: assetAddress, network: this.network }),
         ]);

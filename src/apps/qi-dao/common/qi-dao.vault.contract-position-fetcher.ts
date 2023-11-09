@@ -148,7 +148,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
           network: this.network,
         });
 
-        const numOfVaults = await multicall.wrap(vaultNftContract).balanceOf(address).then(Number);
+        const numOfVaults = await multicall.wrap(vaultNftContract).read.balanceOf([address]).then(Number);
         if (numOfVaults === 0) return [];
 
         const tokenIds = await Promise.all(
@@ -158,8 +158,8 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
         const positionBalances = await Promise.all(
           tokenIds.map(async tokenId => {
             const balancesRaw = await Promise.all([
-              multicall.wrap(vaultInfoContract).vaultCollateral(tokenId),
-              multicall.wrap(vaultInfoContract).vaultDebt(tokenId),
+              multicall.wrap(vaultInfoContract).read.vaultCollateral([tokenId]),
+              multicall.wrap(vaultInfoContract).read.vaultDebt([tokenId]),
             ]);
 
             const allTokens = contractPosition.tokens.map((cp, idx) =>

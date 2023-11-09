@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
 import { CleverViemContractFactory } from '../contracts';
@@ -21,7 +21,7 @@ export class EthereumCleverLeverTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   getContract(address: string) {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   getAddresses() {

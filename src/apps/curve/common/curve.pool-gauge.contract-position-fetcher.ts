@@ -153,7 +153,9 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     // Modern "n" gauges supports multiple extra tokens
     if ([GaugeType.GAUGE_V4, GaugeType.N_GAUGE].includes(definition.gaugeType)) {
       const nGauge = this.contractFactory.curveNGauge({ address, network: this.network });
-      const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => multicall.wrap(nGauge).reward_tokens(i)));
+      const rewardTokenAddresses = await Promise.all(
+        range(0, 4).map(i => multicall.wrap(nGauge).read.reward_tokens([i])),
+      );
       const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
       filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));
     }
@@ -177,7 +179,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 
     // Derive liquidity as the amount of the staked token held by the gauge contract
     const stakedTokenContract = this.contractFactory.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(address);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     const liquidity = reserve * stakedToken.price;
     const gaugeType = definition.gaugeType;
@@ -223,8 +225,8 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     if (contractPosition.dataProps.gaugeType === GaugeType.DOUBLE && rewardTokens.length > 1) {
       const doubleGauge = this.contractFactory.curveDoubleGauge(contractPosition);
       const [secondaryRewardBalanceTotal, secondaryRewardBalanceClaimed] = await Promise.all([
-        multicall.wrap(doubleGauge).claimable_reward(address),
-        multicall.wrap(doubleGauge).claimed_rewards_for(address),
+        multicall.wrap(doubleGauge).read.claimable_reward([address]),
+        multicall.wrap(doubleGauge).read.claimed_rewards_for([address]),
       ]);
 
       const secondaryRewardBalance = secondaryRewardBalanceTotal.sub(secondaryRewardBalanceClaimed);

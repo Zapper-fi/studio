@@ -60,7 +60,7 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
     const currentRound = await contract.read.round();
     const liquidityRaw = await contract.read.allocationPerRound([currentRound]);
     const underlyingTokenAddress = await contract.read.sUSD();
-    const underlyingTokenContract = this.appToolkit.globalContracts.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingTokenAddress,
       network: this.network,
     });

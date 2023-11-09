@@ -41,7 +41,7 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
 
     const vaultTokenAddresses = await Promise.all(
       _.range(0, Number(numTokens)).map(async index => {
-        return await multicall.wrap(stakingRewardRegistryContract).tokens(index);
+        return await multicall.wrap(stakingRewardRegistryContract).read.tokens([index]);
       }),
     );
 

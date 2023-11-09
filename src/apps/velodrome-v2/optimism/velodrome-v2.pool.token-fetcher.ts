@@ -41,7 +41,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const poolAddressRaw = await multicall.wrap(factoryContract).allPools(i);
+        const poolAddressRaw = await multicall.wrap(factoryContract).read.allPools([i]);
         return { address: poolAddressRaw.toLowerCase() };
       }),
     );

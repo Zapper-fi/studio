@@ -123,11 +123,11 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
       address: fiduPosition.address,
       network: this.network,
     });
-    const balanceRaw = await multicall.wrap(stakingRewardsContract).balanceOf(address);
+    const balanceRaw = await multicall.wrap(stakingRewardsContract).read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
-    const claimableGFI = await multicall.wrap(stakingRewardsContract).totalOptimisticClaimable(address);
+    const claimableGFI = await multicall.wrap(stakingRewardsContract).read.totalOptimisticClaimable([address]);
     const claimableGFITokens = [drillBalance(gfiPosition.tokens[1], claimableGFI.toString())];
     const claimableGFIBalanceUSD = sumBy(claimableGFITokens, v => v.balanceUSD);
     const claimableGFIContractPositionBalance = {
@@ -143,7 +143,7 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
     await Promise.all(
       range(0, balance).map(async i => {
         const tokenId = await multicall.wrap(stakingRewardsContract).tokenOfOwnerByIndex(address, i);
-        const positionData = await multicall.wrap(stakingRewardsContract).positions(tokenId);
+        const positionData = await multicall.wrap(stakingRewardsContract).read.positions([tokenId]);
         if (positionData.positionType !== 0 && positionData.positionType !== 1) return null;
 
         if (positionData.positionType === 1) {

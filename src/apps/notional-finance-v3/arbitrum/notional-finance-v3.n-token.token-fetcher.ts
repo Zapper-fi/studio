@@ -45,7 +45,7 @@ export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplat
       range(1, maxCurrencyId + 1).map(async currencyId => {
         let address: string;
         try {
-          address = await multicall.wrap(notionalViewContract).nTokenAddress(currencyId);
+          address = await multicall.wrap(notionalViewContract).read.nTokenAddress([currencyId]);
         } catch (error) {
           return null;
         }

@@ -78,18 +78,18 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(bondNftContract).balanceOf(address);
+    const numPositionsRaw = await multicall.wrap(bondNftContract).read.balanceOf([address]);
 
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index => {
         const bondId = await multicall.wrap(bondNftContract).tokenOfOwnerByIndex(address, index);
 
-        const bondStatus = await multicall.wrap(bondNftContract).getBondStatus(bondId);
+        const bondStatus = await multicall.wrap(bondNftContract).read.getBondStatus([bondId]);
         if (bondStatus !== BondStatus.PENDING) return null;
 
         const [depositAmountRaw, claimableAmountRaw] = await Promise.all([
-          multicall.wrap(bondNftContract).getBondAmount(bondId),
-          multicall.wrap(bondManagerContract).calcAccruedBLUSD(bondId),
+          multicall.wrap(bondNftContract).read.getBondAmount([bondId]),
+          multicall.wrap(bondManagerContract).read.calcAccruedBLUSD([bondId]),
         ]);
 
         const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());

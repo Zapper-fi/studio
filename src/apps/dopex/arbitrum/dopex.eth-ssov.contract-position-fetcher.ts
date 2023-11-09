@@ -61,15 +61,15 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
   }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch } = contractPosition.dataProps;
     const rewardDistributionName = ethers.utils.formatBytes32String('RewardsDistribution');
-    const rewardDistrbutionAddress = await multicall.wrap(contract).getAddress(rewardDistributionName);
+    const rewardDistrbutionAddress = await multicall.wrap(contract).read.getAddress([rewardDistributionName]);
     const rewardDistributionContract = this.contractFactory.dopexRewardDistribution({
       address: rewardDistrbutionAddress,
       network: this.network,
     });
 
     return Promise.all([
-      multicall.wrap(rewardDistributionContract).dpxReceived(epoch),
-      multicall.wrap(rewardDistributionContract).rdpxReceived(epoch),
+      multicall.wrap(rewardDistributionContract).read.dpxReceived([epoch]),
+      multicall.wrap(rewardDistributionContract).read.rdpxReceived([epoch]),
     ]);
   }
 }

@@ -124,7 +124,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
     const [underlyingToken] = params.contractPosition.tokens;
 
     const multicall = params.multicall;
-    const erc20 = this.appToolkit.globalContracts.erc20({
+    const erc20 = this.appToolkit.globalViemContracts.erc20({
       address: params.contractPosition.address,
       network: this.network,
     });

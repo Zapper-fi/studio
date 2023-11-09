@@ -68,7 +68,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
 
         const collateralTokenAddresses = await Promise.all(
           _.range(collateralTokensCount.toNumber()).map(async id => {
-            const collateralToken = await multicall.wrap(creditManagerV2Contract).collateralTokens(id);
+            const collateralToken = await multicall.wrap(creditManagerV2Contract).read.collateralTokens([id]);
             return collateralToken.token;
           }),
         );
@@ -118,7 +118,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
       address: ACCOUNT_FACTORY_ADDRESS,
       network: this.network,
     });
-    const isCreditAccount = await multicall.wrap(accountFactoryContract).isCreditAccount(address);
+    const isCreditAccount = await multicall.wrap(accountFactoryContract).read.isCreditAccount([address]);
     // credit acccounts themselves cannot have other credit accounts
     // also this helps prevent double counting of convex positions via
     // phantom tokens and convex position fetcher
@@ -140,7 +140,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
         }
 
         const tokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        return multicall.wrap(tokenContract).balanceOf(creditAccountAddress);
+        return multicall.wrap(tokenContract).read.balanceOf([creditAccountAddress]);
       }),
     );
 

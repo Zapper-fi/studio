@@ -44,7 +44,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
 
     const boostedPids = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const isWhitelisted = await multicall.wrap(booster).whiteList(i);
+        const isWhitelisted = await multicall.wrap(booster).read.whiteList([i]);
         return isWhitelisted ? i : null;
       }),
     );
@@ -89,7 +89,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
       network: this.network,
     });
 
-    const proxyAddress = await multicall.wrap(booster).proxyContract(address);
+    const proxyAddress = await multicall.wrap(booster).read.proxyContract([address]);
     if (proxyAddress === ZERO_ADDRESS) return [0];
 
     return contract.userInfo(contractPosition.dataProps.poolIndex, proxyAddress).then(v => v.amount);
@@ -106,7 +106,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
       network: this.network,
     });
 
-    const proxyAddress = await multicall.wrap(booster).proxyContract(address);
+    const proxyAddress = await multicall.wrap(booster).read.proxyContract([address]);
     if (proxyAddress === ZERO_ADDRESS) return [0];
 
     return contract.pendingCake(contractPosition.dataProps.poolIndex, proxyAddress);

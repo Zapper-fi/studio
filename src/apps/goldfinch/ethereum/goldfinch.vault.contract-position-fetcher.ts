@@ -112,7 +112,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
     });
 
     // GFI
-    const gfiBalanceRaw = await multicall.wrap(goldfinchVaultContract).totalGFIHeldBy(address); // denominated in gfi units
+    const gfiBalanceRaw = await multicall.wrap(goldfinchVaultContract).read.totalGFIHeldBy([address]); // denominated in gfi units
     const gfiTokens = [drillBalance(gfiPosition.tokens[0], gfiBalanceRaw.totalAmount.toString())];
     const gfiBalanceUSD = sumBy(gfiTokens, v => v.balanceUSD);
     const gfiContractPositionBalance = { ...gfiPosition, tokens: gfiTokens, balanceUSD: gfiBalanceUSD };
@@ -125,7 +125,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
       address: SENIOR_POOL,
       network: this.network,
     });
-    const capitalBalanceRaw = await multicall.wrap(goldfinchVaultContract).totalCapitalHeldBy(address); // response denominated in USDC
+    const capitalBalanceRaw = await multicall.wrap(goldfinchVaultContract).read.totalCapitalHeldBy([address]); // response denominated in USDC
     const fiduBalanceRaw = await multicall
       .wrap(seniorPoolContract)
       .getNumShares(capitalBalanceRaw.totalAmount.toString());
@@ -134,7 +134,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
     const fiduContractPositionBalance = { ...fiduPosition, tokens: fiduTokens, balanceUSD: fiduBalanceUSD };
 
     // Claimable FIDU from MembershipVaults
-    const claimableFIDU = await multicall.wrap(goldfinchVaultContract).claimableRewards(address);
+    const claimableFIDU = await multicall.wrap(goldfinchVaultContract).read.claimableRewards([address]);
     const claimableFiduTokens = [drillBalance(fiduPosition.tokens[1], claimableFIDU.toString())];
     const claimableFiduBalanceUSD = sumBy(claimableFiduTokens, v => v.balanceUSD);
     const claimableFiduContractPositionBalance = {

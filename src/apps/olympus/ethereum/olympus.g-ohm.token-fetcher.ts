@@ -56,7 +56,7 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
       network: this.network,
     });
 
-    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).read.balanceOf([reserveAddress]);
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     return reserve * underlyingToken.price;
   }
@@ -69,7 +69,7 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
       network: this.network,
     });
 
-    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).read.balanceOf([reserveAddress]);
     return [Number(reserveRaw) / 10 ** underlyingToken.decimals];
   }
 
