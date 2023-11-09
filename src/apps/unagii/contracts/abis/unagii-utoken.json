@@ -48,40 +48,35 @@
     "type": "function",
     "name": "setName",
     "inputs": [{ "name": "name", "type": "string" }],
-    "outputs": [],
-    "gas": 108313
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "setSymbol",
     "inputs": [{ "name": "symbol", "type": "string" }],
-    "outputs": [],
-    "gas": 73163
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "setNextTimeLock",
     "inputs": [{ "name": "nextTimeLock", "type": "address" }],
-    "outputs": [],
-    "gas": 38981
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "acceptTimeLock",
     "inputs": [],
-    "outputs": [],
-    "gas": 58909
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "setMinter",
     "inputs": [{ "name": "minter", "type": "address" }],
-    "outputs": [],
-    "gas": 39041
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -91,8 +86,7 @@
       { "name": "_to", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 149013
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -103,8 +97,7 @@
       { "name": "_to", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 193476
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -114,8 +107,7 @@
       { "name": "spender", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 37941
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -125,8 +117,7 @@
       { "name": "spender", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 42582
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -136,8 +127,7 @@
       { "name": "spender", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 42606
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -152,8 +142,7 @@
       { "name": "r", "type": "bytes32" },
       { "name": "s", "type": "bytes32" }
     ],
-    "outputs": [],
-    "gas": 86176
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -163,8 +152,7 @@
       { "name": "_to", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 115368
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -174,40 +162,35 @@
       { "name": "_from", "type": "address" },
       { "name": "amount", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 114962
+    "outputs": []
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "name",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 13080
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "symbol",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 10833
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "decimals",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2838
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "balanceOf",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3083
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -217,71 +200,62 @@
       { "name": "arg0", "type": "address" },
       { "name": "arg1", "type": "address" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3328
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "totalSupply",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2928
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "nonces",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3173
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "DOMAIN_SEPARATOR",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "bytes32" }],
-    "gas": 2988
+    "outputs": [{ "name": "", "type": "bytes32" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "timeLock",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3018
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "nextTimeLock",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3048
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "minter",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3078
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "token",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3108
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "lastBlock",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3353
+    "outputs": [{ "name": "", "type": "uint256" }]
   }
 ]

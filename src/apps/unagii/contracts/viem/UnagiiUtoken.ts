@@ -106,7 +106,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 108313,
   },
   {
     stateMutability: 'nonpayable',
@@ -119,7 +118,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 73163,
   },
   {
     stateMutability: 'nonpayable',
@@ -132,7 +130,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 38981,
   },
   {
     stateMutability: 'nonpayable',
@@ -140,7 +137,6 @@ export const unagiiUtokenAbi = [
     name: 'acceptTimeLock',
     inputs: [],
     outputs: [],
-    gas: 58909,
   },
   {
     stateMutability: 'nonpayable',
@@ -153,7 +149,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 39041,
   },
   {
     stateMutability: 'nonpayable',
@@ -175,7 +170,6 @@ export const unagiiUtokenAbi = [
         type: 'bool',
       },
     ],
-    gas: 149013,
   },
   {
     stateMutability: 'nonpayable',
@@ -201,7 +195,6 @@ export const unagiiUtokenAbi = [
         type: 'bool',
       },
     ],
-    gas: 193476,
   },
   {
     stateMutability: 'nonpayable',
@@ -223,7 +216,6 @@ export const unagiiUtokenAbi = [
         type: 'bool',
       },
     ],
-    gas: 37941,
   },
   {
     stateMutability: 'nonpayable',
@@ -245,7 +237,6 @@ export const unagiiUtokenAbi = [
         type: 'bool',
       },
     ],
-    gas: 42582,
   },
   {
     stateMutability: 'nonpayable',
@@ -267,7 +258,6 @@ export const unagiiUtokenAbi = [
         type: 'bool',
       },
     ],
-    gas: 42606,
   },
   {
     stateMutability: 'nonpayable',
@@ -304,7 +294,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 86176,
   },
   {
     stateMutability: 'nonpayable',
@@ -321,7 +310,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 115368,
   },
   {
     stateMutability: 'nonpayable',
@@ -338,7 +326,6 @@ export const unagiiUtokenAbi = [
       },
     ],
     outputs: [],
-    gas: 114962,
   },
   {
     stateMutability: 'view',
@@ -351,7 +338,6 @@ export const unagiiUtokenAbi = [
         type: 'string',
       },
     ],
-    gas: 13080,
   },
   {
     stateMutability: 'view',
@@ -364,7 +350,6 @@ export const unagiiUtokenAbi = [
         type: 'string',
       },
     ],
-    gas: 10833,
   },
   {
     stateMutability: 'view',
@@ -377,7 +362,6 @@ export const unagiiUtokenAbi = [
         type: 'uint256',
       },
     ],
-    gas: 2838,
   },
   {
     stateMutability: 'view',
@@ -395,7 +379,6 @@ export const unagiiUtokenAbi = [
         type: 'uint256',
       },
     ],
-    gas: 3083,
   },
   {
     stateMutability: 'view',
@@ -417,7 +400,6 @@ export const unagiiUtokenAbi = [
         type: 'uint256',
       },
     ],
-    gas: 3328,
   },
   {
     stateMutability: 'view',
@@ -430,7 +412,6 @@ export const unagiiUtokenAbi = [
         type: 'uint256',
       },
     ],
-    gas: 2928,
   },
   {
     stateMutability: 'view',
@@ -448,7 +429,6 @@ export const unagiiUtokenAbi = [
         type: 'uint256',
       },
     ],
-    gas: 3173,
   },
   {
     stateMutability: 'view',
@@ -461,7 +441,6 @@ export const unagiiUtokenAbi = [
         type: 'bytes32',
       },
     ],
-    gas: 2988,
   },
   {
     stateMutability: 'view',
@@ -474,7 +453,6 @@ export const unagiiUtokenAbi = [
         type: 'address',
       },
     ],
-    gas: 3018,
   },
   {
     stateMutability: 'view',
@@ -487,7 +465,6 @@ export const unagiiUtokenAbi = [
         type: 'address',
       },
     ],
-    gas: 3048,
   },
   {
     stateMutability: 'view',
@@ -500,7 +477,6 @@ export const unagiiUtokenAbi = [
         type: 'address',
       },
     ],
-    gas: 3078,
   },
   {
     stateMutability: 'view',
@@ -513,7 +489,6 @@ export const unagiiUtokenAbi = [
         type: 'address',
       },
     ],
-    gas: 3108,
   },
   {
     stateMutability: 'view',
@@ -531,7 +506,6 @@ export const unagiiUtokenAbi = [
         type: 'uint256',
       },
     ],
-    gas: 3353,
   },
 ] as const;
 

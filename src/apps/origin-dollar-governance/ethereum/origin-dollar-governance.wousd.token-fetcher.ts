@@ -12,7 +12,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { OriginDollarContractFactory, Wousd } from '../contracts';
+import { OriginDollarGovernanceContractFactory, Wousd } from '../contracts';
 const oneEther = ethers.constants.WeiPerEther;
 const format = v => ethers.utils.formatUnits(v);
 
@@ -22,7 +22,8 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarContractFactory) private readonly contractFactory: OriginDollarContractFactory,
+    @Inject(OriginDollarGovernanceContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceContractFactory,
   ) {
     super(appToolkit);
   }
