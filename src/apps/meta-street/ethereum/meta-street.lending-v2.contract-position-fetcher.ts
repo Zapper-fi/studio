@@ -102,7 +102,7 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
     super(appToolkit);
   }
 
-  getContract(_address: string): PoolV2 {
+  getContract(_address: string) {
     return this.contractFactory.poolV2({ address: _address, network: this.network });
   }
 
@@ -211,7 +211,7 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
     const redemptionIds = Array.from({ length: deposit.redemptionId.toNumber() }, (_, index) => index + 1);
     const pool = multicall.wrap(contract);
     const redemptionsAvailable = await Promise.all(
-      redemptionIds.map(async id => await pool.redemptionAvailable(address, tick, BigNumber.from(id))),
+      redemptionIds.map(async id => await pool.read.redemptionAvailable(address, tick, BigNumber.from(id))),
     );
     const redeemed: Redemption = redemptionsAvailable.reduce(
       (redemptionAvailable, { amount, shares }) => ({

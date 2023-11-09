@@ -26,7 +26,7 @@ export class EthereumSwellSwethTokenFetcher extends AppTokenTemplatePositionFetc
     super(appToolkit);
   }
 
-  getContract(_address: string): Sweth {
+  getContract(_address: string) {
     return this.contractFactory.sweth({ network: this.network, address: _address });
   }
 

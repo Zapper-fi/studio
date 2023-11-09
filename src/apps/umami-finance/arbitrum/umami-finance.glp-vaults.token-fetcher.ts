@@ -43,7 +43,7 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
     super(appToolkit);
   }
 
-  getContract(_address: string): UmamiFinanceGlpVault {
+  getContract(_address: string) {
     return this.umamiFinanceContractFactory.umamiFinanceGlpVault({ address: _address, network: this.network });
   }
 

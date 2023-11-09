@@ -32,7 +32,7 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
     super(appToolkit);
   }
 
-  getContract(_address: string): OlympusBoostedLiquidityManager {
+  getContract(_address: string) {
     return this.olympusContractFactory.olympusBoostedLiquidityManager({ address: _address, network: this.network });
   }
 

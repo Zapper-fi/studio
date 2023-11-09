@@ -47,7 +47,7 @@ export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends C
     super(appToolkit);
   }
 
-  getContract(_address: string): Contract {
+  getContract(_address: string) {
     return this.meanFinanceContractFactory.meanFinanceOptimismAirdrop({
       address: _address,
       network: this.network,

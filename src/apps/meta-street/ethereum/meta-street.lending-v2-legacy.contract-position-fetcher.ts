@@ -102,7 +102,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     super(appToolkit);
   }
 
-  getContract(_address: string): PoolV2Legacy {
+  getContract(_address: string) {
     return this.contractFactory.poolV2Legacy({ address: _address, network: this.network });
   }
 

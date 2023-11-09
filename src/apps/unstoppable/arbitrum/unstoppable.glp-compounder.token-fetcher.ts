@@ -23,7 +23,7 @@ export class ArbitrumUnstoppableGlpCompounderTokenFetcher extends AppTokenTempla
     super(appToolkit);
   }
 
-  getContract(_address: string): UnstoppableGlpVault {
+  getContract(_address: string) {
     return this.unstoppableContractFactory.unstoppableGlpVault({ address: _address, network: this.network });
   }
 

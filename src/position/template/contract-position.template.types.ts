@@ -1,6 +1,7 @@
 import { Contract } from '@ethersproject/contracts';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
+import { ViemMulticallDataLoader } from '~multicall';
 
-import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
@@ -19,21 +20,21 @@ export type UnderlyingTokenDefinition = {
 
 // PHASE 1: List definitions
 export type GetDefinitionsParams = {
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
 };
 
 // PHASE 2: Build position objects
-export type ContractPositionBuilderContext<T, R = DefaultContractPositionDefinition> = {
-  multicall: IMulticallWrapper;
+export type ContractPositionBuilderContext<T extends Abi, R = DefaultContractPositionDefinition> = {
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
   address: string;
   definition: R;
-  contract: T;
+  contract: GetContractReturnType<T, PublicClient>;
 };
 
 export type ContractPositionBuilderContextWithContractPosition<
-  T,
+  T extends Abi,
   V = DefaultDataProps,
   R = DefaultContractPositionDefinition,
   K extends keyof ContractPosition = keyof ContractPosition,
@@ -41,24 +42,27 @@ export type ContractPositionBuilderContextWithContractPosition<
   contractPosition: Omit<ContractPosition<V>, K>;
 };
 
-export type GetTokenDefinitionsParams<T, R = DefaultContractPositionDefinition> = ContractPositionBuilderContext<T, R>;
+export type GetTokenDefinitionsParams<
+  T extends Abi,
+  R = DefaultContractPositionDefinition,
+> = ContractPositionBuilderContext<T, R>;
 
 export type GetDataPropsParams<
-  T,
+  T extends Abi,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > = ContractPositionBuilderContextWithContractPosition<T, V, R, 'dataProps' | 'displayProps'>;
 
 export type GetDisplayPropsParams<
-  T,
+  T extends Abi,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > = ContractPositionBuilderContextWithContractPosition<T, V, R, 'displayProps'>;
 
 // PHASE 3: Get balances
-export type GetTokenBalancesParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = {
+export type GetTokenBalancesParams<T extends Abi, V extends DefaultDataProps = DefaultDataProps> = {
   address: string;
   contractPosition: ContractPosition<V>;
-  contract: T;
-  multicall: IMulticallWrapper;
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };

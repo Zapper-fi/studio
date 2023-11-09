@@ -30,7 +30,7 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(_address: string): EnsuroEtoken {
+  getContract(_address: string) {
     return this.ensuroContractFactory.ensuroEtoken({ address: _address, network: this.network });
   }
 

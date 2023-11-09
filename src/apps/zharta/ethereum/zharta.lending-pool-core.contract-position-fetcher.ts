@@ -32,7 +32,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
     super(appToolkit);
   }
 
-  getContract(_address: string): ZhartaLendingPoolCore {
+  getContract(_address: string) {
     return this.contractFactory.zhartaLendingPoolCore({ address: _address, network: this.network });
   }
 
