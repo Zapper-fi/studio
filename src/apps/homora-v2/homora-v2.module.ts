@@ -10,7 +10,7 @@ import { OptimismHomoraV2FarmContractPositionFetcher } from './optimism/homora-v
 
 @Module({
   providers: [
-    HomoraV2ContractFactory,
+    HomoraV2ViemContractFactory,
     // Ethereum
     EthereumHomoraV2FarmContractPositionFetcher,
     // Avalanche

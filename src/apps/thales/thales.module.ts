@@ -15,7 +15,7 @@ import { OptimismThalesVaultContractPositionFetcher } from './optimism/thales.va
 
 @Module({
   providers: [
-    ThalesContractFactory,
+    ThalesViemContractFactory,
     OptimismThalesStakingContractPositionFetcher,
     ArbitrumThalesStakingContractPositionFetcher,
     OptimismThalesEscrowContractPositionFetcher,

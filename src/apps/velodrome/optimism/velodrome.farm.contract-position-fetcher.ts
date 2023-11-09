@@ -15,7 +15,8 @@ import {
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
 import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
-import { VelodromeContractFactory, VelodromeGauge } from '../contracts';
+import { VelodromeViemContractFactory } from '../contracts';
+import { VelodromeGauge } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismVelodromeStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<VelodromeGauge> {
@@ -29,7 +30,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromeGauge {
+  getContract(address: string) {
     return this.contractFactory.velodromeGauge({ address, network: this.network });
   }
 
@@ -42,7 +43,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<VelodromeGauge>) {
-    const numRewards = Number(await contract.rewardsListLength());
+    const numRewards = Number(await contract.read.rewardsListLength());
     return Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
   }
 

@@ -22,7 +22,7 @@ export abstract class PoolTogetherV3SponsorshipTokenFetcher extends PoolTogether
     super(appToolkit, contractFactory);
   }
 
-  getContract(address: string): Erc20 {
+  getContract(address: string) {
     return this.contractFactory.erc20({ address, network: this.network });
   }
 

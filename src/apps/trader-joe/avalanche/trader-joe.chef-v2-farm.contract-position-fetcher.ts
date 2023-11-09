@@ -13,7 +13,8 @@ import {
   GetMasterChefTokenBalancesParams,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { TraderJoeChefV2, TraderJoeChefV2Rewarder, TraderJoeContractFactory } from '../contracts';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeChefV2, TraderJoeChefV2Rewarder } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -30,7 +31,7 @@ export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterC
     super(appToolkit);
   }
 
-  getContract(address: string): TraderJoeChefV2 {
+  getContract(address: string) {
     return this.traderJoeContractFactory.traderJoeChefV2({ address, network: this.network });
   }
 
@@ -67,7 +68,7 @@ export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterC
   }
 
   async getExtraRewardTokenAddresses(contract: TraderJoeChefV2Rewarder): Promise<string[]> {
-    return [await contract.rewardToken()];
+    return [await contract.read.rewardToken()];
   }
 
   async getExtraRewardTokenRewardRates({

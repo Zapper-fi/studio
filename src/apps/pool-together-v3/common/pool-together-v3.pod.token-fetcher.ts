@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV3ContractFactory, PoolTogetherV3Pod } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherV3Pod } from '../contracts/viem';
 
 type PoolTogetherV3PodDefinition = DefaultAppTokenDefinition & {
   underlyingTokenAddress: string;
@@ -31,7 +32,7 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): PoolTogetherV3Pod {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherV3Pod({ address, network: this.network });
   }
 
@@ -47,12 +48,12 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PoolTogetherV3Pod>) {
-    const pricePerShareRaw = await contract.getPricePerShare();
+    const pricePerShareRaw = await contract.read.getPricePerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [pricePerShare];
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PoolTogetherV3Pod>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 }

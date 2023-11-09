@@ -38,7 +38,7 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
+  getContract(address: string) {
     return this.appToolkit.globalContracts.erc20({ address: address, network: this.network });
   }
 
@@ -71,7 +71,7 @@ export class OptimismPolynomialSmartWalletContractPositionFetcher extends Contra
   }
 
   async getDataProps({ contract }): Promise<PolynomialSmartWalletDataProp> {
-    if ((await contract.symbol()) != 'sUSD') {
+    if ((await contract.read.symbol()) != 'sUSD') {
       return { liquidity: 0 };
     }
     const { data } = await Axios.get<{ tvl: number }>('https://perps-api-experimental.polynomial.fi/snx-perps/tvl');

@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 
-import { RhinoFiContractFactory, RhinoFiBridge } from '../contracts';
+import { RhinoFiViemContractFactory } from '../contracts';
+import { RhinoFiBridge } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRhinoFiBridgeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RhinoFiBridge> {
@@ -17,7 +18,7 @@ export class EthereumRhinoFiBridgeContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): RhinoFiBridge {
+  getContract(address: string) {
     return this.contractFactory.rhinoFiBridge({ address, network: this.network });
   }
 

@@ -16,7 +16,7 @@ export type VelodromeFeesDefinition = {
 export class OptimismVelodromeFeesContractPositionFetcher extends VotingRewardsContractPositionFetcher<VelodromeFees> {
   groupLabel = 'Fees';
 
-  getContract(address: string): VelodromeFees {
+  getContract(address: string) {
     return this.contractFactory.velodromeFees({ address, network: this.network });
   }
 

@@ -7,6 +7,6 @@ import { RubiconViemContractFactory } from './contracts';
 import { OptimismRubiconBathTokenFetcher } from './optimism/rubicon.bath.token-fetcher';
 
 @Module({
-  providers: [RubiconContractFactory, RubiconBathTokenDefinitionResolver, OptimismRubiconBathTokenFetcher],
+  providers: [RubiconViemContractFactory, RubiconBathTokenDefinitionResolver, OptimismRubiconBathTokenFetcher],
 })
 export class RubiconAppModule extends AbstractApp() {}

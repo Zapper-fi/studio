@@ -13,7 +13,8 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '../common/compound.borrow.contract-position-fetcher';
-import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
+import { CompoundViemContractFactory } from '../contracts';
+import { CompoundComptroller, CompoundCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<

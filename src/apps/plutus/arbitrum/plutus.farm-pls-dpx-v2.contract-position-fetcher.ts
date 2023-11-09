@@ -13,7 +13,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusFarmPlsDpxV2 } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusFarmPlsDpxV2 } from '../contracts/viem';
 
 export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
   label: string;
@@ -34,7 +35,7 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsDpxV2 {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsDpxV2({ address, network: this.network });
   }
 
@@ -55,14 +56,14 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsDpxV2, SingleStakingFarmDataProps>) {
-    const rewardsDistro = await contract.REWARDS_DISTRO();
+    const rewardsDistro = await contract.read.REWARDS_DISTRO();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsDpxV2({
       address: rewardsDistro,
       network: this.network,
     });
 
     const emissions = await rewardsDistroContract.getEmissions();
-    const lastRewardSecond = await contract.lastRewardSecond();
+    const lastRewardSecond = await contract.read.lastRewardSecond();
     const duration = Date.now() / 1000 - lastRewardSecond;
     const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
     return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, dpxEmissions];
@@ -71,14 +72,14 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
   async getIsActive({
     contract,
   }: GetDataPropsParams<PlutusFarmPlsDpxV2, SingleStakingFarmDataProps, PlutusFarmDefinition>): Promise<boolean> {
-    const rewardsDistro = await contract.REWARDS_DISTRO();
+    const rewardsDistro = await contract.read.REWARDS_DISTRO();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsDpxV2({
       address: rewardsDistro,
       network: this.network,
     });
 
     const emissions = await rewardsDistroContract.getEmissions();
-    const lastRewardSecond = await contract.lastRewardSecond();
+    const lastRewardSecond = await contract.read.lastRewardSecond();
     const duration = Date.now() / 1000 - lastRewardSecond;
     const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
 

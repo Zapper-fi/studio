@@ -33,7 +33,7 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
 
 @Module({
   providers: [
-    StargateContractFactory,
+    StargateViemContractFactory,
     // Arbitrum
     ArbitrumStargateEthTokenFetcher,
     ArbitrumStargateFarmContractPositionFetcher,

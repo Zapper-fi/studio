@@ -19,7 +19,7 @@ export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): TokemakAccToke {
+  getContract(address: string) {
     return this.contractFactory.tokemakAccToke({ network: this.network, address });
   }
 
@@ -28,7 +28,7 @@ export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TokemakAccToke>) {
-    return [{ address: await contract.toke(), network: this.network }];
+    return [{ address: await contract.read.toke(), network: this.network }];
   }
 
   async getPricePerShare() {

@@ -68,7 +68,7 @@ export class ReflexerSafeContractPositionFetcher extends CustomContractPositionT
     super(appToolkit);
   }
 
-  getContract(address: string): ReflexerSafeJoin {
+  getContract(address: string) {
     return this.contractFactory.reflexerSafeJoin({ address, network: this.network });
   }
 

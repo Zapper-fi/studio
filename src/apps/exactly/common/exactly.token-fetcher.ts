@@ -16,7 +16,8 @@ import type {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { ExactlyContractFactory, type Market } from '../contracts';
+import { ExactlyViemContractFactory } from '../contracts';
+import { type Market } from '../contracts/viem';
 
 import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 

@@ -8,7 +8,8 @@ import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { StakingThales, ThalesContractFactory } from '../contracts';
+import { ThalesViemContractFactory } from '../contracts';
+import { StakingThales } from '../contracts/viem';
 
 export abstract class ThalesStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StakingThales> {
   groupLabel = 'Staking';
@@ -21,7 +22,7 @@ export abstract class ThalesStakingContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): StakingThales {
+  getContract(address: string) {
     return this.contractFactory.stakingThales({ network: this.network, address });
   }
 
@@ -30,7 +31,7 @@ export abstract class ThalesStakingContractPositionFetcher extends ContractPosit
   }
 
   async getTokenDefinitions({ contract }) {
-    const thalesAddress = await contract.stakingToken();
+    const thalesAddress = await contract.read.stakingToken();
     return [
       {
         metaType: MetaType.SUPPLIED,

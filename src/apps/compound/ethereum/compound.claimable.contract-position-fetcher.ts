@@ -8,7 +8,8 @@ import {
   CompoundClaimableContractPositionFetcher,
   CompoundClaimablePositionDataProps,
 } from '../common/compound.claimable.contract-position-fetcher';
-import { CompoundComptroller, CompoundContractFactory, CompoundLens } from '../contracts';
+import { CompoundViemContractFactory } from '../contracts';
+import { CompoundComptroller, CompoundLens } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCompoundClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<

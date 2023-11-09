@@ -3,7 +3,8 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
-import { PancakeswapContractFactory, PancakeswapStablePool, PancakeswapStablePoolRegistry } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
+import { PancakeswapStablePool, PancakeswapStablePoolRegistry } from '../contracts/viem';
 
 import {
   PancakeswapPoolDynamicTokenFetcher,
@@ -47,12 +48,12 @@ export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolD
   }
 
   async resolveCoinAddresses({ contract }: ResolveCoinAddressesParams<PancakeswapStablePool>) {
-    const coinCount = await contract.N_COINS();
+    const coinCount = await contract.read.N_COINS();
     return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.coins(coinIndex)));
   }
 
   async resolveReserves({ contract }: ResolveReservesParams<PancakeswapStablePool>) {
-    const coinCount = await contract.N_COINS();
+    const coinCount = await contract.read.N_COINS();
     return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.balances(coinIndex)));
   }
 

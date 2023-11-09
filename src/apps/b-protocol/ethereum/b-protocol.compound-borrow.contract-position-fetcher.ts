@@ -15,7 +15,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { BProtocolCompoundComptroller, BProtocolCompoundToken, BProtocolContractFactory } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
+import { BProtocolCompoundComptroller, BProtocolCompoundToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -42,7 +43,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
   }
 
   async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
-    const cTokenAddresses = await contract.getAllMarkets();
+    const cTokenAddresses = await contract.read.getAllMarkets();
     const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }
@@ -59,7 +60,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
     contract,
     multicall,
   }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    const cTokenAddress = await contract.cToken();
+    const cTokenAddress = await contract.read.cToken();
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)
@@ -68,7 +69,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
   }
 
   async getCash({ contract, multicall }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    const cTokenAddress = await contract.cToken();
+    const cTokenAddress = await contract.read.cToken();
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)

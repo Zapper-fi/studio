@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory, LemmaXUsdl } from '../contracts';
+import { LemmaFinanceViemContractFactory } from '../contracts';
+import { LemmaXUsdl } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismLemmaFinanceXUsdlTokenFetcher extends AppTokenTemplatePositionFetcher<LemmaXUsdl> {
@@ -18,7 +19,7 @@ export class OptimismLemmaFinanceXUsdlTokenFetcher extends AppTokenTemplatePosit
     super(appToolkit);
   }
 
-  getContract(address: string): LemmaXUsdl {
+  getContract(address: string) {
     return this.contractFactory.lemmaXUsdl({ address, network: this.network });
   }
 
@@ -31,7 +32,7 @@ export class OptimismLemmaFinanceXUsdlTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<LemmaXUsdl>) {
-    const pricePerShareRaw = await contract.assetsPerShare();
+    const pricePerShareRaw = await contract.read.assetsPerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [1 / pricePerShare];
   }

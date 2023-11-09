@@ -6,7 +6,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { RocketDaoNodeTrusted, RocketPoolContractFactory } from '../contracts';
+import { RocketPoolViemContractFactory } from '../contracts';
+import { RocketDaoNodeTrusted } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketDaoNodeTrusted> {
@@ -19,7 +20,7 @@ export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends Cont
     super(appToolkit);
   }
 
-  getContract(address: string): RocketDaoNodeTrusted {
+  getContract(address: string) {
     return this.contractFactory.rocketDaoNodeTrusted({ address, network: this.network });
   }
 

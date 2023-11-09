@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { OlympusBoostedLiquidityManager, OlympusContractFactory } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusBoostedLiquidityManager } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusBleContractPositionFetcher extends ContractPositionTemplatePositionFetcher<OlympusBoostedLiquidityManager> {
@@ -40,7 +41,7 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
       address: this.LIQUIDITY_REGISTRY_ADDRESS,
       network: this.network,
     });
-    const activeVaultsCount = (await contract.activeVaultCount()).toNumber();
+    const activeVaultsCount = (await contract.read.activeVaultCount()).toNumber();
     const countArray = Array(activeVaultsCount).fill(0);
     const addresses = await Promise.all(
       countArray.map(async (value, position) => {

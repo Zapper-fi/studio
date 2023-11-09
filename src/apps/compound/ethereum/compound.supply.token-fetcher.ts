@@ -10,7 +10,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { CompoundSupplyTokenFetcher, GetMarketsParams } from '../common/compound.supply.token-fetcher';
-import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
+import { CompoundViemContractFactory } from '../contracts';
+import { CompoundComptroller, CompoundCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<

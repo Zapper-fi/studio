@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { LiquityContractFactory, LiquityStaking } from '../contracts';
+import { LiquityViemContractFactory } from '../contracts';
+import { LiquityStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -30,7 +31,7 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
     super(appToolkit);
   }
 
-  getContract(address: string): LiquityStaking {
+  getContract(address: string) {
     return this.contractFactory.liquityStaking({ address, network: this.network });
   }
 

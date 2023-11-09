@@ -64,7 +64,7 @@ export abstract class DopexSsovContractPositionFetcher<
       ssovDefinitions.map(async ({ address, depositTokenAddress, extraRewardTokenAddresses }) => {
         const _contract = this.contractFactory.dopexDpxSsov({ address, network: this.network });
         const contract = multicall.wrap(_contract);
-        const currentEpoch = Number(await contract.currentEpoch());
+        const currentEpoch = Number(await contract.read.currentEpoch());
 
         const nextEpoch = currentEpoch + 1;
         const nextEpochStartTime = await contract.epochStartTimes(nextEpoch).then(Number);

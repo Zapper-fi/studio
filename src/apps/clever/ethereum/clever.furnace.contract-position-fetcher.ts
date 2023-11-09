@@ -7,7 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverFurnace } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverFurnace } from '../contracts/viem';
 
 import { CVX, CLEVCVX } from './addresses';
 
@@ -22,7 +23,7 @@ export class EthereumCleverFurnaceContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): CleverFurnace {
+  getContract(address: string) {
     return this.contractFactory.cleverFurnace({ address, network: this.network });
   }
 

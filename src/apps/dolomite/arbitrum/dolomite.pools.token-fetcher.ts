@@ -15,7 +15,8 @@ import {
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { DOLOMITE_AMM_FACTORY_ADDRESSES } from '../common/utils';
-import { DolomiteAmmFactory, DolomiteAmmPair, DolomiteContractFactory } from '../contracts';
+import { DolomiteViemContractFactory } from '../contracts';
+import { DolomiteAmmFactory, DolomiteAmmPair } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<

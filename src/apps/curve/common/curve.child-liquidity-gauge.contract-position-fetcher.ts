@@ -20,7 +20,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CurveChildLiquidityGauge, CurveContractFactory } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveChildLiquidityGauge } from '../contracts/viem';
 
 import { GaugeType } from './curve.pool-gauge.contract-position-fetcher';
 
@@ -51,7 +52,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     super(appToolkit);
   }
 
-  getContract(address: string): CurveChildLiquidityGauge {
+  getContract(address: string) {
     return this.contractFactory.curveChildLiquidityGauge({ address, network: this.network });
   }
 
@@ -74,7 +75,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<CurveChildLiquidityGauge>) {
-    const lpTokenAddress = await contract.lp_token();
+    const lpTokenAddress = await contract.read.lp_token();
     const definitions = [{ metaType: MetaType.SUPPLIED, address: lpTokenAddress, network: this.network }];
     definitions.push({ metaType: MetaType.CLAIMABLE, address: this.crvTokenAddress, network: this.network });
 
@@ -107,7 +108,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const gaugeType = definition.gaugeType;
 
     // Calculate annual CRV rewards
-    const period = await contract.period();
+    const period = await contract.read.period();
     const periodTimestamp = await contract.period_timestamp(period);
     const periodWeek = Math.floor(periodTimestamp.toNumber() / moment.duration(7, 'days').asSeconds()); // num weeks
 
@@ -118,7 +119,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const crvYearlyRewardInUSD = crvYearlyReward * crvToken.price;
 
     // Calculate annual bonus rewards
-    const rewardTokenCount = await contract.reward_count();
+    const rewardTokenCount = await contract.read.reward_count();
     const individualRewardsInUSD = await Promise.all(
       range(0, Number(rewardTokenCount)).map(async index => {
         const rewardTokenAddressRaw = await contract.reward_tokens(index);

@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { IdleContractFactory, IdleToken } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
+import { IdleToken } from '../contracts/viem';
 
 export type IdleBestYieldTokenDefinition = {
   address: string;
@@ -35,7 +36,7 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): IdleToken {
+  getContract(address: string) {
     return this.contractFactory.idleToken({ address, network: this.network });
   }
 

@@ -22,7 +22,7 @@ import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetc
 
 @Module({
   providers: [
-    QiDaoContractFactory,
+    QiDaoViemContractFactory,
     // Arbitrum
     ArbitrumQiDaoVaultPositionFetcher,
     // Avalanche

@@ -13,7 +13,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusFarmPlsDpx } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusFarmPlsDpx } from '../contracts/viem';
 
 export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
   label: string;
@@ -34,7 +35,7 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsDpx {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsDpx({ address, network: this.network });
   }
 
@@ -56,7 +57,7 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsDpx, SingleStakingFarmDataProps>) {
-    const rewardsDistro = await contract.rewardsDistro();
+    const rewardsDistro = await contract.read.rewardsDistro();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsDpx({
       address: rewardsDistro,
       network: this.network,
@@ -69,7 +70,7 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
   async getIsActive({
     contract,
   }: GetDataPropsParams<PlutusFarmPlsDpx, SingleStakingFarmDataProps, PlutusFarmDefinition>): Promise<boolean> {
-    const rewardsDistro = await contract.rewardsDistro();
+    const rewardsDistro = await contract.read.rewardsDistro();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsDpx({
       address: rewardsDistro,
       network: this.network,

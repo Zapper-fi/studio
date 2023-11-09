@@ -6,7 +6,8 @@ import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { RookContractFactory, RookKToken } from '../contracts';
+import { RookViemContractFactory } from '../contracts';
+import { RookKToken } from '../contracts/viem';
 
 export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetcher<RookKToken> {
   abstract kTokenAddresses: string[];
@@ -20,7 +21,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string): RookKToken {
+  getContract(address: string) {
     return this.contractFactory.rookKToken({ address, network: this.network });
   }
 
@@ -29,7 +30,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<RookKToken>) {
-    const underlyingRaw = await contract.underlying();
+    const underlyingRaw = await contract.read.underlying();
     const underlying = underlyingRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
     return [{ address: underlying, network: this.network }];
   }

@@ -20,7 +20,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { PendleContractFactory, PendleOwnershipToken } from '../contracts';
+import { PendleViemContractFactory } from '../contracts';
+import { PendleOwnershipToken } from '../contracts/viem';
 
 export type PendleOwnershipTokenDataProps = DefaultAppTokenDataProps & {
   expiry: number;
@@ -112,7 +113,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
-    return [{ address: await contract.underlyingYieldToken(), network: this.network }];
+    return [{ address: await contract.read.underlyingYieldToken(), network: this.network }];
   }
 
   async getPricePerShare({

@@ -19,7 +19,7 @@ export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePo
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoPassiveVault {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoPassiveVault({ address, network: this.network });
   }
 
@@ -34,11 +34,11 @@ export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePo
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StakeDaoPassiveVault>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<StakeDaoPassiveVault>) {
-    const pricePerShareRaw = await contract.getPricePerFullShare();
+    const pricePerShareRaw = await contract.read.getPricePerFullShare();
 
     return [Number(pricePerShareRaw) / 10 ** appToken.decimals];
   }

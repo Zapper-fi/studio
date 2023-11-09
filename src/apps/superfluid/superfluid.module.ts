@@ -6,6 +6,6 @@ import { SuperfluidViemContractFactory } from './contracts';
 import { PolygonSuperfluidVaultTokenFetcher } from './polygon/superfluid.vault.token-fetcher';
 
 @Module({
-  providers: [SuperfluidContractFactory, PolygonSuperfluidVaultTokenFetcher],
+  providers: [SuperfluidViemContractFactory, PolygonSuperfluidVaultTokenFetcher],
 })
 export class SuperfluidAppModule extends AbstractApp() {}

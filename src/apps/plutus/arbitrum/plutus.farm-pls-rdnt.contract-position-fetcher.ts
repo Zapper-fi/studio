@@ -31,7 +31,7 @@ export class ArbitrumPlutusFarmPlsRdntContractPositionFetcher extends SingleStak
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsRdnt {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsRdnt({ address, network: this.network });
   }
 

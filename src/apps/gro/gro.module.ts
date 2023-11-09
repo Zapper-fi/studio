@@ -9,7 +9,7 @@ import { EthereumGroVestingContractPositionFetcher } from './ethereum/gro.vestin
 
 @Module({
   providers: [
-    GroContractFactory,
+    GroViemContractFactory,
     // Ethereum
     EthereumGroFarmContractPositionFetcher,
     EthereumGroVestingContractPositionFetcher,

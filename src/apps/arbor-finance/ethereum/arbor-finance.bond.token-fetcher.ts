@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { ArborFinanceContractFactory, ArborFinanceBondToken } from '../contracts';
+import { ArborFinanceViemContractFactory } from '../contracts';
+import { ArborFinanceBondToken } from '../contracts/viem';
 import { BONDS_QUERY, BondHolders } from '../graphql';
 
 export type ArborFinanceBondTokenDefinition = {
@@ -36,7 +37,7 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): ArborFinanceBondToken {
+  getContract(address: string) {
     return this.contractFactory.arborFinanceBondToken({ address, network: this.network });
   }
 
@@ -58,7 +59,7 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<ArborFinanceBondToken>) {
-    return [{ address: await contract.collateralToken(), network: this.network }];
+    return [{ address: await contract.read.collateralToken(), network: this.network }];
   }
 
   async getPricePerShare({

@@ -12,8 +12,8 @@ import { OptimismBeethovenXPoolTokenFetcher } from './optimism/beethoven-x.pool.
 
 @Module({
   providers: [
-    BeethovenXContractFactory,
-    BalancerV2ContractFactory,
+    BeethovenXViemContractFactory,
+    BalancerV2ViemContractFactory,
     // Fantom
     FantomBeethovenXChefContractPositionFetcher,
     FantomBeethovenXPoolTokenFetcher,

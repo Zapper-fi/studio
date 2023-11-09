@@ -4,7 +4,8 @@ import { BigNumberish, BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { RariFuseSupplyTokenFetcher } from '~apps/rari-fuse/common/rari-fuse.supply.token-fetcher';
 
-import { MarketXyzContractFactory, MarketXyzPoolDirectory, MarketXyzPoolLens } from '../contracts';
+import { MarketXyzViemContractFactory } from '../contracts';
+import { MarketXyzPoolDirectory, MarketXyzPoolLens } from '../contracts/viem';
 import { MarketXyzComptroller } from '../contracts/viem/MarketXyzComptroller';
 import { MarketXyzToken } from '../contracts/viem/MarketXyzToken';
 

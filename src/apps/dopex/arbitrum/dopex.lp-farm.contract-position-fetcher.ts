@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { DopexContractFactory, DopexSingleRewardStaking } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexSingleRewardStaking } from '../contracts/viem';
 
 const FARMS = [
   // SUSHI DPX/WETH
@@ -33,7 +34,7 @@ export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFar
     super(appToolkit);
   }
 
-  getContract(address: string): DopexSingleRewardStaking {
+  getContract(address: string) {
     return this.contractFactory.dopexSingleRewardStaking({ address, network: this.network });
   }
 

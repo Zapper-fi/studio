@@ -20,7 +20,7 @@ import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.t
 
 @Module({
   providers: [
-    SynthetixContractFactory,
+    SynthetixViemContractFactory,
     SynthetixMintrSnxHoldersCache,
     // Ethereum
     EthereumSynthetixFarmContractPositionFetcher,

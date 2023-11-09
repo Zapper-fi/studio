@@ -52,7 +52,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexSingleStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.convexSingleStakingRewards({ address, network: this.network });
   }
 
@@ -68,7 +68,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     ];
 
     // Extra rewards
-    const numExtraRewards = await contract.extraRewardsLength();
+    const numExtraRewards = await contract.read.extraRewardsLength();
     const extraRewardTokenAddresses = await Promise.all(
       range(0, Number(numExtraRewards)).map(async v => {
         const vbpAddress = await contract.extraRewards(v);

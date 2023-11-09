@@ -16,7 +16,7 @@ import { PolygonUniswapV3LiquidityContractPositionFetcher } from './polygon/unis
 
 @Module({
   providers: [
-    UniswapV3ContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     // Arbitrum
     ArbitrumUniswapV3LiquidityContractPositionFetcher,

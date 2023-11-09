@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { LyraAvalonContractFactory, LyraLpStaking } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraLpStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -30,7 +31,7 @@ export class EthereumLyraAvalonStakingContractPositionFetcher extends SingleStak
     super(appToolkit);
   }
 
-  getContract(address: string): LyraLpStaking {
+  getContract(address: string) {
     return this.contractFactory.lyraLpStaking({ address, network: this.network });
   }
 
@@ -43,7 +44,7 @@ export class EthereumLyraAvalonStakingContractPositionFetcher extends SingleStak
   }
 
   async getIsActive({ contract }: GetDataPropsParams<LyraLpStaking>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()).gt(0);
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LyraLpStaking, SingleStakingFarmDataProps>) {

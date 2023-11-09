@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusFarmPlsArb } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusFarmPlsArb } from '../contracts/viem';
 
 export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
   label: string;
@@ -30,7 +31,7 @@ export class ArbitrumPlutusFarmPlsArbContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsArb {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsArb({ address, network: this.network });
   }
 

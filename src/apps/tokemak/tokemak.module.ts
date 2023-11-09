@@ -11,7 +11,7 @@ import { EthereumTokemakReactorTokenFetcher } from './ethereum/tokemak.reactor.t
 
 @Module({
   providers: [
-    TokemakContractFactory,
+    TokemakViemContractFactory,
     TokemakClaimableResolver,
     EthereumTokemakReactorTokenFetcher,
     EthereumTokemakFarmContractPositionFetcher,

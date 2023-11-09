@@ -10,7 +10,7 @@ import { EthereumMetaStreetLendingV2ContractPositionFetcher } from './ethereum/m
   providers: [
     EthereumMetaStreetLendingV2ContractPositionFetcher,
     EthereumMetaStreetLendingV2LegacyContractPositionFetcher,
-    MetaStreetContractFactory,
+    MetaStreetViemContractFactory,
   ],
 })
 export class MetaStreetAppModule extends AbstractApp() {}

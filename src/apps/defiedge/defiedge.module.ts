@@ -13,7 +13,7 @@ import { PolygonDefiedgeStrategyTokenFetcher } from './polygon/defiedge.strategy
 
 @Module({
   providers: [
-    DefiedgeContractFactory,
+    DefiedgeViemContractFactory,
     DefiedgeStrategyDefinitionsResolver,
     ArbitrumDefiedgeStrategyTokenFetcher,
     BaseDefiedgeStrategyTokenFetcher,

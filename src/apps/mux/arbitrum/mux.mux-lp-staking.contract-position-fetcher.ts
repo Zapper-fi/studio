@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MuxContractFactory, MuxRewardRouter } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxRewardRouter } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MuxRewardRouter> {
@@ -26,7 +27,7 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  getContract(address: string): MuxRewardRouter {
+  getContract(address: string) {
     return this.contractFactory.muxRewardRouter({ address, network: this.network });
   }
 
@@ -38,17 +39,17 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.mlp(),
+        address: await contract.read.mlp(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.mux(),
+        address: await contract.read.mux(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.weth(),
+        address: await contract.read.weth(),
         network: this.network,
       },
     ];

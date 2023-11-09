@@ -13,7 +13,7 @@ import { EthereumStakeDaoEscrowedQiContractPositionFetcher } from './ethereum/st
 
 @Module({
   providers: [
-    StakeDaoContractFactory,
+    StakeDaoViemContractFactory,
     EthereumStakeDaoLockerTokenFetcher,
     EthereumStakeDaoGaugeContractPositionFetcher,
     EthereumStakeDaoFarmContractPositionFetcher,

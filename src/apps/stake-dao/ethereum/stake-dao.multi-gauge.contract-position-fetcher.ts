@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { StakeDaoContractFactory, StakeDaoMultiGauge } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoMultiGauge } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StakeDaoMultiGauge> {
@@ -25,7 +26,7 @@ export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractP
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoMultiGauge {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoMultiGauge({ address, network: this.network });
   }
 
@@ -41,7 +42,7 @@ export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractP
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.stakingToken(),
+        address: await contract.read.stakingToken(),
         network: this.network,
       },
     ];

@@ -9,7 +9,7 @@ import { EthereumRariFuseSupplyTokenFetcher } from './ethereum/rari-fuse.supply.
 
 @Module({
   providers: [
-    RariFuseContractFactory,
+    RariFuseViemContractFactory,
     // Ethereum
     EthereumRariFuseBorrowContractPositionFetcher,
     EthereumRariFuseSupplyTokenFetcher,

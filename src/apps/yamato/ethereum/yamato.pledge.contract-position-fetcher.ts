@@ -30,7 +30,7 @@ export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositio
     super(appToolkit);
   }
 
-  getContract(address: string): Yamato {
+  getContract(address: string) {
     return this.yamatoContractFactory.yamato({ address, network: this.network });
   }
 

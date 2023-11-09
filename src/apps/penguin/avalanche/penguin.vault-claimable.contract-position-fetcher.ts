@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { PenguinContractFactory, PenguinVault } from '../contracts';
+import { PenguinViemContractFactory } from '../contracts';
+import { PenguinVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalanchePenguinVaultClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PenguinVault> {
@@ -21,7 +22,7 @@ export class AvalanchePenguinVaultClaimableContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): PenguinVault {
+  getContract(address: string) {
     return this.contractFactory.penguinVault({ address, network: this.network });
   }
 

@@ -6,6 +6,6 @@ import { EnzymeFinanceViemContractFactory } from './contracts';
 import { EthereumEnzymeFinanceVaultTokenFetcher } from './ethereum/enzyme-finance.vault.token-fetcher';
 
 @Module({
-  providers: [EnzymeFinanceContractFactory, EthereumEnzymeFinanceVaultTokenFetcher],
+  providers: [EnzymeFinanceViemContractFactory, EthereumEnzymeFinanceVaultTokenFetcher],
 })
 export class EnzymeFinanceAppModule extends AbstractApp() {}

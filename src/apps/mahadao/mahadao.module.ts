@@ -6,6 +6,6 @@ import { MahadaoViemContractFactory } from './contracts';
 import { EthereumMahadaoLockerContractPositionFetcher } from './ethereum/mahadao.locker.contract-position-fetcher';
 
 @Module({
-  providers: [MahadaoContractFactory, EthereumMahadaoLockerContractPositionFetcher],
+  providers: [MahadaoViemContractFactory, EthereumMahadaoLockerContractPositionFetcher],
 })
 export class MahadaoAppModule extends AbstractApp() {}

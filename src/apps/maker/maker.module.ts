@@ -9,7 +9,7 @@ import { EthereumMakerVaultContractPositionFetcher } from './ethereum/maker.vaul
 
 @Module({
   providers: [
-    MakerContractFactory,
+    MakerViemContractFactory,
     EthereumMakerGovernanceContractPositionFetcher,
     EthereumMakerVaultContractPositionFetcher,
     EthereumMakerDsrContractPositionFetcher,

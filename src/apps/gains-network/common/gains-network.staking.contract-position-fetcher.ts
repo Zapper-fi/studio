@@ -7,7 +7,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { GainsNetworkContractFactory, GainsNetworkStaking } from '../contracts';
+import { GainsNetworkViemContractFactory } from '../contracts';
+import { GainsNetworkStaking } from '../contracts/viem';
 
 export abstract class GainsNetworkStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<GainsNetworkStaking> {
   groupLabel = 'Staking';
@@ -19,7 +20,7 @@ export abstract class GainsNetworkStakingContractPositionFetcher extends SingleS
     super(appToolkit);
   }
 
-  getContract(address: string): GainsNetworkStaking {
+  getContract(address: string) {
     return this.contractFactory.gainsNetworkStaking({ address, network: this.network });
   }
 

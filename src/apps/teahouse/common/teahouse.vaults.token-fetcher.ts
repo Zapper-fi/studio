@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { TeahouseVault, TeahouseContractFactory } from '../contracts';
+import { TeahouseViemContractFactory } from '../contracts';
+import { TeahouseVault } from '../contracts/viem';
 
 export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<TeahouseVault> {
   queryFilterFromBlock: number | null;
@@ -21,13 +22,13 @@ export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TeahouseVault>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TeahouseVault>) {
     const assetDecimals = appToken.decimals;
-    const shareDecimals = await contract.decimals();
-    const globalState = await contract.globalState();
+    const shareDecimals = await contract.read.decimals();
+    const globalState = await contract.read.globalState();
     const currentIndex = globalState[2];
     const enterNextCycleEventFilter = contract.filters.EnterNextCycle(null, currentIndex - 1);
     const enterNextCycleEvent = await contract.queryFilter(

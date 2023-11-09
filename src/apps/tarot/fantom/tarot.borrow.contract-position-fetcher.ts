@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { TarotBorrowable, TarotContractFactory } from '../contracts';
+import { TarotViemContractFactory } from '../contracts';
+import { TarotBorrowable } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TarotBorrowable> {
@@ -34,7 +35,7 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
     super(appToolkit);
   }
 
-  getContract(address: string): TarotBorrowable {
+  getContract(address: string) {
     return this.contractFactory.tarotBorrowable({ address, network: this.network });
   }
 
@@ -72,7 +73,7 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<TarotBorrowable>) {
-    const underlyingAddress = await contract.underlying();
+    const underlyingAddress = await contract.read.underlying();
     return [
       {
         metaType: MetaType.BORROWED,

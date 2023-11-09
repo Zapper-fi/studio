@@ -7,7 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { MakerContractFactory, MakerMdcPot } from '../contracts';
+import { MakerViemContractFactory } from '../contracts';
+import { MakerMdcPot } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMakerDsrContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MakerMdcPot> {
@@ -20,7 +21,7 @@ export class EthereumMakerDsrContractPositionFetcher extends ContractPositionTem
     super(appToolkit);
   }
 
-  getContract(address: string): MakerMdcPot {
+  getContract(address: string) {
     return this.contractFactory.makerMdcPot({ address, network: this.network });
   }
 

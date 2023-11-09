@@ -7,7 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { RocketNodeStaking, RocketPoolContractFactory } from '../contracts';
+import { RocketPoolViemContractFactory } from '../contracts';
+import { RocketNodeStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRocketPoolStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketNodeStaking> {
@@ -20,7 +21,7 @@ export class EthereumRocketPoolStakingContractPositionFetcher extends ContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): RocketNodeStaking {
+  getContract(address: string) {
     return this.contractFactory.rocketNodeStaking({ address, network: this.network });
   }
 

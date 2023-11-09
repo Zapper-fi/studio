@@ -8,7 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { RariContractFactory, RariGovernanceTokenDistributor } from '../contracts';
+import { RariViemContractFactory } from '../contracts';
+import { RariGovernanceTokenDistributor } from '../contracts/viem';
 
 const FARMS = [
   // RGT
@@ -30,7 +31,7 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
     super(appToolkit);
   }
 
-  getContract(address: string): RariGovernanceTokenDistributor {
+  getContract(address: string) {
     return this.contractFactory.rariGovernanceTokenDistributor({ address, network: this.network });
   }
 

@@ -5,7 +5,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetAddressesParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { WombatExchangePoolToken, WombatExchangeContractFactory } from '../contracts';
+import { WombatExchangeViemContractFactory } from '../contracts';
+import { WombatExchangePoolToken } from '../contracts/viem';
 
 export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePositionFetcher<WombatExchangePoolToken> {
   constructor(
@@ -17,7 +18,7 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
 
   abstract poolAddresses: string[];
 
-  getContract(address: string): WombatExchangePoolToken {
+  getContract(address: string) {
     return this.contractFactory.wombatExchangePoolToken({ address, network: this.network });
   }
 
@@ -38,6 +39,6 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<WombatExchangePoolToken>) {
-    return [{ address: await contract.underlyingToken(), network: this.network }];
+    return [{ address: await contract.read.underlyingToken(), network: this.network }];
   }
 }

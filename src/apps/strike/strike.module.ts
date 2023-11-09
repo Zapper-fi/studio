@@ -9,7 +9,7 @@ import { EthereumStrikeSupplyTokenFetcher } from './ethereum/strike.supply.token
 
 @Module({
   providers: [
-    StrikeContractFactory,
+    StrikeViemContractFactory,
     EthereumStrikePositionPresenter,
     EthereumStrikeBorrowContractPositionFetcher,
     EthereumStrikeSupplyTokenFetcher,

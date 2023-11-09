@@ -21,7 +21,7 @@ export class ArbitrumPlutusVaultTokenFetcher extends AppTokenTemplatePositionFet
 > {
   groupLabel = 'Vault';
 
-  getContract(address: string): Erc20 {
+  getContract(address: string) {
     return this.appToolkit.globalContracts.erc20({ address, network: this.network });
   }
 

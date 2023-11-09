@@ -10,7 +10,7 @@ import { EthereumCompoundSupplyTokenFetcher } from './ethereum/compound.supply.t
 
 @Module({
   providers: [
-    CompoundContractFactory,
+    CompoundViemContractFactory,
     EthereumCompoundBorrowContractPositionFetcher,
     EthereumCompoundPositionPresenter,
     EthereumCompoundClaimableContractPositionFetcher,

@@ -59,7 +59,7 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
     super(appToolkit);
   }
 
-  getContract(address: string): MuxVault {
+  getContract(address: string) {
     return this.contractFactory.muxVault({ address, network: this.network });
   }
 

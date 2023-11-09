@@ -14,7 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { InsuraceContractFactory, InsuracePoolToken } from '../contracts';
+import { InsuraceViemContractFactory } from '../contracts';
+import { InsuracePoolToken } from '../contracts/viem';
 
 export type InsuraceMiningTokenDefinition = {
   address: string;
@@ -36,7 +37,7 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): InsuracePoolToken {
+  getContract(address: string) {
     return this.contractFactory.insuracePoolToken({ address, network: this.network });
   }
 

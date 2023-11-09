@@ -31,7 +31,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
     super(appToolkit);
   }
 
-  getContract(address: string): SonneStakedSonne {
+  getContract(address: string) {
     return this.contractFactory.sonneStakedSonne({ address, network: this.network });
   }
 
@@ -80,7 +80,7 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<SonneStakedSonne>) {
-    return `${await contract.symbol()}`;
+    return `${await contract.read.symbol()}`;
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<SonneStakedSonne>) {

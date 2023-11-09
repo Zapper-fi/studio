@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { BalancerV2ContractFactory, BalancerVeBal } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerVeBal } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BalancerVeBal> {
@@ -25,7 +26,7 @@ export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): BalancerVeBal {
+  getContract(address: string) {
     return this.contractFactory.balancerVeBal({ address, network: this.network });
   }
 
@@ -37,7 +38,7 @@ export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends Contr
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.token(),
+        address: await contract.read.token(),
         network: this.network,
       },
     ];

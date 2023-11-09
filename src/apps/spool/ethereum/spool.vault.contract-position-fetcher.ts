@@ -134,7 +134,7 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
     super(appToolkit);
   }
 
-  getContract(address: string): SpoolVault {
+  getContract(address: string) {
     return this.contractFactory.spoolVault({ address, network: this.network });
   }
 

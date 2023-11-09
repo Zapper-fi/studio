@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LooksRareCompounder, LooksRareContractFactory } from '../contracts';
+import { LooksRareViemContractFactory } from '../contracts';
+import { LooksRareCompounder } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLooksRareCompounderContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareCompounder> {
@@ -26,7 +27,7 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
     super(appToolkit);
   }
 
-  getContract(address: string): LooksRareCompounder {
+  getContract(address: string) {
     return this.contractFactory.looksRareCompounder({ address, network: this.network });
   }
 
@@ -38,7 +39,7 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.looksRareToken(),
+        address: await contract.read.looksRareToken(),
         network: this.network,
       },
     ];

@@ -9,7 +9,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
+import { IronBankViemContractFactory } from '../contracts';
+import { IronBankComptroller, IronBankCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher<IronBankCToken, IronBankComptroller> {

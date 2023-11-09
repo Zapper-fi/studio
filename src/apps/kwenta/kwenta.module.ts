@@ -14,8 +14,8 @@ import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.
 
 @Module({
   providers: [
-    KwentaContractFactory,
-    SynthetixContractFactory,
+    KwentaViemContractFactory,
+    SynthetixViemContractFactory,
     OptimismKwentaPerpV1CrossMarginContractPositionFetcher,
     OptimismKwentaPerpV2SmartMarginContractPositionFetcher,
     OptimismKwentaStakingContractPositionFetcher,

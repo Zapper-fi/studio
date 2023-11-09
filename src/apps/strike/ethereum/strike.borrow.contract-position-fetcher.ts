@@ -21,7 +21,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { StrikeComptroller, StrikeContractFactory, StrikeSToken } from '../contracts';
+import { StrikeViemContractFactory } from '../contracts';
+import { StrikeComptroller, StrikeSToken } from '../contracts/viem';
 
 export type StrikeBorrowTokenDataProps = CompoundBorrowTokenDataProps & {
   collateralFactor: number;

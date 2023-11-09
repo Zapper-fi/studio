@@ -18,7 +18,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { SolidLizardDefinitionsResolver } from '../common/solid-lizard.definitions-resolver';
-import { SolidLizardContractFactory, SolidLizardPool } from '../contracts';
+import { SolidLizardViemContractFactory } from '../contracts';
+import { SolidLizardPool } from '../contracts/viem';
 
 export type SolidLizardPoolTokenDefinition = {
   address: string;
@@ -40,7 +41,7 @@ export class ArbitrumSolidLizardPoolsTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): SolidLizardPool {
+  getContract(address: string) {
     return this.contractFactory.solidLizardPool({ address, network: this.network });
   }
 
@@ -54,8 +55,8 @@ export class ArbitrumSolidLizardPoolsTokenFetcher extends AppTokenTemplatePositi
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<SolidLizardPool>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 

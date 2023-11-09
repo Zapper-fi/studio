@@ -18,7 +18,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { VendorFinanceContractFactory, VendorFinancePool } from '../contracts';
+import { VendorFinanceViemContractFactory } from '../contracts';
+import { VendorFinancePool } from '../contracts/viem';
 
 import { LENDING_POOLS_QUERY } from './getLendingPoolsQuery';
 import {
@@ -37,7 +38,7 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
     super(appToolkit);
   }
 
-  getContract(address: string): VendorFinancePool {
+  getContract(address: string) {
     return this.contractFactory.vendorFinancePool({ address, network: this.network });
   }
 

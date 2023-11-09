@@ -9,7 +9,7 @@ import { EthereumSaddlePoolTokenFetcher } from './ethereum/saddle.pool.token-fet
 
 @Module({
   providers: [
-    SaddleContractFactory,
+    SaddleViemContractFactory,
     // Ethereum
     EthereumSaddleCommunalFarmContractPositionFetcher,
     EthereumSaddleMiniChefV2FarmContractPositionFetcher,

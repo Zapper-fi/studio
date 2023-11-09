@@ -14,7 +14,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
-import { SablierContractFactory, SablierStream } from '../contracts';
+import { SablierViemContractFactory } from '../contracts';
+import { SablierStream } from '../contracts/viem';
 
 export type SablierStreamContractPositionDataProps = {
   deposited: number;
@@ -48,7 +49,7 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
     return tokens.map(v => ({ address: streamAddress, tokenAddress: v }));
   }
 
-  getContract(address: string): SablierStream {
+  getContract(address: string) {
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 

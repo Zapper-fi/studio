@@ -11,7 +11,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { EaseContractFactory, EaseRcaShield } from '../contracts';
+import { EaseViemContractFactory } from '../contracts';
+import { EaseRcaShield } from '../contracts/viem';
 
 import { EaseRcaDefinitionsResolver } from './ease.rca-definition-resolver';
 
@@ -34,7 +35,7 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
     super(appToolkit);
   }
 
-  getContract(address: string): EaseRcaShield {
+  getContract(address: string) {
     return this.contractFactory.easeRcaShield({ network: this.network, address });
   }
 

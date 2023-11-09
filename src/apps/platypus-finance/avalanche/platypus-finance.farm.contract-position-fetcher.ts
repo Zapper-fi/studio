@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PlatypusFinanceContractFactory, PlatypusFinanceMasterPlatypusV1 } from '../contracts';
+import { PlatypusFinanceViemContractFactory } from '../contracts';
+import { PlatypusFinanceMasterPlatypusV1 } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalanchePlatypusFinanceFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlatypusFinanceMasterPlatypusV1> {
@@ -23,7 +24,7 @@ export class AvalanchePlatypusFinanceFarmContractPositionFetcher extends MasterC
     super(appToolkit);
   }
 
-  getContract(address: string): PlatypusFinanceMasterPlatypusV1 {
+  getContract(address: string) {
     return this.contractFactory.platypusFinanceMasterPlatypusV1({ address, network: this.network });
   }
 

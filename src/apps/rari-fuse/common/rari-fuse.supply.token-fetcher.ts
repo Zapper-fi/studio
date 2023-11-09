@@ -56,7 +56,7 @@ export abstract class RariFuseSupplyTokenFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getTokenContract(address);
   }
 

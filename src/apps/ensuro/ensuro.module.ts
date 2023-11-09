@@ -7,6 +7,6 @@ import { EnsuroViemContractFactory } from './contracts';
 import { PolygonEnsuroETokenTokenFetcher } from './polygon/ensuro.e-token.token-fetcher';
 
 @Module({
-  providers: [EnsuroContractFactory, EnsuroApiRegistry, PolygonEnsuroETokenTokenFetcher],
+  providers: [EnsuroViemContractFactory, EnsuroApiRegistry, PolygonEnsuroETokenTokenFetcher],
 })
 export class EnsuroAppModule extends AbstractApp() {}

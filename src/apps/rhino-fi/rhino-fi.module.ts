@@ -10,7 +10,7 @@ import { EthereumRhinoFiDepositContractPositionFetcher } from './ethereum/rhino-
 
 @Module({
   providers: [
-    RhinoFiContractFactory,
+    RhinoFiViemContractFactory,
     RhinoFiCacheManager,
     RhinoFiApiClient,
     EthereumRhinoFiBridgeContractPositionFetcher,

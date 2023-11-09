@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { ConvexContractFactory, ConvexStashTokenWrapped } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexStashTokenWrapped } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConvexStashTokenWrappedTokenFetcher extends AppTokenTemplatePositionFetcher<ConvexStashTokenWrapped> {
@@ -18,7 +19,7 @@ export class EthereumConvexStashTokenWrappedTokenFetcher extends AppTokenTemplat
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexStashTokenWrapped {
+  getContract(address: string) {
     return this.contractFactory.convexStashTokenWrapped({ address, network: this.network });
   }
 
@@ -34,7 +35,7 @@ export class EthereumConvexStashTokenWrappedTokenFetcher extends AppTokenTemplat
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<ConvexStashTokenWrapped>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare() {

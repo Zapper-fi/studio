@@ -17,7 +17,7 @@ import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-f
 
 @Module({
   providers: [
-    AuraContractFactory,
+    AuraViemContractFactory,
     // helpers
     AuraBalancerPoolResolver,
     // Arbitrum

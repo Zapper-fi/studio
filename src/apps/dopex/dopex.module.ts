@@ -18,7 +18,7 @@ import { DopexViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    DopexContractFactory,
+    DopexViemContractFactory,
     DopexSsovV3DefinitionsResolver,
     // Arbitrum
     ArbitrumDopexFarmContractPositionFetcher,

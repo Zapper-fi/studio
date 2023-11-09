@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusLock } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusLock } from '../contracts/viem';
 
 const PLUTUS_LOCKS = [
   {
@@ -56,7 +57,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusLock {
+  getContract(address: string) {
     return this.contractFactory.plutusLock({ address, network: this.network });
   }
 

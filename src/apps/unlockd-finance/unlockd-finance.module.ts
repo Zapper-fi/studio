@@ -9,7 +9,7 @@ import { EthereumUnlockdFinanceVariableDebtTokenFetcher } from './ethereum/unloc
 
 @Module({
   providers: [
-    UnlockdFinanceContractFactory,
+    UnlockdFinanceViemContractFactory,
     EthereumUnlockdFinancePositionPresenter,
     EthereumUnlockdFinanceSupplyTokenFetcher,
     EthereumUnlockdFinanceVariableDebtTokenFetcher,

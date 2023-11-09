@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { CamelotContractFactory, CamelotXGrail } from '../contracts';
+import { CamelotViemContractFactory } from '../contracts';
+import { CamelotXGrail } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumXGrailTokenFetcher extends AppTokenTemplatePositionFetcher<CamelotXGrail> {
@@ -18,7 +19,7 @@ export class ArbitrumXGrailTokenFetcher extends AppTokenTemplatePositionFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): CamelotXGrail {
+  getContract(address: string) {
     return this.contractFactory.camelotXGrail({ address, network: this.network });
   }
 
@@ -27,7 +28,7 @@ export class ArbitrumXGrailTokenFetcher extends AppTokenTemplatePositionFetcher<
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<CamelotXGrail>) {
-    return [{ address: await contract.grailToken(), network: this.network }];
+    return [{ address: await contract.read.grailToken(), network: this.network }];
   }
 
   async getPricePerShare() {

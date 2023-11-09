@@ -16,8 +16,8 @@ import { PolygonRevertFinanceCompoundorContractPositionFetcher } from './polygon
 
 @Module({
   providers: [
-    RevertFinanceContractFactory,
-    UniswapV3ContractFactory,
+    RevertFinanceViemContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumRevertFinanceCompoundorContractPositionFetcher,
     ArbitrumRevertFinanceCompoundorRewardsContractPositionFetcher,

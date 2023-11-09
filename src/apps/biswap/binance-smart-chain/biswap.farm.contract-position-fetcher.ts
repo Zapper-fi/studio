@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BiswapContractFactory, BiswapMasterchef } from '../contracts';
+import { BiswapViemContractFactory } from '../contracts';
+import { BiswapMasterchef } from '../contracts/viem';
 
 @PositionTemplate()
 export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BiswapMasterchef> {
@@ -23,7 +24,7 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     super(appToolkit);
   }
 
-  getContract(address: string): BiswapMasterchef {
+  getContract(address: string) {
     return this.contractFactory.biswapMasterchef({ address, network: this.network });
   }
 

@@ -7,7 +7,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PendleContractFactory, PendleStaking } from '../contracts';
+import { PendleViemContractFactory } from '../contracts';
+import { PendleStaking } from '../contracts/viem';
 
 const FARMS = [
   // PENDLE
@@ -29,7 +30,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
     super(appToolkit);
   }
 
-  getContract(address: string): PendleStaking {
+  getContract(address: string) {
     return this.contractFactory.pendleStaking({ address, network: this.network });
   }
 
@@ -38,7 +39,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
   }
 
   async getRewardRates({ contract, multicall }: GetDataPropsParams<PendleStaking>) {
-    const stakingManagerAddress = await contract.stakingManager();
+    const stakingManagerAddress = await contract.read.stakingManager();
     const stakingManager = this.contractFactory.pendleStakingManager({
       address: stakingManagerAddress,
       network: this.network,
@@ -49,7 +50,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
   }
 
   async getIsActive({ contract, multicall }: GetDataPropsParams<PendleStaking>): Promise<boolean> {
-    const stakingManagerAddress = await contract.stakingManager();
+    const stakingManagerAddress = await contract.read.stakingManager();
     const stakingManager = this.contractFactory.pendleStakingManager({
       address: stakingManagerAddress,
       network: this.network,

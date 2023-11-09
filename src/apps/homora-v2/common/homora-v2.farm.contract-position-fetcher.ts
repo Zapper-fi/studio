@@ -16,7 +16,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types';
 
-import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
+import { HomoraV2ViemContractFactory } from '../contracts';
+import { HomoraBank } from '../contracts/viem';
 import httpClient from '../helpers/httpClient';
 import { Exchange, Poolstatus } from '../interfaces/enums';
 import {
@@ -40,7 +41,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
     super(appToolkit);
   }
 
-  getContract(address: string): HomoraBank {
+  getContract(address: string) {
     return this.contractFactory.homoraBank({ address, network: this.network });
   }
 

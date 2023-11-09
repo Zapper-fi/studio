@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { SonneComptroller, SonneContractFactory, SonneSoToken } from '../contracts';
+import { SonneViemContractFactory } from '../contracts';
+import { SonneComptroller, SonneSoToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class BaseSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<SonneSoToken, SonneComptroller> {

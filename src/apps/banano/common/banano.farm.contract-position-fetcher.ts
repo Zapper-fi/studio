@@ -9,7 +9,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BananoContractFactory, Benis } from '../contracts';
+import { BananoViemContractFactory } from '../contracts';
+import { Benis } from '../contracts/viem';
 
 export abstract class BananoFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<Benis> {
   rewardRateUnit = RewardRateUnit.SECOND;
@@ -21,7 +22,7 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
     super(appToolkit);
   }
 
-  getContract(address: string): Benis {
+  getContract(address: string) {
     return this.contractFactory.benis({ address, network: this.network });
   }
 

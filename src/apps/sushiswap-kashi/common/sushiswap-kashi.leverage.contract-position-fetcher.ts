@@ -11,7 +11,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { SushiswapKashiContractFactory, SushiswapKashiLendingToken } from '../contracts';
+import { SushiswapKashiViemContractFactory } from '../contracts';
+import { SushiswapKashiLendingToken } from '../contracts/viem';
 
 export type SushiswapKashiLeverageDefinition = {
   address: string;
@@ -33,7 +34,7 @@ export class SushiswapKashiLeverageContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): SushiswapKashiLendingToken {
+  getContract(address: string) {
     return this.contractFactory.sushiswapKashiLendingToken({ address, network: this.network });
   }
 

@@ -15,8 +15,8 @@ import { TraderJoeViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    TraderJoeContractFactory,
-    UniswapV2ContractFactory,
+    TraderJoeViemContractFactory,
+    UniswapV2ViemContractFactory,
     AvalancheTraderJoeChefV2FarmContractPositionFetcher,
     AvalancheTraderJoeChefV3FarmContractPositionFetcher,
     AvalancheTraderJoeChefBoostedFarmContractPositionFetcher,

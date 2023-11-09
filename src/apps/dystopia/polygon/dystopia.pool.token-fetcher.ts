@@ -14,7 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { DystopiaContractFactory, DystopiaPair } from '../contracts';
+import { DystopiaViemContractFactory } from '../contracts';
+import { DystopiaPair } from '../contracts/viem';
 
 export const DYSTOPIA_QUERY = gql`
   query fetchDystopiaPairs {
@@ -47,7 +48,7 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): DystopiaPair {
+  getContract(address: string) {
     return this.contractFactory.dystopiaPair({ address, network: this.network });
   }
 
@@ -61,8 +62,8 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<DystopiaPair>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 

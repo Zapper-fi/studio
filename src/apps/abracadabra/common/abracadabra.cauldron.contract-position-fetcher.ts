@@ -20,7 +20,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AbracadabraContractFactory, AbracadabraCauldron, AbracadabraMarketLens } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { AbracadabraCauldron, AbracadabraMarketLens } from '../contracts/viem';
 import { MarketLens } from '../contracts/viem/AbracadabraMarketLens';
 
 import { CAULDRON_V1_RISK_CONSTANTS, MARKET_LENS_ADDRESS } from './abracadabra.common.constants';
@@ -90,7 +91,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): AbracadabraCauldron {
+  getContract(address: string) {
     return this.contractFactory.abracadabraCauldron({ address, network: this.network });
   }
 
@@ -455,7 +456,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     contract,
     multicall,
   }: GetTokenBalancesParams<AbracadabraCauldron, AbracadabraCauldronDataProps>) {
-    const collateral = await contract.collateral().then(collateralTokenAddress =>
+    const collateral = await contract.read.collateral().then(collateralTokenAddress =>
       multicall.wrap(
         this.contractFactory.abracadabraConvexWrapper({
           address: collateralTokenAddress.toLowerCase(),

@@ -97,7 +97,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): YieldProtocolLendToken {
+  getContract(address: string) {
     return this.contractFactory.yieldProtocolLendToken({ address, network: this.network });
   }
 
@@ -118,7 +118,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolLendToken>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -139,7 +139,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
       });
     if (poolBalance.isZero()) return [0];
 
-    const maturity = await contract.maturity();
+    const maturity = await contract.read.maturity();
     const isMatured = Math.floor(new Date().getTime() / 1000) > Number(maturity);
     if (isMatured) return [1];
 

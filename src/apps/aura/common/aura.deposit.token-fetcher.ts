@@ -12,7 +12,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { AuraContractFactory, AuraDepositToken } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraDepositToken } from '../contracts/viem';
 
 type AuraDepositTokenDefinition = {
   address: string;
@@ -36,7 +37,7 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): AuraDepositToken {
+  getContract(address: string) {
     return this.contractFactory.auraDepositToken({ address, network: this.network });
   }
 

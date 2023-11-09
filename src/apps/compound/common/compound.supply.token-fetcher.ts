@@ -43,7 +43,7 @@ export abstract class CompoundSupplyTokenFetcher<
   abstract getExchangeRate(params: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>): Promise<BigNumberish>;
   abstract getSupplyRate(params: GetDataPropsParams<R, CompoundSupplyTokenDataProps>): Promise<BigNumberish>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getCompoundCTokenContract(address);
   }
 

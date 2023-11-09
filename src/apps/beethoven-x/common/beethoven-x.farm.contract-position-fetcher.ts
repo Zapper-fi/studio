@@ -48,7 +48,7 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
 
   abstract subgraphUrl: string;
 
-  getContract(address: string): BeethovenXGauge {
+  getContract(address: string) {
     return this.contractFactory.beethovenXGauge({ address, network: this.network });
   }
 

@@ -10,7 +10,7 @@ import { Y2KFinanceViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    Y2KFinanceContractFactory,
+    Y2KFinanceViemContractFactory,
     // Arbitrum
     ArbitrumY2KFinanceFarmV1ContractPositionFetcher,
     ArbitrumY2KFinanceMintV1ContractPositionFetcher,

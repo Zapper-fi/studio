@@ -22,7 +22,7 @@ import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polyg
 
 @Module({
   providers: [
-    KyberswapElasticContractFactory,
+    KyberswapElasticViemContractFactory,
     KyberswapElasticApyDataLoader,
     KyberswapElasticFarmContractPositionBuilder,
     KyberswapElasticLiquidityContractPositionBuilder,

@@ -61,7 +61,7 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
 
   protected abstract isFetchingDolomiteBalances(): boolean;
 
-  getContract(address: string): DolomiteMargin {
+  getContract(address: string) {
     return this.contractFactory.dolomiteMargin({ address, network: this.network });
   }
 

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { SaddleCommunalFarm, SaddleContractFactory } from '../contracts';
+import { SaddleViemContractFactory } from '../contracts';
+import { SaddleCommunalFarm } from '../contracts/viem';
 
 const FARMS = [
   // Saddle D4 Communal Farm
@@ -32,7 +33,7 @@ export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleSta
     super(appToolkit);
   }
 
-  getContract(address: string): SaddleCommunalFarm {
+  getContract(address: string) {
     return this.contractFactory.saddleCommunalFarm({ address, network: this.network });
   }
 

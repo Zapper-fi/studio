@@ -15,7 +15,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Y2KFinanceContractFactory, Y2KFinanceVotingLocked } from '../contracts';
+import { Y2KFinanceViemContractFactory } from '../contracts';
+import { Y2KFinanceVotingLocked } from '../contracts/viem';
 
 const VLY2K = [
   {
@@ -37,7 +38,7 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): Y2KFinanceVotingLocked {
+  getContract(address: string) {
     return this.contractFactory.y2KFinanceVotingLocked({ address, network: this.network });
   }
 

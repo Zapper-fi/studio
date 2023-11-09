@@ -14,7 +14,7 @@ import { PolygonSushiswapKashiLeverageContractPositionFetcher } from './polygon/
 
 @Module({
   providers: [
-    SushiswapKashiContractFactory,
+    SushiswapKashiViemContractFactory,
     // Arbitrum
     ArbitrumSushiswapKashiLendingTokenFetcher,
     ArbitrumSushiswapKashiLeverageContractPositionFetcher,

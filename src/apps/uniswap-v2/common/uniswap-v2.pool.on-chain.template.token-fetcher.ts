@@ -40,7 +40,7 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher<
 
   fee = 0.3;
 
-  getContract(address: string): T {
+  getContract(address: string) {
     return this.getPoolTokenContract(address);
   }
 

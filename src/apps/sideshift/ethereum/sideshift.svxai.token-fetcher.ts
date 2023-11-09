@@ -22,7 +22,7 @@ export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): SvxaiVault {
+  getContract(address: string) {
     return this.contractFactory.svxaiVault({ address, network });
   }
 
@@ -31,11 +31,11 @@ export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<SvxaiVault>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<SvxaiVault>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

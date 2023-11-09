@@ -10,7 +10,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { GeistContractFactory, GeistRewards } from '../contracts';
+import { GeistViemContractFactory } from '../contracts';
+import { GeistRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomGeistIncentivesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistRewards> {

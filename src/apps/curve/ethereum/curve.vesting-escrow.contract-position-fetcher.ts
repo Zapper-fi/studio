@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VestingEscrowTemplateContractPositionFetcher } from '~position/template/vesting-escrow.template-contract-position-fetcher';
 
-import { CurveContractFactory, CurveVestingEscrow } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveVestingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEscrowTemplateContractPositionFetcher<CurveVestingEscrow> {

@@ -9,7 +9,7 @@ import { MyceliumViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    MyceliumContractFactory,
+    MyceliumViemContractFactory,
     // Arbitrum
     ArbitrumMyceliumEsMycTokenFetcher,
     ArbitrumMyceliumMlpTokenFetcher,

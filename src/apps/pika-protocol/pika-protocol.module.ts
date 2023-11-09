@@ -9,7 +9,7 @@ import { OptimismPikaProtocolVaultContractPositionFetcher } from './optimism/pik
 
 @Module({
   providers: [
-    PikaProtocolContractFactory,
+    PikaProtocolViemContractFactory,
     OptimismPikaProtocolVaultContractPositionFetcher,
     OptimismPikaProtocolEsPikaTokenFetcher,
     OptimismPikaProtocolEscrowContractPositionFetcher,

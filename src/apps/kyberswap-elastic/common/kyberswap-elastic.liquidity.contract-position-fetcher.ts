@@ -14,7 +14,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { KyberswapElasticContractFactory, PositionManager } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
+import { PositionManager } from '../contracts/viem';
 
 import { KyberswapElasticApyDataLoader } from './kyberswap-elastic.apy.data-loader';
 import { KyberswapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
@@ -78,7 +79,7 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
     super(appToolkit);
   }
 
-  getContract(address: string): PositionManager {
+  getContract(address: string) {
     return this.contractFactory.positionManager({ address, network: this.network });
   }
 

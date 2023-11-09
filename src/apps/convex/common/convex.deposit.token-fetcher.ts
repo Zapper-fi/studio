@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { ConvexContractFactory, ConvexDepositToken } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexDepositToken } from '../contracts/viem';
 
 type ConvexDepositTokenDefinition = {
   address: string;
@@ -36,7 +37,7 @@ export abstract class ConvexDepositTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexDepositToken {
+  getContract(address: string) {
     return this.contractFactory.convexDepositToken({ address, network: this.network });
   }
 

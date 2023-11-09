@@ -45,7 +45,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     super(appToolkit);
   }
 
-  getContract(address: string): StakedRsr {
+  getContract(address: string) {
     return this.contractFactory.stakedRsr({ address, network: this.network });
   }
 
@@ -85,7 +85,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
    async getDataProps(params: GetDataPropsParams<StakedRsr>) {
      const defaultDataProps = await super.getDataProps(params);
      const { contract } = params;
-     const inCoolDownTotalBalance = await contract.getTotalDrafts();
+     const inCoolDownTotalBalance = await contract.read.getTotalDrafts();
      return { ...defaultDataProps, inCoolDownTotalBalance };
    }
 
@@ -111,7 +111,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const main = multicall.wrap(
       this.contractFactory.main({
         network: this.network,
-        address: await contract.main(),
+        address: await contract.read.main(),
       }),
     );
 

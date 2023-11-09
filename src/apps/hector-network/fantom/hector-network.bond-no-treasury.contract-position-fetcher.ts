@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { HectorNetworkBondNoTreasury, HectorNetworkContractFactory } from '../contracts';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkBondNoTreasury } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondNoTreasury> {

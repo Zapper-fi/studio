@@ -11,7 +11,7 @@ import { OptimismVelodromeV2VotingEscrowContractPositionFetcher } from './optimi
 
 @Module({
   providers: [
-    VelodromeV2ContractFactory,
+    VelodromeV2ViemContractFactory,
     VelodromeV2AddressesResolver,
     OptimismVelodromeV2PoolTokenFetcher,
     OptimismVelodromeV2VotingEscrowContractPositionFetcher,

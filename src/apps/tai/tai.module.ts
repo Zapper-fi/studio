@@ -7,6 +7,6 @@ import { TaiCollateralResolver } from './ethereum/tai.collateral-fetcher';
 import { TaiSafeContractPositionFetcher } from './ethereum/tai.safe.contract-position-fetcher';
 
 @Module({
-  providers: [TaiContractFactory, TaiCollateralResolver, TaiSafeContractPositionFetcher],
+  providers: [TaiViemContractFactory, TaiCollateralResolver, TaiSafeContractPositionFetcher],
 })
 export class TaiAppModule extends AbstractApp() {}

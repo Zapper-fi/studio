@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PlatypusFinanceContractFactory, PlatypusFinancePoolToken } from '../contracts';
+import { PlatypusFinanceViemContractFactory } from '../contracts';
+import { PlatypusFinancePoolToken } from '../contracts/viem';
 
 export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePositionFetcher<PlatypusFinancePoolToken> {
   constructor(
@@ -21,7 +22,7 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
 
   abstract poolAddresses: string[];
 
-  getContract(address: string): PlatypusFinancePoolToken {
+  getContract(address: string) {
     return this.contractFactory.platypusFinancePoolToken({ address, network: this.network });
   }
 
@@ -42,11 +43,11 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PlatypusFinancePoolToken>) {
-    return [{ address: await contract.underlyingToken(), network: this.network }];
+    return [{ address: await contract.read.underlyingToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<PlatypusFinancePoolToken>) {
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     const _pool = this.contractFactory.platypusFinancePool({ address: poolAddress, network: this.network });
     const pool = multicall.wrap(_pool);
 

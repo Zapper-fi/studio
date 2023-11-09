@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { MakerContractFactory, MakerGovernance } from '../contracts';
+import { MakerViemContractFactory } from '../contracts';
+import { MakerGovernance } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMakerGovernanceContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<MakerGovernance> {
@@ -18,7 +19,7 @@ export class EthereumMakerGovernanceContractPositionFetcher extends SingleStakin
     super(appToolkit);
   }
 
-  getContract(address: string): MakerGovernance {
+  getContract(address: string) {
     return this.contractFactory.makerGovernance({ address, network: this.network });
   }
 
@@ -31,7 +32,7 @@ export class EthereumMakerGovernanceContractPositionFetcher extends SingleStakin
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<MakerGovernance>) {
-    return [await contract.GOV()];
+    return [await contract.read.GOV()];
   }
 
   async getRewardRates() {

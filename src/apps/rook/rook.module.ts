@@ -10,7 +10,7 @@ import { EthereumRookXRookTokenFetcher } from './ethereum/rook.x-rook.token-fetc
 
 @Module({
   providers: [
-    RookContractFactory,
+    RookViemContractFactory,
     // Ethereum
     EthereumRookV2PoolTokenFetcher,
     EthereumRookV3PoolTokenFetcher,

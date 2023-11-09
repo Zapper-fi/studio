@@ -14,7 +14,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { BeanstalkBalanceResolver } from '../common/beanstalk.balance-resolver';
-import { Beanstalk, BeanstalkContractFactory } from '../contracts';
+import { BeanstalkViemContractFactory } from '../contracts';
+import { Beanstalk } from '../contracts/viem';
 
 export type BeanstalkSiloDepositDefinition = {
   address: string;
@@ -57,7 +58,7 @@ export class EthereumBeanstalkSiloDepositContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): Beanstalk {
+  getContract(address: string) {
     return this.contractFactory.beanstalk({ address, network: this.network });
   }
 

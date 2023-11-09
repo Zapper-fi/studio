@@ -17,7 +17,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Y2KFinanceCarousel, Y2KFinanceContractFactory } from '../contracts';
+import { Y2KFinanceViemContractFactory } from '../contracts';
+import { Y2KFinanceCarousel } from '../contracts/viem';
 
 export const VAULTS_QUERY = gql`
   {
@@ -45,7 +46,7 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  getContract(address: string): Y2KFinanceCarousel {
+  getContract(address: string) {
     return this.contractFactory.y2KFinanceCarousel({ address, network: this.network });
   }
 

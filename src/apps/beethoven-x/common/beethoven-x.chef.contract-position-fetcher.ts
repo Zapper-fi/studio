@@ -8,7 +8,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BeethovenXContractFactory, BeethovenXMasterchef } from '../contracts';
+import { BeethovenXViemContractFactory } from '../contracts';
+import { BeethovenXMasterchef } from '../contracts/viem';
 
 export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BeethovenXMasterchef> {
   constructor(
@@ -18,7 +19,7 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     super(appToolkit);
   }
 
-  getContract(address: string): BeethovenXMasterchef {
+  getContract(address: string) {
     return this.contractFactory.beethovenXMasterchef({ address, network: this.network });
   }
 

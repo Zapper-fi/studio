@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
 
-import { RaftContractFactory, RaftToken } from '../contracts';
+import { RaftViemContractFactory } from '../contracts';
+import { RaftToken } from '../contracts/viem';
 
 export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
   abstract collateral: string;
@@ -20,7 +21,7 @@ export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string): RaftToken {
+  getContract(address: string) {
     return this.contractFactory.raftToken({ address, network: this.network });
   }
 
@@ -37,8 +38,8 @@ export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getPricePerShare({ contract }): Promise<number[]> {
-    const precision = Number(await contract.INDEX_PRECISION());
-    const index = Number(await contract.currentIndex());
+    const precision = Number(await contract.read.INDEX_PRECISION());
+    const index = Number(await contract.read.currentIndex());
     return [index / precision];
   }
 }

@@ -10,7 +10,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { SynthetixContractFactory, SynthetixPerp } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixPerp } from '../contracts/viem';
 
 export type Market = {
   id: string;
@@ -51,7 +52,7 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixPerp {
+  getContract(address: string) {
     return this.contractFactory.synthetixPerp({ address, network: this.network });
   }
 

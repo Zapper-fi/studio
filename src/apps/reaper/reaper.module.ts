@@ -9,7 +9,7 @@ import { OptimismReaperVaultTokenFetcher } from './optimism/reaper.vault.token-f
 
 @Module({
   providers: [
-    ReaperContractFactory,
+    ReaperViemContractFactory,
     ReaperVaultCacheManager,
     FantomReaperVaultTokenFetcher,
     OptimismReaperVaultTokenFetcher,

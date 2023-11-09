@@ -18,7 +18,7 @@ import { OptimismExactlyRewardsFetcher } from './optimism/exactly.rewards.contra
 
 @Module({
   providers: [
-    ExactlyContractFactory,
+    ExactlyViemContractFactory,
     ExactlyDefinitionsResolver,
     EthereumExactlyPositionPresenter,
     EthereumExactlyBorrowFetcher,

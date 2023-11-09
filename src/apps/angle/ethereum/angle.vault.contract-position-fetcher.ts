@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleVaultManager } from '../contracts';
+import { AngleViemContractFactory } from '../contracts';
+import { AngleVaultManager } from '../contracts/viem';
 
 export type AngleVaultDefinition = {
   address: string;
@@ -39,7 +40,7 @@ export class EthereumAngleVaultsContractPositionFetcher extends ContractPosition
     super(appToolkit);
   }
 
-  getContract(address: string): AngleVaultManager {
+  getContract(address: string) {
     return this.contractFactory.angleVaultManager({ address, network: this.network });
   }
 
@@ -50,8 +51,8 @@ export class EthereumAngleVaultsContractPositionFetcher extends ContractPosition
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<AngleVaultManager, AngleVaultDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.collateral(), network: this.network },
-      { metaType: MetaType.BORROWED, address: await contract.stablecoin(), network: this.network },
+      { metaType: MetaType.SUPPLIED, address: await contract.read.collateral(), network: this.network },
+      { metaType: MetaType.BORROWED, address: await contract.read.stablecoin(), network: this.network },
     ];
   }
 

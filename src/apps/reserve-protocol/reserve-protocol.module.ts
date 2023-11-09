@@ -10,7 +10,7 @@ import { EthereumReserveProtocolStakedRsrTokenFetcher } from './ethereum/reserve
   providers: [
     EthereumReserveProtocolStakedRsrTokenFetcher,
     EthereumReserveProtocolCooldownContractPositionFetcher,
-    ReserveProtocolContractFactory,
+    ReserveProtocolViemContractFactory,
   ],
 })
 export class ReserveProtocolAppModule extends AbstractApp() {}

@@ -12,7 +12,7 @@ import { NotionalFinanceV3ViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    NotionalFinanceV3ContractFactory,
+    NotionalFinanceV3ViemContractFactory,
     // Arbitrum
     ArbitrumNotionalFinanceV3PCashTokenFetcher,
     ArbitrumNotionalFinanceV3PDebtTokenFetcher,

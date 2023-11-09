@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { MahadaoContractFactory, MahadoMahaxLocker } from '../contracts';
+import { MahadaoViemContractFactory } from '../contracts';
+import { MahadoMahaxLocker } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<MahadoMahaxLocker> {

@@ -11,7 +11,7 @@ import { EthereumUwuLendVariableDebtTokenFetcher } from './ethereum/uwu-lend.var
 
 @Module({
   providers: [
-    UwuLendContractFactory,
+    UwuLendViemContractFactory,
     EthereumUwuLendSupplyTokenFetcher,
     EthereumUwuLendVariableDebtTokenFetcher,
     EthereumUwuLendPlatformFeesV1PositionFetcher,

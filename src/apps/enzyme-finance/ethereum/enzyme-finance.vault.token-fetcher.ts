@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { EnzymeFinanceContractFactory, EnzymeFinanceVault } from '../contracts';
+import { EnzymeFinanceViemContractFactory } from '../contracts';
+import { EnzymeFinanceVault } from '../contracts/viem';
 
 const query = gql`
   query fetchEnzymeVaults {
@@ -46,7 +47,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return data.funds.map(v => v.id.toLowerCase());
   }
 
-  getContract(address: string): EnzymeFinanceVault {
+  getContract(address: string) {
     return this.contractFactory.enzymeFinanceVault({ network: this.network, address });
   }
 
@@ -55,7 +56,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {
-    return (await contract.getTrackedAssets()).map(x => ({ address: x.toLowerCase(), network: this.network }));
+    return (await contract.read.getTrackedAssets()).map(x => ({ address: x.toLowerCase(), network: this.network }));
   }
 
   async getPricePerShare({

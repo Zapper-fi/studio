@@ -11,7 +11,7 @@ import { JonesDaoViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    JonesDaoContractFactory,
+    JonesDaoViemContractFactory,
     ArbitrumJonesDaoFarmContractPositionFetcher,
     ArbitrumJonesDaoMillinerV2ContractPositionFetcher,
     ArbitrumJonesDaoVaultTokenFetcher,

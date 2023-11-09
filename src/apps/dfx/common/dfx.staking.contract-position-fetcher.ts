@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { DfxContractFactory, DfxStaking } from '../contracts';
+import { DfxViemContractFactory } from '../contracts';
+import { DfxStaking } from '../contracts/viem';
 
 type DfxStakingContractPositionDefinition = {
   address: string;
@@ -55,7 +56,7 @@ export abstract class DfxStakingContractPositionFetcher extends ContractPosition
     ];
   }
 
-  getContract(address: string): DfxStaking {
+  getContract(address: string) {
     return this.contractFactory.dfxStaking({ network: this.network, address });
   }
 

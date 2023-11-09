@@ -9,7 +9,8 @@ import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { LpStaking, ThalesContractFactory } from '../contracts';
+import { ThalesViemContractFactory } from '../contracts';
+import { LpStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismThalesPool2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LpStaking> {
@@ -22,7 +23,7 @@ export class OptimismThalesPool2ContractPositionFetcher extends ContractPosition
     super(appToolkit);
   }
 
-  getContract(address: string): LpStaking {
+  getContract(address: string) {
     return this.contractFactory.lpStaking({ network: this.network, address });
   }
 

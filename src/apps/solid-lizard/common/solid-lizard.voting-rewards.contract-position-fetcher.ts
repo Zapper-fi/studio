@@ -11,7 +11,8 @@ import { GetTokenDefinitionsParams } from '~position/template/contract-position.
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SolidLizardDefinitionsResolver } from '../common/solid-lizard.definitions-resolver';
-import { SolidLizardBribe, SolidLizardContractFactory } from '../contracts';
+import { SolidLizardViemContractFactory } from '../contracts';
+import { SolidLizardBribe } from '../contracts/viem';
 
 export abstract class VotingRewardsContractPositionFetcher<
   T extends Contract,
@@ -27,7 +28,7 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<T>) {
-    const numRewards = Number(await contract.rewardsListLength());
+    const numRewards = Number(await contract.read.rewardsListLength());
     const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {

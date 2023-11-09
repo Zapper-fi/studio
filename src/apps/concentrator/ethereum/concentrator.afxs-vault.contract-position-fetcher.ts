@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { ConcentratorContractFactory, AladdinConcentratorAfxsVault } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AladdinConcentratorAfxsVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConcentratorAfxsVaultContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorAfxsVault> {
@@ -24,7 +25,7 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConcentratorAfxsVault {
+  getContract(address: string) {
     return this.contractFactory.aladdinConcentratorAfxsVault({ address, network: this.network });
   }
 

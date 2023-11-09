@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPriceParams } from '~position/template/app-token.template.types';
 
-import { ChickenBondBlusd, ChickenBondContractFactory } from '../contracts';
+import { ChickenBondViemContractFactory } from '../contracts';
+import { ChickenBondBlusd } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositionFetcher<ChickenBondBlusd> {
@@ -19,7 +20,7 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): ChickenBondBlusd {
+  getContract(address: string) {
     return this.contractFactory.chickenBondBlusd({ address, network: this.network });
   }
 

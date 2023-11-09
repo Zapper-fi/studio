@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { OlympusBondContractPositionFetcher } from '../common/olympus.bond.contract-position-fetcher';
-import { OlympusContractFactory, OlympusV2BondDepository } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusV2BondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContractPositionFetcher<OlympusV2BondDepository> {
@@ -26,7 +27,7 @@ export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContr
     super(appToolkit);
   }
 
-  getContract(address: string): OlympusV2BondDepository {
+  getContract(address: string) {
     return this.contractFactory.olympusV2BondDepository({ address, network: this.network });
   }
 

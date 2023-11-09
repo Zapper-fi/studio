@@ -13,7 +13,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { SynthetixContractFactory, SynthetixSynthToken } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixSynthToken } from '../contracts/viem';
 
 type SynthetixSynthDataProps = DefaultAppTokenDataProps & {
   exchangeable: boolean;
@@ -35,7 +36,7 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixSynthToken {
+  getContract(address: string) {
     return this.contractFactory.synthetixSynthToken({ address, network: this.network });
   }
 
@@ -99,7 +100,7 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
       network: this.network,
     });
 
-    const key = await contract.currencyKey();
+    const key = await contract.read.currencyKey();
     const rate = await multicall.wrap(synthExchangeRatesContract).rateForCurrency(key);
     const price = (Number(rate) * sUSDToken!.price) / 10 ** appToken.decimals;
     return price;

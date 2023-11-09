@@ -15,7 +15,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PenguinChefV2, PenguinContractFactory, PenguinExtraRewarder } from '../contracts';
+import { PenguinViemContractFactory } from '../contracts';
+import { PenguinChefV2, PenguinExtraRewarder } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -33,7 +34,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
     super(appToolkit);
   }
 
-  getContract(address: string): PenguinChefV2 {
+  getContract(address: string) {
     return this.contractFactory.penguinChefV2({ address, network: this.network });
   }
 

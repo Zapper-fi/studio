@@ -9,7 +9,7 @@ import { OptimismYearnSakingContractPositionFetcher } from './optimism/yearn.sta
 
 @Module({
   providers: [
-    YearnContractFactory,
+    YearnViemContractFactory,
     // Ethereum
     EthereumYearnGovernanceContractPositionFetcher,
     EthereumYearnVeYfiContractPositionFetcher,

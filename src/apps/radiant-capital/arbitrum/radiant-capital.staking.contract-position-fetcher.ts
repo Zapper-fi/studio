@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { RadiantCapitalContractFactory, RadiantCapitalStaking } from '../contracts';
+import { RadiantCapitalViemContractFactory } from '../contracts';
+import { RadiantCapitalStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<RadiantCapitalStaking> {
@@ -25,12 +26,12 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     super(appToolkit);
   }
 
-  getContract(address: string): RadiantCapitalStaking {
+  getContract(address: string) {
     return this.contractFactory.radiantCapitalStaking({ address, network: this.network });
   }
 
   async getPoolLength(contract: RadiantCapitalStaking): Promise<BigNumberish> {
-    return (await contract.poolLength()).sub(1); // Last index is a testing pool
+    return (await contract.read.poolLength()).sub(1); // Last index is a testing pool
   }
 
   async getStakedTokenAddress(contract: RadiantCapitalStaking, poolIndex: number): Promise<string> {

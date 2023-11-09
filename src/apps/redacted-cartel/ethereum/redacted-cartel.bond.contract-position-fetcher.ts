@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { RedactedBondDepository, RedactedCartelContractFactory } from '../contracts';
+import { RedactedCartelViemContractFactory } from '../contracts';
+import { RedactedBondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRedactedCartelBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedBondDepository> {

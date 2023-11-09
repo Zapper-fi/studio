@@ -12,7 +12,7 @@ import { PolygonGainsNetworkStakingContractPositionFetcher } from './polygon/gai
 
 @Module({
   providers: [
-    GainsNetworkContractFactory,
+    GainsNetworkViemContractFactory,
     // Arbitrum
     ArbitrumGainsNetworkGTokenTokenFetcher,
     ArbitrumGainsNetworkStakingContractPositionFetcher,

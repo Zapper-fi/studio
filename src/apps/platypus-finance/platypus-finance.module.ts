@@ -10,7 +10,7 @@ import { PlatypusFinanceViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    PlatypusFinanceContractFactory,
+    PlatypusFinanceViemContractFactory,
     // Avalanche
     //AvalanchePlatypusFinancePoolTokenFetcher,
     //AvalanchePlatypusFinanceFarmContractPositionFetcher,

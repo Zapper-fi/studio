@@ -18,8 +18,8 @@ import { OptimismPolynomialSmartWalletContractPositionFetcher } from './optimism
   providers: [
     PolynomialApiHelper,
     PolynomialAccountResolver,
-    PolynomialContractFactory,
-    SynthetixContractFactory,
+    PolynomialViemContractFactory,
+    SynthetixViemContractFactory,
     OptimismPolynomialCallSellingVaultTokenFetcher,
     OptimismPolynomialCallSellingVaultQueueContractPositionFetcher,
     OptimismPolynomialPutSellingVaultTokenFetcher,

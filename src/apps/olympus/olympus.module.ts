@@ -29,7 +29,7 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     EthereumOlympusSOhmV1TokenFetcher,
     EthereumOlympusWsOhmV1TokenFetcher,
     FantomOlympusGOhmTokenFetcher,
-    OlympusContractFactory,
+    OlympusViemContractFactory,
     PolygonOlympusGOhmTokenFetcher,
   ],
 })

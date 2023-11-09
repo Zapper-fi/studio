@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { TarotContractFactory, TarotSupplyVault } from '../contracts';
+import { TarotViemContractFactory } from '../contracts';
+import { TarotSupplyVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetcher<TarotSupplyVault> {
@@ -22,7 +23,7 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
     super(appToolkit);
   }
 
-  getContract(address: string): TarotSupplyVault {
+  getContract(address: string) {
     return this.contractFactory.tarotSupplyVault({ address, network: this.network });
   }
 
@@ -36,12 +37,12 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TarotSupplyVault>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TarotSupplyVault>) {
     const [underlyingToken] = appToken.tokens;
-    const reserveRaw = await contract.getTotalUnderlying();
+    const reserveRaw = await contract.read.getTotalUnderlying();
 
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     const pricePerShare = appToken.supply > 0 ? reserve / appToken.supply : 0;
@@ -49,14 +50,14 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getLiquidity({ contract, appToken }: GetDataPropsParams<TarotSupplyVault>) {
-    const reserveRaw = await contract.getTotalUnderlying();
+    const reserveRaw = await contract.read.getTotalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = appToken.tokens[0].price * reserve;
     return liquidity;
   }
 
   async getReserves({ contract, appToken }: GetDataPropsParams<TarotSupplyVault>) {
-    const reserveRaw = await contract.getTotalUnderlying();
+    const reserveRaw = await contract.read.getTotalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }

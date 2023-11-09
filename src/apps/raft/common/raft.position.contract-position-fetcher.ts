@@ -10,7 +10,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { RaftContractFactory, RaftPositionManager } from '../contracts';
+import { RaftViemContractFactory } from '../contracts';
+import { RaftPositionManager } from '../contracts/viem';
 
 export interface RaftDataProps extends DefaultDataProps {
   minCRatio: number;
@@ -30,7 +31,7 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): RaftPositionManager {
+  getContract(address: string) {
     return this.raftContractFactory.raftPositionManager({ address, network: this.network });
   }
 

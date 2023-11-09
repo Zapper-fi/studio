@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PieDaoContractFactory, PieDaoRewards } from '../contracts';
+import { PieDaoViemContractFactory } from '../contracts';
+import { PieDaoRewards } from '../contracts/viem';
 
 const FARMS = [
   // BPT WETH / DOUGH
@@ -55,7 +56,7 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
     super(appToolkit);
   }
 
-  getContract(address: string): PieDaoRewards {
+  getContract(address: string) {
     return this.contractFactory.pieDaoRewards({ address, network: this.network });
   }
 
@@ -68,7 +69,7 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PieDaoRewards>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()).gt(0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {

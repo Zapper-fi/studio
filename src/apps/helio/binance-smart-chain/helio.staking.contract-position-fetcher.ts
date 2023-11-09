@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { HelioContractFactory, HelioJar } from '../contracts';
+import { HelioViemContractFactory } from '../contracts';
+import { HelioJar } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -30,7 +31,7 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
     super(appToolkit);
   }
 
-  getContract(address: string): HelioJar {
+  getContract(address: string) {
     return this.contractFactory.helioJar({ address, network: this.network });
   }
 

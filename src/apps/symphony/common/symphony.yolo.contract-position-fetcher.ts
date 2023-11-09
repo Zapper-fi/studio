@@ -17,7 +17,8 @@ import { GetTokenDefinitionsParams, GetDisplayPropsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { NETWORK_IDS } from '~types';
 
-import { SymphonyContractFactory, SymphonyYolo } from '../contracts';
+import { SymphonyViemContractFactory } from '../contracts';
+import { SymphonyYolo } from '../contracts/viem';
 
 type UserOpenOrders = {
   orders: {
@@ -57,7 +58,7 @@ export abstract class SymphonyYoloContractPositionFetcher extends CustomContract
     super(appToolkit);
   }
 
-  getContract(address: string): SymphonyYolo {
+  getContract(address: string) {
     return this.contractFactory.symphonyYolo({ address, network: this.network });
   }
 

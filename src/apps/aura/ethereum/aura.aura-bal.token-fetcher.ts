@@ -7,7 +7,8 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
 
 import { AuraBalancerPoolResolver } from '../common/aura.balancer-pool.resolver';
-import { AuraBalToken, AuraContractFactory } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraBalToken } from '../contracts/viem';
 
 export type AuraBalTokenDefinition = {
   address: string;
@@ -34,7 +35,7 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): AuraBalToken {
+  getContract(address: string) {
     return this.contractFactory.auraBalToken({ network: this.network, address });
   }
 

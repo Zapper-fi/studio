@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ArthContractFactory, TroveManager } from '../contracts';
+import { ArthViemContractFactory } from '../contracts';
+import { TroveManager } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumArthTroveContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TroveManager> {
@@ -21,7 +22,7 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
     super(appToolkit);
   }
 
-  getContract(address: string): TroveManager {
+  getContract(address: string) {
     return this.contractFactory.troveManager({ address, network: this.network });
   }
 

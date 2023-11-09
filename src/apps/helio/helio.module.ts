@@ -6,6 +6,6 @@ import { BinanceSmartChainHelioStakingContractPositionFetcher } from './binance-
 import { HelioViemContractFactory } from './contracts';
 
 @Module({
-  providers: [HelioContractFactory, BinanceSmartChainHelioStakingContractPositionFetcher],
+  providers: [HelioViemContractFactory, BinanceSmartChainHelioStakingContractPositionFetcher],
 })
 export class HelioAppModule extends AbstractApp() {}

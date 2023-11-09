@@ -8,7 +8,7 @@ import { EthereumPhutureIndexTokenFetcher } from './ethereum/phuture.index.token
 
 @Module({
   providers: [
-    PhutureContractFactory,
+    PhutureViemContractFactory,
     // Avalanche
     AvalanchePhutureIndexTokenFetcher,
     // Ethereum

@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { HalofiContractFactory, HalofiAbi } from '../contracts';
+import { HalofiViemContractFactory } from '../contracts';
+import { HalofiAbi } from '../contracts/viem';
 
 import { HalofiGameGamesApiSource } from './halofi.game.games.api-source';
 
@@ -42,7 +43,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): HalofiAbi {
+  getContract(address: string) {
     return this.contractFactory.halofiAbi({ address, network: this.network });
   }
 

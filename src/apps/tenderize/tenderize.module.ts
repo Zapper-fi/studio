@@ -13,7 +13,7 @@ import { EthereumTenderizeTenderTokenFetcher } from './ethereum/tenderize.tender
 
 @Module({
   providers: [
-    TenderizeContractFactory,
+    TenderizeViemContractFactory,
     TenderizeTokenDefinitionsResolver,
     // Arbitrum
     ArbitrumTenderizeSwapTokenFetcher,

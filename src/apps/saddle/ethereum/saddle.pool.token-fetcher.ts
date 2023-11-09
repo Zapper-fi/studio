@@ -10,7 +10,8 @@ import {
   ResolvePoolReserveParams,
 } from '~apps/curve/common/curve.pool-static.token-fetcher';
 
-import { SaddleContractFactory, SaddleSwap } from '../contracts';
+import { SaddleViemContractFactory } from '../contracts';
+import { SaddleSwap } from '../contracts/viem';
 
 import { SADDLE_POOL_DEFINITIONS } from './saddle.pool.definitions';
 

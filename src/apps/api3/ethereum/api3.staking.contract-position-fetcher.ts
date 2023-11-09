@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { Api3ContractFactory, Api3Staking } from '../contracts';
+import { Api3ViemContractFactory } from '../contracts';
+import { Api3Staking } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumApi3StakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Api3Staking> {
@@ -24,7 +25,7 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
     super(appToolkit);
   }
 
-  getContract(address: string): Api3Staking {
+  getContract(address: string) {
     return this.contractFactory.api3Staking({ address, network: this.network });
   }
 
@@ -36,7 +37,7 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.api3Token(),
+        address: await contract.read.api3Token(),
         network: this.network,
       },
     ];

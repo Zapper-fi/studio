@@ -14,7 +14,7 @@ import { PolygonMstableSavingsVaultContractPositionFetcher } from './polygon/mst
 
 @Module({
   providers: [
-    MstableContractFactory,
+    MstableViemContractFactory,
     EthereumMstableEarnContractPositionFetcher,
     EthereumMstableImusdTokenFetcher,
     EthereumMstableMtaV1FarmContractPositionFetcher,

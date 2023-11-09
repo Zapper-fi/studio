@@ -27,7 +27,7 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
     super(appToolkit);
   }
 
-  getContract(address: string): MuxVeMux {
+  getContract(address: string) {
     return this.contractFactory.muxVeMux({ address, network: this.network });
   }
 
@@ -39,17 +39,17 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.mcbToken(),
+        address: await contract.read.mcbToken(),
         network: this.network,
       },
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.muxToken(),
+        address: await contract.read.muxToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.muxToken(),
+        address: await contract.read.muxToken(),
         network: this.network,
       },
       {

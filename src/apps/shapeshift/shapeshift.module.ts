@@ -6,6 +6,6 @@ import { ShapeshiftViemContractFactory } from './contracts';
 import { EthereumShapeshiftFarmContractPositionFetcher } from './ethereum/shapeshift.farm.contract-position-fetcher';
 
 @Module({
-  providers: [ShapeshiftContractFactory, EthereumShapeshiftFarmContractPositionFetcher],
+  providers: [ShapeshiftViemContractFactory, EthereumShapeshiftFarmContractPositionFetcher],
 })
 export class ShapeshiftAppModule extends AbstractApp() {}

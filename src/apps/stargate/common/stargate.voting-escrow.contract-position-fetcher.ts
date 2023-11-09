@@ -4,7 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { StargateContractFactory, StargateVe } from '../contracts';
+import { StargateViemContractFactory } from '../contracts';
+import { StargateVe } from '../contracts/viem';
 
 export abstract class StargateVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<StargateVe> {
   constructor(

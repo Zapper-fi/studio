@@ -13,7 +13,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SentimentAccountsResolver } from '../common/sentiment.accounts-resolver';
-import { SentimentContractFactory, SentimentLToken } from '../contracts';
+import { SentimentViemContractFactory } from '../contracts';
+import { SentimentLToken } from '../contracts/viem';
 
 export type SentimentSupplyAppTokenDefinition = {
   address: string;
@@ -36,7 +37,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
     super(appToolkit);
   }
 
-  getContract(address: string): SentimentLToken {
+  getContract(address: string) {
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 

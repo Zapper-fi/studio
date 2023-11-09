@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MapleContractFactory, MapleWithdrawalManager } from '../contracts';
+import { MapleViemContractFactory } from '../contracts';
+import { MapleWithdrawalManager } from '../contracts/viem';
 
 export type MaplePendingWithdrawalContractPositionDefinition = {
   address: string;
@@ -31,7 +32,7 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): MapleWithdrawalManager {
+  getContract(address: string) {
     return this.contractFactory.mapleWithdrawalManager({ address, network: this.network });
   }
 

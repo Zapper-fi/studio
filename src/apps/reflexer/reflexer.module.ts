@@ -9,7 +9,7 @@ import { ReflexerSaviorContractPositionFetcher } from './ethereum/reflexer.savio
 
 @Module({
   providers: [
-    ReflexerContractFactory,
+    ReflexerViemContractFactory,
     EthereumReflexerPositionPresenter,
     ReflexerSafeContractPositionFetcher,
     ReflexerSaviorContractPositionFetcher,

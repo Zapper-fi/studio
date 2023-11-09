@@ -13,7 +13,7 @@ import { SteakHutViemContractFactory } from './contracts';
     AvalancheSteakHutStakingContractPositionFetcher,
     AvalancheSteakHutVeTokenFetcher,
 
-    SteakHutContractFactory,
+    SteakHutViemContractFactory,
   ],
 })
 export class SteakHutAppModule extends AbstractApp() {}

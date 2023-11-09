@@ -14,7 +14,7 @@ import { OptimismHiddenHandRewardsContractPositionFetcher } from './optimism/hid
     EthereumHiddenHandRewardsContractPositionFetcher,
     OptimismHiddenHandRewardsContractPositionFetcher,
     ArbitrumHiddenHandRewardsContractPositionFetcher,
-    HiddenHandContractFactory,
+    HiddenHandViemContractFactory,
   ],
 })
 export class HiddenHandAppModule extends AbstractApp() {}

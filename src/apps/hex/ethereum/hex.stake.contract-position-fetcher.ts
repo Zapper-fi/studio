@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Hex, HexContractFactory } from '../contracts';
+import { HexViemContractFactory } from '../contracts';
+import { Hex } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumHexStakeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Hex> {
@@ -29,7 +30,7 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
     super(appToolkit);
   }
 
-  getContract(address: string): Hex {
+  getContract(address: string) {
     return this.contractFactory.hex({ address, network: this.network });
   }
 

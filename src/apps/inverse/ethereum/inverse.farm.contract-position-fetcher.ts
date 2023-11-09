@@ -29,7 +29,7 @@ export class EthereumInverseFarmContractPositionFetcher extends SingleStakingFar
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixRewards {
+  getContract(address: string) {
     return this.contractFactory.synthetixRewards({ address, network: this.network });
   }
 
@@ -42,7 +42,7 @@ export class EthereumInverseFarmContractPositionFetcher extends SingleStakingFar
   }
 
   async getIsActive({ contract }: GetDataPropsParams<SynthetixRewards>): Promise<boolean> {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()).gt(0);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {

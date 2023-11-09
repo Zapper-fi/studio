@@ -10,7 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { LlamaAirforceContractFactory, LlamaAirforceUnionVault } from '../contracts';
+import { LlamaAirforceViemContractFactory } from '../contracts';
+import { LlamaAirforceUnionVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<LlamaAirforceUnionVault> {
@@ -23,7 +24,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): LlamaAirforceUnionVault {
+  getContract(address: string) {
     return this.contractFactory.llamaAirforceUnionVault({ address, network: this.network });
   }
 
@@ -50,7 +51,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
       return [{ address: await multicall.wrap(pirexContract).asset(), network: this.network }];
     }
 
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<LlamaAirforceUnionVault>) {
@@ -66,7 +67,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
       return [pricePerShare];
     }
 
-    const reserveRaw = await contract.totalUnderlying();
+    const reserveRaw = await contract.read.totalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

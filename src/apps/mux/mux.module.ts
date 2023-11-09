@@ -20,7 +20,7 @@ import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract
 
 @Module({
   providers: [
-    MuxContractFactory,
+    MuxViemContractFactory,
     // Arbitrum
     ArbitrumMuxFarmContractPositionFetcher,
     ArbitrumMuxPerpContractPositionFetcher,

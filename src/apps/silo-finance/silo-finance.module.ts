@@ -8,7 +8,7 @@ import { EthereumSiloFinanceIncentivesContractPositionfetcher } from './ethereum
 
 @Module({
   providers: [
-    SiloFinanceContractFactory,
+    SiloFinanceViemContractFactory,
     // Arbitrum
     ArbitrumSiloFinanceIncentivesContractPositionfetcher,
     // Ethereum

@@ -12,7 +12,7 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AaveSafetyModuleContractFactory, AaveStkAave } from '../contracts';
+import { AaveSafetyModuleViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AaveStkAave> {
@@ -26,7 +26,7 @@ export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher ext
     super(appToolkit);
   }
 
-  getContract(address: string): AaveStkAave {
+  getContract(address: string) {
     return this.contractFactory.aaveStkAave({ address, network: this.network });
   }
 

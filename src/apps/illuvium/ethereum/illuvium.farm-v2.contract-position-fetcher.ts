@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { IlluviumContractFactory, IlluviumIlvPoolV2 } from '../contracts';
+import { IlluviumViemContractFactory } from '../contracts';
+import { IlluviumIlvPoolV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumIlvPoolV2> {
@@ -18,7 +19,7 @@ export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStaking
     super(appToolkit);
   }
 
-  getContract(address: string): IlluviumIlvPoolV2 {
+  getContract(address: string) {
     return this.contractFactory.illuviumIlvPoolV2({ address, network: this.network });
   }
 

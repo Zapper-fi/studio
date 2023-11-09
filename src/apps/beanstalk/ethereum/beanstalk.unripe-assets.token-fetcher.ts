@@ -10,7 +10,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { BeanstalkContractFactory, BeanstalkToken } from '../contracts';
+import { BeanstalkViemContractFactory } from '../contracts';
+import { BeanstalkToken } from '../contracts/viem';
 
 export type BeanstalkUnripeAssetsTokenDefinition = {
   address: string;
@@ -32,7 +33,7 @@ export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplateP
     super(appToolkit);
   }
 
-  getContract(address: string): BeanstalkToken {
+  getContract(address: string) {
     return this.contractFactory.beanstalkToken({ address, network: this.network });
   }
 

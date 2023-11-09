@@ -20,7 +20,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { VendorFinanceContractFactory, VendorFinancePoolV2 } from '../contracts';
+import { VendorFinanceViemContractFactory } from '../contracts';
+import { VendorFinancePoolV2 } from '../contracts/viem';
 import { IPositionTracker } from '../contracts/viem/VendorFinancePositionTracker';
 
 import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
@@ -41,7 +42,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): VendorFinancePoolV2 {
+  getContract(address: string) {
     return this.contractFactory.vendorFinancePoolV2({ address, network: this.network });
   }
 
@@ -173,7 +174,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
 
   async getPoolSettings(address: string) {
     const pool = this.contractFactory.vendorFinancePoolV2({ address, network: this.network });
-    return await pool.poolSettings();
+    return await pool.read.poolSettings();
   }
 
   async getTotalBorrowed(positions: IPositionTracker.EntryStructOutput[], borrowerAddr: string): Promise<number> {

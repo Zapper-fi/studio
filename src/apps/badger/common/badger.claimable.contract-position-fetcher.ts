@@ -14,7 +14,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { BadgerContractFactory, BadgerTree } from '../contracts';
+import { BadgerViemContractFactory } from '../contracts';
+import { BadgerTree } from '../contracts/viem';
 
 import { BadgerClaimableRewardsResolver } from './badger.claimable.rewards-resolver';
 
@@ -39,7 +40,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  getContract(address: string): BadgerTree {
+  getContract(address: string) {
     return this.contractFactory.badgerTree({ network: this.network, address });
   }
 
@@ -76,7 +77,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     if (!match) return [0];
     let cumulativeAmount = match.rewardTokenBalanceRaw;
 
-    let claimed = await contract.claimed(address, rewardToken.address).then(v => v.toString());
+    let claimed = await contract.read.claimed(address, rewardToken.address).then(v => v.toString());
 
     if (rewardToken.address === this.diggTokenAddress) {
       const diggTokenContract = this.contractFactory.badgerDiggToken(rewardToken);

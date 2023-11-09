@@ -9,7 +9,7 @@ import { EthereumOriginDollarGovernanceWousdTokenFetcher } from './ethereum/orig
 
 @Module({
   providers: [
-    OriginDollarGovernanceContractFactory,
+    OriginDollarGovernanceViemContractFactory,
     // Ethereum
     EthereumOriginDollarGovernanceRewardsContractPositionFetcher,
     EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher,

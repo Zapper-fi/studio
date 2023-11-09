@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { DfxContractFactory, DfxCurve } from '../contracts';
+import { DfxViemContractFactory } from '../contracts';
+import { DfxCurve } from '../contracts/viem';
 
 export abstract class DfxCurveTokenFetcher extends AppTokenTemplatePositionFetcher<DfxCurve> {
   abstract poolAddresses: string[];
@@ -21,7 +22,7 @@ export abstract class DfxCurveTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string): DfxCurve {
+  getContract(address: string) {
     return this.contractFactory.dfxCurve({ network: this.network, address });
   }
 
@@ -37,7 +38,7 @@ export abstract class DfxCurveTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<DfxCurve>) {
-    const liquidity = await contract.liquidity();
+    const liquidity = await contract.read.liquidity();
     const reserves = liquidity.individual_.map(reserveRaw => Number(reserveRaw) / 10 ** 18); // DFX report all token liquidity in 10**18
 
     return reserves.map(r => r / appToken.supply);

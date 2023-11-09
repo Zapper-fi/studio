@@ -5,7 +5,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { MidasMarketTokenFetcher } from '../common/midas.market.token-fetcher';
-import { MidasContractFactory, MidasCErc20Token, MidasPoolDirectory, MidasPoolLens } from '../contracts';
+import { MidasViemContractFactory } from '../contracts';
+import { MidasCErc20Token, MidasPoolDirectory, MidasPoolLens } from '../contracts/viem';
 import { FusePoolDirectory } from '../contracts/viem/MidasPoolDirectory';
 
 @PositionTemplate()

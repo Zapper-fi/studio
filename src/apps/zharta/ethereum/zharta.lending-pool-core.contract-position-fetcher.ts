@@ -13,7 +13,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { ZhartaContractFactory, ZhartaLendingPoolCore } from '../contracts';
+import { ZhartaViemContractFactory } from '../contracts';
+import { ZhartaLendingPoolCore } from '../contracts/viem';
 
 interface ZhartaLendingPoolCoreContractPositionDefinition extends DefaultContractPositionDefinition {
   type: 'LENDING_POOL_CORE';

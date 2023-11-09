@@ -38,11 +38,11 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     OptimismUniV3PickleJarTokenFetcher,
     PickleApiJarRegistry,
 
-    PickleContractFactory,
+    PickleViemContractFactory,
     PolygonPickleFarmContractPositionFetcher,
     PolygonPickleJarTokenFetcher,
     PolygonUniV3PickleJarTokenFetcher,
-    UniswapV3ContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
   ],
 })

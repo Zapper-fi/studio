@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { LiquityContractFactory, TroveManager } from '../contracts';
+import { LiquityViemContractFactory } from '../contracts';
+import { TroveManager } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLiquityTroveContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TroveManager> {
@@ -25,7 +26,7 @@ export class EthereumLiquityTroveContractPositionFetcher extends ContractPositio
     super(appToolkit);
   }
 
-  getContract(address: string): TroveManager {
+  getContract(address: string) {
     return this.contractFactory.troveManager({ address, network: this.network });
   }
 

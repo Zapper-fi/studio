@@ -12,7 +12,7 @@ import { VelaViemContractFactory } from './contracts';
     ArbitrumVelaEsVelaTokenFetcher,
     ArbitrumVelaVlpFarmContractPositionFetcher,
     ArbitrumVelaVlpTokenFetcher,
-    VelaContractFactory,
+    VelaViemContractFactory,
   ],
 })
 export class VelaAppModule extends AbstractApp() {}

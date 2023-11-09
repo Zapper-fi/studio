@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { StakeDaoContractFactory, StakeDaoFarm } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoFarm } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StakeDaoFarm> {
@@ -25,7 +26,7 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoFarm {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoFarm({ address, network: this.network });
   }
 

@@ -15,7 +15,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
-import { DieselToken, GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { DieselToken } from '../contracts/viem';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -70,7 +71,7 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     return pools.map((pool, idx) => ({ address: dieselTokens[idx], poolAddress: pool }));
   }
 
-  getContract(address: string): DieselToken {
+  getContract(address: string) {
     return this.gearboxContractFactory.dieselToken({ address, network });
   }
 

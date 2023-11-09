@@ -16,7 +16,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MetaStreetContractFactory, PoolV2Legacy } from '../contracts';
+import { MetaStreetViemContractFactory } from '../contracts';
+import { PoolV2Legacy } from '../contracts/viem';
 
 export const GET_POOLS_QUERY = gql`
   {

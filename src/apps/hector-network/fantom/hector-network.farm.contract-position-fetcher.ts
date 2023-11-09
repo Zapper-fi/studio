@@ -31,7 +31,7 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
     super(appToolkit);
   }
 
-  getContract(address: string): HectorNetworkStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.hectorNetworkStakingRewards({ address, network: this.network });
   }
 

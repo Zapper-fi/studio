@@ -13,7 +13,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV3ContractFactory, PoolTogetherV3Ticket } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherV3Ticket } from '../contracts/viem';
 
 import { POOL_WITH_MULTIPLE_WINNERS_BUILDERS } from './pool-together-v3.community-tocket.pool-builders';
 import { PoolTogetherV3LogProvider, PoolWithMultipleWinnersBuilderCreatedType } from './pool-together-v3.log-provider';
@@ -57,7 +58,7 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
     return poolBuilders ?? [];
   }
 
-  getContract(address: string): PoolTogetherV3Ticket {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherV3Ticket({ address, network: this.network });
   }
 
@@ -93,7 +94,7 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
               }),
             );
 
-            const ticketAddress = await contract.ticket().then(addr => addr.toLowerCase());
+            const ticketAddress = await contract.read.ticket().then(addr => addr.toLowerCase());
 
             return {
               type,

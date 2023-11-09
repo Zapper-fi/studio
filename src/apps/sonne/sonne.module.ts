@@ -13,7 +13,7 @@ import { OptimismSonneSupplyTokenFetcher } from './optimism/sonne.supply.token-f
 
 @Module({
   providers: [
-    SonneContractFactory,
+    SonneViemContractFactory,
     // Base
     BaseSonnePositionPresenter,
     BaseSonneBorrowContractPositionFetcher,

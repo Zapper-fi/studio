@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { BottoContractFactory, BottoLiquidityMining } from '../contracts';
+import { BottoViemContractFactory } from '../contracts';
+import { BottoLiquidityMining } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<BottoLiquidityMining> {
@@ -33,7 +34,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     ];
   }
 
-  getContract(address: string): BottoLiquidityMining {
+  getContract(address: string) {
     return this.contractFactory.bottoLiquidityMining({ address, network: this.network });
   }
 
@@ -54,7 +55,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    return (await contract.endTime()).gt(Math.floor(Date.now() / 1000));
+    return (await contract.read.endTime()).gt(Math.floor(Date.now() / 1000));
   }
 
   async getStakedTokenBalance({

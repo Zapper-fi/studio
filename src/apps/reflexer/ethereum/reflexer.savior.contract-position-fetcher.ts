@@ -46,7 +46,7 @@ export class ReflexerSaviorContractPositionFetcher extends CustomContractPositio
     super(appToolkit);
   }
 
-  getContract(address: string): ReflexerUniswapV2SafeSavior {
+  getContract(address: string) {
     return this.contractFactory.reflexerUniswapV2SafeSavior({ address, network: this.network });
   }
 

@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { IndexCoopContractFactory, IndexCoopToken } from '../contracts';
+import { IndexCoopViemContractFactory } from '../contracts';
+import { IndexCoopToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePositionFetcher<IndexCoopToken> {
@@ -27,7 +28,7 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): IndexCoopToken {
+  getContract(address: string) {
     return this.contractFactory.indexCoopToken({ address, network: this.network });
   }
 
@@ -46,7 +47,7 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IndexCoopToken>) {
-    return (await contract.getComponents()).map(address => ({ address, network: this.network }));
+    return (await contract.read.getComponents()).map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ appToken, contract }: GetDataPropsParams<IndexCoopToken>) {

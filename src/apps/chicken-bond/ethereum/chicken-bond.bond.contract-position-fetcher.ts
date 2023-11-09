@@ -10,7 +10,8 @@ import { MetaType } from '~position/position.interface';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ChickenBondBondNft, ChickenBondContractFactory } from '../contracts';
+import { ChickenBondViemContractFactory } from '../contracts';
+import { ChickenBondBondNft } from '../contracts/viem';
 
 enum BondStatus {
   PENDING = 1,
@@ -48,7 +49,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
     ];
   }
 
-  getContract(address: string): ChickenBondBondNft {
+  getContract(address: string) {
     return this.contractFactory.chickenBondBondNft({ network: this.network, address });
   }
 

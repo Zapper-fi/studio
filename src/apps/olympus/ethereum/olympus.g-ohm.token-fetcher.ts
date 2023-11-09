@@ -10,7 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { OlympusContractFactory, OlympusGOhmToken } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusGOhmToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFetcher<OlympusGOhmToken> {
@@ -23,7 +24,7 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): OlympusGOhmToken {
+  getContract(address: string) {
     return this.contractFactory.olympusGOhmToken({ address, network: this.network });
   }
 
@@ -32,7 +33,7 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OlympusGOhmToken>) {
-    return [{ address: await contract.sOHM(), network: this.network }];
+    return [{ address: await contract.read.sOHM(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<OlympusGOhmToken>) {

@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { LiquityContractFactory, StabilityPool } from '../contracts';
+import { LiquityViemContractFactory } from '../contracts';
+import { StabilityPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLiquityStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StabilityPool> {
@@ -25,7 +26,7 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): StabilityPool {
+  getContract(address: string) {
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 

@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { WolfGameContractFactory, WolfGameWoolPouch } from '../contracts';
+import { WolfGameViemContractFactory } from '../contracts';
+import { WolfGameWoolPouch } from '../contracts/viem';
 
 type PouchesResult = {
   pouches: { id: string }[];
@@ -40,7 +41,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0xb76fbbb30e31f2c3bdaa2466cfb1cfe39b220d06' }];
   }
-  getContract(address: string): WolfGameWoolPouch {
+  getContract(address: string) {
     return this.contractFactory.wolfGameWoolPouch({ address, network: this.network });
   }
   async getTokenDefinitions(

@@ -8,7 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { ShapeshiftContractFactory, ShapeshiftStakingRewards } from '../contracts';
+import { ShapeshiftViemContractFactory } from '../contracts';
+import { ShapeshiftStakingRewards } from '../contracts/viem';
 
 const FARMS = [
   // UNI-V2 FOX / ETH v1 (inactive)
@@ -60,7 +61,7 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
     super(appToolkit);
   }
 
-  getContract(address: string): ShapeshiftStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.shapeshiftStakingRewards({ address, network: this.network });
   }
 
@@ -73,7 +74,7 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
   }
 
   async getIsActive({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    return (await contract.read.periodFinish()).gt(Math.floor(Date.now() / 1000));
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {

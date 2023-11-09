@@ -8,7 +8,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { SteakHutPool, SteakHutContractFactory } from '../contracts';
+import { SteakHutViemContractFactory } from '../contracts';
+import { SteakHutPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<SteakHutPool> {
@@ -22,7 +23,7 @@ export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemp
     super(appToolkit);
   }
 
-  getContract(address: string): SteakHutPool {
+  getContract(address: string) {
     return this.contractFactory.steakHutPool({ address, network: this.network });
   }
 

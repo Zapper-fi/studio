@@ -19,7 +19,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { LlamapayStreamApiClient } from '../common/llamapay.stream.api-client';
-import { LlamapayContractFactory, LlamapayVestingEscrow } from '../contracts';
+import { LlamapayViemContractFactory } from '../contracts';
+import { LlamapayVestingEscrow } from '../contracts/viem';
 
 export type LlamapayVestingEscrowContractPositionDefinition = {
   address: string;
@@ -46,7 +47,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
     return this.apiClient.getTokens(this.subgraph);
   }
 
-  getContract(address: string): LlamapayVestingEscrow {
+  getContract(address: string) {
     return this.contractFactory.llamapayVestingEscrow({ address, network: this.network });
   }
 

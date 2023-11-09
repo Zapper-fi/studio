@@ -15,7 +15,8 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 
 import { RhinoFiApiClient } from '../common/rhino-fi.api-client';
 import { RhinoFiCacheManager } from '../common/rhino-fi.cache-manager';
-import { RhinoFiContractFactory, RhinoFiStarkEx } from '../contracts';
+import { RhinoFiViemContractFactory } from '../contracts';
+import { RhinoFiStarkEx } from '../contracts/viem';
 
 type RhinoFiDepositDefinition = {
   address: string;
@@ -39,7 +40,7 @@ export class EthereumRhinoFiDepositContractPositionFetcher extends CustomContrac
     super(appToolkit);
   }
 
-  getContract(address: string): RhinoFiStarkEx {
+  getContract(address: string) {
     return this.contractFactory.rhinoFiStarkEx({ address, network: this.network });
   }
 

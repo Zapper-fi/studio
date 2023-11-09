@@ -18,7 +18,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CurveContractFactory, CurveGauge } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveGauge } from '../contracts/viem';
 
 export enum GaugeType {
   SINGLE = 'single',
@@ -86,7 +87,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): CurveGauge {
+  getContract(address: string) {
     return this.contractFactory.curveGauge({ address, network: this.network });
   }
 
@@ -187,8 +188,8 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
       network: this.network,
     });
 
-    const inflationRateRaw = await contract.inflation_rate();
-    const workingSupplyRaw = await contract.working_supply();
+    const inflationRateRaw = await contract.read.inflation_rate();
+    const workingSupplyRaw = await contract.read.working_supply();
     const relativeWeightRaw = await multicall.wrap(controller)['gauge_relative_weight(address)'](address);
 
     const inflationRate = Number(inflationRateRaw) / 10 ** 18;

@@ -17,7 +17,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { BalancerGauge, BalancerV2ContractFactory } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerGauge } from '../contracts/viem';
 
 export const GAUGES_QUERY = gql`
   {
@@ -44,7 +45,7 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
   abstract subgraphUrl: string;
   faultyRewardAddress?: string[] = [];
 
-  getContract(address: string): BalancerGauge {
+  getContract(address: string) {
     return this.contractFactory.balancerGauge({ address, network: this.network });
   }
 

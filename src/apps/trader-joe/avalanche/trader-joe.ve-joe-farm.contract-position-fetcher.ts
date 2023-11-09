@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { TraderJoeVeJoeStaking, TraderJoeContractFactory } from '../contracts';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeVeJoeStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<TraderJoeVeJoeStaking> {
@@ -23,7 +24,7 @@ export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTe
     super(appToolkit);
   }
 
-  getContract(address: string): TraderJoeVeJoeStaking {
+  getContract(address: string) {
     return this.contractFactory.traderJoeVeJoeStaking({ address, network: this.network });
   }
 

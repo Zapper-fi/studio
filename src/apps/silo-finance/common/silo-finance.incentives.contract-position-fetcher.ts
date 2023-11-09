@@ -11,7 +11,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { SiloFinanceContractFactory, SiloIncentives } from '../contracts';
+import { SiloFinanceViemContractFactory } from '../contracts';
+import { SiloIncentives } from '../contracts/viem';
 
 export type SiloFinanceIncentivesContractPositionDefinition = {
   address: string;
@@ -55,7 +56,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
   async getTokenDefinitions({ contract }) {
     return [
       {
-        address: await contract.REWARD_TOKEN(),
+        address: await contract.read.REWARD_TOKEN(),
         metaType: MetaType.CLAIMABLE,
         network: this.network,
       },

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { PikaProtocolContractFactory, PikaProtocolEsPika } from '../contracts';
+import { PikaProtocolViemContractFactory } from '../contracts';
+import { PikaProtocolEsPika } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPikaProtocolEsPikaTokenFetcher extends AppTokenTemplatePositionFetcher<PikaProtocolEsPika> {
@@ -18,7 +19,7 @@ export class OptimismPikaProtocolEsPikaTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): PikaProtocolEsPika {
+  getContract(address: string) {
     return this.contractFactory.pikaProtocolEsPika({ address, network: this.network });
   }
 

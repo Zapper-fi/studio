@@ -11,7 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { LyraAvalonContractFactory, LyraLiquidityToken } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraLiquidityToken } from '../contracts/viem';
 
 // TODO: find better way to determine available markets
 type QueryResponse = {
@@ -51,7 +52,7 @@ export abstract class LyraAvalonPoolTokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): LyraLiquidityToken {
+  getContract(address: string) {
     return this.contractFactory.lyraLiquidityToken({ address, network: this.network });
   }
 
@@ -81,7 +82,7 @@ export abstract class LyraAvalonPoolTokenFetcher extends AppTokenTemplatePositio
     contract,
     multicall,
   }: GetPricePerShareParams<LyraLiquidityToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
-    const pool = await contract.liquidityPool();
+    const pool = await contract.read.liquidityPool();
     const poolContract = this.contractFactory.lyraLiquidityPool({ address: pool, network: this.network });
     const ratioRaw = await multicall.wrap(poolContract).getTokenPrice();
     const ratio = Number(ratioRaw) / 10 ** 18;

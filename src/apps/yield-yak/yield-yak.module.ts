@@ -8,7 +8,7 @@ import { YieldYakViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    YieldYakContractFactory,
+    YieldYakViemContractFactory,
     AvalancheYieldyakVaultTokenFetcher,
     AvalancheYieldyakFarmContractPositionFetcher,
   ],

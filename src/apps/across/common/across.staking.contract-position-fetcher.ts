@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AcrossContractFactory, AcrossStaking } from '../contracts';
+import { AcrossViemContractFactory } from '../contracts';
+import { AcrossStaking } from '../contracts/viem';
 
 export type AcrossStakingContractPositionDefinition = {
   address: string;
@@ -34,7 +35,7 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): AcrossStaking {
+  getContract(address: string) {
     return this.contractFactory.acrossStaking({ address, network: this.network });
   }
 

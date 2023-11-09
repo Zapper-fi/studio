@@ -17,7 +17,7 @@ import { PolygonOokiLendTokenFetcher } from './polygon/ooki.lend.token-fetcher';
     OptimismOokiLendTokenFetcher,
     PolygonOokiLendTokenFetcher,
 
-    OokiContractFactory,
+    OokiViemContractFactory,
   ],
 })
 export class OokiAppModule extends AbstractApp() {}

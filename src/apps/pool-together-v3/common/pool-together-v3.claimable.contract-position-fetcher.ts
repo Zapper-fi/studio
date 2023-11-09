@@ -13,7 +13,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { PoolTogetherV3ContractFactory, PoolTogetherV3TokenFaucet } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherV3TokenFaucet } from '../contracts/viem';
 
 import { PoolTogetherV3ApiPrizePoolRegistry } from './pool-together-v3.api.prize-pool-registry';
 
@@ -27,7 +28,7 @@ export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends Con
     super(appToolkit);
   }
 
-  getContract(address: string): PoolTogetherV3TokenFaucet {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherV3TokenFaucet({ address, network: this.network });
   }
 
@@ -43,7 +44,7 @@ export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends Con
   }: GetTokenDefinitionsParams<PoolTogetherV3TokenFaucet, DefaultContractPositionDefinition>): Promise<
     UnderlyingTokenDefinition[] | null
   > {
-    const rewardTokenAddressRaw = await contract.asset().then(addr => addr.toLowerCase());
+    const rewardTokenAddressRaw = await contract.read.asset().then(addr => addr.toLowerCase());
     return [
       {
         metaType: MetaType.CLAIMABLE,

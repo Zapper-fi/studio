@@ -215,13 +215,13 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChefInit>) {
-    return [await contract.rewardToken()];
+    return [await contract.read.rewardToken()];
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<PancakeswapSmartChefInit>) {
-    const end = await contract.bonusEndBlock();
+    const end = await contract.read.bonusEndBlock();
     if (Number(end) > this.currentBlock) return [0];
-    return [await contract.rewardPerBlock()];
+    return [await contract.read.rewardPerBlock()];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PancakeswapSmartChefInit>) {

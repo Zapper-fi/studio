@@ -19,7 +19,7 @@ export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): MstableAsset {
+  getContract(address: string) {
     return this.contractFactory.mstableAsset({ address, network: this.network });
   }
 
@@ -28,10 +28,10 @@ export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MstableAsset>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<MstableAsset>) {
-    return [await contract.exchangeRate().then(v => Number(v) / 10 ** appToken.tokens[0].decimals)];
+    return [await contract.read.exchangeRate().then(v => Number(v) / 10 ** appToken.tokens[0].decimals)];
   }
 }

@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { WombatExchangeContractFactory, WombatExchangeMasterWombat } from '../contracts';
+import { WombatExchangeViemContractFactory } from '../contracts';
+import { WombatExchangeMasterWombat } from '../contracts/viem';
 
 @PositionTemplate()
 export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<WombatExchangeMasterWombat> {
@@ -23,7 +24,7 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
     super(appToolkit);
   }
 
-  getContract(address: string): WombatExchangeMasterWombat {
+  getContract(address: string) {
     return this.contractFactory.wombatExchangeMasterWombat({ address, network: this.network });
   }
 

@@ -20,7 +20,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { MakerContractFactory, MakerGemJoin } from '../contracts';
+import { MakerViemContractFactory } from '../contracts';
+import { MakerGemJoin } from '../contracts/viem';
 
 export type MakerVaultDefinition = {
   address: string;

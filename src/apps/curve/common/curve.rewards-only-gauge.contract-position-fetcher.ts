@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveRewardsOnlyGauge } from '../contracts/viem';
 
 import { GaugeType } from './curve.pool-gauge.contract-position-fetcher';
 
@@ -59,7 +60,9 @@ export abstract class CurveRewardsOnlyGaugeContractPositionFetcher extends Contr
   async getTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<CurveRewardsOnlyGauge, CurveRewardsOnlyDefinition>) {
-    const definitions = [{ metaType: MetaType.SUPPLIED, address: await contract.lp_token(), network: this.network }];
+    const definitions = [
+      { metaType: MetaType.SUPPLIED, address: await contract.read.lp_token(), network: this.network },
+    ];
 
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.reward_tokens(i)));
     const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);

@@ -5,7 +5,8 @@ import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MetavaultTradeContractFactory, MetavaultTradeRewardTracker } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
+import { MetavaultTradeRewardTracker } from '../contracts/viem';
 
 type MetavaultTradeFarmType = {
   address: string;
@@ -25,7 +26,7 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
     super(appToolkit);
   }
 
-  getContract(address: string): MetavaultTradeRewardTracker {
+  getContract(address: string) {
     return this.contractFactory.metavaultTradeRewardTracker({ address, network: this.network });
   }
 

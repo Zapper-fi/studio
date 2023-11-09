@@ -13,7 +13,7 @@ import { EthereumCleverVotingEscrowContractPositionFetcher } from './ethereum/cl
 
 @Module({
   providers: [
-    CleverContractFactory,
+    CleverViemContractFactory,
     EthereumCleverLeverTokenFetcher,
     EthereumCleverFurnaceContractPositionFetcher,
     EthereumCleverLockContractPositionFetcher,

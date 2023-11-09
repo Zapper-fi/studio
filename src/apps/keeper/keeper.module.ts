@@ -13,8 +13,8 @@ import { EthereumKeeperVestContractPositionFetcher } from './ethereum/keeper.ves
 
 @Module({
   providers: [
-    KeeperContractFactory,
-    UniswapV3ContractFactory,
+    KeeperViemContractFactory,
+    UniswapV3ViemContractFactory,
     EthereumKeeperUnbondContractPositionFetcher,
     EthereumKeeperBondContractPositionFetcher,
     EthereumKeeperJobContractPositionFetcher,

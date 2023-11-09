@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { AaveSafetyModuleContractFactory, AaveStkAbpt } from '../contracts';
+import { AaveSafetyModuleViemContractFactory } from '../contracts';
+import { AaveStkAbpt } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplatePositionFetcher<AaveStkAbpt> {
@@ -22,7 +23,7 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
     super(appToolkit);
   }
 
-  getContract(address: string): AaveStkAbpt {
+  getContract(address: string) {
     return this.contractFactory.aaveStkAbpt({ address, network: this.network });
   }
 

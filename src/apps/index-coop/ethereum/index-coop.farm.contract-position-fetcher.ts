@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { IndexCoopContractFactory, IndexCoopStaking } from '../contracts';
+import { IndexCoopViemContractFactory } from '../contracts';
+import { IndexCoopStaking } from '../contracts/viem';
 
 const FARMS = [
   // UNI-V2 DPI / ETH
@@ -43,7 +44,7 @@ export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingF
     super(appToolkit);
   }
 
-  getContract(address: string): IndexCoopStaking {
+  getContract(address: string) {
     return this.contractFactory.indexCoopStaking({ address, network: this.network });
   }
 
@@ -56,7 +57,7 @@ export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingF
   }
 
   async getIsActive({ contract }: GetDataPropsParams<IndexCoopStaking, SingleStakingFarmDataProps>): Promise<boolean> {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()).gt(0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<IndexCoopStaking, SingleStakingFarmDataProps>) {

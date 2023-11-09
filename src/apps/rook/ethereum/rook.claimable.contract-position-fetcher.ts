@@ -15,7 +15,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { RookContractFactory, RookLiquidityPoolDistributor } from '../contracts';
+import { RookViemContractFactory } from '../contracts';
+import { RookLiquidityPoolDistributor } from '../contracts/viem';
 
 type RewardOfLiquidityProviderResponse = {
   owner: string;
@@ -73,7 +74,7 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): RookLiquidityPoolDistributor {
+  getContract(address: string) {
     return this.contractFactory.rookLiquidityPoolDistributor({ address, network: this.network });
   }
 

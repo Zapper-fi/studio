@@ -12,7 +12,8 @@ import { GetDefinitionsParams } from '~position/template/app-token.template.type
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { CamelotContractFactory, CamelotNftPool } from '../contracts';
+import { CamelotViemContractFactory } from '../contracts';
+import { CamelotNftPool } from '../contracts/viem';
 
 type CamelotFarmContractPositionDefinition = {
   address: string;
@@ -80,7 +81,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
     ];
   }
 
-  getContract(address: string): CamelotNftPool {
+  getContract(address: string) {
     return this.contractFactory.camelotNftPool({ network: this.network, address });
   }
 

@@ -13,7 +13,8 @@ import {
   GetMasterChefTokenBalancesParams,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { TraderJoeChefV2Rewarder, TraderJoeChefV3, TraderJoeContractFactory } from '../contracts';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeChefV2Rewarder, TraderJoeChefV3 } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -30,7 +31,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     super(appToolkit);
   }
 
-  getContract(address: string): TraderJoeChefV3 {
+  getContract(address: string) {
     return this.traderJoeContractFactory.traderJoeChefV3({ address, network: this.network });
   }
 
@@ -55,7 +56,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
-    return await contract.joePerSec().catch(err => {
+    return await contract.read.joePerSec().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });
@@ -70,7 +71,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getExtraRewardTokenAddresses(contract: TraderJoeChefV2Rewarder): Promise<string[]> {
-    return [await contract.rewardToken()];
+    return [await contract.read.rewardToken()];
   }
 
   async getExtraRewardTokenRewardRates({

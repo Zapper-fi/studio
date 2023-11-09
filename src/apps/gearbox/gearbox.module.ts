@@ -15,7 +15,7 @@ import { EthereumGearboxRewardsMerkleCache } from './ethereum/gearbox.rewards.me
     EthereumGearboxLendingTokenFetcher,
     EthereumGearboxPhantomTokenFetcher,
     EthereumGearboxRewardsPositionFetcher,
-    GearboxContractFactory,
+    GearboxViemContractFactory,
     EthereumGearboxRewardsMerkleCache,
   ],
 })

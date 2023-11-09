@@ -10,7 +10,7 @@ import { EthereumBeanstalkUnripeAssetsTokenFetcher } from './ethereum/beanstalk.
 
 @Module({
   providers: [
-    BeanstalkContractFactory,
+    BeanstalkViemContractFactory,
     BeanstalkBalanceResolver,
     EthereumBeanstalkSiloDepositContractPositionFetcher,
     EthereumBeanstalkSiloEarnedContractPositionFetcher,

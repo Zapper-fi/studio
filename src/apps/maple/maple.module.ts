@@ -10,7 +10,7 @@ import { EthereumMapleXMplTokenFetcher } from './ethereum/maple.x-mpl.token-fetc
 
 @Module({
   providers: [
-    MapleContractFactory,
+    MapleViemContractFactory,
     MaplePoolDefinitionResolver,
     EthereumMaplePoolTokenFetcher,
     EthereumMapleXMplTokenFetcher,

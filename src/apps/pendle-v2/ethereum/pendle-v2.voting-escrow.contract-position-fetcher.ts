@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { PendleV2ContractFactory, PendleVotingEscrow } from '../contracts';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendleVotingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumPendleV2VotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<PendleVotingEscrow> {

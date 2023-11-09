@@ -15,7 +15,8 @@ import {
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { MyceliumContractFactory, MyceliumVault } from '../contracts';
+import { MyceliumViemContractFactory } from '../contracts';
+import { MyceliumVault } from '../contracts/viem';
 
 export type MyceliumPerpContractPositionDefinition = {
   address: string;
@@ -46,7 +47,7 @@ export class ArbitrumMycellilumPerpContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): MyceliumVault {
+  getContract(address: string) {
     return this.contractFactory.myceliumVault({ address, network: this.network });
   }
 

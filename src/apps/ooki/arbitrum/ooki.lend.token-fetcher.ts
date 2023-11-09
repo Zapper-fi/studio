@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { OokiContractFactory, OokiIToken } from '../contracts';
+import { OokiViemContractFactory } from '../contracts';
+import { OokiIToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumOokiLendTokenFetcher extends AppTokenTemplatePositionFetcher<OokiIToken> {
@@ -20,7 +21,7 @@ export class ArbitrumOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
     super(appToolkit);
   }
 
-  getContract(address: string): OokiIToken {
+  getContract(address: string) {
     return this.contractFactory.ookiIToken({ address, network: this.network });
   }
 
@@ -35,11 +36,11 @@ export class ArbitrumOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OokiIToken>) {
-    return [{ address: await contract.loanTokenAddress(), network: this.network }];
+    return [{ address: await contract.read.loanTokenAddress(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OokiIToken>) {
-    const exchangeRateRaw = await contract.tokenPrice();
+    const exchangeRateRaw = await contract.read.tokenPrice();
     const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
     return [exchangeRate];
   }

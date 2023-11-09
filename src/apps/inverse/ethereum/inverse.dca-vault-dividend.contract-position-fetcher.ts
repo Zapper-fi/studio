@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { InverseContractFactory, InverseDcaVaultToken } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseDcaVaultToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumInverseDcaVaultDividendContractPositionFetcher extends ContractPositionTemplatePositionFetcher<InverseDcaVaultToken> {
@@ -26,7 +27,7 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
     super(appToolkit);
   }
 
-  getContract(address: string): InverseDcaVaultToken {
+  getContract(address: string) {
     return this.contractFactory.inverseDcaVaultToken({ address, network: this.network });
   }
 
@@ -40,7 +41,7 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<InverseDcaVaultToken>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: await contract.target(), network: this.network }];
+    return [{ metaType: MetaType.CLAIMABLE, address: await contract.read.target(), network: this.network }];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<InverseDcaVaultToken>) {

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetAddressesParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { JonesDaoContractFactory, JonesStrategyToken } from '../contracts';
+import { JonesDaoViemContractFactory } from '../contracts';
+import { JonesStrategyToken } from '../contracts/viem';
 
 export type JonesDaoStrategyTokenDefinition = {
   address: string;
@@ -23,7 +24,7 @@ export class ArbitrumJonesDaoStrategyTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): JonesStrategyToken {
+  getContract(address: string) {
     return this.contractFactory.jonesStrategyToken({ network: this.network, address });
   }
 

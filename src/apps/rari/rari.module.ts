@@ -9,7 +9,7 @@ import { EthereumRariGovernanceContractPositionFetcher } from './ethereum/rari.g
 
 @Module({
   providers: [
-    RariContractFactory,
+    RariViemContractFactory,
     EthereumRariFarmContractPositionFetcher,
     EthereumRariFundTokenFetcher,
     EthereumRariGovernanceContractPositionFetcher,

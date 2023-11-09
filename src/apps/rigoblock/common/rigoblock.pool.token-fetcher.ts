@@ -16,7 +16,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { BaseToken } from '~position/token.interface';
 
-import { RigoblockContractFactory, SmartPool } from '../contracts';
+import { RigoblockViemContractFactory } from '../contracts';
+import { SmartPool } from '../contracts/viem';
 
 import { PoolLogType, RigoblockLogProvider } from './rigoblock.log-provider';
 import { POOL_BUILDERS } from './rigoblock.pool.pool-builders';
@@ -92,7 +93,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     return definitions.map(definition => definition.address);
   }
 
-  getContract(address: string): SmartPool {
+  getContract(address: string) {
     return this.contractFactory.smartPool({ address, network: this.network });
   }
 

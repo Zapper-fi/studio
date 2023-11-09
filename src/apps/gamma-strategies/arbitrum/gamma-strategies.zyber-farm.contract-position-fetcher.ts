@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GammaStrategiesContractFactory, GammaStrategiesZyberswapMasterchef } from '../contracts';
+import { GammaStrategiesViemContractFactory } from '../contracts';
+import { GammaStrategiesZyberswapMasterchef } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesZyberswapMasterchef> {
@@ -25,7 +26,7 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     super(appToolkit);
   }
 
-  getContract(address: string): GammaStrategiesZyberswapMasterchef {
+  getContract(address: string) {
     return this.contractFactory.gammaStrategiesZyberswapMasterchef({ address, network: this.network });
   }
 
@@ -38,7 +39,7 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
   }
 
   async getRewardTokenAddress(contract: GammaStrategiesZyberswapMasterchef) {
-    return (await contract.zyber()).toLowerCase();
+    return (await contract.read.zyber()).toLowerCase();
   }
 
   async getTotalAllocPoints({

@@ -3,7 +3,8 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
-import { UniswapPair, UniswapV2ContractFactory } from '../contracts';
+import { UniswapV2ViemContractFactory } from '../contracts';
+import { UniswapPair } from '../contracts/viem';
 
 import { UniswapV2PoolSubgraphTemplateTokenFetcher } from './uniswap-v2.pool.subgraph.template.token-fetcher';
 

@@ -28,7 +28,7 @@ export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromeV2Gauge {
+  getContract(address: string) {
     return this.contractFactory.velodromeV2Gauge({ address, network: this.network });
   }
 
@@ -44,12 +44,12 @@ export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPos
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.stakingToken(),
+        address: await contract.read.stakingToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.rewardToken(),
+        address: await contract.read.rewardToken(),
         network: this.network,
       },
     ];

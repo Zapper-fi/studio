@@ -9,7 +9,7 @@ import { PolygonClearpoolPoolTokenFetcher } from './polygon/clearpool.pool.token
 
 @Module({
   providers: [
-    ClearpoolContractFactory,
+    ClearpoolViemContractFactory,
     ClearpoolPoolDefinitionsResolver,
     // Ethereum
     EthereumClearpoolPoolTokenFetcher,

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { StakeDaoContractFactory, StakeDaoVotingEscrow } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoVotingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStakeDaoEscrowedQiContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<StakeDaoVotingEscrow> {

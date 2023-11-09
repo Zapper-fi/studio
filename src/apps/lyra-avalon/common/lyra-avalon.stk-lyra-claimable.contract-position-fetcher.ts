@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LyraAvalonContractFactory, LyraStkLyra } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraStkLyra } from '../contracts/viem';
 
 export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LyraStkLyra> {
   groupLabel = 'stkLYRA Rewards';
@@ -25,7 +26,7 @@ export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends 
     super(appToolkit);
   }
 
-  getContract(address: string): LyraStkLyra {
+  getContract(address: string) {
     return this.contractFactory.lyraStkLyra({ address, network: this.network });
   }
 
@@ -37,7 +38,7 @@ export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends 
     return [
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.STAKED_TOKEN(),
+        address: await contract.read.STAKED_TOKEN(),
         network: this.network,
       },
     ];

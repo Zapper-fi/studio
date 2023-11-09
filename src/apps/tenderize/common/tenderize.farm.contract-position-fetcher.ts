@@ -7,7 +7,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { TenderizeContractFactory, TenderFarm } from '../contracts';
+import { TenderizeViemContractFactory } from '../contracts';
+import { TenderFarm } from '../contracts/viem';
 
 import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-resolver';
 
@@ -24,7 +25,7 @@ export abstract class FarmContractPositionFetcher extends SingleStakingFarmTempl
     super(appToolkit);
   }
 
-  getContract(address: string): TenderFarm {
+  getContract(address: string) {
     return this.contractFactory.tenderFarm({ network: this.network, address });
   }
 

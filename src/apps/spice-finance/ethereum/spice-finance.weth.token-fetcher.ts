@@ -31,7 +31,7 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): Erc721 {
+  getContract(address: string) {
     return this.appToolkit.globalContracts.erc721({ address, network: this.network });
   }
 

@@ -14,7 +14,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { UniswapV3ContractFactory, UniswapV3PositionManager } from '../contracts';
+import { UniswapV3ViemContractFactory } from '../contracts';
+import { UniswapV3PositionManager } from '../contracts/viem';
 
 import { UniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.contract-position-builder';
 
@@ -83,7 +84,7 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
     super(appToolkit);
   }
 
-  getContract(address: string): UniswapV3PositionManager {
+  getContract(address: string) {
     return this.contractFactory.uniswapV3PositionManager({ address, network: this.network });
   }
 

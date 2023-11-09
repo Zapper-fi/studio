@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverGauge } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverGauge } from '../contracts/viem';
 
 import { CLEV } from './addresses';
 
@@ -36,7 +37,7 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): CleverGauge {
+  getContract(address: string) {
     return this.contractFactory.cleverGauge({ address, network: this.network });
   }
 

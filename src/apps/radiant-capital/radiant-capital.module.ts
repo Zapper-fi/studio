@@ -13,8 +13,8 @@ import { RadiantCapitalViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    RadiantCapitalContractFactory,
-    AaveV2ContractFactory,
+    RadiantCapitalViemContractFactory,
+    AaveV2ViemContractFactory,
     ArbitrumRadiantCapitalPositionPresenter,
     ArbitrumRadiantCapitalStableDebtTokenFetcher,
     ArbitrumRadiantCapitalSupplyTokenFetcher,

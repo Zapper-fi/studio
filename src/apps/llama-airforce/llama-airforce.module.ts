@@ -9,7 +9,7 @@ import { EthereumLlamaAirforceVaultTokenFetcher } from './ethereum/llama-airforc
 
 @Module({
   providers: [
-    LlamaAirforceContractFactory,
+    LlamaAirforceViemContractFactory,
     // Ethereum
     EthereumLlamaAirforceMerkleCache,
     EthereumLlamaAirforceAirdropContractPositionFetcher,

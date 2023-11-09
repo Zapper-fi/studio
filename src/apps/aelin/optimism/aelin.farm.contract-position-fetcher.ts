@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { AelinContractFactory, AelinStaking } from '../contracts';
+import { AelinViemContractFactory } from '../contracts';
+import { AelinStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -35,7 +36,7 @@ export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmT
     super(appToolkit);
   }
 
-  getContract(address: string): AelinStaking {
+  getContract(address: string) {
     return this.contractFactory.aelinStaking({ address, network: this.network });
   }
 

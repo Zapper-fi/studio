@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
 import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleVeAngle, AngleLiquidityGauge } from '../contracts';
+import { AngleViemContractFactory } from '../contracts';
+import { AngleVeAngle, AngleLiquidityGauge } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

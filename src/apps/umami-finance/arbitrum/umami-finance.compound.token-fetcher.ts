@@ -11,7 +11,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
-import { UmamiFinanceCompound, UmamiFinanceContractFactory } from '../contracts';
+import { UmamiFinanceViemContractFactory } from '../contracts';
+import { UmamiFinanceCompound } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePositionFetcher<UmamiFinanceCompound> {
@@ -26,7 +27,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
     super(appToolkit);
   }
 
-  getContract(address: string): UmamiFinanceCompound {
+  getContract(address: string) {
     return this.contractFactory.umamiFinanceCompound({ network: this.network, address });
   }
 

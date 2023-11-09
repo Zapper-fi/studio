@@ -17,7 +17,7 @@ import { UmamiFinanceViemContractFactory } from './contracts';
     ArbitrumUmamiFinanceMarinateContractPositionFetcher,
     ArbitrumUmamiFinanceMarinateUmamiTokenFetcher,
     ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher,
-    UmamiFinanceContractFactory,
+    UmamiFinanceViemContractFactory,
     UmamiFinanceYieldResolver,
   ],
 })

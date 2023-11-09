@@ -9,7 +9,7 @@ import { EthereumBancorV3PoolTokenFetcher } from './ethereum/bancor-v3.pool.toke
 
 @Module({
   providers: [
-    BancorV3ContractFactory,
+    BancorV3ViemContractFactory,
     EthereumBancorV3FarmContractPositionFetcher,
     EthereumBancorV3PoolTokenFetcher,
     EthereumBancorV3BntPoolTokenFetcher,

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
 
-import { GearboxContractFactory, PhantomToken } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { PhantomToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePositionFetcher<PhantomToken> {
@@ -21,7 +22,7 @@ export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): PhantomToken {
+  getContract(address: string) {
     return this.contractFactory.phantomToken({ address, network: this.network });
   }
 
@@ -41,7 +42,7 @@ export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePosition
   async getUnderlyingTokenDefinitions({
     contract,
   }: GetUnderlyingTokensParams<PhantomToken>): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare() {

@@ -10,7 +10,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { ArtGobblers, ArtGobblersContractFactory } from '../contracts';
+import { ArtGobblersViemContractFactory } from '../contracts';
+import { ArtGobblers } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ArtGobblers> {
@@ -37,7 +38,7 @@ export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPo
     ];
   }
 
-  getContract(address: string): ArtGobblers {
+  getContract(address: string) {
     return this.contractFactory.artGobblers({ network: this.network, address });
   }
 

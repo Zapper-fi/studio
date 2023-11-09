@@ -13,7 +13,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { AlphaBank, AlphaV1ContractFactory } from '../contracts';
+import { AlphaV1ViemContractFactory } from '../contracts';
+import { AlphaBank } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePositionFetcher<AlphaBank> {
@@ -26,7 +27,7 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): AlphaBank {
+  getContract(address: string) {
     return this.contractFactory.alphaBank({ network: this.network, address });
   }
 
@@ -58,7 +59,7 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getReserves({ appToken, contract }: GetDataPropsParams<AlphaBank>) {
-    const totalEthRaw = await contract.totalETH();
+    const totalEthRaw = await contract.read.totalETH();
     return [Number(totalEthRaw) / 10 ** appToken.tokens[0].decimals];
   }
 

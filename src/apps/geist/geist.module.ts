@@ -13,8 +13,8 @@ import { FantomGeistVariableDebtTokenFetcher } from './fantom/geist.variable-deb
 
 @Module({
   providers: [
-    GeistContractFactory,
-    AaveV2ContractFactory,
+    GeistViemContractFactory,
+    AaveV2ViemContractFactory,
     FantomGeistIncentivesPositionFetcher,
     FantomGeistPlatformFeesPositionFetcher,
     FantomGeistPositionPresenter,

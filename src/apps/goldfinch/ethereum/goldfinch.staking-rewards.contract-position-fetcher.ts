@@ -18,7 +18,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { GoldfinchContractFactory, GoldfinchStakingRewards } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
+import { GoldfinchStakingRewards } from '../contracts/viem';
 
 export type GoldfinchStakingRewardsDataProps = {
   assetStandard: Standard;
@@ -44,7 +45,7 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
     super(appToolkit);
   }
 
-  getContract(address: string): GoldfinchStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.goldfinchStakingRewards({ address, network: this.network });
   }
 

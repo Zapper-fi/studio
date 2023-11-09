@@ -11,7 +11,8 @@ import { isVesting } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverVesting } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverVesting } from '../contracts/viem';
 
 import { CLEV } from './addresses';
 
@@ -26,7 +27,7 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  getContract(address: string): CleverVesting {
+  getContract(address: string) {
     return this.contractFactory.cleverVesting({ network: this.network, address });
   }
 

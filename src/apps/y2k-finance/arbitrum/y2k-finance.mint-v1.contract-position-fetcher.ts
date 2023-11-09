@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Y2KFinanceContractFactory, Y2KFinanceVaultV1 } from '../contracts';
+import { Y2KFinanceViemContractFactory } from '../contracts';
+import { Y2KFinanceVaultV1 } from '../contracts/viem';
 
 const vaultFactory = '0x984e0eb8fb687afa53fc8b33e12e04967560e092';
 
@@ -40,7 +41,7 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
     return epochIds;
   }
 
-  getContract(address: string): Y2KFinanceVaultV1 {
+  getContract(address: string) {
     return this.contractFactory.y2KFinanceVaultV1({ address, network: this.network });
   }
 

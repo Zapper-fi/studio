@@ -6,6 +6,6 @@ import { ApecoinViemContractFactory } from './contracts';
 import { EthereumApecoinStakingContractPositionFetcher } from './ethereum/apecoin.staking.contract-position-fetcher';
 
 @Module({
-  providers: [ApecoinContractFactory, EthereumApecoinStakingContractPositionFetcher],
+  providers: [ApecoinViemContractFactory, EthereumApecoinStakingContractPositionFetcher],
 })
 export class ApecoinAppModule extends AbstractApp() {}

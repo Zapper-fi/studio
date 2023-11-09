@@ -9,7 +9,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { EulerContractFactory, EulerDtokenContract } from '../contracts';
+import { EulerViemContractFactory } from '../contracts';
+import { EulerDtokenContract } from '../contracts/viem';
 
 import { EulerTokenDefinition, EulerTokenDefinitionsResolver, EulerTokenType } from './euler.token-definition-resolver';
 
@@ -30,7 +31,7 @@ export abstract class EulerDTokenTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): EulerDtokenContract {
+  getContract(address: string) {
     return this.contractFactory.eulerDtokenContract({ network: this.network, address });
   }
 

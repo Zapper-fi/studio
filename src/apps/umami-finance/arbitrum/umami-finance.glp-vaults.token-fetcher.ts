@@ -62,7 +62,7 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
   }: GetUnderlyingTokensParams<UmamiFinanceGlpVault, UmamiFinanceGlpVaultAppTokenDefinition>): Promise<
     UnderlyingTokenDefinition[]
   > {
-    const underlyingToken = await contract.asset();
+    const underlyingToken = await contract.read.asset();
     return [{ address: underlyingToken, network: this.network }];
   }
 
@@ -74,7 +74,7 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
     DefaultAppTokenDataProps,
     UmamiFinanceGlpVaultAppTokenDefinition
   >): Promise<number[]> {
-    const pricePerShareRaw = await contract.pps();
+    const pricePerShareRaw = await contract.read.pps();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
 
     return [pricePerShare];

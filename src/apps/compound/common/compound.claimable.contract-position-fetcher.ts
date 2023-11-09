@@ -31,7 +31,7 @@ export abstract class CompoundClaimableContractPositionFetcher<
     opts: { contract: S; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
   ): Promise<BigNumberish>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getCompoundComptrollerContract(address);
   }
 

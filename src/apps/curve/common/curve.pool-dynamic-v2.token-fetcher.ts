@@ -23,7 +23,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { CurveContractFactory, CurveTricryptoPool } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveTricryptoPool } from '../contracts/viem';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
@@ -80,7 +81,7 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
     super(appToolkit);
   }
 
-  getContract(address: string): CurveTricryptoPool {
+  getContract(address: string) {
     return this.contractFactory.curveTricryptoPool({ address, network: this.network });
   }
 
@@ -145,7 +146,7 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
     let fee: number;
 
     try {
-      const fees = await contract.fee();
+      const fees = await contract.read.fee();
       fee = Number(fees) / 10 ** 8;
     } catch {
       fee = 0;

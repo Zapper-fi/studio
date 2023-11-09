@@ -13,7 +13,7 @@ import { EthereumSpoolVoSpoolTokenFetcher } from './ethereum/spool.vo-spool.toke
     EthereumSpoolVaultContractPositionFetcher,
     EthereumSpoolStakingContractPositionFetcher,
 
-    SpoolContractFactory,
+    SpoolViemContractFactory,
   ],
 })
 export class SpoolAppModule extends AbstractApp() {}

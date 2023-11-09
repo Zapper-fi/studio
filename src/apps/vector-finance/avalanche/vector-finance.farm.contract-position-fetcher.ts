@@ -21,7 +21,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { VectorFinanceContractFactory, VectorFinanceMasterChef, VectorFinanceMasterChefRewarder } from '../contracts';
+import { VectorFinanceViemContractFactory } from '../contracts';
+import { VectorFinanceMasterChef, VectorFinanceMasterChefRewarder } from '../contracts/viem';
 
 @PositionTemplate()
 export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -39,7 +40,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     super(appToolkit);
   }
 
-  getContract(address: string): VectorFinanceMasterChef {
+  getContract(address: string) {
     return this.contractFactory.vectorFinanceMasterChef({ address, network: this.network });
   }
 

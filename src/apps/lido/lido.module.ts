@@ -7,6 +7,6 @@ import { EthereumLidoStethTokenFetcher } from './ethereum/lido.steth.token-fetch
 import { EthereumLidoWstethTokenFetcher } from './ethereum/lido.wsteth.token-fetcher';
 
 @Module({
-  providers: [LidoContractFactory, EthereumLidoStethTokenFetcher, EthereumLidoWstethTokenFetcher],
+  providers: [LidoViemContractFactory, EthereumLidoStethTokenFetcher, EthereumLidoWstethTokenFetcher],
 })
 export class LidoAppModule extends AbstractApp() {}

@@ -11,7 +11,7 @@ import { PolygonPoolTogetherV4TicketTokenFetcher } from './polygon/pool-together
 
 @Module({
   providers: [
-    PoolTogetherV4ContractFactory,
+    PoolTogetherV4ViemContractFactory,
     PoolTogetherV4ApiPrizePoolRegistry,
     AvalanchePoolTogetherV4TicketTokenFetcher,
     EthereumPoolTogetherV4TicketTokenFetcher,

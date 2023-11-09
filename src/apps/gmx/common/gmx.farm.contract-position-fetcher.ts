@@ -5,7 +5,8 @@ import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { GmxContractFactory, GmxRewardTracker } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
+import { GmxRewardTracker } from '../contracts/viem';
 
 type GmxFarmType = {
   address: string;
@@ -25,7 +26,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
     super(appToolkit);
   }
 
-  getContract(address: string): GmxRewardTracker {
+  getContract(address: string) {
     return this.contractFactory.gmxRewardTracker({ address, network: this.network });
   }
 

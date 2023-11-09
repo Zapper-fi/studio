@@ -16,7 +16,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { PendleMarket, PendleV2ContractFactory } from '../contracts';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendleMarket } from '../contracts/viem';
 
 import { AppTokenResponse, PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 

@@ -6,6 +6,6 @@ import { PolygonStakingViemContractFactory } from './contracts';
 import { EthereumPolygonStakingContractPositionFetcher } from './ethereum/polygon-staking.deposit.contract-position-fetcher';
 
 @Module({
-  providers: [PolygonStakingContractFactory, EthereumPolygonStakingContractPositionFetcher],
+  providers: [PolygonStakingViemContractFactory, EthereumPolygonStakingContractPositionFetcher],
 })
 export class PolygonStakingAppModule extends AbstractApp() {}

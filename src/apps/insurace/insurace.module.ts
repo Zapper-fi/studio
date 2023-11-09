@@ -10,7 +10,7 @@ import { PolygonInsuraceMiningTokenFetcher } from './polygon/insurace.mining.tok
 
 @Module({
   providers: [
-    InsuraceContractFactory,
+    InsuraceViemContractFactory,
     // Avalanche
     AvalancheInsuraceMiningTokenFetcher,
     // Binance-smart-chain

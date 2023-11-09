@@ -16,7 +16,8 @@ import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ConcaveContractFactory, Lsdcnv } from '../contracts';
+import { ConcaveViemContractFactory } from '../contracts';
+import { Lsdcnv } from '../contracts/viem';
 
 export type ConcaveStakingV1Lock = {
   deposit: string;
@@ -65,7 +66,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
     super(appToolkit);
   }
 
-  getContract(address: string): Lsdcnv {
+  getContract(address: string) {
     return this.concaveContractFactory.lsdcnv({ address, network: this.network });
   }
 

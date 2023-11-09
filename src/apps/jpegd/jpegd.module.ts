@@ -9,7 +9,7 @@ import { EthereumJpegdChefV2ContractPositionFetcher } from './ethereum/jpegd.che
 
 @Module({
   providers: [
-    JpegdContractFactory,
+    JpegdViemContractFactory,
     EthereumJpegdChefV1ContractPositionFetcher,
     EthereumJpegdChefV2ContractPositionFetcher,
     EthereumJpegdBondContractPositionFetcher,

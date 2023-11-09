@@ -12,7 +12,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { AbracadabraContractFactory, AbracadabraErc20Vault } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { AbracadabraErc20Vault } from '../contracts/viem';
 
 import { OPTIMISM_ERC20_VAULT_CAULDRONS } from './abracadabra.optimism.constants';
 
@@ -27,7 +28,7 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
-  getContract(address: string): AbracadabraErc20Vault {
+  getContract(address: string) {
     return this.contractFactory.abracadabraErc20Vault({
       address,
       network: this.network,
@@ -54,7 +55,7 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
   }: GetUnderlyingTokensParams<AbracadabraErc20Vault, DefaultAppTokenDefinition>): Promise<
     UnderlyingTokenDefinition[]
   > {
-    const underlyingTokenAddress = await contract.underlying();
+    const underlyingTokenAddress = await contract.read.underlying();
     return [{ address: underlyingTokenAddress, network: this.network }];
   }
 

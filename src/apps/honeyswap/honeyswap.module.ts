@@ -9,8 +9,8 @@ import { PolygonHoneyswapPoolTokenFetcher } from './polygon/honeyswap.pool.token
 
 @Module({
   providers: [
-    HoneyswapContractFactory,
-    UniswapV2ContractFactory,
+    HoneyswapViemContractFactory,
+    UniswapV2ViemContractFactory,
     // Gnosis
     GnosisHoneyswapPoolTokenFetcher,
     // Polygon

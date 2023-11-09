@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BancorV3ContractFactory, StandardRewards } from '../contracts';
+import { BancorV3ViemContractFactory } from '../contracts';
+import { StandardRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StandardRewards> {
@@ -23,7 +24,7 @@ export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTempl
     super(appToolkit);
   }
 
-  getContract(address: string): StandardRewards {
+  getContract(address: string) {
     return this.contractFactory.standardRewards({ address, network: this.network });
   }
 

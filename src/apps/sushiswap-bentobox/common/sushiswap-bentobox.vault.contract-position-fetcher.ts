@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { SushiswapBentobox, SushiswapBentoboxContractFactory } from '../contracts';
+import { SushiswapBentoboxViemContractFactory } from '../contracts';
+import { SushiswapBentobox } from '../contracts/viem';
 
 import { SushiswapBentoboxVaultTokensResolver } from './sushiswap-bentobox.vault-tokens-resolver';
 
@@ -59,7 +60,7 @@ export abstract class SushiswapBentoboxVaultContractPositionFetcher extends Cont
     ];
   }
 
-  getContract(address: string): SushiswapBentobox {
+  getContract(address: string) {
     return this.contractFactory.sushiswapBentobox({ network: this.network, address });
   }
 

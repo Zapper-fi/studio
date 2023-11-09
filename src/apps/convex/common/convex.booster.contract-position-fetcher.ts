@@ -3,7 +3,8 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 
-import { ConvexBooster, ConvexContractFactory } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexBooster } from '../contracts/viem';
 
 export abstract class ConvexBoosterContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexBooster> {
   abstract boosterAddress: string;
@@ -18,7 +19,7 @@ export abstract class ConvexBoosterContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexBooster {
+  getContract(address: string) {
     return this.contractFactory.convexBooster({ address, network: this.network });
   }
 

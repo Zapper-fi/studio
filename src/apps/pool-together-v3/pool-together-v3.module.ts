@@ -24,7 +24,7 @@ import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together
   providers: [
     PoolTogetherV3ApiPrizePoolRegistry,
 
-    PoolTogetherV3ContractFactory,
+    PoolTogetherV3ViemContractFactory,
     PoolTogetherV3LogProvider,
     // Celo
     CeloPoolTogetherV3ClaimableContractPositionFetcher,

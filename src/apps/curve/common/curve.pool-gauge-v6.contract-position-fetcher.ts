@@ -69,7 +69,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): CurveGaugeV6 {
+  getContract(address: string) {
     return this.contractFactory.curveGaugeV6({ address, network: this.network });
   }
 
@@ -153,8 +153,8 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
       network: this.network,
     });
 
-    const inflationRateRaw = await contract.inflation_rate();
-    const workingSupplyRaw = await contract.working_supply();
+    const inflationRateRaw = await contract.read.inflation_rate();
+    const workingSupplyRaw = await contract.read.working_supply();
     const relativeWeightRaw = await multicall.wrap(controller)['gauge_relative_weight(address)'](address);
 
     const inflationRate = Number(inflationRateRaw) / 10 ** 18;

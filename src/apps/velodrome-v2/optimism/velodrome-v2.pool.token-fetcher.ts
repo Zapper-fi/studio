@@ -26,7 +26,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromeV2Pool {
+  getContract(address: string) {
     return this.contractFactory.velodromeV2Pool({ address, network: this.network });
   }
 
@@ -54,7 +54,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromeV2Pool>) {
-    const [token0, token1] = await contract.tokens();
+    const [token0, token1] = await contract.read.tokens();
 
     return [
       { address: token0.toLowerCase(), network: this.network },

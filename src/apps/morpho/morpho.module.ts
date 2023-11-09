@@ -10,7 +10,7 @@ import { EthereumMorphoPositionPresenter } from './ethereum/morpho.position-pres
 
 @Module({
   providers: [
-    MorphoContractFactory,
+    MorphoViemContractFactory,
     // Ethereum
     EthereumMorphoCompoundSupplyContractPositionFetcher,
     EthereumMorphoAaveV2SupplyContractPositionFetcher,

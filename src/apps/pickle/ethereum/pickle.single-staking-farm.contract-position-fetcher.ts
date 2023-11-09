@@ -25,7 +25,7 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
     super(appToolkit);
   }
 
-  getContract(address: string): PickleJarSingleRewardStaking {
+  getContract(address: string) {
     return this.contractFactory.pickleJarSingleRewardStaking({ address, network: this.network });
   }
 
@@ -45,7 +45,7 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()).gt(0);
   }
 
   getStakedTokenBalance({

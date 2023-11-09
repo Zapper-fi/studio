@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { DopexContractFactory, DopexVotingEscrowRewards } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexVotingEscrowRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<DopexVotingEscrowRewards> {
@@ -25,7 +26,7 @@ export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends Con
     super(appToolkit);
   }
 
-  getContract(address: string): DopexVotingEscrowRewards {
+  getContract(address: string) {
     return this.contractFactory.dopexVotingEscrowRewards({ address, network: this.network });
   }
 
@@ -37,7 +38,7 @@ export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends Con
     return [
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.emittedToken(),
+        address: await contract.read.emittedToken(),
         network: this.network,
       },
     ];

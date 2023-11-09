@@ -11,7 +11,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { YieldYakChef, YieldYakContractFactory } from '../contracts';
+import { YieldYakViemContractFactory } from '../contracts';
+import { YieldYakChef } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<YieldYakChef> {
@@ -26,7 +27,7 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     super(appToolkit);
   }
 
-  getContract(address: string): YieldYakChef {
+  getContract(address: string) {
     return this.contractFactory.yieldYakChef({ address, network: this.network });
   }
 

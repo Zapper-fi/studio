@@ -11,7 +11,8 @@ import { MetaType } from '~position/position.interface';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ApecoinContractFactory, ApecoinStaking } from '../contracts';
+import { ApecoinViemContractFactory } from '../contracts';
+import { ApecoinStaking } from '../contracts/viem';
 
 enum PoolTypes {
   APECOIN = 0,
@@ -58,7 +59,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
     ];
   }
 
-  getContract(address: string): ApecoinStaking {
+  getContract(address: string) {
     return this.contractFactory.apecoinStaking({ network: this.network, address });
   }
 

@@ -19,7 +19,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
-import { VelodromeContractFactory, VelodromePool } from '../contracts';
+import { VelodromeViemContractFactory } from '../contracts';
+import { VelodromePool } from '../contracts/viem';
 
 export type VelodromePoolTokenDefinition = {
   address: string;
@@ -42,7 +43,7 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromePool {
+  getContract(address: string) {
     return this.contractFactory.velodromePool({ address, network: this.network });
   }
 
@@ -56,8 +57,8 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 

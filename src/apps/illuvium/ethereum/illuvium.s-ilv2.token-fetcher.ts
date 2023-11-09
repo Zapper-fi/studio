@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { IlluviumContractFactory, IlluviumSIlv2 } from '../contracts';
+import { IlluviumViemContractFactory } from '../contracts';
+import { IlluviumSIlv2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIlluviumSIlv2TokenFetcher extends AppTokenTemplatePositionFetcher<IlluviumSIlv2> {
@@ -17,7 +18,7 @@ export class EthereumIlluviumSIlv2TokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): IlluviumSIlv2 {
+  getContract(address: string) {
     return this.contractFactory.illuviumSIlv2({ network: this.network, address });
   }
 

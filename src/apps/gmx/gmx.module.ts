@@ -14,7 +14,7 @@ import { GmxViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    GmxContractFactory,
+    GmxViemContractFactory,
     // Arbitrum
     ArbitrumGmxEsGmxTokenFetcher,
     ArbitrumGmxFarmContractPositionFetcher,

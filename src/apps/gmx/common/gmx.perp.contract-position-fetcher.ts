@@ -17,7 +17,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { GmxContractFactory, GmxVault } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
+import { GmxVault } from '../contracts/viem';
 
 export type GmxOptionContractPositionDefinition = {
   address: string;
@@ -47,7 +48,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): GmxVault {
+  getContract(address: string) {
     return this.contractFactory.gmxVault({ address, network: this.network });
   }
 

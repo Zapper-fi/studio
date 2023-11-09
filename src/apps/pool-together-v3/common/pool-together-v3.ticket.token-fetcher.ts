@@ -2,7 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
-import { PoolTogetherV3ContractFactory, PoolTogetherV3Ticket } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherV3Ticket } from '../contracts/viem';
 
 import { PoolTogetherV3ApiPrizePoolRegistry } from './pool-together-v3.api.prize-pool-registry';
 import {
@@ -20,7 +21,7 @@ export abstract class PoolTogetherV3TicketTokenFetcher extends PoolTogetherV3Pri
     super(appToolkit, contractFactory);
   }
 
-  getContract(address: string): PoolTogetherV3Ticket {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherV3Ticket({ address, network: this.network });
   }
 

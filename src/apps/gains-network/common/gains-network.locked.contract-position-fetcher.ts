@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { GainsNetworkContractFactory, GainsNetworkGToken } from '../contracts';
+import { GainsNetworkViemContractFactory } from '../contracts';
+import { GainsNetworkGToken } from '../contracts/viem';
 
 export abstract class GainsNetworkLockedContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<GainsNetworkGToken> {
   groupLabel = 'Locked';
@@ -42,7 +43,7 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
     ];
   }
 
-  getContract(address: string): GainsNetworkGToken {
+  getContract(address: string) {
     return this.contractFactory.gainsNetworkGToken({ network: this.network, address });
   }
 

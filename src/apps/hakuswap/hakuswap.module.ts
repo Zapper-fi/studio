@@ -9,7 +9,7 @@ import { HakuswapViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    HakuswapContractFactory,
+    HakuswapViemContractFactory,
     AvalancheHakuswapFarmContractPositionFetcher,
     AvalancheHakuswapPoolTokenFetcher,
     AvalancheHakuswapXHakuTokenFetcher,

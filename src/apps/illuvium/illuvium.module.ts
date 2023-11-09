@@ -9,7 +9,7 @@ import { EthereumIlluviumSIlv2TokenFetcher } from './ethereum/illuvium.s-ilv2.to
 
 @Module({
   providers: [
-    IlluviumContractFactory,
+    IlluviumViemContractFactory,
     EthereumIlluviumFarmContractPositionFetcher,
     EthereumIlluviumFarmV2ContractPositionFetcher,
     EthereumIlluviumSIlv2TokenFetcher,

@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { ConvexContractFactory, ConvexCvxStaking } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexCvxStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -30,7 +31,7 @@ export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexCvxStaking {
+  getContract(address: string) {
     return this.contractFactory.convexCvxStaking({ address, network: this.network });
   }
 

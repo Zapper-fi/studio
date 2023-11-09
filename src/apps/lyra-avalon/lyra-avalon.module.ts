@@ -18,7 +18,7 @@ import { OptimismLyraAvalonStkLyraTokenFetcher } from './optimism/lyra-avalon.st
 
 @Module({
   providers: [
-    LyraAvalonContractFactory,
+    LyraAvalonViemContractFactory,
     // Arbitrum
     ArbitrumLyraAvalonOptionsContractPositionFetcher,
     ArbitrumLyraAvalonStkLyraTokenFetcher,

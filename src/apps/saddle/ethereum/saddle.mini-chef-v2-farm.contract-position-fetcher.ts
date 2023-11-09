@@ -32,7 +32,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     super(appToolkit);
   }
 
-  getContract(address: string): SaddleMiniChefV2 {
+  getContract(address: string) {
     return this.contractFactory.saddleMiniChefV2({ address, network: this.network });
   }
 

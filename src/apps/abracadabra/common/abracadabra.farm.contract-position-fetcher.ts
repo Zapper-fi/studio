@@ -9,7 +9,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { AbracadabraContractFactory, PopsicleChef } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { PopsicleChef } from '../contracts/viem';
 
 export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PopsicleChef> {
   rewardRateUnit = RewardRateUnit.SECOND;
@@ -21,7 +22,7 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
     super(appToolkit);
   }
 
-  getContract(address: string): PopsicleChef {
+  getContract(address: string) {
     return this.contractFactory.popsicleChef({ address, network: this.network });
   }
 

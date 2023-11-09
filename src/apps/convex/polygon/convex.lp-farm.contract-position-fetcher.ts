@@ -40,7 +40,7 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexRewardPool {
+  getContract(address: string) {
     return this.contractFactory.convexRewardPool({ address, network: this.network });
   }
 

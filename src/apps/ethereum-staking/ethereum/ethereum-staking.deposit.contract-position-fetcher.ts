@@ -19,7 +19,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { EthereumStakingContractFactory, EthereumStakingDeposit } from '../contracts';
+import { EthereumStakingViemContractFactory } from '../contracts';
+import { EthereumStakingDeposit } from '../contracts/viem';
 
 type Eth2DepositsResponse = {
   deposits: {
@@ -73,7 +74,7 @@ export class EthereumEthereumStakingDepositContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): EthereumStakingDeposit {
+  getContract(address: string) {
     return this.contractFactory.ethereumStakingDeposit({ address, network: this.network });
   }
 

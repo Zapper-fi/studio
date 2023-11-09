@@ -8,7 +8,7 @@ import { EthereumBarnbridgeSmartAlphaSeniorTokenFetcher } from './ethereum/barnb
 
 @Module({
   providers: [
-    BarnbridgeSmartAlphaContractFactory,
+    BarnbridgeSmartAlphaViemContractFactory,
     EthereumBarnbridgeSmartAlphaJuniorTokenFetcher,
     EthereumBarnbridgeSmartAlphaSeniorTokenFetcher,
   ],

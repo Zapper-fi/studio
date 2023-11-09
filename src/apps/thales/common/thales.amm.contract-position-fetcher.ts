@@ -11,7 +11,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { Amm, ThalesContractFactory } from '../contracts';
+import { ThalesViemContractFactory } from '../contracts';
+import { Amm } from '../contracts/viem';
 
 export type ThalesAmmDefinition = {
   address: string;
@@ -33,7 +34,7 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
     super(appToolkit);
   }
 
-  getContract(address: string): Amm {
+  getContract(address: string) {
     return this.contractFactory.amm({ network: this.network, address });
   }
 
@@ -44,7 +45,7 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Amm>) {
     return [
       {
-        address: await contract.sUSD(),
+        address: await contract.read.sUSD(),
         metaType: MetaType.SUPPLIED,
         network: this.network,
       },
@@ -56,8 +57,8 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
   }
 
   async getDataProps({ contract, multicall }): Promise<ThalesAMMDataProp> {
-    const liquidityRaw = await contract.totalDeposited();
-    const underlyingTokenAddress = await contract.sUSD();
+    const liquidityRaw = await contract.read.totalDeposited();
+    const underlyingTokenAddress = await contract.read.sUSD();
     const underlyingTokenContract = this.appToolkit.globalContracts.erc20({
       address: underlyingTokenAddress,
       network: this.network,
@@ -69,7 +70,7 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Amm>): Promise<BigNumberish[]> {
-    const currentRound = await contract.round();
+    const currentRound = await contract.read.round();
     const currentBalance = await contract.balancesPerRound(Number(currentRound), address);
     const pendingDeposit = await contract.balancesPerRound(Number(currentRound) + 1, address);
 

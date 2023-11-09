@@ -12,7 +12,8 @@ import {
   GetMasterChefTokenBalancesParams,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { TraderJoeChefBoosted, TraderJoeContractFactory } from '../contracts';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeChefBoosted } from '../contracts/viem';
 import { TraderJoeChefBoostedRewarder } from '../contracts/viem/TraderJoeChefBoostedRewarder';
 
 @PositionTemplate()
@@ -30,7 +31,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
     super(appToolkit);
   }
 
-  getContract(address: string): TraderJoeChefBoosted {
+  getContract(address: string) {
     return this.traderJoeContractFactory.traderJoeChefBoosted({ address, network: this.network });
   }
 
@@ -67,7 +68,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
   }
 
   async getExtraRewardTokenAddresses(contract: TraderJoeChefBoostedRewarder): Promise<string[]> {
-    return [await contract.rewardToken()];
+    return [await contract.read.rewardToken()];
   }
 
   async getExtraRewardTokenRewardRates({

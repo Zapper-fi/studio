@@ -9,7 +9,7 @@ import { PolygonSymphonyYoloContractPositionFetcher } from './polygon/symphony.y
 
 @Module({
   providers: [
-    SymphonyContractFactory,
+    SymphonyViemContractFactory,
     AvalancheSymphonyYoloContractPositionFetcher,
     PolygonSymphonyYoloContractPositionFetcher,
     OptimismSymphonyYoloContractPositionFetcher,

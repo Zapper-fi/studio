@@ -9,7 +9,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { StakefishFeePool, StakefishContractFactory } from '../contracts';
+import { StakefishViemContractFactory } from '../contracts';
+import { StakefishFeePool } from '../contracts/viem';
 
 type StakeFishApiResponse = {
   effective_balance: string;
@@ -31,7 +32,7 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  getContract(address: string): StakefishFeePool {
+  getContract(address: string) {
     return this.contractFactory.stakefishFeePool({ address, network: this.network });
   }
 

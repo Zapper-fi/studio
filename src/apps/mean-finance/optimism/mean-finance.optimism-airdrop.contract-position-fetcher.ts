@@ -16,7 +16,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { MeanFinanceContractFactory, MeanFinanceOptimismAirdrop } from '../contracts';
+import { MeanFinanceViemContractFactory } from '../contracts';
+import { MeanFinanceOptimismAirdrop } from '../contracts/viem';
 
 const TOKEN_DISTRIBUTOR = '0xf453cc2cb0d016a028a34162cf1f9efbb799c2d7';
 const OP_TOKEN = '0x4200000000000000000000000000000000000042';

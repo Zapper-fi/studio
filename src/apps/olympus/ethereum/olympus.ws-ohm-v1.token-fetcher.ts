@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { OlympusContractFactory, OlympusWsOhmV1Token } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusWsOhmV1Token } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePositionFetcher<OlympusWsOhmV1Token> {
@@ -18,7 +19,7 @@ export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): OlympusWsOhmV1Token {
+  getContract(address: string) {
     return this.contractFactory.olympusWsOhmV1Token({ address, network: this.network });
   }
 
@@ -27,7 +28,7 @@ export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OlympusWsOhmV1Token>) {
-    return [{ address: await contract.sOHM(), network: this.network }];
+    return [{ address: await contract.read.sOHM(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<OlympusWsOhmV1Token>) {

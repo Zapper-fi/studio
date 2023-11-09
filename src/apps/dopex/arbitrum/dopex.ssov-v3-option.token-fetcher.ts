@@ -16,7 +16,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { DopexSsovV3DefinitionsResolver } from '../common/dopex.ssov-v3.definition-resolver';
-import { DopexContractFactory, DopexOptionToken } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexOptionToken } from '../contracts/viem';
 
 export type SsovV3OptionAppTokenDefinition = {
   address: string;
@@ -39,7 +40,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
     super(appToolkit);
   }
 
-  getContract(address: string): DopexOptionToken {
+  getContract(address: string) {
     return this.contractFactory.dopexOptionToken({ address, network: this.network });
   }
 
@@ -97,7 +98,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPrice({ appToken, contract }: GetPriceParams<DopexOptionToken>): Promise<number> {
-    const optionValueRaw = await contract.optionValue();
+    const optionValueRaw = await contract.read.optionValue();
     const optionValue = Number(optionValueRaw);
 
     return optionValue !== 0 ? optionValue / 10 ** appToken.decimals : 0;

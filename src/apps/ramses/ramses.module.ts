@@ -10,8 +10,8 @@ import { RamsesViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    UniswapV2ContractFactory,
-    RamsesContractFactory,
+    UniswapV2ViemContractFactory,
+    RamsesViemContractFactory,
     ArbitrumRamsesPoolTokenFetcher,
     ArbitrumRamsesVotingEscrowContractPositionFetcher,
     ArbitrumRamsesBribeContractPositionFetcher,

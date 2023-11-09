@@ -6,6 +6,6 @@ import { MoonrockViemContractFactory } from './contracts';
 import { EthereumMoonrockIndexTokenFetcher } from './ethereum/moonrock.index.token-fetcher';
 
 @Module({
-  providers: [MoonrockContractFactory, EthereumMoonrockIndexTokenFetcher],
+  providers: [MoonrockViemContractFactory, EthereumMoonrockIndexTokenFetcher],
 })
 export class MoonrockAppModule extends AbstractApp() {}

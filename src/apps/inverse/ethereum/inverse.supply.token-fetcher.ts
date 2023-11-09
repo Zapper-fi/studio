@@ -10,7 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { InverseContractFactory, InverseController } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseController } from '../contracts/viem';
 import { InverseLendingPool } from '../contracts/viem/InverseLendingPool';
 
 @PositionTemplate()

@@ -11,7 +11,7 @@ import { OptimismMeanFinanceOptimismAirdropContractPositionFetcher } from './opt
 import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/mean-finance.dca-position.contract-position-fetcher';
 @Module({
   providers: [
-    MeanFinanceContractFactory,
+    MeanFinanceViemContractFactory,
     OptimismMeanFinanceDcaPositionContractPositionFetcher,
     PolygonMeanFinanceDcaPositionContractPositionFetcher,
     ArbitrumMeanFinanceDcaPositionContractPositionFetcher,

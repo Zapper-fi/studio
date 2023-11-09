@@ -8,7 +8,7 @@ import { PancakeswapV3ViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    PancakeswapV3ContractFactory,
+    PancakeswapV3ViemContractFactory,
     BinanceSmartChainPancakeSwapV3LiquidityContractPositionFetcher,
     PancakeswapV3LiquidityContractPositionBuilder,
   ],

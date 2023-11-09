@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { GeistContractFactory, GeistStaking } from '../contracts';
+import { GeistViemContractFactory } from '../contracts';
+import { GeistStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistStaking> {

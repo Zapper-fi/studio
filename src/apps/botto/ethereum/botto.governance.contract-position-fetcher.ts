@@ -6,7 +6,8 @@ import { GetTokenBalancesParams } from '~position/template/contract-position.tem
 import { SingleStakingFarmDataProps } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { BottoContractFactory, BottoGovernance } from '../contracts';
+import { BottoViemContractFactory } from '../contracts';
+import { BottoGovernance } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<BottoGovernance> {
@@ -29,7 +30,7 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
     ];
   }
 
-  getContract(address: string): BottoGovernance {
+  getContract(address: string) {
     return this.contractFactory.bottoGovernance({ address, network: this.network });
   }
 

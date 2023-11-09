@@ -12,7 +12,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { YieldYakContractFactory, YieldYakVault } from '../contracts';
+import { YieldYakViemContractFactory } from '../contracts';
+import { YieldYakVault } from '../contracts/viem';
 
 export type YieldYakFarmDetails = {
   address: string;
@@ -38,7 +39,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): YieldYakVault {
+  getContract(address: string) {
     return this.contractFactory.yieldYakVault({ network: this.network, address });
   }
 
@@ -48,7 +49,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
-    return [{ address: await contract.depositToken(), network: this.network }];
+    return [{ address: await contract.read.depositToken(), network: this.network }];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault>): Promise<string> {

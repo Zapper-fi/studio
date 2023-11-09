@@ -16,7 +16,7 @@ import { VelodromeV2Bribe } from '../contracts';
 export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<VelodromeV2Bribe> {
   groupLabel = 'Bribe';
 
-  getContract(address: string): VelodromeV2Bribe {
+  getContract(address: string) {
     return this.contractFactory.velodromeV2Bribe({ address, network: this.network });
   }
 
@@ -29,7 +29,7 @@ export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewar
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<VelodromeV2Bribe>) {
-    const numRewards = Number(await contract.rewardsListLength());
+    const numRewards = Number(await contract.read.rewardsListLength());
     const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {

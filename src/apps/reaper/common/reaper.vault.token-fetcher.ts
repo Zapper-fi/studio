@@ -11,7 +11,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { ReaperContractFactory, ReaperCrypt } from '../contracts';
+import { ReaperViemContractFactory } from '../contracts';
+import { ReaperCrypt } from '../contracts/viem';
 
 import { ReaperVaultCacheManager } from './reaper.vault.cache-manager';
 
@@ -35,7 +36,7 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): ReaperCrypt {
+  getContract(address: string) {
     return this.contractFactory.reaperCrypt({ address, network: this.network });
   }
 
@@ -55,7 +56,7 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     contract,
   }: GetPricePerShareParams<ReaperCrypt, DefaultAppTokenDataProps, ReaperVaultDefinition>) {
-    const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
+    const pricePerShareRaw = await contract.read.getPricePerFullShare().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });

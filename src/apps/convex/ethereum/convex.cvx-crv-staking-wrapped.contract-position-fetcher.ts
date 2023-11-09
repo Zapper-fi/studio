@@ -16,7 +16,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { ConvexContractFactory, ConvexCvxCrvStakingWrapped } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexCvxCrvStakingWrapped } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<ConvexCvxCrvStakingWrapped> {
@@ -31,7 +32,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexCvxCrvStakingWrapped {
+  getContract(address: string) {
     return this.contractFactory.convexCvxCrvStakingWrapped({ address, network: this.network });
   }
 
@@ -44,7 +45,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<ConvexCvxCrvStakingWrapped>) {
-    const numRewards = await contract.rewardLength();
+    const numRewards = await contract.read.rewardLength();
     const rewardTokenAddresses = await Promise.all(
       range(0, Number(numRewards)).map(async v => {
         const rewards = await contract.rewards(v);

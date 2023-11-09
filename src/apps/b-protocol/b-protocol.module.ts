@@ -12,9 +12,9 @@ import { EthereumBProtocolMakerVaultContractPositionFetcher } from './ethereum/b
 
 @Module({
   providers: [
-    BProtocolContractFactory,
-    CompoundContractFactory,
-    MakerContractFactory,
+    BProtocolViemContractFactory,
+    CompoundViemContractFactory,
+    MakerViemContractFactory,
     EthereumBProtocolCompoundSupplyTokenFetcher,
     EthereumBProtocolCompoundBorrowContractPositionFetcher,
     EthereumLiquityStabilityPoolContractPositionFetcher,

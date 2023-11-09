@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
+import { UmamiFinanceViemContractFactory } from '../contracts';
+import { UmamiFinanceMarinate } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends ContractPositionTemplatePositionFetcher<UmamiFinanceMarinate> {
@@ -25,7 +26,7 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): UmamiFinanceMarinate {
+  getContract(address: string) {
     return this.contractFactory.umamiFinanceMarinate({ address, network: this.network });
   }
 

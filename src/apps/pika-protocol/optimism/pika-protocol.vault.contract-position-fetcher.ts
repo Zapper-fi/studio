@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PikaProtocolContractFactory, PikaProtocolVault } from '../contracts';
+import { PikaProtocolViemContractFactory } from '../contracts';
+import { PikaProtocolVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolVault> {
@@ -25,7 +26,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): PikaProtocolVault {
+  getContract(address: string) {
     return this.contractFactory.pikaProtocolVault({ address, network: this.network });
   }
 

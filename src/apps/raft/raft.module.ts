@@ -13,7 +13,7 @@ import { EthereumRaftPositionV2ContractPositionFetcher } from './ethereum/raft.p
 
 @Module({
   providers: [
-    RaftContractFactory,
+    RaftViemContractFactory,
     EthereumRaftCollateralV1TokenFetcher,
     EthereumRaftCollateralV2TokenFetcher,
     EthereumRaftDebtV1TokenFetcher,

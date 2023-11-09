@@ -24,7 +24,7 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusPlvGlp {
+  getContract(address: string) {
     return this.contractFactory.plutusPlvGlp({ address, network: this.network });
   }
 
@@ -33,24 +33,24 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PlutusPlvGlp>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PlutusPlvGlp>) {
-    const pricePerShareRaw = await contract.convertToAssets(BigNumber.from(10).pow(18).toString());
+    const pricePerShareRaw = await contract.read.convertToAssets(BigNumber.from(10).pow(18).toString());
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return [pricePerShare];
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
     return liquidity;
   }
 
   async getReserves({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }

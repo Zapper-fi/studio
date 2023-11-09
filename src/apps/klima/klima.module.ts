@@ -9,7 +9,7 @@ import { PolygonKlimaWsKlimaTokenFetcher } from './polygon/klima.ws-klima.token-
 
 @Module({
   providers: [
-    KlimaContractFactory,
+    KlimaViemContractFactory,
     // Polygon
     PolygonKlimaBondContractPositionFetcher,
     PolygonKlimaSKlimaTokenFetcher,

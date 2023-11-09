@@ -12,7 +12,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { GoldfinchContractFactory, GoldfinchVault } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
+import { GoldfinchVault } from '../contracts/viem';
 
 export type GoldfinchVaultDataProps = {
   assetStandard: Standard;
@@ -38,7 +39,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
     super(appToolkit);
   }
 
-  getContract(address: string): GoldfinchVault {
+  getContract(address: string) {
     return this.contractFactory.goldfinchVault({ address, network: this.network });
   }
 

@@ -10,7 +10,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { JarvisContractFactory, JarvisSynth } from '../contracts';
+import { JarvisViemContractFactory } from '../contracts';
+import { JarvisSynth } from '../contracts/viem';
 
 type JarvisSynthDefinition = {
   address: string;
@@ -31,7 +32,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): JarvisSynth {
+  getContract(address: string) {
     return this.contractFactory.jarvisSynth({ address, network: this.network });
   }
 

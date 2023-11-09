@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { HakuswapContractFactory, HakuswapXHaku } from '../contracts';
+import { HakuswapViemContractFactory } from '../contracts';
+import { HakuswapXHaku } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheHakuswapXHakuTokenFetcher extends AppTokenTemplatePositionFetcher<HakuswapXHaku> {
@@ -19,7 +20,7 @@ export class AvalancheHakuswapXHakuTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): HakuswapXHaku {
+  getContract(address: string) {
     return this.contractFactory.hakuswapXHaku({ network: this.network, address });
   }
 
@@ -28,7 +29,7 @@ export class AvalancheHakuswapXHakuTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<HakuswapXHaku>) {
-    return [{ address: await contract.haku(), network: this.network }];
+    return [{ address: await contract.read.haku(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<HakuswapXHaku>) {

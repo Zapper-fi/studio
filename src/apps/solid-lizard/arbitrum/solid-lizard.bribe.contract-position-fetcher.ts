@@ -17,7 +17,7 @@ export type SolidLizardBribeDefinition = {
 export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<SolidLizardBribe> {
   groupLabel = 'Bribe';
 
-  getContract(address: string): SolidLizardBribe {
+  getContract(address: string) {
     return this.contractFactory.solidLizardBribe({ address, network: this.network });
   }
 
@@ -26,7 +26,7 @@ export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewar
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<SolidLizardBribe>) {
-    const numRewards = Number(await contract.rewardTokensLength());
+    const numRewards = Number(await contract.read.rewardTokensLength());
     const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {

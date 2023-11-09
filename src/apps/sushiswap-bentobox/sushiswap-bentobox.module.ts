@@ -13,7 +13,7 @@ import { PolygonSushiSwapBentoBoxContractPositionFetcher } from './polygon/sushi
 
 @Module({
   providers: [
-    SushiswapBentoboxContractFactory,
+    SushiswapBentoboxViemContractFactory,
     SushiswapBentoboxVaultTokensResolver,
     // Arbitrum
     ArbitrumSushiSwapBentoBoxContractPositionFetcher,

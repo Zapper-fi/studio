@@ -25,7 +25,7 @@ export abstract class StargateFarmContractPositionFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getStargateChefContract(address);
   }
 

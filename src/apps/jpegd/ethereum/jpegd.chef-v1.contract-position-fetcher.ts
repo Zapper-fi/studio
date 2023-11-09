@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { JpegdContractFactory, JpegdLpFarm } from '../contracts';
+import { JpegdViemContractFactory } from '../contracts';
+import { JpegdLpFarm } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JpegdLpFarm> {
@@ -23,7 +24,7 @@ export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTempla
     super(appToolkit);
   }
 
-  getContract(address: string): JpegdLpFarm {
+  getContract(address: string) {
     return this.contractFactory.jpegdLpFarm({ address, network: this.network });
   }
 

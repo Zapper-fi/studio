@@ -11,7 +11,8 @@ import { GetTokenDefinitionsParams } from '~position/template/contract-position.
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
-import { VelodromeBribe, VelodromeContractFactory } from '../contracts';
+import { VelodromeViemContractFactory } from '../contracts';
+import { VelodromeBribe } from '../contracts/viem';
 
 export abstract class VotingRewardsContractPositionFetcher<
   T extends Contract,
@@ -27,7 +28,7 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<T>) {
-    const numRewards = Number(await contract.rewardsListLength());
+    const numRewards = Number(await contract.read.rewardsListLength());
     const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {

@@ -58,7 +58,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
   abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
   abstract getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number;
 
-  getContract(address: string): AaveV2AToken {
+  getContract(address: string) {
     return this.contractFactory.aaveV2AToken({ network: this.network, address });
   }
 
@@ -71,7 +71,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
       }),
     );
 
-    const reserveTokens = await pool.getAllReservesTokens();
+    const reserveTokens = await pool.read.getAllReservesTokens();
     const reserveTokenAddreses = reserveTokens.map(v => v[1]);
     const reserveTokensData = await Promise.all(reserveTokenAddreses.map(r => pool.getReserveTokensAddresses(r)));
 
@@ -85,7 +85,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AaveV2AToken>) {
-    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
+    return [{ address: await contract.read.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getPricePerShare() {
@@ -119,7 +119,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
       address: this.providerAddress,
     });
 
-    const reservesData = await multicall.wrap(pool).getReserveData(appToken.tokens[0].address);
+    const reservesData = await multicall.wrap(pool).read.getReserveData([appToken.tokens[0].address]);
     const supplyApy = (Number(reservesData.liquidityRate) / 10 ** 27) * 100;
     const stableBorrowApy = (Number(reservesData.stableBorrowRate) / 10 ** 27) * 100;
     const variableBorrowApy = (Number(reservesData.variableBorrowRate) / 10 ** 27) * 100;

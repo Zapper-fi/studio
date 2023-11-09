@@ -82,7 +82,7 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
     super(appToolkit);
   }
 
-  getContract(address: string): UniswapV3PositionManager {
+  getContract(address: string) {
     return this.contractFactory.uniswapV3PositionManager({ address, network: this.network });
   }
 

@@ -8,7 +8,7 @@ import { DopexGOhmSsov } from '../contracts';
 export class ArbitrumDopexGOhmSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexGOhmSsov> {
   groupLabel = 'SSOVs';
 
-  getContract(address: string): DopexGOhmSsov {
+  getContract(address: string) {
     return this.contractFactory.dopexGOhmSsov({ address, network: this.network });
   }
 

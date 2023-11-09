@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BarnbridgeSmartAlphaContractFactory, BarnbridgeSmartAlphaToken } from '../contracts';
+import { BarnbridgeSmartAlphaViemContractFactory } from '../contracts';
+import { BarnbridgeSmartAlphaToken } from '../contracts/viem';
 
 export type BarnbridgeSmartAlphaJuniorPoolTokenDefinition = {
   address: string;
@@ -59,7 +60,7 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     return poolAlphaPositions;
   }
 
-  getContract(address: string): BarnbridgeSmartAlphaToken {
+  getContract(address: string) {
     return this.contractFactory.barnbridgeSmartAlphaToken({ network: this.network, address });
   }
 

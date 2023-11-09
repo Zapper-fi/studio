@@ -12,7 +12,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { GoldfinchContractFactory, GoldfinchSeniorPool } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
+import { GoldfinchSeniorPool } from '../contracts/viem';
 
 export type GoldfinchSeniorPoolDataProps = {
   assetStandard: Standard;
@@ -38,7 +39,7 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
     super(appToolkit);
   }
 
-  getContract(address: string): GoldfinchSeniorPool {
+  getContract(address: string) {
     return this.contractFactory.goldfinchSeniorPool({ address, network: this.network });
   }
 

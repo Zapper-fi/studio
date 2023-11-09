@@ -8,7 +8,7 @@ import { EthereumIndexCoopIndexTokenFetcher } from './ethereum/index-coop.index.
 
 @Module({
   providers: [
-    IndexCoopContractFactory,
+    IndexCoopViemContractFactory,
     EthereumIndexCoopIndexTokenFetcher,
     EthereumIndexCoopFarmContractPositionFetcher,
   ],

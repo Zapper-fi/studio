@@ -12,7 +12,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { OriginDollarGovernanceContractFactory, Veogv } from '../contracts';
+import { OriginDollarGovernanceViemContractFactory } from '../contracts';
+import { Veogv } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Veogv> {
@@ -26,7 +27,7 @@ export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extend
     super(appToolkit);
   }
 
-  getContract(address: string): Veogv {
+  getContract(address: string) {
     return this.contractFactory.veogv({ address, network: this.network });
   }
 

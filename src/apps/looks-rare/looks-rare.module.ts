@@ -8,7 +8,7 @@ import { EthereumLooksRareFarmContractPositionFetcher } from './ethereum/looks-r
 
 @Module({
   providers: [
-    LooksRareContractFactory,
+    LooksRareViemContractFactory,
     EthereumLooksRareFarmContractPositionFetcher,
     EthereumLooksRareCompounderContractPositionFetcher,
   ],

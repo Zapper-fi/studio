@@ -10,7 +10,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { OpnxContractFactory, Veox } from '../contracts';
+import { OpnxViemContractFactory } from '../contracts';
+import { Veox } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<Veox> {

@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { BProtocolContractFactory, BProtocolBamm } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
+import { BProtocolBamm } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLiquityStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BProtocolBamm> {
@@ -25,7 +26,7 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): BProtocolBamm {
+  getContract(address: string) {
     return this.contractFactory.bProtocolBamm({ address, network: this.network });
   }
 

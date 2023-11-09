@@ -11,7 +11,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PancakeswapContractFactory, PancakeswapIfoChef } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
+import { PancakeswapIfoChef } from '../contracts/viem';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapIfoChef> {

@@ -6,6 +6,6 @@ import { EthereumStakingViemContractFactory } from './contracts';
 import { EthereumEthereumStakingDepositContractPositionFetcher } from './ethereum/ethereum-staking.deposit.contract-position-fetcher';
 
 @Module({
-  providers: [EthereumStakingContractFactory, EthereumEthereumStakingDepositContractPositionFetcher],
+  providers: [EthereumStakingViemContractFactory, EthereumEthereumStakingDepositContractPositionFetcher],
 })
 export class EthereumStakingAppModule extends AbstractApp() {}

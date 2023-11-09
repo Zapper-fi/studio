@@ -6,6 +6,6 @@ import { AtlendisV1ViemContractFactory } from './contracts';
 import { PolygonAtlendisV1PoolContractPositionFetcher } from './polygon/atlendis-v1.pool.contract-position-fetcher';
 
 @Module({
-  providers: [AtlendisV1ContractFactory, PolygonAtlendisV1PoolContractPositionFetcher],
+  providers: [AtlendisV1ViemContractFactory, PolygonAtlendisV1PoolContractPositionFetcher],
 })
 export class AtlendisV1AppModule extends AbstractApp() {}

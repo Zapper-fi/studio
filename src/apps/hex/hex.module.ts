@@ -6,6 +6,6 @@ import { HexViemContractFactory } from './contracts';
 import { EthereumHexStakeContractPositionFetcher } from './ethereum/hex.stake.contract-position-fetcher';
 
 @Module({
-  providers: [HexContractFactory, EthereumHexStakeContractPositionFetcher],
+  providers: [HexViemContractFactory, EthereumHexStakeContractPositionFetcher],
 })
 export class HexAppModule extends AbstractApp() {}

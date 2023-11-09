@@ -5,7 +5,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetAddressesParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { ImpermaxContractFactory, Collateral } from '../contracts';
+import { ImpermaxViemContractFactory } from '../contracts';
+import { Collateral } from '../contracts/viem';
 
 export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePositionFetcher<Collateral> {
   abstract factoryAddress: string;
@@ -17,7 +18,7 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
     super(appToolkit);
   }
 
-  getContract(address: string): Collateral {
+  getContract(address: string) {
     return this.contractFactory.collateral({ address, network: this.network });
   }
 
@@ -39,7 +40,7 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Collateral>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare() {

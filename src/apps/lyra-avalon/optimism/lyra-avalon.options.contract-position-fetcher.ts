@@ -16,7 +16,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LyraAvalonContractFactory, LyraOptionToken } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraOptionToken } from '../contracts/viem';
 
 const OPTION_TYPES = {
   0: 'Long Call',
@@ -123,7 +124,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): LyraOptionToken {
+  getContract(address: string) {
     return this.contractFactory.lyraOptionToken({ address, network: this.network });
   }
 

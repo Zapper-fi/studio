@@ -20,7 +20,7 @@ import { EthereumPirexPxCvxTokenFetcher } from './ethereum/pirex.pxcvx.token-fet
     EthereumPirexApxBtrflyTokenFetcher,
     EthereumPirexPxCvxTokenFetcher,
     EthereumPirexPxBtrflyTokenFetcher,
-    PirexContractFactory,
+    PirexViemContractFactory,
   ],
 })
 export class PirexAppModule extends AbstractApp() {}

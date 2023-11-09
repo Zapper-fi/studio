@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GammaStrategiesContractFactory, GammaStrategiesQuickswapMasterchef } from '../contracts';
+import { GammaStrategiesViemContractFactory } from '../contracts';
+import { GammaStrategiesQuickswapMasterchef } from '../contracts/viem';
 
 @PositionTemplate()
 export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesQuickswapMasterchef> {
@@ -25,7 +26,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     super(appToolkit);
   }
 
-  getContract(address: string): GammaStrategiesQuickswapMasterchef {
+  getContract(address: string) {
     return this.contractFactory.gammaStrategiesQuickswapMasterchef({ address, network: this.network });
   }
 
@@ -34,7 +35,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
   }
 
   async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterchef, poolIndex: number) {
-    return (await contract.lpToken(poolIndex)).toLowerCase();
+    return (await contract.read.lpToken(poolIndex)).toLowerCase();
   }
 
   async getRewardTokenAddress() {

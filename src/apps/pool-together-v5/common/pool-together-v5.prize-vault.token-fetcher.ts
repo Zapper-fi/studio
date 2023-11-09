@@ -30,7 +30,7 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
     super(appToolkit);
   }
 
-  getContract(address: string): Erc4626 {
+  getContract(address: string) {
     return this.appToolkit.globalContracts.erc4626({ address, network: this.network });
   }
 
@@ -58,24 +58,24 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Erc4626>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<Erc4626>) {
-    const ratioRaw = await contract.convertToAssets(BigNumber.from((10 ** appToken.decimals).toString()));
+    const ratioRaw = await contract.read.convertToAssets(BigNumber.from((10 ** appToken.decimals).toString()));
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];
   }
 
   async getLiquidity({ contract, appToken }: GetDataPropsParams<Erc4626>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
     return liquidity;
   }
 
   async getReserves({ contract, appToken }: GetDataPropsParams<Erc4626>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }

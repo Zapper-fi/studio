@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { TokemakClaimableResolver } from '../common/tokemak.claimable.resolver';
-import { TokemakContractFactory, TokemakRewards } from '../contracts';
+import { TokemakViemContractFactory } from '../contracts';
+import { TokemakRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumTokemakClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TokemakRewards> {
@@ -41,7 +42,7 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
     ];
   }
 
-  getContract(address: string): TokemakRewards {
+  getContract(address: string) {
     return this.contractFactory.tokemakRewards({ network: this.network, address });
   }
 
@@ -58,7 +59,9 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
 
     const { chainId, cycle, wallet, amount } = payload;
 
-    const claimableBalanceRaw = await contract.getClaimableAmount({ chainId, cycle, wallet, amount }).catch(() => 0);
+    const claimableBalanceRaw = await contract.read
+      .getClaimableAmount({ chainId, cycle, wallet, amount })
+      .catch(() => 0);
 
     return [claimableBalanceRaw];
   }

@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { GammaStrategiesContractFactory, GammaStrategiesHypervisor } from '../contracts';
+import { GammaStrategiesViemContractFactory } from '../contracts';
+import { GammaStrategiesHypervisor } from '../contracts/viem';
 
 import { GammaStrategiesDefinitionResolver } from './gamma-strategies.definition-resolver';
 
@@ -24,7 +25,7 @@ export abstract class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePo
     super(appToolkit);
   }
 
-  getContract(address: string): GammaStrategiesHypervisor {
+  getContract(address: string) {
     return this.contractFactory.gammaStrategiesHypervisor({ address, network: this.network });
   }
 
@@ -40,13 +41,13 @@ export abstract class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePo
     contract,
   }: GetUnderlyingTokensParams<GammaStrategiesHypervisor, DefaultAppTokenDefinition>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<GammaStrategiesHypervisor>) {
-    const totalAmountInfo = await contract.getTotalAmounts();
+    const totalAmountInfo = await contract.read.getTotalAmounts();
     const reserve0 = Number(totalAmountInfo.total0) / 10 ** appToken.tokens[0].decimals;
     const reserve1 = Number(totalAmountInfo.total1) / 10 ** appToken.tokens[1].decimals;
     const pricePerShare = [reserve0, reserve1].map(r => r / appToken.supply);

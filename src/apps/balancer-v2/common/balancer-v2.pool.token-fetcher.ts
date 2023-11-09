@@ -17,7 +17,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BalancerPool, BalancerV2ContractFactory } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerPool } from '../contracts/viem';
 
 import { PoolType } from './balancer-v2.pool-types';
 
@@ -115,7 +116,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
-    const poolId = await contract.getPoolId();
+    const poolId = await contract.read.getPoolId();
     const poolTokens = await vault.getPoolTokens(poolId);
 
     // "Phantom" pools emit their own token address as an underlying token; filter this out
@@ -129,7 +130,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
-    const poolId = await contract.getPoolId();
+    const poolId = await contract.read.getPoolId();
     const poolTokens = await vault.getPoolTokens(poolId);
 
     // "Phantom" pools emit their own token address as an underlying token; filter this out

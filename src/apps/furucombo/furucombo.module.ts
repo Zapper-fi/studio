@@ -6,6 +6,6 @@ import { FurucomboViemContractFactory } from './contracts';
 import { PolygonFurucomboFundTokenFetcher } from './polygon/furucombo.fund.token-fetcher';
 
 @Module({
-  providers: [FurucomboContractFactory, PolygonFurucomboFundTokenFetcher],
+  providers: [FurucomboViemContractFactory, PolygonFurucomboFundTokenFetcher],
 })
 export class FurucomboAppModule extends AbstractApp() {}

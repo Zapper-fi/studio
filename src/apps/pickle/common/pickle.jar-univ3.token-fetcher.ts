@@ -14,7 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PickleContractFactory, PickleJarUniv3 } from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
+import { PickleJarUniv3 } from '../contracts/viem';
 
 import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 
@@ -29,7 +30,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): PickleJarUniv3 {
+  getContract(address: string) {
     return this.contractFactory.pickleJarUniv3({ address, network: this.network });
   }
 
@@ -60,7 +61,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
 
         if (!underlyingTokenDefinitions) return null;
 
-        const controllerAddr = await contract.controller();
+        const controllerAddr = await contract.read.controller();
         const controller = multicall.wrap(
           this.contractFactory.pickleController({ address: controllerAddr, network: this.network }),
         );
@@ -158,7 +159,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJarUniv3>) {
-    return [{ address: await contract.pool(), network: this.network }];
+    return [{ address: await contract.read.pool(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PickleJarUniv3, DefaultDataProps>) {
@@ -170,7 +171,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
   }
 
   async getReserves({ contract }: GetDataPropsParams<PickleJarUniv3>) {
-    const reserveRaw = await contract.totalLiquidity();
+    const reserveRaw = await contract.read.totalLiquidity();
     const reserve = Number(reserveRaw) / 10 ** 18;
     return [reserve];
   }

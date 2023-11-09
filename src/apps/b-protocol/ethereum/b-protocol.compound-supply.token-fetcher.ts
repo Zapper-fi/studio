@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BProtocolContractFactory, BProtocolCompoundComptroller, BProtocolCompoundToken } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
+import { BProtocolCompoundComptroller, BProtocolCompoundToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
@@ -38,7 +39,7 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
   }
 
   async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
-    const cTokenAddresses = await contract.getAllMarkets();
+    const cTokenAddresses = await contract.read.getAllMarkets();
     const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }
@@ -52,7 +53,7 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
   }
 
   async getSupplyRate({ contract, multicall }: GetDataPropsParams<BProtocolCompoundToken>) {
-    const cTokenAddress = await contract.cToken();
+    const cTokenAddress = await contract.read.cToken();
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)

@@ -8,7 +8,7 @@ import { UniswapV3LiquidityContractPositionBuilder } from './common/uniswap-v3.l
 
 @Module({
   providers: [
-    UniswapV3ContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumRamsesV2LiquidityContractPositionFetcher,
   ],

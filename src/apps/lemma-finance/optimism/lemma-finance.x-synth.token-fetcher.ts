@@ -10,7 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory, LemmaXSynth } from '../contracts';
+import { LemmaFinanceViemContractFactory } from '../contracts';
+import { LemmaXSynth } from '../contracts/viem';
 
 export type LemmaFinanceXSynthDefinition = {
   address: string;
@@ -59,7 +60,7 @@ export class OptimismLemmaFinanceXSynthTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): LemmaXSynth {
+  getContract(address: string) {
     return this.contractFactory.lemmaXSynth({ address, network: this.network });
   }
 
@@ -95,7 +96,7 @@ export class OptimismLemmaFinanceXSynthTokenFetcher extends AppTokenTemplatePosi
     contract,
     appToken,
   }: GetPricePerShareParams<LemmaXSynth, DefaultAppTokenDataProps, LemmaFinanceXSynthDefinition>) {
-    const pricePerShareRaw = await contract.assetsPerShare();
+    const pricePerShareRaw = await contract.read.assetsPerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [pricePerShare, 0];
   }

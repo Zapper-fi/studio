@@ -9,7 +9,7 @@ import { EthereumSablierStreamContractPositionFetcher } from './ethereum/sablier
 
 @Module({
   providers: [
-    SablierContractFactory,
+    SablierViemContractFactory,
     SablierStreamApiClient,
     EthereumSablierStreamLegacyContractPositionFetcher,
     EthereumSablierStreamContractPositionFetcher,

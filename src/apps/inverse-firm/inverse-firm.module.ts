@@ -6,6 +6,6 @@ import { InverseFirmViemContractFactory } from './contracts';
 import { EthereumInverseFirmLoanContractPositionFetcher } from './ethereum/inverse-firm.loan.contract-position-fetcher';
 
 @Module({
-  providers: [InverseFirmContractFactory, EthereumInverseFirmLoanContractPositionFetcher],
+  providers: [InverseFirmViemContractFactory, EthereumInverseFirmLoanContractPositionFetcher],
 })
 export class InverseFirmAppModule extends AbstractApp() {}

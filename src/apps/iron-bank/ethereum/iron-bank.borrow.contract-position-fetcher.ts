@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
+import { IronBankViemContractFactory } from '../contracts';
+import { IronBankComptroller, IronBankCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIronBankBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<

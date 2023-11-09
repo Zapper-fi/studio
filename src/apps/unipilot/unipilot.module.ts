@@ -9,7 +9,7 @@ import { PolygonUnipilotPoolTokenFetcher } from './polygon/unipilot.pool.token-f
 
 @Module({
   providers: [
-    UnipilotContractFactory,
+    UnipilotViemContractFactory,
     UnipilotVaultDefinitionsResolver,
     // Ethereum
     EthereumUnipilotPoolTokenFetcher,

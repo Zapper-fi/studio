@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { VerseContractFactory, VerseFarm } from '../contracts';
+import { VerseViemContractFactory } from '../contracts';
+import { VerseFarm } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VerseFarm> {
@@ -29,7 +30,7 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
     super(appToolkit);
   }
 
-  getContract(address: string): VerseFarm {
+  getContract(address: string) {
     return this.contractFactory.verseFarm({ address, network: this.network });
   }
 
@@ -55,12 +56,12 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
   > {
     return [
       {
-        address: await contract.stakeToken(),
+        address: await contract.read.stakeToken(),
         metaType: MetaType.SUPPLIED,
         network: this.network,
       },
       {
-        address: await contract.rewardToken(),
+        address: await contract.read.rewardToken(),
         metaType: MetaType.CLAIMABLE,
         network: this.network,
       },

@@ -4,7 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { StargateContractFactory, StargateEth } from '../contracts';
+import { StargateViemContractFactory } from '../contracts';
+import { StargateEth } from '../contracts/viem';
 
 export abstract class StargateEthTokenFetcher extends AppTokenTemplatePositionFetcher<StargateEth> {
   abstract stargateEthAddress: string;
@@ -16,7 +17,7 @@ export abstract class StargateEthTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): StargateEth {
+  getContract(address: string) {
     return this.contractFactory.stargateEth({ address, network: this.network });
   }
 

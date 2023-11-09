@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { KyberswapElasticContractFactory, KyberswapElasticLm } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
+import { KyberswapElasticLm } from '../contracts/viem';
 
 import { KyberswapElasticFarmContractPositionBuilder } from './kyberswap-elastic.farm.contract-position-builder';
 
@@ -55,7 +56,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
     super(appToolkit);
   }
 
-  getContract(address: string): KyberswapElasticLm {
+  getContract(address: string) {
     return this.contractFactory.kyberswapElasticLm({ address, network: this.network });
   }
 

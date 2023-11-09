@@ -9,7 +9,7 @@ import { CONVEX_POLYGON_PROVIDERS } from './polygon';
 
 @Module({
   providers: [
-    ConvexContractFactory,
+    ConvexViemContractFactory,
     ...CONVEX_ARBITRUM_PROVIDERS,
     ...CONVEX_ETHEREUM_PROVIDERS,
     ...CONVEX_POLYGON_PROVIDERS,

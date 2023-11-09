@@ -42,7 +42,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
   abstract subgraphUrl: string;
   abstract vaultAddress: string;
 
-  getContract(address: string): BalancerBoostedPool {
+  getContract(address: string) {
     return this.contractFactory.balancerBoostedPool({ address, network: this.network });
   }
 
@@ -65,7 +65,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
-    const poolId = await contract.getPoolId();
+    const poolId = await contract.read.getPoolId();
     const { tokens } = await vault.getPoolTokens(poolId);
     return [{ address: tokens[tokens.length - 1], network: this.network }];
   }

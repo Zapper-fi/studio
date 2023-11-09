@@ -10,7 +10,7 @@ import { FantomTempusPoolTokenFetcher } from './fantom/tempus.pool.token-fetcher
 
 @Module({
   providers: [
-    TempusContractFactory,
+    TempusViemContractFactory,
     // Ethereum
     EthereumTempusAmmTokenFetcher,
     EthereumTempusPoolTokenFetcher,

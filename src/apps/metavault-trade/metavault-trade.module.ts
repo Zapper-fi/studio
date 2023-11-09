@@ -10,7 +10,7 @@ import { PolygonPerpContractPositionFetcher } from './polygon/metavault-trade.pe
 
 @Module({
   providers: [
-    MetavaultTradeContractFactory,
+    MetavaultTradeViemContractFactory,
     //Polygon
     PolygonMetavaultTradeEsMvxTokenFetcher,
     PolygonMetavaultTradeFarmContractPositionFetcher,

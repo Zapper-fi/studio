@@ -11,7 +11,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { AmpStakingResolver } from '../common/amp.staking-resolver';
-import { AmpContractFactory, AmpStaking } from '../contracts';
+import { AmpViemContractFactory } from '../contracts';
+import { AmpStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AmpStaking> {
@@ -25,7 +26,7 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
     super(appToolkit);
   }
 
-  getContract(address: string): AmpStaking {
+  getContract(address: string) {
     return this.contractFactory.ampStaking({ address, network: this.network });
   }
 

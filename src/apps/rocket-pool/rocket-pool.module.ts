@@ -9,7 +9,7 @@ import { EthereumRocketPoolStakingContractPositionFetcher } from './ethereum/roc
 
 @Module({
   providers: [
-    RocketPoolContractFactory,
+    RocketPoolViemContractFactory,
     // Ethereum
     EthereumRocketPoolOracleDaoBondContractPositionFetcher,
     EthereumRocketPoolStakingContractPositionFetcher,

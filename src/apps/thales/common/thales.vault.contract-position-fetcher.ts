@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { Vaults, ThalesContractFactory } from '../contracts';
+import { ThalesViemContractFactory } from '../contracts';
+import { Vaults } from '../contracts/viem';
 
 export type ThalesVaultDefinition = {
   address: string;
@@ -33,7 +34,7 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
     super(appToolkit);
   }
 
-  getContract(address: string): Vaults {
+  getContract(address: string) {
     return this.contractFactory.vaults({ network: this.network, address });
   }
 
@@ -44,7 +45,7 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Vaults>) {
     return [
       {
-        address: await contract.sUSD(),
+        address: await contract.read.sUSD(),
         metaType: MetaType.SUPPLIED,
         network: this.network,
       },
@@ -56,9 +57,9 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
   }
 
   async getDataProps({ contract, multicall }): Promise<ThalesVaultDataProp> {
-    const currentRound = await contract.round();
+    const currentRound = await contract.read.round();
     const liquidityRaw = await contract.allocationPerRound(currentRound);
-    const underlyingTokenAddress = await contract.sUSD();
+    const underlyingTokenAddress = await contract.read.sUSD();
     const underlyingTokenContract = this.appToolkit.globalContracts.erc20({
       address: underlyingTokenAddress,
       network: this.network,
@@ -70,7 +71,7 @@ export abstract class ThalesVaultContractPositionFetcher extends ContractPositio
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Vaults>): Promise<BigNumberish[]> {
-    const currentRound = await contract.round();
+    const currentRound = await contract.read.round();
     const currentBalance = await contract.getBalancesPerRound(Number(currentRound), address);
     const pendingDeposit = await contract.getBalancesPerRound(Number(currentRound) + 1, address);
 

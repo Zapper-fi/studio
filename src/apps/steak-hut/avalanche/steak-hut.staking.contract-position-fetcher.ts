@@ -9,7 +9,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { SteakHutContractFactory, SteakHutStaking } from '../contracts';
+import { SteakHutViemContractFactory } from '../contracts';
+import { SteakHutStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<SteakHutStaking> {
@@ -22,7 +23,7 @@ export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): SteakHutStaking {
+  getContract(address: string) {
     return this.contractFactory.steakHutStaking({ address, network: this.network });
   }
 

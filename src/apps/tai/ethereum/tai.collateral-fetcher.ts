@@ -29,7 +29,7 @@ export class TaiCollateralResolver {
     const collaterals = await Promise.all(
       map(results, async ([name, address]) => {
         const contract = this.contractFactory.taiCollateralJoin({ address, network });
-        const collateral = await contract.collateral();
+        const collateral = await contract.read.collateral();
         return [name, collateral];
       }),
     );

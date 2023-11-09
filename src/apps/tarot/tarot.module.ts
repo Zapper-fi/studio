@@ -9,7 +9,7 @@ import { FantomTarotVaultTokenFetcher } from './fantom/tarot.vault.token-fetcher
 
 @Module({
   providers: [
-    TarotContractFactory,
+    TarotViemContractFactory,
     FantomTarotBorrowContractPositionFetcher,
     FantomTarotSupplyTokenFetcher,
     FantomTarotVaultTokenFetcher,

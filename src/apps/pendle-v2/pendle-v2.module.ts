@@ -16,7 +16,7 @@ import { EthereumPendleV2YieldTokenFetcher } from './ethereum/pendle-v2.yield.to
 
 @Module({
   providers: [
-    PendleV2ContractFactory,
+    PendleV2ViemContractFactory,
     PendleV2MarketDefinitionsResolver,
     // Ethereum
     EthereumPendleV2PoolTokenFetcher,

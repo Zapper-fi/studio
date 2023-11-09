@@ -17,7 +17,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { TarotBorrowable, TarotContractFactory } from '../contracts';
+import { TarotViemContractFactory } from '../contracts';
+import { TarotBorrowable } from '../contracts/viem';
 
 type TarotSupplyDataProps = DefaultAppTokenDataProps & {
   poolTokenLabel: string;
@@ -50,7 +51,7 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string): TarotBorrowable {
+  getContract(address: string) {
     return this.contractFactory.tarotBorrowable({ address, network: this.network });
   }
 
@@ -128,7 +129,7 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TarotBorrowable, Definition>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TarotBorrowable>) {

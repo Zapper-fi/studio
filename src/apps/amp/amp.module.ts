@@ -7,6 +7,6 @@ import { AmpViemContractFactory } from './contracts';
 import { EthereumAmpFarmContractPositionFetcher } from './ethereum/amp.farm.contract-position-fetcher';
 
 @Module({
-  providers: [AmpContractFactory, AmpStakingResolver, EthereumAmpFarmContractPositionFetcher],
+  providers: [AmpViemContractFactory, AmpStakingResolver, EthereumAmpFarmContractPositionFetcher],
 })
 export class AmpAppModule extends AbstractApp() {}

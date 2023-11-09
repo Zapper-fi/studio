@@ -20,7 +20,7 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
     super(appToolkit);
   }
 
-  getContract(address: string): PStakeStkToken {
+  getContract(address: string) {
     return this.contractFactory.pStakeStkToken({ address, network: this.network });
   }
 

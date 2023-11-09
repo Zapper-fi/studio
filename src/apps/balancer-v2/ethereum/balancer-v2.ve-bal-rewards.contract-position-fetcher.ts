@@ -7,7 +7,8 @@ import { isClaimable } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { BalancerFeeDistributor, BalancerV2ContractFactory } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerFeeDistributor } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BalancerFeeDistributor> {
@@ -20,7 +21,7 @@ export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends Contr
     super(appToolkit);
   }
 
-  getContract(address: string): BalancerFeeDistributor {
+  getContract(address: string) {
     return this.contractFactory.balancerFeeDistributor({ address, network: this.network });
   }
 

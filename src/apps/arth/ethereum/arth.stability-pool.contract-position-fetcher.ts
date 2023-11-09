@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ArthContractFactory, StabilityPool } from '../contracts';
+import { ArthViemContractFactory } from '../contracts';
+import { StabilityPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StabilityPool> {
@@ -21,7 +22,7 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): StabilityPool {
+  getContract(address: string) {
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 

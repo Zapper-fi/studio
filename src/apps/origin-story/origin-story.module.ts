@@ -8,7 +8,7 @@ import { EthereumOriginStoryWoethTokenFetcher } from './ethereum/origin-story.wo
 
 @Module({
   providers: [
-    OriginStoryContractFactory,
+    OriginStoryViemContractFactory,
     EthereumOriginStorySeriesContractPositionFetcher,
     EthereumOriginStoryWoethTokenFetcher,
   ],

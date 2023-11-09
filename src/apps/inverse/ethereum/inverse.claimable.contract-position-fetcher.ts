@@ -9,7 +9,8 @@ import {
 } from '~apps/compound/common/compound.claimable.contract-position-fetcher';
 import { ContractPosition } from '~position/position.interface';
 
-import { InverseContractFactory, InverseController } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseController } from '../contracts/viem';
 import { InverseLens } from '../contracts/viem/InverseLens';
 
 @PositionTemplate()

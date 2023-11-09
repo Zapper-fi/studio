@@ -18,7 +18,7 @@ export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string): LidoSteth {
+  getContract(address: string) {
     return this.contractFactory.lidoSteth({ network: this.network, address });
   }
 

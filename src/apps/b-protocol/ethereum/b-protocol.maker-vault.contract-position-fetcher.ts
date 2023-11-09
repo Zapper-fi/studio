@@ -55,7 +55,7 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
     super(appToolkit);
   }
 
-  getContract(address: string): MakerGemJoin {
+  getContract(address: string) {
     return this.makerContractFactory.makerGemJoin({ address, network: this.network });
   }
 

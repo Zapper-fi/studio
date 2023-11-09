@@ -14,7 +14,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { NETWORK_IDS } from '~types';
 
-import { KeeperContractFactory, KeeperKlp } from '../contracts';
+import { KeeperViemContractFactory } from '../contracts';
+import { KeeperKlp } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumKeeperKlpTokenFetcher extends AppTokenTemplatePositionFetcher<KeeperKlp> {
@@ -38,8 +39,8 @@ export class EthereumKeeperKlpTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<KeeperKlp>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 

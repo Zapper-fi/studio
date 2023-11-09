@@ -10,7 +10,7 @@ import { PolygonHalofiGameContractPositionFetcher } from './polygon/halofi.game.
 
 @Module({
   providers: [
-    HalofiContractFactory,
+    HalofiViemContractFactory,
     // Helpers
     HalofiGameGamesApiSource,
     // Polygon

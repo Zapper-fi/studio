@@ -11,7 +11,7 @@ import { EthereumIdleVaultTokenFetcher } from './ethereum/idle.vault.token-fetch
 
 @Module({
   providers: [
-    IdleContractFactory,
+    IdleViemContractFactory,
     IdleTranchesDefinitionsResolver,
     EthereumIdleBestYieldContractPositionFetcher,
     EthereumIdleVaultTokenFetcher,

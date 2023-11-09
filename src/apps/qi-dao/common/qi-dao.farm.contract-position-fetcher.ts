@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { QiDaoContractFactory, QiDaoMasterChef } from '../contracts';
+import { QiDaoViemContractFactory } from '../contracts';
+import { QiDaoMasterChef } from '../contracts/viem';
 
 @Injectable()
 export abstract class QiDaoFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<QiDaoMasterChef> {
@@ -38,7 +39,7 @@ export abstract class QiDaoFarmContractPositionFetcher extends MasterChefTemplat
     return definitionsAll.flat();
   }
 
-  getContract(address: string): QiDaoMasterChef {
+  getContract(address: string) {
     return this.contractFactory.qiDaoMasterChef({ address, network: this.network });
   }
 

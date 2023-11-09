@@ -19,7 +19,7 @@ export class EthereumMstableMetaVaultTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): MstableMetavault4626 {
+  getContract(address: string) {
     return this.contractFactory.mstableMetavault4626({ address, network: this.network });
   }
 
@@ -30,11 +30,11 @@ export class EthereumMstableMetaVaultTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MstableMetavault4626>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<MstableMetavault4626>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

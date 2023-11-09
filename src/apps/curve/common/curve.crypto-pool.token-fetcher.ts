@@ -2,7 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
-import { CurveContractFactory, CurveCryptoRegistry } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveCryptoRegistry } from '../contracts/viem';
 
 import {
   CurvePoolDynamicTokenFetcher,

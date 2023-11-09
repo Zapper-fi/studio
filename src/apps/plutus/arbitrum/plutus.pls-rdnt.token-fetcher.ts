@@ -33,7 +33,7 @@ export class ArbitrumPlutusPlsRdntTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
+  getContract(address: string) {
     return this.appToolkit.globalContracts.erc20({ address, network: this.network });
   }
 

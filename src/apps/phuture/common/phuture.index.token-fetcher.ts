@@ -8,7 +8,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { PhutureContractFactory, PhutureManagedIndex } from '../contracts';
+import { PhutureViemContractFactory } from '../contracts';
+import { PhutureManagedIndex } from '../contracts/viem';
 
 export type PhutureIndexAppTokenDefinition = {
   address: string;
@@ -30,7 +31,7 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): PhutureManagedIndex {
+  getContract(address: string) {
     return this.contractFactory.phutureManagedIndex({ address, network: this.network });
   }
 

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { PlatypusFinanceContractFactory, PlatypusFinanceVotingEscrow } from '../contracts';
+import { PlatypusFinanceViemContractFactory } from '../contracts';
+import { PlatypusFinanceVotingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<PlatypusFinanceVotingEscrow> {

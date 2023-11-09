@@ -96,7 +96,7 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
     super(appToolkit);
   }
 
-  getContract(address: string): AtlendisPositionManager {
+  getContract(address: string) {
     return this.contractFactory.atlendisPositionManager({ address, network: this.network });
   }
 

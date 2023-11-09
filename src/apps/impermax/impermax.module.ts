@@ -18,7 +18,7 @@ import { PolygonImpermaxPositionPresenter } from './polygon/impermax.position-pr
 
 @Module({
   providers: [
-    ImpermaxContractFactory,
+    ImpermaxViemContractFactory,
     // Arbitrum
     ArbitrumImpermaxPositionPresenter,
     ArbitrumImpermaxBorrowContractPositionFetcher,

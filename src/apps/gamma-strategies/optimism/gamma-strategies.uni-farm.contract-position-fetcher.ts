@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GammaStrategiesContractFactory, GammaStrategiesUniOpMasterchef } from '../contracts';
+import { GammaStrategiesViemContractFactory } from '../contracts';
+import { GammaStrategiesUniOpMasterchef } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesUniOpMasterchef> {
@@ -25,7 +26,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     super(appToolkit);
   }
 
-  getContract(address: string): GammaStrategiesUniOpMasterchef {
+  getContract(address: string) {
     return this.contractFactory.gammaStrategiesUniOpMasterchef({ address, network: this.network });
   }
 

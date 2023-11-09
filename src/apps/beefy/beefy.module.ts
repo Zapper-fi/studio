@@ -23,7 +23,7 @@ import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetch
 
 @Module({
   providers: [
-    BeefyContractFactory,
+    BeefyViemContractFactory,
     // Helpers
     BeefyVaultTokenDefinitionsResolver,
     BeefyBoostVaultDefinitionsResolver,

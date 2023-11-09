@@ -24,7 +24,7 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
     super(appToolkit);
   }
 
-  getContract(address: string): YearnGovernance {
+  getContract(address: string) {
     return this.contractFactory.yearnGovernance({ address, network: this.network });
   }
 

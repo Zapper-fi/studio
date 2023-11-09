@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { CozyFinanceComptroller, CozyFinanceContractFactory, CozyFinanceCToken } from '../contracts';
+import { CozyFinanceViemContractFactory } from '../contracts';
+import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFetcher<

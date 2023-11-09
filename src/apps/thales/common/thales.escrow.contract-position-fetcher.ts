@@ -4,7 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { EscrowThales, ThalesContractFactory } from '../contracts';
+import { ThalesViemContractFactory } from '../contracts';
+import { EscrowThales } from '../contracts/viem';
 
 export abstract class ThalesEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<EscrowThales> {
   groupLabel = 'Voting Escrow';

@@ -17,7 +17,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { CreditManagerV2, GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { CreditManagerV2 } from '../contracts/viem';
 
 export type GearboxCreditAccountsDefinition = {
   address: string;
@@ -42,7 +43,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     super(appToolkit);
   }
 
-  getContract(address: string): CreditManagerV2 {
+  getContract(address: string) {
     return this.contractFactory.creditManagerV2({ address, network: this.network });
   }
 

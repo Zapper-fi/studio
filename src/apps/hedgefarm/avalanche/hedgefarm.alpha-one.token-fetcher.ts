@@ -8,7 +8,8 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { AlphaOne, HedgefarmContractFactory } from '../contracts';
+import { HedgefarmViemContractFactory } from '../contracts';
+import { AlphaOne } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePositionFetcher<AlphaOne> {
@@ -21,7 +22,7 @@ export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): AlphaOne {
+  getContract(address: string) {
     return this.contractFactory.alphaOne({ address, network: this.network });
   }
 
@@ -34,7 +35,7 @@ export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AlphaOne>) {
-    return [Number(await contract.pricePerShare()) / 10 ** 6];
+    return [Number(await contract.read.pricePerShare()) / 10 ** 6];
   }
 
   async getApy(_params: GetDataPropsParams<AlphaOne>) {

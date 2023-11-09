@@ -6,6 +6,6 @@ import { VectorFinanceFarmContractPositionFetcher } from './avalanche/vector-fin
 import { VectorFinanceViemContractFactory } from './contracts';
 
 @Module({
-  providers: [VectorFinanceContractFactory, VectorFinanceFarmContractPositionFetcher],
+  providers: [VectorFinanceViemContractFactory, VectorFinanceFarmContractPositionFetcher],
 })
 export class VectorFinanceAppModule extends AbstractApp() {}

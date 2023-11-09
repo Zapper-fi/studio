@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GroContractFactory, GroLpTokenStaker } from '../contracts';
+import { GroViemContractFactory } from '../contracts';
+import { GroLpTokenStaker } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GroLpTokenStaker> {

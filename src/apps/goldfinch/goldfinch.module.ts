@@ -10,7 +10,7 @@ import { EthereumGoldfinchVaultContractPositionFetcher } from './ethereum/goldfi
 
 @Module({
   providers: [
-    GoldfinchContractFactory,
+    GoldfinchViemContractFactory,
     EthereumGoldfinchFiduTokenFetcher,
     EthereumGoldfinchStakingRewardsContractPositionFetcher,
     EthereumGoldfinchSeniorPoolContractPositionFetcher,

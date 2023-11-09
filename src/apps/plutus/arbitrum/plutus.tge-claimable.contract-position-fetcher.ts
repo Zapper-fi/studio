@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusPrivateTgeVester } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
@@ -25,7 +26,7 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusPrivateTgeVester {
+  getContract(address: string) {
     return this.contractFactory.plutusPrivateTgeVester({ address, network: this.network });
   }
 

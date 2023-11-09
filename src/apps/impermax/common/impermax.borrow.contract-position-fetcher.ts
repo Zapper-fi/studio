@@ -14,7 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { ImpermaxContractFactory, Borrowable } from '../contracts';
+import { ImpermaxViemContractFactory } from '../contracts';
+import { Borrowable } from '../contracts/viem';
 
 export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Borrowable> {
   abstract factoryAddress: string;
@@ -26,7 +27,7 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  getContract(address: string): Borrowable {
+  getContract(address: string) {
     return this.contractFactory.borrowable({ address, network: this.network });
   }
 
@@ -48,7 +49,7 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Borrowable>) {
-    const underlyingAddress = await contract.underlying();
+    const underlyingAddress = await contract.read.underlying();
     return [
       {
         metaType: MetaType.BORROWED,

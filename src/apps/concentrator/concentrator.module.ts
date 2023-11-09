@@ -14,7 +14,7 @@ import { EthereumConcentratorVotingEscrowContractPositionFetcher } from './ether
 
 @Module({
   providers: [
-    ConcentratorContractFactory,
+    ConcentratorViemContractFactory,
     EthereumConcentratorAbcCvxTokenFetcher,
     EthereumConcentratorAcrvVaultContractPositionFetcher,
     EthereumConcentratorAfxsVaultContractPositionFetcher,

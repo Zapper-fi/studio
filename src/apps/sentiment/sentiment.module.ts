@@ -9,7 +9,7 @@ import { SentimentViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    SentimentContractFactory,
+    SentimentViemContractFactory,
     SentimentAccountsResolver,
     ArbitrumSentimentSupplyTokenFetcher,
     ArbitrumSentimentBorrowContractPositionFetcher,

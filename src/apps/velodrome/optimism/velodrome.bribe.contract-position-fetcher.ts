@@ -17,7 +17,7 @@ export type VelodromeBribeDefinition = {
 export class OptimismVelodromeBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<VelodromeBribe> {
   groupLabel = 'Bribe';
 
-  getContract(address: string): VelodromeBribe {
+  getContract(address: string) {
     return this.contractFactory.velodromeBribe({ address, network: this.network });
   }
 
@@ -26,7 +26,7 @@ export class OptimismVelodromeBribeContractPositionFetcher extends VotingRewards
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<VelodromeBribe>) {
-    const numRewards = Number(await contract.rewardsListLength());
+    const numRewards = Number(await contract.read.rewardsListLength());
     const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {

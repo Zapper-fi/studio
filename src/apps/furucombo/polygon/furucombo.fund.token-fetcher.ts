@@ -17,7 +17,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { NETWORK_IDS } from '~types/network.interface';
 
-import { FurucomboContractFactory, FurucomboFundShareToken } from '../contracts';
+import { FurucomboViemContractFactory } from '../contracts';
+import { FurucomboFundShareToken } from '../contracts/viem';
 
 interface FurucomboFund {
   address: string;
@@ -67,7 +68,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): FurucomboFundShareToken {
+  getContract(address: string) {
     return this.contractFactory.furucomboFundShareToken({ address, network: this.network });
   }
 

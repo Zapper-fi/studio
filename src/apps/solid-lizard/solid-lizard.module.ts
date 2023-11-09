@@ -11,7 +11,7 @@ import { SolidLizardViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    SolidLizardContractFactory,
+    SolidLizardViemContractFactory,
     SolidLizardDefinitionsResolver,
     ArbitrumSolidLizardPoolsTokenFetcher,
     ArbitrumSolidLizardStakingContractPositionFetcher,

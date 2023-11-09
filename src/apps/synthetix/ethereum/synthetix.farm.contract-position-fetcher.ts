@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { SynthetixContractFactory, SynthetixRewards } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixRewards } from '../contracts/viem';
 
 const FARMS = [
   // iBTC
@@ -105,7 +106,7 @@ export class EthereumSynthetixFarmContractPositionFetcher extends SingleStakingF
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixRewards {
+  getContract(address: string) {
     return this.contractFactory.synthetixRewards({ address, network: this.network });
   }
 

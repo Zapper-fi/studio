@@ -9,8 +9,8 @@ import { BiswapViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    UniswapV2ContractFactory,
-    BiswapContractFactory,
+    UniswapV2ViemContractFactory,
+    BiswapViemContractFactory,
     BinanceSmartChainBiswapPoolTokenFetcher,
     BinanceSmartChainBiswapContractPositionFetcher,
   ],

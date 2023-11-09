@@ -9,7 +9,7 @@ import { EthereumPendleYieldTokenFetcher } from './ethereum/pendle.yield.token-f
 
 @Module({
   providers: [
-    PendleContractFactory,
+    PendleViemContractFactory,
     EthereumPendleYieldTokenFetcher,
     EthereumPendleOwnershipTokenFetcher,
     EthereumPendleFarmContractPositionFetcher,

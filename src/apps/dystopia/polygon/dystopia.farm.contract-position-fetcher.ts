@@ -15,7 +15,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { DystopiaContractFactory, DystopiaGauge } from '../contracts';
+import { DystopiaViemContractFactory } from '../contracts';
+import { DystopiaGauge } from '../contracts/viem';
 
 import { DYSTOPIA_QUERY, DystopiaQueryResponse } from './dystopia.pool.token-fetcher';
 
@@ -30,7 +31,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
     super(appToolkit);
   }
 
-  getContract(address: string): DystopiaGauge {
+  getContract(address: string) {
     return this.contractFactory.dystopiaGauge({ address, network: this.network });
   }
 
@@ -47,7 +48,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<DystopiaGauge>) {
-    const numRewards = Number(await contract.rewardTokensLength());
+    const numRewards = Number(await contract.read.rewardTokensLength());
     return Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
   }
 

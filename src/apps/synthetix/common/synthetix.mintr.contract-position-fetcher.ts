@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { SynthetixContractFactory, SynthetixNetworkToken } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixNetworkToken } from '../contracts/viem';
 
 import { SynthetixMintrSnxHoldersCache } from './synthetix.mintr.snx-holders.cache';
 
@@ -36,7 +37,7 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixNetworkToken {
+  getContract(address: string) {
     return this.contractFactory.synthetixNetworkToken({ address, network: this.network });
   }
 

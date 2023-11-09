@@ -12,7 +12,7 @@ import { EthereumRedactedCartelXBtrflyTokenFetcher } from './ethereum/redacted-c
 
 @Module({
   providers: [
-    RedactedCartelContractFactory,
+    RedactedCartelViemContractFactory,
     EthereumRedactedCartelXBtrflyTokenFetcher,
     EthereumRedactedCartelWxBtrflyTokenFetcher,
     EthereumRedactedCartelWxBtrflyV1TokenFetcher,

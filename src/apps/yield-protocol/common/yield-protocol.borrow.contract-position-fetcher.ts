@@ -20,7 +20,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { YieldProtocolContractFactory, YieldProtocolLadle } from '../contracts';
+import { YieldProtocolViemContractFactory } from '../contracts';
+import { YieldProtocolLadle } from '../contracts/viem';
 
 import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 
@@ -148,7 +149,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
     super(appToolkit);
   }
 
-  getContract(address: string): YieldProtocolLadle {
+  getContract(address: string) {
     return this.contractFactory.yieldProtocolLadle({ address, network: this.network });
   }
 

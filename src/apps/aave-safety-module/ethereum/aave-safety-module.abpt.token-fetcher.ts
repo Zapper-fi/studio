@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AaveAbpt, AaveSafetyModuleContractFactory } from '../contracts';
+import { AaveAbpt } from '../contracts/viem';
+import { AaveSafetyModuleViemContractFactory } from '../contracts';
 
 type AaveSafetyModuleAbptTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
@@ -39,7 +40,7 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     super(appToolkit);
   }
 
-  getContract(address: string): AaveAbpt {
+  getContract(address: string) {
     return this.contractFactory.aaveAbpt({ address, network: this.network });
   }
 
@@ -64,8 +65,8 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     });
 
     const [wethReserveRaw, aaveReserveRaw] = await Promise.all([
-      multicall.wrap(poolToken).getBalance(this.wethAddress),
-      multicall.wrap(poolToken).getBalance(this.aaveAddress),
+      multicall.wrap(poolToken).read.getBalance([this.wethAddress]),
+      multicall.wrap(poolToken).read.getBalance([this.aaveAddress]),
     ]);
 
     const aaveReserve = Number(aaveReserveRaw) / 10 ** 18;

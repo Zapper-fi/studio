@@ -17,7 +17,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { InverseFirmContractFactory, SimpleMarket } from '../contracts';
+import { InverseFirmViemContractFactory } from '../contracts';
+import { SimpleMarket } from '../contracts/viem';
 import { CvxCrvStakingWrapper } from '../contracts/viem/StCvxCrv';
 import { CvxFxsStaking } from '../contracts/viem/StCvxFxs';
 
@@ -65,7 +66,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  getContract(address: string): SimpleMarket {
+  getContract(address: string) {
     return this.contractFactory.simpleMarket({ network: this.network, address });
   }
 

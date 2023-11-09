@@ -47,7 +47,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     super(appToolkit);
   }
 
-  getContract(address: string): SpoolStaking {
+  getContract(address: string) {
     return this.contractFactory.spoolStaking({ address, network: this.network });
   }
 

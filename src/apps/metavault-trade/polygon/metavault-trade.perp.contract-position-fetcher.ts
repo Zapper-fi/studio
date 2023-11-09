@@ -15,7 +15,8 @@ import {
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { MetavaultTradeContractFactory, MetavaultTradeVault } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
+import { MetavaultTradeVault } from '../contracts/viem';
 
 export type MetavaultTradeOptionContractPositionDefinition = {
   address: string;
@@ -46,7 +47,7 @@ export class PolygonPerpContractPositionFetcher extends ContractPositionTemplate
     super(appToolkit);
   }
 
-  getContract(address: string): MetavaultTradeVault {
+  getContract(address: string) {
     return this.contractFactory.metavaultTradeVault({ address, network: this.network });
   }
 

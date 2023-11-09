@@ -12,7 +12,8 @@ import {
 import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { GetDataPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { InverseContractFactory, InverseController, InverseLendingPool } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseController, InverseLendingPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -53,7 +54,7 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
     contract,
     contractPosition,
   }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    const decimals = await contract.decimals();
+    const decimals = await contract.read.decimals();
     return 18 + contractPosition.tokens[0].decimals - decimals;
   }
 

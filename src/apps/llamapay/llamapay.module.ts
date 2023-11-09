@@ -13,7 +13,7 @@ import { PolygonLlamapayStreamContractPositionFetcher } from './polygon/llamapay
 
 @Module({
   providers: [
-    LlamapayContractFactory,
+    LlamapayViemContractFactory,
     LlamapayStreamApiClient,
     ArbitrumLlamapayStreamContractPositionFetcher,
     ArbitrumLlamapayVestingEscrowContractPositionFetcher,

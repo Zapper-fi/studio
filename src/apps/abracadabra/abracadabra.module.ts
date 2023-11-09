@@ -28,7 +28,7 @@ import { OptimismAbracadabraErc20VaultsTokenFetcher } from './optimism/abracadab
 
 @Module({
   providers: [
-    AbracadabraContractFactory,
+    AbracadabraViemContractFactory,
     // Arbitrum
     ArbitrumAbracadabraCauldronContractPositionFetcher,
     ArbitrumAbracadabraFarmContractPositionFetcher,

@@ -11,7 +11,7 @@ import { WombatExchangeViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    WombatExchangeContractFactory,
+    WombatExchangeViemContractFactory,
     // Arbitrum
     ArbitrumWombatExchangePoolTokenFetcher,
     ArbitrumWombatExchangeVotingEscrowContractPositionFetcher,

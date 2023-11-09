@@ -7,7 +7,8 @@ import { GetTokenBalancesParams } from '~position/template/contract-position.tem
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
 import { Network } from '~types';
 
-import { AirdropDistributor, GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { AirdropDistributor } from '../contracts/viem';
 
 import { EthereumGearboxRewardsMerkleCache, AIRDROP_DISTRIBUTOR, GEAR_TOKEN } from './gearbox.rewards.merkle-cache';
 
@@ -28,7 +29,7 @@ export class EthereumGearboxRewardsPositionFetcher extends MerkleTemplateContrac
     super(appToolkit);
   }
 
-  getContract(address: string): AirdropDistributor {
+  getContract(address: string) {
     return this.contractFactory.airdropDistributor({ address, network: this.network });
   }
 

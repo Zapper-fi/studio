@@ -10,7 +10,7 @@ import { PolygonArrakisPoolTokenFetcher } from './polygon/arrakis.pool.token-fet
 
 @Module({
   providers: [
-    ArrakisContractFactory,
+    ArrakisViemContractFactory,
     ArrakisPoolDefinitionsResolver,
     EthereumArrakisPoolTokenFetcher,
     OptimismArrakisPoolTokenFetcher,

@@ -8,7 +8,7 @@ import { EthereumChickenBondBondContractPositionFetcher } from './ethereum/chick
 
 @Module({
   providers: [
-    ChickenBondContractFactory,
+    ChickenBondViemContractFactory,
     EthereumChickenBondBlusdTokenFetcher,
     EthereumChickenBondBondContractPositionFetcher,
   ],

@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
 import { GetTokenPropsParams, DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
 
-import { HakuswapContractFactory, HakuswapFactory, HakuswapPool } from '../contracts';
+import { HakuswapViemContractFactory } from '../contracts';
+import { HakuswapFactory, HakuswapPool } from '../contracts/viem';
 
 const poolNotUsingDecimals = [
   '0x519de4668ea6661d1870928a3033a62dc2acc503',
@@ -70,7 +71,7 @@ export class AvalancheHakuswapPoolTokenFetcher extends UniswapV2PoolOnChainTempl
     address,
     contract,
   }: GetTokenPropsParams<HakuswapPool, DefaultAppTokenDefinition, DefaultAppTokenDefinition>): Promise<number> {
-    const decimals = !poolNotUsingDecimals.includes(address) ? await contract.decimals() : 0;
+    const decimals = !poolNotUsingDecimals.includes(address) ? await contract.read.decimals() : 0;
 
     return decimals;
   }

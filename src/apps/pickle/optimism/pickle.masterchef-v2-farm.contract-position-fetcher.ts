@@ -15,7 +15,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PickleContractFactory, PickleMiniChefV2, PickleRewarder } from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
+import { PickleMiniChefV2, PickleRewarder } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPickleFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -33,7 +34,7 @@ export class OptimismPickleFarmContractPositionFetcher extends MasterChefV2Templ
     super(appToolkit);
   }
 
-  getContract(address: string): PickleMiniChefV2 {
+  getContract(address: string) {
     return this.contractFactory.pickleMiniChefV2({ address, network: this.network });
   }
 

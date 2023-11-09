@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableStakingV2 } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableStakingV2 } from '../contracts/viem';
 
 const MTA_V2_FARMS = [
   {
@@ -36,7 +37,7 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): MstableStakingV2 {
+  getContract(address: string) {
     return this.contractFactory.mstableStakingV2({ address, network: this.network });
   }
 
@@ -45,19 +46,19 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    const lastRewardTimeRaw = await contract.lastTimeRewardApplicable();
+    const lastRewardTimeRaw = await contract.read.lastTimeRewardApplicable();
 
     // Add an hour buffer for determining active state
     const now = Math.floor(Date.now() / 1000) - 60 * 60;
     const isActive = Number(lastRewardTimeRaw) >= now;
     if (!isActive) return [0];
 
-    const globalData = await contract.globalData();
+    const globalData = await contract.read.globalData();
     return [globalData.rewardRate];
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableStakingV2>) {
-    const lastRewardTimeRaw = await contract.lastTimeRewardApplicable();
+    const lastRewardTimeRaw = await contract.read.lastTimeRewardApplicable();
     const now = Math.floor(Date.now() / 1000) - 60 * 60;
     const isActive = Number(lastRewardTimeRaw) >= now;
     return isActive;

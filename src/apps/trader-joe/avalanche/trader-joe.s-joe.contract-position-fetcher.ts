@@ -11,7 +11,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { TraderJoeContractFactory, TraderJoeStableStaking } from '../contracts';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeStableStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<TraderJoeStableStaking> {
@@ -24,7 +25,7 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
     super(appToolkit);
   }
 
-  getContract(address: string): TraderJoeStableStaking {
+  getContract(address: string) {
     return this.contractFactory.traderJoeStableStaking({ address, network: this.network });
   }
 
@@ -37,7 +38,7 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<TraderJoeStableStaking>) {
-    const length = await contract.rewardTokensLength().then(Number);
+    const length = await contract.read.rewardTokensLength().then(Number);
     return Promise.all(_.range(length).map(i => contract.rewardTokens(i)));
   }
 

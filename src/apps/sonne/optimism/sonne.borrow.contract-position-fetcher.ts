@@ -21,7 +21,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { SonneComptroller, SonneContractFactory, SonneSoToken } from '../contracts';
+import { SonneViemContractFactory } from '../contracts';
+import { SonneComptroller, SonneSoToken } from '../contracts/viem';
 
 export type SonneBorrowTokenDataProps = CompoundBorrowTokenDataProps & {
   collateralFactor: number;

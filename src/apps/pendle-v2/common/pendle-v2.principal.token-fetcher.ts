@@ -13,7 +13,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { PendlePrincipalToken, PendleV2ContractFactory } from '../contracts';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendlePrincipalToken } from '../contracts/viem';
 
 import { PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 

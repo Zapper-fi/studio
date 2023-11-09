@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { DopexContractFactory, DopexDualRewardStaking } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexDualRewardStaking } from '../contracts/viem';
 
 const FARMS = [
   // rDPX v1
@@ -33,7 +34,7 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
     super(appToolkit);
   }
 
-  getContract(address: string): DopexDualRewardStaking {
+  getContract(address: string) {
     return this.contractFactory.dopexDualRewardStaking({ address, network: this.network });
   }
 

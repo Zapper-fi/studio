@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableStaking } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableStaking } from '../contracts/viem';
 
 const EARN_FARMS = [
   {
@@ -60,7 +61,7 @@ export class EthereumMstableEarnContractPositionFetcher extends SingleStakingFar
     super(appToolkit);
   }
 
-  getContract(address: string): MstableStaking {
+  getContract(address: string) {
     return this.contractFactory.mstableStaking({ address, network: this.network });
   }
 
@@ -73,7 +74,7 @@ export class EthereumMstableEarnContractPositionFetcher extends SingleStakingFar
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableStaking>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()).gt(0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {

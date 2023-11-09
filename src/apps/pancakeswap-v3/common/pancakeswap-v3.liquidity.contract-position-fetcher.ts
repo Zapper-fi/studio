@@ -19,7 +19,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { PancakeswapNfPositionManager, PancakeswapV3ContractFactory } from '../contracts';
+import { PancakeswapV3ViemContractFactory } from '../contracts';
+import { PancakeswapNfPositionManager } from '../contracts/viem';
 
 import { PancakeswapV3LiquidityContractPositionBuilder } from './pancakeswap-v3.liquidity.contract-position-builder';
 
@@ -119,7 +120,7 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): PancakeswapNfPositionManager {
+  getContract(address: string) {
     return this.pancakeswapV3ContractFactory.pancakeswapNfPositionManager({
       address,
       network: Network.BINANCE_SMART_CHAIN_MAINNET,

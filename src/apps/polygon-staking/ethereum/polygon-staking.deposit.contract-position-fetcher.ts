@@ -108,7 +108,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
     return data;
   }
 
-  getContract(address: string): PolygonStakeManager {
+  getContract(address: string) {
     return this.contractFactory.polygonStakeManager({ address, network: this.network });
   }
 

@@ -10,7 +10,7 @@ import { EthereumAngleVeAngleContractPositionFetcher } from './ethereum/angle.vo
 
 @Module({
   providers: [
-    AngleContractFactory,
+    AngleViemContractFactory,
     AngleApiHelper,
     // Ethereum
     EthereumAngleSanTokenTokenFetcher,

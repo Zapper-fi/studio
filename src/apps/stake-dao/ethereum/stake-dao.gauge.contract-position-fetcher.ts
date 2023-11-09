@@ -16,7 +16,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { StakeDaoContractFactory, StakeDaoGauge } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoGauge } from '../contracts/viem';
 
 const LOCKER_GAUGE_ADDRESSES = [
   '0x7f50786a0b15723d741727882ee99a0bf34e3466', // sdCRV
@@ -83,7 +84,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoGauge {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoGauge({ address, network: this.network });
   }
 

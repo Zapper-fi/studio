@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleSanToken } from '../contracts';
+import { AngleViemContractFactory } from '../contracts';
+import { AngleSanToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionFetcher<AngleSanToken> {
@@ -27,7 +28,7 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): AngleSanToken {
+  getContract(address: string) {
     return this.contractFactory.angleSanToken({ address, network: this.network });
   }
 

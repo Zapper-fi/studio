@@ -4,7 +4,8 @@ import { BigNumberish } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
 
-import { UniswapFactory, UniswapPair, UniswapV2ContractFactory } from '../contracts';
+import { UniswapV2ViemContractFactory } from '../contracts';
+import { UniswapFactory, UniswapPair } from '../contracts/viem';
 
 export abstract class UniswapV2DefaultPoolOnChainTemplateTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
   UniswapPair,

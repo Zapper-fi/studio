@@ -11,7 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { EulerContractFactory, EulerEtokenContract } from '../contracts';
+import { EulerViemContractFactory } from '../contracts';
+import { EulerEtokenContract } from '../contracts/viem';
 
 import { EulerTokenDefinition, EulerTokenDefinitionsResolver, EulerTokenType } from './euler.token-definition-resolver';
 
@@ -31,7 +32,7 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): EulerEtokenContract {
+  getContract(address: string) {
     return this.contractFactory.eulerEtokenContract({ network: this.network, address });
   }
 

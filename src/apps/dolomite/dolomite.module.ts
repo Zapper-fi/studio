@@ -12,7 +12,7 @@ import { DolomiteViemContractFactory } from './contracts';
     ArbitrumDolomiteBorrowContractPositionFetcher,
     ArbitrumDolomiteDolomiteContractPositionFetcher,
     ArbitrumDolomitePoolsTokenFetcher,
-    DolomiteContractFactory,
+    DolomiteViemContractFactory,
   ],
 })
 export class DolomiteAppModule extends AbstractApp() {}

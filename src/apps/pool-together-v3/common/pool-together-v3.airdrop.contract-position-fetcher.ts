@@ -17,7 +17,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
-import { PoolTogetherMerkleDistributor, PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherMerkleDistributor } from '../contracts/viem';
 
 export abstract class PoolTogetherV3AirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolTogetherMerkleDistributor> {
   abstract merkleAddress: string;
@@ -43,7 +44,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
       .catch(() => null);
   }
 
-  getContract(address: string): PoolTogetherMerkleDistributor {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherMerkleDistributor({ address, network: this.network });
   }
 

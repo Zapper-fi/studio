@@ -51,7 +51,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
   abstract getCTokenDecimals(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<number>;
   abstract getBorrowBalance(params: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getCompoundCTokenContract(address);
   }
 

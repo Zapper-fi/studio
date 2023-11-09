@@ -9,7 +9,7 @@ import { EthereumStakingContractPositionFetcher } from './ethereum/across.stakin
 
 @Module({
   providers: [
-    AcrossContractFactory,
+    AcrossViemContractFactory,
     EthereumAcrossPoolV1TokenFetcher,
     EthereumAcrossPoolV2TokenFetcher,
     EthereumStakingContractPositionFetcher,

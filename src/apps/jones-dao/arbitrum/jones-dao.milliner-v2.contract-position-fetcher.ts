@@ -8,7 +8,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { JonesDaoContractFactory, JonesMillinerV2 } from '../contracts';
+import { JonesDaoViemContractFactory } from '../contracts';
+import { JonesMillinerV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JonesMillinerV2> {

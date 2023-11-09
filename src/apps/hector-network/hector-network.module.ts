@@ -23,7 +23,7 @@ import { FantomHectorNetworkWsHecTokenFetcher } from './fantom/hector-network.ws
     FantomHectorNetworkStakeBondContractPositionFetcher,
     FantomHectorNetworkWsHecTokenFetcher,
 
-    HectorNetworkContractFactory,
+    HectorNetworkViemContractFactory,
   ],
 })
 export class HectorNetworkAppModule extends AbstractApp() {}

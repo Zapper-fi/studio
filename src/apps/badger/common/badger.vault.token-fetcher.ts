@@ -10,7 +10,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { BadgerContractFactory, BadgerSett } from '../contracts';
+import { BadgerViemContractFactory } from '../contracts';
+import { BadgerSett } from '../contracts/viem';
 
 import { BadgerVaultTokenDefinitionsResolver } from './badger.vault.token-definition-resolver';
 
@@ -33,7 +34,7 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): BadgerSett {
+  getContract(address: string) {
     return this.contractFactory.badgerSett({ network: this.network, address });
   }
 

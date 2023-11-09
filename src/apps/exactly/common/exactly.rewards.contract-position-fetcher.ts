@@ -13,7 +13,8 @@ import type {
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { ExactlyContractFactory, Previewer } from '../contracts';
+import { ExactlyViemContractFactory } from '../contracts';
+import { Previewer } from '../contracts/viem';
 
 import {
   ExactlyDefinitionsResolver,

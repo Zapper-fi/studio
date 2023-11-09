@@ -12,7 +12,7 @@ import { PenguinViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    PenguinContractFactory,
+    PenguinViemContractFactory,
     AvalanchePenguinChefV1FarmContractPositionFetcher,
     AvalanchePenguinChefV2FarmContractPositionFetcher,
     AvalanchePenguinIPefiTokenFetcher,

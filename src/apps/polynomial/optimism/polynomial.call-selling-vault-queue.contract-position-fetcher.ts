@@ -15,7 +15,8 @@ import {
 
 import { isUnderlyingDenominated } from '../common/formatters';
 import { PolynomialApiHelper } from '../common/polynomial.api';
-import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
+import { PolynomialViemContractFactory } from '../contracts';
+import { PolynomialCoveredCall } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialCoveredCall> {
@@ -29,7 +30,7 @@ export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher exte
     super(appToolkit);
   }
 
-  getContract(address: string): PolynomialCoveredCall {
+  getContract(address: string) {
     return this.contractFactory.polynomialCoveredCall({ address, network: this.network });
   }
 
@@ -41,13 +42,13 @@ export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher exte
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PolynomialCoveredCall>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.UNDERLYING(), network: this.network },
-      { metaType: MetaType.CLAIMABLE, address: await contract.VAULT_TOKEN(), network: this.network },
+      { metaType: MetaType.SUPPLIED, address: await contract.read.UNDERLYING(), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await contract.read.VAULT_TOKEN(), network: this.network },
     ];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<PolynomialCoveredCall, DefaultDataProps>) {
-    return ethers.utils.parseBytes32String(await contract.name());
+    return ethers.utils.parseBytes32String(await contract.read.name());
   }
 
   async getTokenBalancesPerPosition({

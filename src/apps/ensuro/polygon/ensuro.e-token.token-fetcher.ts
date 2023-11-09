@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { EnsuroApiRegistry } from '../common/ensuro.api-registry';
-import { EnsuroContractFactory, EnsuroEtoken } from '../contracts';
+import { EnsuroViemContractFactory } from '../contracts';
+import { EnsuroEtoken } from '../contracts/viem';
 
 const USDC = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174';
 

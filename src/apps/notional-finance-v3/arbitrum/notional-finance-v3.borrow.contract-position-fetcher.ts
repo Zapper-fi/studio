@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { NotionalFinanceV3ContractFactory, NotionalView } from '../contracts';
+import { NotionalFinanceV3ViemContractFactory } from '../contracts';
+import { NotionalView } from '../contracts/viem';
 
 export type NotionalBorrowingDefinition = {
   address: string;
@@ -51,7 +52,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
     super(appToolkit);
   }
 
-  getContract(address: string): NotionalView {
+  getContract(address: string) {
     return this.contractFactory.notionalView({ address, network: this.network });
   }
 

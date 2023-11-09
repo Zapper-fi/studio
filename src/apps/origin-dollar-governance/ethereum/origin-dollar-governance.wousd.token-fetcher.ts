@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { OriginDollarGovernanceContractFactory, Wousd } from '../contracts';
+import { OriginDollarGovernanceViemContractFactory } from '../contracts';
+import { Wousd } from '../contracts/viem';
 const oneEther = ethers.constants.WeiPerEther;
 const format = v => ethers.utils.formatUnits(v);
 
@@ -28,7 +29,7 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
     super(appToolkit);
   }
 
-  getContract(address: string): Wousd {
+  getContract(address: string) {
     return this.contractFactory.wousd({ network: this.network, address });
   }
 
@@ -37,11 +38,11 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Wousd>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPrice({ appToken, contract, multicall }: GetPriceParams<Wousd>): Promise<number> {
-    const supplyRaw = await contract.totalSupply();
+    const supplyRaw = await contract.read.totalSupply();
     const underlyingTokenContract = this.contractFactory.erc20({
       network: this.network,
       address: appToken.tokens[0].address,
@@ -54,7 +55,7 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<Wousd>) {
-    const supplyRaw = await contract.totalSupply();
+    const supplyRaw = await contract.read.totalSupply();
     const underlyingTokenContract = this.contractFactory.erc20({
       network: this.network,
       address: appToken.tokens[0].address,

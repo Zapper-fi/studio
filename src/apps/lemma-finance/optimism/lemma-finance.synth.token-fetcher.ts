@@ -10,7 +10,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory, LemmaSynth } from '../contracts';
+import { LemmaFinanceViemContractFactory } from '../contracts';
+import { LemmaSynth } from '../contracts/viem';
 
 export type LemmaFinanceSynthDefinition = {
   address: string;
@@ -59,7 +60,7 @@ export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePosit
     super(appToolkit);
   }
 
-  getContract(address: string): LemmaSynth {
+  getContract(address: string) {
     return this.contractFactory.lemmaSynth({ address, network: this.network });
   }
 

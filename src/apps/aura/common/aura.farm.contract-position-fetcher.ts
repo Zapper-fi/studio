@@ -14,7 +14,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { AuraBaseRewardPool, AuraContractFactory } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraBaseRewardPool } from '../contracts/viem';
 
 export type AuraPoolSingleStakingFarmDataProps = {
   liquidity: number;
@@ -79,7 +80,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
     super(appToolkit);
   }
 
-  getContract(address: string): AuraBaseRewardPool {
+  getContract(address: string) {
     return this.contractFactory.auraBaseRewardPool({ network: this.network, address });
   }
 
@@ -96,7 +97,7 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
 
     // Extra rewards
     const extraRewardTokenAddresses = await Promise.all(
-      range(0, Number(await contract.extraRewardsLength())).map(async v => {
+      range(0, Number(await contract.read.extraRewardsLength())).map(async v => {
         const vbpAddress = await contract.extraRewards(v);
         const vbp = this.contractFactory.auraVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
         const stashTokenAddressRaw = await multicall.wrap(vbp).rewardToken();

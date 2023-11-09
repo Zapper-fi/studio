@@ -8,7 +8,7 @@ import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './ethereum/balan
 
 @Module({
   providers: [
-    BalancerV1ContractFactory,
+    BalancerV1ViemContractFactory,
     EthereumBalancerV1PoolTokenFetcher,
     EthereumBalancerV1PoolSubgraphVolumeDataLoader,
   ],

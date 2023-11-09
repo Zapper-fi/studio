@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LlamaAirforceContractFactory, LlamaAirforceMerkleDistributor } from '../contracts';
+import { LlamaAirforceViemContractFactory } from '../contracts';
+import { LlamaAirforceMerkleDistributor } from '../contracts/viem';
 
 import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
@@ -36,7 +37,7 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): LlamaAirforceMerkleDistributor {
+  getContract(address: string) {
     return this.contractFactory.llamaAirforceMerkleDistributor({ address, network: this.network });
   }
 

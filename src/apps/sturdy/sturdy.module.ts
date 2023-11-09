@@ -16,9 +16,9 @@ import { FantomSturdyVariableDebtTokenFetcher } from './fantom/sturdy.variable-d
 
 @Module({
   providers: [
-    SturdyContractFactory,
-    AaveV2ContractFactory,
-    AaveAmmContractFactory,
+    SturdyViemContractFactory,
+    AaveV2ViemContractFactory,
+    AaveAmmViemContractFactory,
     // Ethereum
     EthereumSturdyPositionPresenter,
     EthereumSturdyStableDebtTokenFetcher,

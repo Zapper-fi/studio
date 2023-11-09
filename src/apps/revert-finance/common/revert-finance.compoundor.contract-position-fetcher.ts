@@ -8,7 +8,8 @@ import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { RevertFinanceCompoundor, RevertFinanceContractFactory } from '../contracts';
+import { RevertFinanceViemContractFactory } from '../contracts';
+import { RevertFinanceCompoundor } from '../contracts/viem';
 
 export abstract class RevertFinanceCompoundorContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RevertFinanceCompoundor> {
   isExcludedFromExplore = true;
@@ -24,7 +25,7 @@ export abstract class RevertFinanceCompoundorContractPositionFetcher extends Cus
     super(appToolkit);
   }
 
-  getContract(address: string): RevertFinanceCompoundor {
+  getContract(address: string) {
     return this.contractFactory.revertFinanceCompoundor({ address, network: this.network });
   }
 

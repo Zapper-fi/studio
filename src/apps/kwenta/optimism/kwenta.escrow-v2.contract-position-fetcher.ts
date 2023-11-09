@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { KwentaContractFactory, KwentaStakingV2 } from '../contracts';
+import { KwentaViemContractFactory } from '../contracts';
+import { KwentaStakingV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismKwentaEscrowV2ContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KwentaStakingV2> {

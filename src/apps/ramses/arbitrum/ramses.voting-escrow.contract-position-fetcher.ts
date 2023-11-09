@@ -6,7 +6,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { RamsesContractFactory, RamsesVe, RamsesRewards } from '../contracts';
+import { RamsesViemContractFactory } from '../contracts';
+import { RamsesVe, RamsesRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

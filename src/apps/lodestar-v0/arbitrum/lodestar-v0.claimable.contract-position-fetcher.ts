@@ -9,7 +9,8 @@ import {
 } from '~apps/compound/common/compound.claimable.contract-position-fetcher';
 import { ContractPosition } from '~position/position.interface';
 
-import { LodestarV0Comptroller, LodestarV0ContractFactory, LodestarV0Lens } from '../contracts';
+import { LodestarV0ViemContractFactory } from '../contracts';
+import { LodestarV0Comptroller, LodestarV0Lens } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumLodestarV0ClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<

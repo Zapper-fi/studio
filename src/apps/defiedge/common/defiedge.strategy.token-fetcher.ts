@@ -19,7 +19,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { DefiedgeContractFactory, Strategy } from '../contracts';
+import { DefiedgeViemContractFactory } from '../contracts';
+import { Strategy } from '../contracts/viem';
 
 import { DefiedgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
@@ -58,7 +59,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     super(appToolkit);
   }
 
-  getContract(address: string): Strategy {
+  getContract(address: string) {
     return this.contractFactory.strategy({ address, network: this.network });
   }
 
@@ -79,7 +80,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getSymbol({ contract }: GetTokenPropsParams<Strategy>) {
-    return ethers.utils.parseBytes32String(await contract.symbol());
+    return ethers.utils.parseBytes32String(await contract.read.symbol());
   }
 
   async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<Strategy, DefiedgeStrategyDefinition>) {

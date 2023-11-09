@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { SentimentContractFactory, SentimentLToken } from '../contracts';
+import { SentimentViemContractFactory } from '../contracts';
+import { SentimentLToken } from '../contracts/viem';
 
 export type SentimentSupplyAppTokenDefinition = {
   address: string;
@@ -35,7 +36,7 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): SentimentLToken {
+  getContract(address: string) {
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 

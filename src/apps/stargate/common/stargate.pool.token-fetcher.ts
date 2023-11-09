@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { StargatePool, StargateContractFactory } from '../contracts';
+import { StargateViemContractFactory } from '../contracts';
+import { StargatePool } from '../contracts/viem';
 
 export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionFetcher<StargatePool> {
   constructor(
@@ -39,7 +40,7 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StargatePool>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<StargatePool, DefaultDataProps>) {

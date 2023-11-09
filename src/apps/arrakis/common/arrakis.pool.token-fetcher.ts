@@ -18,7 +18,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { ArrakisContractFactory, ArrakisGelatoPool } from '../contracts';
+import { ArrakisViemContractFactory } from '../contracts';
+import { ArrakisGelatoPool } from '../contracts/viem';
 
 import { ArrakisPoolDefinitionsResolver } from './arrakis.pool-definition-resolver';
 
@@ -46,7 +47,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  getContract(address: string): ArrakisGelatoPool {
+  getContract(address: string) {
     return this.contractFactory.arrakisGelatoPool({ network: this.network, address });
   }
 
@@ -71,7 +72,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     contract,
   }: GetPricePerShareParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
-    const reservesRaw = await contract.getUnderlyingBalances();
+    const reservesRaw = await contract.read.getUnderlyingBalances();
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     const pricePerShare = reserves.map(r => {
       return r == 0 ? 0 : r / appToken.supply;
@@ -96,7 +97,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     contract,
   }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
-    const gelatoFeeRaw = await contract.gelatoFeeBPS().catch(e => {
+    const gelatoFeeRaw = await contract.read.gelatoFeeBPS().catch(e => {
       if (isMulticallUnderlyingError(e)) return null;
       throw e;
     });

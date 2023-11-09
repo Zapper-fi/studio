@@ -13,8 +13,8 @@ import { EthereumInverseSupplyTokenFetcher } from './ethereum/inverse.supply.tok
 
 @Module({
   providers: [
-    InverseContractFactory,
-    SynthetixContractFactory,
+    InverseViemContractFactory,
+    SynthetixViemContractFactory,
     EthereumInverseBorrowContractPositionFetcher,
     EthereumInverseClaimableContractPositionFetcher,
     EthereumInverseDcaVaultTokenFetcher,

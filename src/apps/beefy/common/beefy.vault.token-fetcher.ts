@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BeefyContractFactory, BeefyVaultToken } from '../contracts';
+import { BeefyViemContractFactory } from '../contracts';
+import { BeefyVaultToken } from '../contracts/viem';
 
 import { BeefyVaultTokenDefinitionsResolver } from './beefy.vault.token-definition-resolver';
 
@@ -40,7 +41,7 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): BeefyVaultToken {
+  getContract(address: string) {
     return this.contractFactory.beefyVaultToken({ network: this.network, address });
   }
 

@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { QiDaoContractFactory, QiDaoVaultNft } from '../contracts';
+import { QiDaoViemContractFactory } from '../contracts';
+import { QiDaoVaultNft } from '../contracts/viem';
 
 type QiDaoVaultDataProps = {
   liquidity: number;
@@ -45,7 +46,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): QiDaoVaultNft {
+  getContract(address: string) {
     return this.contractFactory.qiDaoVaultNft({ address, network: this.network });
   }
 

@@ -18,7 +18,7 @@ import { EthereumEulerSingleStakingFarmContractPositionFetcher } from './ethereu
     EthereumEulerPTokenTokenFetcher,
     EthereumEulerPositionPresenter,
     EthereumEulerSingleStakingFarmContractPositionFetcher,
-    EulerContractFactory,
+    EulerViemContractFactory,
     EulerTokenDefinitionsResolver,
     EulerApiStakingRegistry,
   ],

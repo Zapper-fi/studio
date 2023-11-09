@@ -9,7 +9,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { KyberswapClassicContractFactory, KyberSwapClassicMasterchefV2 } from '../contracts';
+import { KyberswapClassicViemContractFactory } from '../contracts';
+import { KyberSwapClassicMasterchefV2 } from '../contracts/viem';
 
 export abstract class KyberSwapClassicFarmFairlaunchV2ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<KyberSwapClassicMasterchefV2> {
   abstract chefAddresses: string[];
@@ -38,7 +39,7 @@ export abstract class KyberSwapClassicFarmFairlaunchV2ContractPositionFetcher ex
     return definitionsAll.flat();
   }
 
-  getContract(address: string): KyberSwapClassicMasterchefV2 {
+  getContract(address: string) {
     return this.contractFactory.kyberSwapClassicMasterchefV2({ address, network: this.network });
   }
 

@@ -25,7 +25,7 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
     super(appToolkit);
   }
 
-  getContract(address: string): CleverFeeDistributor {
+  getContract(address: string) {
     return this.contractFactory.cleverFeeDistributor({ address, network: this.network });
   }
 
@@ -40,7 +40,7 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
     return [
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.token(),
+        address: await contract.read.token(),
         network: this.network,
       },
     ];

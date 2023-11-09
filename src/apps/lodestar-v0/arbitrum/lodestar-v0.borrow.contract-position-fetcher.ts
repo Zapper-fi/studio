@@ -13,7 +13,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { LodestarV0Comptroller, LodestarV0ContractFactory, LodestarV0IToken } from '../contracts';
+import { LodestarV0ViemContractFactory } from '../contracts';
+import { LodestarV0Comptroller, LodestarV0IToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<

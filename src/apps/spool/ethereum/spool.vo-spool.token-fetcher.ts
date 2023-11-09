@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { SpoolContractFactory, SpoolVospool } from '../contracts';
+import { SpoolViemContractFactory } from '../contracts';
+import { SpoolVospool } from '../contracts/viem';
 
 import { VOSPOOL_ADDRESS } from './spool.constants';
 

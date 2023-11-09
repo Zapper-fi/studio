@@ -14,7 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AuraContractFactory, AuraLocker } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraLocker } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAuraLockerContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AuraLocker> {
@@ -27,7 +28,7 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
     super(appToolkit);
   }
 
-  getContract(address: string): AuraLocker {
+  getContract(address: string) {
     return this.contractFactory.auraLocker({ network: this.network, address });
   }
 
@@ -36,7 +37,7 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<AuraLocker>) {
-    const stakedTokenAddress = await contract.stakingToken();
+    const stakedTokenAddress = await contract.read.stakingToken();
     const rewardTokenAddress = await contract.rewardTokens(0);
 
     return [

@@ -5,7 +5,8 @@ import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams, GetDisplayPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
 
-import { SynthetixContractFactory, SynthetixNetworkToken } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixNetworkToken } from '../contracts/viem';
 
 export abstract class SynthetixSnxTokenFetcher extends AppTokenTemplatePositionFetcher<SynthetixNetworkToken> {
   abstract snxAddress: string;
@@ -18,7 +19,7 @@ export abstract class SynthetixSnxTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixNetworkToken {
+  getContract(address: string) {
     return this.contractFactory.synthetixNetworkToken({ address, network: this.network });
   }
 

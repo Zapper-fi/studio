@@ -23,10 +23,10 @@ import { PlutusViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    PlutusContractFactory,
-    CamelotContractFactory,
-    ChronosContractFactory,
-    UniswapV3ContractFactory,
+    PlutusViemContractFactory,
+    CamelotViemContractFactory,
+    ChronosViemContractFactory,
+    UniswapV3ViemContractFactory,
     ArbitrumPlutusFarmPlsArbContractPositionFetcher,
     ArbitrumPlutusFarmContractPositionFetcher,
     ArbitrumPlutusFarmPlsDpxContractPositionFetcher,

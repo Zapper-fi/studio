@@ -11,8 +11,8 @@ import { EthereumAaveAmmVariableDebtTokenFetcher } from './ethereum/aave-amm.var
 
 @Module({
   providers: [
-    AaveAmmContractFactory,
-    AaveV2ContractFactory,
+    AaveAmmViemContractFactory,
+    AaveV2ViemContractFactory,
     EthereumAaveAmmPositionPresenter,
     EthereumAaveAmmStableDebtTokenFetcher,
     EthereumAaveAmmSupplyTokenFetcher,

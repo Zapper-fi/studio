@@ -18,7 +18,7 @@ export class EthereumKeeperRedeemableTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  getContract(address: string): KeeperRedeemableToken {
+  getContract(address: string) {
     return this.contractFactory.keeperRedeemableToken({ address, network: this.network });
   }
 

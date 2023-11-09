@@ -32,7 +32,7 @@ export class ArbitrumJonesDaoVaultTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): JonesVault {
+  getContract(address: string) {
     return this.contractFactory.jonesVault({ network: this.network, address });
   }
 

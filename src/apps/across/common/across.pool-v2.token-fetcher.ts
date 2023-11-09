@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AcrossContractFactory, AcrossPoolV2 } from '../contracts';
+import { AcrossViemContractFactory } from '../contracts';
+import { AcrossPoolV2 } from '../contracts/viem';
 
 export type AcrossPoolV2TokenDefinition = {
   address: string;
@@ -33,7 +34,7 @@ export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): AcrossPoolV2 {
+  getContract(address: string) {
     return this.contractFactory.acrossPoolV2({ network: this.network, address });
   }
 

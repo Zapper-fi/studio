@@ -9,7 +9,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { TenderizeContractFactory, TenderToken } from '../contracts';
+import { TenderizeViemContractFactory } from '../contracts';
+import { TenderToken } from '../contracts/viem';
 
 import { TenderizeTokenDefinition } from './tenderize-token-definition';
 import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-resolver';
@@ -28,7 +29,7 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): TenderToken {
+  getContract(address: string) {
     return this.contractFactory.tenderToken({ network: this.network, address });
   }
 

@@ -10,7 +10,7 @@ import { EthereumPieDaoVotingEscrowContractPositionFether } from './ethereum/pie
 
 @Module({
   providers: [
-    PieDaoContractFactory,
+    PieDaoViemContractFactory,
     // Ethereum
     EthereumPieDaoEDoughTokenFetcher,
     EthereumPieDaoFarmSingleStakingContractPositionFetcher,

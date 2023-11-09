@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { BalancerV2ContractFactory, BalancerWrappedAaveToken } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerWrappedAaveToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplatePositionFetcher<BalancerWrappedAaveToken> {

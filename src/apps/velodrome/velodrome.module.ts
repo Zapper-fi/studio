@@ -12,7 +12,7 @@ import { OptimismVelodromeVotingEscrowContractPositionFetcher } from './optimism
 
 @Module({
   providers: [
-    VelodromeContractFactory,
+    VelodromeViemContractFactory,
     VelodromeDefinitionsResolver,
     OptimismVelodromePoolsTokenFetcher,
     OptimismVelodromeStakingContractPositionFetcher,

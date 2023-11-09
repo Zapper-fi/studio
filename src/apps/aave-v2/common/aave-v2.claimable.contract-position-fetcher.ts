@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { AaveStakedTokenIncentivesController, AaveV2ContractFactory } from '../contracts';
+import { AaveV2ViemContractFactory } from '../contracts';
+import { AaveStakedTokenIncentivesController } from '../contracts/viem';
 
 export type AaveV2ClaimableDataProps = {
   incentivesControllerAddress: string;

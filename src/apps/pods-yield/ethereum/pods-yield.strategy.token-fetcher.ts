@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PodsYieldContractFactory, PodsYieldVault } from '../contracts';
+import { PodsYieldViemContractFactory } from '../contracts';
+import { PodsYieldVault } from '../contracts/viem';
 
 import { strategyAddresses, strategyDetails } from './config';
 
@@ -33,7 +34,7 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PodsYieldVault>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PodsYieldVault>) {

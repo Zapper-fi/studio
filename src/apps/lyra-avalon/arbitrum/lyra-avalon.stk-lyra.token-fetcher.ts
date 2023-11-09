@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { LyraAvalonContractFactory, LyraStkLyra } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraStkLyra } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumLyraAvalonStkLyraTokenFetcher extends AppTokenTemplatePositionFetcher<LyraStkLyra> {
@@ -17,7 +18,7 @@ export class ArbitrumLyraAvalonStkLyraTokenFetcher extends AppTokenTemplatePosit
     super(appToolkit);
   }
 
-  getContract(address: string): LyraStkLyra {
+  getContract(address: string) {
     return this.contractFactory.lyraStkLyra({ address, network: this.network });
   }
 

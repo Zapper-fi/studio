@@ -17,7 +17,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { NETWORK_IDS } from '~types';
 
-import { HiddenHandContractFactory, HiddenHandRewardDistributor } from '../contracts';
+import { HiddenHandViemContractFactory } from '../contracts';
+import { HiddenHandRewardDistributor } from '../contracts/viem';
 
 import { HiddenHandRewardsResolver, HiddenHandRewardsDefinition, PROTOCOLS } from './hidden-hand.rewards-resolver';
 
@@ -34,7 +35,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     super(appToolkit);
   }
 
-  getContract(address: string): HiddenHandRewardDistributor {
+  getContract(address: string) {
     return this.contractFactory.hiddenHandRewardDistributor({ address, network: this.network });
   }
 
@@ -67,7 +68,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     ) {
       vault = ZERO_ADDRESS;
     } else {
-      vault = (await contract.BRIBE_VAULT()).toLowerCase();
+      vault = (await contract.read.BRIBE_VAULT()).toLowerCase();
     }
 
     const marketEntry = Object.entries(protocols).find(

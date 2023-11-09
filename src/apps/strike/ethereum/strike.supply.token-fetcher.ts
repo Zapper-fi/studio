@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { StrikeComptroller, StrikeContractFactory, StrikeSToken } from '../contracts';
+import { StrikeViemContractFactory } from '../contracts';
+import { StrikeComptroller, StrikeSToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher<StrikeSToken, StrikeComptroller> {

@@ -23,7 +23,7 @@ import { PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher } from './po
     EthereumGammaStrategiesPoolTokenFetcher,
     EthereumGammaStrategiesTGammaTokenFetcher,
     EthereumGammaStrategiesXGammaTokenFetcher,
-    GammaStrategiesContractFactory,
+    GammaStrategiesViemContractFactory,
     GammaStrategiesDefinitionResolver,
     OptimismGammaStrategiesPoolTokenFetcher,
     OptimismGammaStrategiesUniFarmContractPositionFetcher,

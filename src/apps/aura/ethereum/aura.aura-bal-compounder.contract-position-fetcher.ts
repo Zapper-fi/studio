@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AuraBalVirtualRewardPool, AuraContractFactory } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraBalVirtualRewardPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAuraAuraBalCompounderContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AuraBalVirtualRewardPool> {
@@ -25,7 +26,7 @@ export class EthereumAuraAuraBalCompounderContractPositionFetcher extends Contra
     super(appToolkit);
   }
 
-  getContract(address: string): AuraBalVirtualRewardPool {
+  getContract(address: string) {
     return this.contractFactory.auraBalVirtualRewardPool({ network: this.network, address });
   }
 
@@ -37,12 +38,12 @@ export class EthereumAuraAuraBalCompounderContractPositionFetcher extends Contra
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.deposits(),
+        address: await contract.read.deposits(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.rewardToken(),
+        address: await contract.read.rewardToken(),
         network: this.network,
       },
     ];

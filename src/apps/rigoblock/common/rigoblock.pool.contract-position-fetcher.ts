@@ -9,7 +9,8 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 
-import { RigoblockContractFactory, SmartPool } from '../contracts';
+import { RigoblockViemContractFactory } from '../contracts';
+import { SmartPool } from '../contracts/viem';
 
 export type UnderlyingLiquidityPositionTokens = {
   address: string;
@@ -47,7 +48,7 @@ export abstract class RigoblockPoolContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): SmartPool {
+  getContract(address: string) {
     return this.rigoblockContractFactory.smartPool({ address, network: this.network });
   }
 

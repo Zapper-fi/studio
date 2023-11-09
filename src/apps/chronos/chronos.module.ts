@@ -7,6 +7,6 @@ import { ArbitrumChronosPoolTokenFetcher } from './arbitrum/chronos.pool.token-f
 import { ChronosViemContractFactory } from './contracts';
 
 @Module({
-  providers: [UniswapV2ContractFactory, ChronosContractFactory, ArbitrumChronosPoolTokenFetcher],
+  providers: [UniswapV2ViemContractFactory, ChronosViemContractFactory, ArbitrumChronosPoolTokenFetcher],
 })
 export class ChronosAppModule extends AbstractApp() {}

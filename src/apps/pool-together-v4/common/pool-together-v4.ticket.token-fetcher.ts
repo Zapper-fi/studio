@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV4ContractFactory, PoolTogetherV4Ticket } from '../contracts';
+import { PoolTogetherV4ViemContractFactory } from '../contracts';
+import { PoolTogetherV4Ticket } from '../contracts/viem';
 
 import { PoolTogetherV4ApiPrizePoolRegistry } from './pool-together-v4.api.prize-pool-registry';
 
@@ -35,7 +36,7 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
     super(appToolkit);
   }
 
-  getContract(address: string): PoolTogetherV4Ticket {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherV4Ticket({ address, network: this.network });
   }
 

@@ -24,7 +24,7 @@ import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.
 
 @Module({
   providers: [
-    BalancerV2ContractFactory,
+    BalancerV2ViemContractFactory,
     // Arbitrum
     ArbitrumBalancerV2BoostedTokenFetcher,
     ArbitrumBalancerV2PoolTokenFetcher,

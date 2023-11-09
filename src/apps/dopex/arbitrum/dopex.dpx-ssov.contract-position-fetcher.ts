@@ -10,7 +10,7 @@ import { DopexDpxSsov } from '../contracts';
 export class ArbitrumDopexDpxSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexDpxSsov> {
   groupLabel = 'SSOVs';
 
-  getContract(address: string): DopexDpxSsov {
+  getContract(address: string) {
     return this.contractFactory.dopexDpxSsov({ address, network: this.network });
   }
 

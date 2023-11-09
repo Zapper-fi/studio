@@ -7,6 +7,6 @@ import { EaseViemContractFactory } from './contracts';
 import { EthereumEaseRcaTokenFetcher } from './ethereum/ease.rca.token-fetcher';
 
 @Module({
-  providers: [EaseContractFactory, EaseRcaDefinitionsResolver, EthereumEaseRcaTokenFetcher],
+  providers: [EaseViemContractFactory, EaseRcaDefinitionsResolver, EthereumEaseRcaTokenFetcher],
 })
 export class EaseAppModule extends AbstractApp() {}

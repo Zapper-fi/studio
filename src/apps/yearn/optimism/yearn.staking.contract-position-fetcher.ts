@@ -27,7 +27,7 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
     super(appToolkit);
   }
 
-  getContract(address: string): YearnStaking {
+  getContract(address: string) {
     return this.contractFactory.yearnStaking({ address, network: this.network });
   }
 

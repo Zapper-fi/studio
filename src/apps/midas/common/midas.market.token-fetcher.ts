@@ -64,7 +64,7 @@ export abstract class MidasMarketTokenFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): CT {
+  getContract(address: string) {
     return this.getCTokenContract(address);
   }
 

@@ -10,7 +10,8 @@ import { isVesting } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ConcentratorContractFactory, AladdinConcentratorVest } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AladdinConcentratorVest } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConcentratorVestingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AladdinConcentratorVest> {
@@ -23,7 +24,7 @@ export class EthereumConcentratorVestingContractPositionFetcher extends Contract
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConcentratorVest {
+  getContract(address: string) {
     return this.contractFactory.aladdinConcentratorVest({ network: this.network, address });
   }
 

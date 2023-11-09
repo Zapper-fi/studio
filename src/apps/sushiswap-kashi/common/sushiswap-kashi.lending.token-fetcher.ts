@@ -16,7 +16,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { SushiswapKashiContractFactory, SushiswapKashiLendingToken } from '../contracts';
+import { SushiswapKashiViemContractFactory } from '../contracts';
+import { SushiswapKashiLendingToken } from '../contracts/viem';
 
 type SushiswapKashiLendingTokenDefinition = {
   address: string;
@@ -75,7 +76,7 @@ export abstract class SushiswapKashiLendingTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
-  getContract(address: string): SushiswapKashiLendingToken {
+  getContract(address: string) {
     return this.contractFactory.sushiswapKashiLendingToken({ address, network: this.network });
   }
 

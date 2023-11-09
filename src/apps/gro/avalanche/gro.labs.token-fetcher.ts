@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { GroContractFactory, GroLabsVault } from '../contracts';
+import { GroViemContractFactory } from '../contracts';
+import { GroLabsVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheGroLabsTokenFetcher extends AppTokenTemplatePositionFetcher<GroLabsVault> {
@@ -18,7 +19,7 @@ export class AvalancheGroLabsTokenFetcher extends AppTokenTemplatePositionFetche
     super(appToolkit);
   }
 
-  getContract(address: string): GroLabsVault {
+  getContract(address: string) {
     return this.contractFactory.groLabsVault({ network: this.network, address });
   }
 
@@ -31,11 +32,11 @@ export class AvalancheGroLabsTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<GroLabsVault>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<GroLabsVault>) {
-    const pricePerShareRaw = await contract.getPricePerShare();
+    const pricePerShareRaw = await contract.read.getPricePerShare();
     return [Number(pricePerShareRaw) / 10 ** 18];
   }
 }

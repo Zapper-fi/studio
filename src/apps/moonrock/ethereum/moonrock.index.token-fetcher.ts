@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { MoonrockContractFactory, MoonrockToken } from '../contracts';
+import { MoonrockViemContractFactory } from '../contracts';
+import { MoonrockToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMoonrockIndexTokenFetcher extends AppTokenTemplatePositionFetcher<MoonrockToken> {
@@ -22,7 +23,7 @@ export class EthereumMoonrockIndexTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): MoonrockToken {
+  getContract(address: string) {
     return this.contractFactory.moonrockToken({ address, network: this.network });
   }
 
@@ -33,7 +34,7 @@ export class EthereumMoonrockIndexTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MoonrockToken>) {
-    return (await contract.getComponents()).map(address => ({ address, network: this.network }));
+    return (await contract.read.getComponents()).map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ appToken, contract }: GetDataPropsParams<MoonrockToken>) {

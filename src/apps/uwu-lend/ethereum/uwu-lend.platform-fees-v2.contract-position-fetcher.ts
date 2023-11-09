@@ -14,7 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { UwuLendContractFactory, UwuLendStakingV2 } from '../contracts';
+import { UwuLendViemContractFactory } from '../contracts';
+import { UwuLendStakingV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumUwuLendPlatformFeesV2PositionFetcher extends ContractPositionTemplatePositionFetcher<UwuLendStakingV2> {

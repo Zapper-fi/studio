@@ -8,7 +8,7 @@ import { EthereumBottoGovernanceContractPositionFetcher } from './ethereum/botto
 
 @Module({
   providers: [
-    BottoContractFactory,
+    BottoViemContractFactory,
     EthereumBottoFarmContractPositionFetcher,
     EthereumBottoGovernanceContractPositionFetcher,
   ],

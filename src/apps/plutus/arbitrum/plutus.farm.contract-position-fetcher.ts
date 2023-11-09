@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PlutusChef, PlutusContractFactory } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusChef } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlutusChef> {
@@ -25,7 +26,7 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusChef {
+  getContract(address: string) {
     return this.contractFactory.plutusChef({ address, network: this.network });
   }
 

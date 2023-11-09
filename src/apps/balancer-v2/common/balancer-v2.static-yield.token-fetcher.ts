@@ -17,7 +17,7 @@ export abstract class BalancerV2StaticYieldTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
-  getContract(address: string): BalancerStaticAToken {
+  getContract(address: string) {
     return this.contractFactory.balancerStaticAToken({ address, network: this.network });
   }
 

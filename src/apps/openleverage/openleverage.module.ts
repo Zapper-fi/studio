@@ -12,7 +12,7 @@ import { EthereumOpenleveragePoolTokenFetcher } from './ethereum/openleverage.po
     EthereumOpenleveragePoolTokenFetcher,
     BinanceSmartChainOpenleveragePoolTokenFetcher,
 
-    OpenleverageContractFactory,
+    OpenleverageViemContractFactory,
     OpenleveragePoolAPYHelper,
   ],
 })

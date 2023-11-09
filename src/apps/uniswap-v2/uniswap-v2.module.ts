@@ -6,6 +6,6 @@ import { UniswapV2ViemContractFactory } from './contracts';
 import { EthereumUniswapV2PoolTokenFetcher } from './ethereum/uniswap-v2.pool.token-fetcher';
 
 @Module({
-  providers: [UniswapV2ContractFactory, EthereumUniswapV2PoolTokenFetcher],
+  providers: [UniswapV2ViemContractFactory, EthereumUniswapV2PoolTokenFetcher],
 })
 export class UniswapV2AppModule extends AbstractApp() {}

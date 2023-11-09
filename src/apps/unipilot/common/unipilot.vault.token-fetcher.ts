@@ -12,7 +12,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { UnipilotContractFactory, UnipilotVault } from '../contracts';
+import { UnipilotViemContractFactory } from '../contracts';
+import { UnipilotVault } from '../contracts/viem';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
 import { UnipilotVaultDefinitionsResolver } from './unipilot.vault-definition-resolver';
@@ -36,7 +37,7 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): UnipilotVault {
+  getContract(address: string) {
     return this.contractFactory.unipilotVault({ address, network: this.network });
   }
 

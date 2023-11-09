@@ -15,7 +15,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { KwentaContractFactory, KwentaStakingV2 } from '../contracts';
+import { KwentaViemContractFactory } from '../contracts';
+import { KwentaStakingV2 } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -36,7 +37,7 @@ export class OptimismKwentaStakingV2ContractPositionFetcher extends SingleStakin
     super(appToolkit);
   }
 
-  getContract(address: string): KwentaStakingV2 {
+  getContract(address: string) {
     return this.contractFactory.kwentaStakingV2({ address, network: this.network });
   }
 

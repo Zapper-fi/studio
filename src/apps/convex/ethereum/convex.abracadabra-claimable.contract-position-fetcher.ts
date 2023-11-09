@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { ConvexAbracadabraWrapper, ConvexContractFactory } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexAbracadabraWrapper } from '../contracts/viem';
 
 export const ABRACADABRA_WRAPPERS = [
   '0x5958a8db7dfe0cc49382209069b00f54e17929c2', // stk-tricrypto2
@@ -35,7 +36,7 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexAbracadabraWrapper {
+  getContract(address: string) {
     return this.convexContractFactory.convexAbracadabraWrapper({ address, network: this.network });
   }
 
@@ -51,7 +52,7 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.convexToken(),
+        address: await contract.read.convexToken(),
         network: this.network,
       },
       {

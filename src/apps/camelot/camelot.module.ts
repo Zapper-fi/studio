@@ -12,8 +12,8 @@ import { CamelotViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    CamelotContractFactory,
-    UniswapV2ContractFactory,
+    CamelotViemContractFactory,
+    UniswapV2ViemContractFactory,
     // Arbitrum
     ArbitrumCamelotPoolV2TokenFetcher,
     ArbitrumXGrailTokenFetcher,

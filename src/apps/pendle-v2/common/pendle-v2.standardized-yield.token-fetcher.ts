@@ -12,7 +12,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { PendleV2ContractFactory, StandardizedYield } from '../contracts';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { StandardizedYield } from '../contracts/viem';
 
 import { PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 

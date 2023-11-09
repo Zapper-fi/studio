@@ -11,7 +11,7 @@ import { PolygonBananoFarmContractPositionFetcher } from './polygon/banano.farm.
 
 @Module({
   providers: [
-    BananoContractFactory,
+    BananoViemContractFactory,
     BinanceSmartChainBananoFarmContractPositionFetcher,
     PolygonBananoFarmContractPositionFetcher,
     FantomBananoFarmContractPositionFetcher,

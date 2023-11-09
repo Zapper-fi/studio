@@ -7,7 +7,8 @@ import { isClaimable } from '~position/position.utils';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
 
-import { VotiumContractFactory, VotiumMultiMerkle } from '../contracts';
+import { VotiumViemContractFactory } from '../contracts';
+import { VotiumMultiMerkle } from '../contracts/viem';
 
 import { EthereumVotiumMerkleCache, VotiumActiveTokenData } from './votium.merkle-cache';
 
@@ -24,7 +25,7 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
     super(appToolkit);
   }
 
-  getContract(address: string): VotiumMultiMerkle {
+  getContract(address: string) {
     return this.contractFactory.votiumMultiMerkle({ address, network: this.network });
   }
 

@@ -9,7 +9,7 @@ import { PolygonDystopiaVotingEscrowContractPositionFetcher } from './polygon/dy
 
 @Module({
   providers: [
-    DystopiaContractFactory,
+    DystopiaViemContractFactory,
     PolygonDystopiaPairsTokenFetcher,
     PolygonDystopiaStakingContractPositionFetcher,
     PolygonDystopiaVotingEscrowContractPositionFetcher,

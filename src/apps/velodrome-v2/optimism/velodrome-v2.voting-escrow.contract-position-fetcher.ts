@@ -6,7 +6,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { VelodromeV2ContractFactory, VelodromeV2Rewards, VelodromeV2Ve } from '../contracts';
+import { VelodromeV2ViemContractFactory } from '../contracts';
+import { VelodromeV2Rewards, VelodromeV2Ve } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismVelodromeV2VotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

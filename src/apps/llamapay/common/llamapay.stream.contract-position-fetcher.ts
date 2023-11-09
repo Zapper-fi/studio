@@ -14,7 +14,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { LlamapayStreamApiClient } from '../common/llamapay.stream.api-client';
-import { LlamapayContractFactory, LlamapayStream } from '../contracts';
+import { LlamapayViemContractFactory } from '../contracts';
+import { LlamapayStream } from '../contracts/viem';
 
 export type LlamapayStreamContractPositionDefinition = {
   address: string;
@@ -41,7 +42,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
     return this.apiClient.getTokens(this.subgraph);
   }
 
-  getContract(address: string): LlamapayStream {
+  getContract(address: string) {
     return this.contractFactory.llamapayStream({ address, network: this.network });
   }
 

@@ -6,7 +6,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverLocker } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverLocker } from '../contracts/viem';
 
 import { CVX, CLEVCVX } from './addresses';
 
@@ -21,7 +22,7 @@ export class EthereumCleverLockContractPositionFetcher extends ContractPositionT
     super(appToolkit);
   }
 
-  getContract(address: string): CleverLocker {
+  getContract(address: string) {
     return this.contractFactory.cleverLocker({ address, network: this.network });
   }
 

@@ -8,7 +8,7 @@ import { EthereumArthTroveContractPositionFetcher } from './ethereum/arth.trove.
 
 @Module({
   providers: [
-    ArthContractFactory,
+    ArthViemContractFactory,
     EthereumArthStabilityPoolContractPositionFetcher,
     EthereumArthTroveContractPositionFetcher,
   ],

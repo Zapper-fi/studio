@@ -7,7 +7,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { AbracadabraContractFactory, AbracadabraMspell } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { AbracadabraMspell } from '../contracts/viem';
 
 export abstract class AbracadabraMspellContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<AbracadabraMspell> {
   abstract mSpellAddress: string;
@@ -19,7 +20,7 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
     super(appToolkit);
   }
 
-  getContract(address: string): AbracadabraMspell {
+  getContract(address: string) {
     return this.contractFactory.abracadabraMspell({ address, network: this.network });
   }
 

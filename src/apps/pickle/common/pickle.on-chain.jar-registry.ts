@@ -26,7 +26,7 @@ export class PickleOnChainJarRegistry {
     const multicall = this.appToolkit.getMulticall(network);
 
     const contract = this.pickleContractFactory.pickleRegistry({ address: registryAddress, network });
-    const vaultAddresses = await contract.developmentVaults();
+    const vaultAddresses = await contract.read.developmentVaults();
 
     const vaultData = await Promise.all(
       vaultAddresses.map(async vaultAddressRaw => {

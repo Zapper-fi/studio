@@ -13,7 +13,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { UnlockdFinanceContractFactory, UnlockdFinanceUToken } from '../contracts';
+import { UnlockdFinanceViemContractFactory } from '../contracts';
+import { UnlockdFinanceUToken } from '../contracts/viem';
 
 const SECONDS_PER_YEAR = 31536000;
 
@@ -33,7 +34,7 @@ export class EthereumUnlockdFinanceVariableDebtTokenFetcher extends AppTokenTemp
     super(appToolkit);
   }
 
-  getContract(address: string): UnlockdFinanceUToken {
+  getContract(address: string) {
     return this.unlockdFinanceContractFactory.unlockdFinanceUToken({ network: this.network, address });
   }
 
@@ -44,7 +45,7 @@ export class EthereumUnlockdFinanceVariableDebtTokenFetcher extends AppTokenTemp
   async getUnderlyingTokenDefinitions({
     contract,
   }: GetUnderlyingTokensParams<UnlockdFinanceUToken, DefaultAppTokenDefinition>): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
+    return [{ address: await contract.read.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getPricePerShare() {

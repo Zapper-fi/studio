@@ -10,7 +10,7 @@ import { OptimismLemmaFinanceXUsdlTokenFetcher } from './optimism/lemma-finance.
 
 @Module({
   providers: [
-    LemmaFinanceContractFactory,
+    LemmaFinanceViemContractFactory,
     // Optimism
     OptimismLemmaFinanceSynthTokenFetcher,
     OptimismLemmaFinanceUsdlTokenFetcher,

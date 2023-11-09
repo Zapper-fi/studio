@@ -11,8 +11,8 @@ import { EthereumVersePoolTokenFetcher } from './ethereum/verse.pool.token-fetch
   providers: [
     EthereumVerseFarmContractPositionFetcher,
     EthereumVersePoolTokenFetcher,
-    UniswapV2ContractFactory,
-    VerseContractFactory,
+    UniswapV2ViemContractFactory,
+    VerseViemContractFactory,
   ],
 })
 export class VerseAppModule extends AbstractApp() {}

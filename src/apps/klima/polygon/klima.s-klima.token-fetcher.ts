@@ -13,7 +13,8 @@ import type {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { KlimaContractFactory, KlimaSKlima } from '../contracts';
+import { KlimaViemContractFactory } from '../contracts';
+import { KlimaSKlima } from '../contracts/viem';
 
 export const API_BASE_URL = 'https://www.klimadao.finance/api';
 export const EPOCH_INTERVAL = 11_520;
@@ -41,7 +42,7 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
     super(appToolkit);
   }
 
-  getContract(address: string): KlimaSKlima {
+  getContract(address: string) {
     return this.contractFactory.klimaSKlima({ address, network: this.network });
   }
 

@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { UniswapV3ContractFactory, UniswapV3PositionManager } from '../contracts';
+import { UniswapV3ViemContractFactory } from '../contracts';
+import { UniswapV3PositionManager } from '../contracts/viem';
 
 import { BaseUniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.contract-position-builder';
 
@@ -26,7 +27,7 @@ export class BaseUniswapV3LiquidityContractPositionFetcher extends CustomContrac
     super(appToolkit);
   }
 
-  getContract(address: string): UniswapV3PositionManager {
+  getContract(address: string) {
     return this.contractFactory.uniswapV3PositionManager({ address, network: this.network });
   }
 

@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { BeefyBoostVaultDefinitionsResolver } from '../common/beefy.boost-vault.definition-resolver';
-import { BeefyBoostVault, BeefyContractFactory } from '../contracts';
+import { BeefyViemContractFactory } from '../contracts';
+import { BeefyBoostVault } from '../contracts/viem';
 
 export type BeefyBoostVaultDefinition = {
   address: string;
@@ -35,7 +36,7 @@ export abstract class BeefyBoostVaultContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  getContract(address: string): BeefyBoostVault {
+  getContract(address: string) {
     return this.contractFactory.beefyBoostVault({ address, network: this.network });
   }
 

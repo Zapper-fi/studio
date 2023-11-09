@@ -13,7 +13,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { DhedgeV2ContractFactory, DhedgeV2Token } from '../contracts';
+import { DhedgeV2ViemContractFactory } from '../contracts';
+import { DhedgeV2Token } from '../contracts/viem';
 
 const customImg = new Set<string>(['BEAR', 'BTCy', 'BULL', 'dSNX', 'USDy', 'mlETH', 'USDmny', 'dUSD']);
 
@@ -43,7 +44,7 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<DhedgeV2Token>) {
-    const pricePerShareRaw = await contract.tokenPrice().catch(err => {
+    const pricePerShareRaw = await contract.read.tokenPrice().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });

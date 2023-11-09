@@ -15,7 +15,8 @@ import {
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
 import { SolidLizardDefinitionsResolver } from '../common/solid-lizard.definitions-resolver';
-import { SolidLizardContractFactory, SolidLizardGauge } from '../contracts';
+import { SolidLizardViemContractFactory } from '../contracts';
+import { SolidLizardGauge } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<SolidLizardGauge> {
@@ -29,7 +30,7 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
     super(appToolkit);
   }
 
-  getContract(address: string): SolidLizardGauge {
+  getContract(address: string) {
     return this.contractFactory.solidLizardGauge({ address, network: this.network });
   }
 
@@ -42,7 +43,7 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<SolidLizardGauge>) {
-    const numRewards = Number(await contract.rewardTokensLength());
+    const numRewards = Number(await contract.read.rewardTokensLength());
     return Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
   }
 

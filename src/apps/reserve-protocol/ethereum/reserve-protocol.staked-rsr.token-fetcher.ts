@@ -23,7 +23,7 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
     super(appToolkit);
   }
 
-  getContract(address: string): StakedRsr {
+  getContract(address: string) {
     return this.contractFactory.stakedRsr({ network: this.network, address });
   }
 
@@ -46,7 +46,7 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<StakedRsr>) {
-    const exchangeRate = await contract.exchangeRate();
+    const exchangeRate = await contract.read.exchangeRate();
     return [Number(exchangeRate) / 10 ** 18];
   }
 }

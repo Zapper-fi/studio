@@ -17,7 +17,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Y2KFinanceContractFactory, Y2KFinanceStakingRewards } from '../contracts';
+import { Y2KFinanceViemContractFactory } from '../contracts';
+import { Y2KFinanceStakingRewards } from '../contracts/viem';
 
 export const FARMS_QUERY = gql`
   {
@@ -45,7 +46,7 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  getContract(address: string): Y2KFinanceStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.y2KFinanceStakingRewards({ address, network: this.network });
   }
 

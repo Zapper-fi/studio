@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { JonesDaoContractFactory, JonesStakingRewards } from '../contracts';
+import { JonesDaoViemContractFactory } from '../contracts';
+import { JonesStakingRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<JonesStakingRewards> {
@@ -23,7 +24,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
     super(appToolkit);
   }
 
-  getContract(address: string): JonesStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.jonesStakingRewards({ address, network: this.network });
   }
 
@@ -70,7 +71,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
   }
 
   async getIsActive({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    return (await contract.read.periodFinish()).gt(Math.floor(Date.now() / 1000));
   }
 
   getStakedTokenBalance({

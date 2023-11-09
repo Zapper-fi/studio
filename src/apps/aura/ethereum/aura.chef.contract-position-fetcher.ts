@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { AuraContractFactory, AuraMasterchef } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraMasterchef } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AuraMasterchef> {
@@ -25,7 +26,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
     super(appToolkit);
   }
 
-  getContract(address: string): AuraMasterchef {
+  getContract(address: string) {
     return this.contractFactory.auraMasterchef({ address, network: this.network });
   }
 

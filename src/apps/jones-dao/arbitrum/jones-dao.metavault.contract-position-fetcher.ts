@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { JonesMetavault, JonesDaoContractFactory } from '../contracts';
+import { JonesDaoViemContractFactory } from '../contracts';
+import { JonesMetavault } from '../contracts/viem';
 
 const VAULT_TYPE = ['Bull', 'Bear'];
 
@@ -36,7 +37,7 @@ export class ArbitrumJonesDaoMetavaultTokenFetcher extends ContractPositionTempl
     super(appToolkit);
   }
 
-  getContract(address: string): JonesMetavault {
+  getContract(address: string) {
     return this.contractFactory.jonesMetavault({ address, network: this.network });
   }
 
@@ -54,7 +55,7 @@ export class ArbitrumJonesDaoMetavaultTokenFetcher extends ContractPositionTempl
           address,
           network: this.network,
         });
-        const underlyingToken = await contract.depositToken();
+        const underlyingToken = await contract.read.depositToken();
 
         return { address, underlyingToken };
       }),
@@ -72,7 +73,7 @@ export class ArbitrumJonesDaoMetavaultTokenFetcher extends ContractPositionTempl
   }
 
   async getLabel({ contractPosition, contract }: GetDisplayPropsParams<JonesMetavault>): Promise<string> {
-    const type = await contract.vaultType();
+    const type = await contract.read.vaultType();
 
     return `${getLabelFromToken(contractPosition.tokens[0])} ${VAULT_TYPE[type]} Metavault`;
   }

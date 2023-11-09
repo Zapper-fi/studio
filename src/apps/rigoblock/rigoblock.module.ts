@@ -17,7 +17,7 @@ import { PolygonRigoblockPoolTokenFetcher } from './polygon/rigoblock.pool.token
 
 @Module({
   providers: [
-    UniswapV3ContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumRigoblockPoolContractPositionFetcher,
     ArbitrumRigoblockPoolTokenFetcher,
@@ -27,7 +27,7 @@ import { PolygonRigoblockPoolTokenFetcher } from './polygon/rigoblock.pool.token
     OptimismRigoblockPoolTokenFetcher,
     PolygonRigoblockPoolContractPositionFetcher,
     PolygonRigoblockPoolTokenFetcher,
-    RigoblockContractFactory,
+    RigoblockViemContractFactory,
     RigoblockLogProvider,
   ],
 })

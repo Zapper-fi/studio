@@ -21,8 +21,8 @@ import { OptimismGranaryFinanceVariableDebtTokenFetcher } from './optimism/grana
 
 @Module({
   providers: [
-    GranaryFinanceContractFactory,
-    AaveV2ContractFactory,
+    GranaryFinanceViemContractFactory,
+    AaveV2ViemContractFactory,
     // Arbitrum
     ArbitrumGranaryFinancePositionPresenter,
     ArbitrumGranaryFinanceSupplyTokenFetcher,

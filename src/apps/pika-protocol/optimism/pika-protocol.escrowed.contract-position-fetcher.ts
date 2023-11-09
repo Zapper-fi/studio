@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PikaProtocolContractFactory, PikaProtocolVester } from '../contracts';
+import { PikaProtocolViemContractFactory } from '../contracts';
+import { PikaProtocolVester } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolVester> {
@@ -26,7 +27,7 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
     super(appToolkit);
   }
 
-  getContract(address: string): PikaProtocolVester {
+  getContract(address: string) {
     return this.contractFactory.pikaProtocolVester({ network: this.network, address });
   }
 
@@ -38,7 +39,7 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
     return [
       {
         metaType: MetaType.LOCKED,
-        address: await contract.esPika(),
+        address: await contract.read.esPika(),
         network: this.network,
       },
     ];

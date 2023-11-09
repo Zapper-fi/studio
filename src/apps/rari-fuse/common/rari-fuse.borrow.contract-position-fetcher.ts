@@ -55,7 +55,7 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   abstract getBorrowBalance(address: string, contract: R): Promise<BigNumberish>;
   abstract getPoolsBySupplier(address: string, contract: S): Promise<[BigNumber[], { comptroller: string }[]]>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getTokenContract(address);
   }
 

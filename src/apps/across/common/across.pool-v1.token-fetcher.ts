@@ -23,7 +23,7 @@ export abstract class AcrossPoolV1TokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): AcrossPoolV1 {
+  getContract(address: string) {
     return this.contractFactory.acrossPoolV1({ network: this.network, address });
   }
 
@@ -32,7 +32,7 @@ export abstract class AcrossPoolV1TokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AcrossPoolV1>) {
-    return [{ address: await contract.l1Token(), network: this.network }];
+    return [{ address: await contract.read.l1Token(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<AcrossPoolV1>) {
@@ -42,13 +42,13 @@ export abstract class AcrossPoolV1TokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLiquidity({ contract, appToken }: GetDataPropsParams<AcrossPoolV1>) {
-    const reserveRaw = await contract.liquidReserves();
+    const reserveRaw = await contract.read.liquidReserves();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return reserve * appToken.tokens[0].price;
   }
 
   async getReserves({ contract, appToken }: GetDataPropsParams<AcrossPoolV1>) {
-    const reserveRaw = await contract.liquidReserves();
+    const reserveRaw = await contract.read.liquidReserves();
     return [Number(reserveRaw) / 10 ** appToken.tokens[0].decimals];
   }
 

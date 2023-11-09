@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { OlympusBondContractPositionFetcher } from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { KlimaBondDepository, KlimaContractFactory } from '../contracts';
+import { KlimaViemContractFactory } from '../contracts';
+import { KlimaBondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContractPositionFetcher<KlimaBondDepository> {
@@ -51,7 +52,7 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     super(appToolkit);
   }
 
-  getContract(address: string): KlimaBondDepository {
+  getContract(address: string) {
     return this.contractFactory.klimaBondDepository({ address, network: this.network });
   }
 

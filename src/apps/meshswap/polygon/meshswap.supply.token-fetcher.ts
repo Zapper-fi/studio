@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { MeshswapContractFactory, MeshswapSinglePool } from '../contracts';
+import { MeshswapViemContractFactory } from '../contracts';
+import { MeshswapSinglePool } from '../contracts/viem';
 
 @PositionTemplate()
 export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<MeshswapSinglePool> {
@@ -24,7 +25,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): MeshswapSinglePool {
+  getContract(address: string) {
     return this.contractFactory.meshswapSinglePool({ network: this.network, address });
   }
 
@@ -47,11 +48,11 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MeshswapSinglePool>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<MeshswapSinglePool>): Promise<number[]> {
-    const exchangeRateRaw = await contract.exchangeRateStored();
+    const exchangeRateRaw = await contract.read.exchangeRateStored();
     const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
     return [exchangeRate];
   }
@@ -61,8 +62,8 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<MeshswapSinglePool>) {
-    const cashRaw = await contract.getCash();
-    const borrowAmountRaw = await contract.totalBorrows();
+    const cashRaw = await contract.read.getCash();
+    const borrowAmountRaw = await contract.read.totalBorrows();
     const cash = Number(cashRaw) / 10 ** appToken.decimals;
     const borrowAmount = Number(borrowAmountRaw) / 10 ** appToken.decimals;
 

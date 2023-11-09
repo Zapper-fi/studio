@@ -12,7 +12,8 @@ import {
 
 import { isUnderlyingDenominated } from '../common/formatters';
 import { PolynomialApiHelper } from '../common/polynomial.api';
-import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
+import { PolynomialViemContractFactory } from '../contracts';
+import { PolynomialVaultToken } from '../contracts/viem';
 
 type PolynomialCallSellingVaultTokenDefinition = {
   address: string;
@@ -35,7 +36,7 @@ export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemp
     super(appToolkit);
   }
 
-  getContract(address: string): PolynomialVaultToken {
+  getContract(address: string) {
     return this.contractFactory.polynomialVaultToken({ address, network: this.network });
   }
 

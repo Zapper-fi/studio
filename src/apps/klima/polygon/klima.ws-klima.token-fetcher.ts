@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { KlimaContractFactory, KlimaWsKlima } from '../contracts';
+import { KlimaViemContractFactory } from '../contracts';
+import { KlimaWsKlima } from '../contracts/viem';
 
 @PositionTemplate()
 export class PolygonKlimaWsKlimaTokenFetcher extends AppTokenTemplatePositionFetcher<KlimaWsKlima> {
@@ -18,7 +19,7 @@ export class PolygonKlimaWsKlimaTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): KlimaWsKlima {
+  getContract(address: string) {
     return this.contractFactory.klimaWsKlima({ address, network: this.network });
   }
 
@@ -27,7 +28,7 @@ export class PolygonKlimaWsKlimaTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<KlimaWsKlima>) {
-    return [{ address: await contract.sKLIMA(), network: this.network }];
+    return [{ address: await contract.read.sKLIMA(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<KlimaWsKlima>) {

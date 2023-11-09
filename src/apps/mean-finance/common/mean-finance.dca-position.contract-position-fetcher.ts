@@ -18,7 +18,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { MeanFinanceContractFactory, MeanFinancePermissionManager } from '../contracts';
+import { MeanFinanceViemContractFactory } from '../contracts';
+import { MeanFinancePermissionManager } from '../contracts/viem';
 
 import { GET_USER_POSITIONS, GET_POSITIONS, MeanFinancePosition } from './mean-finance.dca-position.queries';
 
@@ -58,7 +59,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
     super(appToolkit);
   }
 
-  getContract(address: string): MeanFinancePermissionManager {
+  getContract(address: string) {
     return this.contractFactory.meanFinancePermissionManager({ address, network: this.network });
   }
 

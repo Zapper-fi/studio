@@ -10,7 +10,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { HakuswapContractFactory, HakuswapMasterchef } from '../contracts';
+import { HakuswapViemContractFactory } from '../contracts';
+import { HakuswapMasterchef } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheHakuswapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<HakuswapMasterchef> {
@@ -25,7 +26,7 @@ export class AvalancheHakuswapFarmContractPositionFetcher extends MasterChefTemp
     super(appToolkit);
   }
 
-  getContract(address: string): HakuswapMasterchef {
+  getContract(address: string) {
     return this.contractFactory.hakuswapMasterchef({ address, network: this.network });
   }
 

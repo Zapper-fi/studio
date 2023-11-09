@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PodsYieldContractFactory, PodsYieldVault } from '../contracts';
+import { PodsYieldViemContractFactory } from '../contracts';
+import { PodsYieldVault } from '../contracts/viem';
 
 import { strategyAddresses, strategyDetails } from './config';
 
@@ -34,7 +35,7 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
     super(appToolkit);
   }
 
-  getContract(address: string): PodsYieldVault {
+  getContract(address: string) {
     return this.contractFactory.podsYieldVault({ address, network: this.network });
   }
 
@@ -46,7 +47,7 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.asset(),
+        address: await contract.read.asset(),
         network: this.network,
       },
     ];

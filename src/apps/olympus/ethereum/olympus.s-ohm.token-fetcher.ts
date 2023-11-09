@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { OlympusContractFactory, OlympusSOhmToken } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusSOhmToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFetcher<OlympusSOhmToken> {
@@ -18,7 +19,7 @@ export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): OlympusSOhmToken {
+  getContract(address: string) {
     return this.contractFactory.olympusSOhmToken({ address, network: this.network });
   }
 

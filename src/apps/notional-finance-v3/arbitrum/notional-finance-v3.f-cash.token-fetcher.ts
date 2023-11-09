@@ -18,7 +18,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { NotionalFCash, NotionalFinanceV3ContractFactory } from '../contracts';
+import { NotionalFinanceV3ViemContractFactory } from '../contracts';
+import { NotionalFCash } from '../contracts/viem';
 
 export type NotionalFCashTokenDefinition = {
   address: string;
@@ -56,7 +57,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
-  getContract(address: string): NotionalFCash {
+  getContract(address: string) {
     return this.contractFactory.notionalFCash({ address, network: this.network });
   }
 

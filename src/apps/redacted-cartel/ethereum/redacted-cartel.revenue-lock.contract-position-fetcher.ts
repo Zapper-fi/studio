@@ -19,7 +19,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { RedactedEarningsResolver } from '../common/redacted.earnings-resolver';
-import { RedactedCartelContractFactory, RedactedRevenueLock } from '../contracts';
+import { RedactedCartelViemContractFactory } from '../contracts';
+import { RedactedRevenueLock } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedRevenueLock> {
@@ -35,7 +36,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
     super(appToolkit);
   }
 
-  getContract(address: string): RedactedRevenueLock {
+  getContract(address: string) {
     return this.contractFactory.redactedRevenueLock({ address, network: this.network });
   }
 

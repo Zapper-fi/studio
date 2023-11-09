@@ -11,7 +11,7 @@ import { EthereumPodsYieldStrategyTokenFetcher } from './ethereum/pods-yield.str
     EthereumPodsYieldQueueContractPositionFetcher,
     EthereumPodsYieldStrategyTokenFetcher,
 
-    PodsYieldContractFactory,
+    PodsYieldViemContractFactory,
   ],
 })
 export class PodsYieldAppModule extends AbstractApp() {}

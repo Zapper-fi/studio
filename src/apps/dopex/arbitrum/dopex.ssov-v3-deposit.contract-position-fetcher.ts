@@ -16,7 +16,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { DopexSsovV3DefinitionsResolver } from '../common/dopex.ssov-v3.definition-resolver';
-import { DopexContractFactory, DopexSsovV3 } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexSsovV3 } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<DopexSsovV3> {
@@ -33,7 +34,7 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
     super(appToolkit);
   }
 
-  getContract(address: string): DopexSsovV3 {
+  getContract(address: string) {
     return this.contractFactory.dopexSsovV3({ network: this.network, address });
   }
 
@@ -51,7 +52,7 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.collateralToken(),
+        address: await contract.read.collateralToken(),
         network: this.network,
       },
     ];

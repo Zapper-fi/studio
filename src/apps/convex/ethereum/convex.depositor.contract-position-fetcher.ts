@@ -24,7 +24,7 @@ export class EthereumConvexDepositorContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexDepositor {
+  getContract(address: string) {
     return this.contractFactory.convexDepositor({ address, network: this.network });
   }
 

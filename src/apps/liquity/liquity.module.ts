@@ -9,7 +9,7 @@ import { EthereumLiquityTroveContractPositionFetcher } from './ethereum/liquity.
 
 @Module({
   providers: [
-    LiquityContractFactory,
+    LiquityViemContractFactory,
     EthereumLiquityStabilityPoolContractPositionFetcher,
     EthereumLiquityStakingContractPositionFetcher,
     EthereumLiquityTroveContractPositionFetcher,

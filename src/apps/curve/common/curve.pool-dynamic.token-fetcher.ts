@@ -102,7 +102,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
+  getContract(address: string) {
     return this.contractFactory.erc20({ address, network: this.network });
   }
 

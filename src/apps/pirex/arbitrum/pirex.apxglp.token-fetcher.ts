@@ -11,7 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { PirexContractFactory, ApxGlp } from '../contracts';
+import { PirexViemContractFactory } from '../contracts';
+import { ApxGlp } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumPirexApxglpTokenFetcher extends AppTokenTemplatePositionFetcher<ApxGlp> {
@@ -24,7 +25,7 @@ export class ArbitrumPirexApxglpTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): ApxGlp {
+  getContract(address: string) {
     return this.pirexContractFactory.apxGlp({ address, network: this.network });
   }
 
@@ -39,7 +40,7 @@ export class ArbitrumPirexApxglpTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<ApxGlp>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

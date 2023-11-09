@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { HectorNetworkContractFactory, HectorNetworkStakeBondDepository } from '../contracts';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkStakeBondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomHectorNetworkStakeBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkStakeBondDepository> {

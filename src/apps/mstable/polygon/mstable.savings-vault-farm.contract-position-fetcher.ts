@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableStaking } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableStaking } from '../contracts/viem';
 
 const SAVINGS_VAULTS = [
   {
@@ -30,7 +31,7 @@ export class PolygonMstableSavingsVaultContractPositionFetcher extends SingleSta
     super(appToolkit);
   }
 
-  getContract(address: string): MstableStaking {
+  getContract(address: string) {
     return this.contractFactory.mstableStaking({ address, network: this.network });
   }
 

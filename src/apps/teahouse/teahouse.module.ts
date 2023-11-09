@@ -9,7 +9,7 @@ import { OptimismTeahouseVaultsTokenFetcher } from './optimism/teahouse.vaults.t
 
 @Module({
   providers: [
-    TeahouseContractFactory,
+    TeahouseViemContractFactory,
     ArbitrumTeahouseVaultsTokenFetcher,
     EthereumTeahouseVaultsTokenFetcher,
     OptimismTeahouseVaultsTokenFetcher,

@@ -14,7 +14,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { NotionalFinanceV3ContractFactory, NotionalPCash } from '../contracts';
+import { NotionalFinanceV3ViemContractFactory } from '../contracts';
+import { NotionalPCash } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumNotionalFinanceV3PDebtTokenFetcher extends AppTokenTemplatePositionFetcher<NotionalPCash> {
@@ -31,7 +32,7 @@ export class ArbitrumNotionalFinanceV3PDebtTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
-  getContract(address: string): NotionalPCash {
+  getContract(address: string) {
     return this.contractFactory.notionalPCash({ network: this.network, address });
   }
 
@@ -60,13 +61,13 @@ export class ArbitrumNotionalFinanceV3PDebtTokenFetcher extends AppTokenTemplate
   async getUnderlyingTokenDefinitions({
     contract,
   }: GetUnderlyingTokensParams<NotionalPCash>): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<NotionalPCash>) {
     let pricePerShareRaw: BigNumber;
     try {
-      pricePerShareRaw = await contract.exchangeRate();
+      pricePerShareRaw = await contract.read.exchangeRate();
     } catch (error) {
       pricePerShareRaw = BigNumber.from(10).pow(10 + appToken.tokens[0].decimals);
     }

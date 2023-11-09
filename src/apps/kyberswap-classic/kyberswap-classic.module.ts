@@ -27,8 +27,8 @@ import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './poly
 
 @Module({
   providers: [
-    KyberswapClassicContractFactory,
-    UniswapV2ContractFactory,
+    KyberswapClassicViemContractFactory,
+    UniswapV2ViemContractFactory,
     // Arbitrum
     ArbitrumKyberSwapClassicFarmContractPositionFetcher,
     ArbitrumKyberSwapClassicKsPoolTokenFetcher,

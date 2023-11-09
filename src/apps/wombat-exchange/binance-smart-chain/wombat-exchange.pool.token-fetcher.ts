@@ -29,7 +29,7 @@ export class BinanceSmartChainWombatExchangePoolTokenFetcher extends WombatExcha
   ];
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<WombatExchangePoolToken>) {
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     const _pool = this.contractFactory.wombatExchangePool({ address: poolAddress, network: this.network });
     const pool = multicall.wrap(_pool);
 

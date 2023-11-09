@@ -11,8 +11,8 @@ import { NereusFinanceViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    NereusFinanceContractFactory,
-    AaveV2ContractFactory,
+    NereusFinanceViemContractFactory,
+    AaveV2ViemContractFactory,
     AvalancheNereusFinancePositionPresenter,
     AvalancheNereusFinanceStableDebtTokenFetcher,
     AvalancheNereusFinanceSupplyTokenFetcher,

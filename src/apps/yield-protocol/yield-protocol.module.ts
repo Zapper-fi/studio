@@ -12,7 +12,7 @@ import { EthereumYieldProtocolPoolTokenFetcher } from './ethereum/yield-protocol
 
 @Module({
   providers: [
-    YieldProtocolContractFactory,
+    YieldProtocolViemContractFactory,
     ArbitrumYieldProtocolBorrowContractPositionFetcher,
     ArbitrumYieldProtocolLendTokenFetcher,
     ArbitrumYieldProtocolPoolTokenFetcher,

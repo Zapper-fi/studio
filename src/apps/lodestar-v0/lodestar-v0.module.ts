@@ -10,7 +10,7 @@ import { LodestarV0ViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    LodestarV0ContractFactory,
+    LodestarV0ViemContractFactory,
     // Arbitrum
     ArbitrumLodestarV0BorrowContractPositionFetcher,
     ArbitrumLodestarV0PositionPresenter,

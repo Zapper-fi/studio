@@ -18,7 +18,7 @@ import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.
 
 @Module({
   providers: [
-    IronBankContractFactory,
+    IronBankViemContractFactory,
     // Avalanche
     AvalancheIronBankBorrowContractPositionFetcher,
     AvalancheIronBankPositionPresenter,

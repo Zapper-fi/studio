@@ -14,7 +14,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { YieldProtocolContractFactory, YieldProtocolPoolToken } from '../contracts';
+import { YieldProtocolViemContractFactory } from '../contracts';
+import { YieldProtocolPoolToken } from '../contracts/viem';
 
 import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 
@@ -35,7 +36,7 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
-  getContract(address: string): YieldProtocolPoolToken {
+  getContract(address: string) {
     return this.contractFactory.yieldProtocolPoolToken({ address, network: this.network });
   }
 
@@ -44,11 +45,11 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolPoolToken>) {
-    return [{ address: await contract.base(), network: this.network }];
+    return [{ address: await contract.read.base(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<YieldProtocolPoolToken>) {
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     if (poolAddress === ZERO_ADDRESS) return [0];
 
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
@@ -78,7 +79,7 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     const defaultDataProps = await super.getDataProps(params);
 
     const { contract, multicall } = params;
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
     if (poolAddress === ZERO_ADDRESS) return { ...defaultDataProps, maturity: 0 };
 

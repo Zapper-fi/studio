@@ -23,7 +23,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     super(appToolkit);
   }
 
-  getContract(address: string): EulerStakingRewardsContract {
+  getContract(address: string) {
     return this.contractFactory.eulerStakingRewardsContract({ address, network: this.network });
   }
 
@@ -62,7 +62,7 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    return (await contract.read.periodFinish()).gt(Math.floor(Date.now() / 1000));
   }
 
   getStakedTokenBalance({

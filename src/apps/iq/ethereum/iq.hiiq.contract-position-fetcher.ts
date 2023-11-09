@@ -7,7 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { IqContractFactory, IqHiiq } from '../contracts';
+import { IqViemContractFactory } from '../contracts';
+import { IqHiiq } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTemplatePositionFetcher<IqHiiq> {
@@ -20,7 +21,7 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
     super(appToolkit);
   }
 
-  getContract(address: string): IqHiiq {
+  getContract(address: string) {
     return this.iqContractFactory.iqHiiq({ address, network: this.network });
   }
 
@@ -45,7 +46,7 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
   async getDataProps(_params: GetDataPropsParams<IqHiiq>) {
     const defaultDataProps = await super.getDataProps(_params);
     const { contract } = _params;
-    const totalHiIQ = await contract.totalHiIQSupplyStored();
+    const totalHiIQ = await contract.read.totalHiIQSupplyStored();
     const totalHiIQSupply = ethers.utils.formatUnits(totalHiIQ);
     return { ...defaultDataProps, totalHiIQSupply };
   }

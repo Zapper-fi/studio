@@ -18,7 +18,8 @@ import { MetaType } from '~position/position.interface';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { KeeperContractFactory, KeeperJobManager } from '../contracts';
+import { KeeperViemContractFactory } from '../contracts';
+import { KeeperJobManager } from '../contracts/viem';
 
 import { KeeperUnbond, SUBGRAPH_URL, GET_UNBONDS, GET_USER_UNBONDS } from './keeper.keeper-unbond.queries';
 
@@ -51,7 +52,7 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
     super(appToolkit);
   }
 
-  getContract(address: string): KeeperJobManager {
+  getContract(address: string) {
     return this.contractFactory.keeperJobManager({ address, network: this.network });
   }
 

@@ -14,7 +14,7 @@ import { PolygonBadgerVaultTokenFetcher } from './polygon/badger.vault.token-fet
 
 @Module({
   providers: [
-    BadgerContractFactory,
+    BadgerViemContractFactory,
     BadgerVaultTokenDefinitionsResolver,
     BadgerClaimableRewardsResolver,
     // Arbitrum

@@ -19,7 +19,7 @@ export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsCon
   groupLabel = 'Bribe';
   voterAddress = '0xaaa2564deb34763e3d05162ed3f5c2658691f499';
 
-  getContract(address: string): RamsesBribe {
+  getContract(address: string) {
     return this.contractFactory.ramsesBribe({ address, network: this.network });
   }
 
@@ -44,7 +44,7 @@ export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsCon
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RamsesBribe>) {
-    const bribeTokens = await contract.getRewardTokens();
+    const bribeTokens = await contract.read.getRewardTokens();
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());

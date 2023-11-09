@@ -6,7 +6,8 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDisplayPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { TokemakContractFactory, TokemakReactor } from '../contracts';
+import { TokemakViemContractFactory } from '../contracts';
+import { TokemakReactor } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePositionFetcher<TokemakReactor> {
@@ -19,7 +20,7 @@ export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): TokemakReactor {
+  getContract(address: string) {
     return this.contractFactory.tokemakReactor({ network: this.network, address });
   }
 
@@ -52,7 +53,7 @@ export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TokemakReactor>) {
-    return [{ address: await contract.underlyer(), network: this.network }];
+    return [{ address: await contract.read.underlyer(), network: this.network }];
   }
 
   async getPricePerShare() {

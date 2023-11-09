@@ -8,7 +8,8 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PieDaoContractFactory, PieDaoStaking } from '../contracts';
+import { PieDaoViemContractFactory } from '../contracts';
+import { PieDaoStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PieDaoStaking> {

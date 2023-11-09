@@ -10,7 +10,8 @@ import { GetDefinitionsParams } from '~position/template/app-token.template.type
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { CamelotContractFactory, CamelotDividend } from '../contracts';
+import { CamelotViemContractFactory } from '../contracts';
+import { CamelotDividend } from '../contracts/viem';
 
 export type CamelotDividendDefinition = {
   address: string;
@@ -35,7 +36,7 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  getContract(address: string): CamelotDividend {
+  getContract(address: string) {
     return this.contractFactory.camelotDividend({ address, network: this.network });
   }
 
