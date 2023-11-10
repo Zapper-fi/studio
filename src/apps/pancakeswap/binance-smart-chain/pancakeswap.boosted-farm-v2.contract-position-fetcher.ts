@@ -44,7 +44,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
 
     const boostedPids = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const isWhitelisted = await multicall.wrap(booster).read.whiteList([i]);
+        const isWhitelisted = await multicall.wrap(booster).read.whiteList([BigInt(i)]);
         return isWhitelisted ? i : null;
       }),
     );

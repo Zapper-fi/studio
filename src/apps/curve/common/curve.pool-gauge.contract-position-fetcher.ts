@@ -154,7 +154,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     if ([GaugeType.GAUGE_V4, GaugeType.N_GAUGE].includes(definition.gaugeType)) {
       const nGauge = this.contractFactory.curveNGauge({ address, network: this.network });
       const rewardTokenAddresses = await Promise.all(
-        range(0, 4).map(i => multicall.wrap(nGauge).read.reward_tokens([i])),
+        range(0, 4).map(i => multicall.wrap(nGauge).read.reward_tokens([BigInt(i)])),
       );
       const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
       filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));

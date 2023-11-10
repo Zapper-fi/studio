@@ -44,7 +44,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getStakedTokenAddress(contract: TraderJoeChefV3, poolIndex: number) {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: TraderJoeChefV3) {
@@ -67,7 +67,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getExtraRewarder(contract: TraderJoeChefV3, poolIndex: number) {
-    return contract.read.poolInfo([poolIndex]).then(v => v.rewarder);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.rewarder);
   }
 
   async getExtraRewardTokenAddresses(contract: TraderJoeChefV2Rewarder): Promise<string[]> {

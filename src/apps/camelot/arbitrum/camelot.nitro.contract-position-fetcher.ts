@@ -43,7 +43,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const poolAddressRaw = await multicall.wrap(nitroPoolFactoryContract).read.getPublishedNitroPool([i]);
+        const poolAddressRaw = await multicall.wrap(nitroPoolFactoryContract).read.getPublishedNitroPool([BigInt(i)]);
         return poolAddressRaw.toLowerCase();
       }),
     );

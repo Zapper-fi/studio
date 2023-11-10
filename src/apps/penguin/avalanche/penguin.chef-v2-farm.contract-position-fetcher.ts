@@ -47,7 +47,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
   }
 
   async getStakedTokenAddress(contract: PenguinChefV2, poolIndex: number) {
-    return (await contract.read.poolInfo([poolIndex])).poolToken;
+    return (await contract.read.poolInfo([BigInt(poolIndex)])).poolToken;
   }
 
   async getRewardTokenAddress(contract: PenguinChefV2) {
@@ -55,7 +55,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
   }
 
   async getExtraRewarder(contract: PenguinChefV2, poolIndex: number) {
-    return (await contract.read.poolInfo([poolIndex])).rewarder;
+    return (await contract.read.poolInfo([BigInt(poolIndex)])).rewarder;
   }
 
   async getExtraRewardTokenAddresses(contract: PenguinExtraRewarder, poolIndex: number) {

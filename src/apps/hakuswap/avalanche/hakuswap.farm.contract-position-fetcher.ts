@@ -35,7 +35,7 @@ export class AvalancheHakuswapFarmContractPositionFetcher extends MasterChefTemp
   }
 
   async getStakedTokenAddress(contract: HakuswapMasterChefContract, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: HakuswapMasterChefContract): Promise<string> {

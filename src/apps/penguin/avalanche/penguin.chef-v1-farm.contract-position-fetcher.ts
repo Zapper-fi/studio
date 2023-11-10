@@ -35,7 +35,7 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
   }
 
   async getStakedTokenAddress(contract: PenguinChefContract, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: PenguinChefContract): Promise<string> {

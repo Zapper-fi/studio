@@ -34,7 +34,7 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
   }
 
   async getStakedTokenAddress(contract: GroLpTokenStaker, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: GroLpTokenStaker) {

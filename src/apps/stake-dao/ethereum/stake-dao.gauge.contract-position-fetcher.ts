@@ -97,7 +97,9 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<StakeDaoGauge>) {
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.read.reward_tokens([i])));
+    const rewardTokenAddresses = await Promise.all(
+      range(0, 4).map(async i => contract.read.reward_tokens([BigInt(i)])),
+    );
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
 

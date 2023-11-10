@@ -34,7 +34,7 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
   }
 
   async getStakedTokenAddress(contract: AladdinConcentratorAfxsVault, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(

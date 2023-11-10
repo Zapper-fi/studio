@@ -44,7 +44,9 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
 
     const tokenCount = await multicall.wrap(vault).read.allWhitelistedTokensLength();
     const tokenRange = range(0, Number(tokenCount));
-    const tokenAddresses = await Promise.all(tokenRange.map(i => multicall.wrap(vault).read.allWhitelistedTokens([i])));
+    const tokenAddresses = await Promise.all(
+      tokenRange.map(i => multicall.wrap(vault).read.allWhitelistedTokens([BigInt(i)])),
+    );
 
     const validTokenAddresses = tokenAddresses.filter(v => !this.blockedTokenAddresses.includes(v.toLowerCase()));
     return validTokenAddresses.map(address => ({ address, network: this.network }));

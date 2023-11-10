@@ -33,7 +33,7 @@ export class AvalanchePlatypusFinanceFarmContractPositionFetcher extends MasterC
   }
 
   async getStakedTokenAddress(contract: PlatypusFinanceMasterPlatypusV1, poolIndex: number): Promise<string> {
-    return (await contract.read.poolInfo([poolIndex])).lpToken;
+    return (await contract.read.poolInfo([BigInt(poolIndex)])).lpToken;
   }
 
   async getRewardTokenAddress(contract: PlatypusFinanceMasterPlatypusV1): Promise<string> {

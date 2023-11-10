@@ -45,7 +45,9 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
     );
     const stakingIds = _.compact(maybeStakingIds).map(v => Number(v));
     const stakingInfo = await Promise.all(
-      stakingIds.map(async i => await multicall.wrap(factoryContract).read.stakingRewardsInfoByStakingToken([i])),
+      stakingIds.map(
+        async i => await multicall.wrap(factoryContract).read.stakingRewardsInfoByStakingToken([BigInt(i)]),
+      ),
     );
     const stakingAddresses = stakingInfo.map(v => v.stakingRewards.toLowerCase());
 

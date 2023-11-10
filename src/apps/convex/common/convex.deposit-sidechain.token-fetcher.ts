@@ -49,7 +49,7 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
 
     return Promise.all(
       poolsRange.flatMap(async poolIndex => {
-        const poolInfo = await depositcontract.read.poolInfo([poolIndex]);
+        const poolInfo = await depositcontract.read.poolInfo([BigInt(poolIndex)]);
         return { address: poolInfo.rewards.toLowerCase(), poolIndex };
       }),
     );

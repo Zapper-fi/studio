@@ -56,7 +56,9 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
 
     const numTokens = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const underlyingTokenAddressesRaw = await Promise.all(
-      range(0, Number(numTokens)).map(async i => await multicall.wrap(vaultContract).read.allWhitelistedTokens([i])),
+      range(0, Number(numTokens)).map(
+        async i => await multicall.wrap(vaultContract).read.allWhitelistedTokens([BigInt(i)]),
+      ),
     );
     return [
       {

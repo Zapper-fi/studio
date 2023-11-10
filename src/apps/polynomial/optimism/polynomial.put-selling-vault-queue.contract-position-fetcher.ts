@@ -65,8 +65,10 @@ export class OptimismPolynomialPutSellingVaultQueueContractPositionFetcher exten
     // Note: ignores pending withdrawals/deposits when queue is large (>250)
     const depositRange = range(Number(depositHead), min([Number(depositHead) + 250, Number(depositTail)]));
     const withdrawalRange = range(Number(withdrawalHead), min([Number(withdrawalHead) + 250, Number(withdrawalTail)]));
-    const pendingDeposits = await Promise.all(depositRange.map(async i => contract.read.depositQueue([i])));
-    const pendingWithdrawals = await Promise.all(withdrawalRange.map(async i => contract.read.withdrawalQueue([i])));
+    const pendingDeposits = await Promise.all(depositRange.map(async i => contract.read.depositQueue([BigInt(i)])));
+    const pendingWithdrawals = await Promise.all(
+      withdrawalRange.map(async i => contract.read.withdrawalQueue([BigInt(i)])),
+    );
 
     const userPendingDeposits = pendingDeposits
       .filter(deposit => deposit.user.toLowerCase() === address.toLowerCase())

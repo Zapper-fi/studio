@@ -48,7 +48,7 @@ export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTempl
   }
 
   async getStakedTokenAddress(contract: QiDaoMasterChefV3, poolIndex: number) {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: QiDaoMasterChefV3) {

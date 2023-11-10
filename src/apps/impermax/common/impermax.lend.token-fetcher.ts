@@ -50,7 +50,7 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
     const poolLength = await factorycontract.read.allLendingPoolsLength().then(length => Number(length));
     const collateralAddressesRaw = await Promise.all(
       _.range(poolLength).map(async i => {
-        const poolAddress = await factorycontract.read.allLendingPools([i]);
+        const poolAddress = await factorycontract.read.allLendingPools([BigInt(i)]);
         if (deprecatedMarkets.includes(poolAddress.toLowerCase())) return null;
         const { initialized, borrowable0, borrowable1 } = await factorycontract.read.getLendingPool([poolAddress]);
         return initialized ? [borrowable0.toLowerCase(), borrowable1.toLowerCase()] : [];

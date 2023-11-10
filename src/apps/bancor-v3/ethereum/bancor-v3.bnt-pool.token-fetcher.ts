@@ -53,7 +53,7 @@ export class EthereumBancorV3BntPoolTokenFetcher extends AppTokenTemplatePositio
 
     const ratioRaw = await multicall
       .wrap(bntPoolContract)
-      .read.poolTokenToUnderlying((10 ** appToken.tokens[0].decimals).toString());
+      .read.poolTokenToUnderlying([BigInt(10 ** appToken.tokens[0].decimals)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
 
     return [ratio];

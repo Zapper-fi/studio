@@ -64,7 +64,7 @@ export abstract class CurveRewardsOnlyGaugeContractPositionFetcher extends Contr
       { metaType: MetaType.SUPPLIED, address: await contract.read.lp_token(), network: this.network },
     ];
 
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.read.reward_tokens([i])));
+    const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.read.reward_tokens([BigInt(i)])));
     const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
     filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));
 

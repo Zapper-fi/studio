@@ -39,7 +39,7 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<TraderJoeStableStaking>) {
     const length = await contract.read.rewardTokensLength().then(Number);
-    return Promise.all(_.range(length).map(i => contract.read.rewardTokens([i])));
+    return Promise.all(_.range(length).map(i => contract.read.rewardTokens([BigInt(i)])));
   }
 
   async getRewardRates(_params: GetDataPropsParams<TraderJoeStableStaking>) {

@@ -43,7 +43,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const poolAddressRaw = await multicall.wrap(masterContract).read.getPoolAddressByIndex([i]);
+        const poolAddressRaw = await multicall.wrap(masterContract).read.getPoolAddressByIndex([BigInt(i)]);
         return poolAddressRaw.toLowerCase();
       }),
     );

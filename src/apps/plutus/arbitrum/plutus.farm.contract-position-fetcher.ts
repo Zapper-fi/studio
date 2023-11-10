@@ -35,7 +35,7 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
   }
 
   async getStakedTokenAddress(contract: PlutusChefContract, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: PlutusChefContract): Promise<string> {

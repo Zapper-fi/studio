@@ -81,7 +81,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   async getExtraRewardTokenAddresses(contract: VectorFinanceMasterChefRewarder) {
     const rewardTokens = await Promise.all(
       range(0, 2).map(i => {
-        return contract.read.rewardTokens([i]).catch(err => {
+        return contract.read.rewardTokens([BigInt(i)]).catch(err => {
           if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });

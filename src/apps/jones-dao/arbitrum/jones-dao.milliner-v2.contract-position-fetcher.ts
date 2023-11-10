@@ -32,7 +32,7 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
   }
 
   async getStakedTokenAddress(contract: JonesMillinerV2, poolIndex: number) {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
   }
 
   async getRewardTokenAddress(contract: JonesMillinerV2) {
