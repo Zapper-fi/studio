@@ -60,7 +60,7 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JpegdLpFarmV2>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -68,6 +68,6 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JpegdLpFarmV2>): Promise<BigNumberish> {
-    return contract.read.pendingReward([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingReward([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

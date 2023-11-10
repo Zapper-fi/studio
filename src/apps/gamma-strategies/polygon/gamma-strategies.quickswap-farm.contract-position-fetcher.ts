@@ -12,6 +12,7 @@ import {
 
 import { GammaStrategiesViemContractFactory } from '../contracts';
 import { GammaStrategiesQuickswapMasterchef } from '../contracts/viem';
+import { GammaStrategiesQuickswapMasterchefContract } from '../contracts/viem/GammaStrategiesQuickswapMasterchef';
 
 @PositionTemplate()
 export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesQuickswapMasterchef> {
@@ -30,12 +31,12 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     return this.contractFactory.gammaStrategiesQuickswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesQuickswapMasterChefContract) {
+  async getPoolLength(contract: GammaStrategiesQuickswapMasterchefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterChefContract, poolIndex: number) {
-    return (await contract.read.lpToken(poolIndex)).toLowerCase();
+  async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterchefContract, poolIndex: number) {
+    return (await contract.read.lpToken([BigInt(poolIndex)])).toLowerCase();
   }
 
   async getRewardTokenAddress() {
@@ -59,7 +60,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[2]);
   }
 
   async getStakedTokenBalance({
@@ -67,7 +68,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance(): Promise<BigNumberish> {

@@ -65,8 +65,8 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
       token.address === this.AURA_BAL_ADDRESS ? auraBALAmount : BigNumber.from(0),
     );
 
-    const { bptOut } = await this.balancerPoolResolver.getBPTOut({ balancerPool, maxAmountsIn });
-    const bptPerAuraBALRaw = bptOut.mul(utils.parseEther('1')).div(auraBALAmount);
+    const [bptOut] = await this.balancerPoolResolver.getBPTOut({ balancerPool, maxAmountsIn });
+    const bptPerAuraBALRaw = BigNumber.from(bptOut).mul(utils.parseEther('1')).div(auraBALAmount);
     const bptPerAuraBAL = Number(bptPerAuraBALRaw) / 10 ** 18;
 
     const bptPrice = totalLiquidity / totalShares;

@@ -66,7 +66,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const vault = multicall.wrap(_vault);
 
     const poolId = await contract.read.getPoolId();
-    const { tokens } = await vault.getPoolTokens(poolId);
+    const [tokens] = await vault.read.getPoolTokens([poolId]);
     return [{ address: tokens[tokens.length - 1], network: this.network }];
   }
 
@@ -78,7 +78,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const boosted = multicall.wrap(_boosted);
 
     try {
-      const [decimals, ratioRaw] = await Promise.all([boosted.decimals(), boosted.getWrappedTokenRate()]);
+      const [decimals, ratioRaw] = await Promise.all([boosted.read.decimals(), boosted.read.getWrappedTokenRate()]);
 
       return [Number(ratioRaw) / 10 ** Number(decimals)];
     } catch (error) {

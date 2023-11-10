@@ -12,6 +12,7 @@ import {
 
 import { GammaStrategiesViemContractFactory } from '../contracts';
 import { GammaStrategiesZyberswapMasterchef } from '../contracts/viem';
+import { GammaStrategiesZyberswapMasterchefContract } from '../contracts/viem/GammaStrategiesZyberswapMasterchef';
 
 @PositionTemplate()
 export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesZyberswapMasterchef> {
@@ -30,15 +31,15 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     return this.contractFactory.gammaStrategiesZyberswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesZyberswapMasterChefContract) {
+  async getPoolLength(contract: GammaStrategiesZyberswapMasterchefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesZyberswapMasterChefContract, poolIndex: number) {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken.toLowerCase());
+  async getStakedTokenAddress(contract: GammaStrategiesZyberswapMasterchefContract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0].toLowerCase());
   }
 
-  async getRewardTokenAddress(contract: GammaStrategiesZyberswapMasterChefContract) {
+  async getRewardTokenAddress(contract: GammaStrategiesZyberswapMasterchefContract) {
     return (await contract.read.zyber()).toLowerCase();
   }
 
@@ -58,7 +59,7 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesZyberswapMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -66,7 +67,9 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesZyberswapMasterchef>): Promise<BigNumberish> {
-    const result = await contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    const result = await contract.read
+      .userInfo([BigInt(contractPosition.dataProps.poolIndex), address])
+      .then(v => v[0]);
     return result;
   }
 

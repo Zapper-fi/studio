@@ -12,6 +12,7 @@ import {
 
 import { GammaStrategiesViemContractFactory } from '../contracts';
 import { GammaStrategiesUniOpMasterchef } from '../contracts/viem';
+import { GammaStrategiesUniOpMasterchefContract } from '../contracts/viem/GammaStrategiesUniOpMasterchef';
 
 @PositionTemplate()
 export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesUniOpMasterchef> {
@@ -30,12 +31,12 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     return this.contractFactory.gammaStrategiesUniOpMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesUniOpMasterChefContract) {
+  async getPoolLength(contract: GammaStrategiesUniOpMasterchefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterChefContract, poolIndex: number) {
-    return contract.read.lpToken([poolIndex]);
+  async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterchefContract, poolIndex: number) {
+    return contract.read.lpToken([BigInt(poolIndex)]);
   }
 
   async getRewardTokenAddress() {
@@ -59,7 +60,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[2]);
   }
 
   async getStakedTokenBalance({
@@ -67,7 +68,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance(): Promise<BigNumberish> {

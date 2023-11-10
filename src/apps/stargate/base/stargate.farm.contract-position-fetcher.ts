@@ -34,7 +34,7 @@ export class BaseStargateFarmContractPositionFetcher extends StargateFarmContrac
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StargateChefBase>): Promise<BigNumberish> {
-    return contract.read.pendingEmissionToken([contractPosition.dataProps.poolIndex, address]).catch(err => {
+    return contract.read.pendingEmissionToken([BigInt(contractPosition.dataProps.poolIndex), address]).catch(err => {
       if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });

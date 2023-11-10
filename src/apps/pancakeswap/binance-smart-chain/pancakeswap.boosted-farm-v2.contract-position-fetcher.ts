@@ -92,7 +92,7 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
     const proxyAddress = await multicall.wrap(booster).read.proxyContract([address]);
     if (proxyAddress === ZERO_ADDRESS) return [0];
 
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, proxyAddress]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), proxyAddress]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -109,6 +109,6 @@ export class BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher ex
     const proxyAddress = await multicall.wrap(booster).read.proxyContract([address]);
     if (proxyAddress === ZERO_ADDRESS) return [0];
 
-    return contract.read.pendingCake([contractPosition.dataProps.poolIndex, proxyAddress]);
+    return contract.read.pendingCake([BigInt(contractPosition.dataProps.poolIndex), proxyAddress]);
   }
 }

@@ -56,7 +56,7 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JonesMillinerV2>) {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -64,6 +64,6 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JonesMillinerV2>) {
-    return contract.read.pendingJones([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingJones([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

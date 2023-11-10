@@ -117,10 +117,10 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const vault = multicall.wrap(_vault);
 
     const poolId = await contract.read.getPoolId();
-    const poolTokens = await vault.getPoolTokens(poolId);
+    const [tokens] = await vault.read.getPoolTokens([poolId]);
 
     // "Phantom" pools emit their own token address as an underlying token; filter this out
-    const underlyingTokenAddresses = poolTokens.tokens.map(v => v.toLowerCase());
+    const underlyingTokenAddresses = tokens.map(v => v.toLowerCase());
     const redundantIndex = underlyingTokenAddresses.findIndex(v => v === address);
     const tokenAddresses = underlyingTokenAddresses.filter((_, i) => i !== redundantIndex);
     return tokenAddresses.map(address => ({ address, network: this.network }));
@@ -131,12 +131,12 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const vault = multicall.wrap(_vault);
 
     const poolId = await contract.read.getPoolId();
-    const poolTokens = await vault.getPoolTokens(poolId);
+    const [tokens, balances] = await vault.read.getPoolTokens([poolId]);
 
     // "Phantom" pools emit their own token address as an underlying token; filter this out
-    const underlyingTokenAddresses = poolTokens.tokens.map(v => v.toLowerCase());
+    const underlyingTokenAddresses = tokens.map(v => v.toLowerCase());
     const redundantIndex = underlyingTokenAddresses.findIndex(v => v === appToken.address);
-    const reservesRaw = poolTokens.balances.filter((_, i) => i !== redundantIndex);
+    const reservesRaw = balances.filter((_, i) => i !== redundantIndex);
     const reserves = reservesRaw.map((v, i) => Number(v) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(r => r / appToken.supply);
   }

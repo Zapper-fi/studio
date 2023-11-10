@@ -144,7 +144,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   }: GetTokenBalancesParams<VectorFinanceMasterChef, MasterChefContractPositionDataProps>): Promise<BigNumberish> {
     const anyClaimable = contractPosition.tokens.find(isClaimable)!;
     const registeredToken = await contract.read.registeredToken([contractPosition.dataProps.poolIndex]);
-    const pendingTokens = await contract.pendingTokens(registeredToken, address, anyClaimable?.address);
+    const pendingTokens = await contract.read.pendingTokens(registeredToken, address, anyClaimable?.address);
     return pendingTokens.pendingVTX;
   }
 

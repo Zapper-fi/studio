@@ -58,7 +58,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends Mas
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PancakeswapChef>) {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -66,6 +66,6 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends Mas
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PancakeswapChef>) {
-    return contract.read.pendingCake([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingCake([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

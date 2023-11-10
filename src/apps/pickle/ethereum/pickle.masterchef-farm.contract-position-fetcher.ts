@@ -62,7 +62,7 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -70,6 +70,6 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.read.pendingPickle([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingPickle([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

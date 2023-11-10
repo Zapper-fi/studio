@@ -7,6 +7,10 @@ import { AvalancheHedgefarmAlphaTwoTokenFetcher } from './avalanche/hedgefarm.al
 import { HedgefarmViemContractFactory } from './contracts';
 
 @Module({
-  providers: [AvalancheHedgefarmAlphaOneTokenFetcher, AvalancheHedgefarmAlphaTwoTokenFetcher, HedgefarmContractFactory],
+  providers: [
+    AvalancheHedgefarmAlphaOneTokenFetcher,
+    AvalancheHedgefarmAlphaTwoTokenFetcher,
+    HedgefarmViemContractFactory,
+  ],
 })
 export class HedgefarmAppModule extends AbstractApp() {}

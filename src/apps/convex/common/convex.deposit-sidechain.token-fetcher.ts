@@ -67,7 +67,7 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
       network: this.network,
     });
 
-    const poolInfo = await depositContract.poolInfo(definition.poolIndex);
+    const poolInfo = await depositContract.read.poolInfo([BigInt(definition.poolIndex)]);
     return [{ address: poolInfo.lptoken, network: this.network }];
   }
 

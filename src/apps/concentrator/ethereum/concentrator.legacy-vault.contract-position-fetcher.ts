@@ -57,7 +57,7 @@ export class EthereumConcentratorLegacyVaultContractPositionFetcher extends Mast
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorLegacyVault>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.shares);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.shares);
   }
 
   async getRewardTokenBalance({
@@ -65,6 +65,6 @@ export class EthereumConcentratorLegacyVaultContractPositionFetcher extends Mast
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorLegacyVault>): Promise<BigNumberish | BigNumberish[]> {
-    return contract.read.pendingReward([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingReward([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

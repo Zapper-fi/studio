@@ -54,7 +54,7 @@ export abstract class StargateFarmContractPositionFetcher<
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<R>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -62,7 +62,7 @@ export abstract class StargateFarmContractPositionFetcher<
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<R>): Promise<BigNumberish> {
-    return contract.read.pendingStargate([contractPosition.dataProps.poolIndex, address]).catch(err => {
+    return contract.read.pendingStargate([BigInt(contractPosition.dataProps.poolIndex), address]).catch(err => {
       if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });

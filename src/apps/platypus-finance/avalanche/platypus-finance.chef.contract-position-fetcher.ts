@@ -57,7 +57,7 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlatypusFinanceMasterPlatypusV2>) {
-    return (await contract.read.userInfo([contractPosition.dataProps.poolIndex, address])).amount;
+    return (await contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address])).amount;
   }
 
   async getRewardTokenBalance({

@@ -77,7 +77,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     if (!match) return [0];
     let cumulativeAmount = match.rewardTokenBalanceRaw;
 
-    let claimed = await contract.read.claimed(address, rewardToken.address).then(v => v.toString());
+    let claimed = await contract.read.claimed([address, rewardToken.address]).then(v => v.toString());
 
     if (rewardToken.address === this.diggTokenAddress) {
       const diggTokenContract = this.contractFactory.badgerDiggToken(rewardToken);

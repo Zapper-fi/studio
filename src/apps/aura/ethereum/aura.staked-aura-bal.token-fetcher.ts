@@ -41,7 +41,8 @@ export class EthereumAuraStakedAuraBalTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AuraBalStakingToken>) {
-    const ratioRaw = await contract.read.convertToAssets(BigNumber.from((1e18).toString()));
+    const amount = BigNumber.from((1e18).toString()).toString();
+    const ratioRaw = await contract.read.convertToAssets([BigInt(amount)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];
   }

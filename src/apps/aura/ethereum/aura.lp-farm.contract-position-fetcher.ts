@@ -19,7 +19,7 @@ export class EthereumAuraLpFarmContractPositionFetcher extends AuraFarmContractP
     const addresses = await Promise.all(
       boosters.map(async contract => {
         const numPools = await contract.read.poolLength().then(Number);
-        return Promise.all(range(0, numPools).map(v => contract.read.poolInfo([v]).then(p => p.crvRewards)));
+        return Promise.all(range(0, numPools).map(v => contract.read.poolInfo([BigInt(v)]).then(p => p[3])));
       }),
     );
 

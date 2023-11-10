@@ -63,7 +63,7 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
   }
 
   async getRewardTokenBalance({
@@ -71,6 +71,6 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.read.pendingSdt([contractPosition.dataProps.poolIndex, address]);
+    return contract.read.pendingSdt([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }
