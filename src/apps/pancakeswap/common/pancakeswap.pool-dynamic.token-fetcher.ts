@@ -10,7 +10,6 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts/viem';
-import { IMulticallWrapper } from '~multicall';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -24,6 +23,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { PancakeswapViemContractFactory } from '../contracts';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
+import { ViemMulticallDataLoader } from '~multicall';
 
 export type PancakeswapPoolTokenDataProps = DefaultAppTokenDataProps & {
   swapAddress: string;
@@ -35,45 +36,45 @@ export type PancakeswapPoolDefinition = {
   swapAddress: string;
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveSwapAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveSwapAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveCoinAddressesParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolveCoinAddressesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveReservesParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolveReservesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveFeesParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolveFeesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
 export abstract class PancakeswapPoolDynamicTokenFetcher<
-  R extends Contract,
-  T extends Contract,
+  R extends Abi,
+  T extends Abi,
 > extends AppTokenTemplatePositionFetcher<Erc20, PancakeswapPoolTokenDataProps, PancakeswapPoolDefinition> {
   abstract registryAddress: string;
 
-  abstract resolveRegistry(address: string): R;
-  abstract resolveStablePool(address: string): T;
+  abstract resolveRegistry(address: string): GetContractReturnType<R, PublicClient>;
+  abstract resolveStablePool(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<R>): Promise<BigNumberish>;
   abstract resolveSwapAddress(params: ResolveSwapAddressParams<R>): Promise<string>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
