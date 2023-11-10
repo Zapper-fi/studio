@@ -132,7 +132,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
     const poolBalance = await multicall
       .wrap(pool)
-      .read.read.getBaseBalance()
+      .read.getBaseBalance()
       .catch(err => {
         if (isViemMulticallUnderlyingError(err)) return BigNumber.from(0);
         throw err;
@@ -148,11 +148,11 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
       appToken.tokens[0].symbol === 'WETH'
         ? (await multicall
             .wrap(pool)
-            .read.read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('.01', appToken.decimals).toString())])) *
+            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('.01', appToken.decimals).toString())])) *
           BigInt(100)
         : await multicall
             .wrap(pool)
-            .read.read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('1', appToken.decimals).toString())]);
+            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('1', appToken.decimals).toString())]);
 
     return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }

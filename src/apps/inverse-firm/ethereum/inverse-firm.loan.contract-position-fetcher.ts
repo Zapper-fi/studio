@@ -19,8 +19,6 @@ import {
 
 import { InverseFirmViemContractFactory } from '../contracts';
 import { SimpleMarket } from '../contracts/viem';
-import { CvxCrvStakingWrapper } from '../contracts/viem/StCvxCrv';
-import { CvxFxsStaking } from '../contracts/viem/StCvxFxs';
 
 const DBR = '0xad038eb671c44b853887a7e32528fab35dc5d710';
 const CVX = '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b';
@@ -154,17 +152,23 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     const isCvxFxsMarket = contract.address.toLowerCase() === CVX_FXS_MARKET.toLowerCase();
     const isCvxCrvMarket = contract.address.toLowerCase() === CVX_CRV_MARKET.toLowerCase();
 
-    let claimablesAsTuple: CvxFxsStaking.EarnedDataStructOutput[] | CvxCrvStakingWrapper.EarnedDataStructOutput[] = [];
+    let claimablesAsTuple: {
+      token: string;
+      amount: bigint;
+    }[] = [];
+
     if (isCvxFxsMarket || isCvxCrvMarket) {
       if (isCvxFxsMarket) {
         const stakeContract = this.contractFactory.stCvxFxs({ address: this.stCvxFxsAddress, network: this.network });
-        claimablesAsTuple = await multicall.wrap(stakeContract).read.claimableRewards([personalEscrow]);
+        const result = await multicall.wrap(stakeContract).read.claimableRewards([personalEscrow]);
+        claimablesAsTuple = result.map((v, i) => ({ token: v.token, amount: v.amount }));
       } else {
         const stakeContract = this.contractFactory.stCvxCrv({ address: this.stCvxCrvAddress, network: this.network });
-        claimablesAsTuple = await multicall
+        const result = await multicall
           .wrap(stakeContract)
-          .read.simulate.earned([personalEscrow])
+          .simulate.earned([personalEscrow])
           .then(v => v.result);
+        claimablesAsTuple = result.map((v, i) => ({ token: v.token, amount: v.amount }));
       }
     }
 

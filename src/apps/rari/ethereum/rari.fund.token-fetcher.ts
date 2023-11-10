@@ -76,7 +76,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
 
     const symbols = await multicall
       .wrap(managerContract)
-      .read.simulate.getAcceptedCurrencies()
+      .simulate.getAcceptedCurrencies()
       .then(v => v.result);
     return symbols.map(v => ({ address: SYMBOL_TO_ADDRESS[v]!, network: this.network }));
   }

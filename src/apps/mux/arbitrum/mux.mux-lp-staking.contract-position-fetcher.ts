@@ -78,11 +78,11 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
       contract.read.stakedMlpAmount([address]),
       multicall
         .wrap(mlpRewardTracker)
-        .read.simulate.claimable([address])
+        .simulate.claimable([address])
         .then(v => v.result),
       multicall
         .wrap(muxRewardTracker)
-        .read.simulate.claimable([address])
+        .simulate.claimable([address])
         .then(v => v.result),
     ]);
 

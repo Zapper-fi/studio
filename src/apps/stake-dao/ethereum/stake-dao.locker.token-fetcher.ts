@@ -100,7 +100,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
 
     const pricePerShareRaw = await multicall
       .wrap(pool)
-      .read.read.get_dy([BigInt(1 - knownIndex), BigInt(knownIndex), BigInt(amount)]);
+      .read.get_dy([BigInt(1 - knownIndex), BigInt(knownIndex), BigInt(amount)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return [pricePerShare];
   }
