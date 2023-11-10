@@ -6,6 +6,6 @@ import { ArbitrumUnstoppableGlpCompounderTokenFetcher } from './arbitrum/unstopp
 import { UnstoppableViemContractFactory } from './contracts';
 
 @Module({
-  providers: [ArbitrumUnstoppableGlpCompounderTokenFetcher, UnstoppableContractFactory],
+  providers: [ArbitrumUnstoppableGlpCompounderTokenFetcher, UnstoppableViemContractFactory],
 })
 export class UnstoppableAppModule extends AbstractApp() {}

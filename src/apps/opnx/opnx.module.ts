@@ -6,6 +6,6 @@ import { OpnxViemContractFactory } from './contracts';
 import { EthereumOpnxContractPositionFetcher } from './ethereum/opnx.veox.contract-position-fetcher';
 
 @Module({
-  providers: [EthereumOpnxContractPositionFetcher, OpnxContractFactory],
+  providers: [EthereumOpnxContractPositionFetcher, OpnxViemContractFactory],
 })
 export class OpnxAppModule extends AbstractApp() {}

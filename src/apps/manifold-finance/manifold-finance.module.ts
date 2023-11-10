@@ -6,6 +6,6 @@ import { ManifoldFinanceViemContractFactory } from './contracts';
 import { EthereumManifoldFinanceStakingTokenFetcher } from './ethereum/manifold-finance.staking.token-fetcher';
 
 @Module({
-  providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceContractFactory],
+  providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceViemContractFactory],
 })
 export class ManifoldFinanceAppModule extends AbstractApp() {}

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -45,7 +45,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
       contract.read.endTime(),
     ]);
 
-    return totalRewards.div(endTime.sub(startTime));
+    return BigNumber.from(totalRewards).div(BigNumber.from(endTime).sub(startTime));
   }
 
   async getIsActive({
@@ -55,7 +55,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    return (await contract.read.endTime()).gt(Math.floor(Date.now() / 1000));
+    return BigNumber.from(await contract.read.endTime()).gt(Math.floor(Date.now() / 1000));
   }
 
   async getStakedTokenBalance({

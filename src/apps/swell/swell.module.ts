@@ -6,6 +6,6 @@ import { SwellViemContractFactory } from './contracts';
 import { EthereumSwellSwethTokenFetcher } from './ethereum/swell.sweth.token-fetcher';
 
 @Module({
-  providers: [EthereumSwellSwethTokenFetcher, SwellContractFactory],
+  providers: [EthereumSwellSwethTokenFetcher, SwellViemContractFactory],
 })
 export class SwellAppModule extends AbstractApp() {}

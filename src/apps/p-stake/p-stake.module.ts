@@ -6,6 +6,6 @@ import { BinanceSmartChainPStakeStakeTokenFetcher } from './binance-smart-chain/
 import { PStakeViemContractFactory } from './contracts';
 
 @Module({
-  providers: [BinanceSmartChainPStakeStakeTokenFetcher, PStakeContractFactory],
+  providers: [BinanceSmartChainPStakeStakeTokenFetcher, PStakeViemContractFactory],
 })
 export class PStakeAppModule extends AbstractApp() {}
