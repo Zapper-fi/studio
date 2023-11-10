@@ -44,7 +44,7 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<JonesMillinerV2>) {
-    return contract.read.poolInfo([definition.poolIndex]).then(i => i.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(i => i.allocPoint);
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JonesMillinerV2>) {

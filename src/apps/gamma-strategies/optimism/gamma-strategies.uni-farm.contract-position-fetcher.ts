@@ -30,11 +30,11 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     return this.contractFactory.gammaStrategiesUniOpMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesUniOpMasterchef) {
+  async getPoolLength(contract: GammaStrategiesUniOpMasterChefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterchef, poolIndex: number) {
+  async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterChefContract, poolIndex: number) {
     return contract.read.lpToken([poolIndex]);
   }
 
@@ -59,7 +59,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

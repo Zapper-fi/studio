@@ -12,6 +12,7 @@ import {
 
 import { AuraViemContractFactory } from '../contracts';
 import { AuraMasterchef } from '../contracts/viem';
+import { AuraMasterchefContract } from '../contracts/viem/AuraMasterchef';
 
 @PositionTemplate()
 export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AuraMasterchef> {
@@ -30,15 +31,15 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
     return this.contractFactory.auraMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: AuraMasterchef): Promise<BigNumberish> {
+  async getPoolLength(contract: AuraMasterchefContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: AuraMasterchef, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: AuraMasterchefContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: AuraMasterchef): Promise<string> {
+  async getRewardTokenAddress(contract: AuraMasterchefContract): Promise<string> {
     return contract.read.cvx();
   }
 
@@ -51,7 +52,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<AuraMasterchef>) {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -59,7 +60,7 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AuraMasterchef>): Promise<BigNumberish> {
-    return contract.read.userInfo([contractPosition.dataProps.poolIndex, address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -72,32 +73,35 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
 
     const { poolIndex } = contractPosition.dataProps;
     const [poolInfo, userInfo, totalAllocPoint, rewardPerBlock, endBlock] = await Promise.all([
-      contract.read.poolInfo([poolIndex]),
-      contract.read.userInfo([poolIndex, address]),
+      contract.read.poolInfo([BigInt(poolIndex)]),
+      contract.read.userInfo([BigInt(poolIndex), address]),
       contract.read.totalAllocPoint(),
       contract.read.rewardPerBlock(),
       contract.read.endBlock(),
     ]);
 
-    if (userInfo.amount.eq(0)) {
-      return 0;
-    }
+    const amount = BigNumber.from(userInfo[0]);
+    const rewardDebt = BigNumber.from(userInfo[1]);
+    if (amount.isZero()) return 0;
 
-    const lpToken = this.appToolkit.globalViemContracts.erc20({ address: poolInfo.lpToken, network: this.network });
-    const lpSupply = await lpToken.balanceOf(contract.address);
+    const lpToken = this.appToolkit.globalViemContracts.erc20({ address: poolInfo[0], network: this.network });
+    const lpSupply = await lpToken.read.balanceOf([contract.address]);
 
-    let { accCvxPerShare } = poolInfo;
-    if (poolInfo.lastRewardBlock.lt(block) && lpSupply > 0) {
+    let accCvxPerShare = BigNumber.from(poolInfo[3]);
+    const lastRewardBlock = poolInfo[2];
+    const allocPoint = poolInfo[1];
+
+    if (Number(lastRewardBlock) < block && lpSupply > 0) {
       const clampedTo = Math.min(block, Number(endBlock));
-      const clampedFrom = Math.min(Number(poolInfo.lastRewardBlock), Number(endBlock));
+      const clampedFrom = Math.min(Number(lastRewardBlock), Number(endBlock));
       const multiplier = BigNumber.from(clampedTo - clampedFrom);
-      const reward = multiplier.mul(rewardPerBlock).mul(poolInfo.allocPoint).div(totalAllocPoint);
+      const reward = multiplier.mul(rewardPerBlock).mul(allocPoint).div(totalAllocPoint);
       accCvxPerShare = accCvxPerShare.add(reward.mul(10 ** 12).div(lpSupply));
     }
 
-    return userInfo.amount
+    return amount
       .mul(accCvxPerShare)
       .div(10 ** 12)
-      .sub(userInfo.rewardDebt);
+      .sub(rewardDebt);
   }
 }

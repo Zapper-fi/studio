@@ -28,15 +28,15 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     return this.contractFactory.biswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: BiswapMasterchef): Promise<BigNumberish> {
+  async getPoolLength(contract: BiswapMasterChefContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: BiswapMasterchef, poolIndex: number): Promise<string> {
+  async getStakedTokenAddress(contract: BiswapMasterChefContract, poolIndex: number): Promise<string> {
     return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
-  async getRewardTokenAddress(contract: BiswapMasterchef): Promise<string> {
+  async getRewardTokenAddress(contract: BiswapMasterChefContract): Promise<string> {
     return contract.read.BSW();
   }
 
@@ -52,7 +52,7 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     contract,
     definition,
   }: GetMasterChefDataPropsParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

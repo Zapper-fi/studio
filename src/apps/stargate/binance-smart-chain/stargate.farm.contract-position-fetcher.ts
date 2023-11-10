@@ -14,7 +14,7 @@ export class BinanceSmartChainStargateFarmContractPositionFetcher extends Starga
   getStargateChefContract(address: string): StargateChef {
     return this.contractFactory.stargateChef({ address, network: this.network });
   }
-  getStargateTokenAddress(contract: StargateChef): Promise<string> {
+  getStargateTokenAddress(contract: StargateChefContract): Promise<string> {
     return contract.read.stargate();
   }
 

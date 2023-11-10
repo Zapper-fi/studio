@@ -30,15 +30,15 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
     return this.contractFactory.penguinChef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PenguinChef): Promise<BigNumberish> {
+  async getPoolLength(contract: PenguinChefContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PenguinChef, poolIndex: number): Promise<string> {
+  async getStakedTokenAddress(contract: PenguinChefContract, poolIndex: number): Promise<string> {
     return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
-  async getRewardTokenAddress(contract: PenguinChef): Promise<string> {
+  async getRewardTokenAddress(contract: PenguinChefContract): Promise<string> {
     return contract.read.pefi();
   }
 
@@ -51,7 +51,7 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PenguinChef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

@@ -30,15 +30,15 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     return this.contractFactory.gammaStrategiesZyberswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesZyberswapMasterchef) {
+  async getPoolLength(contract: GammaStrategiesZyberswapMasterChefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesZyberswapMasterchef, poolIndex: number) {
+  async getStakedTokenAddress(contract: GammaStrategiesZyberswapMasterChefContract, poolIndex: number) {
     return contract.read.poolInfo([poolIndex]).then(v => v.lpToken.toLowerCase());
   }
 
-  async getRewardTokenAddress(contract: GammaStrategiesZyberswapMasterchef) {
+  async getRewardTokenAddress(contract: GammaStrategiesZyberswapMasterChefContract) {
     return (await contract.read.zyber()).toLowerCase();
   }
 
@@ -58,7 +58,7 @@ export class ArbitrumGammaStrategiesZyberFarmContractPositionFetcher extends Mas
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesZyberswapMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

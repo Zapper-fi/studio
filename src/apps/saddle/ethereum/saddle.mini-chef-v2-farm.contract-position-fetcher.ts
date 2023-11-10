@@ -69,7 +69,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getExtraRewardTokenRewardRates({

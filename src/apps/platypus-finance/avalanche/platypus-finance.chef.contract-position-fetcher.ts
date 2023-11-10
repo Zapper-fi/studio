@@ -49,7 +49,7 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PlatypusFinanceMasterPlatypusV2>) {
-    return (await contract.read.poolInfo([definition.poolIndex])).adjustedAllocPoint;
+    return (await contract.read.poolInfo([BigInt(definition.poolIndex)])).adjustedAllocPoint;
   }
 
   async getStakedTokenBalance({

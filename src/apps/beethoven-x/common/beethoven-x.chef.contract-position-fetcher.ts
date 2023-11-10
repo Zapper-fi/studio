@@ -23,15 +23,15 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     return this.contractFactory.beethovenXMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: BeethovenXMasterchef): Promise<BigNumberish> {
+  async getPoolLength(contract: BeethovenXMasterChefContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: BeethovenXMasterchef, poolIndex: number): Promise<string> {
+  async getStakedTokenAddress(contract: BeethovenXMasterChefContract, poolIndex: number): Promise<string> {
     return contract.read.lpTokens([poolIndex]);
   }
 
-  async getRewardTokenAddress(contract: BeethovenXMasterchef): Promise<string> {
+  async getRewardTokenAddress(contract: BeethovenXMasterChefContract): Promise<string> {
     return contract.read.beets();
   }
 
@@ -47,7 +47,7 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     contract,
     definition,
   }: GetMasterChefDataPropsParams<BeethovenXMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

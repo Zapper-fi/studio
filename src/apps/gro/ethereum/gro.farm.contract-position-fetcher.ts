@@ -46,7 +46,7 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<GroLpTokenStaker>) {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<GroLpTokenStaker>): Promise<BigNumberish> {

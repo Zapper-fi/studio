@@ -38,11 +38,11 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
     return 1;
   }
 
-  async getStakedTokenAddress(contract: PancakeswapIfoChef) {
+  async getStakedTokenAddress(contract: PancakeswapIfoChefContract) {
     return contract.read.token();
   }
 
-  async getRewardTokenAddress(contract: PancakeswapIfoChef) {
+  async getRewardTokenAddress(contract: PancakeswapIfoChefContract) {
     return contract.read.token();
   }
 

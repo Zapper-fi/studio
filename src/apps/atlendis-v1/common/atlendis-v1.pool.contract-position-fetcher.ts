@@ -158,9 +158,9 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
         if (!position) return null;
 
         const contract = this.contractFactory.atlendisPositionManager(position);
-        const { bondsQuantity, normalizedDepositedAmount } = await multicall
+        const [bondsQuantity, normalizedDepositedAmount] = await multicall
           .wrap(contract)
-          .read.getPositionRepartition(tokenId);
+          .read.getPositionRepartition([BigInt(tokenId)]);
         const balanceRawWei = new BigNumber(bondsQuantity.toString()).plus(normalizedDepositedAmount.toString());
         const balanceRaw = new BigNumber(balanceRawWei).div(10 ** 18).times(10 ** position.tokens[0].decimals);
         const tokenBalance = drillBalance(position.tokens[0], balanceRaw.toString());

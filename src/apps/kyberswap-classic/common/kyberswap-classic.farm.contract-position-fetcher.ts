@@ -23,15 +23,15 @@ export abstract class KyberSwapClassicFarmContractPositionFetcher extends Master
     return this.contractFactory.kyberSwapClassicMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: KyberSwapClassicMasterchef) {
+  async getPoolLength(contract: KyberSwapClassicMasterChefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: KyberSwapClassicMasterchef, poolIndex: number) {
+  async getStakedTokenAddress(contract: KyberSwapClassicMasterChefContract, poolIndex: number) {
     return contract.read.getPoolInfo([poolIndex]).then(v => v.stakeToken);
   }
 
-  async getRewardTokenAddress(contract: KyberSwapClassicMasterchef) {
+  async getRewardTokenAddress(contract: KyberSwapClassicMasterChefContract) {
     return contract.read.getRewardTokens().then(v => v[0]);
   }
 

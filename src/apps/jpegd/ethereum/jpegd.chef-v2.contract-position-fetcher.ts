@@ -52,7 +52,7 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
     contract,
     definition,
   }: GetMasterChefDataPropsParams<JpegdLpFarmV2>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

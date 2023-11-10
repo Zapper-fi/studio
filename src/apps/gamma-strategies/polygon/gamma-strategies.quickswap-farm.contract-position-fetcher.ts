@@ -30,11 +30,11 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     return this.contractFactory.gammaStrategiesQuickswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesQuickswapMasterchef) {
+  async getPoolLength(contract: GammaStrategiesQuickswapMasterChefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterchef, poolIndex: number) {
+  async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterChefContract, poolIndex: number) {
     return (await contract.read.lpToken(poolIndex)).toLowerCase();
   }
 
@@ -59,7 +59,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

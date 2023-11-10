@@ -30,15 +30,15 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     return this.contractFactory.pickleJarMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PickleJarMasterchef) {
+  async getPoolLength(contract: PickleJarMasterChefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PickleJarMasterchef, poolIndex: number) {
+  async getStakedTokenAddress(contract: PickleJarMasterChefContract, poolIndex: number) {
     return contract.read.poolInfo([poolIndex]).then(v => v.lpToken);
   }
 
-  async getRewardTokenAddress(contract: PickleJarMasterchef) {
+  async getRewardTokenAddress(contract: PickleJarMasterChefContract) {
     return contract.read.pickle();
   }
 
@@ -54,7 +54,7 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     definition,
   }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({

@@ -48,12 +48,12 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     return this.contractFactory.vectorFinanceMasterChefRewarder({ address, network: this.network });
   }
 
-  async getPoolLength(contract: VectorFinanceMasterChef) {
+  async getPoolLength(contract: VectorFinanceMasterChefContract) {
     return contract.read.poolLength();
   }
 
   async getStakedTokenAddress(
-    contract: VectorFinanceMasterChef,
+    contract: VectorFinanceMasterChefContract,
     poolIndex: number,
     multicall: IMulticallWrapper,
   ): Promise<string> {
@@ -68,11 +68,11 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     return helper.depositToken();
   }
 
-  getRewardTokenAddress(contract: VectorFinanceMasterChef): Promise<string> {
+  getRewardTokenAddress(contract: VectorFinanceMasterChefContract): Promise<string> {
     return contract.read.vtx();
   }
 
-  async getExtraRewarder(contract: VectorFinanceMasterChef, poolIndex: number): Promise<string> {
+  async getExtraRewarder(contract: VectorFinanceMasterChefContract, poolIndex: number): Promise<string> {
     const registeredToken = await contract.read.registeredToken([poolIndex]);
     const poolInfo = await contract.read.addressToPoolInfo([registeredToken]);
     return poolInfo.rewarder;

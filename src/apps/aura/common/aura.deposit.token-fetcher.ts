@@ -48,13 +48,13 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
           address: booster,
           network: this.network,
         });
-        const numOfPools = await boostercontract.read.poolLength();
+        const numOfPools = await boosterContract.read.poolLength();
 
         return Promise.all(
           range(0, Number(numOfPools)).flatMap(async poolIndex => {
-            const poolInfo = await multicall.wrap(boosterContract).read.poolInfo([poolIndex]);
+            const poolInfo = await multicall.wrap(boosterContract).read.poolInfo([BigInt(poolIndex)]);
             return {
-              address: poolInfo.token.toLowerCase(),
+              address: poolInfo[1].toLowerCase(),
               poolIndex,
               booster,
             };
@@ -74,8 +74,8 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
     definition,
   }: GetUnderlyingTokensParams<AuraDepositToken, AuraDepositTokenDefinition>) {
     const boosterContract = this.contractFactory.auraBooster({ address: definition.booster, network: this.network });
-    const poolInfo = await boosterContract.poolInfo(definition.poolIndex);
-    return [{ address: poolInfo.lptoken, network: this.network }];
+    const poolInfo = await boosterContract.read.poolInfo([BigInt(definition.poolIndex)]);
+    return [{ address: poolInfo[0], network: this.network }];
   }
 
   async getPricePerShare() {

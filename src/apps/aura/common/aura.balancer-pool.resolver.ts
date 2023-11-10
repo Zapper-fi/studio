@@ -160,11 +160,11 @@ export class AuraBalancerPoolResolver {
 
     const joinPoolRequestStruct = {
       assets: tokens.map(token => token.address),
-      maxAmountsIn,
+      maxAmountsIn: maxAmountsIn.map(v => BigInt(v.toString())),
       userData: ethers.utils.defaultAbiCoder.encode(['uint256', 'uint256[]', 'uint256'], [1, maxAmountsIn, 0]),
       fromInternalBalance: false,
     };
 
-    return balancerHelpers.callStatic.queryJoin(id, sender, recipient, joinPoolRequestStruct);
+    return balancerHelpers.simulate.queryJoin([id, sender, recipient, joinPoolRequestStruct]).then(v => v.result);
   }
 }

@@ -60,7 +60,7 @@ export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<TraderJoeChefV2>) {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getExtraRewarder(contract: TraderJoeChefV2, poolIndex: number) {

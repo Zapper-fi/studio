@@ -49,7 +49,7 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<WombatExchangeMasterWombat>) {
-    return (await contract.read.poolInfo([definition.poolIndex])).allocPoint;
+    return (await contract.read.poolInfo([BigInt(definition.poolIndex)])).allocPoint;
   }
 
   async getStakedTokenBalance({

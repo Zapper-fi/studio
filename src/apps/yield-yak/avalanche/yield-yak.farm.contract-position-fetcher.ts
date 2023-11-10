@@ -31,11 +31,11 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     return this.contractFactory.yieldYakChef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: YieldYakChef) {
+  async getPoolLength(contract: YieldYakChefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: YieldYakChef, poolIndex: number) {
+  async getStakedTokenAddress(contract: YieldYakChefContract, poolIndex: number) {
     return contract.read.poolInfo([poolIndex]).then(v => v.token);
   }
 
@@ -55,7 +55,7 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     contract,
     definition,
   }: GetMasterChefDataPropsParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.poolIndex]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
   }
 
   async getStakedTokenBalance({
