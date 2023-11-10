@@ -187,7 +187,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
 
     const deposited: Deposited = depositLogs.reduce(
       (deposited: Deposited, l) => {
-        if (l.args.tick!.eq(tick) && l.args.account!.toLowerCase() === address) {
+        if (l.args.tick! === tick && l.args.account!.toLowerCase() === address) {
           return { amount: deposited.amount.add(l.args.amount!), shares: deposited.shares.add(l.args.shares!) };
         } else {
           return deposited;
@@ -212,28 +212,35 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
           return withdrawn;
         }
       },
-      { amount: constants.Zero, shares: constants.Zero },
+      { amount: BigNumber.from(0), shares: BigNumber.from(0) },
     );
 
     /* Get redemption available */
-    const redemptionAvailable = await contract.read.redemptionAvailable([address, tick]);
+    const [redemptionAvailableSharesRaw, redemptionAvailableAmountRaw] = await contract.read.redemptionAvailable([
+      address,
+      tick,
+    ]);
+    const redemptionAvailableShares = BigNumber.from(redemptionAvailableSharesRaw);
+    const redemptionAvailableAmount = BigNumber.from(redemptionAvailableAmountRaw);
 
     /* Compute active shares in tick */
-    const activeShares = deposited.shares.sub(redemptionAvailable.shares).sub(withdrawn.shares);
+    const activeShares = deposited.shares.sub(redemptionAvailableShares).sub(withdrawn.shares);
 
     /* Compute current position balance from tick data in addition to redeemed amount available */
     const tickData = await contract.read.liquidityNode([tick]);
-    const currentPosition = tickData.shares.eq(constants.Zero)
-      ? redemptionAvailable.amount
-      : activeShares.mul(tickData.value).div(tickData.shares).add(redemptionAvailable.amount);
+    const currentPosition =
+      tickData.shares === BigInt(0)
+        ? redemptionAvailableAmount
+        : activeShares.mul(tickData.value).div(tickData.shares).add(redemptionAvailableAmount);
 
     /* Compute deposit position based on remaining shares */
-    const depositPosition = deposited.shares > 0)
-      ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
-      : constants.Zero;
+    const depositPosition =
+      deposited[0] > 0
+        ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
+        : constants.Zero;
 
     /* Compute supplied balance (minimum of currentPosition and depositPosition) */
-    const suppliedBalance = currentPosition.gt(depositPosition) ? depositPosition : currentPosition;
+    const suppliedBalance = BigNumber.from(currentPosition).gt(depositPosition) ? depositPosition : currentPosition;
 
     /* Compute claimable balance (interest earned) */
     const claimableBalance = currentPosition.gt(depositPosition)

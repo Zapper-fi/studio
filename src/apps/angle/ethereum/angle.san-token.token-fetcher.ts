@@ -55,7 +55,7 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
     });
 
     const collateralMap = await multicall.wrap(stableMaster).read.collateralMap([poolManagerAddress]);
-    return [{ address: collateralMap.token, network: this.network }];
+    return [{ address: collateralMap[0], network: this.network }];
   }
 
   async getPricePerShare({ contract, multicall }: GetPricePerShareParams<AngleSanToken>) {
@@ -70,7 +70,7 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
     });
 
     const collateralMap = await multicall.wrap(stableMaster).read.collateralMap([poolManagerAddress]);
-    const pricePerShare = Number(collateralMap.sanRate) / 10 ** 18;
+    const pricePerShare = Number(collateralMap[5]) / 10 ** 18;
 
     return [pricePerShare];
   }

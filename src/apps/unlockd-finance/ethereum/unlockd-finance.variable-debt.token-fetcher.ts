@@ -28,14 +28,13 @@ export class EthereumUnlockdFinanceVariableDebtTokenFetcher extends AppTokenTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UnlockdFinanceContractFactory)
-    private readonly unlockdFinanceContractFactory: UnlockdFinanceContractFactory,
+    @Inject(UnlockdFinanceViemContractFactory) private readonly contractFactory: UnlockdFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
   getContract(address: string) {
-    return this.unlockdFinanceContractFactory.unlockdFinanceUToken({ network: this.network, address });
+    return this.contractFactory.unlockdFinanceUToken({ network: this.network, address });
   }
 
   async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
@@ -54,15 +53,15 @@ export class EthereumUnlockdFinanceVariableDebtTokenFetcher extends AppTokenTemp
 
   async getApy({ multicall }: GetDataPropsParams<UnlockdFinanceUToken>): Promise<number> {
     const pool = multicall.wrap(
-      this.unlockdFinanceContractFactory.unlockdFinanceProtocolDataProvider({
+      this.contractFactory.unlockdFinanceProtocolDataProvider({
         network: this.network,
         address: this.dataProviderAddress,
       }),
     );
 
-    const reservesData = await pool.getReserveData(this.wethAddress);
+    const reservesData = await pool.read.getReserveData([this.wethAddress]);
 
-    const apr = Number(reservesData.variableBorrowRate) / 10 ** 27;
+    const apr = Number(reservesData[3]) / 10 ** 27;
 
     const base = apr / SECONDS_PER_YEAR + 1;
 

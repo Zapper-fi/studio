@@ -39,8 +39,8 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReserveProtocolContractFactory)
-    protected readonly contractFactory: ReserveProtocolContractFactory,
+    @Inject(ReserveProtocolViemContractFactory)
+    protected readonly contractFactory: ReserveProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -119,7 +119,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const bh = multicall.wrap(
       this.contractFactory.basketHandler({
         network: this.network,
-        address: await main.basketHandler(),
+        address: await main.read.basketHandler(),
       }),
     );
 
@@ -127,7 +127,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const rToken = multicall.wrap(
       this.contractFactory.rtoken({
         network: this.network,
-        address: await main.rToken(),
+        address: await main.read.rToken(),
       }),
     );
 
@@ -137,13 +137,13 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const timestamp = (await provider.getBlock(blockNumber)).timestamp;
 
     // Check if claiming is disabled
-    const fullyCollateralized = await bh.fullyCollateralized();
-    const basketSound = (await bh.status()) == CollateralStatus.SOUND;
-    const mainPausedOrFrozen = await main.pausedOrFrozen();
+    const fullyCollateralized = await bh.read.fullyCollateralized();
+    const basketSound = (await bh.read.status()) == CollateralStatus.SOUND;
+    const mainPausedOrFrozen = await main.read.pausedOrFrozen();
     const claimingDisabled = !fullyCollateralized || !basketSound || mainPausedOrFrozen;
 
     // Process pending unstakings
-    const pendingUnstakings = await facadeRead.pendingUnstakings(rToken.address, address);
+    const pendingUnstakings = await facadeRead.read.pendingUnstakings([rToken.address, address]);
 
     let lockedBalance = BigNumber.from(0);
     let claimableBalance = BigNumber.from(0);

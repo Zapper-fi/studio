@@ -10,7 +10,9 @@ import { ReflexerViemContractFactory } from '../contracts';
 
 @PresenterTemplate()
 export class EthereumReflexerPositionPresenter extends PositionPresenterTemplate {
-  constructor(@Inject(ReflexerContractFactory) protected readonly aaveV2ContractFactory: ReflexerContractFactory) {
+  constructor(
+    @Inject(ReflexerViemContractFactory) protected readonly aaveV2ContractFactory: ReflexerViemContractFactory,
+  ) {
     super();
   }
 
