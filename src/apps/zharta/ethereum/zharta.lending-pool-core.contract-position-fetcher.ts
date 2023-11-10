@@ -15,6 +15,7 @@ import {
 
 import { ZhartaViemContractFactory } from '../contracts';
 import { ZhartaLendingPoolCore } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 interface ZhartaLendingPoolCoreContractPositionDefinition extends DefaultContractPositionDefinition {
   type: 'LENDING_POOL_CORE';
@@ -90,6 +91,9 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
       contract.read.computeWithdrawableAmount([address]),
     ]);
 
-    return [lenderFundsRaw.currentAmountDeposited, withdrawableAmountRaw.sub(lenderFundsRaw.currentAmountDeposited)];
+    return [
+      lenderFundsRaw.currentAmountDeposited,
+      BigNumber.from(withdrawableAmountRaw).sub(lenderFundsRaw.currentAmountDeposited),
+    ];
   }
 }

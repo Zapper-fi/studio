@@ -11,6 +11,7 @@ import {
 
 import { WombatExchangeViemContractFactory } from '../contracts';
 import { WombatExchangeMasterWombat } from '../contracts/viem';
+import { WombatExchangeMasterWombatContract } from '../contracts/viem/WombatExchangeMasterWombat';
 
 @PositionTemplate()
 export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<WombatExchangeMasterWombat> {
@@ -28,15 +29,15 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
     return this.contractFactory.wombatExchangeMasterWombat({ address, network: this.network });
   }
 
-  async getPoolLength(contract: WombatExchangeMasterWombat) {
+  async getPoolLength(contract: WombatExchangeMasterWombatContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: WombatExchangeMasterWombat, poolIndex: number): Promise<string> {
-    return (await contract.read.poolInfo([poolIndex])).lpToken;
+  async getStakedTokenAddress(contract: WombatExchangeMasterWombatContract, poolIndex: number): Promise<string> {
+    return (await contract.read.poolInfo([BigInt(poolIndex)]))[0];
   }
 
-  async getRewardTokenAddress(contract: WombatExchangeMasterWombat): Promise<string> {
+  async getRewardTokenAddress(contract: WombatExchangeMasterWombatContract): Promise<string> {
     return contract.read.wom();
   }
 
@@ -49,7 +50,7 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<WombatExchangeMasterWombat>) {
-    return (await contract.read.poolInfo([BigInt(definition.poolIndex)])).allocPoint;
+    return (await contract.read.poolInfo([BigInt(definition.poolIndex)]))[1];
   }
 
   async getStakedTokenBalance({
@@ -57,7 +58,7 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<WombatExchangeMasterWombat>) {
-    return (await contract.read.userInfo([contractPosition.dataProps.poolIndex, address])).amount;
+    return (await contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]))[0];
   }
 
   async getRewardTokenBalance({
@@ -65,9 +66,9 @@ export class BinanceSmartChainWombatExchangeFarmContractPositionFetcher extends 
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<WombatExchangeMasterWombat>) {
-    return contract
-      .pendingTokens(contractPosition.dataProps.poolIndex, address)
-      .then(v => v.pendingRewards)
+    return contract.read
+      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address])
+      .then(v => v[0])
       .catch(err => {
         if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;

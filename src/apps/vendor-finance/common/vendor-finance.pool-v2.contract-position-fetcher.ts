@@ -22,7 +22,6 @@ import {
 
 import { VendorFinanceViemContractFactory } from '../contracts';
 import { VendorFinancePoolV2 } from '../contracts/viem';
-import { IPositionTracker } from '../contracts/viem/VendorFinancePositionTracker';
 
 import { LENDING_POOLS_V2_QUERY } from './getLendingPoolsQuery';
 import {
@@ -156,15 +155,15 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
         network: this.network,
       }),
     );
-    const borrowerPositionCount = await positionTracker.borrowPositionCount(address);
-    const borrowerPositions = await positionTracker.getBorrowPositions(address, startKey, borrowerPositionCount);
+    const borrowerPositionCount = await positionTracker.read.borrowPositionCount([address]);
+    const borrowerPositions = await positionTracker.read.getBorrowPositions([address, startKey, borrowerPositionCount]);
     const borrowerPosition = borrowerPositions.find(
       poolData => contractPosition.address.toLowerCase() === poolData.pool.toLowerCase(),
     );
     if (!borrowerPosition) return [];
     const totalBorrowed = await this.getTotalBorrowed(borrowerPositions, address);
     const poolSettings = await this.getPoolSettings(contractPosition.address);
-    const poolRate = Number(poolSettings.lendRatio) / 10 ** 18;
+    const poolRate = Number(poolSettings[8]) / 10 ** 18;
     const suppliedBalance = totalBorrowed / 10 ** lentToken.decimals / poolRate;
     const suppliedBalanceRaw = suppliedBalance * 10 ** collateralToken.decimals;
     // Deposit, borrow, no lending out (not pool creator)
@@ -177,7 +176,16 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
     return await pool.read.poolSettings();
   }
 
-  async getTotalBorrowed(positions: IPositionTracker.EntryStructOutput[], borrowerAddr: string): Promise<number> {
+  async getTotalBorrowed(
+    positions: readonly {
+      id: string;
+      prev: string;
+      next: string;
+      user: string;
+      pool: string;
+    }[],
+    borrowerAddr: string,
+  ): Promise<number> {
     let totalBorrowed = 0;
     await Promise.all(
       positions.map(async poolData => {
@@ -185,7 +193,7 @@ export abstract class VendorFinancePoolV2ContractPositionFetcher extends Contrac
           address: poolData.pool,
           network: this.network,
         });
-        const borrowedFromPoolAmt = Number((await lendingPool.debts(borrowerAddr)).debt.toString());
+        const borrowedFromPoolAmt = Number((await lendingPool.read.debts([borrowerAddr]))[0].toString());
         totalBorrowed += borrowedFromPoolAmt;
       }),
     );

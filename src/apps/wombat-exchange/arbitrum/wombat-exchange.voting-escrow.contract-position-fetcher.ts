@@ -7,6 +7,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { WombatExchangeViemContractFactory } from '../contracts';
 import { WombatExchangeVotingEscrow } from '../contracts/viem';
+import { WombatExchangeVotingEscrowContract } from '../contracts/viem/WombatExchangeVotingEscrow';
 
 @PositionTemplate()
 export class ArbitrumWombatExchangeVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<WombatExchangeVotingEscrow> {
@@ -20,7 +21,7 @@ export class ArbitrumWombatExchangeVotingEscrowContractPositionFetcher extends V
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): WombatExchangeVotingEscrow {
+  getEscrowContract(address: string): WombatExchangeVotingEscrowContract {
     return this.contractFactory.wombatExchangeVotingEscrow({ address, network: this.network });
   }
 

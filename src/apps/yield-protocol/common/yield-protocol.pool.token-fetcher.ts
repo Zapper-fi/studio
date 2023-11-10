@@ -61,15 +61,15 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
         throw err;
       });
 
-    if (baseReserves.isZero()) return [0];
+    if (Number(baseReserves) === 0) return [0];
 
     const [fyTokenReserves, poolTotalSupply] = await Promise.all([
       multicall.wrap(poolContract).read.getFYTokenBalance(),
       multicall.wrap(poolContract).read.totalSupply(),
     ]);
 
-    const realFyTokenReserves = fyTokenReserves.sub(poolTotalSupply);
-    const reserveRaw = baseReserves.add(realFyTokenReserves);
+    const realFyTokenReserves = BigNumber.from(fyTokenReserves).sub(poolTotalSupply);
+    const reserveRaw = BigNumber.from(baseReserves).add(realFyTokenReserves);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

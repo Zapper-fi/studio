@@ -7,6 +7,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { YearnViemContractFactory } from '../contracts';
 import { YearnVeYfi } from '../contracts/viem';
+import { YearnVeYfiContract } from '../contracts/viem/YearnVeYfi';
 
 @PositionTemplate()
 export class EthereumYearnVeYfiContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<YearnVeYfi> {
@@ -20,7 +21,7 @@ export class EthereumYearnVeYfiContractPositionFetcher extends VotingEscrowTempl
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): YearnVeYfi {
+  getEscrowContract(address: string): YearnVeYfiContract {
     return this.contractFactory.yearnVeYfi({ address, network: this.network });
   }
 

@@ -7,6 +7,6 @@ import { EthereumVotiumClaimableContractPositionFetcher } from './ethereum/votiu
 import { EthereumVotiumMerkleCache } from './ethereum/votium.merkle-cache';
 
 @Module({
-  providers: [EthereumVotiumClaimableContractPositionFetcher, EthereumVotiumMerkleCache, VotiumContractFactory],
+  providers: [EthereumVotiumClaimableContractPositionFetcher, EthereumVotiumMerkleCache, VotiumViemContractFactory],
 })
 export class VotiumAppModule extends AbstractApp() {}

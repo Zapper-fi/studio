@@ -6,6 +6,6 @@ import { YamatoViemContractFactory } from './contracts';
 import { EthereumYamatoPledgeContractPositionFetcher } from './ethereum/yamato.pledge.contract-position-fetcher';
 
 @Module({
-  providers: [EthereumYamatoPledgeContractPositionFetcher, YamatoContractFactory],
+  providers: [EthereumYamatoPledgeContractPositionFetcher, YamatoViemContractFactory],
 })
 export class YamatoAppModule extends AbstractApp() {}

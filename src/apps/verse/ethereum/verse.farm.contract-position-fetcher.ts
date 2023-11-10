@@ -77,7 +77,7 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<VerseFarm, DefaultDataProps>): Promise<BigNumberish[]> {
     return [await contract.read.balanceOf([address]), await contract.read.earned([address])];
   }
 }

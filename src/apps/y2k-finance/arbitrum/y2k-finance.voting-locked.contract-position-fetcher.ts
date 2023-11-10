@@ -57,12 +57,12 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: (await params.contract.read.rewardToken([0])).addr,
+        address: (await params.contract.read.rewardToken([BigInt(0)]))[0],
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: (await params.contract.read.rewardToken([1])).addr,
+        address: (await params.contract.read.rewardToken([BigInt(1)]))[0],
         network: this.network,
       },
     ];
@@ -79,6 +79,6 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
     params: GetTokenBalancesParams<Y2KFinanceVotingLocked, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
     const info = await params.contract.read.getAccount([params.address]);
-    return [info.balance, info.rewards1, info.rewards2];
+    return [info[0], info[3], info[4]];
   }
 }

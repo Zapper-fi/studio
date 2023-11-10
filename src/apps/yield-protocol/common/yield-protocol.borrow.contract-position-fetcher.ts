@@ -175,8 +175,8 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
             const { assetId: artId, id: artAddress } = art.baseAsset;
 
             // assume this is an invalid art/ilk pair if the max debt has not been set
-            const { max: maxDebt } = await multicall.wrap(cauldron).read.debt([artId, ilkId]);
-            if (maxDebt.eq(ethers.constants.Zero)) return null;
+            const [maxDebt] = await multicall.wrap(cauldron).read.debt([artId, ilkId]);
+            if (Number(maxDebt) === 0) return null;
 
             return { address: this.ladleAddress, ilkId, artId, ilkAddress, artAddress };
           }),
@@ -206,7 +206,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
     });
 
     const { artId, ilkId } = definition;
-    const { ratio } = await multicall.wrap(cauldron).read.spotOracles([artId, ilkId]);
+    const [, ratio] = await multicall.wrap(cauldron).read.spotOracles([artId, ilkId]);
     const minCollateralizationRatio = ratio / 10 ** 6; // ratio uses 6 decimals for all pairs
 
     const defaultDataProps = await super.getDataProps(params);
@@ -273,7 +273,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
         const collateralizationRatio =
           debt.balanceUSD === 0 ? 0 : (collateral.balanceUSD / Math.abs(debt.balanceUSD)) * 100;
 
-        const { ratio } = await multicall.wrap(cauldron).read.spotOracles([artId, ilkId]);
+        const [, ratio] = await multicall.wrap(cauldron).read.spotOracles([artId, ilkId]);
         const minCollateralizationRatio = ratio / 10 ** 6; // ratio uses 6 decimals for all pairs
         const liquidationPrice = (debtAmount * minCollateralizationRatio) / collateralAmount;
 

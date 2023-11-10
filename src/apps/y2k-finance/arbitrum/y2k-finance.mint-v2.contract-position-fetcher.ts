@@ -102,11 +102,12 @@ export class ArbitrumY2KFinanceMintV2ContractPositionFetcher extends ContractPos
     const vault = params.multicall.wrap(params.contract);
     const results = await Promise.all(
       epochIds.map(async id => {
-        const finalTVL = await vault.finalTVL(id);
-        const balance = await vault.balanceOf(params.address, id);
-        if (finalTVL.isZero() || balance.isZero()) return [0, 0, 0];
-        const claimable = await vault.previewWithdraw(id, balance);
-        const emission = await vault.previewEmissionsWithdraw(id, balance);
+        const finalTVL = await vault.read.finalTVL([id]);
+        const balance = await vault.read.balanceOf([params.address, id]);
+        if (Number(finalTVL) === 0 || Number(balance) === 0) return [0, 0, 0];
+
+        const claimable = await vault.read.previewWithdraw([id, balance]);
+        const emission = await vault.read.previewEmissionsWithdraw([id, balance]);
         return [balance, claimable, emission];
       }),
     );

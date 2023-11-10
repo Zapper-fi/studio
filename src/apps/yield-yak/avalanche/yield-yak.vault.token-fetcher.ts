@@ -66,7 +66,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
         multicall: _params.multicall,
       });
 
-      const underlying = await _params.contract.getDepositTokensForShares(one_receipt_token);
+      const underlying = await _params.contract.read.getDepositTokensForShares([BigInt(one_receipt_token.toString())]);
       const pps = ethers.utils.formatUnits(underlying, depositTokenDecimals);
       return [+pps];
     } catch (err) {

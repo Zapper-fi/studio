@@ -3,7 +3,7 @@ import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -18,6 +18,7 @@ import {
 
 import { Y2KFinanceViemContractFactory } from '../contracts';
 import { Y2KFinanceVaultV1 } from '../contracts/viem';
+import { Y2KFinanceVaultV1Contract } from '../contracts/viem/Y2KFinanceVaultV1';
 
 const vaultFactory = '0x984e0eb8fb687afa53fc8b33e12e04967560e092';
 
@@ -32,12 +33,14 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  async getEpochIds(multicall: IMulticallWrapper, contract: Y2KFinanceVaultV1): Promise<BigNumber[]> {
+  async getEpochIds(multicall: ViemMulticallDataLoader, contract: Y2KFinanceVaultV1Contract): Promise<BigNumberish[]> {
     const vault = multicall.wrap(contract);
-    const epochsLength = await vault.epochsLength();
+    const epochsLength = await vault.read.epochsLength();
+
     const epochIds = await Promise.all(
-      Array.from(Array(Number(epochsLength)).keys()).map(async i => await vault.epochs(i)),
+      Array.from(Array(Number(epochsLength)).keys()).map(async i => await vault.read.epochs([BigInt(i)])),
     );
+
     return epochIds;
   }
 
@@ -49,9 +52,11 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
     const factory = params.multicall.wrap(
       this.contractFactory.y2KFinanceVaultFactoryV1({ address: vaultFactory, network: this.network }),
     );
-    const poolLength = await factory.marketIndex();
+    const poolLength = await factory.read.marketIndex();
     const vaults = (
-      await Promise.all(Array.from(Array(Number(poolLength)).keys()).map(async i => await factory.getVaults(i)))
+      await Promise.all(
+        Array.from(Array(Number(poolLength)).keys()).map(async i => await factory.read.getVaults([BigInt(i)])),
+      )
     ).flat();
     return vaults.map(vault => ({ address: vault }));
   }
@@ -93,10 +98,11 @@ export class ArbitrumY2KFinanceMintV1ContractPositionFetcher extends ContractPos
     const vault = params.multicall.wrap(params.contract);
     const results = await Promise.all(
       epochIds.map(async id => {
-        const finalTVL = await vault.idFinalTVL(id);
-        const balance = await vault.balanceOf(params.address, id);
-        if (finalTVL.isZero() || balance.isZero()) return [0, 0];
-        const claimable = await vault.previewWithdraw(id, balance);
+        const finalTVL = await vault.read.idFinalTVL([BigInt(id.toString())]);
+        const balance = await vault.read.balanceOf([params.address, BigInt(id.toString())]);
+        if (Number(finalTVL) === 0 || Number(balance) === 0) return [0, 0];
+
+        const claimable = await vault.read.previewWithdraw([BigInt(id.toString()), balance]);
         return [balance, claimable];
       }),
     );

@@ -96,7 +96,7 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
       address: stakingTokenAddress.address,
       network: this.network,
     });
-    const name = await vault.name();
+    const name = await vault.read.name();
     return `${name} Farming`;
   }
 
