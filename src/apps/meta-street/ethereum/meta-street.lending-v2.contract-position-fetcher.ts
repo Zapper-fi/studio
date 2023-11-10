@@ -217,17 +217,19 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
     const deposit = await contract.read.deposits([address, tick]);
 
     /* Multicall redemption available and compute total amount and shares */
-    const redemptionIds = Array.from({ length: deposit.redemptionId.toNumber() }, (_, index) => index + 1);
+    const redemptionId = Number(deposit[1]);
+    const redemptionIds = Array.from({ length: redemptionId }, (_, index) => index + 1);
     const pool = multicall.wrap(contract);
     const redemptionsAvailable = await Promise.all(
-      redemptionIds.map(async id => await pool.read.redemptionAvailable(address, tick, BigNumber.from(id))),
+      redemptionIds.map(async id => await pool.read.redemptionAvailable([address, tick, BigInt(id)])),
     );
+
     const redeemed: Redemption = redemptionsAvailable.reduce(
-      (redemptionAvailable, { amount, shares }) => ({
-        amount: redemptionAvailable.amount.add(amount),
+      (redemptionAvailable, [shares, amount]) => ({
         shares: redemptionAvailable.shares.add(shares),
+        amount: redemptionAvailable.amount.add(amount),
       }),
-      { amount: constants.Zero, shares: constants.Zero },
+      { shares: constants.Zero, amount: constants.Zero },
     );
 
     /* Compute active shares in tick */
@@ -235,12 +237,12 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
 
     /* Compute current position balance from tick data in addition to redeemed amount available */
     const tickData = await contract.read.liquidityNode([tick]);
-    const currentPosition = tickData.shares.eq(constants.Zero)
+    const currentPosition = BigNumber.from(tickData.shares).eq(constants.Zero)
       ? redeemed.amount
       : activeShares.mul(tickData.value).div(tickData.shares).add(redeemed.amount);
 
     /* Compute deposit position based on remaining shares */
-    const depositPosition = deposited.shares > 0)
+    const depositPosition = deposited.shares.gt(0)
       ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
       : constants.Zero;
 

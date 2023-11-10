@@ -1,5 +1,6 @@
 import { BigNumberish, Contract } from 'ethers';
 import { compact, range } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import {
   buildDollarDisplayItem,
@@ -24,19 +25,19 @@ export type UniswapV2TokenDataProps = DefaultAppTokenDataProps & {
 };
 
 export abstract class UniswapV2PoolOnChainTemplateTokenFetcher<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > extends AppTokenTemplatePositionFetcher<T, UniswapV2TokenDataProps> {
   abstract factoryAddress: string;
 
-  abstract getPoolTokenContract(address: string): T;
-  abstract getPoolFactoryContract(address: string): V;
+  abstract getPoolTokenContract(address: string): GetContractReturnType<T, PublicClient>;
+  abstract getPoolFactoryContract(address: string): GetContractReturnType<V, PublicClient>;
 
-  abstract getPoolsLength(contract: V): Promise<BigNumberish>;
-  abstract getPoolAddress(contract: V, index: number): Promise<string>;
-  abstract getPoolToken0(contract: T): Promise<string>;
-  abstract getPoolToken1(contract: T): Promise<string>;
-  abstract getPoolReserves(contract: T): Promise<BigNumberish[]>;
+  abstract getPoolsLength(contract: GetContractReturnType<V, PublicClient>): Promise<BigNumberish>;
+  abstract getPoolAddress(contract: GetContractReturnType<V, PublicClient>, index: number): Promise<string>;
+  abstract getPoolToken0(contract: GetContractReturnType<T, PublicClient>): Promise<string>;
+  abstract getPoolToken1(contract: GetContractReturnType<T, PublicClient>): Promise<string>;
+  abstract getPoolReserves(contract: GetContractReturnType<T, PublicClient>): Promise<BigNumberish[]>;
 
   fee = 0.3;
 
