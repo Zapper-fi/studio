@@ -9,7 +9,7 @@ import { TaiViemContractFactory } from '../contracts';
 
 @Injectable()
 export class TaiCollateralResolver {
-  constructor(@Inject(TaiContractFactory) protected readonly contractFactory: TaiContractFactory) {}
+  constructor(@Inject(TaiViemContractFactory) protected readonly contractFactory: TaiViemContractFactory) {}
 
   @Cache({
     key: `studio:tai:collateral`,

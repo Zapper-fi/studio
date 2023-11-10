@@ -63,8 +63,8 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
       network: this.network,
     });
 
-    const emissions = await rewardsDistrocontract.read.getEmissions();
-    return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.dpx_, emissions.rdpx_];
+    const [pls, plsDpx, plsJones, dpx, rdpx] = await rewardsDistroContract.read.getEmissions();
+    return [pls, plsDpx, plsJones, dpx, rdpx];
   }
 
   async getIsActive({
@@ -76,14 +76,8 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
       network: this.network,
     });
 
-    const emissions = await rewardsDistrocontract.read.getEmissions();
-    return (
-      emissions.pls_ > 0) ||
-      emissions.plsDpx_ > 0) ||
-      emissions.plsJones_ > 0) ||
-      emissions.dpx_ > 0) ||
-      emissions.rdpx_ > 0)
-    );
+    const [pls, plsDpx, plsJones, dpx, rdpx] = await rewardsDistroContract.read.getEmissions();
+    return Number(pls) > 0 || Number(plsDpx) > 0 || Number(plsJones) > 0 || Number(dpx) > 0 || Number(rdpx) > 0;
   }
 
   async getLabel({
@@ -93,10 +87,10 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpx>) {
-    return contract.read.userInfo([address]).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpx>) {
-    return contract.read.pendingRewards([address]);
+    return contract.read.pendingRewards([address]).then(v => [...v]);
   }
 }

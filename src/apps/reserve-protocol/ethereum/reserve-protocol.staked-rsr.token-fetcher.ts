@@ -17,8 +17,8 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReserveProtocolContractFactory)
-    protected readonly contractFactory: ReserveProtocolContractFactory,
+    @Inject(ReserveProtocolViemContractFactory)
+    protected readonly contractFactory: ReserveProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }

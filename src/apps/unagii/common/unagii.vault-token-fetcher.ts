@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { UnagiiContractFactory, UnagiiUtoken } from '../contracts';
+import { UnagiiViemContractFactory } from '../contracts';
+import { UnagiiUtoken } from '../contracts/viem';
 
 export type UnagiiTokenDefinition = {
   address: string;
@@ -72,7 +73,7 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
       address: definition.vaultManagerAddress,
       network: this.network,
     });
-    const totalAssetsRaw = await multicall.wrap(vaultManagerContract).totalAssets();
+    const totalAssetsRaw = await multicall.wrap(vaultManagerContract).read.totalAssets();
     const underlyingAssets = Number(totalAssetsRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = underlyingAssets / appToken.supply;
     return [pricePerShare];

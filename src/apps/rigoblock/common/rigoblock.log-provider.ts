@@ -14,7 +14,7 @@ export enum PoolLogType {
 
 @Injectable()
 export class RigoblockLogProvider {
-  constructor(@Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory) {}
+  constructor(@Inject(RigoblockViemContractFactory) private readonly contractFactory: RigoblockViemContractFactory) {}
 
   @Cache({
     key: ({
@@ -41,23 +41,22 @@ export class RigoblockLogProvider {
     network: Network;
     fromBlock: number;
   }) {
-    const [contract, eventFilter] =
-      logType === PoolLogType.REGISTERED
-        ? [
-            this.contractFactory.poolRegistry({ network, address }),
-            this.contractFactory.poolRegistry({ network, address }).filters.Registered(),
-          ]
-        : [
-            this.contractFactory.tokenWhitelist({ network, address }),
-            this.contractFactory.tokenWhitelist({ network, address }).filters.Whitelisted(),
-          ];
+    switch (logType) {
+      case PoolLogType.REGISTERED: {
+        const contract = this.contractFactory.poolRegistry({ network, address });
+        const logs = await contract.getEvents.Registered({}, { fromBlock: BigInt(fromBlock) });
+        return logs;
+      }
 
-    const mapper = <T extends Event>({ address, event, args }: T) => ({
-      args: Array.from(args?.values() ?? []),
-      address,
-      event,
-    });
+      case PoolLogType.TOKEN_WHITELISTED: {
+        const contract = this.contractFactory.tokenWhitelist({ network, address });
+        const logs = await contract.getEvents.Whitelisted({}, { fromBlock: BigInt(fromBlock) });
+        return logs;
+      }
 
-    return await Promise.all([contract.queryFilter(eventFilter, fromBlock).then(logs => logs.map(mapper))]);
+      default: {
+        throw new Error(`Unknown log type: ${logType}`);
+      }
+    }
   }
 }

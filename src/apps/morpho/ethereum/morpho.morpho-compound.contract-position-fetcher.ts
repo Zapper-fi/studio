@@ -4,10 +4,16 @@ import { formatUnits } from 'ethers/lib/utils';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
-import { MorphoCompound, MorphoContractFactory } from '~apps/morpho/contracts';
+import {
+  MorphoContractPositionDataProps,
+  MorphoContractPositionDefinition,
+  MorphoSupplyContractPositionFetcher,
+} from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
+import { MorphoCompound } from '~apps/morpho/contracts/viem';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
-import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import { GetDataPropsParams, GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import { MorphoViemContractFactory } from '../contracts';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoSupplyContractPositionFetcher<MorphoCompound> {
@@ -32,13 +38,13 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
     const morphoCompound = this.contractFactory.morphoCompound({ address: this.morphoAddress, network: this.network });
 
     const morpho = multicall.wrap(morphoCompound);
-    const markets = await morpho.getAllMarkets();
+    const markets = await morpho.read.getAllMarkets();
 
     return Promise.all(
       markets.map(async marketAddress => {
         const market = this.contractFactory.morphoCToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
-        const supplyTokenAddress = await marketcontract.read.underlying().catch(err => {
+        const supplyTokenAddress = await marketContract.read.underlying().catch(err => {
           if (isViemMulticallUnderlyingError(err)) return this.wEthAddress;
           throw err;
         });
@@ -52,36 +58,41 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
     );
   }
 
-  async getDataProps({ contractPosition, multicall, definition }) {
+  async getDataProps({
+    contractPosition,
+    multicall,
+    definition,
+  }: GetDataPropsParams<MorphoCompound, MorphoContractPositionDataProps, MorphoContractPositionDefinition>) {
     const lens = this.contractFactory.morphoCompoundLens({ address: this.lensAddress, network: this.network });
     const lensContract = multicall.wrap(lens);
     const marketAddress = definition.marketAddress;
 
     const [supplyRateRaw, borrowRateRaw, totalMarketSupplyRaw, totalMarketBorrowRaw, marketConfiguration] =
       await Promise.all([
-        lenscontract.read.getAverageSupplyRatePerBlock([marketAddress]),
-        lenscontract.read.getAverageBorrowRatePerBlock([marketAddress]),
-        lenscontract.read.getTotalMarketSupply([marketAddress]),
-        lenscontract.read.getTotalMarketBorrow([marketAddress]),
-        lenscontract.read.getMarketConfiguration([marketAddress]),
+        lensContract.read.getAverageSupplyRatePerBlock([marketAddress]),
+        lensContract.read.getAverageBorrowRatePerBlock([marketAddress]),
+        lensContract.read.getTotalMarketSupply([marketAddress]),
+        lensContract.read.getTotalMarketBorrow([marketAddress]),
+        lensContract.read.getMarketConfiguration([marketAddress]),
       ]);
 
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
-    const supplyRate = supplyRateRaw.avgSupplyRatePerBlock;
-    const borrowRate = borrowRateRaw.avgBorrowRatePerBlock;
+    const supplyRate = supplyRateRaw[0];
+    const borrowRate = borrowRateRaw[0];
     const supplyApy = Math.pow(1 + (blocksPerDay * Number(supplyRate)) / Number(1e18), 365) - 1;
     const borrowApy = Math.pow(1 + (blocksPerDay * Number(borrowRate)) / Number(1e18), 365) - 1;
-    const p2pDisabled = marketConfiguration.p2pDisabled;
+    const p2pDisabled = marketConfiguration[2];
 
     const underlyingToken = contractPosition.tokens[0];
-    const supplyRaw = totalMarketSupplyRaw.p2pSupplyAmount.add(totalMarketSupplyRaw.poolSupplyAmount);
+    const supplyRaw = BigNumber.from(totalMarketSupplyRaw[0]).add(totalMarketSupplyRaw[1]);
     const supply = Number(supplyRaw) / 10 ** underlyingToken.decimals;
     const supplyUSD = supply * underlyingToken.price;
-    const borrowRaw = totalMarketBorrowRaw.p2pBorrowAmount.add(totalMarketBorrowRaw.poolBorrowAmount);
+    const liquidity = supply * underlyingToken.price;
+
+    const borrowRaw = BigNumber.from(totalMarketBorrowRaw[0]).add(totalMarketBorrowRaw[1]);
     const matchedUSD = +formatUnits(borrowRaw, underlyingToken.decimals) * underlyingToken.price;
     const borrow = Number(borrowRaw) / 10 ** underlyingToken.decimals;
     const borrowUSD = borrow * underlyingToken.price;
-    const liquidity = supply * underlyingToken.price;
 
     return {
       marketAddress,

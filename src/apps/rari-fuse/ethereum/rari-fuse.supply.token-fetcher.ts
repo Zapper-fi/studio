@@ -5,13 +5,12 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { RariFuseSupplyTokenFetcher } from '../common/rari-fuse.supply.token-fetcher';
-import {
-  RariFuseComptroller,
-  RariFuseContractFactory,
-  RariFusePoolLens,
-  RariFusePoolsDirectory,
-  RariFuseToken,
-} from '../contracts';
+import { RariFuseViemContractFactory } from '../contracts';
+import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
+import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
+import { RariFuseComptrollerContract } from '../contracts/viem/RariFuseComptroller';
+import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
+import { RariFusePoolLensContract } from '../contracts/viem/RariFusePoolLens';
 
 @PositionTemplate()
 export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetcher<
@@ -32,43 +31,48 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
     super(appToolkit);
   }
 
-  getPoolDirectoryContract(address: string): RariFusePoolsDirectory {
+  getPoolDirectoryContract(address: string): RariFusePoolsDirectoryContract {
     return this.contractFactory.rariFusePoolsDirectory({ address, network: this.network });
   }
 
-  getComptrollerContract(address: string): RariFuseComptroller {
+  getComptrollerContract(address: string): RariFuseComptrollerContract {
     return this.contractFactory.rariFuseComptroller({ address, network: this.network });
   }
 
-  getTokenContract(address: string): RariFuseToken {
+  getTokenContract(address: string): RariFuseTokenContract {
     return this.contractFactory.rariFuseToken({ address, network: this.network });
   }
 
-  getLensContract(address: string): RariFusePoolLens {
+  getLensContract(address: string): RariFusePoolLensContract {
     return this.contractFactory.rariFusePoolLens({ address, network: this.network });
   }
 
-  getPools(contract: RariFusePoolsDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.read.getAllPools();
+  getPools(contract: RariFusePoolsDirectoryContract): Promise<{ name: string; comptroller: string }[]> {
+    return contract.read.getAllPools().then(v => [...v]);
   }
 
-  getMarketTokenAddresses(contract: RariFuseComptroller): Promise<string[]> {
-    return contract.read.getAllMarkets();
+  getMarketTokenAddresses(contract: RariFuseComptrollerContract): Promise<string[]> {
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
-  getUnderlyingTokenAddress(contract: RariFuseToken): Promise<string> {
+  getUnderlyingTokenAddress(contract: RariFuseTokenContract): Promise<string> {
     return contract.read.underlying();
   }
 
-  getExchangeRateCurrent(contract: RariFuseToken): Promise<BigNumberish> {
+  getExchangeRateCurrent(contract: RariFuseTokenContract): Promise<BigNumberish> {
     return contract.read.exchangeRateCurrent();
   }
 
-  getSupplyRateRaw(contract: RariFuseToken): Promise<BigNumberish> {
+  getSupplyRateRaw(contract: RariFuseTokenContract): Promise<BigNumberish> {
     return contract.read.supplyRatePerBlock();
   }
 
-  getPoolsBySupplier(address: string, contract: RariFusePoolLens) {
-    return contract.read.getPoolsBySupplier([address]);
+  getPoolsBySupplier(
+    address: string,
+    contract: RariFusePoolLensContract,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]> {
+    return contract.read
+      .getPoolsBySupplier([address])
+      .then(([pools, comptrollers]) => [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))]);
   }
 }

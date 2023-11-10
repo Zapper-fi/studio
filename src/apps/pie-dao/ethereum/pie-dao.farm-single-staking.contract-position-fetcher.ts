@@ -69,7 +69,7 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PieDaoRewards>) {
-    return (await contract.read.rewardRate()) > 0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {

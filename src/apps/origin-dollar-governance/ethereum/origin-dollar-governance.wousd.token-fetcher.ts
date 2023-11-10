@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -14,6 +14,7 @@ import {
 
 import { OriginDollarGovernanceViemContractFactory } from '../contracts';
 import { Wousd } from '../contracts/viem';
+
 const oneEther = ethers.constants.WeiPerEther;
 const format = v => ethers.utils.formatUnits(v);
 
@@ -23,8 +24,8 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarGovernanceContractFactory)
-    private readonly contractFactory: OriginDollarGovernanceContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -48,7 +49,7 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
       address: appToken.tokens[0].address,
     });
     const underlyingBalance = await multicall.wrap(underlyingTokenContract).read.balanceOf([appToken.address]);
-    const ratio = parseFloat(format(supplyRaw.mul(oneEther).div(underlyingBalance)));
+    const ratio = parseFloat(format(BigNumber.from(supplyRaw).mul(oneEther).div(underlyingBalance)));
     const price = appToken.tokens[0].price / ratio;
 
     return price;
@@ -61,7 +62,7 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
       address: appToken.tokens[0].address,
     });
     const underlyingBalance = await multicall.wrap(underlyingTokenContract).read.balanceOf([appToken.address]);
-    const ratio = parseFloat(format(supplyRaw.mul(oneEther).div(underlyingBalance)));
+    const ratio = parseFloat(format(BigNumber.from(supplyRaw).mul(oneEther).div(underlyingBalance)));
 
     return [1 / ratio];
   }

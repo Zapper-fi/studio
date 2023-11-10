@@ -57,7 +57,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
     });
 
     const rewardRate = await multicall.wrap(stakingManager).read.rewardPerBlock();
-    return rewardRate > 0);
+    return rewardRate > 0;
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PendleStaking>) {

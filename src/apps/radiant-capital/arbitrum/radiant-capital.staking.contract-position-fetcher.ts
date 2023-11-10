@@ -12,6 +12,7 @@ import {
 
 import { RadiantCapitalViemContractFactory } from '../contracts';
 import { RadiantCapitalStaking } from '../contracts/viem';
+import { RadiantCapitalStakingContract } from '../contracts/viem/RadiantCapitalStaking';
 
 @PositionTemplate()
 export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<RadiantCapitalStaking> {
@@ -30,12 +31,13 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     return this.contractFactory.radiantCapitalStaking({ address, network: this.network });
   }
 
-  async getPoolLength(contract: RadiantCapitalStaking): Promise<BigNumberish> {
-    return (await contract.read.poolLength()).sub(1); // Last index is a testing pool
+  async getPoolLength(contract: RadiantCapitalStakingContract): Promise<BigNumberish> {
+    const numPools = await contract.read.poolLength();
+    return Number(numPools) - 1; // Last index is a testing pool
   }
 
-  async getStakedTokenAddress(contract: RadiantCapitalStaking, poolIndex: number): Promise<string> {
-    return contract.read.registeredTokens([poolIndex]);
+  async getStakedTokenAddress(contract: RadiantCapitalStakingContract, poolIndex: number): Promise<string> {
+    return contract.read.registeredTokens([BigInt(poolIndex)]);
   }
 
   async getRewardTokenAddress(): Promise<string> {
@@ -54,7 +56,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     contract,
     definition,
   }: GetMasterChefDataPropsParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    return contract.read.poolInfo([definition.address]).then(v => v.allocPoint);
+    return contract.read.poolInfo([definition.address]).then(v => v[0]);
   }
 
   async getStakedTokenBalance({
@@ -62,7 +64,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    return contract.read.userInfocontractPosition.tokens[0].address, address).then(v => v.amount);
+    return contract.read.userInfo([contractPosition.tokens[0].address, address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -70,7 +72,7 @@ export class ArbitrumRadiantCapitalStakingContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<RadiantCapitalStaking>): Promise<BigNumberish> {
-    const claimableRewards = await contract.claimableReward(address, [contractPosition.tokens[0].address]);
+    const claimableRewards = await contract.read.claimableReward([address, [contractPosition.tokens[0].address]]);
 
     return claimableRewards[0];
   }

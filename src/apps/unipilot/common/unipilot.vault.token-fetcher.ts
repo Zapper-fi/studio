@@ -31,8 +31,8 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UnipilotVaultDefinitionsResolver)
     private readonly vaultDefinitionsResolver: UnipilotVaultDefinitionsResolver,
-    @Inject(UnipilotContractFactory)
-    private readonly contractFactory: UnipilotContractFactory,
+    @Inject(UnipilotViemContractFactory)
+    private readonly contractFactory: UnipilotViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -165,18 +165,18 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
       indexToken.price,
       contractPosition.dataProps.indexTokenMinProfitTime,
       contractPosition.dataProps.indexTokenMinProfitRate,
-      fromWei(size),
-      fromWei(entryPrice),
+      fromWei(BigNumber.from(size)),
+      fromWei(BigNumber.from(entryPrice)),
       lastIncreasedTime,
       isLong,
     );
 
-    const collateralAmount = fromWei(collateral);
+    const collateralAmount = fromWei(BigNumber.from(collateral));
     if (Number(collateralAmount) == 0) return [0, 0, 0];
 
     const collateralAmountUsd = collateralAmount.times(collateralToken.price);
 
-    const hasProfit = pnlUsd > 0);
+    const hasProfit = Number(pnlUsd) > 0;
     const profitToken = isLong ? indexToken : usdcToken;
 
     const collateralBalanceRaw = hasProfit

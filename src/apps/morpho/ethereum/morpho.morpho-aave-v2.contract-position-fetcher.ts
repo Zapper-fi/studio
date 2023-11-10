@@ -6,9 +6,10 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
-import { MorphoAaveV2, MorphoAaveV2Lens, MorphoContractFactory } from '~apps/morpho/contracts';
+import { MorphoViemContractFactory } from '~apps/morpho/contracts';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import { MorphoAaveV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSupplyContractPositionFetcher<MorphoAaveV2> {
@@ -32,13 +33,13 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
     const morphoAaveV2 = this.contractFactory.morphoAaveV2({ address: this.morphoAddress, network: this.network });
 
     const morpho = multicall.wrap(morphoAaveV2);
-    const markets = await morpho.getMarketsCreated();
+    const markets = await morpho.read.getMarketsCreated();
 
     return Promise.all(
       markets.map(async marketAddress => {
         const market = this.contractFactory.morphoAToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
-        const supplyTokenAddress = await marketcontract.read.UNDERLYING_ASSET_ADDRESS().catch(err => {
+        const supplyTokenAddress = await marketContract.read.UNDERLYING_ASSET_ADDRESS().catch(err => {
           if (isViemMulticallUnderlyingError(err)) return ZERO_ADDRESS;
           throw err;
         });
@@ -53,16 +54,16 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
 
   async getDataProps({ contractPosition, multicall, definition }) {
     const lens = this.contractFactory.morphoAaveV2Lens({ address: this.lensAddress, network: this.network });
-    const lensContract = multicall.wrap(lens) as MorphoAaveV2Lens;
+    const lensContract = multicall.wrap(lens);
     const marketAddress = definition.marketAddress;
 
     const [supplyRateRaw, borrowRateRaw, totalMarketSupplyRaw, totalMarketBorrowRaw, marketConfiguration] =
       await Promise.all([
-        lenscontract.read.getAverageSupplyRatePerYear([marketAddress]),
-        lenscontract.read.getAverageBorrowRatePerYear([marketAddress]),
-        lenscontract.read.getTotalMarketSupply([marketAddress]),
-        lenscontract.read.getTotalMarketBorrow([marketAddress]),
-        lenscontract.read.getMarketConfiguration([marketAddress]),
+        lensContract.read.getAverageSupplyRatePerYear([marketAddress]),
+        lensContract.read.getAverageBorrowRatePerYear([marketAddress]),
+        lensContract.read.getTotalMarketSupply([marketAddress]),
+        lensContract.read.getTotalMarketBorrow([marketAddress]),
+        lensContract.read.getMarketConfiguration([marketAddress]),
       ]);
 
     const secondsPerYear = 3600 * 24 * 365;
@@ -97,8 +98,9 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
   }
 
   async getTokenBalancesPerPosition({ address, contractPosition, multicall }): Promise<BigNumber[]> {
-    const _lens = this.contractFactory.morphoAaveV2Lens({ address: this.lensAddress, network: this.network });
-    const lens = multicall.wrap(_lens) as MorphoAaveV2Lens;
+    const lens = multicall.wrap(
+      this.contractFactory.morphoAaveV2Lens({ address: this.lensAddress, network: this.network }),
+    );
 
     const [{ totalBalance: supplyRaw }, { totalBalance: borrowRaw }] = await Promise.all([
       lens.getCurrentSupplyBalanceInOf(contractPosition.dataProps.marketAddress, address),

@@ -21,8 +21,8 @@ export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extend
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarGovernanceContractFactory)
-    private readonly contractFactory: OriginDollarGovernanceContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }

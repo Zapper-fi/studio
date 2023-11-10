@@ -62,11 +62,12 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
       network: this.network,
     });
 
-    const emissions = await rewardsDistrocontract.read.getEmissions();
+    const [pls, plsDpx, plsJones, pendingDpxLessFee] = await rewardsDistroContract.read.getEmissions();
     const lastRewardSecond = await contract.read.lastRewardSecond();
     const duration = Date.now() / 1000 - lastRewardSecond;
-    const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
-    return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, dpxEmissions];
+    const dpxEmissions = Number(pendingDpxLessFee) / duration;
+
+    return [pls, plsDpx, plsJones, dpxEmissions];
   }
 
   async getIsActive({
@@ -78,12 +79,12 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
       network: this.network,
     });
 
-    const emissions = await rewardsDistrocontract.read.getEmissions();
+    const [pls, plsDpx, plsJones, pendingDpxLessFee] = await rewardsDistroContract.read.getEmissions();
     const lastRewardSecond = await contract.read.lastRewardSecond();
     const duration = Date.now() / 1000 - lastRewardSecond;
-    const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
+    const dpxEmissions = Number(pendingDpxLessFee) / duration;
 
-    return emissions.pls_ > 0) || emissions.plsDpx_ > 0) || emissions.plsJones_ > 0) || dpxEmissions > 0;
+    return pls > 0 || plsDpx > 0 || plsJones > 0 || dpxEmissions > 0;
   }
 
   async getLabel({
@@ -93,10 +94,10 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpxV2>) {
-    return contract.read.userInfo([address]).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpxV2>) {
-    return contract.read.pendingRewards([address]);
+    return contract.read.pendingRewards([address]).then(v => [...v]);
   }
 }

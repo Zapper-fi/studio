@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import moment from 'moment';
 import 'moment-duration-format';
 
@@ -41,8 +41,8 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarGovernanceContractFactory)
-    private readonly contractFactory: OriginDollarGovernanceContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -87,16 +87,22 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
   async getApy({ contract }: GetDataPropsParams<Veogv>) {
     const stakeAmount = ethers.BigNumber.from('1000000000000000000000');
     const fourYears = ethers.BigNumber.from(moment.duration(4, 'years').asSeconds());
-    const [expectedVeOGV] = await contract.read.previewPoints([stakeAmount, fourYears]);
-    const supplyRaw = await contract.read.totalSupply();
 
-    const pctShare = expectedVeOGV.mul(oneEther).div(supplyRaw.add(expectedVeOGV));
+    const [expectedVeOGV] = await contract.read.previewPoints([
+      BigInt(stakeAmount.toString()),
+      BigInt(fourYears.toString()),
+    ]);
+
+    const supplyRaw = await contract.read.totalSupply();
+    const pctShare = BigNumber.from(expectedVeOGV).mul(oneEther).div(BigNumber.from(supplyRaw).add(expectedVeOGV));
+
     const now = stamp();
     const dailyEmissionsRow = dailyEmissionsTable.find(([startTime, endTime]) => now > startTime && now < endTime);
     const dailyEmissions = dailyEmissionsRow ? dailyEmissionsRow[2] : 0;
     const dailyRewards = toBN(dailyEmissions).mul(pctShare);
     const yearlyRewards = dailyRewards.mul(floatToBN(365.25)).div(oneEther);
     const apr = yearlyRewards.mul(oneEther).div(stakeAmount);
+
     return parseFloat(format(apr));
   }
 

@@ -44,7 +44,7 @@ export class EthereumMstableSavingsVaultContractPositionFetcher extends SingleSt
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableStaking>) {
-    return (await contract.read.rewardRate()) > 0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
