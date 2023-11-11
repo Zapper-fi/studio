@@ -17,6 +17,9 @@ import { EthereumBalancerV2PoolTokenFetcher } from './ethereum/balancer-v2.pool.
 import { EthereumBalancerV2VeBalRewardsContractPositionFetcher } from './ethereum/balancer-v2.ve-bal-rewards.contract-position-fetcher';
 import { EthereumBalancerV2VotingEscrowContractPositionFetcher } from './ethereum/balancer-v2.voting-escrow.contract-position-fetcher';
 import { EthereumBalancerV2WrappedAaveTokenFetcher } from './ethereum/balancer-v2.wrapped-aave.token-fetcher';
+import { GnosisBalancerV2BoostedTokenFetcher } from './gnosis/balancer-v2.boosted.token-fetcher';
+import { GnosisBalancerV2FarmContractPositionFetcher } from './gnosis/balancer-v2.farm.contract-position-fetcher';
+import { GnosisBalancerV2PoolTokenFetcher } from './gnosis/balancer-v2.pool.token-fetcher';
 import { PolygonBalancerV2BoostedTokenFetcher } from './polygon/balancer-v2.boosted.token-fetcher';
 import { PolygonBalancerV2FarmContractPositionFetcher } from './polygon/balancer-v2.farm.contract-position-fetcher';
 import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.token-fetcher';
@@ -43,6 +46,10 @@ import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.
     EthereumBalancerV2FarmContractPositionFetcher,
     EthereumBalancerV2WrappedAaveTokenFetcher,
     EthereumBalancerV2VeBalRewardsContractPositionFetcher,
+    // Gnosis
+    GnosisBalancerV2BoostedTokenFetcher,
+    GnosisBalancerV2PoolTokenFetcher,
+    GnosisBalancerV2FarmContractPositionFetcher,
     // Polygon
     PolygonBalancerV2BoostedTokenFetcher,
     PolygonBalancerV2PoolTokenFetcher,
