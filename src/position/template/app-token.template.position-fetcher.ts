@@ -10,14 +10,12 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition, isNonFungibleToken, NonFungibleToken, Token } from '~position/position.interface';
-import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import {
