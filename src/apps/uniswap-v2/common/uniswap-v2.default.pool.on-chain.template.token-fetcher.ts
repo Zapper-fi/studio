@@ -6,6 +6,8 @@ import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/commo
 
 import { UniswapV2ViemContractFactory } from '../contracts';
 import { UniswapFactory, UniswapPair } from '../contracts/viem';
+import { UniswapPairContract } from '../contracts/viem/UniswapPair';
+import { UniswapFactoryContract } from '../contracts/viem/UniswapFactory';
 
 export abstract class UniswapV2DefaultPoolOnChainTemplateTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
   UniswapPair,
@@ -18,31 +20,32 @@ export abstract class UniswapV2DefaultPoolOnChainTemplateTokenFetcher extends Un
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): UniswapPair {
+  getPoolTokenContract(address: string): UniswapPairContract {
     return this.contractFactory.uniswapPair({ address, network: this.network });
   }
 
-  getPoolFactoryContract(address: string): UniswapFactory {
+  getPoolFactoryContract(address: string): UniswapFactoryContract {
     return this.contractFactory.uniswapFactory({ address, network: this.network });
   }
 
-  getPoolsLength(contract: UniswapFactory): Promise<BigNumberish> {
+  getPoolsLength(contract: UniswapFactoryContract): Promise<BigNumberish> {
     return contract.read.allPairsLength();
   }
 
-  getPoolAddress(contract: UniswapFactory, index: number): Promise<string> {
-    return contract.read.allPairs([index]);
+  getPoolAddress(contract: UniswapFactoryContract, index: number): Promise<string> {
+    return contract.read.allPairs([BigInt(index)]);
   }
 
-  getPoolToken0(contract: UniswapPair): Promise<string> {
+  getPoolToken0(contract: UniswapPairContract): Promise<string> {
     return contract.read.token0();
   }
 
-  getPoolToken1(contract: UniswapPair): Promise<string> {
+  getPoolToken1(contract: UniswapPairContract): Promise<string> {
     return contract.read.token1();
   }
 
-  getPoolReserves(contract: UniswapPair): Promise<BigNumberish[]> {
-    return contract.read.getReserves();
+  async getPoolReserves(contract: UniswapPairContract): Promise<BigNumberish[]> {
+    const reserves = await contract.read.getReserves();
+    return [reserves[0], reserves[1]];
   }
 }

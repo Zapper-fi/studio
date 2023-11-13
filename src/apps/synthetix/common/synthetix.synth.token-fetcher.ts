@@ -47,13 +47,13 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     });
 
     const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
-    const synthUtilAddress = await addressResolvercontract.read.getAddress([synthUtilName]);
+    const synthUtilAddress = await addressResolverContract.read.getAddress([synthUtilName]);
     const snxUtilsContract = this.contractFactory.synthetixSummaryUtil({
       address: synthUtilAddress,
       network: this.network,
     });
 
-    const synthRates = await snxUtilscontract.read.synthsRates();
+    const synthRates = await snxUtilsContract.read.synthsRates();
     const synthSymbolBytes = synthRates[0];
 
     const addresses = await Promise.all(
@@ -94,7 +94,7 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     });
 
     const synthExchangeRatesName = ethers.utils.formatBytes32String('ExchangeRates');
-    const synthExchangeRatesAddress = await addressResolvercontract.read.getAddress([synthExchangeRatesName]);
+    const synthExchangeRatesAddress = await addressResolverContract.read.getAddress([synthExchangeRatesName]);
     const synthExchangeRatesContract = this.contractFactory.synthetixExchangeRates({
       address: synthExchangeRatesAddress,
       network: this.network,

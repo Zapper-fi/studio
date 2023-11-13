@@ -46,11 +46,11 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
           this.contractFactory.tarotFactory({ address: tarotFactoryAddress, network: this.network }),
         );
 
-        const numPoolsRaw = await tarotFactory.allLendingPoolsLength();
+        const numPoolsRaw = await tarotFactory.read.allLendingPoolsLength();
 
         return Promise.all(
           _.range(0, Number(numPoolsRaw)).map(async index => {
-            const tarotVaultAddressRaw = await tarotFactory.allLendingPools(index);
+            const tarotVaultAddressRaw = await tarotFactory.read.allLendingPools([BigInt(index)]);
             const tarotVaultAddress = tarotVaultAddressRaw.toLowerCase();
 
             const tarotVault = this.contractFactory.tarotVault({ network: this.network, address: tarotVaultAddress });
@@ -60,8 +60,8 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
               .catch(() => false);
             if (!isVault) return null;
 
-            const { borrowable0, borrowable1 } = await tarotFactory.getLendingPool(tarotVaultAddress);
-            return [borrowable0, borrowable1];
+            const lendingPool = await tarotFactory.read.getLendingPool([tarotVaultAddress]);
+            return [lendingPool[3], lendingPool[4]];
           }),
         );
       }),

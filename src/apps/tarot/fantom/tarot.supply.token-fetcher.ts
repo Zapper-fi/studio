@@ -66,7 +66,7 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
       }),
     );
 
-    const vaultTokenAddress = await collateralTokencontract.read.underlying();
+    const vaultTokenAddress = await collateralTokenContract.read.underlying();
     const vaultTokenContract = multicall.wrap(
       this.contractFactory.tarotBorrowable({ network: this.network, address: vaultTokenAddress }),
     );
@@ -81,11 +81,11 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
           this.contractFactory.tarotFactory({ address: tarotFactoryAddress, network: this.network }),
         );
 
-        const numPoolsRaw = await tarotFactory.allLendingPoolsLength();
+        const numPoolsRaw = await tarotFactory.read.allLendingPoolsLength();
 
         return Promise.all(
           _.range(0, Number(numPoolsRaw)).map(async index => {
-            const tarotVaultAddressRaw = await tarotFactory.allLendingPools(index);
+            const tarotVaultAddressRaw = await tarotFactory.read.allLendingPools([BigInt(index)]);
             const tarotVaultAddress = tarotVaultAddressRaw.toLowerCase();
 
             const tarotVault = this.contractFactory.tarotVault({ network: this.network, address: tarotVaultAddress });
@@ -95,14 +95,15 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
               .catch(() => false);
             if (!isVault) return null;
 
-            const { borrowable0, borrowable1, collateral } = await tarotFactory.getLendingPool(tarotVaultAddress);
+            const lendingPool = await tarotFactory.read.getLendingPool([tarotVaultAddress]);
+
             const poolTokenAddress = await this.getPoolTokenAddress({
               multicall,
               tokenLoader,
-              collateralAddress: collateral,
+              collateralAddress: lendingPool[2],
             });
 
-            return [borrowable0, borrowable1].map(address => ({
+            return [lendingPool[3], lendingPool[4]].map(address => ({
               address: address.toLowerCase(),
               poolTokenAddress: poolTokenAddress.toLowerCase(),
             }));

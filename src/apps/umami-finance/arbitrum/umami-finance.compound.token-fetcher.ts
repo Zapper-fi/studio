@@ -45,7 +45,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
       network: this.network,
     });
 
-    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const balanceRaw = await underlyingTokenContract.read.balanceOf([appToken.address]);
     const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];
@@ -57,7 +57,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
       network: this.network,
     });
 
-    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const balanceRaw = await underlyingTokenContract.read.balanceOf([appToken.address]);
     const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
     return [reserve];
   }

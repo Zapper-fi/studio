@@ -22,9 +22,10 @@ import {
   PoolsResponse,
   PoolVolumesResponse,
 } from './uniswap-v2.pool.subgraph.types';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends UniswapV2PoolOnChainTemplateTokenFetcher<T, any> {
   volumeDataLoader: DataLoader<string, number> | null;
 
@@ -79,7 +80,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     return filteredPoolIds;
   }
 
-  getPoolFactoryContract(_address: string) {
+  getPoolFactoryContract(_address: string): GetContractReturnType<any, PublicClient> {
     throw new Error('Method not implemented.');
   }
 

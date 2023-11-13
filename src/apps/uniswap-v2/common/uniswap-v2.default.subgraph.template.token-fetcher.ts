@@ -7,6 +7,7 @@ import { UniswapV2ViemContractFactory } from '../contracts';
 import { UniswapPair } from '../contracts/viem';
 
 import { UniswapV2PoolSubgraphTemplateTokenFetcher } from './uniswap-v2.pool.subgraph.template.token-fetcher';
+import { UniswapPairContract } from '../contracts/viem/UniswapPair';
 
 export abstract class UniswapV2DefaultPoolSubgraphTemplateTokenFetcher extends UniswapV2PoolSubgraphTemplateTokenFetcher<UniswapPair> {
   constructor(
@@ -16,19 +17,20 @@ export abstract class UniswapV2DefaultPoolSubgraphTemplateTokenFetcher extends U
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): UniswapPair {
+  getPoolTokenContract(address: string): UniswapPairContract {
     return this.contractFactory.uniswapPair({ address, network: this.network });
   }
 
-  getPoolToken0(contract: UniswapPair): Promise<string> {
+  getPoolToken0(contract: UniswapPairContract): Promise<string> {
     return contract.read.token0();
   }
 
-  getPoolToken1(contract: UniswapPair): Promise<string> {
+  getPoolToken1(contract: UniswapPairContract): Promise<string> {
     return contract.read.token1();
   }
 
-  getPoolReserves(contract: UniswapPair): Promise<BigNumberish[]> {
-    return contract.read.getReserves();
+  async getPoolReserves(contract: UniswapPairContract): Promise<BigNumberish[]> {
+    const reserves = await contract.read.getReserves();
+    return [reserves[0], reserves[1]];
   }
 }

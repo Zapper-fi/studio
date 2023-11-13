@@ -11,6 +11,7 @@ import {
 
 import { TraderJoeViemContractFactory } from '../contracts';
 import { TraderJoeVeJoeStaking } from '../contracts/viem';
+import { TraderJoeVeJoeStakingContract } from '../contracts/viem/TraderJoeVeJoeStaking';
 
 @PositionTemplate()
 export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<TraderJoeVeJoeStaking> {
@@ -28,15 +29,15 @@ export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTe
     return this.contractFactory.traderJoeVeJoeStaking({ address, network: this.network });
   }
 
-  async getPoolLength(_contract: TraderJoeVeJoeStaking): Promise<BigNumberish> {
+  async getPoolLength(_contract: TraderJoeVeJoeStakingContract): Promise<BigNumberish> {
     return 1;
   }
 
-  async getStakedTokenAddress(contract: TraderJoeVeJoeStaking) {
+  async getStakedTokenAddress(contract: TraderJoeVeJoeStakingContract) {
     return contract.read.joe();
   }
 
-  async getRewardTokenAddress(contract: TraderJoeVeJoeStaking) {
+  async getRewardTokenAddress(contract: TraderJoeVeJoeStakingContract) {
     return contract.read.veJoe();
   }
 
@@ -53,7 +54,7 @@ export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTe
   }
 
   async getStakedTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<TraderJoeVeJoeStaking>) {
-    return contract.read.userInfos([address]).then(v => v.balance);
+    return contract.read.userInfos([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<TraderJoeVeJoeStaking>) {

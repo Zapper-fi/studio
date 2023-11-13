@@ -46,7 +46,7 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
       network: this.network,
     });
 
-    const reserveRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const reserveRaw = await underlyingTokenContract.read.balanceOf(appToken.address);
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     const pricePerShare = reserve / appToken.supply;
 

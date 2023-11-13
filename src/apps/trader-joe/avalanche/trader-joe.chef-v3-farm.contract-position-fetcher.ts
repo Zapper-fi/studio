@@ -15,6 +15,8 @@ import {
 
 import { TraderJoeViemContractFactory } from '../contracts';
 import { TraderJoeChefV2Rewarder, TraderJoeChefV3 } from '../contracts/viem';
+import { TraderJoeChefV2RewarderContract } from '../contracts/viem/TraderJoeChefV2Rewarder';
+import { TraderJoeChefV3Contract } from '../contracts/viem/TraderJoeChefV3';
 
 @PositionTemplate()
 export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -35,19 +37,19 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     return this.traderJoeContractFactory.traderJoeChefV3({ address, network: this.network });
   }
 
-  getExtraRewarderContract(address: string): TraderJoeChefV2Rewarder {
+  getExtraRewarderContract(address: string): TraderJoeChefV2RewarderContract {
     return this.traderJoeContractFactory.traderJoeChefV2Rewarder({ address, network: this.network });
   }
 
-  async getPoolLength(contract: TraderJoeChefV3) {
+  async getPoolLength(contract: TraderJoeChefV3Contract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: TraderJoeChefV3, poolIndex: number) {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: TraderJoeChefV3Contract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: TraderJoeChefV3) {
+  async getRewardTokenAddress(contract: TraderJoeChefV3Contract) {
     return contract.read.JOE();
   }
 
@@ -63,14 +65,14 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<TraderJoeChefV3>) {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[3]);
   }
 
-  async getExtraRewarder(contract: TraderJoeChefV3, poolIndex: number) {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.rewarder);
+  async getExtraRewarder(contract: TraderJoeChefV3Contract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[4]);
   }
 
-  async getExtraRewardTokenAddresses(contract: TraderJoeChefV2Rewarder): Promise<string[]> {
+  async getExtraRewardTokenAddresses(contract: TraderJoeChefV2RewarderContract): Promise<string[]> {
     return [await contract.read.rewardToken()];
   }
 
@@ -78,7 +80,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     rewarderContract,
   }: GetMasterChefV2ExtraRewardTokenRewardRates<TraderJoeChefV3, TraderJoeChefV2Rewarder>) {
     return [
-      await rewardercontract.read.rewardPerSecond().catch(err => {
+      await rewarderContract.read.rewardPerSecond().catch(err => {
         if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
@@ -90,7 +92,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<TraderJoeChefV3>) {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -98,9 +100,9 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<TraderJoeChefV3>) {
-    return contract
-      .pendingTokens(contractPosition.dataProps.poolIndex, address)
-      .then(v => v.pendingJoe)
+    return contract.read
+      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address])
+      .then(v => v[0])
       .catch(e => {
         if (isViemMulticallUnderlyingError(e)) return 0;
         throw e;
@@ -112,9 +114,9 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefV2ExtraRewardTokenBalancesParams<TraderJoeChefV3, TraderJoeChefV2Rewarder>) {
-    return contract
-      .pendingTokens(contractPosition.dataProps.poolIndex, address)
-      .then(v => v.pendingBonusToken)
+    return contract.read
+      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address])
+      .then(v => v[3])
       .catch(e => {
         if (isViemMulticallUnderlyingError(e)) return 0;
         throw e;

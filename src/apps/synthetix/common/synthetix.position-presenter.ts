@@ -53,9 +53,9 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
     });
 
     const [unlockedSnxRaw, collateralRaw, debtBalanceRaw] = await Promise.all([
-      synthetixContract.balanceOf(address),
-      synthetixContract.collateral(address),
-      synthetixContract.debtBalanceOf(address, formatBytes32String('sUSD')),
+      synthetixContract.read.balanceOf([address]),
+      synthetixContract.read.collateral([address]),
+      synthetixContract.read.debtBalanceOf([address, formatBytes32String('sUSD')]),
     ]);
 
     const collateralBalance = Number(collateralRaw) / 10 ** 18;
