@@ -79,7 +79,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusLock>) {
-    return contract.read.stakedDetails([address]).then(details => details.amount);
+    return contract.read.stakedDetails([address]).then(details => details[0]);
   }
 
   async getRewardTokenBalances({ contractPosition, contract, address, multicall }: GetTokenBalancesParams<PlutusLock>) {
@@ -100,27 +100,24 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
 
         const userPlsDpxShare = await multicall
           .wrap(rewardsContract)
-          .read.calculateShare(address, epoch, rewardsForEpoch.plsDpx);
+          .read.calculateShare([address, epoch, rewardsForEpoch[1]]);
         const userPlsJonesShare = await multicall
           .wrap(rewardsContract)
-          .read.calculateShare(address, epoch, rewardsForEpoch.plsJones);
+          .read.calculateShare([address, epoch, rewardsForEpoch[2]]);
         if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0)
           return [new BigNumber(0), new BigNumber(0)];
 
         const now = Date.now() / 1000;
-        const vestedDuration =
-          claimDetails.lastClaimedTimestamp > rewardsForEpoch.addedAtTimestamp
-            ? now - claimDetails.lastClaimedTimestamp
-            : now - rewardsForEpoch.addedAtTimestamp;
+        const vestedDuration = claimDetails[1] > rewardsForEpoch[0] ? now - claimDetails[1] : now - rewardsForEpoch[0];
 
         const claimablePlsDpx = BigNumber.min(
           new BigNumber(userPlsDpxShare.toString()).times(vestedDuration).div(EPOCH_DURATION),
-          new BigNumber(userPlsDpxShare.toString()).minus(claimDetails.plsDpxClaimedAmt.toString()),
+          new BigNumber(userPlsDpxShare.toString()).minus(claimDetails[2].toString()),
         );
 
         const claimablePlsJones = BigNumber.min(
           new BigNumber(userPlsJonesShare.toString()).times(vestedDuration).div(EPOCH_DURATION),
-          new BigNumber(userPlsJonesShare.toString()).minus(claimDetails.plsJonesClaimedAmt.toString()),
+          new BigNumber(userPlsJonesShare.toString()).minus(claimDetails[3].toString()),
         );
 
         return [claimablePlsDpx, claimablePlsJones];

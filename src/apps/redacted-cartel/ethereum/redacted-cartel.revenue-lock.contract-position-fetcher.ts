@@ -45,7 +45,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
   }
 
   async getTokenDefinitions(
-    _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
+    _params: GetTokenDefinitionsParams<RedactedRevenueLock, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return [
       {
@@ -73,7 +73,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
 
   async getLabel({
     contractPosition,
-  }: GetDisplayPropsParams<Contract, DefaultDataProps, DefaultContractPositionDefinition>): Promise<string> {
+  }: GetDisplayPropsParams<RedactedRevenueLock, DefaultDataProps, DefaultContractPositionDefinition>): Promise<string> {
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     return `Voting Escrow ${getLabelFromToken(suppliedToken)}`;
   }
@@ -81,8 +81,8 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
-    const { total } = await contract.read.lockedBalances([address]);
+  }: GetTokenBalancesParams<RedactedRevenueLock, DefaultDataProps>): Promise<BigNumberish[]> {
+    const [total] = await contract.read.lockedBalances([address]);
 
     const [claimableBTRFLY, claimableETH, claimableWETH] = await this.earningsResolver.getClaimableAmount(
       address,

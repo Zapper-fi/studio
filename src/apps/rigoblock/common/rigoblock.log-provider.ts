@@ -17,46 +17,40 @@ export class RigoblockLogProvider {
   constructor(@Inject(RigoblockViemContractFactory) private readonly contractFactory: RigoblockViemContractFactory) {}
 
   @Cache({
-    key: ({
-      network,
-      address,
-      fromBlock,
-      logType,
-    }: {
-      network: Network;
-      logType: PoolLogType;
-      fromBlock: number;
-      address: string;
-    }) => `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
+    key: ({ network, address, fromBlock }: { network: Network; fromBlock: number; address: string }) =>
+      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:registered`,
     ttl: duration(8, 'hours').asSeconds(),
   })
-  async getRigoblockLogs({
+  async getRigoblockRegisteredLogs({
     fromBlock,
     network,
     address,
-    logType,
   }: {
     address: string;
-    logType: PoolLogType;
     network: Network;
     fromBlock: number;
   }) {
-    switch (logType) {
-      case PoolLogType.REGISTERED: {
-        const contract = this.contractFactory.poolRegistry({ network, address });
-        const logs = await contract.getEvents.Registered({}, { fromBlock: BigInt(fromBlock) });
-        return logs;
-      }
+    const contract = this.contractFactory.poolRegistry({ network, address });
+    const logs = await contract.getEvents.Registered({}, { fromBlock: BigInt(fromBlock) });
+    return logs;
+  }
 
-      case PoolLogType.TOKEN_WHITELISTED: {
-        const contract = this.contractFactory.tokenWhitelist({ network, address });
-        const logs = await contract.getEvents.Whitelisted({}, { fromBlock: BigInt(fromBlock) });
-        return logs;
-      }
-
-      default: {
-        throw new Error(`Unknown log type: ${logType}`);
-      }
-    }
+  @Cache({
+    key: ({ network, address, fromBlock }: { network: Network; fromBlock: number; address: string }) =>
+      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:whitelisted`,
+    ttl: duration(8, 'hours').asSeconds(),
+  })
+  async getRigoblockWhitelistedLogs({
+    fromBlock,
+    network,
+    address,
+  }: {
+    address: string;
+    network: Network;
+    fromBlock: number;
+  }) {
+    const contract = this.contractFactory.tokenWhitelist({ network, address });
+    const logs = await contract.getEvents.Whitelisted({}, { fromBlock: BigInt(fromBlock) });
+    return logs;
   }
 }

@@ -61,7 +61,7 @@ export class ArbitrumPlutusPlsSpaTokenFetcher extends AppTokenTemplatePositionFe
     const slot0 = await multicall.wrap(uniswapV3PairContract).read.slot0();
     const tickBasisConstant = 1.0001;
 
-    const token0InTermOfToken1 = tickBasisConstant ** Math.abs(slot0.tick);
+    const token0InTermOfToken1 = tickBasisConstant ** Math.abs(slot0[1]);
     const pricePerShare = 1 / token0InTermOfToken1;
 
     return [pricePerShare];

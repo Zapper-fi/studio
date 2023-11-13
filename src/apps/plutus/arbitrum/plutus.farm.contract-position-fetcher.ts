@@ -12,6 +12,7 @@ import {
 
 import { PlutusViemContractFactory } from '../contracts';
 import { PlutusChef } from '../contracts/viem';
+import { PlutusChefContract } from '../contracts/viem/PlutusChef';
 
 @PositionTemplate()
 export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlutusChef> {
@@ -35,7 +36,7 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
   }
 
   async getStakedTokenAddress(contract: PlutusChefContract, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
   async getRewardTokenAddress(contract: PlutusChefContract): Promise<string> {
@@ -51,7 +52,7 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -59,7 +60,7 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

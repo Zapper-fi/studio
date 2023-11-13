@@ -13,6 +13,7 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { Abi } from 'viem';
 
 export type PoolTogetherV3PrizePoolDefinition = DefaultAppTokenDefinition & {
   ticketAddress: string;
@@ -29,7 +30,7 @@ export type PoolTogetherV3PrizePoolDataProps = DefaultAppTokenDataProps & {
   faucetAddresses: string[];
 };
 
-export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Abi> extends AppTokenTemplatePositionFetcher<
   T,
   PoolTogetherV3PrizePoolDataProps,
   PoolTogetherV3PrizePoolDefinition
@@ -67,15 +68,17 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
       address: sponsorshipAddress,
       network: this.network,
     });
+
     const ticketTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: ticketAddress,
       network: this.network,
     });
+
     const [sponsorshipSupplyRaw, sponsorshipDecimals, ticketSupplyRaw, ticketDecimals] = await Promise.all([
-      sponsorshipTokencontract.read.totalSupply(),
-      sponsorshipTokencontract.read.decimals(),
-      ticketTokencontract.read.totalSupply(),
-      ticketTokencontract.read.decimals(),
+      sponsorshipTokenContract.read.totalSupply(),
+      sponsorshipTokenContract.read.decimals(),
+      ticketTokenContract.read.totalSupply(),
+      ticketTokenContract.read.decimals(),
     ]);
 
     const sponsorshipSupply = Number(sponsorshipSupplyRaw) / 10 ** sponsorshipDecimals;

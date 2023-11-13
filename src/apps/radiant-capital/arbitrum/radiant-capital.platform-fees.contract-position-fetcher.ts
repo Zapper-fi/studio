@@ -16,6 +16,7 @@ import {
 
 import { RadiantCapitalViemContractFactory } from '../contracts';
 import { RadiantCapitalPlatformFees } from '../contracts/viem/RadiantCapitalPlatformFees';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<RadiantCapitalPlatformFees> {
@@ -39,7 +40,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RadiantCapitalPlatformFees>) {
     const [rewards, radiantTokenAddressRaw] = await Promise.all([
-      contract.claimableRewards(ZERO_ADDRESS),
+      contract.read.claimableRewards([ZERO_ADDRESS]),
       contract.read.stakingToken(),
     ]);
     const rewardTokenAddressesRaw = rewards
@@ -93,14 +94,14 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
       contract.read.claimableRewards([address]),
     ]);
 
-    const withdrawableBalanceRaw = withdrawableDataRaw.amount.sub(withdrawableDataRaw.penaltyAmount).toString();
+    const withdrawableBalanceRaw = BigNumber.from(withdrawableDataRaw[0]).sub(withdrawableDataRaw[1]).toString();
 
     return contractPosition.tokens.map((token, idx) => {
-      if (idx === 0) return lockedBalancesData.total; // Locked RDNT
+      if (idx === 0) return lockedBalancesData[0]; // Locked RDNT
       if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked RDNT
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
-        ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,
+        ({ token: tokenAddressRaw }) => tokenAddressRaw.toLowerCase() === token.address,
       );
 
       return rewardTokenMatch?.amount ?? 0;

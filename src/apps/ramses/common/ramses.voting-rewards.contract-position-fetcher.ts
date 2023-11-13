@@ -12,10 +12,9 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 
 import { RamsesViemContractFactory } from '../contracts';
 import { RamsesBribe } from '../contracts/viem';
+import { Abi } from 'viem';
 
-export abstract class VotingRewardsContractPositionFetcher<
-  T extends Contract,
-> extends CustomContractPositionTemplatePositionFetcher<T> {
+export abstract class VotingRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RamsesBribe> {
   veTokenAddress = '0xaaa343032aa79ee9a6897dab03bef967c3289a06';
 
   constructor(
@@ -25,9 +24,9 @@ export abstract class VotingRewardsContractPositionFetcher<
     super(appToolkit);
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<T>) {
-    const numRewards = Number(await contract.read.rewardsListLength());
-    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.read.rewards([BigInt(n)])));
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RamsesBribe>) {
+    const bribeTokens = await contract.read.getRewardTokens();
+
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());
@@ -52,7 +51,7 @@ export abstract class VotingRewardsContractPositionFetcher<
     // Get ve token IDs
     const escrow = this.contractFactory.ramsesVe({ address: this.veTokenAddress, network: this.network });
     const mcEscrow = multicall.wrap(escrow);
-    const veCount = Number(await mcEscrow.balanceOf(address));
+    const veCount = Number(await mcEscrow.read.balanceOf([address]));
     const veTokenIds = await Promise.all(
       range(veCount).map(async i => mcEscrow.read.tokenOfOwnerByIndex([address, BigInt(i)])),
     );
@@ -66,13 +65,14 @@ export abstract class VotingRewardsContractPositionFetcher<
 
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
-        const bribeContract = multicall.wrap(this.getContract(contractPosition.address) as unknown as RamsesBribe);
+        const bribeContract = multicall.wrap(this.getContract(contractPosition.address));
 
         const tokens = await Promise.all(
           contractPosition.tokens.map(async bribeToken => {
-            const balancesPerBribePromises = veTokenIds.map(async _ =>
-              bribeContract.read.earned([bribeToken.address, address]),
+            const balancesPerBribePromises = veTokenIds.map(async tokenId =>
+              bribeContract.read.earned([bribeToken.address, tokenId]),
             );
+
             const balancesPerBribe = await Promise.all(balancesPerBribePromises);
             const balancesPerBribeSum = balancesPerBribe.reduce((acc, v) => acc.add(v), BigNumber.from(0));
             return drillBalance(bribeToken, balancesPerBribeSum.toString());
@@ -94,7 +94,7 @@ export abstract class VotingRewardsContractPositionFetcher<
     // Get ve token IDs
     const escrow = this.contractFactory.ramsesVe({ address: this.veTokenAddress, network: this.network });
     const mcEscrow = multicall.wrap(escrow);
-    const veCount = Number(await mcEscrow.balanceOf(address));
+    const veCount = Number(await mcEscrow.read.balanceOf([address]));
     const veTokenIds = await Promise.all(
       range(veCount).map(async i => mcEscrow.read.tokenOfOwnerByIndex([address, BigInt(i)])),
     );
@@ -108,14 +108,14 @@ export abstract class VotingRewardsContractPositionFetcher<
 
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
-        const bribeContract = multicall.wrap(this.getContract(contractPosition.address) as unknown as RamsesBribe);
+        const bribeContract = multicall.wrap(this.getContract(contractPosition.address));
 
         const balance: RawContractPositionBalance = {
           key: this.appToolkit.getPositionKey(contractPosition),
           tokens: await Promise.all(
             contractPosition.tokens.map(async bribeToken => {
-              const balancesPerBribePromises = veTokenIds.map(async _ =>
-                bribeContract.read.earned([bribeToken.address, address]),
+              const balancesPerBribePromises = veTokenIds.map(async veTokenId =>
+                bribeContract.read.earned([bribeToken.address, veTokenId]),
               );
               const balancesPerBribe = await Promise.all(balancesPerBribePromises);
               const balancesPerBribeSum = balancesPerBribe.reduce((acc, v) => acc.add(v), BigNumber.from(0));

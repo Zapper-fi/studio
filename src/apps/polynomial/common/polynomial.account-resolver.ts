@@ -23,12 +23,12 @@ export class PolynomialAccountResolver {
       network: this.network,
     });
     const mcAccountResolver = multicall.wrap(accountResolver);
-    const authorityAccounts = await mcAccountResolver.getAuthorityAccounts(address);
+    const authorityAccounts = await mcAccountResolver.read.getAuthorityAccounts([address]);
     if (authorityAccounts.length === 0) {
       return ZERO_ADDRESS;
     }
     const smartAccountAddress = authorityAccounts[0].toLowerCase();
-    const accountAuthorities = await mcAccountResolver.getAccountAuthorities(smartAccountAddress);
+    const accountAuthorities = await mcAccountResolver.read.getAccountAuthorities([smartAccountAddress]);
     const mainOwnerAddress = accountAuthorities[0].toLowerCase();
     if (mainOwnerAddress != address) {
       return ZERO_ADDRESS;

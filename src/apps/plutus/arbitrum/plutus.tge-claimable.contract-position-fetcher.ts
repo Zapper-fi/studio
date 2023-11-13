@@ -13,6 +13,7 @@ import {
 
 import { PlutusViemContractFactory } from '../contracts';
 import { PlutusPrivateTgeVester } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
@@ -50,6 +51,6 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
     const pendingClaims = await contract.read.pendingClaims([address]);
-    return [pendingClaims._allocation.sub(pendingClaims._claimed)];
+    return [BigNumber.from(pendingClaims[2]).sub(pendingClaims[1])];
   }
 }

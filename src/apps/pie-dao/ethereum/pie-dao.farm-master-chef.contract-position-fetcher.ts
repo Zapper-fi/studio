@@ -10,6 +10,7 @@ import {
 
 import { PieDaoViemContractFactory } from '../contracts';
 import { PieDaoStaking } from '../contracts/viem';
+import { PieDaoStakingContract } from '../contracts/viem/PieDaoStaking';
 
 @PositionTemplate()
 export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PieDaoStaking> {
@@ -27,15 +28,15 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
     return this.contractFactory.pieDaoStaking({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PieDaoStaking) {
+  async getPoolLength(contract: PieDaoStakingContract) {
     return contract.read.poolCount();
   }
 
-  async getStakedTokenAddress(contract: PieDaoStaking, poolIndex: number) {
+  async getStakedTokenAddress(contract: PieDaoStakingContract, poolIndex: number) {
     return contract.read.getPoolToken([BigInt(poolIndex)]);
   }
 
-  async getRewardTokenAddress(contract: PieDaoStaking) {
+  async getRewardTokenAddress(contract: PieDaoStakingContract) {
     return contract.read.reward();
   }
 
@@ -56,7 +57,7 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PieDaoStaking>) {
-    return contract.read.getStakeTotalDeposited([address, contractPosition.dataProps.poolIndex]);
+    return contract.read.getStakeTotalDeposited([address, BigInt(contractPosition.dataProps.poolIndex)]);
   }
 
   async getRewardTokenBalance({
@@ -64,6 +65,6 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PieDaoStaking>) {
-    return contract.read.getStakeTotalUnclaimed([address, contractPosition.dataProps.poolIndex]);
+    return contract.read.getStakeTotalUnclaimed([address, BigInt(contractPosition.dataProps.poolIndex)]);
   }
 }

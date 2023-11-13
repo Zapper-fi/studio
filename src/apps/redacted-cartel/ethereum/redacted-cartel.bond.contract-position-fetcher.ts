@@ -13,6 +13,7 @@ import {
 
 import { RedactedCartelViemContractFactory } from '../contracts';
 import { RedactedBondDepository } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumRedactedCartelBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedBondDepository> {
@@ -73,6 +74,6 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
       multicall.wrap(contract).read.pendingPayoutFor([address]),
     ]);
 
-    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
+    return [BigNumber.from(bondInfo[0]).sub(claimablePayout).toString(), claimablePayout.toString()];
   }
 }

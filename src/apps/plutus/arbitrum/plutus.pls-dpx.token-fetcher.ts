@@ -59,8 +59,10 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
       address: '0x035d9815ae5af78d568721fa118bb93428c91f51',
       network: this.network,
     });
-    const oneUnit = BigNumber.from(10).pow(18);
-    const pricePerShare = await multicall.wrap(camelotPairContract).read.getAmountOut([oneUnit, appToken.address]);
+    const oneUnit = BigNumber.from(10).pow(18).toString();
+    const pricePerShare = await multicall
+      .wrap(camelotPairContract)
+      .read.getAmountOut([BigInt(oneUnit), appToken.address]);
 
     return [Number(pricePerShare) / 10 ** appToken.decimals];
   }

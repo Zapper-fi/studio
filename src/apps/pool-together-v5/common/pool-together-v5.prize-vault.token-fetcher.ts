@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Erc4626 } from '~contract/contracts';
+import { Erc4626 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDefinition,
@@ -48,8 +48,8 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
     const vaultNumberRaw = await multicall.wrap(vaultFactoryContract).read.totalVaults();
 
     return Promise.all(
-      range(0, vaultNumberRaw.toNumber()).map(async index => {
-        const address = await multicall.wrap(vaultFactoryContract).read.allVaults([index]);
+      range(0, Number(vaultNumberRaw)).map(async index => {
+        const address = await multicall.wrap(vaultFactoryContract).read.allVaults([BigInt(index)]);
         return {
           address,
         };
@@ -62,7 +62,8 @@ export abstract class PoolTogetherV5PrizeVaultTokenFetcher extends AppTokenTempl
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<Erc4626>) {
-    const ratioRaw = await contract.read.convertToAssets(BigNumber.from((10 ** appToken.decimals).toString()));
+    const sampleAmount = BigNumber.from(10).pow(appToken.decimals).toString();
+    const ratioRaw = await contract.read.convertToAssets([BigInt(sampleAmount)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];
   }

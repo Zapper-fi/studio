@@ -11,6 +11,7 @@ import {
 
 import { QiDaoViemContractFactory } from '../contracts';
 import { QiDaoMasterChefV3 } from '../contracts/viem';
+import { QiDaoMasterChefV3Contract } from '../contracts/viem/QiDaoMasterChefV3';
 
 @Injectable()
 export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<QiDaoMasterChefV3> {
@@ -43,15 +44,15 @@ export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTempl
     return this.contractFactory.qiDaoMasterChefV3({ address, network: this.network });
   }
 
-  async getPoolLength(contract: QiDaoMasterChefV3): Promise<BigNumberish> {
+  async getPoolLength(contract: QiDaoMasterChefV3Contract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: QiDaoMasterChefV3, poolIndex: number) {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: QiDaoMasterChefV3Contract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: QiDaoMasterChefV3) {
+  async getRewardTokenAddress(contract: QiDaoMasterChefV3Contract) {
     return contract.read.erc20();
   }
 
@@ -67,7 +68,7 @@ export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTempl
     contract,
     definition,
   }: GetMasterChefDataPropsParams<QiDaoMasterChefV3>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -75,7 +76,7 @@ export abstract class QiDaoFarmV3ContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<QiDaoMasterChefV3>) {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

@@ -7,7 +7,7 @@ import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/ramses.voting-rewards.contract-position-fetcher';
-import { RamsesBribe } from '../contracts';
+import { RamsesBribe } from '../contracts/viem';
 
 export type RamsesBribeDefinition = {
   address: string;
@@ -15,7 +15,7 @@ export type RamsesBribeDefinition = {
 };
 
 @PositionTemplate()
-export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<RamsesBribe> {
+export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher {
   groupLabel = 'Bribe';
   voterAddress = '0xaaa2564deb34763e3d05162ed3f5c2658691f499';
 

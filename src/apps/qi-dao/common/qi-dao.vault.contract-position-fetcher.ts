@@ -106,7 +106,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
     });
 
     const reserveRaw = await (contractPosition.tokens[0].address === ZERO_ADDRESS
-      ? multicall.wrap(multicall.contract).getEthBalance(contractPosition.address).read
+      ? multicall.wrap(multicall.contract).read.getEthBalance([contractPosition.address])
       : multicall.wrap(collateralTokenContract).read.balanceOf([contractPosition.address]));
 
     const reserve = Number(reserveRaw) / 10 ** collateralToken.decimals;
@@ -152,7 +152,9 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
         if (numOfVaults === 0) return [];
 
         const tokenIds = await Promise.all(
-          range(0, numOfVaults).map(i => multicall.wrap(vaultNftContract).read.tokenOfOwnerByIndex([address, i])),
+          range(0, numOfVaults).map(i =>
+            multicall.wrap(vaultNftContract).read.tokenOfOwnerByIndex([address, BigInt(i)]),
+          ),
         );
 
         const positionBalances = await Promise.all(

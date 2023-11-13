@@ -61,31 +61,30 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     // Get all logs for each pool builder contract
     const builderLogs = await Promise.all(
       poolBuilders.map(({ registryAddress, blockNumber }) =>
-        this.logProvider.getRigoblockLogs({
+        this.logProvider.getRigoblockRegisteredLogs({
           fromBlock: blockNumber,
           address: registryAddress.toLowerCase(),
           network: this.network,
-          logType: PoolLogType.REGISTERED,
         }),
       ),
     );
+
     const definitions = await Promise.all(
       builderLogs.flatMap(logs =>
-        flatMap(logs, (logsForType, logType: PoolLogType) =>
-          logsForType.map(async log => {
-            const poolAddress = log.args[1].toLowerCase();
-            const name = log.args[2].toLowerCase();
+        logs.map(async log => {
+          const poolAddress = log.args.pool!.toLowerCase();
+          const name = log.args.name!.toLowerCase();
 
-            return {
-              logType,
-              address: poolAddress,
-              name: parseBytes32String(name),
-              tokenList,
-            };
-          }),
-        ),
+          return {
+            logType: PoolLogType.REGISTERED,
+            address: poolAddress,
+            name: parseBytes32String(name),
+            tokenList,
+          };
+        }),
       ),
     );
+
     return [...definitions, ...this.extraDefinitions];
   }
 
@@ -115,27 +114,24 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
 
     const tokenLogs = await Promise.all(
       tokenBuilders.map(({ tokenWhitelistAddress, blockNumber }) =>
-        this.logProvider.getRigoblockLogs({
+        this.logProvider.getRigoblockWhitelistedLogs({
           fromBlock: blockNumber,
           address: tokenWhitelistAddress.toLowerCase(),
           network: this.network,
-          logType: PoolLogType.TOKEN_WHITELISTED,
         }),
       ),
     );
 
     return await Promise.all(
       tokenLogs.flatMap(logs =>
-        flatMap(logs, (logsForType, logType: PoolLogType) =>
-          logsForType.map(async log => {
-            const tokenAddress = log.args[0].toLowerCase();
+        logs.map(async log => {
+          const tokenAddress = log.args.token!.toLowerCase();
 
-            return {
-              logType,
-              address: tokenAddress,
-            };
-          }),
-        ),
+          return {
+            logType: PoolLogType.TOKEN_WHITELISTED,
+            address: tokenAddress,
+          };
+        }),
       ),
     );
   }
@@ -156,12 +152,12 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
           network: this.network,
         });
         const poolTokenBalance = await multicall.wrap(uTokenContract).read.balanceOf([definition.address]);
-        if (poolTokenBalance && poolTokenBalance.gt(BigNumber.from(0))) {
+        if (poolTokenBalance && Number(poolTokenBalance) > 0) {
           heldTokens[i] = tokens[i];
         }
       } else {
-        const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(definition.address);
-        if (ethBalance && ethBalance.gt(BigNumber.from(0))) {
+        const ethBalance = await multicall.wrap(multicall.contract).read.getEthBalance([definition.address]);
+        if (ethBalance && Number(ethBalance) > 0) {
           heldTokens[i] = tokens[i];
         }
       }
@@ -179,7 +175,7 @@ export abstract class RigoblockPoolTokenFetcher extends AppTokenTemplatePosition
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
         if (token.address === ZERO_ADDRESS) {
-          const ethBalance = await multicall.wrap(multicall.contract).getEthBalance(appToken.address);
+          const ethBalance = await multicall.wrap(multicall.contract).read.getEthBalance([appToken.address]);
           return Number(ethBalance) / 10 ** 18;
         }
         const uTokenContract = this.appToolkit.globalViemContracts.erc20({

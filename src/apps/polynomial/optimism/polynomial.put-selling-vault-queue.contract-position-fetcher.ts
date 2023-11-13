@@ -71,15 +71,15 @@ export class OptimismPolynomialPutSellingVaultQueueContractPositionFetcher exten
     );
 
     const userPendingDeposits = pendingDeposits
-      .filter(deposit => deposit.user.toLowerCase() === address.toLowerCase())
-      .filter(deposit => !Number(deposit.mintedTokens));
+      .filter(deposit => deposit[1].toLowerCase() === address.toLowerCase())
+      .filter(deposit => !Number(deposit[3]));
 
     const userPendingWithdrawals = pendingWithdrawals
-      .filter(withdrawal => withdrawal.user.toLowerCase() === address.toLowerCase())
-      .filter(withdrawal => !Number(withdrawal.returnedAmount));
+      .filter(withdrawal => withdrawal[1].toLowerCase() === address.toLowerCase())
+      .filter(withdrawal => !Number(withdrawal[3]));
 
-    const depositBalance = userPendingDeposits.reduce((acc, v) => acc.add(v.depositedAmount), BigNumber.from(0));
-    const withdrawalBalance = userPendingWithdrawals.reduce((acc, v) => acc.add(v.withdrawnTokens), BigNumber.from(0));
+    const depositBalance = userPendingDeposits.reduce((acc, v) => acc.add(v[2]), BigNumber.from(0));
+    const withdrawalBalance = userPendingWithdrawals.reduce((acc, v) => acc.add(v[2]), BigNumber.from(0));
 
     return [depositBalance, withdrawalBalance];
   }

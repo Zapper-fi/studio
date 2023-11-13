@@ -46,8 +46,9 @@ export abstract class PoolTogetherV3SponsorshipTokenFetcher extends PoolTogether
 
     const [supplyRaw, ticketDecimals] = await Promise.all([
       contract.read.totalSupply(),
-      ticketcontract.read.decimals(),
+      ticketContract.read.decimals(),
     ]);
+
     return Number(supplyRaw) / 10 ** ticketDecimals;
   }
 }
