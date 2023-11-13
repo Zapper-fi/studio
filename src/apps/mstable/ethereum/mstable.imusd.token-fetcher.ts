@@ -6,7 +6,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { MstableViemContractFactory } from '../contracts';
-import { MstableAsset } from '../contracts/ethers';
+import { MstableAsset } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFetcher<MstableAsset> {

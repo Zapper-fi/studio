@@ -100,38 +100,39 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomCo
 
     const salaries = await Promise.all(
       streams.map(async stream =>
-        sablierSalary.getSalary(stream.salaryId).catch(err => {
+        sablierSalary.read.getSalary([BigInt(stream.salaryId)]).catch(err => {
           if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
       ),
     );
 
-    const underlyingAddresses = compact(salaries).map(({ tokenAddress }) => ({
+    const underlyingAddresses = compact(salaries).map(stream => ({
       network: this.network,
-      address: tokenAddress.toLowerCase(),
+      address: stream[3].toLowerCase(),
     }));
 
     const tokenDependencies = await tokenLoader.getMany(underlyingAddresses).then(deps => compact(deps));
 
     const positions = await Promise.all(
       streams.map(async stream => {
-        const salaryRaw = await sablierSalary.getSalary(stream.salaryId).catch(err => {
+        const salaryRaw = await sablierSalary.read.getSalary([BigInt(stream.salaryId)]).catch(err => {
           if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
         if (!salaryRaw) return null;
 
-        const isRecipient = salaryRaw.employee.toLowerCase() === address;
+        const employeeAddress = salaryRaw[1].toLowerCase();
+        const isRecipient = employeeAddress === address;
         const who = isRecipient ? address : sablierSalaryAddress;
-        const salaryBalanceRaw = await sablierStream.balanceOf(stream.streamId, who);
+        const salaryBalanceRaw = await sablierStream.read.balanceOf([BigInt(stream.streamId), who]);
 
-        const tokenAddress = salaryRaw.tokenAddress.toLowerCase();
+        const tokenAddress = salaryRaw[3].toLowerCase();
         const token = tokenDependencies.find(t => t.address === tokenAddress);
         if (!token) return null;
 
-        const remainingRaw = salaryRaw.remainingBalance.toString();
-        const depositRaw = salaryRaw.salary.toString();
+        const remainingRaw = salaryRaw[6].toString();
+        const depositRaw = salaryRaw[2].toString();
         const balanceRaw = salaryBalanceRaw.toString();
 
         const deposited = Number(depositRaw) / 10 ** token.decimals;

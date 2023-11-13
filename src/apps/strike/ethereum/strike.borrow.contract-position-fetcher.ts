@@ -107,7 +107,7 @@ export class EthereumStrikeBorrowContractPositionFetcher extends CompoundBorrowC
     const comptrollerContract = this.getCompoundComptrollerContract(this.comptrollerAddress);
     const collateralFactorRaw = await params.multicall
       .wrap(comptrollerContract)
-      .read.markets(params.contractPosition.address);
+      .read.markets([params.contractPosition.address]);
     const collateralFactor = Number(collateralFactorRaw.collateralFactorMantissa) / 10 ** 18;
 
     // The "cash" needs to be converted back into a proper number format.

@@ -14,7 +14,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { CozyFinanceViemContractFactory } from '../contracts';
-import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/ethers';
+import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<

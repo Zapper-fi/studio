@@ -91,7 +91,7 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
 
     const maybeRawStreams = await Promise.all(
       streams.map(async ({ streamId }) => {
-        const rawStream = await sablierStream.getStream(streamId).catch(err => {
+        const rawStream = await sablierStream.read.getStream([BigInt(streamId)]).catch(err => {
           if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
@@ -102,32 +102,37 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
     );
 
     const rawStreams = compact(maybeRawStreams);
-    const underlyingAddresses = rawStreams.map(({ tokenAddress }) => ({
+    const underlyingAddresses = rawStreams.map(data => ({
       network: this.network,
-      address: tokenAddress.toLowerCase(),
+      address: data[3].toLowerCase(),
     }));
 
     const tokenDependencies = await tokenLoader.getMany(underlyingAddresses).then(deps => compact(deps));
 
     const positions = await Promise.all(
       rawStreams.map(async stream => {
-        const streamBalanceRaw = await sablierStream.balanceOf(stream.streamId, address).catch(err => {
+        const tokenAddress = stream[3].toLowerCase();
+        const remainingBalanceData = stream[6];
+        const depositData = stream[2];
+        const recipientAddress = stream[1].toLowerCase();
+
+        const streamBalanceRaw = await sablierStream.read.balanceOf([BigInt(stream.streamId), address]).catch(err => {
           if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
         if (!streamBalanceRaw) return null;
 
-        const token = tokenDependencies.find(t => t.address === stream.tokenAddress.toLowerCase());
+        const token = tokenDependencies.find(t => t.address === tokenAddress.toLowerCase());
         if (!token) return null;
 
-        const remainingRaw = stream.remainingBalance.toString();
-        const depositRaw = stream.deposit.toString();
+        const remainingRaw = remainingBalanceData.toString();
+        const depositRaw = depositData.toString();
         const balanceRaw = streamBalanceRaw.toString();
 
         const deposited = Number(depositRaw) / 10 ** token.decimals;
         const remaining = Number(remainingRaw) / 10 ** token.decimals;
         const tokenBalance = drillBalance(token, balanceRaw);
-        const isRecipient = stream.recipient.toLowerCase() === address;
+        const isRecipient = recipientAddress === address;
 
         const position: ContractPositionBalance<SablierStreamContractPositionDataProps> = {
           type: ContractType.POSITION,

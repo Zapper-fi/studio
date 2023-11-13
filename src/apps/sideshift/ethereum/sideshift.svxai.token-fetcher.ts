@@ -7,7 +7,7 @@ import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/tem
 import { Network } from '~types/network.interface';
 
 import { SideshiftViemContractFactory } from '../contracts';
-import { SvxaiVault } from '../contracts/ethers';
+import { SvxaiVault } from '../contracts/viem';
 
 const network = Network.ETHEREUM_MAINNET;
 

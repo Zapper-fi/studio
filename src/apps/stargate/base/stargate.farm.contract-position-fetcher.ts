@@ -9,19 +9,21 @@ import {
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.contract-position-fetcher';
-import { StargateChefBase } from '../contracts';
+import { StargateChefBase } from '../contracts/viem';
+import { StargateFarmBaseContractPositionFetcher } from '../common/stargate.farm-base.contract-position-fetcher';
+import { StargateChefBaseContract } from '../contracts/viem/StargateChefBase';
 
 @PositionTemplate()
-export class BaseStargateFarmContractPositionFetcher extends StargateFarmContractPositionFetcher<StargateChefBase> {
+export class BaseStargateFarmContractPositionFetcher extends StargateFarmBaseContractPositionFetcher {
   groupLabel = 'Farms';
   chefAddress = '0x06eb48763f117c7be887296cdcdfad2e4092739c';
   rewardRateUnit = RewardRateUnit.SECOND;
 
-  getStargateChefContract(address: string): StargateChefBase {
+  getStargateChefContract(address: string): StargateChefBaseContract {
     return this.contractFactory.stargateChefBase({ address, network: this.network });
   }
 
-  getStargateTokenAddress(contract: StargateChefBase): Promise<string> {
+  getStargateTokenAddress(contract: StargateChefBaseContract): Promise<string> {
     return contract.read.eToken();
   }
 

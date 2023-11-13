@@ -33,7 +33,7 @@ export class BaseSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<Sonn
   }
 
   async getMarkets({ contract }: GetMarketsParams<SonneComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<SonneSoToken>) {

@@ -10,13 +10,15 @@ import {
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { StargateViemContractFactory } from '../contracts';
-import { StargateChef } from '../contracts/viem';
+import { Abi, GetContractReturnType } from 'viem';
+import { StargateChef, StargateChefBase } from '../contracts/viem';
 import { StargateChefContract } from '../contracts/viem/StargateChef';
+import { StargateChefBaseContract } from '../contracts/viem/StargateChefBase';
 
-export abstract class StargateFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StargateChef> {
-  abstract getStargateChefContract(address: string): StargateChefContract;
-  abstract getStargateTokenAddress(contract: StargateChefContract): Promise<string>;
-  abstract getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StargateChef>): Promise<BigNumberish>;
+export abstract class StargateFarmBaseContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StargateChefBase> {
+  abstract getStargateChefContract(address: string): StargateChefBaseContract;
+  abstract getStargateTokenAddress(contract: StargateChefBaseContract): Promise<string>;
+  abstract getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StargateChefBase>): Promise<BigNumberish>;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -29,26 +31,26 @@ export abstract class StargateFarmContractPositionFetcher extends MasterChefTemp
     return this.getStargateChefContract(address);
   }
 
-  async getPoolLength(contract: StargateChefContract): Promise<BigNumberish> {
+  async getPoolLength(contract: StargateChefBaseContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: StargateChefContract, poolIndex: number): Promise<string> {
+  async getStakedTokenAddress(contract: StargateChefBaseContract, poolIndex: number): Promise<string> {
     return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: StargateChefContract): Promise<string> {
+  async getRewardTokenAddress(contract: StargateChefBaseContract): Promise<string> {
     return this.getStargateTokenAddress(contract);
   }
 
-  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<StargateChef>): Promise<BigNumberish> {
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<StargateChefBase>): Promise<BigNumberish> {
     return contract.read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
-  }: GetMasterChefDataPropsParams<StargateChef>): Promise<BigNumberish> {
+  }: GetMasterChefDataPropsParams<StargateChefBase>): Promise<BigNumberish> {
     return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
@@ -56,7 +58,7 @@ export abstract class StargateFarmContractPositionFetcher extends MasterChefTemp
     address,
     contract,
     contractPosition,
-  }: GetMasterChefTokenBalancesParams<StargateChef>): Promise<BigNumberish> {
+  }: GetMasterChefTokenBalancesParams<StargateChefBase>): Promise<BigNumberish> {
     return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
@@ -64,8 +66,8 @@ export abstract class StargateFarmContractPositionFetcher extends MasterChefTemp
     address,
     contract,
     contractPosition,
-  }: GetMasterChefTokenBalancesParams<StargateChef>): Promise<BigNumberish> {
-    return contract.read.pendingStargate([BigInt(contractPosition.dataProps.poolIndex), address]).catch(err => {
+  }: GetMasterChefTokenBalancesParams<StargateChefBase>): Promise<BigNumberish> {
+    return contract.read.pendingEmissionToken([BigInt(contractPosition.dataProps.poolIndex), address]).catch(err => {
       if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });

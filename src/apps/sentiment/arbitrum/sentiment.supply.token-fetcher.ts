@@ -74,8 +74,8 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<SentimentLToken>) {
     const decimals = appToken.tokens[0].decimals;
-    const oneUnit = ethers.BigNumber.from(10).pow(decimals);
-    const pricePerShareRaw = await contract.read.convertToAssets([oneUnit]);
+    const oneUnit = ethers.BigNumber.from(10).pow(decimals).toString();
+    const pricePerShareRaw = await contract.read.convertToAssets([BigInt(oneUnit)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
 
     return [pricePerShare];

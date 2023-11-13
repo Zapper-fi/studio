@@ -66,10 +66,7 @@ export abstract class CurvePoolStaticTokenFetcher<T extends Abi> extends AppToke
   abstract resolvePoolReserve(opts: ResolvePoolReserveParams<T>): Promise<BigNumberish>;
   abstract resolvePoolFee(opts: ResolvePoolFeeParams<T>): Promise<BigNumberish>;
 
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ContractViemContractFactory) protected readonly contractFactory: ContractViemContractFactory,
-  ) {
+  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
 

@@ -15,7 +15,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { ConvexViemContractFactory } from '../contracts';
-import { ConvexRewardPool } from '../contracts/ethers';
+import { ConvexRewardPool } from '../contracts/viem';
 
 export type ConvexLpFarmDefinition = {
   address: string;

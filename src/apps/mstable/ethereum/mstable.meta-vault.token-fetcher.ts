@@ -6,7 +6,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { MstableViemContractFactory } from '../contracts';
-import { MstableMetavault4626 } from '../contracts/ethers';
+import { MstableMetavault4626 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMstableMetaVaultTokenFetcher extends AppTokenTemplatePositionFetcher<MstableMetavault4626> {

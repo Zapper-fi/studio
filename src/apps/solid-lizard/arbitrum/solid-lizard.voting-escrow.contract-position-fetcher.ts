@@ -8,6 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { SolidLizardViemContractFactory } from '../contracts';
 import { SolidLizardVe, SolidLizardRewards } from '../contracts/viem';
+import { SolidLizardVeContract } from '../contracts/viem/SolidLizardVe';
+import { SolidLizardRewardsContract } from '../contracts/viem/SolidLizardRewards';
 
 @PositionTemplate()
 export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -25,26 +27,26 @@ export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends Voti
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): SolidLizardVe {
+  getEscrowContract(address: string): SolidLizardVeContract {
     return this.contractFactory.solidLizardVe({ address, network: this.network });
   }
 
-  getRewardContract(address: string): SolidLizardRewards {
+  getRewardContract(address: string): SolidLizardRewardsContract {
     return this.contractFactory.solidLizardRewards({ address, network: this.network });
   }
 
-  getEscrowedTokenAddress(contract: SolidLizardVe): Promise<string> {
+  getEscrowedTokenAddress(contract: SolidLizardVeContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getRewardTokenBalance(address: string, contract: SolidLizardRewards): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string, contract: SolidLizardRewardsContract): Promise<BigNumberish> {
     const multicall = this.appToolkit.getViemMulticall(this.network);
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
-    const veCount = Number(await escrow.balanceOf(address));
+    const veCount = Number(await escrow.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await escrow.tokenOfOwnerByIndex(address, i);
+        const tokenId = await escrow.read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const balance = await contract.read.claimable([tokenId]);
         return Number(balance);
       }),
@@ -53,18 +55,18 @@ export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends Voti
     return sum(balances);
   }
 
-  getRewardTokenAddress(contract: SolidLizardRewards): Promise<string> {
+  getRewardTokenAddress(contract: SolidLizardRewardsContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: SolidLizardVe): Promise<BigNumberish> {
+  async getEscrowedTokenBalance(address: string, contract: SolidLizardVeContract): Promise<BigNumberish> {
     const veCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await contract.read.tokenOfOwnerByIndex([address, i]);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const balance = await contract.read.locked([tokenId]);
-        return Number(balance.amount);
+        return Number(balance[0]);
       }),
     );
 

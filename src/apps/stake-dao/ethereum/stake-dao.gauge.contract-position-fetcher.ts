@@ -106,7 +106,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
   async getRewardRates({ contract, contractPosition }: GetDataPropsParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const rewardData = await Promise.all(claimableTokens.map(ct => contract.read.reward_data([ct.address])));
-    return rewardData.map(v => v.rate);
+    return rewardData.map(v => v[3]);
   }
 
   getStakedTokenBalance({

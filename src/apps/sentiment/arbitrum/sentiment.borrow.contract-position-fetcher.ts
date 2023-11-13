@@ -101,13 +101,14 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
           accountAddresses.map(address => multicall.wrap(supplyTokenContract).read.getBorrowBalance([address])),
         );
         const supplyRaw = await Promise.all(
-          accountAddresses.map(address =>
-            multicall
-              .wrap(
-                this.appToolkit.globalViemContracts.erc20({ address: underlyingTokenAddress, network: this.network }),
-              )
-              .balanceOf(address),
-          ),
+          accountAddresses.map(address => {
+            const tokenContract = this.appToolkit.globalViemContracts.erc20({
+              address: underlyingTokenAddress,
+              network: this.network,
+            });
+
+            return multicall.wrap(tokenContract).read.balanceOf([address]);
+          }),
         );
         const depositedAmountRaw = _.sum(supplyRaw);
         const borrowedAmountRaw = _.sum(borrowRaw);

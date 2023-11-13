@@ -74,7 +74,8 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
   }
 
   async getIsActive({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return (await contract.read.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    const periodFinish = await contract.read.periodFinish();
+    return Number(periodFinish) > Math.floor(Date.now() / 1000);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {

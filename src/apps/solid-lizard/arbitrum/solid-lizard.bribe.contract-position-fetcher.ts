@@ -6,7 +6,7 @@ import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/solid-lizard.voting-rewards.contract-position-fetcher';
-import { SolidLizardBribe } from '../contracts';
+import { SolidLizardBribe } from '../contracts/viem';
 
 export type SolidLizardBribeDefinition = {
   address: string;
@@ -14,7 +14,7 @@ export type SolidLizardBribeDefinition = {
 };
 
 @PositionTemplate()
-export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<SolidLizardBribe> {
+export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher {
   groupLabel = 'Bribe';
 
   getContract(address: string) {

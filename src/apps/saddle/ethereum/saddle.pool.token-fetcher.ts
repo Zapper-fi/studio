@@ -14,6 +14,7 @@ import { SaddleViemContractFactory } from '../contracts';
 import { SaddleSwap } from '../contracts/viem';
 
 import { SADDLE_POOL_DEFINITIONS } from './saddle.pool.definitions';
+import { SaddleSwapContract } from '../contracts/viem/SaddleSwap';
 
 @PositionTemplate()
 export class EthereumSaddlePoolTokenFetcher extends CurvePoolStaticTokenFetcher<SaddleSwap> {
@@ -24,10 +25,10 @@ export class EthereumSaddlePoolTokenFetcher extends CurvePoolStaticTokenFetcher<
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(SaddleViemContractFactory) protected readonly contractFactory: SaddleViemContractFactory,
   ) {
-    super(appToolkit, contractFactory);
+    super(appToolkit);
   }
 
-  resolvePoolContract(definition: CurvePoolDefinition): SaddleSwap {
+  resolvePoolContract(definition: CurvePoolDefinition): SaddleSwapContract {
     return this.contractFactory.saddleSwap({ address: definition.swapAddress, network: this.network });
   }
 

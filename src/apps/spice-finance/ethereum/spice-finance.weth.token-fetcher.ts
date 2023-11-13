@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc721 } from '~contract/contracts';
+import { Erc721 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -56,7 +56,7 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
       address: this.vaultAddress,
       network: this.network,
     });
-    const reserveRaw = await vault.totalAssets();
+    const reserveRaw = await vault.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
     return liquidity;
@@ -67,7 +67,7 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
       address: this.vaultAddress,
       network: this.network,
     });
-    const reserveRaw = await vault.totalAssets();
+    const reserveRaw = await vault.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }
