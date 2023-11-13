@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -17,7 +17,7 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { FusePoolDirectory } from '../contracts/viem/MidasPoolDirectory';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type MidasMarketTokenDataProps = DefaultAppTokenDataProps & {
   marketName: string;
@@ -30,35 +30,35 @@ export type MidasMarketTokenDefinition = {
   comptroller: string;
 };
 
+export type FusePoolStruct = {
+  name: string;
+  creator: string;
+  comptroller: string;
+  blockPosted: BigNumberish;
+  timestampPosted: BigNumberish;
+};
+
 export abstract class MidasMarketTokenFetcher<
-  PD extends Contract,
-  CT extends Contract,
-  PL extends Contract,
+  PD extends Abi,
+  CT extends Abi,
+  PL extends Abi,
 > extends AppTokenTemplatePositionFetcher<CT, MidasMarketTokenDataProps, MidasMarketTokenDefinition> {
   abstract poolDirectoryAddress: string;
   abstract poolLensAddress: string;
 
-  abstract getPoolDirectoryContract(address: string): PD;
-  abstract getCTokenContract(address: string): CT;
-  abstract getPoolLensContract(address: string): PL;
+  abstract getPoolDirectoryContract(address: string): GetContractReturnType<PD, PublicClient>;
+  abstract getCTokenContract(address: string): GetContractReturnType<CT, PublicClient>;
+  abstract getPoolLensContract(address: string): GetContractReturnType<PL, PublicClient>;
 
-  abstract getPools(contract: PD): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
-  abstract getPool(
-    contract: PD,
-    poolId: BigNumberish,
-  ): Promise<
-    [string, string, string, BigNumber, BigNumber] & {
-      name: string;
-      creator: string;
-      comptroller: string;
-      blockPosted: BigNumber;
-      timestampPosted: BigNumber;
-    }
-  >;
-  abstract getMarketTokenAddresses(contract: PL, poolAddress: string): Promise<string[]>;
-  abstract getUnderlyingTokenAddress(contract: CT): Promise<string>;
-  abstract getExchangeRateCurrent(contract: CT): Promise<BigNumberish>;
-  abstract getSupplyRateRaw(contract: CT): Promise<BigNumberish>;
+  abstract getPools(contract: GetContractReturnType<PD, PublicClient>): Promise<[BigNumberish[], FusePoolStruct[]]>;
+  abstract getPool(contract: GetContractReturnType<PD, PublicClient>, poolId: BigNumberish): Promise<FusePoolStruct>;
+  abstract getMarketTokenAddresses(
+    contract: GetContractReturnType<PL, PublicClient>,
+    poolAddress: string,
+  ): Promise<string[]>;
+  abstract getUnderlyingTokenAddress(contract: GetContractReturnType<CT, PublicClient>): Promise<string>;
+  abstract getExchangeRateCurrent(contract: GetContractReturnType<CT, PublicClient>): Promise<BigNumberish>;
+  abstract getSupplyRateRaw(contract: GetContractReturnType<CT, PublicClient>): Promise<BigNumberish>;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
@@ -93,7 +93,12 @@ export abstract class MidasMarketTokenFetcher<
     return definitions.flat();
   }
 
-  async getAddresses({ definitions }: { multicall: IMulticallWrapper; definitions: MidasMarketTokenDefinition[] }) {
+  async getAddresses({
+    definitions,
+  }: {
+    multicall: ViemMulticallDataLoader;
+    definitions: MidasMarketTokenDefinition[];
+  }) {
     return definitions.map(v => v.address);
   }
 

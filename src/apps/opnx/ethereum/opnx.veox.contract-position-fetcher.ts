@@ -12,6 +12,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { OpnxViemContractFactory } from '../contracts';
 import { Veox } from '../contracts/viem';
+import { VeoxContract } from '../contracts/viem/Veox';
 
 @PositionTemplate()
 export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<Veox> {
@@ -25,7 +26,7 @@ export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateCon
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): Veox {
+  getEscrowContract(address: string): VeoxContract {
     return this.opnxContractFactory.veox({ address, network: this.network });
   }
 
@@ -34,7 +35,7 @@ export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateCon
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<Veox>) {
-    return contract.read.locked([address]).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v[0]);
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Veox>) {

@@ -181,7 +181,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
 
               const amountTransformedToUnderlying = await multicall
                 .wrap(transformerContract)
-                .read.calculateTransformToUnderlying(userPos.from.address, fromBalanceRaw);
+                .read.calculateTransformToUnderlying([userPos.from.address, BigInt(fromBalanceRaw)]);
               fromBalanceRaw = amountTransformedToUnderlying[0].amount.toString();
             }
 

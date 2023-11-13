@@ -77,7 +77,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
     const finder = this.contractFactory.jarvisSynthereumFinder({ address: finderAddress, network: this.network });
 
     const priceFeedName = ethers.utils.formatBytes32String('PriceFeed');
-    const priceFeedAddress = await finder.getImplementationAddress(priceFeedName);
+    const priceFeedAddress = await finder.read.getImplementationAddress([priceFeedName]);
     const priceFeed = this.contractFactory.jarvisSynthereumPriceFeed({
       address: priceFeedAddress,
       network: this.network,
@@ -85,7 +85,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
 
     // Multicall crashes for some reason
     const priceFeedIdentifier = await multicall.wrap(poolContract).read.priceFeedIdentifier();
-    const priceRaw = await priceFeed.getLatestPrice(priceFeedIdentifier).catch(() => 0);
+    const priceRaw = await priceFeed.read.getLatestPrice([priceFeedIdentifier]).catch(() => 0);
 
     return Number(priceRaw) / 10 ** 18;
   }

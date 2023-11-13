@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -69,7 +69,10 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
       contract.read.pendingPayoutFor([address]),
     ]);
 
-    const vestingBalanceRaw = bondInfo.payout.gt(pendingPayout) ? bondInfo.payout.sub(pendingPayout) : 0;
+    const vestingBalanceRaw = BigNumber.from(bondInfo[0]).gt(pendingPayout)
+      ? BigNumber.from(bondInfo[0]).sub(pendingPayout)
+      : BigNumber.from('0');
+
     return vestingBalanceRaw;
   }
 

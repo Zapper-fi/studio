@@ -16,6 +16,7 @@ import {
 
 import { InsuraceViemContractFactory } from '../contracts';
 import { InsuracePoolToken } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 export type InsuraceMiningTokenDefinition = {
   address: string;
@@ -86,9 +87,10 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
       multicall.wrap(stakersPool).read.poolWeightPT([appToken.address]),
     ]);
 
-    if (totalPoolWeight.lte(0)) return 0;
+    if (Number(totalPoolWeight) <= 0) return 0;
     const liquidity = appToken.price * appToken.supply;
-    const insurPerBlock = Number(totalInsurPerBlock.mul(poolWeight).div(totalPoolWeight)) / 10 ** insurToken.decimals;
+    const insurPerBlock =
+      Number(BigNumber.from(totalInsurPerBlock).mul(poolWeight).div(totalPoolWeight)) / 10 ** insurToken.decimals;
     const blocksPerYear = 365 * BLOCKS_PER_DAY[this.network];
 
     const apy = ((insurPerBlock * blocksPerYear * insurToken.price) / liquidity) * 100;

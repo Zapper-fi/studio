@@ -88,13 +88,14 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
     );
 
     const [info, circulatingSupply, decimals, reserveRaw, blockRate] = await Promise.all([
-      distributor.info(0),
-      sKlima.circulatingSupply(),
-      underlyingToken.decimals(),
-      underlyingToken.balanceOf(reserveAddress),
+      distributor.read.info([BigInt(0)]),
+      sKlima.read.circulatingSupply(),
+      underlyingToken.read.decimals(),
+      underlyingToken.read.balanceOf([reserveAddress]),
       this.getBlockRate(),
     ]);
-    const stakingReward = await distributor.nextRewardAt(info.rate);
+
+    const stakingReward = await distributor.read.nextRewardAt([info[0]]);
     const stakingRebase = Number(stakingReward) / Number(circulatingSupply);
     const rebasesPerDay = 86_400 / (blockRate * EPOCH_INTERVAL);
     return [

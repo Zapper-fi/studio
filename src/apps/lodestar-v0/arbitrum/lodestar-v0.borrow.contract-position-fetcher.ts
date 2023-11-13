@@ -40,7 +40,7 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
   }
 
   async getMarkets({ contract }: GetMarketsParams<LodestarV0Comptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<LodestarV0IToken>) {

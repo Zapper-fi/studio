@@ -41,11 +41,11 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
       address: this.LIQUIDITY_REGISTRY_ADDRESS,
       network: this.network,
     });
-    const activeVaultsCount = (await contract.read.activeVaultCount()).toNumber();
+    const activeVaultsCount = Number(await contract.read.activeVaultCount());
     const countArray = Array(activeVaultsCount).fill(0);
     const addresses = await Promise.all(
       countArray.map(async (value, position) => {
-        const address = await contract.read.activeVaults([position]);
+        const address = await contract.read.activeVaults([BigInt(position)]);
         return { address };
       }),
     );
@@ -93,16 +93,15 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
   async getTokenBalancesPerPosition(
     _params: GetTokenBalancesParams<OlympusBoostedLiquidityManager, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const balance = await _params.contract.getUserPairShare(_params.address);
-    const ohmPrice = (await _params.contract.read.getOhmTknPoolPrice()).div(1e9);
-    const ohmBalance = balance.mul(ohmPrice).div(1e9);
+    const balance = BigNumber.from(await _params.contract.read.getUserPairShare([_params.address]));
+    const ohmPrice = BigNumber.from(await _params.contract.read.getOhmTknPoolPrice()).div(1e9);
+    const ohmBalance = BigNumber.from(balance).mul(ohmPrice).div(1e9);
     const rewardTokens = await _params.contract.read.getRewardTokens();
     const rewardBalances = await Promise.all(
       rewardTokens.map(async token => {
-        const rewards = await _params.contract.getOutstandingRewards(_params.address);
-        const rewardBalances =
-          rewards.find(address => address.rewardToken === token)?.outstandingRewards || BigNumber.from('0');
-        return rewardBalances;
+        const rewards = await _params.contract.read.getOutstandingRewards([_params.address]);
+        const rewardBalances = rewards.find(address => address.rewardToken === token)?.outstandingRewards;
+        return rewardBalances ? BigNumber.from(rewardBalances) : BigNumber.from(0);
       }),
     );
     return [balance, ohmBalance, ohmBalance, ...rewardBalances];

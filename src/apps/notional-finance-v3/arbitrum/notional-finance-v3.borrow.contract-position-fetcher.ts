@@ -67,7 +67,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {
         const currency = await multicall.wrap(notionalViewContract).read.getCurrency([currencyId]);
-        const underlyingTokenAddress = currency.underlyingToken.tokenAddress.toLowerCase();
+        const underlyingTokenAddress = currency[1].tokenAddress.toLowerCase();
         const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([currencyId]);
 
         const markets = await Promise.all(
@@ -76,7 +76,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
             const maturity = Number(activeMarket.maturity);
             const tokenId = await multicall
               .wrap(notionalViewContract)
-              .read.encodeToId(currencyId, maturity, 0)
+              .read.encodeToId([currencyId, maturity, 0])
               .then(v => v.toString());
 
             return {
@@ -122,7 +122,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
   }: GetTokenBalancesParams<NotionalView, NotionalBorrowingDataProps>) {
     const { maturity, currencyId } = contractPosition.dataProps;
     const portfolio = await contract.read.getAccountPortfolio([address]);
-    const debtPositions = portfolio.filter(v => v.notional.isNegative());
+    const debtPositions = portfolio.filter(v => v.notional < 0);
     const position = debtPositions.find(v => Number(v.maturity) === maturity && Number(v.currencyId) === currencyId);
     if (!position) return [0];
 

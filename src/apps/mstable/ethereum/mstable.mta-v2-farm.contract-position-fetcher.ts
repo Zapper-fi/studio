@@ -54,7 +54,7 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     if (!isActive) return [0];
 
     const globalData = await contract.read.globalData();
-    return [globalData.rewardRate];
+    return [globalData[2]];
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableStakingV2>) {
@@ -68,9 +68,9 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     address,
     contract,
   }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    return contract
-      .rawBalanceOf(address)
-      .then(v => v[0].add(v[1]))
+    return contract.read
+      .rawBalanceOf([address])
+      .then(v => BigNumber.from(v[0]).add(v[1]))
       .catch(() => BigNumber.from('0'));
   }
 

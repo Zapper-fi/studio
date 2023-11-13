@@ -72,7 +72,7 @@ export class ArbitrumNotionalFinanceV3NTokenTokenFetcher extends AppTokenTemplat
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<NotionalPCash>) {
     let pricePerShareRaw: BigNumber;
     try {
-      pricePerShareRaw = await contract.read.exchangeRate();
+      pricePerShareRaw = BigNumber.from(await contract.read.exchangeRate());
     } catch (error) {
       pricePerShareRaw = BigNumber.from(10).pow(10 + appToken.tokens[0].decimals);
     }

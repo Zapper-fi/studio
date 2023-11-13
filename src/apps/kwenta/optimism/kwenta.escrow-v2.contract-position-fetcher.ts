@@ -7,6 +7,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { KwentaViemContractFactory } from '../contracts';
 import { KwentaStakingV2 } from '../contracts/viem';
+import { KwentaStakingV2Contract } from '../contracts/viem/KwentaStakingV2';
 
 @PositionTemplate()
 export class OptimismKwentaEscrowV2ContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KwentaStakingV2> {
@@ -20,7 +21,7 @@ export class OptimismKwentaEscrowV2ContractPositionFetcher extends VotingEscrowT
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): KwentaStakingV2 {
+  getEscrowContract(address: string): KwentaStakingV2Contract {
     return this.contractFactory.kwentaStakingV2({ address, network: this.network });
   }
 

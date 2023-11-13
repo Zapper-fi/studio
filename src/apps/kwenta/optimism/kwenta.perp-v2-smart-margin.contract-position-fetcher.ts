@@ -29,7 +29,7 @@ export class OptimismKwentaPerpV2SmartMarginContractPositionFetcher extends Opti
       network: this.network,
     });
     const mcAccountResolver = multicall.wrap(accountResolver);
-    const accountsOwned = await mcAccountResolver.getAccountsOwnedBy(address);
+    const accountsOwned = await mcAccountResolver.read.getAccountsOwnedBy([address]);
     if (accountsOwned.length === 0) {
       return ZERO_ADDRESS;
     }

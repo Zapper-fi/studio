@@ -31,7 +31,7 @@ export class EthereumOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
       address: this.tokenRegistryAddress,
     });
 
-    const tokenAddresses = await registrycontract.read.getTokens([0, 100]);
+    const tokenAddresses = await registryContract.read.getTokens([BigInt(0), BigInt(100)]);
     return tokenAddresses.map(v => v.token);
   }
 

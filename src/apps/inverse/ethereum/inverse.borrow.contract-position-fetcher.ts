@@ -14,6 +14,8 @@ import { GetDataPropsParams, GetTokenDefinitionsParams } from '~position/templat
 
 import { InverseViemContractFactory } from '../contracts';
 import { InverseController, InverseLendingPool } from '../contracts/viem';
+import { InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
+import { InverseControllerContract } from '../contracts/viem/InverseController';
 
 @PositionTemplate()
 export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -30,16 +32,16 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
     super(appToolkit);
   }
 
-  getCompoundCTokenContract(address: string): InverseLendingPool {
+  getCompoundCTokenContract(address: string): InverseLendingPoolContract {
     return this.contractFactory.inverseLendingPool({ address, network: this.network });
   }
 
-  getCompoundComptrollerContract(address: string): InverseController {
+  getCompoundComptrollerContract(address: string): InverseControllerContract {
     return this.contractFactory.inverseController({ address, network: this.network });
   }
 
   async getMarkets({ contract }: GetMarketsParams<InverseController>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<InverseLendingPool>) {
@@ -79,7 +81,7 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
     address,
   }: {
     address: string;
-    contract: InverseLendingPool;
+    contract: InverseLendingPoolContract;
   }): Promise<BigNumberish> {
     return contract.read.borrowBalanceCurrent([address]).catch(err => {
       if (isViemMulticallUnderlyingError(err)) return 0;

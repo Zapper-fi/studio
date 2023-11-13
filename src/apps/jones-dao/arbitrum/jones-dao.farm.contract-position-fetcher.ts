@@ -39,7 +39,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
         async i =>
           await multicall
             .wrap(factoryContract)
-            .read.stakingID(i)
+            .read.stakingID([BigInt(i)])
             .catch(() => null),
       ),
     );
@@ -49,7 +49,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
         async i => await multicall.wrap(factoryContract).read.stakingRewardsInfoByStakingToken([BigInt(i)]),
       ),
     );
-    const stakingAddresses = stakingInfo.map(v => v.stakingRewards.toLowerCase());
+    const stakingAddresses = stakingInfo.map(v => v[0].toLowerCase());
 
     return Promise.all(
       stakingAddresses.map(async address => {
@@ -73,7 +73,8 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
   }
 
   async getIsActive({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return (await contract.read.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    const periodFinish = await contract.read.periodFinish();
+    return Number(periodFinish) > Math.floor(Date.now() / 1000);
   }
 
   getStakedTokenBalance({

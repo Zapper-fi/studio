@@ -14,6 +14,7 @@ import {
 
 import { InverseViemContractFactory } from '../contracts';
 import { InverseDcaVaultToken } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumInverseDcaVaultDividendContractPositionFetcher extends ContractPositionTemplatePositionFetcher<InverseDcaVaultToken> {
@@ -54,6 +55,6 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
       contract.read.withdrawnDividendOf([address]),
     ]);
 
-    return [totalRaw.sub(withdrawnRaw)];
+    return [BigNumber.from(totalRaw).sub(withdrawnRaw)];
   }
 }

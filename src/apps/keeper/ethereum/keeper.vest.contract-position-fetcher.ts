@@ -7,6 +7,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { KeeperViemContractFactory } from '../contracts';
 import { KeeperVest } from '../contracts/viem';
+import { KeeperVestContract } from '../contracts/viem/KeeperVest';
 
 @PositionTemplate()
 export class EthereumKeeperVestContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KeeperVest> {
@@ -20,7 +21,7 @@ export class EthereumKeeperVestContractPositionFetcher extends VotingEscrowTempl
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): KeeperVest {
+  getEscrowContract(address: string): KeeperVestContract {
     return this.contractFactory.keeperVest({ address, network: this.network });
   }
 

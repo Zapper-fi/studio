@@ -40,8 +40,8 @@ export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContr
     const pendingBonds = await Promise.all(
       indexes.map(index => multicall.wrap(contract).read.pendingFor([address, index])),
     );
-    const vestingBonds = pendingBonds.filter(p => !p.matured_);
-    const vestingAmount = vestingBonds.reduce((acc, bond) => acc.add(bond.payout_), BigNumber.from('0'));
+    const vestingBonds = pendingBonds.filter(p => !p[1]);
+    const vestingAmount = vestingBonds.reduce((acc, bond) => acc.add(bond[0]), BigNumber.from('0'));
     return vestingAmount;
   }
 
@@ -50,8 +50,8 @@ export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContr
     const pendingBonds = await Promise.all(
       indexes.map(index => multicall.wrap(contract).read.pendingFor([address, index])),
     );
-    const claimableBonds = pendingBonds.filter(p => p.matured_);
-    const claimableAmount = claimableBonds.reduce((acc, bond) => acc.add(bond.payout_), BigNumber.from('0'));
+    const claimableBonds = pendingBonds.filter(p => p[1]);
+    const claimableAmount = claimableBonds.reduce((acc, bond) => acc.add(bond[0]), BigNumber.from('0'));
     return claimableAmount;
   }
 }

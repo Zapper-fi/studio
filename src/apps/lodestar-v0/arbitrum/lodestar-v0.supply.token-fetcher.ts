@@ -38,7 +38,7 @@ export class ArbitrumLodestarV0SupplyTokenFetcher extends CompoundSupplyTokenFet
   }
 
   async getMarkets({ contract }: GetMarketsParams<LodestarV0Comptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<LodestarV0IToken>) {

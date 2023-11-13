@@ -4,7 +4,7 @@ import { pick, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -72,7 +72,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {
         const currency = await multicall.wrap(notionalViewContract).read.getCurrency([currencyId]);
-        const underlyingTokenAddress = currency.underlyingToken.tokenAddress.toLowerCase();
+        const underlyingTokenAddress = currency[1].tokenAddress.toLowerCase();
         const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([currencyId]);
 
         const markets = await Promise.all(
@@ -80,7 +80,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
             const maturity = Number(activeMarket.maturity);
             const tokenId = await multicall
               .wrap(notionalViewContract)
-              .read.encodeToId(currencyId, maturity, 0)
+              .read.encodeToId([currencyId, maturity, 0])
               .then(v => v.toString());
 
             return {
@@ -192,8 +192,10 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
   }: {
     address: string;
     appToken: AppTokenPosition<NotionalFCashTokenDataProps>;
-    multicall: IMulticallWrapper;
+    multicall: ViemMulticallDataLoader;
   }): Promise<BigNumberish> {
-    return multicall.wrap(this.getContract(appToken.address)).balanceOf(address, appToken.dataProps.tokenId);
+    return multicall
+      .wrap(this.getContract(appToken.address))
+      .read.balanceOf([address, BigInt(appToken.dataProps.tokenId)]);
   }
 }

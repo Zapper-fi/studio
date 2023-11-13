@@ -10,6 +10,7 @@ import {
 
 import { JonesDaoViemContractFactory } from '../contracts';
 import { JonesMillinerV2 } from '../contracts/viem';
+import { JonesMillinerV2Contract } from '../contracts/viem/JonesMillinerV2';
 
 @PositionTemplate()
 export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JonesMillinerV2> {
@@ -27,15 +28,15 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
     return this.contractFactory.jonesMillinerV2({ address, network: this.network });
   }
 
-  async getPoolLength(contract: JonesMillinerV2) {
+  async getPoolLength(contract: JonesMillinerV2Contract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: JonesMillinerV2, poolIndex: number) {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: JonesMillinerV2Contract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: JonesMillinerV2) {
+  async getRewardTokenAddress(contract: JonesMillinerV2Contract) {
     return contract.read.jones();
   }
 
@@ -44,7 +45,7 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<JonesMillinerV2>) {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(i => i.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(i => i[1]);
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JonesMillinerV2>) {
@@ -56,7 +57,7 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JonesMillinerV2>) {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

@@ -12,7 +12,8 @@ import {
 
 import { InverseViemContractFactory } from '../contracts';
 import { InverseController } from '../contracts/viem';
-import { InverseLendingPool } from '../contracts/viem/InverseLendingPool';
+import { InverseLendingPool, InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
+import { InverseControllerContract } from '../contracts/viem/InverseController';
 
 @PositionTemplate()
 export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
@@ -29,16 +30,16 @@ export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetche
     super(appToolkit);
   }
 
-  getCompoundCTokenContract(address: string): InverseLendingPool {
+  getCompoundCTokenContract(address: string): InverseLendingPoolContract {
     return this.contractFactory.inverseLendingPool({ address, network: this.network });
   }
 
-  getCompoundComptrollerContract(address: string): InverseController {
+  getCompoundComptrollerContract(address: string): InverseControllerContract {
     return this.contractFactory.inverseController({ address, network: this.network });
   }
 
   async getMarkets({ contract }: GetMarketsParams<InverseController>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<InverseLendingPool>) {

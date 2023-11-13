@@ -62,8 +62,8 @@ export class EthereumKeeperKlpTokenFetcher extends AppTokenTemplatePositionFetch
     const [token0, token1] = appToken.tokens;
     const t0 = new TokenWrapper(NETWORK_IDS[this.network]!, token0.address, token0.decimals, token0.symbol);
     const t1 = new TokenWrapper(NETWORK_IDS[this.network]!, token1.address, token1.decimals, token1.symbol);
-    const pool = new Pool(t0, t1, Number(fee), slot.sqrtPriceX96.toString(), liquidity.toString(), Number(slot.tick));
-    const pos = new Position({ pool, liquidity: position.liquidity.toString(), tickLower, tickUpper });
+    const pool = new Pool(t0, t1, Number(fee), slot[0].toString(), liquidity.toString(), Number(slot[1]));
+    const pos = new Position({ pool, liquidity: position[0].toString(), tickLower, tickUpper });
 
     const reserve0Raw = pos.amount0.multiply(10 ** token0.decimals).toFixed(0);
     const reserve1Raw = pos.amount1.multiply(10 ** token1.decimals).toFixed(0);

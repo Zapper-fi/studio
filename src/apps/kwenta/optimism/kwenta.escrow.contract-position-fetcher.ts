@@ -7,6 +7,8 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { KwentaViemContractFactory } from '../contracts';
 import { KwentaEscrow } from '../contracts/viem';
+import { KwentaEscrowContract } from '../contracts/viem/KwentaEscrow';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KwentaEscrow> {
@@ -21,7 +23,7 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): KwentaEscrow {
+  getEscrowContract(address: string): KwentaEscrowContract {
     return this.contractFactory.kwentaEscrow({ address, network: this.network });
   }
 
@@ -34,11 +36,13 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
       address: this.stakingContractAddress,
       network: this.network,
     });
+
     const mcStakingContract = multicall.wrap(stakingContract);
-    const stakedBalance = await mcStakingcontract.read.balanceOf([address]);
-    const stakedNonEscrowedBalance = await mcStakingcontract.read.nonEscrowedBalanceOf([address]);
+    const stakedBalance = await mcStakingContract.read.balanceOf([address]);
+    const stakedNonEscrowedBalance = await mcStakingContract.read.nonEscrowedBalanceOf([address]);
     const escrowBalance = await contract.read.balanceOf([address]);
-    const stakedEscrowBalance = stakedBalance.sub(stakedNonEscrowedBalance);
-    return escrowBalance.sub(stakedEscrowBalance);
+
+    const stakedEscrowBalance = BigNumber.from(stakedBalance).sub(stakedNonEscrowedBalance);
+    return BigNumber.from(escrowBalance).sub(stakedEscrowBalance);
   }
 }

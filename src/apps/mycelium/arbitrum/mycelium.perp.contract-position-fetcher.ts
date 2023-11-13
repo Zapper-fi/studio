@@ -60,7 +60,9 @@ export class ArbitrumMycellilumPerpContractPositionFetcher extends ContractPosit
     const tokensRange = _.range(0, Number(tokensCount));
 
     const whitelistedTokens = await Promise.all(
-      tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).read.allWhitelistedTokens([tokenIndex])),
+      tokensRange.map(async tokenIndex =>
+        multicall.wrap(vaultContract).read.allWhitelistedTokens([BigInt(tokenIndex)]),
+      ),
     );
 
     const definitions = whitelistedTokens.flatMap(indexTokenAddress =>
