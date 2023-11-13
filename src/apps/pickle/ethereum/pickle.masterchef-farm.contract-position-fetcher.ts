@@ -12,6 +12,7 @@ import {
 
 import { PickleViemContractFactory } from '../contracts';
 import { PickleJarMasterchef } from '../contracts/viem';
+import { PickleJarMasterchefContract } from '../contracts/viem/PickleJarMasterchef';
 
 @PositionTemplate()
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
@@ -30,15 +31,15 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     return this.contractFactory.pickleJarMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PickleJarMasterChefContract) {
+  async getPoolLength(contract: PickleJarMasterchefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PickleJarMasterChefContract, poolIndex: number) {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: PickleJarMasterchefContract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: PickleJarMasterChefContract) {
+  async getRewardTokenAddress(contract: PickleJarMasterchefContract) {
     return contract.read.pickle();
   }
 
@@ -54,7 +55,7 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     definition,
   }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -62,7 +63,7 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

@@ -29,6 +29,6 @@ export class EthereumPendleV2VotingEscrowContractPositionFetcher extends VotingE
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<PendleVotingEscrow>) {
-    return contract.read.positionData([address]).then(data => data.amount);
+    return contract.read.positionData([address]).then(data => data[0]);
   }
 }

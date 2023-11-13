@@ -13,6 +13,7 @@ import {
 
 import { PancakeswapViemContractFactory } from '../contracts';
 import { PancakeswapIfoChef } from '../contracts/viem';
+import { PancakeswapIfoChefContract } from '../contracts/viem/PancakeswapIfoChef';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapIfoChef> {
@@ -65,8 +66,8 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
 
   async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapIfoChef>) {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const poolInfo = await multicall.wrap(mainChef).read.poolInfo([0]);
-    return poolInfo.allocPoint;
+    const poolInfo = await multicall.wrap(mainChef).read.poolInfo([BigInt(0)]);
+    return poolInfo[1];
   }
 
   async getTotalRewardRate({ multicall }: GetMasterChefDataPropsParams<PancakeswapIfoChef>) {
@@ -80,7 +81,7 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends 
       contract.read.getPricePerFullShare(),
     ]);
 
-    const shares = userInfo.shares.toString();
+    const shares = userInfo[0].toString();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return new BigNumber(shares).times(pricePerShare).toFixed(0);
   }

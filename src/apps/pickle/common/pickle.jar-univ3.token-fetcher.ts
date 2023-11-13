@@ -65,12 +65,12 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
         const controller = multicall.wrap(
           this.contractFactory.pickleController({ address: controllerAddr, network: this.network }),
         );
-        const strategyAddr = await controller.strategies(underlyingTokenDefinitions[0].address);
+        const strategyAddr = await controller.read.strategies([underlyingTokenDefinitions[0].address]);
         const strategy = multicall.wrap(
           this.contractFactory.pickleStrategyUniv3({ address: strategyAddr, network: this.network }),
         );
 
-        const tokenId = await strategy
+        const tokenId = await strategy.read
           .tokenId()
           .then(x => x?.toString())
           .catch(err => {

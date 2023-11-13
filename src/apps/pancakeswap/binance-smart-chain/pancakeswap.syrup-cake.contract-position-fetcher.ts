@@ -14,6 +14,7 @@ import {
 
 import { PancakeswapViemContractFactory } from '../contracts';
 import { PancakeswapSyrupCake } from '../contracts/viem';
+import { PancakeswapSyrupCakeContract } from '../contracts/viem/PancakeswapSyrupCake';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapSyrupCake> {
@@ -37,34 +38,34 @@ export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher extend
     return 1;
   }
 
-  async getStakedTokenAddress(contract: PancakeswapSyrupCake) {
+  async getStakedTokenAddress(contract: PancakeswapSyrupCakeContract) {
     return contract.read.token();
   }
 
-  async getRewardTokenAddress(contract: PancakeswapSyrupCake) {
+  async getRewardTokenAddress(contract: PancakeswapSyrupCakeContract) {
     return contract.read.token();
   }
 
   async getTotalAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapSyrupCake>): Promise<BigNumberish> {
     const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefV2Address, network: this.network });
-    const poolInfo = await multicall.wrap(chefV2).read.poolInfo([0]);
-    const totalAllocPoints = await (poolInfo.isRegular
-      ? chefV2.totalRegularAllocPoint()
-      : chefV2.totalSpecialAllocPoint());
+    const poolInfo = await multicall.wrap(chefV2).read.poolInfo([BigInt(0)]);
+    const totalAllocPoints = await (poolInfo[4]
+      ? chefV2.read.totalRegularAllocPoint()
+      : chefV2.read.totalSpecialAllocPoint());
     return totalAllocPoints;
   }
 
   async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapSyrupCake>) {
     const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefV2Address, network: this.network });
-    const poolInfo = await multicall.wrap(chefV2).read.poolInfo([0]);
-    const poolAllocPoints = poolInfo.allocPoint;
+    const poolInfo = await multicall.wrap(chefV2).read.poolInfo([BigInt(0)]);
+    const poolAllocPoints = poolInfo[2];
     return poolAllocPoints;
   }
 
   async getTotalRewardRate({ multicall }: GetMasterChefDataPropsParams<PancakeswapSyrupCake>): Promise<BigNumberish> {
     const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefV2Address, network: this.network });
-    const poolInfo = await multicall.wrap(chefV2).read.poolInfo([0]);
-    const cakePerBlock = await multicall.wrap(chefV2).cakePerBlock(poolInfo.isRegular);
+    const poolInfo = await multicall.wrap(chefV2).read.poolInfo([BigInt(0)]);
+    const cakePerBlock = await multicall.wrap(chefV2).read.cakePerBlock([poolInfo[4]]);
     return cakePerBlock;
   }
 
@@ -74,8 +75,8 @@ export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher extend
       contract.read.getPricePerFullShare(),
     ]);
 
-    const shares = userInfo.shares.toString();
-    const userBoostedShare = userInfo.userBoostedShare.toString();
+    const shares = userInfo[0].toString();
+    const userBoostedShare = userInfo[6].toString();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return new BigNumber(shares).times(pricePerShare).minus(userBoostedShare).toFixed(0);
   }

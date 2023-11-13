@@ -172,8 +172,8 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
     const { tokens } = contractPosition;
 
     const [reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(this.pancakeswapV3ContractFactory.erc20(tokens[0])).balanceOf(poolAddress),
-      multicall.wrap(this.pancakeswapV3ContractFactory.erc20(tokens[1])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[0])).read.balanceOf([poolAddress]),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[1])).read.balanceOf([poolAddress]),
     ]);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];
@@ -197,7 +197,9 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
     return label;
   }
 
-  getTokenBalancesPerPosition(_params: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
+  getTokenBalancesPerPosition(
+    _params: GetTokenBalancesParams<PancakeswapNfPositionManager, DefaultDataProps>,
+  ): Promise<BigNumberish[]> {
     throw new Error('Method not implemented.');
   }
 
@@ -213,12 +215,12 @@ export abstract class BinanceSmartChainPancakeswapV3LiquidityContractPositionFet
       network: this.network,
     });
 
-    const numPositionsRaw = await positionManager.balanceOf(address);
+    const numPositionsRaw = await positionManager.read.balanceOf([address]);
 
     const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index =>
+      range(0, Number(numPositionsRaw)).map(async index =>
         this.pancakeswapV3LiquidityContractPositionBuilder.buildPosition({
-          positionId: await multicall.wrap(positionManager).read.tokenOfOwnerByIndex([address, index]),
+          positionId: await multicall.wrap(positionManager).read.tokenOfOwnerByIndex([address, BigInt(index)]),
           network: this.network,
           multicall,
           tokenLoader,

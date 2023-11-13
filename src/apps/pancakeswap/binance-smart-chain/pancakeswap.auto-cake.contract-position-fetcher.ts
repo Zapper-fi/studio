@@ -14,6 +14,7 @@ import {
 
 import { PancakeswapViemContractFactory } from '../contracts';
 import { PancakeswapCakeChef } from '../contracts/viem';
+import { PancakeswapCakeChefContract } from '../contracts/viem/PancakeswapCakeChef';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapCakeChef> {
@@ -49,8 +50,8 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
   async getReserve({ contractPosition, multicall }: GetDataPropsParams<PancakeswapCakeChef>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const userInfo = await multicall.wrap(mainChef).read.userInfo([0, contractPosition.address]);
-    const reserve = Number(userInfo.amount) / 10 ** stakedToken.decimals;
+    const userInfo = await multicall.wrap(mainChef).read.userInfo([BigInt(0), contractPosition.address]);
+    const reserve = Number(userInfo[0]) / 10 ** stakedToken.decimals;
     return reserve;
   }
 
@@ -61,8 +62,8 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
 
   async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapCakeChef>) {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const poolInfo = await multicall.wrap(mainChef).read.poolInfo([0]);
-    return poolInfo.allocPoint;
+    const poolInfo = await multicall.wrap(mainChef).read.poolInfo([BigInt(0)]);
+    return poolInfo[1];
   }
 
   async getTotalRewardRate({ multicall }: GetMasterChefDataPropsParams<PancakeswapCakeChef>): Promise<BigNumberish> {
@@ -76,7 +77,7 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
       contract.read.getPricePerFullShare(),
     ]);
 
-    const shares = userInfo.shares.toString();
+    const shares = userInfo[0].toString();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return new BigNumber(shares).times(pricePerShare).toFixed(0);
   }

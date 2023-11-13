@@ -23,7 +23,7 @@ export class PickleOnChainJarRegistry {
 
   async getJarDefinitions({ network }: GetJarDefinitionsParams) {
     const registryAddress = SUPPORTED_REGISTRIES[network];
-    const multicall = this.appToolkit.getMulticall(network);
+    const multicall = this.appToolkit.getViemMulticall(network);
 
     const contract = this.pickleContractFactory.pickleRegistry({ address: registryAddress, network });
     const vaultAddresses = await contract.read.developmentVaults();
@@ -32,7 +32,7 @@ export class PickleOnChainJarRegistry {
       vaultAddresses.map(async vaultAddressRaw => {
         const vaultAddress = vaultAddressRaw.toLowerCase();
         const vaultContract = this.pickleContractFactory.pickleJar({ address: vaultAddress, network });
-        const tokenAddressRaw = await multicall.wrap(vaultContract).token();
+        const tokenAddressRaw = await multicall.wrap(vaultContract).read.token();
         const tokenAddress = tokenAddressRaw.toLowerCase();
         return { vaultAddress, tokenAddress };
       }),

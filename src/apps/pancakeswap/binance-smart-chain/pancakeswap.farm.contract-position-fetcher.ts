@@ -10,6 +10,7 @@ import {
 
 import { PancakeswapViemContractFactory } from '../contracts';
 import { PancakeswapChef } from '../contracts/viem';
+import { PancakeswapChefContract } from '../contracts/viem/PancakeswapChef';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapChef> {
@@ -34,7 +35,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends Mas
   }
 
   async getStakedTokenAddress(contract: PancakeswapChefContract, poolIndex: number) {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
   async getRewardTokenAddress(contract: PancakeswapChefContract) {
@@ -46,7 +47,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends Mas
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PancakeswapChef>) {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PancakeswapChef>) {
@@ -58,7 +59,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher extends Mas
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PancakeswapChef>) {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

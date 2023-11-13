@@ -48,9 +48,7 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
 
     const anatomy = await multicall.wrap(managerContract).read.anatomy();
 
-    const underlyingTokenAddresses = anatomy._assets.map(underlyingTokenAddress =>
-      underlyingTokenAddress.toLowerCase(),
-    );
+    const underlyingTokenAddresses = anatomy[0].map(underlyingTokenAddress => underlyingTokenAddress.toLowerCase());
 
     return underlyingTokenAddresses.map(address => {
       return { address, network: this.network };
