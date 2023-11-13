@@ -49,8 +49,8 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
     const numRewardToken = await multicall.wrap(dividenContract).read.distributedTokensLength();
 
     const rewardTokenAddresses = await Promise.all(
-      range(0, numRewardToken.toNumber()).map(async index => {
-        const rewardTokenAddressRaw = await multicall.wrap(dividenContract).read.distributedToken([index]);
+      range(0, Number(numRewardToken)).map(async index => {
+        const rewardTokenAddressRaw = await multicall.wrap(dividenContract).read.distributedToken([BigInt(index)]);
         return rewardTokenAddressRaw.toLowerCase();
       }),
     );

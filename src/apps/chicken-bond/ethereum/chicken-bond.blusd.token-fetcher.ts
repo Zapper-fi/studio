@@ -42,9 +42,9 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
       address: '0x74ed5d42203806c8cdcf2f04ca5f60dc777b901c',
       network: this.network,
     });
-    const oneUnit = BigNumber.from(10).pow(18);
+    const oneUnit = BigNumber.from(10).pow(18).toString();
 
-    const priceRaw = await multicall.wrap(curvePoolContract).read.get_dy([0, 1, oneUnit]);
+    const priceRaw = await multicall.wrap(curvePoolContract).read.get_dy([BigInt(0), BigInt(1), BigInt(oneUnit)]);
     const price = Number(priceRaw) / 10 ** 18;
 
     return price;

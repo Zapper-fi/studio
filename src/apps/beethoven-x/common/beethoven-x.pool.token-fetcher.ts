@@ -6,7 +6,7 @@ import {
   BalancerV2PoolTokenDefinition,
   BalancerV2PoolTokenFetcher,
 } from '~apps/balancer-v2/common/balancer-v2.pool.token-fetcher';
-import { BalancerPool } from '~apps/balancer-v2/contracts';
+import { BalancerPool } from '~apps/balancer-v2/contracts/viem';
 import { GetDisplayPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 type GetPoolsResponse = {

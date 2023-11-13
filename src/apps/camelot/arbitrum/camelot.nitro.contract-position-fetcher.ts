@@ -59,14 +59,14 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
         ]);
 
         const nftPoolContract = this.contractFactory.camelotNftPool({ address: nftPoolAddress, network: this.network });
-        const { lpToken } = await multicall.wrap(nftPoolContract).read.getPoolInfo();
+        const [lpToken] = await multicall.wrap(nftPoolContract).read.getPoolInfo();
 
         return {
           address,
           stakingTokenAddress: lpToken.toLowerCase(),
           rewardTokenAddresses: [
-            rewardToken1.token.toLowerCase(),
-            rewardToken2.token.toLowerCase(),
+            rewardToken1[0].toLowerCase(),
+            rewardToken2[0].toLowerCase(),
             grailTokenAddress.toLowerCase(),
           ],
         };
@@ -120,7 +120,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
           address: contractPosition.address,
           network: this.network,
         });
-        const [numPositionsRaw, nftPoolAddress, { totalDepositAmount }, { pending1, pending2 }] = await Promise.all([
+        const [numPositionsRaw, nftPoolAddress, [totalDepositAmount], [pending1, pending2]] = await Promise.all([
           multicall.wrap(nitroContract).read.userTokenIdsLength([address]),
           multicall.wrap(nitroContract).read.nftPool(),
           multicall.wrap(nitroContract).read.userInfo([address]),
@@ -131,7 +131,7 @@ export class ArbitrumCamelotNitroContractPositionFetcher extends CustomContractP
 
         const grailRewardsRaw = await Promise.all(
           range(0, Number(numPositionsRaw)).map(async i => {
-            const tokenId = await multicall.wrap(nitroContract).read.userTokenId([address, i]);
+            const tokenId = await multicall.wrap(nitroContract).read.userTokenId([address, BigInt(i)]);
 
             return await multicall.wrap(nftPoolContract).read.pendingRewards([tokenId]);
           }),
