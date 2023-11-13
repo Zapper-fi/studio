@@ -21,7 +21,7 @@ export abstract class VelaEsVelaTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   getContract(address: string) {
-    return this.velaContractFactory.erc20({
+    return this.appToolkit.globalViemContracts.erc20({
       address,
       network: this.network,
     });

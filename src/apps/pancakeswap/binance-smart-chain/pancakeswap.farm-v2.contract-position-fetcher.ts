@@ -34,7 +34,7 @@ export class BinanceSmartChainPancakeswapFarmV2ContractPositionFetcher extends M
   }
 
   async getStakedTokenAddress(contract: PancakeswapChefV2, poolIndex: number) {
-    return contract.read.lpToken([poolIndex]);
+    return contract.read.lpToken([BigInt(poolIndex)]);
   }
 
   async getRewardTokenAddress(contract: PancakeswapChefV2) {

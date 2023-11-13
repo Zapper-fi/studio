@@ -30,7 +30,7 @@ export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewar
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<VelodromeV2Bribe>) {
     const numRewards = Number(await contract.read.rewardsListLength());
-    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.read.rewards([n])));
+    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.read.rewards([BigInt(n)])));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());

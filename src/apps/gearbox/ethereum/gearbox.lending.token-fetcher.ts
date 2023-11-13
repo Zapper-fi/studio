@@ -117,8 +117,8 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
       multicall.wrap(dieselTokenContract).read.decimals(),
     ]);
 
-    const underlyingTokenContract = this.gearboxContractFactory.erc20({ address: underlyingToken, network });
-    const underlyingTokenDecimals = await underlyingTokencontract.read.decimals();
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({ address: underlyingToken, network });
+    const underlyingTokenDecimals = await underlyingTokenContract.read.decimals();
     const pricePerShare =
       +formatUnits(underlying, underlyingTokenDecimals) / +formatUnits(dieselTokenTotalSupply, dieselTokenDecimals);
 

@@ -18,7 +18,7 @@ export abstract class CurveFactoryStablePoolGaugeContractPositionFetcher extends
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveStableFactory>) {
-    return contract.read.pool_list([poolIndex]);
+    return contract.read.pool_list([BigInt(poolIndex)]);
   }
 
   async resolveTokenAddress({ swapAddress }: ResolveTokenAddressParams<CurveStableFactory>) {

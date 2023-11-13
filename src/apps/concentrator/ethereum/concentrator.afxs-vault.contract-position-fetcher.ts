@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import {
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
@@ -40,7 +40,7 @@ export class EthereumConcentratorAfxsVaultContractPositionFetcher extends Master
   async getRewardTokenAddress(
     contract: AladdinConcentratorAfxsVault,
     _poolIndex: number,
-    multicall: IMulticallWrapper,
+    multicall: ViemMulticallDataLoader,
   ) {
     return multicall.wrap(contract).read.aladdinFXS();
   }

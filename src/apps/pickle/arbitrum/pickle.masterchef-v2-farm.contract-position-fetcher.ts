@@ -47,7 +47,7 @@ export class ArbitrumPickleFarmContractPositionFetcher extends MasterChefV2Templ
   }
 
   async getStakedTokenAddress(contract: PickleMiniChefV2, poolIndex: number) {
-    return contract.read.lpToken([poolIndex]);
+    return contract.read.lpToken([BigInt(poolIndex)]);
   }
 
   async getRewardTokenAddress(contract: PickleMiniChefV2) {

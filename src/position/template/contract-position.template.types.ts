@@ -1,4 +1,3 @@
-import { Contract } from '@ethersproject/contracts';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 import { ViemMulticallDataLoader } from '~multicall';
 

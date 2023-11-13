@@ -49,7 +49,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<DystopiaGauge>) {
     const numRewards = Number(await contract.read.rewardTokensLength());
-    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([n])));
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([BigInt(n)])));
   }
 
   getRewardRates({ contract, contractPosition }: GetDataPropsParams<DystopiaGauge, SingleStakingFarmDataProps>) {

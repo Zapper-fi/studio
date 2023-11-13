@@ -3,8 +3,9 @@ import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { VotingRewardsContractPositionFetcher } from '../common/velodrome.voting-rewards.contract-position-fetcher';
-import { VelodromeFees } from '../contracts';
+import { VelodromeBribeContractPositionFetcher } from '../common/velodrome.bribe.contract-position-fetcher';
+import { VelodromeFees } from '../contracts/viem';
+import { VelodromeFeesContractPositionFetcher } from '../common/velodrome.fees.contract-position-fetcher';
 
 export type VelodromeFeesDefinition = {
   address: string;
@@ -13,7 +14,7 @@ export type VelodromeFeesDefinition = {
 };
 
 @PositionTemplate()
-export class OptimismVelodromeFeesContractPositionFetcher extends VotingRewardsContractPositionFetcher<VelodromeFees> {
+export class OptimismVelodromeFeesContractPositionFetcher extends VelodromeFeesContractPositionFetcher {
   groupLabel = 'Fees';
 
   getContract(address: string) {
@@ -33,8 +34,8 @@ export class OptimismVelodromeFeesContractPositionFetcher extends VotingRewardsC
     );
 
     return [
-      { metaType: MetaType.CLAIMABLE, address: await poolcontract.read.token0(), network: this.network },
-      { metaType: MetaType.CLAIMABLE, address: await poolcontract.read.token1(), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await poolContract.read.token0(), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await poolContract.read.token1(), network: this.network },
     ];
   }
 

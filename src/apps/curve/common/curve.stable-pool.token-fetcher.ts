@@ -34,7 +34,7 @@ export abstract class CurveStablePoolTokenFetcher extends CurvePoolDynamicTokenF
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveStableRegistry>) {
-    return contract.read.pool_list([poolIndex]);
+    return contract.read.pool_list([BigInt(poolIndex)]);
   }
 
   async resolveTokenAddress({ contract, swapAddress }: ResolveTokenAddressParams<CurveStableRegistry>) {

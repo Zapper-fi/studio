@@ -17,7 +17,7 @@ export abstract class CurveCryptoPoolGaugeContractPositionFetcher extends CurveP
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveCryptoRegistry>) {
-    return contract.read.pool_list([poolIndex]);
+    return contract.read.pool_list([BigInt(poolIndex)]);
   }
 
   async resolveTokenAddress({ contract, swapAddress }: ResolveTokenAddressParams<CurveCryptoRegistry>) {

@@ -45,7 +45,7 @@ export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetche
     );
     const basisPointsDivisor = 100000;
 
-    const vlpPrice = await velaVault.getVLPPrice();
+    const vlpPrice = await velaVault.read.getVLPPrice();
     const pricePerShare = Number(vlpPrice) / Number(basisPointsDivisor);
 
     return [pricePerShare];

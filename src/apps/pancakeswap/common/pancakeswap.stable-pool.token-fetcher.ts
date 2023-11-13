@@ -40,7 +40,7 @@ export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolD
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<PancakeswapStablePoolRegistry>) {
-    return contract.read.swapPairContract([poolIndex]);
+    return contract.read.swapPairContract([BigInt(poolIndex)]);
   }
 
   async resolveTokenAddress({ contract }: ResolveTokenAddressParams<PancakeswapStablePool>) {

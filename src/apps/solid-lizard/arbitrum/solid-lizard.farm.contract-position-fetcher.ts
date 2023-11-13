@@ -44,7 +44,7 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<SolidLizardGauge>) {
     const numRewards = Number(await contract.read.rewardTokensLength());
-    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([n])));
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([BigInt(n)])));
   }
 
   // @TODO: Find rewards rates which matches the APY returned from their API

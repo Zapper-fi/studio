@@ -69,7 +69,7 @@ export abstract class KyberSwapClassicFarmFairlaunchV2ContractPositionFetcher ex
     contract,
     definition,
   }: GetMasterChefDataPropsParams<KyberSwapClassicMasterchefV2>): Promise<BigNumberish> {
-    return contract.read.getPoolInfo([definition.poolIndex]).then(v => v.rewardPerSeconds[0]);
+    return contract.read.getPoolInfo([BigInt(definition.poolIndex)]).then(v => v.rewardPerSeconds[0]);
   }
 
   async getStakedTokenBalance({

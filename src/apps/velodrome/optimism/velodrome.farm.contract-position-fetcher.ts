@@ -44,7 +44,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<VelodromeGauge>) {
     const numRewards = Number(await contract.read.rewardsListLength());
-    return Promise.all(range(numRewards).map(async n => await contract.read.rewards([n])));
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewards([BigInt(n)])));
   }
 
   // @TODO: Find rewards rates which matches the APY returned from their API

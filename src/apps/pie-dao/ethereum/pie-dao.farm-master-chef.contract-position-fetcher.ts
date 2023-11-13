@@ -32,7 +32,7 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
   }
 
   async getStakedTokenAddress(contract: PieDaoStaking, poolIndex: number) {
-    return contract.read.getPoolToken([poolIndex]);
+    return contract.read.getPoolToken([BigInt(poolIndex)]);
   }
 
   async getRewardTokenAddress(contract: PieDaoStaking) {
@@ -48,7 +48,7 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher extends MasterC
   }
 
   async getTotalRewardRate({ contract, definition }: GetMasterChefDataPropsParams<PieDaoStaking>) {
-    return contract.read.getPoolRewardRate([definition.poolIndex]);
+    return contract.read.getPoolRewardRate([BigInt(definition.poolIndex)]);
   }
 
   async getStakedTokenBalance({
