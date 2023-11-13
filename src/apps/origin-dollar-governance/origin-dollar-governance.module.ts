@@ -3,17 +3,15 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { OriginDollarGovernanceContractFactory } from './contracts';
-import { EthereumOriginDollarGovernanceRewardsContractPositionFetcher } from './ethereum/origin-dollar-governance.rewards.contract-position-fetcher';
-import { EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher } from './ethereum/origin-dollar-governance.vote-escrowed.token-fetcher';
+import { EthereumOriginDollarGovernanceVeOgvContractPositionFetcher } from './ethereum/origin-dollar-governance.ve-ogv.contract-position-fetcher';
 import { EthereumOriginDollarGovernanceWousdTokenFetcher } from './ethereum/origin-dollar-governance.wousd.token-fetcher';
 
 @Module({
   providers: [
     OriginDollarGovernanceContractFactory,
     // Ethereum
-    EthereumOriginDollarGovernanceRewardsContractPositionFetcher,
-    EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher,
+    EthereumOriginDollarGovernanceVeOgvContractPositionFetcher,
     EthereumOriginDollarGovernanceWousdTokenFetcher,
   ],
 })
-export class OriginDollarAppModule extends AbstractApp() {}
+export class OriginDollarGovernanceAppModule extends AbstractApp() {}
