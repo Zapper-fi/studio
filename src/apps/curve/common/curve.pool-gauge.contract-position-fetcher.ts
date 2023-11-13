@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract, ethers } from 'ethers';
+import { BigNumber, BigNumberish, Contract, ethers } from 'ethers';
 import { range } from 'lodash';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -20,6 +20,7 @@ import {
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveGauge } from '../contracts/viem';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export enum GaugeType {
   SINGLE = 'single',
@@ -44,37 +45,37 @@ export type CurvePoolGaugeDefinition = {
   gaugeType: GaugeType;
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveSwapAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveSwapAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveGaugeAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveGaugeAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
 export abstract class CurvePoolGaugeContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<CurveGauge, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition> {
   abstract registryAddress: string;
   abstract crvTokenAddress: string;
   abstract controllerAddress: string;
 
-  abstract resolveRegistry(address: string): T;
+  abstract resolveRegistry(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveSwapAddress(params: ResolveSwapAddressParams<T>): Promise<string>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
@@ -229,8 +230,10 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
         multicall.wrap(doubleGauge).read.claimed_rewards_for([address]),
       ]);
 
-      const secondaryRewardBalance = secondaryRewardBalanceTotal.sub(secondaryRewardBalanceClaimed);
-      balances.push(secondaryRewardBalance);
+      const secondaryRewardBalance = BigNumber.from(secondaryRewardBalanceTotal)
+        .sub(secondaryRewardBalanceClaimed)
+        .toString();
+      balances.push(BigInt(secondaryRewardBalance));
     }
 
     // Modern "n" gauges supports multiple extra tokens. Call the read function for "n" gauge

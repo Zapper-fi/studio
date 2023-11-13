@@ -56,9 +56,8 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<EulerEtokenContract>) {
-    const pricePerShareRaw = await multicall
-      .wrap(contract)
-      .read.convertBalanceToUnderlying(ethers.BigNumber.from(10).pow(18));
+    const oneUnit = ethers.BigNumber.from(10).pow(18).toString();
+    const pricePerShareRaw = await multicall.wrap(contract).read.convertBalanceToUnderlying([BigInt(oneUnit)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
     return [pricePerShare];
   }

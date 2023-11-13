@@ -38,7 +38,7 @@ export class ArbitrumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
   }
 
   async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CozyFinanceCToken>) {

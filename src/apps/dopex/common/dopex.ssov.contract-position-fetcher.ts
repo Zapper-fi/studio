@@ -18,6 +18,9 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { DopexViemContractFactory } from '../contracts';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
+import { DopexDpxSsov } from '../contracts/viem';
+import { DopexDpxSsovContract } from '../contracts/viem/DopexDpxSsov';
 
 export type DopexSsovDefinition = {
   address: string;
@@ -39,9 +42,11 @@ export type DopexSsovEpochStrikeDefinition = {
   epoch: number;
 };
 
-export abstract class DopexSsovContractPositionFetcher<
-  T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<T, DopexSsovDataProps, DopexSsovEpochStrikeDefinition> {
+export abstract class DopexSsovContractPositionFetcher<T extends Abi> extends ContractPositionTemplatePositionFetcher<
+  T,
+  DopexSsovDataProps,
+  DopexSsovEpochStrikeDefinition
+> {
   abstract getSsovDefinitions(): DopexSsovDefinition[];
   abstract getTotalEpochStrikeDepositBalance(
     params: GetTokenBalancesParams<T, DopexSsovDataProps>,
@@ -67,12 +72,12 @@ export abstract class DopexSsovContractPositionFetcher<
         const currentEpoch = Number(await contract.read.currentEpoch());
 
         const nextEpoch = currentEpoch + 1;
-        const nextEpochStartTime = await contract.read.epochStartTimes([nextEpoch]).then(Number);
+        const nextEpochStartTime = await contract.read.epochStartTimes([BigInt(nextEpoch)]).then(Number);
         const lastValidEpoch = nextEpochStartTime > 0 ? nextEpoch : currentEpoch;
 
         const definitions = await Promise.all(
           range(1, lastValidEpoch + 1).map(async epoch => {
-            const strikes = await contract.read.getEpochStrikes([epoch]);
+            const strikes = await contract.read.getEpochStrikes([BigInt(epoch)]);
             return strikes.map(strike => ({
               address,
               depositTokenAddress,
@@ -128,9 +133,11 @@ export abstract class DopexSsovContractPositionFetcher<
     const strike = contractPosition.dataProps.strike;
 
     const userStrike = ethers.utils.solidityKeccak256(['address', 'uint256'], [address, strike]);
+    const castContract = contract as any as DopexDpxSsovContract;
+
     const [totalDepositBalanceRaw, userDepositBalanceRaw] = await Promise.all([
-      contract.read.totalEpochStrikeDeposits([epoch, strike]),
-      contract.read.userEpochDeposits([epoch, userStrike]),
+      castContract.read.totalEpochStrikeDeposits([BigInt(epoch), BigInt(strike)]),
+      castContract.read.userEpochDeposits([BigInt(epoch), userStrike]),
     ]);
 
     const share = Number(userDepositBalanceRaw) / Number(totalDepositBalanceRaw) || 0;
@@ -151,9 +158,10 @@ export abstract class DopexSsovContractPositionFetcher<
     const strike = contractPosition.dataProps.strike;
 
     const userStrike = ethers.utils.solidityKeccak256(['address', 'uint256'], [address, strike]);
+    const castContract = contract as any as DopexDpxSsovContract;
     const [totalDepositBalanceRaw, userDepositBalanceRaw] = await Promise.all([
-      contract.read.totalEpochStrikeDeposits([epoch, strike]),
-      contract.read.userEpochDeposits([epoch, userStrike]),
+      castContract.read.totalEpochStrikeDeposits([BigInt(epoch), BigInt(strike)]),
+      castContract.read.userEpochDeposits([BigInt(epoch), userStrike]),
     ]);
 
     const share = Number(userDepositBalanceRaw) / Number(totalDepositBalanceRaw) || 0;

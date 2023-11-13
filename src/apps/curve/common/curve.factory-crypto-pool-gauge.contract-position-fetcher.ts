@@ -1,4 +1,5 @@
-import { CurveCryptoFactory } from '../contracts';
+import { CurveCryptoFactory } from '../contracts/viem';
+import { CurveCryptoFactoryContract } from '../contracts/viem/CurveCryptoFactory';
 
 import {
   CurvePoolGaugeContractPositionFetcher,
@@ -9,7 +10,7 @@ import {
 } from './curve.pool-gauge.contract-position-fetcher';
 
 export abstract class CurveFactoryCryptoPoolGaugeContractPositionFetcher extends CurvePoolGaugeContractPositionFetcher<CurveCryptoFactory> {
-  resolveRegistry(address: string): CurveCryptoFactory {
+  resolveRegistry(address: string): CurveCryptoFactoryContract {
     return this.contractFactory.curveCryptoFactory({ address, network: this.network });
   }
 

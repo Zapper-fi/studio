@@ -84,18 +84,18 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
         const numPositionsRaw = await multicall.wrap(ssovV3Contract).read.balanceOf([address]);
 
         return await Promise.all(
-          range(0, numPositionsRaw.toNumber()).map(async index => {
-            const tokenId = await multicall.wrap(ssovV3Contract).tokenOfOwnerByIndex(address, index);
+          range(0, Number(numPositionsRaw)).map(async index => {
+            const tokenId = await multicall.wrap(ssovV3Contract).read.tokenOfOwnerByIndex([address, BigInt(index)]);
 
             const writePosition = await multicall.wrap(ssovV3Contract).read.writePosition([tokenId]);
-            const suppliedAmountRaw = writePosition.collateralAmount;
+            const suppliedAmountRaw = writePosition[2];
 
             const suppliedAmount = drillBalance(contractPosition.tokens[0], suppliedAmountRaw.toString());
 
-            const strike = Number(writePosition.strike) / 10 ** 8;
-            const epoch = Number(writePosition.epoch);
-            const epochTimes = await multicall.wrap(ssovV3Contract).read.getEpochTimes([epoch]);
-            const epochEndDate = unix(Number(epochTimes.end)).format('MMMM D, yyyy');
+            const epoch = Number(writePosition[0]);
+            const strike = Number(writePosition[1]) / 10 ** 8;
+            const epochTimes = await multicall.wrap(ssovV3Contract).read.getEpochTimes([BigInt(epoch)]);
+            const epochEndDate = unix(Number(epochTimes[1])).format('MMMM D, yyyy');
 
             const dataProps = {
               ...contractPosition.dataProps,

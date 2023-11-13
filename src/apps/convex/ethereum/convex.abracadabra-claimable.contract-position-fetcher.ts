@@ -79,7 +79,7 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ConvexAbracadabraWrapper>) {
     const earned = await contract.read.earned([address]);
-    const [[, crvBalanceRaw], [, cvxBalanceRaw]] = earned;
+    const [{ amount: crvBalanceRaw }, { amount: cvxBalanceRaw }] = earned;
     return [0, crvBalanceRaw, cvxBalanceRaw];
   }
 }

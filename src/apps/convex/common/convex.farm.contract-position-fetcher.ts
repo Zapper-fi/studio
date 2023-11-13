@@ -71,7 +71,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const numExtraRewards = await contract.read.extraRewardsLength();
     const extraRewardTokenAddresses = await Promise.all(
       range(0, Number(numExtraRewards)).map(async v => {
-        const vbpAddress = await contract.read.extraRewards([v]);
+        const vbpAddress = await contract.read.extraRewards([BigInt(v)]);
         const vbp = this.contractFactory.convexVirtualBalanceRewardPool({ address: vbpAddress, network: this.network });
         const rewardTokenAddressRaw = await multicall.wrap(vbp).read.rewardToken();
         let rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
@@ -119,7 +119,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardRates = await Promise.all(
       range(0, Number(numExtraRewards)).map(async v => {
-        const vbpAddress = await multicall.wrap(contract).read.extraRewards([v]);
+        const vbpAddress = await multicall.wrap(contract).read.extraRewards([BigInt(v)]);
 
         const vbpContract = this.contractFactory.convexVirtualBalanceRewardPool({
           address: vbpAddress,
@@ -162,7 +162,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const [, cvxRewardToken] = rewardTokens;
 
     const cvxTokenContract = multicall.wrap(this.appToolkit.globalViemContracts.erc20(cvxRewardToken));
-    const currentCvxSupply = await cvxTokencontract.read.totalSupply();
+    const currentCvxSupply = await cvxTokenContract.read.totalSupply();
 
     const crvBalanceBN = await contract.read.earned([address]);
     const crvBalanceRaw = crvBalanceBN.toString();

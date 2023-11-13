@@ -40,7 +40,7 @@ export class EthereumIronBankBorrowContractPositionFetcher extends CompoundBorro
   }
 
   async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<IronBankCToken>) {

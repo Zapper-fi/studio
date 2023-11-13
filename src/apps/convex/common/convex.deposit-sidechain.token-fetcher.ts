@@ -49,8 +49,8 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
 
     return Promise.all(
       poolsRange.flatMap(async poolIndex => {
-        const poolInfo = await depositcontract.read.poolInfo([BigInt(poolIndex)]);
-        return { address: poolInfo.rewards.toLowerCase(), poolIndex };
+        const poolInfo = await depositContract.read.poolInfo([BigInt(poolIndex)]);
+        return { address: poolInfo[2].toLowerCase(), poolIndex };
       }),
     );
   }
@@ -68,7 +68,7 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
     });
 
     const poolInfo = await depositContract.read.poolInfo([BigInt(definition.poolIndex)]);
-    return [{ address: poolInfo.lptoken, network: this.network }];
+    return [{ address: poolInfo[0], network: this.network }];
   }
 
   async getPricePerShare() {

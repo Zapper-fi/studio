@@ -40,7 +40,7 @@ export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorro
   }
 
   async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<CompoundCToken>) {

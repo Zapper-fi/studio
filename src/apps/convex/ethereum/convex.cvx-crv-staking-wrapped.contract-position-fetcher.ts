@@ -48,8 +48,8 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
     const numRewards = await contract.read.rewardLength();
     const rewardTokenAddresses = await Promise.all(
       range(0, Number(numRewards)).map(async v => {
-        const rewards = await contract.read.rewards([v]);
-        return rewards.reward_token.toLowerCase();
+        const rewards = await contract.read.rewards([BigInt(v)]);
+        return rewards[0].toLowerCase();
       }),
     );
 
@@ -70,7 +70,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
 
     const defaultRewardRates = await multicall.wrap(cvxCrvStakingUtilitiesCotnract).read.mainRewardRates();
 
-    return defaultRewardRates.rates;
+    return [...defaultRewardRates[1]];
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ConvexCvxCrvStakingWrapped>) {

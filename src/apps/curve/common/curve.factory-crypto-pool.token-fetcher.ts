@@ -16,6 +16,7 @@ import {
   ResolveTokenAddressParams,
 } from './curve.pool-dynamic.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
+import { CurveCryptoFactoryContract } from '../contracts/viem/CurveCryptoFactory';
 
 export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynamicTokenFetcher<CurveCryptoFactory> {
   constructor(
@@ -26,7 +27,7 @@ export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynami
     super(appToolkit, contractFactory, curveVolumeDataLoader);
   }
 
-  resolveRegistry(address: string): CurveCryptoFactory {
+  resolveRegistry(address: string): CurveCryptoFactoryContract {
     return this.contractFactory.curveCryptoFactory({ address, network: this.network });
   }
 
@@ -43,11 +44,11 @@ export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynami
   }
 
   async resolveCoinAddresses({ contract, swapAddress }: ResolveCoinAddressesParams<CurveCryptoFactory>) {
-    return contract.read.get_coins([swapAddress]);
+    return contract.read.get_coins([swapAddress]).then(v => [...v]);
   }
 
   async resolveReserves({ contract, swapAddress }: ResolveReservesParams<CurveCryptoFactory>) {
-    return contract.read.get_balances([swapAddress]);
+    return contract.read.get_balances([swapAddress]).then(v => [...v]);
   }
 
   async resolveFees({ swapAddress, multicall }: ResolveFeesParams<CurveCryptoFactory>) {

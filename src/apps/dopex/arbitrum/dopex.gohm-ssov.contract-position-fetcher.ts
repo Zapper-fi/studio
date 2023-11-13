@@ -2,7 +2,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
-import { DopexGOhmSsov } from '../contracts';
+import { DopexGOhmSsov } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexGOhmSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexGOhmSsov> {
@@ -37,7 +37,7 @@ export class ArbitrumDopexGOhmSsovContractPositionFetcher extends DopexSsovContr
     contractPosition,
   }: GetTokenBalancesParams<DopexGOhmSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.read.totalEpochStrikeGohmBalance([epoch, strike]);
+    return contract.read.totalEpochStrikeGohmBalance([BigInt(epoch), BigInt(strike)]);
   }
 
   async getTotalEpochStrikeRewardBalances(_params: GetTokenBalancesParams<DopexGOhmSsov, DopexSsovDataProps>) {

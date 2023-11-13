@@ -36,7 +36,7 @@ export class AvalancheIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetc
   }
 
   async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<IronBankCToken>) {

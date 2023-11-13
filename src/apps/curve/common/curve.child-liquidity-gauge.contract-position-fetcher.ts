@@ -66,7 +66,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const gaugeRange = range(0, Number(gaugeCount));
     const gaugeDefinitions = await Promise.all(
       gaugeRange.map(async index => {
-        const gaugeAddress = await multicall.wrap(factory).read.get_gauge([index]);
+        const gaugeAddress = await multicall.wrap(factory).read.get_gauge([BigInt(index)]);
         return { address: gaugeAddress.toLowerCase(), gaugeType: GaugeType.CHILD as const };
       }),
     );
@@ -110,10 +110,10 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     // Calculate annual CRV rewards
     const period = await contract.read.period();
     const periodTimestamp = await contract.read.period_timestamp([period]);
-    const periodWeek = Math.floor(periodTimestamp.toNumber() / moment.duration(7, 'days').asSeconds()); // num weeks
+    const periodWeek = Math.floor(Number(periodTimestamp) / moment.duration(7, 'days').asSeconds()); // num weeks
 
     const crvToken = rewardTokens.find(v => v.address === this.crvTokenAddress)!;
-    const crvInflationRateRaw = await contract.read.inflation_rate([periodWeek]);
+    const crvInflationRateRaw = await contract.read.inflation_rate([BigInt(periodWeek)]);
     const crvInflationRate = Number(crvInflationRateRaw) / 10 ** crvToken.decimals;
     const crvYearlyReward = crvInflationRate * moment.duration(1, 'year').asSeconds();
     const crvYearlyRewardInUSD = crvYearlyReward * crvToken.price;
@@ -122,7 +122,7 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     const rewardTokenCount = await contract.read.reward_count();
     const individualRewardsInUSD = await Promise.all(
       range(0, Number(rewardTokenCount)).map(async index => {
-        const rewardTokenAddressRaw = await contract.read.reward_tokens([index]);
+        const rewardTokenAddressRaw = await contract.read.reward_tokens([BigInt(index)]);
         const rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
         const rewardToken = rewardTokens.find(p => p.address === rewardTokenAddress);
         if (!rewardToken) return 0;

@@ -7,6 +7,7 @@ import { VestingEscrowTemplateContractPositionFetcher } from '~position/template
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveVestingEscrow } from '../contracts/viem';
+import { CurveVestingEscrowContract } from '../contracts/viem/CurveVestingEscrow';
 
 @PositionTemplate()
 export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEscrowTemplateContractPositionFetcher<CurveVestingEscrow> {
@@ -20,7 +21,7 @@ export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEs
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): CurveVestingEscrow {
+  getEscrowContract(address: string): CurveVestingEscrowContract {
     return this.contractFactory.curveVestingEscrow({ address, network: this.network });
   }
 

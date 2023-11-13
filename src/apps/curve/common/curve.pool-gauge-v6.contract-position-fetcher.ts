@@ -6,7 +6,7 @@ import { duration } from 'moment';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -20,6 +20,7 @@ import {
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveGaugeV6 } from '../contracts/viem/CurveGaugeV6';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type CurvePoolGaugeDataProps = {
   liquidity: number;
@@ -33,31 +34,31 @@ export type CurvePoolGaugeDefinition = {
   extraRewardTokenAddresses: string[];
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveGaugeAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveGaugeAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   tokenAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
 export abstract class CurvePoolGaugeV6ContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<CurveGaugeV6, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition> {
   abstract factoryAddress: string;
   abstract controllerAddress: string;
   abstract crvAddress: string;
 
-  abstract resolveFactory(address: string): T;
+  abstract resolveFactory(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
   abstract resolveGaugeAddress(params: ResolveGaugeAddressParams<T>): Promise<string>;

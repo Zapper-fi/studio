@@ -39,7 +39,7 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
       network: this.network,
     });
 
-    const vaultTokens = await controller.read.getAllMarkets();
+    const vaultTokens = await controller.read.getAllMarkets().then(v => [...v]);
     const liveVaultTokens = await Promise.all(
       vaultTokens.map(async address => {
         const contract = this.contractFactory.idleToken({ network: this.network, address });

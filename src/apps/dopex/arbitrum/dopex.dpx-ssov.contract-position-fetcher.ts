@@ -4,7 +4,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
-import { DopexDpxSsov } from '../contracts';
+import { DopexDpxSsov } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexDpxSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexDpxSsov> {
@@ -42,7 +42,7 @@ export class ArbitrumDopexDpxSsovContractPositionFetcher extends DopexSsovContra
     contractPosition,
   }: GetTokenBalancesParams<DopexDpxSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.read.totalEpochStrikeBalance([epoch, strike]);
+    return contract.read.totalEpochStrikeBalance([BigInt(epoch), BigInt(strike)]);
   }
 
   getTotalEpochStrikeRewardBalances({
@@ -50,6 +50,6 @@ export class ArbitrumDopexDpxSsovContractPositionFetcher extends DopexSsovContra
     contractPosition,
   }: GetTokenBalancesParams<DopexDpxSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.read.totalEpochStrikeRdpxBalance([epoch, strike]);
+    return contract.read.totalEpochStrikeRdpxBalance([BigInt(epoch), BigInt(strike)]);
   }
 }

@@ -5,10 +5,11 @@ import {
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
 } from '../common/curve.pool-gauge.contract-position-fetcher';
-import { CurveCryptoRegistry } from '../contracts';
+import { CurveCryptoRegistry } from '../contracts/viem';
+import { CurveCryptoRegistryContract } from '../contracts/viem/CurveCryptoRegistry';
 
 export abstract class CurveCryptoPoolGaugeContractPositionFetcher extends CurvePoolGaugeContractPositionFetcher<CurveCryptoRegistry> {
-  resolveRegistry(address: string): CurveCryptoRegistry {
+  resolveRegistry(address: string): CurveCryptoRegistryContract {
     return this.contractFactory.curveCryptoRegistry({ address, network: this.network });
   }
 
@@ -25,6 +26,6 @@ export abstract class CurveCryptoPoolGaugeContractPositionFetcher extends CurveP
   }
 
   async resolveGaugeAddresses({ contract, swapAddress }: ResolveGaugeAddressParams<CurveCryptoRegistry>) {
-    return contract.read.get_gauges([swapAddress]).then(v => v[0]);
+    return contract.read.get_gauges([swapAddress]).then(v => [...v[0]]);
   }
 }

@@ -6,7 +6,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
 import { ConvexViemContractFactory } from '../contracts';
-import { ConvexVotingEscrow } from '../contracts/viem/ConvexVotingEscrow';
+import { ConvexVotingEscrow, ConvexVotingEscrowContract } from '../contracts/viem/ConvexVotingEscrow';
 
 @PositionTemplate()
 export class EthereumConvexVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -24,27 +24,27 @@ export class EthereumConvexVotingEscrowContractPositionFetcher extends VotingEsc
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): ConvexVotingEscrow {
+  getEscrowContract(address: string): ConvexVotingEscrowContract {
     return this.contractFactory.convexVotingEscrow({ address, network: this.network });
   }
 
-  getRewardContract(address: string): ConvexVotingEscrow {
+  getRewardContract(address: string): ConvexVotingEscrowContract {
     return this.contractFactory.convexVotingEscrow({ address, network: this.network });
   }
 
-  async getEscrowedTokenAddress(contract: ConvexVotingEscrow): Promise<string> {
+  async getEscrowedTokenAddress(contract: ConvexVotingEscrowContract): Promise<string> {
     return contract.read.stakingToken();
   }
 
-  async getRewardTokenAddress(contract: ConvexVotingEscrow): Promise<string> {
+  async getRewardTokenAddress(contract: ConvexVotingEscrowContract): Promise<string> {
     return contract.read.rewardTokens([BigInt(0)]);
   }
 
-  async getEscrowedTokenBalance(address: string, contract: ConvexVotingEscrow): Promise<BigNumberish> {
-    return contract.read.lockedBalances([address]).then(v => v.total);
+  async getEscrowedTokenBalance(address: string, contract: ConvexVotingEscrowContract): Promise<BigNumberish> {
+    return contract.read.lockedBalances([address]).then(v => v[0]);
   }
 
-  async getRewardTokenBalance(address: string, contract: ConvexVotingEscrow): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string, contract: ConvexVotingEscrowContract): Promise<BigNumberish> {
     return contract.read.claimableRewards([address]).then(v => v[0].amount);
   }
 }

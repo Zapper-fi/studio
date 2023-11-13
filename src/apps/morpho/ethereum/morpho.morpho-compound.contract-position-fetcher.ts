@@ -38,7 +38,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
     const morphoCompound = this.contractFactory.morphoCompound({ address: this.morphoAddress, network: this.network });
 
     const morpho = multicall.wrap(morphoCompound);
-    const markets = await morpho.read.getAllMarkets();
+    const markets = await morpho.read.getAllMarkets().then(v => [...v]);
 
     return Promise.all(
       markets.map(async marketAddress => {

@@ -37,7 +37,7 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
   }
 
   async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CompoundCToken>) {

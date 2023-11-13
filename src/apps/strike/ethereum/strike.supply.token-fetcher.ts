@@ -33,7 +33,7 @@ export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher
   }
 
   async getMarkets({ contract }: GetMarketsParams<StrikeComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<StrikeSToken>) {

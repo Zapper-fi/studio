@@ -52,7 +52,7 @@ export class EthereumStrikeBorrowContractPositionFetcher extends CompoundBorrowC
   }
 
   async getMarkets({ contract }: GetMarketsParams<StrikeComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<StrikeSToken>) {

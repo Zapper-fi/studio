@@ -4,7 +4,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
-import { DopexEthSsov } from '../contracts';
+import { DopexEthSsov } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexEthSsov> {
@@ -51,7 +51,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     contractPosition,
   }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.read.totalEpochStrikeEthBalance([epoch, strike]);
+    return contract.read.totalEpochStrikeEthBalance([BigInt(epoch), BigInt(strike)]);
   }
 
   async getTotalEpochStrikeRewardBalances({
@@ -68,8 +68,8 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     });
 
     return Promise.all([
-      multicall.wrap(rewardDistributionContract).read.dpxReceived([epoch]),
-      multicall.wrap(rewardDistributionContract).read.rdpxReceived([epoch]),
+      multicall.wrap(rewardDistributionContract).read.dpxReceived([BigInt(epoch)]),
+      multicall.wrap(rewardDistributionContract).read.rdpxReceived([BigInt(epoch)]),
     ]);
   }
 }

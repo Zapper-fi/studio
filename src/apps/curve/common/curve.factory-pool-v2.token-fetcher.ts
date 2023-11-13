@@ -13,6 +13,7 @@ import {
   ResolveTokenAddressParams,
 } from './curve.pool-dynamic-v2.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
+import { CurveTricryptoFactoryContract } from '../contracts/viem/CurveTricryptoFactory';
 
 export abstract class CurveFactoryV2PoolTokenFetcher extends CurvePoolDynamicV2TokenFetcher<CurveTricryptoFactory> {
   constructor(
@@ -23,7 +24,7 @@ export abstract class CurveFactoryV2PoolTokenFetcher extends CurvePoolDynamicV2T
     super(appToolkit, contractFactory, curveVolumeDataLoader);
   }
 
-  resolveFactory(address: string): CurveTricryptoFactory {
+  resolveFactory(address: string): CurveTricryptoFactoryContract {
     return this.contractFactory.curveTricryptoFactory({ address, network: this.network });
   }
 
@@ -36,10 +37,10 @@ export abstract class CurveFactoryV2PoolTokenFetcher extends CurvePoolDynamicV2T
   }
 
   async resolveCoinAddresses({ contract, tokenAddress }: ResolveCoinAddressesParams<CurveTricryptoFactory>) {
-    return contract.read.get_coins([tokenAddress]);
+    return contract.read.get_coins([tokenAddress]).then(v => [...v]);
   }
 
   async resolveReserves({ contract, tokenAddress }: ResolveReservesParams<CurveTricryptoFactory>) {
-    return contract.read.get_balances([tokenAddress]);
+    return contract.read.get_balances([tokenAddress]).then(v => [...v]);
   }
 }

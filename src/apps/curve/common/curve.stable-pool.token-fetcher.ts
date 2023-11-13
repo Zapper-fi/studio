@@ -15,6 +15,7 @@ import {
   ResolveTokenAddressParams,
 } from './curve.pool-dynamic.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
+import { CurveStableRegistryContract } from '../contracts/viem/CurveStableRegistry';
 
 export abstract class CurveStablePoolTokenFetcher extends CurvePoolDynamicTokenFetcher<CurveStableRegistry> {
   constructor(
@@ -25,7 +26,7 @@ export abstract class CurveStablePoolTokenFetcher extends CurvePoolDynamicTokenF
     super(appToolkit, contractFactory, curveVolumeDataLoader);
   }
 
-  resolveRegistry(address: string): CurveStableRegistry {
+  resolveRegistry(address: string): CurveStableRegistryContract {
     return this.contractFactory.curveStableRegistry({ address, network: this.network });
   }
 
@@ -42,14 +43,14 @@ export abstract class CurveStablePoolTokenFetcher extends CurvePoolDynamicTokenF
   }
 
   async resolveCoinAddresses({ contract, swapAddress }: ResolveCoinAddressesParams<CurveStableRegistry>) {
-    return contract.read.get_coins([swapAddress]);
+    return contract.read.get_coins([swapAddress]).then(v => [...v]);
   }
 
   async resolveReserves({ contract, swapAddress }: ResolveReservesParams<CurveStableRegistry>) {
-    return contract.read.get_balances([swapAddress]);
+    return contract.read.get_balances([swapAddress]).then(v => [...v]);
   }
 
   async resolveFees({ contract, swapAddress }: ResolveFeesParams<CurveStableRegistry>) {
-    return contract.read.get_fees([swapAddress]);
+    return contract.read.get_fees([swapAddress]).then(v => [...v]);
   }
 }

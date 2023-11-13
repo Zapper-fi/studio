@@ -53,8 +53,8 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
     const numPools = await multicall.wrap(depositContract).read.poolLength().then(Number);
     return Promise.all(
       range(0, numPools).map(async v => {
-        const pool = await multicall.wrap(depositContract).read.poolInfo([v]);
-        const address = pool.rewards.toLowerCase();
+        const pool = await multicall.wrap(depositContract).read.poolInfo([BigInt(v)]);
+        const address = pool[2].toLowerCase();
 
         const convexRewardPoolContract = this.contractFactory.convexRewardPool({
           address,
@@ -65,14 +65,14 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
           range(0, Number(rewardLength)).map(v =>
             multicall
               .wrap(convexRewardPoolContract)
-              .read.rewards(v)
-              .then(p => p.reward_token.toLowerCase()),
+              .read.rewards([BigInt(v)])
+              .then(p => p[0].toLowerCase()),
           ),
         );
 
         return {
-          address: pool.rewards.toLowerCase(),
-          lpTokenAddress: pool.lptoken.toLowerCase(),
+          address: pool[2].toLowerCase(),
+          lpTokenAddress: pool[0].toLowerCase(),
           rewardAddresses: [rewardAddresses[0]],
         };
       }),

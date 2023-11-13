@@ -36,7 +36,7 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
   async getAddresses({ multicall }: GetAddressesParams) {
     const factory = this.contractFactory.dhedgeV2Factory({ address: this.factoryAddress, network: this.network });
     const deployedFunds = await multicall.wrap(factory).read.getDeployedFunds();
-    return deployedFunds;
+    return [...deployedFunds];
   }
 
   async getUnderlyingTokenDefinitions() {

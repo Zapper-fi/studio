@@ -43,7 +43,7 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
   }
 
   async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
-    const cTokenAddresses = await contract.read.getAllMarkets();
+    const cTokenAddresses = await contract.read.getAllMarkets().then(v => [...v]);
     const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.read.c2b([cTokenAddress])));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }

@@ -40,7 +40,7 @@ export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBo
   }
 
   async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
-    return contract.read.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<CozyFinanceCToken>) {
