@@ -5,7 +5,7 @@ import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template
 import type { ExactlyMarketDefinition } from '../common/exactly.definitions-resolver';
 import { type ExactlyFixedMarketProps, ExactlyFixedPositionFetcher } from '../common/exactly.fixed-position-fetcher';
 import type { ExactlyMarketProps } from '../common/exactly.token-fetcher';
-import type { Market } from '../contracts';
+import { Market } from '../contracts/viem';
 
 export abstract class ExactlyFixedBorrowFetcher extends ExactlyFixedPositionFetcher {
   groupLabel = 'Variable Borrow';

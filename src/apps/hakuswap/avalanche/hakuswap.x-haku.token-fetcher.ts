@@ -33,8 +33,8 @@ export class AvalancheHakuswapXHakuTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<HakuswapXHaku>) {
-    const oneUnit = BigNumber.from(10).pow(18);
-    const pricePerShareRaw = await multicall.wrap(contract).read.xHAKUForHAKU([oneUnit]);
+    const oneUnit = BigNumber.from(10).pow(18).toString();
+    const pricePerShareRaw = await multicall.wrap(contract).read.xHAKUForHAKU([BigInt(oneUnit)]);
     const decimals = appToken.tokens[0].decimals;
 
     return [Number(pricePerShareRaw) / 10 ** decimals];

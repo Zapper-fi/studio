@@ -48,7 +48,7 @@ export class EthereumGearboxRewardsMerkleCache extends MerkleCache<GearboxMerkle
       address: AIRDROP_DISTRIBUTOR,
       network: this.network,
     });
-    const merkleRoot = await airdropDistributorContract.merkleRoot();
+    const merkleRoot = await airdropDistributorContract.read.merkleRoot();
     const urls = allPermutations.map(
       p =>
         `https://raw.githubusercontent.com/Gearbox-protocol/rewards/master/merkle/mainnet_${merkleRoot.replace(

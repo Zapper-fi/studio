@@ -71,7 +71,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
 
     // The calls fails when it's using the Multicall wrapped version of the contract
     const contract = this.contractFactory.geistRewards({ address: contractPosition.address, network: this.network });
-    const rewardBalanceRaw = await contract.claimableReward(address, appTokenAddresses, { from: address });
+    const rewardBalanceRaw = await contract.read.claimableReward([address, appTokenAddresses]);
     const sum = rewardBalanceRaw.reduce((sum, cur) => sum.add(cur), BigNumber.from(0));
 
     return [sum];

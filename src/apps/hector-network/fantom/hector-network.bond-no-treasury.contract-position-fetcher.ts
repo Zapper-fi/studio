@@ -71,11 +71,13 @@ export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends Co
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondNoTreasury>) {
     const count = await contract.read.depositCounts([address]);
-    const depositIds = await Promise.all(range(0, Number(count)).map(i => contract.read.ownedDeposits([address, i])));
+    const depositIds = await Promise.all(
+      range(0, Number(count)).map(i => contract.read.ownedDeposits([address, BigInt(i)])),
+    );
     const bondInfos = await Promise.all(depositIds.map(id => contract.read.bondInfo([id])));
     const claimablePayouts = await Promise.all(depositIds.map(id => contract.read.pendingPayoutFor([id])));
 
-    const totalPayout = bondInfos.reduce((acc, v) => acc.add(v.payout), BigNumber.from(0));
+    const totalPayout = bondInfos.reduce((acc, v) => acc.add(v[0]), BigNumber.from(0));
     const totalClaimablePayout = claimablePayouts.reduce((acc, v) => acc.add(v), BigNumber.from(0));
     const totalVestingAmount = totalPayout.sub(totalClaimablePayout);
 

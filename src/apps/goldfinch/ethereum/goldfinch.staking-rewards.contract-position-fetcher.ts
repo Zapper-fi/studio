@@ -142,14 +142,17 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
     // Loop through all the user's positions, and sum up the total number of FIDU & CurveLP tokens
     await Promise.all(
       range(0, balance).map(async i => {
-        const tokenId = await multicall.wrap(stakingRewardsContract).read.tokenOfOwnerByIndex([address, i]);
+        const tokenId = await multicall.wrap(stakingRewardsContract).read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const positionData = await multicall.wrap(stakingRewardsContract).read.positions([tokenId]);
-        if (positionData.positionType !== 0 && positionData.positionType !== 1) return null;
+        const amount = positionData[0];
+        const positionType = positionData[4];
 
-        if (positionData.positionType === 1) {
-          sumOfCurveTotalTokens = sumOfCurveTotalTokens.plus(positionData.amount.toString());
-        } else if (positionData.positionType === 0) {
-          sumOfFiduTotalTokens = sumOfFiduTotalTokens.plus(positionData.amount.toString());
+        if (positionType !== 0 && positionType !== 1) return null;
+
+        if (positionType === 1) {
+          sumOfCurveTotalTokens = sumOfCurveTotalTokens.plus(amount.toString());
+        } else if (positionType === 0) {
+          sumOfFiduTotalTokens = sumOfFiduTotalTokens.plus(amount.toString());
         }
       }),
     );

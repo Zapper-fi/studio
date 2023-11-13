@@ -47,9 +47,9 @@ export abstract class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePo
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<GammaStrategiesHypervisor>) {
-    const totalAmountInfo = await contract.read.getTotalAmounts();
-    const reserve0 = Number(totalAmountInfo.total0) / 10 ** appToken.tokens[0].decimals;
-    const reserve1 = Number(totalAmountInfo.total1) / 10 ** appToken.tokens[1].decimals;
+    const [total0, total1] = await contract.read.getTotalAmounts();
+    const reserve0 = Number(total0) / 10 ** appToken.tokens[0].decimals;
+    const reserve1 = Number(total1) / 10 ** appToken.tokens[1].decimals;
     const pricePerShare = [reserve0, reserve1].map(r => r / appToken.supply);
 
     return pricePerShare;

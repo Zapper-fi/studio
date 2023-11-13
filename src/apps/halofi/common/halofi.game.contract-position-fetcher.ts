@@ -96,8 +96,8 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const balancesRaw: BigNumberish[] = [];
 
-        if (!player.withdrawn && stakedToken) {
-          const paidAmount = parseFloat(player.netAmountPaid.toString());
+        if (!player[0] && stakedToken) {
+          const paidAmount = parseFloat(player[7].toString());
           balancesRaw.push(paidAmount);
         }
 

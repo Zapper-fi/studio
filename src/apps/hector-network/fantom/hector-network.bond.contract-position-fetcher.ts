@@ -13,6 +13,7 @@ import {
 
 import { HectorNetworkViemContractFactory } from '../contracts';
 import { HectorNetworkBondDepository } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class FantomHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondDepository> {
@@ -78,6 +79,6 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
       contract.read.pendingPayoutFor([address]),
     ]);
 
-    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
+    return [BigNumber.from(bondInfo[0]).sub(claimablePayout).toString(), claimablePayout.toString()];
   }
 }

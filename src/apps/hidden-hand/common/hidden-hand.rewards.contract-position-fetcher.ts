@@ -53,7 +53,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
   async getTokenDefinitions({
     address,
     contract,
-  }: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>): Promise<
+  }: GetTokenDefinitionsParams<HiddenHandRewardDistributor, DefaultContractPositionDefinition>): Promise<
     UnderlyingTokenDefinition[] | null
   > {
     const distribution = await this.rewardsResolver.getData();
@@ -99,7 +99,11 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
 
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<Contract, DefaultDataProps, HiddenHandRewardsDefinition>): Promise<string> {
+  }: GetDisplayPropsParams<
+    HiddenHandRewardDistributor,
+    DefaultDataProps,
+    HiddenHandRewardsDefinition
+  >): Promise<string> {
     return definition.name;
   }
 

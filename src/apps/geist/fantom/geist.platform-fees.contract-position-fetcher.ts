@@ -17,6 +17,7 @@ import {
 
 import { GeistViemContractFactory } from '../contracts';
 import { GeistStaking } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistStaking> {
@@ -45,7 +46,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<GeistStaking>) {
     const rewardTokenAddresses = await Promise.all(
       range(50).map(idx =>
-        contract.read.rewardTokens([idx]).catch(e => {
+        contract.read.rewardTokens([BigInt(idx)]).catch(e => {
           if (isViemMulticallUnderlyingError(e)) return null;
           throw e;
         }),
@@ -93,14 +94,14 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
       contract.read.claimableRewards([address]),
     ]);
 
-    const withdrawableBalanceRaw = withdrawableDataRaw.amount.add(withdrawableDataRaw.penaltyAmount).toString();
+    const withdrawableBalanceRaw = BigNumber.from(withdrawableDataRaw[0]).add(withdrawableDataRaw[1]).toString();
 
     return contractPosition.tokens.map((token, idx) => {
-      if (idx === 0) return lockedBalancesData.total; // Locked GEIST
+      if (idx === 0) return lockedBalancesData[0]; // Locked GEIST
       if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked GEIST
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
-        ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,
+        ({ token: tokenAddressRaw }) => tokenAddressRaw.toLowerCase() === token.address,
       );
 
       return rewardTokenMatch?.amount ?? 0;

@@ -8,6 +8,8 @@ import { GetTokenPropsParams, DefaultAppTokenDefinition } from '~position/templa
 
 import { HakuswapViemContractFactory } from '../contracts';
 import { HakuswapFactory, HakuswapPool } from '../contracts/viem';
+import { HakuswapPoolContract } from '../contracts/viem/HakuswapPool';
+import { HakuswapFactoryContract } from '../contracts/viem/HakuswapFactory';
 
 const poolNotUsingDecimals = [
   '0x519de4668ea6661d1870928a3033a62dc2acc503',
@@ -39,32 +41,33 @@ export class AvalancheHakuswapPoolTokenFetcher extends UniswapV2PoolOnChainTempl
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): HakuswapPool {
+  getPoolTokenContract(address: string): HakuswapPoolContract {
     return this.contractFactory.hakuswapPool({ address, network: this.network });
   }
 
-  getPoolFactoryContract(address: string): HakuswapFactory {
+  getPoolFactoryContract(address: string): HakuswapFactoryContract {
     return this.contractFactory.hakuswapFactory({ address, network: this.network });
   }
 
-  getPoolsLength(contract: HakuswapFactory): Promise<BigNumberish> {
+  getPoolsLength(contract: HakuswapFactoryContract): Promise<BigNumberish> {
     return contract.read.allPairsLength();
   }
 
-  getPoolAddress(contract: HakuswapFactory, index: number): Promise<string> {
-    return contract.read.allPairs([index]);
+  getPoolAddress(contract: HakuswapFactoryContract, index: number): Promise<string> {
+    return contract.read.allPairs([BigInt(index)]);
   }
 
-  getPoolToken0(contract: HakuswapPool): Promise<string> {
+  getPoolToken0(contract: HakuswapPoolContract): Promise<string> {
     return contract.read.token0();
   }
 
-  getPoolToken1(contract: HakuswapPool): Promise<string> {
+  getPoolToken1(contract: HakuswapPoolContract): Promise<string> {
     return contract.read.token1();
   }
 
-  getPoolReserves(contract: HakuswapPool): Promise<BigNumberish[]> {
-    return contract.read.getReserves();
+  async getPoolReserves(contract: HakuswapPoolContract): Promise<BigNumberish[]> {
+    const reserves = await contract.read.getReserves();
+    return [reserves[0], reserves[1]];
   }
 
   async getDecimals({

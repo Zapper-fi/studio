@@ -67,9 +67,9 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
         ]);
 
         const collateralTokenAddresses = await Promise.all(
-          _.range(collateralTokensCount.toNumber()).map(async id => {
-            const collateralToken = await multicall.wrap(creditManagerV2Contract).read.collateralTokens([id]);
-            return collateralToken.token;
+          _.range(Number(collateralTokensCount)).map(async id => {
+            const collateralToken = await multicall.wrap(creditManagerV2Contract).read.collateralTokens([BigInt(id)]);
+            return collateralToken[0];
           }),
         );
 
@@ -136,7 +136,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
       contractPosition.tokens.map(async token => {
         if (token.metaType === MetaType.BORROWED) {
           const debt = await contract.read.calcCreditAccountAccruedInterest([creditAccountAddress]);
-          return debt.borrowedAmountWithInterestAndFees;
+          return debt[2];
         }
 
         const tokenContract = this.appToolkit.globalViemContracts.erc20({
