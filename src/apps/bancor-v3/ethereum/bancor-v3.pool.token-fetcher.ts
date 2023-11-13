@@ -59,14 +59,11 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
 
     const bancorContract = this.contractFactory.bancorNetwork({ address: this.bancorAddress, network: this.network });
     const poolCollectionAddress = (await multicall.wrap(bancorContract).read.poolCollections()).at(-1)!;
-    const poolContract: PoolCollection = this.contractFactory.poolCollection({
-      address: poolCollectionAddress,
-      network: this.network,
-    });
+    const poolContract = this.contractFactory.poolCollection({ address: poolCollectionAddress, network: this.network });
 
-    const poolData = await multicall
-      .wrap(poolContract)
-      .read.poolData(appToken.tokens[0].address.replace(ZERO_ADDRESS, ETH_ADDR_ALIAS));
+    const poolAddress = appToken.tokens[0].address.replace(ZERO_ADDRESS, ETH_ADDR_ALIAS);
+    const poolData = await multicall.wrap(poolContract).read.poolData([poolAddress]);
+
     const reserve = Number(poolData.liquidity.stakedBalance) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
 
