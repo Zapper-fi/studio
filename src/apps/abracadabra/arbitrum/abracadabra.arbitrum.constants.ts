@@ -7,6 +7,9 @@ export const ARBITRUM_CAULDRONS: AbracadabraCauldronContractPositionDefinition[]
   { version: 'V4', type: 'REGULAR', address: '0x726413d7402ff180609d0ebc79506df8633701b1' }, // magicGLP
 ];
 
+export const ARBITRUM_GLP_TOKEN_ADDRESS = '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258';
+export const AVALANCHE_GLP_TOKEN_ADDRESS = '0x01234181085565ed162a948b6a5e88758cd7c7b8';
+
 export const CURVE_MIM_3POOL_FARM = '0x839de324a1ab773f76a53900d70ac1b913d2b387';
 
 export const M_SPELL_ADDRESS = '0x1df188958a8674b5177f77667b8d173c3cdd9e51';

@@ -4,9 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetDisplayPropsParams } from '~position/template/app-token.template.types';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceViemContractFactory } from '../contracts';
 import { UmamiFinanceMarinate } from '../contracts/viem';
 
@@ -17,8 +16,6 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceYieldResolver)
-    private readonly yieldResolver: UmamiFinanceYieldResolver,
     @Inject(UmamiFinanceViemContractFactory) protected readonly contractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
@@ -38,11 +35,6 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
 
   async getPricePerShare() {
     return [1];
-  }
-
-  async getApy(_params: GetDataPropsParams<UmamiFinanceMarinate>) {
-    const { apr } = await this.yieldResolver.getStakingYield();
-    return Number(apr);
   }
 
   async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceMarinate>): Promise<string[]> {

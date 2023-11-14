@@ -46,7 +46,6 @@ export class EthereumCurveVotingEscrowContractPositionFetcher extends VotingEscr
   }
 
   async getRewardTokenBalance(address: string, contract: CurveVotingEscrowRewardContract) {
-    // @ts-ignore
-    return contract.simulate.earned([address]).then(v => v.result);
+    return contract.simulate.claim([address]).then(v => v.result);
   }
 }

@@ -11,11 +11,9 @@ import {
   UnderlyingTokenDefinition,
   GetPricePerShareParams,
   GetDisplayPropsParams,
-  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceTimelockedGlpVaultAddress } from '../common/umami-finance.constants';
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceViemContractFactory } from '../contracts';
 import { UmamiFinanceTimelockedGlpVault } from '../contracts/viem/UmamiFinanceTimelockedGlpVault';
 
@@ -25,8 +23,6 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceYieldResolver)
-    private readonly yieldResolver: UmamiFinanceYieldResolver,
     @Inject(UmamiFinanceViemContractFactory)
     private readonly umamiFinanceContractFactory: UmamiFinanceViemContractFactory,
   ) {
@@ -72,9 +68,5 @@ export class ArbitrumUmamiFinanceTimelockedGlpVaultsTokenFetcher extends AppToke
 
   async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceTimelockedGlpVault>): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
-  }
-
-  async getApy({ address }: GetDataPropsParams<UmamiFinanceTimelockedGlpVault>): Promise<number> {
-    return this.yieldResolver.getVaultYield(address, true);
   }
 }
