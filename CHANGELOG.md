@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.545.2](https://github.com/Zapper-fi/studio/compare/v0.545.1...v0.545.2) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** Fix multicall call struct types ([#3035](https://github.com/Zapper-fi/studio/issues/3035)) ([8df61a2](https://github.com/Zapper-fi/studio/commit/8df61a2dfdd57069773d64d8438a03d304288c63))
+
+## [0.545.1](https://github.com/Zapper-fi/studio/compare/v0.545.0...v0.545.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** Remove CLI from include ([7ae4797](https://github.com/Zapper-fi/studio/commit/7ae4797feb3c772e611f98779bcd3ca583f3d4d8))
+
 ## [0.545.0](https://github.com/Zapper-fi/studio/compare/v0.544.1...v0.545.0) (2023-11-14)
 
 
