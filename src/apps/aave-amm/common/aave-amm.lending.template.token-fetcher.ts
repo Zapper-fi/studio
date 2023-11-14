@@ -53,9 +53,9 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
 
     return reserveTokensData.map(data =>
       this.getTokenAddress({
-        aTokenAddress: data[7].toLowerCase(),
-        stableDebtTokenAddress: data[8].toLowerCase(),
-        variableDebtTokenAddress: data[9].toLowerCase(),
+        aTokenAddress: data.aTokenAddress.toLowerCase(),
+        stableDebtTokenAddress: data.stableDebtTokenAddress.toLowerCase(),
+        variableDebtTokenAddress: data.variableDebtTokenAddress.toLowerCase(),
       }),
     );
   }
@@ -80,7 +80,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     );
 
     const data = await pool.read.getReserveData([appToken.tokens[0].address]);
-    const configurationData = data[0].data;
+    const configurationData = data.configuration.data;
     if (!configurationData) return { liquidationThreshold: 0, enabledAsCollateral: false };
 
     const liquidationThreshold = (Number(configurationData) & ~LT_MASK) >> LT_START_BIT_POSITION;
