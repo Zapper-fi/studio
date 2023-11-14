@@ -11,14 +11,14 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { RaftDataProps } from '../common/raft.position.contract-position-fetcher';
-import { RaftContractFactory } from '../contracts';
+import { RaftViemContractFactory } from '../contracts';
 
 export const positionManagerAddress = '0x5f59b322eb3e16a0c78846195af1f588b77403fc';
 
 @PresenterTemplate()
 export class EthereumRaftPositionPresenter extends PositionPresenterTemplate {
   constructor(
-    @Inject(RaftContractFactory) protected readonly contractFactory: RaftContractFactory,
+    @Inject(RaftViemContractFactory) protected readonly contractFactory: RaftViemContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
   ) {
     super();

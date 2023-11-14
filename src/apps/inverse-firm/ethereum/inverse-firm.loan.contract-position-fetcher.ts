@@ -17,9 +17,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { InverseFirmContractFactory, SimpleMarket } from '../contracts';
-import { CvxCrvStakingWrapper } from '../contracts/ethers/StCvxCrv';
-import { CvxFxsStaking } from '../contracts/ethers/StCvxFxs';
+import { InverseFirmViemContractFactory } from '../contracts';
+import { SimpleMarket } from '../contracts/viem';
 
 const DBR = '0xad038eb671c44b853887a7e32528fab35dc5d710';
 const CVX = '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b';
@@ -60,30 +59,34 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseFirmContractFactory) private readonly contractFactory: InverseFirmContractFactory,
+    @Inject(InverseFirmViemContractFactory) private readonly contractFactory: InverseFirmViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SimpleMarket {
+  getContract(address: string) {
     return this.contractFactory.simpleMarket({ network: this.network, address });
   }
 
   async getDefinitions(): Promise<InverseFirmLoanContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const dolaBorrowRightContract = this.contractFactory.dbr({
       address: this.dbrAddress,
       network: this.network,
     });
 
-    const logs = await dolaBorrowRightContract.queryFilter(dolaBorrowRightContract.filters.AddMarket(), 16155757);
-    const markets = uniq(logs.map(l => l.args.market.toLowerCase()));
+    const logs = await dolaBorrowRightContract.getEvents.AddMarket(
+      {},
+      { fromBlock: BigInt(16155757), toBlock: 'latest' },
+    );
+
+    const markets = uniq(logs.map(l => l.args.market!.toLowerCase()));
 
     const definitions = await Promise.all(
       markets.map(async address => {
         const simpleMarketContract = this.contractFactory.simpleMarket({ address, network: this.network });
-        const collateralTokenAddressRaw = await multicall.wrap(simpleMarketContract).collateral();
+        const collateralTokenAddressRaw = await multicall.wrap(simpleMarketContract).read.collateral();
 
         return {
           address,
@@ -131,7 +134,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     contractPosition,
     multicall,
   }: GetTokenBalancesParams<SimpleMarket>): Promise<BigNumberish[]> {
-    const personalEscrow = await contract.escrows(address);
+    const personalEscrow = await contract.read.escrows([address]);
     if (personalEscrow === ZERO_ADDRESS) return contractPosition.tokens.map(() => 0);
 
     const escrowContract = this.contractFactory.rewardableEscrow({
@@ -140,8 +143,8 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     });
 
     const [supplied, borrowed] = await Promise.all([
-      multicall.wrap(escrowContract).balance(),
-      multicall.wrap(contract).debts(address),
+      multicall.wrap(escrowContract).read.balance(),
+      multicall.wrap(contract).read.debts([address]),
     ]);
 
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
@@ -149,21 +152,30 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     const isCvxFxsMarket = contract.address.toLowerCase() === CVX_FXS_MARKET.toLowerCase();
     const isCvxCrvMarket = contract.address.toLowerCase() === CVX_CRV_MARKET.toLowerCase();
 
-    let claimablesAsTuple: CvxFxsStaking.EarnedDataStructOutput[] | CvxCrvStakingWrapper.EarnedDataStructOutput[] = [];
+    let claimablesAsTuple: {
+      token: string;
+      amount: bigint;
+    }[] = [];
+
     if (isCvxFxsMarket || isCvxCrvMarket) {
       if (isCvxFxsMarket) {
         const stakeContract = this.contractFactory.stCvxFxs({ address: this.stCvxFxsAddress, network: this.network });
-        claimablesAsTuple = await multicall.wrap(stakeContract).claimableRewards(personalEscrow);
+        const result = await multicall.wrap(stakeContract).read.claimableRewards([personalEscrow]);
+        claimablesAsTuple = result.map((v, i) => ({ token: v.token, amount: v.amount }));
       } else {
         const stakeContract = this.contractFactory.stCvxCrv({ address: this.stCvxCrvAddress, network: this.network });
-        claimablesAsTuple = await multicall.wrap(stakeContract).callStatic.earned(personalEscrow);
+        const result = await multicall
+          .wrap(stakeContract)
+          .simulate.earned([personalEscrow])
+          .then(v => v.result);
+        claimablesAsTuple = result.map((v, i) => ({ token: v.token, amount: v.amount }));
       }
     }
 
     const rewardBalances = await Promise.all(
       rewardTokens.map(token => {
         if (DBR === token.address.toLowerCase()) {
-          return multicall.wrap(escrowContract).claimable();
+          return multicall.wrap(escrowContract).read.claimable();
         } else if (claimablesAsTuple.length > 0) {
           const rewardData = claimablesAsTuple.find(
             claimableData => claimableData[0].toLowerCase() === token.address.toLowerCase(),
@@ -202,9 +214,9 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     });
 
     const [rewardRate, dbrDistributorSupply, xinvExRate] = await Promise.all([
-      multicall.wrap(dbrDistributorContract).rewardRate(),
-      multicall.wrap(dbrDistributorContract).totalSupply(),
-      multicall.wrap(xinvContract).exchangeRateStored(),
+      multicall.wrap(dbrDistributorContract).read.rewardRate(),
+      multicall.wrap(dbrDistributorContract).read.totalSupply(),
+      multicall.wrap(xinvContract).read.exchangeRateStored(),
     ]);
 
     const [dbrtoken, invToken] = await Promise.all([

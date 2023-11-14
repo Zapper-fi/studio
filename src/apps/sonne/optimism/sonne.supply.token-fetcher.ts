@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { SonneComptroller, SonneContractFactory, SonneSoToken } from '../contracts';
+import { SonneViemContractFactory } from '../contracts';
+import { SonneComptroller, SonneSoToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<SonneSoToken, SonneComptroller> {
@@ -18,7 +19,7 @@ export class OptimismSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SonneContractFactory) protected readonly contractFactory: SonneContractFactory,
+    @Inject(SonneViemContractFactory) protected readonly contractFactory: SonneViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -32,18 +33,18 @@ export class OptimismSonneSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   }
 
   async getMarkets({ contract }: GetMarketsParams<SonneComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<SonneSoToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<SonneSoToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.supplyRatePerBlock();
+    return contract.read.supplyRatePerBlock();
   }
 }

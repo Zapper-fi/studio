@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MapleContractFactory, MapleWithdrawalManager } from '../contracts';
+import { MapleViemContractFactory } from '../contracts';
+import { MapleWithdrawalManager } from '../contracts/viem';
 
 export type MaplePendingWithdrawalContractPositionDefinition = {
   address: string;
@@ -26,12 +27,12 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MapleContractFactory) protected readonly contractFactory: MapleContractFactory,
+    @Inject(MapleViemContractFactory) protected readonly contractFactory: MapleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MapleWithdrawalManager {
+  getContract(address: string) {
     return this.contractFactory.mapleWithdrawalManager({ address, network: this.network });
   }
 
@@ -51,8 +52,8 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
           address: appToken.address.toLowerCase(),
         });
         const [managerAddressRaw, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(poolContract).manager(),
-          multicall.wrap(poolContract).asset(),
+          multicall.wrap(poolContract).read.manager(),
+          multicall.wrap(poolContract).read.asset(),
         ]);
 
         const poolManagerContract = this.contractFactory.maplePoolManager({
@@ -60,7 +61,7 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
           address: managerAddressRaw.toLowerCase(),
         });
 
-        const withdrawlManagerAddressRaw = await multicall.wrap(poolManagerContract).withdrawalManager();
+        const withdrawlManagerAddressRaw = await multicall.wrap(poolManagerContract).read.withdrawalManager();
 
         return {
           address: withdrawlManagerAddressRaw.toLowerCase(),
@@ -90,6 +91,6 @@ export class EthereumMaplePendingWithdrawalContractPositionFetcher extends Contr
     address,
     contract,
   }: GetTokenBalancesParams<MapleWithdrawalManager>): Promise<BigNumberish[]> {
-    return [await contract.lockedShares(address)];
+    return [await contract.read.lockedShares([address])];
   }
 }

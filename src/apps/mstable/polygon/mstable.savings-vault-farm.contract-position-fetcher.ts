@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableStaking } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableStaking } from '../contracts/viem';
 
 const SAVINGS_VAULTS = [
   {
@@ -25,12 +26,12 @@ export class PolygonMstableSavingsVaultContractPositionFetcher extends SingleSta
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MstableStaking {
+  getContract(address: string) {
     return this.contractFactory.mstableStaking({ address, network: this.network });
   }
 
@@ -39,18 +40,18 @@ export class PolygonMstableSavingsVaultContractPositionFetcher extends SingleSta
   }
 
   getRewardRates({ contract }: GetDataPropsParams<MstableStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({ contract }: GetDataPropsParams<MstableStaking>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

@@ -6,7 +6,8 @@ import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.presen
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory, LemmaUsdl } from '../contracts';
+import { LemmaFinanceViemContractFactory } from '../contracts';
+import { LemmaUsdl } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismLemmaFinanceUsdlTokenFetcher extends AppTokenTemplatePositionFetcher<LemmaUsdl> {
@@ -14,12 +15,12 @@ export class OptimismLemmaFinanceUsdlTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LemmaFinanceContractFactory) protected readonly contractFactory: LemmaFinanceContractFactory,
+    @Inject(LemmaFinanceViemContractFactory) protected readonly contractFactory: LemmaFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LemmaUsdl {
+  getContract(address: string) {
     return this.contractFactory.lemmaUsdl({ address, network: this.network });
   }
 

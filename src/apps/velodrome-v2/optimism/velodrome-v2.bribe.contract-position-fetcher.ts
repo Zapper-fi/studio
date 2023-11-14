@@ -10,13 +10,13 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/velodrome.voting-rewards.contract-position-fetcher';
-import { VelodromeV2Bribe } from '../contracts';
+import { VelodromeV2Bribe } from '../contracts/viem';
 
 @PositionTemplate()
-export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<VelodromeV2Bribe> {
+export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewardsContractPositionFetcher {
   groupLabel = 'Bribe';
 
-  getContract(address: string): VelodromeV2Bribe {
+  getContract(address: string) {
     return this.contractFactory.velodromeV2Bribe({ address, network: this.network });
   }
 
@@ -29,8 +29,8 @@ export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewar
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<VelodromeV2Bribe>) {
-    const numRewards = Number(await contract.rewardsListLength());
-    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
+    const numRewards = Number(await contract.read.rewardsListLength());
+    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.read.rewards([BigInt(n)])));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());

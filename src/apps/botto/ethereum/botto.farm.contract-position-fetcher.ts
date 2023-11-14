@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { BottoContractFactory, BottoLiquidityMining } from '../contracts';
+import { BottoViemContractFactory } from '../contracts';
+import { BottoLiquidityMining } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<BottoLiquidityMining> {
@@ -18,7 +19,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BottoContractFactory) protected readonly contractFactory: BottoContractFactory,
+    @Inject(BottoViemContractFactory) protected readonly contractFactory: BottoViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -33,18 +34,18 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     ];
   }
 
-  getContract(address: string): BottoLiquidityMining {
+  getContract(address: string) {
     return this.contractFactory.bottoLiquidityMining({ address, network: this.network });
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
     const [totalRewards, startTime, endTime] = await Promise.all([
-      contract.totalRewards(),
-      contract.firstStakeTime(),
-      contract.endTime(),
+      contract.read.totalRewards(),
+      contract.read.firstStakeTime(),
+      contract.read.endTime(),
     ]);
 
-    return totalRewards.div(endTime.sub(startTime));
+    return BigNumber.from(totalRewards).div(BigNumber.from(endTime).sub(startTime));
   }
 
   async getIsActive({
@@ -54,23 +55,23 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     SingleStakingFarmDataProps,
     SingleStakingFarmDefinition
   >): Promise<boolean> {
-    return (await contract.endTime()).gt(Math.floor(Date.now() / 1000));
+    return BigNumber.from(await contract.read.endTime()).gt(Math.floor(Date.now() / 1000));
   }
 
   async getStakedTokenBalance({
     address,
     contract,
   }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
-    return contract.totalUserStake(address);
+    return contract.read.totalUserStake([address]);
   }
 
-  getRewardTokenBalances({
+  async getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
-    return contract.callStatic
-      .withdraw({ from: address })
-      .then(res => res.reward)
+    return contract.simulate
+      .withdraw({ account: address })
+      .then(({ result }) => result[1])
       .catch(() => 0);
   }
 }

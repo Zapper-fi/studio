@@ -8,7 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { ShapeshiftContractFactory, ShapeshiftStakingRewards } from '../contracts';
+import { ShapeshiftViemContractFactory } from '../contracts';
+import { ShapeshiftStakingRewards } from '../contracts/viem';
 
 const FARMS = [
   // UNI-V2 FOX / ETH v1 (inactive)
@@ -55,12 +56,12 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ShapeshiftContractFactory) protected readonly contractFactory: ShapeshiftContractFactory,
+    @Inject(ShapeshiftViemContractFactory) protected readonly contractFactory: ShapeshiftViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ShapeshiftStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.shapeshiftStakingRewards({ address, network: this.network });
   }
 
@@ -69,18 +70,19 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    const periodFinish = await contract.read.periodFinish();
+    return Number(periodFinish) > Math.floor(Date.now() / 1000);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

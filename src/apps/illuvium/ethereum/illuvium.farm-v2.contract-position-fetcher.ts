@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { IlluviumContractFactory, IlluviumIlvPoolV2 } from '../contracts';
+import { IlluviumViemContractFactory } from '../contracts';
+import { IlluviumIlvPoolV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumIlvPoolV2> {
@@ -13,12 +14,12 @@ export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IlluviumContractFactory) protected readonly contractFactory: IlluviumContractFactory,
+    @Inject(IlluviumViemContractFactory) protected readonly contractFactory: IlluviumViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IlluviumIlvPoolV2 {
+  getContract(address: string) {
     return this.contractFactory.illuviumIlvPoolV2({ address, network: this.network });
   }
 
@@ -27,7 +28,7 @@ export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<IlluviumIlvPoolV2>) {
-    return contract.poolToken();
+    return contract.read.poolToken();
   }
 
   async getRewardTokenAddresses() {
@@ -39,10 +40,10 @@ export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<IlluviumIlvPoolV2>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<IlluviumIlvPoolV2>) {
-    return (await contract.pendingRewards(address)).pendingYield;
+    return (await contract.read.pendingRewards([address]))[0];
   }
 }

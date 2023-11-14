@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { ImpermaxContractFactory, Borrowable } from '../contracts';
+import { ImpermaxViemContractFactory } from '../contracts';
+import { Borrowable } from '../contracts/viem';
 
 const deprecatedMarkets = [
   '0xb7e5e74b52b9ada1042594cfd8abbdee506cc6c5', // ETH/IMX
@@ -32,12 +33,12 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(ImpermaxContractFactory) private readonly contractFactory: ImpermaxContractFactory,
+    @Inject(ImpermaxViemContractFactory) private readonly contractFactory: ImpermaxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Borrowable {
+  getContract(address: string) {
     return this.contractFactory.borrowable({ address, network: this.network });
   }
 
@@ -46,12 +47,12 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
       this.contractFactory.factory({ network: this.network, address: this.factoryAddress }),
     );
 
-    const poolLength = await factoryContract.allLendingPoolsLength().then(length => Number(length));
+    const poolLength = await factoryContract.read.allLendingPoolsLength().then(length => Number(length));
     const collateralAddressesRaw = await Promise.all(
       _.range(poolLength).map(async i => {
-        const poolAddress = await factoryContract.allLendingPools(i);
+        const poolAddress = await factoryContract.read.allLendingPools([BigInt(i)]);
         if (deprecatedMarkets.includes(poolAddress.toLowerCase())) return null;
-        const { initialized, borrowable0, borrowable1 } = await factoryContract.getLendingPool(poolAddress);
+        const [initialized, , , borrowable0, borrowable1] = await factoryContract.read.getLendingPool([poolAddress]);
         return initialized ? [borrowable0.toLowerCase(), borrowable1.toLowerCase()] : [];
       }),
     );
@@ -62,19 +63,19 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Borrowable>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<Borrowable>) {
     const [underlyingToken] = appToken.tokens;
-    const exchangeRate = await contract.exchangeRateLast();
+    const exchangeRate = await contract.read.exchangeRateLast();
 
     return [Number(exchangeRate) / 10 ** underlyingToken.decimals];
   }
 
   async getReserves({ appToken, contract }: GetDataPropsParams<Borrowable>) {
-    const marketRaw = await contract.totalBalance();
-    const borrowAmountRaw = await contract.totalBorrows();
+    const marketRaw = await contract.read.totalBalance();
+    const borrowAmountRaw = await contract.read.totalBorrows();
     const reservesRaw = Number(marketRaw) + Number(borrowAmountRaw);
     const reserves = reservesRaw / 10 ** appToken.tokens[0].decimals;
 

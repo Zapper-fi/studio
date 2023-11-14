@@ -8,20 +8,21 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { RoboVault, RoboVaultContractFactory } from '../contracts';
+import { RoboVaultViemContractFactory } from '../contracts';
+import { RoboVault } from '../contracts/viem';
 
 import { RoboVaultApiClient } from './robo-vault.api.client';
 
 export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositionFetcher<RoboVault> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RoboVaultContractFactory) protected readonly contractFactory: RoboVaultContractFactory,
+    @Inject(RoboVaultViemContractFactory) protected readonly contractFactory: RoboVaultViemContractFactory,
     @Inject(RoboVaultApiClient) protected readonly apiClient: RoboVaultApiClient,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RoboVault {
+  getContract(address: string) {
     return this.contractFactory.roboVault({ address, network: this.network });
   }
 
@@ -31,11 +32,11 @@ export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<RoboVault>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<RoboVault>) {
-    const pricePerShareRaw = await contract.pricePerShare();
+    const pricePerShareRaw = await contract.read.pricePerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
     return [pricePerShare];
   }

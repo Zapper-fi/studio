@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { SynthetixContractFactory, SynthetixNetworkToken } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixNetworkToken } from '../contracts/viem';
 
 import { SynthetixMintrSnxHoldersCache } from './synthetix.mintr.snx-holders.cache';
 
@@ -30,13 +31,13 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
     @Inject(SynthetixMintrSnxHoldersCache) protected readonly holdersCache: SynthetixMintrSnxHoldersCache,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixNetworkToken {
+  getContract(address: string) {
     return this.contractFactory.synthetixNetworkToken({ address, network: this.network });
   }
 
@@ -83,9 +84,9 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
 
   async getTokenBalancesPerPosition({ address, contract, multicall }: GetTokenBalancesParams<SynthetixNetworkToken>) {
     const [collateralRaw, transferableRaw, debtBalanceRaw] = await Promise.all([
-      multicall.wrap(contract).collateral(address),
-      multicall.wrap(contract).transferableSynthetix(address),
-      multicall.wrap(contract).debtBalanceOf(address, formatBytes32String('sUSD')),
+      multicall.wrap(contract).read.collateral([address]),
+      multicall.wrap(contract).read.transferableSynthetix([address]),
+      multicall.wrap(contract).read.debtBalanceOf([address, formatBytes32String('sUSD')]),
     ]);
 
     const feePool = this.contractFactory.synthetixFeePool({
@@ -93,7 +94,7 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
       network: this.network,
     });
 
-    const userFees = await multicall.wrap(feePool).feesByPeriod(address);
+    const userFees = await multicall.wrap(feePool).read.feesByPeriod([address]);
 
     const collateralBalanceRaw = new BigNumber(collateralRaw.toString()).minus(transferableRaw.toString()).toFixed(0);
     return [collateralBalanceRaw, debtBalanceRaw.toString(), userFees[1][1]];

@@ -15,7 +15,8 @@ import {
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { MetavaultTradeContractFactory, MetavaultTradeVault } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
+import { MetavaultTradeVault } from '../contracts/viem';
 
 export type MetavaultTradeOptionContractPositionDefinition = {
   address: string;
@@ -41,12 +42,12 @@ export class PolygonPerpContractPositionFetcher extends ContractPositionTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetavaultTradeContractFactory) protected readonly contractFactory: MetavaultTradeContractFactory,
+    @Inject(MetavaultTradeViemContractFactory) protected readonly contractFactory: MetavaultTradeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MetavaultTradeVault {
+  getContract(address: string) {
     return this.contractFactory.metavaultTradeVault({ address, network: this.network });
   }
 
@@ -55,11 +56,13 @@ export class PolygonPerpContractPositionFetcher extends ContractPositionTemplate
       address: this.vaultAddress,
       network: this.network,
     });
-    const tokensCount = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const tokensCount = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const tokensRange = _.range(0, Number(tokensCount));
 
     const whitelistedTokens = await Promise.all(
-      tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).allWhitelistedTokens(tokenIndex)),
+      tokensRange.map(async tokenIndex =>
+        multicall.wrap(vaultContract).read.allWhitelistedTokens([BigInt(tokenIndex)]),
+      ),
     );
 
     const definitions = whitelistedTokens.flatMap(v =>
@@ -124,12 +127,12 @@ export class PolygonPerpContractPositionFetcher extends ContractPositionTemplate
     const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
     const isLong = contractPosition.dataProps.isLong;
 
-    const position = await contract.getPosition(address, collateralToken.address, indexToken.address, isLong);
+    const position = await contract.read.getPosition([address, collateralToken.address, indexToken.address, isLong]);
     // non existing position returns size and collateral = 0
     if (Number(position[0]) == 0 && Number(position[1]) == 0) return [0, 0, 0];
 
-    // const leverage = await contract.getPositionLeverage(address, collateralToken.address, indexToken.address, isLong);
-    const delta = await contract.getPositionDelta(address, collateralToken.address, indexToken.address, isLong);
+    // const leverage = await contract.read.getPositionLeverage([address, collateralToken.address, indexToken.address, isLong]);
+    const delta = await contract.read.getPositionDelta([address, collateralToken.address, indexToken.address, isLong]);
 
     const initialCollateralRaw = position[1];
     const initialCollateral = Number(initialCollateralRaw) / 10 ** 30;

@@ -14,8 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { ConvexContractFactory } from '../contracts';
-import { ConvexRewardPool } from '../contracts/ethers';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexRewardPool } from '../contracts/viem';
 
 export type ConvexLpFarmDefinition = {
   address: string;
@@ -35,44 +35,44 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexRewardPool {
+  getContract(address: string) {
     return this.contractFactory.convexRewardPool({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<ConvexLpFarmDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const depositContract = this.contractFactory.convexBoosterSidechain({
       address: this.boosterContractAddress,
       network: this.network,
     });
-    const numPools = await multicall.wrap(depositContract).poolLength().then(Number);
+    const numPools = await multicall.wrap(depositContract).read.poolLength().then(Number);
     return Promise.all(
       range(0, numPools).map(async v => {
-        const pool = await multicall.wrap(depositContract).poolInfo(v);
-        const address = pool.rewards.toLowerCase();
+        const pool = await multicall.wrap(depositContract).read.poolInfo([BigInt(v)]);
+        const address = pool[2].toLowerCase();
 
         const convexRewardPoolContract = this.contractFactory.convexRewardPool({
           address,
           network: this.network,
         });
-        const rewardLength = await multicall.wrap(convexRewardPoolContract).rewardLength();
+        const rewardLength = await multicall.wrap(convexRewardPoolContract).read.rewardLength();
         const rewardAddresses = await Promise.all(
           range(0, Number(rewardLength)).map(v =>
             multicall
               .wrap(convexRewardPoolContract)
-              .rewards(v)
-              .then(p => p.reward_token.toLowerCase()),
+              .read.rewards([BigInt(v)])
+              .then(p => p[0].toLowerCase()),
           ),
         );
 
         return {
-          address: pool.rewards.toLowerCase(),
-          lpTokenAddress: pool.lptoken.toLowerCase(),
+          address: pool[2].toLowerCase(),
+          lpTokenAddress: pool[0].toLowerCase(),
           rewardAddresses: [rewardAddresses[0]],
         };
       }),
@@ -100,9 +100,9 @@ export class PolygonConvexLpFarmContractPositionFetcher extends ContractPosition
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ConvexRewardPool>) {
-    const deposit = await contract.balanceOf(address);
+    const deposit = await contract.read.balanceOf([address]);
 
-    const rewards = await contract.callStatic.earned(address);
+    const rewards = await contract.simulate.earned([address]).then(v => v.result);
     const rewardBalances = rewards.map(rewardToken => {
       return Number(rewardToken.amount);
     });

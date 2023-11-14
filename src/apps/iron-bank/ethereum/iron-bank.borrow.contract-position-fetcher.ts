@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
+import { IronBankViemContractFactory } from '../contracts';
+import { IronBankComptroller, IronBankCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIronBankBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -25,7 +26,7 @@ export class EthereumIronBankBorrowContractPositionFetcher extends CompoundBorro
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IronBankContractFactory) protected readonly contractFactory: IronBankContractFactory,
+    @Inject(IronBankViemContractFactory) protected readonly contractFactory: IronBankViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -39,34 +40,34 @@ export class EthereumIronBankBorrowContractPositionFetcher extends CompoundBorro
   }
 
   async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<IronBankCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.borrowRatePerBlock().catch(() => 0);
+    return contract.read.borrowRatePerBlock().catch(() => 0);
   }
 
   async getCash({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({ address, contract }: GetTokenBalancesParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.borrowBalanceCurrent(address);
+    return contract.read.borrowBalanceCurrent([address]);
   }
 }

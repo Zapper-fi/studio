@@ -13,7 +13,8 @@ import type {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { KlimaContractFactory, KlimaSKlima } from '../contracts';
+import { KlimaViemContractFactory } from '../contracts';
+import { KlimaSKlima } from '../contracts/viem';
 
 export const API_BASE_URL = 'https://www.klimadao.finance/api';
 export const EPOCH_INTERVAL = 11_520;
@@ -36,12 +37,12 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KlimaContractFactory) protected readonly contractFactory: KlimaContractFactory,
+    @Inject(KlimaViemContractFactory) protected readonly contractFactory: KlimaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): KlimaSKlima {
+  getContract(address: string) {
     return this.contractFactory.klimaSKlima({ address, network: this.network });
   }
 
@@ -83,17 +84,18 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
       this.contractFactory.klimaDistributor({ address: distributorAddress, network: this.network }),
     );
     const underlyingToken = multicall.wrap(
-      this.contractFactory.erc20({ address: underlyingAddress, network: this.network }),
+      this.appToolkit.globalViemContracts.erc20({ address: underlyingAddress, network: this.network }),
     );
 
     const [info, circulatingSupply, decimals, reserveRaw, blockRate] = await Promise.all([
-      distributor.info(0),
-      sKlima.circulatingSupply(),
-      underlyingToken.decimals(),
-      underlyingToken.balanceOf(reserveAddress),
+      distributor.read.info([BigInt(0)]),
+      sKlima.read.circulatingSupply(),
+      underlyingToken.read.decimals(),
+      underlyingToken.read.balanceOf([reserveAddress]),
       this.getBlockRate(),
     ]);
-    const stakingReward = await distributor.nextRewardAt(info.rate);
+
+    const stakingReward = await distributor.read.nextRewardAt([info[0]]);
     const stakingRebase = Number(stakingReward) / Number(circulatingSupply);
     const rebasesPerDay = 86_400 / (blockRate * EPOCH_INTERVAL);
     return [

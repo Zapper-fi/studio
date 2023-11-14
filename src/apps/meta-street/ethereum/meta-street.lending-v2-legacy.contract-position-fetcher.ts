@@ -16,7 +16,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MetaStreetContractFactory, PoolV2Legacy } from '../contracts';
+import { MetaStreetViemContractFactory } from '../contracts';
+import { PoolV2Legacy } from '../contracts/viem';
 
 export const GET_POOLS_QUERY = gql`
   {
@@ -96,12 +97,12 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetaStreetContractFactory) protected readonly contractFactory: MetaStreetContractFactory,
+    @Inject(MetaStreetViemContractFactory) protected readonly contractFactory: MetaStreetViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): PoolV2Legacy {
+  getContract(_address: string) {
     return this.contractFactory.poolV2Legacy({ address: _address, network: this.network });
   }
 
@@ -128,7 +129,7 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<PoolV2Legacy, ContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const currencyTokenAddress: string = await _params.contract.currencyToken();
+    const currencyTokenAddress: string = await _params.contract.read.currencyToken();
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -175,14 +176,19 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     contractPosition,
     address,
   }: GetTokenBalancesParams<PoolV2Legacy, DataProps>): Promise<BigNumberish[]> {
-    const tick: BigNumber = contractPosition.dataProps.tick;
+    const tick = BigInt(contractPosition.dataProps.tick.toString());
 
     /* Get account's deposit logs and compute deposited amount and received shares */
-    const depositLogs = await contract.queryFilter(contract.filters.Deposited(address, tick), START_BLOCK_NUMBER);
+
+    const depositLogs = await contract.getEvents.Deposited(
+      { account: address, tick },
+      { fromBlock: BigInt(START_BLOCK_NUMBER), toBlock: 'latest' },
+    );
+
     const deposited: Deposited = depositLogs.reduce(
       (deposited: Deposited, l) => {
-        if (l.args.tick.eq(tick) && l.args.account.toLowerCase() === address) {
-          return { amount: deposited.amount.add(l.args.amount), shares: deposited.shares.add(l.args.shares) };
+        if (l.args.tick! === tick && l.args.account!.toLowerCase() === address) {
+          return { amount: deposited.amount.add(l.args.amount!), shares: deposited.shares.add(l.args.shares!) };
         } else {
           return deposited;
         }
@@ -191,38 +197,50 @@ export class EthereumMetaStreetLendingV2LegacyContractPositionFetcher extends Co
     );
 
     /* Get account's withdrawal logs and compute withdrawn amount and burned shares */
-    const firstDepositBlockNumber: number = depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER;
-    const withdrawLogs = await contract.queryFilter(contract.filters.Withdrawn(address, tick), firstDepositBlockNumber);
+    const firstDepositBlockNumber = BigInt(depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER);
+
+    const withdrawLogs = await contract.getEvents.Withdrawn(
+      { account: address, tick },
+      { fromBlock: firstDepositBlockNumber, toBlock: 'latest' },
+    );
+
     const withdrawn: Withdrawn = withdrawLogs.reduce(
       (withdrawn: Withdrawn, l) => {
-        if (l.args.tick.eq(tick) && l.args.account.toLowerCase() === address) {
-          return { amount: withdrawn.amount.add(l.args.amount), shares: withdrawn.shares.add(l.args.shares) };
+        if (l.args.tick === tick && l.args.account!.toLowerCase() === address) {
+          return { amount: withdrawn.amount.add(l.args.amount!), shares: withdrawn.shares.add(l.args.shares!) };
         } else {
           return withdrawn;
         }
       },
-      { amount: constants.Zero, shares: constants.Zero },
+      { amount: BigNumber.from(0), shares: BigNumber.from(0) },
     );
 
     /* Get redemption available */
-    const redemptionAvailable = await contract.redemptionAvailable(address, tick);
+    const [redemptionAvailableSharesRaw, redemptionAvailableAmountRaw] = await contract.read.redemptionAvailable([
+      address,
+      tick,
+    ]);
+    const redemptionAvailableShares = BigNumber.from(redemptionAvailableSharesRaw);
+    const redemptionAvailableAmount = BigNumber.from(redemptionAvailableAmountRaw);
 
     /* Compute active shares in tick */
-    const activeShares = deposited.shares.sub(redemptionAvailable.shares).sub(withdrawn.shares);
+    const activeShares = deposited.shares.sub(redemptionAvailableShares).sub(withdrawn.shares);
 
     /* Compute current position balance from tick data in addition to redeemed amount available */
-    const tickData = await contract.liquidityNode(tick);
-    const currentPosition = tickData.shares.eq(constants.Zero)
-      ? redemptionAvailable.amount
-      : activeShares.mul(tickData.value).div(tickData.shares).add(redemptionAvailable.amount);
+    const tickData = await contract.read.liquidityNode([tick]);
+    const currentPosition =
+      tickData.shares === BigInt(0)
+        ? redemptionAvailableAmount
+        : activeShares.mul(tickData.value).div(tickData.shares).add(redemptionAvailableAmount);
 
     /* Compute deposit position based on remaining shares */
-    const depositPosition = deposited.shares.gt(0)
-      ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
-      : constants.Zero;
+    const depositPosition =
+      deposited[0] > 0
+        ? deposited.shares.sub(withdrawn.shares).mul(deposited.amount).div(deposited.shares)
+        : constants.Zero;
 
     /* Compute supplied balance (minimum of currentPosition and depositPosition) */
-    const suppliedBalance = currentPosition.gt(depositPosition) ? depositPosition : currentPosition;
+    const suppliedBalance = BigNumber.from(currentPosition).gt(depositPosition) ? depositPosition : currentPosition;
 
     /* Compute claimable balance (interest earned) */
     const claimableBalance = currentPosition.gt(depositPosition)

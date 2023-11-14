@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { OlympusBondContractPositionFetcher } from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { JpegdBondDepository, JpegdContractFactory } from '../contracts';
+import { JpegdViemContractFactory } from '../contracts';
+import { JpegdBondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContractPositionFetcher<JpegdBondDepository> {
@@ -20,12 +21,12 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JpegdContractFactory) protected readonly contractFactory: JpegdContractFactory,
+    @Inject(JpegdViemContractFactory) protected readonly contractFactory: JpegdViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): JpegdBondDepository {
+  getContract(address: string) {
     return this.contractFactory.jpegdBondDepository({ address, network: this.network });
   }
 
@@ -34,16 +35,16 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
   }
 
   async resolveVestingBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
-    const [bondInfo, pendingPayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
+    const [[payout], pendingPayout] = await Promise.all([
+      contract.read.bondInfo([address]),
+      contract.read.pendingPayoutFor([address]),
     ]);
 
-    const vestingBalanceRaw = bondInfo.payout.gt(pendingPayout) ? bondInfo.payout.sub(pendingPayout) : 0;
+    const vestingBalanceRaw = payout > pendingPayout ? payout - pendingPayout : 0;
     return vestingBalanceRaw;
   }
 
   resolveClaimableBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
-    return contract.pendingPayoutFor(address);
+    return contract.read.pendingPayoutFor([address]);
   }
 }

@@ -10,7 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -23,39 +23,41 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { CurveContractFactory, CurveTricryptoPool } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveTricryptoPool } from '../contracts/viem';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type CurvePoolTokenDataProps = DefaultAppTokenDataProps & {
   volume: number;
   fee: number;
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveCoinAddressesParams<T extends Contract> = {
-  contract: T;
+export type ResolveCoinAddressesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   tokenAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveReservesParams<T extends Contract> = {
-  contract: T;
+export type ResolveReservesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   tokenAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class CurvePoolDynamicV2TokenFetcher<T extends Abi> extends AppTokenTemplatePositionFetcher<
   CurveTricryptoPool,
   CurvePoolTokenDataProps
 > {
@@ -66,7 +68,7 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
 
   skipVolume = false;
 
-  abstract resolveFactory(address: string): T;
+  abstract resolveFactory(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
   abstract resolveCoinAddresses(params: ResolveCoinAddressesParams<T>): Promise<string[]>;
@@ -74,13 +76,13 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
     @Inject(CurveVolumeDataLoader) protected readonly curveVolumeDataLoader: CurveVolumeDataLoader,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CurveTricryptoPool {
+  getContract(address: string) {
     return this.contractFactory.curveTricryptoPool({ address, network: this.network });
   }
 
@@ -145,7 +147,7 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
     let fee: number;
 
     try {
-      const fees = await contract.fee();
+      const fees = await contract.read.fee();
       fee = Number(fees) / 10 ** 8;
     } catch {
       fee = 0;

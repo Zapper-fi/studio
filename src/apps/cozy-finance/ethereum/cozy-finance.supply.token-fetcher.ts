@@ -11,7 +11,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { CozyFinanceComptroller, CozyFinanceContractFactory, CozyFinanceCToken } from '../contracts';
+import { CozyFinanceViemContractFactory } from '../contracts';
+import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
@@ -23,7 +24,7 @@ export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CozyFinanceContractFactory) protected readonly contractFactory: CozyFinanceContractFactory,
+    @Inject(CozyFinanceViemContractFactory) protected readonly contractFactory: CozyFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -36,24 +37,24 @@ export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
   }
 
   async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CozyFinanceCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<CozyFinanceCToken>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<CozyFinanceCToken>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 
   async getLabel({ appToken, contract }: GetDisplayPropsParams<CozyFinanceCToken>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
-    const [symbol, name] = await Promise.all([contract.symbol(), contract.name()]);
+    const [symbol, name] = await Promise.all([contract.read.symbol(), contract.read.name()]);
     if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;
     const triggerLabel = name.replace(`${symbol}-`, '');
     return `${underlyingToken.symbol} - ${triggerLabel}`;

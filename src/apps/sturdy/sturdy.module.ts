@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveAmmContractFactory } from '~apps/aave-amm/contracts';
-import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
+import { AaveAmmViemContractFactory } from '~apps/aave-amm/contracts';
+import { AaveV2ViemContractFactory } from '~apps/aave-v2/contracts';
 
-import { SturdyContractFactory } from './contracts';
+import { SturdyViemContractFactory } from './contracts';
 import { EthereumSturdyPositionPresenter } from './ethereum/sturdy.position-presenter';
 import { EthereumSturdyStableDebtTokenFetcher } from './ethereum/sturdy.stable-debt.token-fetcher';
 import { EthereumSturdySupplyTokenFetcher } from './ethereum/sturdy.supply.token-fetcher';
@@ -16,9 +16,9 @@ import { FantomSturdyVariableDebtTokenFetcher } from './fantom/sturdy.variable-d
 
 @Module({
   providers: [
-    SturdyContractFactory,
-    AaveV2ContractFactory,
-    AaveAmmContractFactory,
+    SturdyViemContractFactory,
+    AaveV2ViemContractFactory,
+    AaveAmmViemContractFactory,
     // Ethereum
     EthereumSturdyPositionPresenter,
     EthereumSturdyStableDebtTokenFetcher,

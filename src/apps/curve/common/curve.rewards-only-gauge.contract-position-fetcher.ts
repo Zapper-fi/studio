@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveRewardsOnlyGauge } from '../contracts/viem';
 
 import { GaugeType } from './curve.pool-gauge.contract-position-fetcher';
 
@@ -40,7 +41,7 @@ export abstract class CurveRewardsOnlyGaugeContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -59,9 +60,11 @@ export abstract class CurveRewardsOnlyGaugeContractPositionFetcher extends Contr
   async getTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<CurveRewardsOnlyGauge, CurveRewardsOnlyDefinition>) {
-    const definitions = [{ metaType: MetaType.SUPPLIED, address: await contract.lp_token(), network: this.network }];
+    const definitions = [
+      { metaType: MetaType.SUPPLIED, address: await contract.read.lp_token(), network: this.network },
+    ];
 
-    const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.reward_tokens(i)));
+    const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => contract.read.reward_tokens([BigInt(i)])));
     const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
     filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));
 
@@ -81,8 +84,8 @@ export abstract class CurveRewardsOnlyGaugeContractPositionFetcher extends Contr
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
 
     // Derive liquidity as the amount of the staked token held by the gauge contract
-    const stakedTokenContract = this.contractFactory.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(address);
+    const stakedTokenContract = this.appToolkit.globalViemContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     const liquidity = reserve * stakedToken.price;
     const gaugeType = definition.gaugeType;
@@ -105,8 +108,8 @@ export abstract class CurveRewardsOnlyGaugeContractPositionFetcher extends Contr
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
     const balances = [
-      await contract.balanceOf(address),
-      ...(await Promise.all(rewardTokens.map(t => contract.claimable_reward_write(address, t.address)))),
+      await contract.read.balanceOf([address]),
+      ...(await Promise.all(rewardTokens.map(t => contract.read.claimable_reward_write([address, t.address])))),
     ];
 
     return balances;

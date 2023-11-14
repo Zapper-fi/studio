@@ -19,7 +19,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { VelodromeDefinitionsResolver } from '../common/velodrome.definitions-resolver';
-import { VelodromeContractFactory, VelodromePool } from '../contracts';
+import { VelodromeViemContractFactory } from '../contracts';
+import { VelodromePool } from '../contracts/viem';
 
 export type VelodromePoolTokenDefinition = {
   address: string;
@@ -36,13 +37,13 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeContractFactory) private readonly contractFactory: VelodromeContractFactory,
+    @Inject(VelodromeViemContractFactory) private readonly contractFactory: VelodromeViemContractFactory,
     @Inject(VelodromeDefinitionsResolver) protected readonly definitionsResolver: VelodromeDefinitionsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromePool {
+  getContract(address: string) {
     return this.contractFactory.velodromePool({ address, network: this.network });
   }
 
@@ -56,14 +57,14 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<VelodromePool, DefaultDataProps>) {
     const [token0, token1] = appToken.tokens;
-    const [reserve0, reserve1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
+    const [reserve0, reserve1] = await Promise.all([contract.read.reserve0(), contract.read.reserve1()]);
     const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;

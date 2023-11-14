@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapV2ViemContractFactory } from '~apps/uniswap-v2/contracts';
 
-import { VerseContractFactory } from './contracts';
+import { VerseViemContractFactory } from './contracts';
 import { EthereumVerseFarmContractPositionFetcher } from './ethereum/verse.farm.contract-position-fetcher';
 import { EthereumVersePoolTokenFetcher } from './ethereum/verse.pool.token-fetcher';
 
@@ -11,8 +11,8 @@ import { EthereumVersePoolTokenFetcher } from './ethereum/verse.pool.token-fetch
   providers: [
     EthereumVerseFarmContractPositionFetcher,
     EthereumVersePoolTokenFetcher,
-    UniswapV2ContractFactory,
-    VerseContractFactory,
+    UniswapV2ViemContractFactory,
+    VerseViemContractFactory,
   ],
 })
 export class VerseAppModule extends AbstractApp() {}

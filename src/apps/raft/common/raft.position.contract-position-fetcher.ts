@@ -10,7 +10,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { RaftContractFactory, RaftPositionManager } from '../contracts';
+import { RaftViemContractFactory } from '../contracts';
+import { RaftPositionManager } from '../contracts/viem';
 
 export interface RaftDataProps extends DefaultDataProps {
   minCRatio: number;
@@ -25,12 +26,12 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RaftContractFactory) protected readonly raftContractFactory: RaftContractFactory,
+    @Inject(RaftViemContractFactory) protected readonly raftContractFactory: RaftViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RaftPositionManager {
+  getContract(address: string) {
     return this.raftContractFactory.raftPositionManager({ address, network: this.network });
   }
 
@@ -39,7 +40,7 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
   }
 
   async getTokenDefinitions({ contract }): Promise<UnderlyingTokenDefinition[]> {
-    const { collateralToken, debtToken } = await contract.collateralInfo(this.collateral);
+    const { collateralToken, debtToken } = await contract.read.collateralInfo([this.collateral]);
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -61,14 +62,14 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
     });
     const liquidiationContractAddress = await multicall
       .wrap(positionManager)
-      .splitLiquidationCollateral(this.collateral);
+      .read.splitLiquidationCollateral(this.collateral);
     const liquidationContract = this.raftContractFactory.raftLiquiditation({
       address: liquidiationContractAddress,
       network: this.network,
     });
 
     const collateralToken = contractPosition.tokens[0];
-    const minCRatio = Number(await multicall.wrap(liquidationContract).MCR()) / 10 ** collateralToken.decimals;
+    const minCRatio = Number(await multicall.wrap(liquidationContract).read.MCR()) / 10 ** collateralToken.decimals;
 
     return { minCRatio };
   }
@@ -84,11 +85,13 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
       address: contractPosition.tokens[0].address,
       network: this.network,
     });
+
     const debt = this.raftContractFactory.raftToken({
       address: contractPosition.tokens[1].address,
       network: this.network,
     });
-    const balances = await Promise.all([collateral.balanceOf(address), debt.balanceOf(address)]);
+
+    const balances = await Promise.all([collateral.read.balanceOf([address]), debt.read.balanceOf([address])]);
     return balances;
   }
 }

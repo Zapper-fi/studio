@@ -7,11 +7,11 @@ import { ArbitrumSolidLizardStakingContractPositionFetcher } from './arbitrum/so
 import { ArbitrumSolidLizardPoolsTokenFetcher } from './arbitrum/solid-lizard.pool.token-fetcher';
 import { ArbitrumSolidLizardVotingEscrowContractPositionFetcher } from './arbitrum/solid-lizard.voting-escrow.contract-position-fetcher';
 import { SolidLizardDefinitionsResolver } from './common/solid-lizard.definitions-resolver';
-import { SolidLizardContractFactory } from './contracts';
+import { SolidLizardViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    SolidLizardContractFactory,
+    SolidLizardViemContractFactory,
     SolidLizardDefinitionsResolver,
     ArbitrumSolidLizardPoolsTokenFetcher,
     ArbitrumSolidLizardStakingContractPositionFetcher,

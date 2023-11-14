@@ -16,7 +16,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MetaStreetContractFactory, PoolV2 } from '../contracts';
+import { MetaStreetViemContractFactory } from '../contracts';
+import { PoolV2 } from '../contracts/viem';
 
 export const GET_POOLS_QUERY = gql`
   {
@@ -96,12 +97,12 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetaStreetContractFactory) protected readonly contractFactory: MetaStreetContractFactory,
+    @Inject(MetaStreetViemContractFactory) protected readonly contractFactory: MetaStreetViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): PoolV2 {
+  getContract(_address: string) {
     return this.contractFactory.poolV2({ address: _address, network: this.network });
   }
 
@@ -128,7 +129,7 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<PoolV2, ContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const currencyTokenAddress: string = await _params.contract.currencyToken();
+    const currencyTokenAddress: string = await _params.contract.read.currencyToken();
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -174,14 +175,18 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
     address,
     multicall,
   }: GetTokenBalancesParams<PoolV2, DataProps>): Promise<BigNumberish[]> {
-    const tick: BigNumber = contractPosition.dataProps.tick;
+    const tick = BigInt(contractPosition.dataProps.tick.toString());
 
     /* Get account's deposit logs and compute deposited amount and received shares */
-    const depositLogs = await contract.queryFilter(contract.filters.Deposited(address, tick), START_BLOCK_NUMBER);
+    const depositLogs = await contract.getEvents.Deposited(
+      { tick, account: address },
+      { fromBlock: BigInt(START_BLOCK_NUMBER), toBlock: 'latest' },
+    );
+
     const deposited: Deposited = depositLogs.reduce(
       (deposited: Deposited, l) => {
-        if (l.args.tick.eq(tick) && l.args.account.toLowerCase() === address) {
-          return { amount: deposited.amount.add(l.args.amount), shares: deposited.shares.add(l.args.shares) };
+        if (l.args.tick === tick && l.args.account?.toLowerCase() === address) {
+          return { amount: deposited.amount.add(l.args.amount ?? 0), shares: deposited.shares.add(l.args.shares ?? 0) };
         } else {
           return deposited;
         }
@@ -190,12 +195,17 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
     );
 
     /* Get account's withdrawal logs and compute withdrawn amount and burned shares */
-    const firstDepositBlockNumber: number = depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER;
-    const withdrawLogs = await contract.queryFilter(contract.filters.Withdrawn(address, tick), firstDepositBlockNumber);
+    const firstDepositBlockNumber = BigInt(depositLogs.length > 0 ? depositLogs[0].blockNumber : START_BLOCK_NUMBER);
+
+    const withdrawLogs = await contract.getEvents.Withdrawn(
+      { tick, account: address },
+      { fromBlock: firstDepositBlockNumber, toBlock: 'latest' },
+    );
+
     const withdrawn: Withdrawn = withdrawLogs.reduce(
       (withdrawn: Withdrawn, l) => {
-        if (l.args.tick.eq(tick) && l.args.account.toLowerCase() === address) {
-          return { amount: withdrawn.amount.add(l.args.amount), shares: withdrawn.shares.add(l.args.shares) };
+        if (l.args.tick === tick && l.args.account?.toLowerCase() === address) {
+          return { amount: withdrawn.amount.add(l.args.amount ?? 0), shares: withdrawn.shares.add(l.args.shares ?? 0) };
         } else {
           return withdrawn;
         }
@@ -204,28 +214,30 @@ export class EthereumMetaStreetLendingV2ContractPositionFetcher extends Contract
     );
 
     /* Get redemption ID from account's deposit */
-    const deposit = await contract.deposits(address, tick);
+    const deposit = await contract.read.deposits([address, tick]);
 
     /* Multicall redemption available and compute total amount and shares */
-    const redemptionIds = Array.from({ length: deposit.redemptionId.toNumber() }, (_, index) => index + 1);
+    const redemptionId = Number(deposit[1]);
+    const redemptionIds = Array.from({ length: redemptionId }, (_, index) => index + 1);
     const pool = multicall.wrap(contract);
     const redemptionsAvailable = await Promise.all(
-      redemptionIds.map(async id => await pool.redemptionAvailable(address, tick, BigNumber.from(id))),
+      redemptionIds.map(async id => await pool.read.redemptionAvailable([address, tick, BigInt(id)])),
     );
+
     const redeemed: Redemption = redemptionsAvailable.reduce(
-      (redemptionAvailable, { amount, shares }) => ({
-        amount: redemptionAvailable.amount.add(amount),
+      (redemptionAvailable, [shares, amount]) => ({
         shares: redemptionAvailable.shares.add(shares),
+        amount: redemptionAvailable.amount.add(amount),
       }),
-      { amount: constants.Zero, shares: constants.Zero },
+      { shares: constants.Zero, amount: constants.Zero },
     );
 
     /* Compute active shares in tick */
     const activeShares = deposited.shares.sub(redeemed.shares).sub(withdrawn.shares);
 
     /* Compute current position balance from tick data in addition to redeemed amount available */
-    const tickData = await contract.liquidityNode(tick);
-    const currentPosition = tickData.shares.eq(constants.Zero)
+    const tickData = await contract.read.liquidityNode([tick]);
+    const currentPosition = BigNumber.from(tickData.shares).eq(constants.Zero)
       ? redeemed.amount
       : activeShares.mul(tickData.value).div(tickData.shares).add(redeemed.amount);
 

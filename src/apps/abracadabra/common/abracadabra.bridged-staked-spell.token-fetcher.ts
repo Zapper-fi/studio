@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 import { WrapperTemplateTokenFetcher } from '~position/template/wrapper.template.token-fetcher';
 

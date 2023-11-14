@@ -1,4 +1,4 @@
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types';
@@ -8,8 +8,8 @@ export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositi
   abstract underlyingTokenAddress: string;
   fromNetwork: Network;
 
-  getContract(address: string): Erc20 {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getAddresses(): Promise<string[]> {

@@ -15,7 +15,7 @@ import { BaseStargatePoolTokenFetcher } from './base/stargate.pool.token-fetcher
 import { BinanceSmartChainStargateFarmContractPositionFetcher } from './binance-smart-chain/stargate.farm.contract-position-fetcher';
 import { BinanceSmartChainStargatePoolTokenFetcher } from './binance-smart-chain/stargate.pool.token-fetcher';
 import { BinanceSmartChainStargateVotingEscrowContractPositionFetcher } from './binance-smart-chain/stargate.voting-escrow.contract-position-fetcher';
-import { StargateContractFactory } from './contracts';
+import { StargateViemContractFactory } from './contracts';
 import { EthereumStargateEthTokenFetcher } from './ethereum/stargate.eth.token-fetcher';
 import { EthereumStargateFarmContractPositionFetcher } from './ethereum/stargate.farm.contract-position-fetcher';
 import { EthereumStargatePoolTokenFetcher } from './ethereum/stargate.pool.token-fetcher';
@@ -33,7 +33,7 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
 
 @Module({
   providers: [
-    StargateContractFactory,
+    StargateViemContractFactory,
     // Arbitrum
     ArbitrumStargateEthTokenFetcher,
     ArbitrumStargateFarmContractPositionFetcher,

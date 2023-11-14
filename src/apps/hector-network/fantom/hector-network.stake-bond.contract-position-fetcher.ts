@@ -11,7 +11,9 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { HectorNetworkContractFactory, HectorNetworkStakeBondDepository } from '../contracts';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkStakeBondDepository } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class FantomHectorNetworkStakeBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkStakeBondDepository> {
@@ -19,7 +21,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HectorNetworkContractFactory) protected readonly contractFactory: HectorNetworkContractFactory,
+    @Inject(HectorNetworkViemContractFactory) protected readonly contractFactory: HectorNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -41,7 +43,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkStakeBondDepository>) {
-    const [principle, claimable] = await Promise.all([contract.principle(), contract.sHEC()]);
+    const [principle, claimable] = await Promise.all([contract.read.principle(), contract.read.sHEC()]);
 
     return [
       {
@@ -76,10 +78,10 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     multicall,
   }: GetTokenBalancesParams<HectorNetworkStakeBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      multicall.wrap(contract).bondInfo(address),
-      multicall.wrap(contract).pendingPayoutFor(address),
+      multicall.wrap(contract).read.bondInfo([address]),
+      multicall.wrap(contract).read.pendingPayoutFor([address]),
     ]);
 
-    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
+    return [BigNumber.from(bondInfo[0]).sub(claimablePayout).toString(), claimablePayout.toString()];
   }
 }

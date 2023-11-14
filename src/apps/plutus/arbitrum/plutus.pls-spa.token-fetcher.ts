@@ -2,8 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
-import { Erc20 } from '~contract/contracts';
+import { UniswapV3ViemContractFactory } from '~apps/uniswap-v3/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -27,13 +27,13 @@ export class ArbitrumPlutusPlsSpaTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV3ContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<PlutusVaultAppTokenDefinition[]> {
@@ -58,10 +58,10 @@ export class ArbitrumPlutusPlsSpaTokenFetcher extends AppTokenTemplatePositionFe
       address: '0x03344b394ccdb3c36ddd134f4962d2fa97e3e714',
       network: this.network,
     });
-    const slot0 = await multicall.wrap(uniswapV3PairContract).slot0();
+    const slot0 = await multicall.wrap(uniswapV3PairContract).read.slot0();
     const tickBasisConstant = 1.0001;
 
-    const token0InTermOfToken1 = tickBasisConstant ** Math.abs(slot0.tick);
+    const token0InTermOfToken1 = tickBasisConstant ** Math.abs(slot0[1]);
     const pricePerShare = 1 / token0InTermOfToken1;
 
     return [pricePerShare];

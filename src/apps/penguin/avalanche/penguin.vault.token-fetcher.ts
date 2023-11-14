@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { PenguinContractFactory, PenguinVault } from '../contracts';
+import { PenguinViemContractFactory } from '../contracts';
+import { PenguinVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalanchePenguinVaultTokenFetcher extends AppTokenTemplatePositionFetcher<PenguinVault> {
@@ -13,12 +14,12 @@ export class AvalanchePenguinVaultTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PenguinContractFactory) protected readonly contractFactory: PenguinContractFactory,
+    @Inject(PenguinViemContractFactory) protected readonly contractFactory: PenguinViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PenguinVault {
+  getContract(address: string) {
     return this.contractFactory.penguinVault({ network: this.network, address });
   }
 
@@ -44,11 +45,11 @@ export class AvalanchePenguinVaultTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PenguinVault>) {
-    return [{ address: await contract.depositToken(), network: this.network }];
+    return [{ address: await contract.read.depositToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PenguinVault>) {
-    const reserveRaw = await contract.totalDeposits();
+    const reserveRaw = await contract.read.totalDeposits();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve / appToken.supply];
   }

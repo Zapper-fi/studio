@@ -12,8 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { VelodromeV2ContractFactory } from '../contracts';
-import { VelodromeV2Pool } from '../contracts/ethers/VelodromeV2Pool';
+import { VelodromeV2ViemContractFactory } from '../contracts';
+import { VelodromeV2Pool } from '../contracts/viem/VelodromeV2Pool';
 
 @PositionTemplate()
 export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<VelodromeV2Pool> {
@@ -21,27 +21,27 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) protected readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) protected readonly contractFactory: VelodromeV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromeV2Pool {
+  getContract(address: string) {
     return this.contractFactory.velodromeV2Pool({ address, network: this.network });
   }
 
   async getDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const factoryContract = this.contractFactory.velodromeV2PoolFactory({
       address: '0xf1046053aa5682b4f9a81b5481394da16be5ff5a',
       network: this.network,
     });
 
-    const poolLength = await multicall.wrap(factoryContract).allPoolsLength();
+    const poolLength = await multicall.wrap(factoryContract).read.allPoolsLength();
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const poolAddressRaw = await multicall.wrap(factoryContract).allPools(i);
+        const poolAddressRaw = await multicall.wrap(factoryContract).read.allPools([BigInt(i)]);
         return { address: poolAddressRaw.toLowerCase() };
       }),
     );
@@ -49,12 +49,12 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
     return poolAddresses;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<VelodromeV2Pool>) {
+  async getAddresses({ definitions }: GetAddressesParams) {
     return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromeV2Pool>) {
-    const [token0, token1] = await contract.tokens();
+    const [token0, token1] = await contract.read.tokens();
 
     return [
       { address: token0.toLowerCase(), network: this.network },
@@ -63,7 +63,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<VelodromeV2Pool>) {
-    const [reserveRaw0, reserveRaw1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
+    const [reserveRaw0, reserveRaw1] = await Promise.all([contract.read.reserve0(), contract.read.reserve1()]);
 
     const reserves = [reserveRaw0, reserveRaw1].map((v, i) => Number(v) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(v => v / appToken.supply);

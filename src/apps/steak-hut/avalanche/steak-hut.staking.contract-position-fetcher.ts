@@ -9,7 +9,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { SteakHutContractFactory, SteakHutStaking } from '../contracts';
+import { SteakHutViemContractFactory } from '../contracts';
+import { SteakHutStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<SteakHutStaking> {
@@ -17,12 +18,12 @@ export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStaki
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SteakHutContractFactory) protected readonly contractFactory: SteakHutContractFactory,
+    @Inject(SteakHutViemContractFactory) protected readonly contractFactory: SteakHutViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SteakHutStaking {
+  getContract(address: string) {
     return this.contractFactory.steakHutStaking({ address, network: this.network });
   }
 
@@ -31,22 +32,22 @@ export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStaki
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<SteakHutStaking>) {
-    return contract.inputToken();
+    return contract.read.inputToken();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<SteakHutStaking>) {
-    return contract.rewardToken();
+    return contract.read.rewardToken();
   }
 
   getRewardRates({ contract }: GetDataPropsParams<SteakHutStaking>) {
-    return contract.tokenPerSec();
+    return contract.read.tokenPerSec();
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SteakHutStaking>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SteakHutStaking>) {
-    return contract.pendingTokens(address);
+    return contract.read.pendingTokens([address]);
   }
 }

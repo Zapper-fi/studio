@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PieDaoContractFactory, PieDaoRewards } from '../contracts';
+import { PieDaoViemContractFactory } from '../contracts';
+import { PieDaoRewards } from '../contracts/viem';
 
 const FARMS = [
   // BPT WETH / DOUGH
@@ -50,12 +51,12 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PieDaoContractFactory) protected readonly contractFactory: PieDaoContractFactory,
+    @Inject(PieDaoViemContractFactory) protected readonly contractFactory: PieDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PieDaoRewards {
+  getContract(address: string) {
     return this.contractFactory.pieDaoRewards({ address, network: this.network });
   }
 
@@ -64,18 +65,18 @@ export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends Sing
   }
 
   getRewardRates({ contract }: GetDataPropsParams<PieDaoRewards, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PieDaoRewards>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

@@ -5,7 +5,7 @@ import { duration } from 'moment';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { RigoblockContractFactory } from '../contracts';
+import { RigoblockViemContractFactory } from '../contracts';
 
 export enum PoolLogType {
   REGISTERED = 'registered',
@@ -14,50 +14,43 @@ export enum PoolLogType {
 
 @Injectable()
 export class RigoblockLogProvider {
-  constructor(@Inject(RigoblockContractFactory) private readonly contractFactory: RigoblockContractFactory) {}
+  constructor(@Inject(RigoblockViemContractFactory) private readonly contractFactory: RigoblockViemContractFactory) {}
 
   @Cache({
-    key: ({
-      network,
-      address,
-      fromBlock,
-      logType,
-    }: {
-      network: Network;
-      logType: PoolLogType;
-      fromBlock: number;
-      address: string;
-    }) => `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:${logType}`,
+    key: ({ network, address, fromBlock }: { network: Network; fromBlock: number; address: string }) =>
+      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:registered`,
     ttl: duration(8, 'hours').asSeconds(),
   })
-  async getRigoblockLogs({
+  async getRigoblockRegisteredLogs({
     fromBlock,
     network,
     address,
-    logType,
   }: {
     address: string;
-    logType: PoolLogType;
     network: Network;
     fromBlock: number;
   }) {
-    const [contract, eventFilter] =
-      logType === PoolLogType.REGISTERED
-        ? [
-            this.contractFactory.poolRegistry({ network, address }),
-            this.contractFactory.poolRegistry({ network, address }).filters.Registered(),
-          ]
-        : [
-            this.contractFactory.tokenWhitelist({ network, address }),
-            this.contractFactory.tokenWhitelist({ network, address }).filters.Whitelisted(),
-          ];
+    const contract = this.contractFactory.poolRegistry({ network, address });
+    const logs = await contract.getEvents.Registered({}, { fromBlock: BigInt(fromBlock) });
+    return logs;
+  }
 
-    const mapper = <T extends Event>({ address, event, args }: T) => ({
-      args: Array.from(args?.values() ?? []),
-      address,
-      event,
-    });
-
-    return await Promise.all([contract.queryFilter(eventFilter, fromBlock).then(logs => logs.map(mapper))]);
+  @Cache({
+    key: ({ network, address, fromBlock }: { network: Network; fromBlock: number; address: string }) =>
+      `rigoblock:${network}:rigoblock-logs:${address}:${fromBlock}:whitelisted`,
+    ttl: duration(8, 'hours').asSeconds(),
+  })
+  async getRigoblockWhitelistedLogs({
+    fromBlock,
+    network,
+    address,
+  }: {
+    address: string;
+    network: Network;
+    fromBlock: number;
+  }) {
+    const contract = this.contractFactory.tokenWhitelist({ network, address });
+    const logs = await contract.getEvents.Whitelisted({}, { fromBlock: BigInt(fromBlock) });
+    return logs;
   }
 }

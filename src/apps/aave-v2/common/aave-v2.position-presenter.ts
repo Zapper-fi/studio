@@ -4,13 +4,13 @@ import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { AaveV2ContractFactory } from '../contracts';
+import { AaveV2ViemContractFactory } from '../contracts';
 
 export type AaveV2PositionPresenterDataProps = { healthFactor: number };
 export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<AaveV2PositionPresenterDataProps> {
   abstract lendingPoolAddress: string;
 
-  constructor(@Inject(AaveV2ContractFactory) protected readonly aaveV2ContractFactory: AaveV2ContractFactory) {
+  constructor(@Inject(AaveV2ViemContractFactory) protected readonly contractFactory: AaveV2ViemContractFactory) {
     super();
   }
 
@@ -47,13 +47,13 @@ export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<
   };
 
   override async dataProps(address: string): Promise<AaveV2PositionPresenterDataProps | undefined> {
-    const lendingPoolContract = this.aaveV2ContractFactory.aaveV2LendingPoolProvider({
+    const lendingPoolContract = this.contractFactory.aaveV2LendingPoolProvider({
       network: this.network,
       address: this.lendingPoolAddress,
     });
 
-    const lendingPoolUserData = await lendingPoolContract.getUserAccountData(address);
-    const healthFactor = Number(lendingPoolUserData.healthFactor) / 10 ** 18;
+    const lendingPoolUserData = await lendingPoolContract.read.getUserAccountData([address]);
+    const healthFactor = Number(lendingPoolUserData[5]) / 10 ** 18;
     return { healthFactor };
   }
 

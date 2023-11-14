@@ -10,7 +10,9 @@ import {
 } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { OpnxContractFactory, Veox } from '../contracts';
+import { OpnxViemContractFactory } from '../contracts';
+import { Veox } from '../contracts/viem';
+import { VeoxContract } from '../contracts/viem/Veox';
 
 @PositionTemplate()
 export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<Veox> {
@@ -19,21 +21,21 @@ export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateCon
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OpnxContractFactory) private readonly opnxContractFactory: OpnxContractFactory,
+    @Inject(OpnxViemContractFactory) private readonly opnxContractFactory: OpnxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): Veox {
+  getEscrowContract(address: string): VeoxContract {
     return this.opnxContractFactory.veox({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<Veox>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<Veox>) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v[0]);
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Veox>) {

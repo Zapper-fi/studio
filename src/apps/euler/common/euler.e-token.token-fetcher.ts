@@ -11,7 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { EulerContractFactory, EulerEtokenContract } from '../contracts';
+import { EulerViemContractFactory } from '../contracts';
+import { EulerEtokenContract } from '../contracts/viem';
 
 import { EulerTokenDefinition, EulerTokenDefinitionsResolver, EulerTokenType } from './euler.token-definition-resolver';
 
@@ -26,12 +27,12 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EulerTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: EulerTokenDefinitionsResolver,
-    @Inject(EulerContractFactory) protected readonly contractFactory: EulerContractFactory,
+    @Inject(EulerViemContractFactory) protected readonly contractFactory: EulerViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): EulerEtokenContract {
+  getContract(address: string) {
     return this.contractFactory.eulerEtokenContract({ network: this.network, address });
   }
 
@@ -55,9 +56,8 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<EulerEtokenContract>) {
-    const pricePerShareRaw = await multicall
-      .wrap(contract)
-      .convertBalanceToUnderlying(ethers.BigNumber.from(10).pow(18));
+    const oneUnit = ethers.BigNumber.from(10).pow(18).toString();
+    const pricePerShareRaw = await multicall.wrap(contract).read.convertBalanceToUnderlying([BigInt(oneUnit)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
     return [pricePerShare];
   }

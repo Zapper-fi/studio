@@ -12,7 +12,9 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { InverseContractFactory, InverseDcaVaultToken } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseDcaVaultToken } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumInverseDcaVaultDividendContractPositionFetcher extends ContractPositionTemplatePositionFetcher<InverseDcaVaultToken> {
@@ -21,12 +23,12 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): InverseDcaVaultToken {
+  getContract(address: string) {
     return this.contractFactory.inverseDcaVaultToken({ address, network: this.network });
   }
 
@@ -40,7 +42,7 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<InverseDcaVaultToken>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: await contract.target(), network: this.network }];
+    return [{ metaType: MetaType.CLAIMABLE, address: await contract.read.target(), network: this.network }];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<InverseDcaVaultToken>) {
@@ -49,10 +51,10 @@ export class EthereumInverseDcaVaultDividendContractPositionFetcher extends Cont
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<InverseDcaVaultToken>) {
     const [totalRaw, withdrawnRaw] = await Promise.all([
-      contract.accumulativeDividendOf(address),
-      contract.withdrawnDividendOf(address),
+      contract.read.accumulativeDividendOf([address]),
+      contract.read.withdrawnDividendOf([address]),
     ]);
 
-    return [totalRaw.sub(withdrawnRaw)];
+    return [BigNumber.from(totalRaw).sub(withdrawnRaw)];
   }
 }

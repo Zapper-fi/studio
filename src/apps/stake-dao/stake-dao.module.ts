@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { StakeDaoContractFactory } from './contracts';
+import { StakeDaoViemContractFactory } from './contracts';
 import { EthereumStakeDaoFarmContractPositionFetcher } from './ethereum/stake-dao.farm.contract-position-fetcher';
 import { EthereumStakeDaoGaugeContractPositionFetcher } from './ethereum/stake-dao.gauge.contract-position-fetcher';
 import { EthereumStakeDaoLockerTokenFetcher } from './ethereum/stake-dao.locker.token-fetcher';
@@ -13,7 +13,7 @@ import { EthereumStakeDaoEscrowedQiContractPositionFetcher } from './ethereum/st
 
 @Module({
   providers: [
-    StakeDaoContractFactory,
+    StakeDaoViemContractFactory,
     EthereumStakeDaoLockerTokenFetcher,
     EthereumStakeDaoGaugeContractPositionFetcher,
     EthereumStakeDaoFarmContractPositionFetcher,

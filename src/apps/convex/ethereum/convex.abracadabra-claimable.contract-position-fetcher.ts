@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { ConvexAbracadabraWrapper, ConvexContractFactory } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexAbracadabraWrapper } from '../contracts/viem';
 
 export const ABRACADABRA_WRAPPERS = [
   '0x5958a8db7dfe0cc49382209069b00f54e17929c2', // stk-tricrypto2
@@ -30,12 +31,12 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly convexContractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly convexContractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexAbracadabraWrapper {
+  getContract(address: string) {
     return this.convexContractFactory.convexAbracadabraWrapper({ address, network: this.network });
   }
 
@@ -51,7 +52,7 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.convexToken(),
+        address: await contract.read.convexToken(),
         network: this.network,
       },
       {
@@ -77,8 +78,8 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ConvexAbracadabraWrapper>) {
-    const earned = await contract.earned(address);
-    const [[, crvBalanceRaw], [, cvxBalanceRaw]] = earned;
+    const earned = await contract.read.earned([address]);
+    const [{ amount: crvBalanceRaw }, { amount: cvxBalanceRaw }] = earned;
     return [0, crvBalanceRaw, cvxBalanceRaw];
   }
 }

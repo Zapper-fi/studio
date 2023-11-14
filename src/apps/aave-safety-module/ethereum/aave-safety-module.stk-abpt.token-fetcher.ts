@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { AaveSafetyModuleContractFactory, AaveStkAbpt } from '../contracts';
+import { AaveSafetyModuleViemContractFactory } from '../contracts';
+import { AaveStkAbpt } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplatePositionFetcher<AaveStkAbpt> {
@@ -16,12 +17,13 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveSafetyModuleContractFactory) protected readonly contractFactory: AaveSafetyModuleContractFactory,
+    @Inject(AaveSafetyModuleViemContractFactory)
+    protected readonly contractFactory: AaveSafetyModuleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AaveStkAbpt {
+  getContract(address: string) {
     return this.contractFactory.aaveStkAbpt({ address, network: this.network });
   }
 
@@ -43,7 +45,7 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
       address: this.stkApyHelperAddress,
     });
 
-    const stkAaveData = await multicall.wrap(stkApyHelperContract).getStkBptData(ZERO_ADDRESS);
+    const stkAaveData = await multicall.wrap(stkApyHelperContract).read.getStkBptData([ZERO_ADDRESS]);
 
     const apy = (+stkAaveData[5] / 1e4) * 100;
     return apy;

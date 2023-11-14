@@ -2,10 +2,10 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { MetavaultTradeContractFactory } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class PolygonMetavaultTradeEsMvxTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
@@ -13,13 +13,13 @@ export class PolygonMetavaultTradeEsMvxTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetavaultTradeContractFactory) protected readonly contractFactory: MetavaultTradeContractFactory,
+    @Inject(MetavaultTradeViemContractFactory) protected readonly contractFactory: MetavaultTradeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ network: this.network, address });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ network: this.network, address });
   }
 
   async getAddresses() {

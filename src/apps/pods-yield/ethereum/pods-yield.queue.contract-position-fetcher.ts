@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PodsYieldContractFactory, PodsYieldVault } from '../contracts';
+import { PodsYieldViemContractFactory } from '../contracts';
+import { PodsYieldVault } from '../contracts/viem';
 
 import { strategyAddresses, strategyDetails } from './config';
 
@@ -29,12 +30,12 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PodsYieldContractFactory) protected readonly contractFactory: PodsYieldContractFactory,
+    @Inject(PodsYieldViemContractFactory) protected readonly contractFactory: PodsYieldViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PodsYieldVault {
+  getContract(address: string) {
     return this.contractFactory.podsYieldVault({ address, network: this.network });
   }
 
@@ -46,14 +47,14 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.asset(),
+        address: await contract.read.asset(),
         network: this.network,
       },
     ];
   }
 
   async getDataProps({ contract }: GetDataPropsParams<PodsYieldVault>): Promise<PodsYieldQueueDataProps> {
-    const [queuedAssets] = await Promise.all([contract.totalIdleAssets()]);
+    const [queuedAssets] = await Promise.all([contract.read.totalIdleAssets()]);
     const totalValueQueued = Number(queuedAssets) / 10 ** 18;
     return { totalValueQueued };
   }
@@ -64,6 +65,6 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PodsYieldVault>) {
-    return Promise.all([contract.idleAssetsOf(address)]);
+    return Promise.all([contract.read.idleAssetsOf([address])]);
   }
 }

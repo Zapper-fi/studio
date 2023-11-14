@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { BalancerV2ContractFactory, BalancerWrappedAaveToken } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerWrappedAaveToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplatePositionFetcher<BalancerWrappedAaveToken> {
@@ -16,7 +17,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
+    @Inject(BalancerV2ViemContractFactory) protected readonly contractFactory: BalancerV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -34,7 +35,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BalancerWrappedAaveToken>) {
-    return [{ address: await contract.callStatic.ATOKEN(), network: this.network }];
+    return [{ address: await contract.read.ATOKEN(), network: this.network }];
   }
 
   async getPricePerShare() {

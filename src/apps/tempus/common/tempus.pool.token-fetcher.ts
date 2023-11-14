@@ -10,7 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { TempusContractFactory, TempusPyToken } from '../contracts';
+import { TempusViemContractFactory } from '../contracts';
+import { TempusPyToken } from '../contracts/viem';
 
 import { getTempusData } from './tempus.datasource';
 
@@ -18,12 +19,12 @@ import { getTempusData } from './tempus.datasource';
 export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFetcher<TempusPyToken> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TempusContractFactory) protected readonly contractFactory: TempusContractFactory,
+    @Inject(TempusViemContractFactory) protected readonly contractFactory: TempusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TempusPyToken {
+  getContract(address: string) {
     return this.contractFactory.tempusPyToken({ address, network: this.network });
   }
 
@@ -33,23 +34,23 @@ export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<TempusPyToken>) {
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     const pool = multicall.wrap(this.contractFactory.tempusPool({ address: poolAddress, network: this.network }));
-    return [{ address: await pool.backingToken(), network: this.network }];
+    return [{ address: await pool.read.backingToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusPyToken>) {
-    const pricePerShareRaw = await contract.getPricePerFullShareStored();
+    const pricePerShareRaw = await contract.read.getPricePerFullShareStored();
     const decimals = appToken.decimals;
     const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
     return [pricePerShare];
   }
 
   async getLabel({ appToken, contract, multicall }: GetDisplayPropsParams<TempusPyToken>) {
-    const kindLabel = (await contract.kind()) === 1 ? 'Yield' : 'Principal';
-    const poolAddress = await contract.pool();
+    const kindLabel = (await contract.read.kind()) === 1 ? 'Yield' : 'Principal';
+    const poolAddress = await contract.read.pool();
     const pool = this.contractFactory.tempusPool({ address: poolAddress, network: this.network });
-    const maturity = await multicall.wrap(pool).maturityTime();
+    const maturity = await multicall.wrap(pool).read.maturityTime();
     return `${getLabelFromToken(appToken.tokens[0])} ${kindLabel} Share - ${unix(Number(maturity)).format('L')}`;
   }
 }

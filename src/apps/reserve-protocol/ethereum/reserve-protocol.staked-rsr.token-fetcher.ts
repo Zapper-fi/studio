@@ -6,8 +6,8 @@ import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { ReserveProtocolContractFactory } from '../contracts';
-import { StakedRsr } from '../contracts/ethers/StakedRsr';
+import { ReserveProtocolViemContractFactory } from '../contracts';
+import { StakedRsr } from '../contracts/viem/StakedRsr';
 
 import { getRTokens, RTokens } from './reserve-protocol.staked-rsr.queries';
 
@@ -17,13 +17,13 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReserveProtocolContractFactory)
-    protected readonly contractFactory: ReserveProtocolContractFactory,
+    @Inject(ReserveProtocolViemContractFactory)
+    protected readonly contractFactory: ReserveProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakedRsr {
+  getContract(address: string) {
     return this.contractFactory.stakedRsr({ network: this.network, address });
   }
 
@@ -46,7 +46,7 @@ export class EthereumReserveProtocolStakedRsrTokenFetcher extends AppTokenTempla
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<StakedRsr>) {
-    const exchangeRate = await contract.exchangeRate();
+    const exchangeRate = await contract.read.exchangeRate();
     return [Number(exchangeRate) / 10 ** 18];
   }
 }

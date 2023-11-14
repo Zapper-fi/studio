@@ -9,7 +9,8 @@ import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { LpStaking, ThalesContractFactory } from '../contracts';
+import { ThalesViemContractFactory } from '../contracts';
+import { LpStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismThalesPool2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LpStaking> {
@@ -17,12 +18,12 @@ export class OptimismThalesPool2ContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ThalesContractFactory) private readonly contractFactory: ThalesContractFactory,
+    @Inject(ThalesViemContractFactory) private readonly contractFactory: ThalesViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LpStaking {
+  getContract(address: string) {
     return this.contractFactory.lpStaking({ network: this.network, address });
   }
 
@@ -51,6 +52,6 @@ export class OptimismThalesPool2ContractPositionFetcher extends ContractPosition
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LpStaking>): Promise<BigNumberish[]> {
-    return Promise.all([contract.balanceOf(address), contract.earned(address)]);
+    return Promise.all([contract.read.balanceOf([address]), contract.read.earned([address])]);
   }
 }

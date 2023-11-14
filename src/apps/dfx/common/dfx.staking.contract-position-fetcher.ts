@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { DfxContractFactory, DfxStaking } from '../contracts';
+import { DfxViemContractFactory } from '../contracts';
+import { DfxStaking } from '../contracts/viem';
 
 type DfxStakingContractPositionDefinition = {
   address: string;
@@ -29,7 +30,7 @@ export abstract class DfxStakingContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DfxContractFactory) private readonly contractFactory: DfxContractFactory,
+    @Inject(DfxViemContractFactory) private readonly contractFactory: DfxViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -55,7 +56,7 @@ export abstract class DfxStakingContractPositionFetcher extends ContractPosition
     ];
   }
 
-  getContract(address: string): DfxStaking {
+  getContract(address: string) {
     return this.contractFactory.dfxStaking({ network: this.network, address });
   }
 
@@ -68,8 +69,8 @@ export abstract class DfxStakingContractPositionFetcher extends ContractPosition
     contract,
   }: GetTokenBalancesParams<DfxStaking>): Promise<BigNumberish[]> {
     const [stakedBalanceRaw, earnedBalanceRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.earned(address),
+      contract.read.balanceOf([address]),
+      contract.read.earned([address]),
     ]);
 
     return [stakedBalanceRaw, earnedBalanceRaw];

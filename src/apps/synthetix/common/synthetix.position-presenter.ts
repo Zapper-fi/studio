@@ -10,7 +10,7 @@ import {
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { SynthetixContractFactory } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
 
 export type SynthetixPositionPresenterDataProps = {
   snxPrice: number;
@@ -25,7 +25,7 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
   abstract sUSDAddress: string;
 
   constructor(
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
   ) {
     super();
@@ -53,9 +53,9 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
     });
 
     const [unlockedSnxRaw, collateralRaw, debtBalanceRaw] = await Promise.all([
-      synthetixContract.balanceOf(address),
-      synthetixContract.collateral(address),
-      synthetixContract.debtBalanceOf(address, formatBytes32String('sUSD')),
+      synthetixContract.read.balanceOf([address]),
+      synthetixContract.read.collateral([address]),
+      synthetixContract.read.debtBalanceOf([address, formatBytes32String('sUSD')]),
     ]);
 
     const collateralBalance = Number(collateralRaw) / 10 ** 18;

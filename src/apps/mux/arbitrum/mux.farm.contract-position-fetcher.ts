@@ -4,7 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MuxContractFactory, MuxRewardTracker } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxRewardTracker } from '../contracts/viem';
 
 const MLP_FARM = {
   address: '0x290450cdea757c68e4fe6032ff3886d204292914',
@@ -32,12 +33,12 @@ export class ArbitrumMuxFarmContractPositionFetcher extends SingleStakingFarmTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MuxRewardTracker {
+  getContract(address: string) {
     return this.contractFactory.muxRewardTracker({ address, network: this.network });
   }
 

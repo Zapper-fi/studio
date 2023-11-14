@@ -7,7 +7,7 @@ import {
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { AaveAmmLendingTemplateTokenFetcher } from '../common/aave-amm.lending.template.token-fetcher';
-import { AaveAmmAToken } from '../contracts';
+import { AaveAmmAToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAaveAmmVariableDebtTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {

@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { KwentaContractFactory, KwentaStakingV2 } from '../contracts';
+import { KwentaViemContractFactory } from '../contracts';
+import { KwentaStakingV2 } from '../contracts/viem';
+import { KwentaStakingV2Contract } from '../contracts/viem/KwentaStakingV2';
 
 @PositionTemplate()
 export class OptimismKwentaEscrowV2ContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KwentaStakingV2> {
@@ -14,20 +16,20 @@ export class OptimismKwentaEscrowV2ContractPositionFetcher extends VotingEscrowT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KwentaContractFactory) protected readonly contractFactory: KwentaContractFactory,
+    @Inject(KwentaViemContractFactory) protected readonly contractFactory: KwentaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): KwentaStakingV2 {
+  getEscrowContract(address: string): KwentaStakingV2Contract {
     return this.contractFactory.kwentaStakingV2({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<KwentaStakingV2>) {
-    return contract.kwenta();
+    return contract.read.kwenta();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<KwentaStakingV2>) {
-    return await contract.unstakedEscrowedBalanceOf(address);
+    return await contract.read.unstakedEscrowedBalanceOf([address]);
   }
 }

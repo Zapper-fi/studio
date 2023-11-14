@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PikaProtocolContractFactory, PikaProtocolVester } from '../contracts';
+import { PikaProtocolViemContractFactory } from '../contracts';
+import { PikaProtocolVester } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolVester> {
@@ -21,12 +22,12 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolContractFactory) private readonly contractFactory: PikaProtocolContractFactory,
+    @Inject(PikaProtocolViemContractFactory) private readonly contractFactory: PikaProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PikaProtocolVester {
+  getContract(address: string) {
     return this.contractFactory.pikaProtocolVester({ network: this.network, address });
   }
 
@@ -38,7 +39,7 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
     return [
       {
         metaType: MetaType.LOCKED,
-        address: await contract.esPika(),
+        address: await contract.read.esPika(),
         network: this.network,
       },
     ];
@@ -52,7 +53,7 @@ export class OptimismPikaProtocolEscrowContractPositionFetcher extends ContractP
     address,
     contract,
   }: GetTokenBalancesParams<PikaProtocolVester>): Promise<BigNumberish[]> {
-    const lockedBalance = await contract.depositedAll(address);
+    const lockedBalance = await contract.read.depositedAll([address]);
 
     return [lockedBalance];
   }

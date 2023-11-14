@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { OriginStoryContractFactory, OriginStoryWoeth } from '../contracts';
+import { OriginStoryViemContractFactory } from '../contracts';
+import { OriginStoryWoeth } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOriginStoryWoethTokenFetcher extends AppTokenTemplatePositionFetcher<OriginStoryWoeth> {
@@ -14,12 +15,12 @@ export class EthereumOriginStoryWoethTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginStoryContractFactory) protected readonly contractFactory: OriginStoryContractFactory,
+    @Inject(OriginStoryViemContractFactory) protected readonly contractFactory: OriginStoryViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): OriginStoryWoeth {
+  getContract(address: string) {
     return this.contractFactory.originStoryWoeth({ network: this.network, address });
   }
 
@@ -28,11 +29,12 @@ export class EthereumOriginStoryWoethTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OriginStoryWoeth>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OriginStoryWoeth>) {
-    const pricePerShareRaw = await contract.convertToAssets(BigNumber.from(10).pow(18).toString());
+    const oneUnit = BigNumber.from(10).pow(18).toString();
+    const pricePerShareRaw = await contract.read.convertToAssets([BigInt(oneUnit)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return [pricePerShare];
   }

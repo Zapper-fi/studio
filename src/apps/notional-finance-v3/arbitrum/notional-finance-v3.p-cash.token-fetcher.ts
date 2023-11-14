@@ -13,7 +13,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { NotionalFinanceV3ContractFactory, NotionalPCash } from '../contracts';
+import { NotionalFinanceV3ViemContractFactory } from '../contracts';
+import { NotionalPCash } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumNotionalFinanceV3PCashTokenFetcher extends AppTokenTemplatePositionFetcher<NotionalPCash> {
@@ -22,12 +23,13 @@ export class ArbitrumNotionalFinanceV3PCashTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(NotionalFinanceV3ContractFactory) protected readonly contractFactory: NotionalFinanceV3ContractFactory,
+    @Inject(NotionalFinanceV3ViemContractFactory)
+    protected readonly contractFactory: NotionalFinanceV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): NotionalPCash {
+  getContract(address: string) {
     return this.contractFactory.notionalPCash({ network: this.network, address });
   }
 
@@ -36,11 +38,11 @@ export class ArbitrumNotionalFinanceV3PCashTokenFetcher extends AppTokenTemplate
       address: this.notionalViewContractAddress,
       network: this.network,
     });
-    const maxCurrencyId = await multicall.wrap(notionalViewContract).getMaxCurrencyId();
+    const maxCurrencyId = await multicall.wrap(notionalViewContract).read.getMaxCurrencyId();
 
     return await Promise.all(
       range(1, maxCurrencyId + 1).map(async currencyId => {
-        const address = await multicall.wrap(notionalViewContract).pCashAddress(currencyId);
+        const address = await multicall.wrap(notionalViewContract).read.pCashAddress([currencyId]);
 
         return {
           address,
@@ -56,11 +58,11 @@ export class ArbitrumNotionalFinanceV3PCashTokenFetcher extends AppTokenTemplate
   async getUnderlyingTokenDefinitions({
     contract,
   }: GetUnderlyingTokensParams<NotionalPCash>): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<NotionalPCash>) {
-    const pricePerShareRaw = await contract.exchangeRate();
+    const pricePerShareRaw = await contract.read.exchangeRate();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** (10 + appToken.tokens[0].decimals);
 
     return [pricePerShare];

@@ -14,7 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { DystopiaContractFactory, DystopiaPair } from '../contracts';
+import { DystopiaViemContractFactory } from '../contracts';
+import { DystopiaPair } from '../contracts/viem';
 
 export const DYSTOPIA_QUERY = gql`
   query fetchDystopiaPairs {
@@ -42,12 +43,12 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DystopiaContractFactory) private readonly contractFactory: DystopiaContractFactory,
+    @Inject(DystopiaViemContractFactory) private readonly contractFactory: DystopiaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DystopiaPair {
+  getContract(address: string) {
     return this.contractFactory.dystopiaPair({ address, network: this.network });
   }
 
@@ -61,14 +62,14 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<DystopiaPair>) {
     return [
-      { address: await contract.token0(), network: this.network },
-      { address: await contract.token1(), network: this.network },
+      { address: await contract.read.token0(), network: this.network },
+      { address: await contract.read.token1(), network: this.network },
     ];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<DystopiaPair, DefaultDataProps>) {
     const [token0, token1] = appToken.tokens;
-    const [reserve0, reserve1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
+    const [reserve0, reserve1] = await Promise.all([contract.read.reserve0(), contract.read.reserve1()]);
     const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;
