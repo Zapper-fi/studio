@@ -8,6 +8,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -37,7 +38,7 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
     super(appToolkit);
   }
 
-  async getDefinitions({ multicall }): Promise<BarnbridgeSmartAlphaSeniorPoolTokenDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<BarnbridgeSmartAlphaSeniorPoolTokenDefinition[]> {
     const poolAlphaPositions = await Promise.all(
       this.poolAlphaAddresses.map(async poolAddress => {
         const poolContract = this.contractFactory.barnbridgeSmartAlphaPool({

@@ -7,6 +7,7 @@ import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -34,7 +35,7 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  async getDefinitions({ multicall }): Promise<UnagiiTokenDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<UnagiiTokenDefinition[]> {
     const vaultDefinitions = await Promise.all(
       this.vaultManagerAddresses.map(async vaultAddress => {
         const vaultManagerContract = this.contractFactory.unagiiV2Vault({
@@ -42,8 +43,8 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
           network: this.network,
         });
         const [uTokenAddress, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(vaultManagerContract).uToken(),
-          multicall.wrap(vaultManagerContract).token(),
+          multicall.wrap(vaultManagerContract).read.uToken(),
+          multicall.wrap(vaultManagerContract).read.token(),
         ]);
         return {
           address: uTokenAddress.toLowerCase(),

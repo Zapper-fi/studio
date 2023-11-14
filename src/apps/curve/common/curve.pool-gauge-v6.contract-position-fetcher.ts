@@ -156,7 +156,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
 
     const inflationRateRaw = await contract.read.inflation_rate();
     const workingSupplyRaw = await contract.read.working_supply();
-    const relativeWeightRaw = await multicall.wrap(controller)['gauge_relative_weight(address)'](address);
+    const relativeWeightRaw = await multicall.wrap(controller).read.gauge_relative_weight([address]);
 
     const inflationRate = Number(inflationRateRaw) / 10 ** 18;
     const workingSupply = Number(workingSupplyRaw) / 10 ** 18;
