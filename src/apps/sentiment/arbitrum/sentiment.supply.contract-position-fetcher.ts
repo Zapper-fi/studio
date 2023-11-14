@@ -7,6 +7,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -32,14 +33,14 @@ export class ArbitrumSentimentSupplyContractPositionFetcher extends ContractPosi
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
-  async getDefinitions() {
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: this.appId,
+  async getDefinitions({ multicall }: GetDefinitionsParams) {
+    const registryContract = this.contractFactory.sentimentRegistry({
+      address: '0x17b07cfbab33c0024040e7c299f8048f4a49679b',
       network: this.network,
-      groupIds: ['supply-ati'],
     });
+    const marketAddressRaw = await multicall.wrap(registryContract).read.getAllLTokens();
 
-    return appTokens.map(x => ({ address: x.address }));
+    return marketAddressRaw.map(x => ({ address: x }));
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<SentimentLToken>) {
