@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { isViemMulticallUnderlyingError } from '~multicall/errors';
+import { MulticallWrappedReadRequestError, isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -154,6 +154,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
         throw err;
       }),
       contract.read.getNormalizedWeights().catch(err => {
+        // console.log('SUP: ', err, err instanceof MulticallWrappedReadRequestError);
         if (isViemMulticallUnderlyingError(err)) return [];
         throw err;
       }),

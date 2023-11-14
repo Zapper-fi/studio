@@ -109,7 +109,7 @@ export class ViemMulticallDataLoader {
 
     const readProxy = new Proxy(contract, {
       get: (target, functionName: string) => {
-        return (args: any[]) => this.load({ abi, address, functionName, args, stack });
+        return (args: any[] = []) => this.load({ abi, address, functionName, args, stack });
       },
     });
 

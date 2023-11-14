@@ -72,7 +72,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
     );
 
     const reserveTokens = await pool.read.getAllReservesTokens();
-    const reserveTokenAddreses = reserveTokens.map(v => v[1]);
+    const reserveTokenAddreses = reserveTokens.map(v => v.tokenAddress);
     const reserveTokensData = await Promise.all(
       reserveTokenAddreses.map(r => pool.read.getReserveTokensAddresses([r])),
     );
