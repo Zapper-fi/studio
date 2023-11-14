@@ -60,7 +60,7 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
     const { chainId, cycle, wallet, amount } = payload;
 
     const claimableBalanceRaw = await contract.read
-      .getClaimableAmount({ chainId, cycle, wallet, amount })
+      .getClaimableAmount([{ chainId: BigInt(chainId), cycle: BigInt(cycle), wallet, amount: BigInt(amount) }])
       .catch(() => 0);
 
     return [claimableBalanceRaw];

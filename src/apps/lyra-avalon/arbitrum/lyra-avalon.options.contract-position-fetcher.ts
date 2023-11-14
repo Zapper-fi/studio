@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import _, { flattenDeep, omit } from 'lodash';
 
@@ -254,7 +254,7 @@ export class ArbitrumLyraAvalonOptionsContractPositionFetcher extends ContractPo
       optionType == 2
         ? 10 ** (18 - contractPosition.tokens[1].decimals)
         : 10 ** (18 - contractPosition.tokens[0].decimals);
-    const positionCollateral = userPosition.collateral.div(decimals);
+    const positionCollateral = BigNumber.from(userPosition.collateral).div(decimals);
 
     return [amountRaw, positionCollateral];
   }

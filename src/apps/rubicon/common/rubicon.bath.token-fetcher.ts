@@ -75,7 +75,7 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     contract,
   }: GetPricePerShareParams<BathToken, DefaultDataProps, RubiconPoolDefinition>) {
-    const oneUnit = BigNumber.from((1e18).toString());
+    const oneUnit = BigNumber.from(10).pow(18).toString();
     const ratioRaw = await contract.read.convertToAssets([BigInt(oneUnit)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];

@@ -14,6 +14,7 @@ import {
 
 import { PikaProtocolViemContractFactory } from '../contracts';
 import { PikaProtocolVault } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolVault> {
@@ -63,7 +64,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
       contract.read.getShareBalance([address]),
       multicall.wrap(rewardContract).read.getClaimableReward([address]),
     ]);
-    const stakedBalance = stakedBalanceRaw.div(100);
+    const stakedBalance = BigNumber.from(stakedBalanceRaw).div(100);
     return [stakedBalance, rewardBalance];
   }
 }

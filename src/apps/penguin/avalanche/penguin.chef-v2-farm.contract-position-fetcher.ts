@@ -112,7 +112,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
     BigNumberish | BigNumberish[]
   > {
     return rewarderContract.read
-      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address, 0])
+      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address, BigInt(0)])
       .then(v => v[1][0]);
   }
 }

@@ -62,13 +62,13 @@ export abstract class RevertFinanceCompoundorContractPositionFetcher extends Cus
       network: this.network,
     });
 
-    const balanceRaw = await compoundor.balanceOf(address);
+    const balanceRaw = await compoundor.read.balanceOf(p);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
     const positionBalances = await Promise.all(
       range(0, balance).map(async i => {
-        const positionId = await multicall.wrap(compoundor).read.accountTokens([address, i]);
+        const positionId = await multicall.wrap(compoundor).read.accountTokens([address, BigInt(i)]);
 
         const uniV3Token = await this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
           positionId,
