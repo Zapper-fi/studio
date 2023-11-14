@@ -1,18 +1,29 @@
 import { Inject } from '@nestjs/common';
 import { Token as TokenWrapper } from '@uniswap/sdk-core';
 import { Pool, Position, TickMath } from '@uniswap/v3-sdk';
+import { AbiEvent } from 'abitype';
 import { BigNumberish, BigNumber as EtherBigNumber } from 'ethers';
+import {
+  RpcLog,
+  EstimateGasParameters,
+  GetEnsAddressReturnType,
+  GetFilterChangesParameters,
+  GetTransactionParameters,
+  MulticallReturnType,
+  WaitForTransactionReceiptParameters,
+  WatchEventParameters,
+} from 'viem';
+import { VerifyTypedDataParameters } from 'viem/_types/actions/public/verifyTypedData';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Erc20 } from '~contract/contracts';
-import { IMulticallWrapper } from '~multicall';
 import { Token } from '~position/position.interface';
-import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
-import { UniswapV3Factory, UniswapV3Pool, UniswapV3PositionManager } from '../contracts/viem';
-
 import { UniswapV3ViemContractFactory } from '../contracts';
+import { UniswapV3Factory, UniswapV3Pool, UniswapV3PositionManager } from '../contracts/viem';
+import { UniswapV3FactoryContract } from '../contracts/viem/UniswapV3Factory';
+import { UniswapV3PoolContract } from '../contracts/viem/UniswapV3Pool';
+import { UniswapV3PositionManagerContract } from '../contracts/viem/UniswapV3PositionManager';
 
 import { AbstractUniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.abstract.contract-position-builder';
 import {
@@ -20,91 +31,6 @@ import {
   UniswapV3LiquiditySlotContractData,
   UniswapV3LiquidityTickContractData,
 } from './uniswap-v3.liquidity.types';
-import { Abi, AbiEvent } from 'abitype';
-import {
-  GetContractReturnType,
-  Chain,
-  EIP1193RequestFn,
-  PublicRpcSchema,
-  TransportConfig,
-  CallParameters,
-  CallReturnType,
-  RpcLog,
-  BlockTag,
-  CreateContractEventFilterParameters,
-  CreateContractEventFilterReturnType,
-  CreateEventFilterParameters,
-  Filter,
-  EstimateContractGasParameters,
-  Account,
-  EstimateGasParameters,
-  GetBalanceParameters,
-  GetBlockParameters,
-  GetBlockReturnType,
-  GetBlockNumberParameters,
-  GetBlockTransactionCountParameters,
-  GetBytecodeParameters,
-  GetBytecodeReturnType,
-  GetEnsAddressReturnType,
-  AssetGatewayUrls,
-  GetEnsNameReturnType,
-  GetFeeHistoryParameters,
-  GetFeeHistoryReturnType,
-  FeeValuesType,
-  EstimateFeesPerGasParameters,
-  EstimateFeesPerGasReturnType,
-  GetFilterChangesParameters,
-  GetFilterChangesReturnType,
-  GetFilterLogsParameters,
-  GetFilterLogsReturnType,
-  GetLogsParameters,
-  GetLogsReturnType,
-  GetStorageAtParameters,
-  GetStorageAtReturnType,
-  GetTransactionParameters,
-  GetTransactionReturnType,
-  GetTransactionConfirmationsParameters,
-  GetTransactionCountParameters,
-  GetTransactionReceiptParameters,
-  TransactionReceipt,
-  ContractFunctionConfig,
-  MulticallParameters,
-  MulticallReturnType,
-  PrepareTransactionRequestParameters,
-  PrepareTransactionRequestReturnType,
-  ReadContractParameters,
-  ReadContractReturnType,
-  SimulateContractParameters,
-  SimulateContractReturnType,
-  UninstallFilterParameters,
-  WaitForTransactionReceiptParameters,
-  WatchBlockNumberParameters,
-  WatchBlockNumberReturnType,
-  WatchBlocksParameters,
-  Transport,
-  WatchBlocksReturnType,
-  WatchContractEventParameters,
-  WatchContractEventReturnType,
-  WatchEventParameters,
-  WatchEventReturnType,
-  WatchPendingTransactionsParameters,
-  WatchPendingTransactionsReturnType,
-  Client,
-  PublicActions,
-  PublicClient,
-} from 'viem';
-import { GetEnsAvatarReturnType } from 'viem/_types/actions/ens/getEnsAvatar';
-import { GetEnsTextReturnType } from 'viem/_types/actions/ens/getEnsText';
-import { GetContractEventsParameters, GetContractEventsReturnType } from 'viem/_types/actions/public/getContractEvents';
-import { GetProofParameters, GetProofReturnType } from 'viem/_types/actions/public/getProof';
-import { VerifyMessageParameters } from 'viem/_types/actions/public/verifyMessage';
-import { VerifyTypedDataParameters } from 'viem/_types/actions/public/verifyTypedData';
-import { SendRawTransactionParameters } from 'viem/_types/actions/wallet/sendRawTransaction';
-import { MaybeExtractEventArgsFromAbi, MaybeAbiEventName } from 'viem/_types/types/contract';
-import { FilterType } from 'viem/_types/types/filter';
-import { UniswapV3PositionManagerContract } from '../contracts/viem/UniswapV3PositionManager';
-import { UniswapV3PoolContract } from '../contracts/viem/UniswapV3Pool';
-import { UniswapV3FactoryContract } from '../contracts/viem/UniswapV3Factory';
 
 export class UniswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3LiquidityContractPositionBuilder<
   UniswapV3Pool,

@@ -15,8 +15,8 @@ import {
 
 import { TraderJoeViemContractFactory } from '../contracts';
 import { TraderJoeChefV2, TraderJoeChefV2Rewarder } from '../contracts/viem';
-import { TraderJoeChefV2RewarderContract } from '../contracts/viem/TraderJoeChefV2Rewarder';
 import { TraderJoeChefV2Contract } from '../contracts/viem/TraderJoeChefV2';
+import { TraderJoeChefV2RewarderContract } from '../contracts/viem/TraderJoeChefV2Rewarder';
 
 @PositionTemplate()
 export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<

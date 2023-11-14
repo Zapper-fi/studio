@@ -1,8 +1,9 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20, Erc4626 } from '~contract/contracts/viem';
+import { Erc4626 } from '~contract/contracts/viem';
 import { isAppToken } from '~position/position.interface';
 import {
   DefaultAppTokenDataProps,
@@ -14,7 +15,6 @@ import {
 import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
 
 import { AbracadabraViemContractFactory } from '../contracts';
-import { BigNumber } from 'ethers';
 
 const SECONDS_PER_YEAR = 31536000;
 const BASIS_POINTS_DIVISOR = 10000;

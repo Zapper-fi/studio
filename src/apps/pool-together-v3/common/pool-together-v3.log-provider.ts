@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Event } from 'ethers';
 import moment from 'moment';
 
 import { Cache } from '~cache/cache.decorator';

@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MakerViemContractFactory } from '~apps/maker/contracts';
+import { MakerGemJoin } from '~apps/maker/contracts/viem';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -16,7 +17,6 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { BProtocolViemContractFactory } from '../contracts';
-import { MakerGemJoin } from '~apps/maker/contracts/viem';
 
 export type BProtocolVaultDefinition = {
   address: string;

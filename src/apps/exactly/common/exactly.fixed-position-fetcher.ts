@@ -5,10 +5,10 @@ import { APP_TOOLKIT, type IAppToolkit } from '~app-toolkit/app-toolkit.interfac
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 import { ExactlyViemContractFactory } from '../contracts';
+import { Market } from '../contracts/viem';
 
 import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 import { type ExactlyMarketProps, ExactlyTokenFetcher } from './exactly.token-fetcher';
-import { Market } from '../contracts/viem';
 
 export type ExactlyFixedMarketProps = ExactlyMarketProps & { maturity: number };
 

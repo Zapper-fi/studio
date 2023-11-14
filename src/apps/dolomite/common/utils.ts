@@ -1,7 +1,6 @@
-import { BigNumber, BigNumberish, ethers } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { DolomiteMargin } from '~apps/dolomite/contracts/viem';
-import { Multicall } from '~contract/contracts/viem';
 import { ViemMulticallDataLoader } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
@@ -13,6 +12,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
+
 import { DolomiteViemContractFactory } from '../contracts';
 
 export interface AccountStruct {

@@ -26,9 +26,10 @@ import {
 } from '~position/template/contract-position.template.types';
 import { BaseToken } from '~position/token.interface';
 
-import { Platform, RewardAnalytics, VaultDetails, SpoolVaults, StrategyAnalytics, VaultAnalytics } from './spool.types';
-import { SpoolVault } from '../contracts/viem';
 import { SpoolViemContractFactory } from '../contracts';
+import { SpoolVault } from '../contracts/viem';
+
+import { Platform, RewardAnalytics, VaultDetails, SpoolVaults, StrategyAnalytics, VaultAnalytics } from './spool.types';
 
 const platformQuery = gql`
   query {

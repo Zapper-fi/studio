@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
@@ -10,9 +10,7 @@ import {
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { StargateViemContractFactory } from '../contracts';
-import { Abi, GetContractReturnType } from 'viem';
-import { StargateChef, StargateChefBase } from '../contracts/viem';
-import { StargateChefContract } from '../contracts/viem/StargateChef';
+import { StargateChefBase } from '../contracts/viem';
 import { StargateChefBaseContract } from '../contracts/viem/StargateChefBase';
 
 export abstract class StargateFarmBaseContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StargateChefBase> {

@@ -14,11 +14,11 @@ import {
 
 import { TraderJoeViemContractFactory } from '../contracts';
 import { TraderJoeChefBoosted } from '../contracts/viem';
+import { TraderJoeChefBoostedContract } from '../contracts/viem/TraderJoeChefBoosted';
 import {
   TraderJoeChefBoostedRewarder,
   TraderJoeChefBoostedRewarderContract,
 } from '../contracts/viem/TraderJoeChefBoostedRewarder';
-import { TraderJoeChefBoostedContract } from '../contracts/viem/TraderJoeChefBoosted';
 
 @PositionTemplate()
 export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<

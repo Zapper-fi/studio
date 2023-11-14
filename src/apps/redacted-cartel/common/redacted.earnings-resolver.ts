@@ -5,6 +5,7 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
+
 import { RedactedRewardDistributor__factory } from '../contracts/viem';
 
 const BTRFLY_REWARDS =

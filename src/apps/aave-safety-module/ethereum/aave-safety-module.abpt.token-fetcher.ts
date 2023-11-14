@@ -13,8 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AaveAbpt } from '../contracts/viem';
 import { AaveSafetyModuleViemContractFactory } from '../contracts';
+import { AaveAbpt } from '../contracts/viem';
 
 type AaveSafetyModuleAbptTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;

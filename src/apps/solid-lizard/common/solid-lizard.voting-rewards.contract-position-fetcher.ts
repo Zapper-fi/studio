@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { BigNumber, Contract } from 'ethers/lib/ethers';
+import { BigNumber } from 'ethers/lib/ethers';
 import _, { range, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -13,7 +13,6 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 import { SolidLizardDefinitionsResolver } from '../common/solid-lizard.definitions-resolver';
 import { SolidLizardViemContractFactory } from '../contracts';
 import { SolidLizardBribe } from '../contracts/viem';
-import { Abi } from 'viem';
 
 export abstract class VotingRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<SolidLizardBribe> {
   veTokenAddress = '0x29d3622c78615a1e7459e4be434d816b7de293e4';

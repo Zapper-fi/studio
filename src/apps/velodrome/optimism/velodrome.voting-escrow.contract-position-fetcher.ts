@@ -8,8 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { VelodromeViemContractFactory } from '../contracts';
 import { VelodromeVe, VelodromeRewards } from '../contracts/viem';
-import { VelodromeVeContract } from '../contracts/viem/VelodromeVe';
 import { VelodromeRewardsContract } from '../contracts/viem/VelodromeRewards';
+import { VelodromeVeContract } from '../contracts/viem/VelodromeVe';
 
 @PositionTemplate()
 export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

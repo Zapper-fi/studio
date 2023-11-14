@@ -12,9 +12,9 @@ import {
 
 import { SaddleViemContractFactory } from '../contracts';
 import { SaddleSwap } from '../contracts/viem';
+import { SaddleSwapContract } from '../contracts/viem/SaddleSwap';
 
 import { SADDLE_POOL_DEFINITIONS } from './saddle.pool.definitions';
-import { SaddleSwapContract } from '../contracts/viem/SaddleSwap';
 
 @PositionTemplate()
 export class EthereumSaddlePoolTokenFetcher extends CurvePoolStaticTokenFetcher<SaddleSwap> {

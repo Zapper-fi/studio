@@ -7,6 +7,7 @@ import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.de
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
+
 import { MorphoViemContractFactory } from '../contracts';
 
 export type EthereumMorphoPositionPresenterDataProps = {

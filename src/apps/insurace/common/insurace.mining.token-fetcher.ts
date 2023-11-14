@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -16,7 +17,6 @@ import {
 
 import { InsuraceViemContractFactory } from '../contracts';
 import { InsuracePoolToken } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 export type InsuraceMiningTokenDefinition = {
   address: string;

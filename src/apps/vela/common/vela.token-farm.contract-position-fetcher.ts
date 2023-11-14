@@ -16,9 +16,9 @@ import {
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { VelaViemContractFactory } from '../contracts';
-import { VelaComplexRewarder, VelaTokenFarm } from '../contracts/viem';
-import { VelaTokenFarmContract } from '../contracts/viem/VelaTokenFarm';
+import { VelaTokenFarm } from '../contracts/viem';
 import { VelaComplexRewarderContract } from '../contracts/viem/VelaComplexRewarder';
+import { VelaTokenFarmContract } from '../contracts/viem/VelaTokenFarm';
 
 export interface VelaTokenFarmDefinition extends SingleStakingFarmDefinition {
   poolId: number;

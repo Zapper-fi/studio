@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -36,7 +35,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<RookKToken>) {
-    let reserveRaw: BigInt;
+    let reserveRaw: bigint;
 
     if (this.isV3) {
       const pool = this.contractFactory.rookLiquidityPoolV3({

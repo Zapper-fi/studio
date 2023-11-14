@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { type BigNumber, constants } from 'ethers';
+import { constants } from 'ethers';
 
-import type { DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
-import { ExactlyViemContractFactory } from '../contracts';
 import { ViemMulticallDataLoader } from '~multicall';
+import { Network } from '~types/network.interface';
+
+import { ExactlyViemContractFactory } from '../contracts';
 
 export const PREVIEWER_ADDRESSES = {
   [Network.ETHEREUM_MAINNET]: '0x5fe09baaa75fd107a8df8565813f66b3603a13d3',

@@ -1,7 +1,6 @@
 import { parseBytes32String } from '@ethersproject/strings';
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
-import { compact, flatMap } from 'lodash';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';

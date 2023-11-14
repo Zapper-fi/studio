@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { BigNumber, Contract } from 'ethers/lib/ethers';
+import { BigNumber } from 'ethers/lib/ethers';
 import _, { range, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -11,9 +11,9 @@ import { GetTokenDefinitionsParams } from '~position/template/contract-position.
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { VelodromeV2ViemContractFactory } from '../contracts';
+import { VelodromeV2Bribe } from '../contracts/viem';
 
 import { VelodromeV2AddressesResolver } from './velodrome-v2.addresses-resolver';
-import { VelodromeV2Bribe } from '../contracts/viem';
 
 export abstract class VotingRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<VelodromeV2Bribe> {
   veTokenAddress = '0xfaf8fd17d9840595845582fcb047df13f006787d';

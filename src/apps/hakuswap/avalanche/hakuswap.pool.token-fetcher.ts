@@ -8,8 +8,8 @@ import { GetTokenPropsParams, DefaultAppTokenDefinition } from '~position/templa
 
 import { HakuswapViemContractFactory } from '../contracts';
 import { HakuswapFactory, HakuswapPool } from '../contracts/viem';
-import { HakuswapPoolContract } from '../contracts/viem/HakuswapPool';
 import { HakuswapFactoryContract } from '../contracts/viem/HakuswapFactory';
+import { HakuswapPoolContract } from '../contracts/viem/HakuswapPool';
 
 const poolNotUsingDecimals = [
   '0x519de4668ea6661d1870928a3033a62dc2acc503',

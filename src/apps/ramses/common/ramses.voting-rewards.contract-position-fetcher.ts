@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { BigNumber, Contract } from 'ethers/lib/ethers';
+import { BigNumber } from 'ethers/lib/ethers';
 import _, { range, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -12,7 +12,6 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 
 import { RamsesViemContractFactory } from '../contracts';
 import { RamsesBribe } from '../contracts/viem';
-import { Abi } from 'viem';
 
 export abstract class VotingRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RamsesBribe> {
   veTokenAddress = '0xaaa343032aa79ee9a6897dab03bef967c3289a06';

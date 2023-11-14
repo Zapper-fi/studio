@@ -5,9 +5,9 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { UniswapV2ViemContractFactory } from '../contracts';
 import { UniswapPair } from '../contracts/viem';
+import { UniswapPairContract } from '../contracts/viem/UniswapPair';
 
 import { UniswapV2PoolSubgraphTemplateTokenFetcher } from './uniswap-v2.pool.subgraph.template.token-fetcher';
-import { UniswapPairContract } from '../contracts/viem/UniswapPair';
 
 export abstract class UniswapV2DefaultPoolSubgraphTemplateTokenFetcher extends UniswapV2PoolSubgraphTemplateTokenFetcher<UniswapPair> {
   constructor(
