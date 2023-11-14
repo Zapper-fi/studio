@@ -8,6 +8,7 @@ import {
   AaveV2LendingTokenDataProps,
 } from '../common/aave-v2.lending.token-fetcher';
 import { AaveV2AToken } from '../contracts/viem/AaveV2AToken';
+
 @PositionTemplate()
 export class AvalancheAaveV2SupplyTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';

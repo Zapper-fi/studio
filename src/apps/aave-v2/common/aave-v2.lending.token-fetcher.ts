@@ -5,6 +5,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
+  GetAddressesParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetUnderlyingTokensParams,
@@ -62,8 +63,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
     return this.contractFactory.aaveV2AToken({ network: this.network, address });
   }
 
-  async getAddresses(): Promise<string[]> {
-    const multicall = this.appToolkit.getViemMulticall(this.network);
+  async getAddresses({ multicall }: GetAddressesParams): Promise<string[]> {
     const pool = multicall.wrap(
       this.contractFactory.aaveProtocolDataProvider({
         network: this.network,
@@ -72,7 +72,7 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
     );
 
     const reserveTokens = await pool.read.getAllReservesTokens();
-    const reserveTokenAddreses = reserveTokens.map(v => v[1]);
+    const reserveTokenAddreses = reserveTokens.map(v => v.tokenAddress);
     const reserveTokensData = await Promise.all(
       reserveTokenAddreses.map(r => pool.read.getReserveTokensAddresses([r])),
     );
