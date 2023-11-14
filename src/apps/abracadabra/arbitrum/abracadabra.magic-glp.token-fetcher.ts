@@ -3,6 +3,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AbracadabraMagicGlpTokenFetcher } from '../common/abracadabra.magic-glp.token-fetcher';
 
 import {
+  ARBITRUM_GLP_TOKEN_ADDRESS,
   GLP_REWARD_TRACKER_ADDRESSES,
   MAGIC_GLP_ADDRESS,
   MAGIC_GLP_ANNUAL_HARVESTS,
@@ -15,4 +16,5 @@ export class ArbitrumAbracadabraMagicGlpTokenFetcher extends AbracadabraMagicGlp
   rewardTrackerAddresses = GLP_REWARD_TRACKER_ADDRESSES;
   magicGlpHarvestorAddress = MAGIC_GLP_HARVESTOR_ADDRESS;
   magicGlpAnnualHarvests = MAGIC_GLP_ANNUAL_HARVESTS;
+  glpTokenAddress = ARBITRUM_GLP_TOKEN_ADDRESS;
 }
