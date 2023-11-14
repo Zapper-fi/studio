@@ -12,7 +12,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { AuraContractFactory, AuraDepositToken } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraDepositToken } from '../contracts/viem';
 
 type AuraDepositTokenDefinition = {
   address: string;
@@ -31,12 +32,12 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AuraDepositToken {
+  getContract(address: string) {
     return this.contractFactory.auraDepositToken({ address, network: this.network });
   }
 
@@ -47,13 +48,13 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
           address: booster,
           network: this.network,
         });
-        const numOfPools = await boosterContract.poolLength();
+        const numOfPools = await boosterContract.read.poolLength();
 
         return Promise.all(
           range(0, Number(numOfPools)).flatMap(async poolIndex => {
-            const poolInfo = await multicall.wrap(boosterContract).poolInfo(poolIndex);
+            const poolInfo = await multicall.wrap(boosterContract).read.poolInfo([BigInt(poolIndex)]);
             return {
-              address: poolInfo.token.toLowerCase(),
+              address: poolInfo[1].toLowerCase(),
               poolIndex,
               booster,
             };
@@ -73,8 +74,8 @@ export abstract class AuraDepositTokenFetcher extends AppTokenTemplatePositionFe
     definition,
   }: GetUnderlyingTokensParams<AuraDepositToken, AuraDepositTokenDefinition>) {
     const boosterContract = this.contractFactory.auraBooster({ address: definition.booster, network: this.network });
-    const poolInfo = await boosterContract.poolInfo(definition.poolIndex);
-    return [{ address: poolInfo.lptoken, network: this.network }];
+    const poolInfo = await boosterContract.read.poolInfo([BigInt(definition.poolIndex)]);
+    return [{ address: poolInfo[0], network: this.network }];
   }
 
   async getPricePerShare() {

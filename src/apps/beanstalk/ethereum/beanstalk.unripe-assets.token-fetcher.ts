@@ -10,7 +10,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { BeanstalkContractFactory, BeanstalkToken } from '../contracts';
+import { BeanstalkViemContractFactory } from '../contracts';
+import { BeanstalkToken } from '../contracts/viem';
 
 export type BeanstalkUnripeAssetsTokenDefinition = {
   address: string;
@@ -27,12 +28,12 @@ export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplateP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeanstalkContractFactory) private readonly contractFactory: BeanstalkContractFactory,
+    @Inject(BeanstalkViemContractFactory) private readonly contractFactory: BeanstalkViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BeanstalkToken {
+  getContract(address: string) {
     return this.contractFactory.beanstalkToken({ address, network: this.network });
   }
 
@@ -65,7 +66,7 @@ export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplateP
       network: this.network,
     });
 
-    const rateRaw = await multicall.wrap(beanstalkContract).getPercentPenalty(appToken.address);
+    const rateRaw = await multicall.wrap(beanstalkContract).read.getPercentPenalty([appToken.address]);
     const rate = Number(rateRaw) / 10 ** 6;
 
     return [rate];

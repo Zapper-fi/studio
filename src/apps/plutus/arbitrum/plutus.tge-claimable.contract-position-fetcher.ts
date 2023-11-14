@@ -11,7 +11,9 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusPrivateTgeVester } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
@@ -20,12 +22,12 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusPrivateTgeVester {
+  getContract(address: string) {
     return this.contractFactory.plutusPrivateTgeVester({ address, network: this.network });
   }
 
@@ -48,7 +50,7 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
-    const pendingClaims = await contract.pendingClaims(address);
-    return [pendingClaims._allocation.sub(pendingClaims._claimed)];
+    const pendingClaims = await contract.read.pendingClaims([address]);
+    return [BigNumber.from(pendingClaims[2]).sub(pendingClaims[1])];
   }
 }

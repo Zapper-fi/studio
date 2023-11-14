@@ -7,7 +7,8 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
 
 import { AuraBalancerPoolResolver } from '../common/aura.balancer-pool.resolver';
-import { AuraBalToken, AuraContractFactory } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraBalToken } from '../contracts/viem';
 
 export type AuraBalTokenDefinition = {
   address: string;
@@ -27,14 +28,14 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
     @Inject(AuraBalancerPoolResolver)
     private readonly balancerPoolResolver: AuraBalancerPoolResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AuraBalToken {
+  getContract(address: string) {
     return this.contractFactory.auraBalToken({ network: this.network, address });
   }
 
@@ -64,8 +65,8 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
       token.address === this.AURA_BAL_ADDRESS ? auraBALAmount : BigNumber.from(0),
     );
 
-    const { bptOut } = await this.balancerPoolResolver.getBPTOut({ balancerPool, maxAmountsIn });
-    const bptPerAuraBALRaw = bptOut.mul(utils.parseEther('1')).div(auraBALAmount);
+    const [bptOut] = await this.balancerPoolResolver.getBPTOut({ balancerPool, maxAmountsIn });
+    const bptPerAuraBALRaw = BigNumber.from(bptOut).mul(utils.parseEther('1')).div(auraBALAmount);
     const bptPerAuraBAL = Number(bptPerAuraBALRaw) / 10 ** 18;
 
     const bptPrice = totalLiquidity / totalShares;

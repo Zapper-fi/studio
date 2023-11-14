@@ -5,13 +5,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
-import { PancakeswapContractFactory } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
 
 @Injectable()
 export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {}
 
   @CacheOnInterval({
@@ -36,13 +36,13 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
     const chefContract = this.contractFactory.pancakeswapChef({ address: chefAddress, network });
 
     const provider = this.appToolkit.getNetworkProvider(network);
-    const multicall = this.appToolkit.getMulticall(network);
-    const numPools = await multicall.wrap(chefContract).poolLength();
+    const multicall = this.appToolkit.getViemMulticall(network);
+    const numPools = await multicall.wrap(chefContract).read.poolLength();
 
     const allAddresses = await Promise.all(
       range(0, Number(numPools)).map(async v => {
-        const poolInfo = await multicall.wrap(chefContract).poolInfo(v);
-        const lpTokenAddress = poolInfo.lpToken.toLowerCase();
+        const poolInfo = await multicall.wrap(chefContract).read.poolInfo([BigInt(v)]);
+        const lpTokenAddress = poolInfo[0].toLowerCase();
         const lpTokenContract = this.contractFactory.pancakeswapPair({ address: lpTokenAddress, network });
 
         // Some EOAs exist on the MasterChef contract; calling these breaks multicall
@@ -52,11 +52,11 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
         const [symbol, factoryAddressRaw] = await Promise.all([
           multicall
             .wrap(lpTokenContract)
-            .symbol()
+            .read.symbol()
             .catch(_err => ''),
           multicall
             .wrap(lpTokenContract)
-            .factory()
+            .read.factory()
             .catch(_err => ''),
         ]);
 
@@ -84,12 +84,12 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
     const chefContract = this.contractFactory.pancakeswapChefV2({ address: chefAddress, network });
 
     const provider = this.appToolkit.getNetworkProvider(network);
-    const multicall = this.appToolkit.getMulticall(network);
-    const numPools = await multicall.wrap(chefContract).poolLength();
+    const multicall = this.appToolkit.getViemMulticall(network);
+    const numPools = await multicall.wrap(chefContract).read.poolLength();
 
     const allAddresses = await Promise.all(
       range(0, Number(numPools)).map(async v => {
-        const lpTokenAddressRaw = await multicall.wrap(chefContract).lpToken(v);
+        const lpTokenAddressRaw = await multicall.wrap(chefContract).read.lpToken([BigInt(v)]);
         const lpTokenAddress = lpTokenAddressRaw.toLowerCase();
         const lpTokenContract = this.contractFactory.pancakeswapPair({ address: lpTokenAddress, network });
 
@@ -100,11 +100,11 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
         const [symbol, factoryAddressRaw] = await Promise.all([
           multicall
             .wrap(lpTokenContract)
-            .symbol()
+            .read.symbol()
             .catch(_err => ''),
           multicall
             .wrap(lpTokenContract)
-            .factory()
+            .read.factory()
             .catch(_err => ''),
         ]);
 

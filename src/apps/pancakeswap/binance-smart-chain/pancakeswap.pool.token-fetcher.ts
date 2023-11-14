@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { UniswapV2DefaultPoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.default.pool.on-chain.template.token-fetcher';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapV2ViemContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { BinanceSmartChainPancakeswapPoolAddressCacheManager } from './pancakeswap.pool.cache-manager';
 
@@ -15,7 +15,7 @@ export class BinanceSmartChainPancakeSwapPoolTokenFetcher extends UniswapV2Defau
   constructor(
     @Inject(APP_TOOLKIT)
     protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
+    @Inject(UniswapV2ViemContractFactory) protected readonly contractFactory: UniswapV2ViemContractFactory,
     @Inject(BinanceSmartChainPancakeswapPoolAddressCacheManager)
     protected readonly pancakeswapPoolAddressCacheManager: BinanceSmartChainPancakeswapPoolAddressCacheManager,
   ) {

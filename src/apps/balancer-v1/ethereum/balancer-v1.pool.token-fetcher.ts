@@ -22,7 +22,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { BalancerPoolToken, BalancerV1ContractFactory } from '../contracts';
+import { BalancerV1ViemContractFactory } from '../contracts';
+import { BalancerPoolToken } from '../contracts/viem';
 
 import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './balancer-v1.volume.data-loader';
 
@@ -57,14 +58,14 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV1ContractFactory) protected readonly contractFactory: BalancerV1ContractFactory,
+    @Inject(BalancerV1ViemContractFactory) protected readonly contractFactory: BalancerV1ViemContractFactory,
     @Inject(EthereumBalancerV1PoolSubgraphVolumeDataLoader)
     protected readonly volumeDataLoaderBuilder: EthereumBalancerV1PoolSubgraphVolumeDataLoader,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BalancerPoolToken {
+  getContract(address: string) {
     return this.contractFactory.balancerPoolToken({ address, network: this.network });
   }
 
@@ -80,13 +81,13 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
-    const tokenAddresses = await contract.getCurrentTokens();
+    const tokenAddresses = await contract.read.getCurrentTokens();
     return tokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BalancerPoolToken>) {
     if (appToken.supply === 0) return appToken.tokens.map(() => 0);
-    const reservesRaw = await Promise.all(appToken.tokens.map(t => contract.getBalance(t.address)));
+    const reservesRaw = await Promise.all(appToken.tokens.map(t => contract.read.getBalance([t.address])));
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;
@@ -103,7 +104,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getApy({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
-    const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
+    const fee = (Number(await contract.read.getSwapFee()) / 10 ** 18) * 100;
     const volume = await this.volumeDataLoader.load(appToken.address);
     const yearlyFees = volume * fee * 365;
     const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
@@ -116,8 +117,8 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     const defaultDataProps = await super.getDataProps(params);
 
     const { appToken, contract } = params;
-    const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
-    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
+    const fee = (Number(await contract.read.getSwapFee()) / 10 ** 18) * 100;
+    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.read.getNormalizedWeight([t.address])));
     const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
     const volume = await this.volumeDataLoader.load(appToken.address);
 

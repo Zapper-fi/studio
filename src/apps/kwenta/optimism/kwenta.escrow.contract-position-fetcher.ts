@@ -5,7 +5,10 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { KwentaContractFactory, KwentaEscrow } from '../contracts';
+import { KwentaViemContractFactory } from '../contracts';
+import { KwentaEscrow } from '../contracts/viem';
+import { KwentaEscrowContract } from '../contracts/viem/KwentaEscrow';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KwentaEscrow> {
@@ -15,17 +18,17 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KwentaContractFactory) protected readonly contractFactory: KwentaContractFactory,
+    @Inject(KwentaViemContractFactory) protected readonly contractFactory: KwentaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): KwentaEscrow {
+  getEscrowContract(address: string): KwentaEscrowContract {
     return this.contractFactory.kwentaEscrow({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<KwentaEscrow>) {
-    return contract.getKwentaAddress();
+    return contract.read.getKwentaAddress();
   }
 
   async getEscrowedTokenBalance({ multicall, contract, address }: GetTokenBalancesParams<KwentaEscrow>) {
@@ -33,11 +36,13 @@ export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTem
       address: this.stakingContractAddress,
       network: this.network,
     });
+
     const mcStakingContract = multicall.wrap(stakingContract);
-    const stakedBalance = await mcStakingContract.balanceOf(address);
-    const stakedNonEscrowedBalance = await mcStakingContract.nonEscrowedBalanceOf(address);
-    const escrowBalance = await contract.balanceOf(address);
-    const stakedEscrowBalance = stakedBalance.sub(stakedNonEscrowedBalance);
-    return escrowBalance.sub(stakedEscrowBalance);
+    const stakedBalance = await mcStakingContract.read.balanceOf([address]);
+    const stakedNonEscrowedBalance = await mcStakingContract.read.nonEscrowedBalanceOf([address]);
+    const escrowBalance = await contract.read.balanceOf([address]);
+
+    const stakedEscrowBalance = BigNumber.from(stakedBalance).sub(stakedNonEscrowedBalance);
+    return BigNumber.from(escrowBalance).sub(stakedEscrowBalance);
   }
 }

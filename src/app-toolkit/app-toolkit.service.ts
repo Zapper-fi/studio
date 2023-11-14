@@ -19,10 +19,13 @@ import { PriceSelectorService } from '~token/selectors/token-price-selector.serv
 import { Network } from '~types/network.interface';
 
 import { IAppToolkit } from './app-toolkit.interface';
+import { ContractViemContractFactory } from '~contract/contracts';
 
 @Injectable()
 export class AppToolkit implements IAppToolkit {
   private readonly contractFactory: ContractFactory;
+  private readonly viemContractFactory: ContractViemContractFactory;
+
   constructor(
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
@@ -35,11 +38,18 @@ export class AppToolkit implements IAppToolkit {
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
+    this.viemContractFactory = new ContractViemContractFactory((network: Network) =>
+      this.networkProviderService.getViemProvider(network),
+    );
   }
-  // Network Related
 
+  // Network Related
   get globalContracts() {
     return this.contractFactory;
+  }
+
+  get globalViemContracts() {
+    return this.viemContractFactory;
   }
 
   getNetworkProvider(network: Network) {
@@ -52,6 +62,10 @@ export class AppToolkit implements IAppToolkit {
 
   getMulticall(network: Network) {
     return this.multicallService.getMulticall(network);
+  }
+
+  getViemMulticall(network: Network) {
+    return this.multicallService.getViemMulticall(network);
   }
 
   // Base Tokens

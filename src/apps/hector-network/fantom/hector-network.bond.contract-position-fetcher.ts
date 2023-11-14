@@ -11,7 +11,9 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { HectorNetworkBondDepository, HectorNetworkContractFactory } from '../contracts';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkBondDepository } from '../contracts/viem';
+import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class FantomHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondDepository> {
@@ -19,7 +21,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HectorNetworkContractFactory) protected readonly contractFactory: HectorNetworkContractFactory,
+    @Inject(HectorNetworkViemContractFactory) protected readonly contractFactory: HectorNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -42,7 +44,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondDepository>) {
-    const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
+    const [principle, claimable] = await Promise.all([contract.read.principle(), contract.read.HEC()]);
 
     return [
       {
@@ -73,10 +75,10 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
+      contract.read.bondInfo([address]),
+      contract.read.pendingPayoutFor([address]),
     ]);
 
-    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
+    return [BigNumber.from(bondInfo[0]).sub(claimablePayout).toString(), claimablePayout.toString()];
   }
 }

@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { AelinContractFactory, AelinStaking } from '../contracts';
+import { AelinViemContractFactory } from '../contracts';
+import { AelinStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -30,12 +31,12 @@ export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AelinContractFactory) protected readonly contractFactory: AelinContractFactory,
+    @Inject(AelinViemContractFactory) protected readonly contractFactory: AelinViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AelinStaking {
+  getContract(address: string) {
     return this.contractFactory.aelinStaking({ address, network: this.network });
   }
 
@@ -44,20 +45,20 @@ export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmT
   }
 
   getRewardRates({ contract }: GetDataPropsParams<AelinStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({
     contract,
   }: GetDataPropsParams<AelinStaking, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.rewardRate().then(v => v.gt(0));
+    return contract.read.rewardRate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AelinStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<AelinStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

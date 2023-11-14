@@ -16,7 +16,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { ConvexContractFactory, ConvexCvxCrvStakingWrapped } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexCvxCrvStakingWrapped } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<ConvexCvxCrvStakingWrapped> {
@@ -26,12 +27,12 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexCvxCrvStakingWrapped {
+  getContract(address: string) {
     return this.contractFactory.convexCvxCrvStakingWrapped({ address, network: this.network });
   }
 
@@ -40,15 +41,15 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
   }
 
   getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<ConvexCvxCrvStakingWrapped>) {
-    return contract.cvxCrv();
+    return contract.read.cvxCrv();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<ConvexCvxCrvStakingWrapped>) {
-    const numRewards = await contract.rewardLength();
+    const numRewards = await contract.read.rewardLength();
     const rewardTokenAddresses = await Promise.all(
       range(0, Number(numRewards)).map(async v => {
-        const rewards = await contract.rewards(v);
-        return rewards.reward_token.toLowerCase();
+        const rewards = await contract.read.rewards([BigInt(v)]);
+        return rewards[0].toLowerCase();
       }),
     );
 
@@ -56,7 +57,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<ConvexCvxCrvStakingWrapped>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardRates({
@@ -67,13 +68,13 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
       network: this.network,
     });
 
-    const defaultRewardRates = await multicall.wrap(cvxCrvStakingUtilitiesCotnract).mainRewardRates();
+    const defaultRewardRates = await multicall.wrap(cvxCrvStakingUtilitiesCotnract).read.mainRewardRates();
 
-    return defaultRewardRates.rates;
+    return [...defaultRewardRates[1]];
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ConvexCvxCrvStakingWrapped>) {
-    const rewards = await contract.callStatic.earned(address);
+    const rewards = await contract.simulate.earned([address]).then(v => v.result);
     return rewards.map(reward => Number(reward.amount));
   }
 
@@ -90,7 +91,7 @@ export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends S
       network: this.network,
     });
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const reserveRaw = await multicall.wrap(cvxCrvStakingContract).balanceOf(contractPosition.address);
+    const reserveRaw = await multicall.wrap(cvxCrvStakingContract).read.balanceOf([contractPosition.address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     return reserve;
   }

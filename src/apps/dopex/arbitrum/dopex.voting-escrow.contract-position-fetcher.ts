@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { DopexContractFactory, DopexVotingEscrow } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexVotingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<DopexVotingEscrow> {
@@ -20,12 +21,12 @@ export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DopexVotingEscrow {
+  getContract(address: string) {
     return this.contractFactory.dopexVotingEscrow({ address, network: this.network });
   }
 
@@ -37,7 +38,7 @@ export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPo
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.token(),
+        address: await contract.read.token(),
         network: this.network,
       },
     ];
@@ -49,7 +50,7 @@ export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPo
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<DopexVotingEscrow>) {
-    const lockedBalance = await contract.locked(address);
-    return [lockedBalance.amount];
+    const [lockedBalanceRaw] = await contract.read.locked([address]);
+    return [lockedBalanceRaw];
   }
 }

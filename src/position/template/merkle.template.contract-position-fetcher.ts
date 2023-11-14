@@ -9,6 +9,7 @@ import { isClaimable } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from './contract-position.template.types';
+import { Abi } from 'viem';
 
 export type MerkleContractPositionDefinition = {
   address: string;
@@ -16,7 +17,7 @@ export type MerkleContractPositionDefinition = {
 };
 
 export abstract class MerkleTemplateContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<T, DefaultDataProps, MerkleContractPositionDefinition> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);

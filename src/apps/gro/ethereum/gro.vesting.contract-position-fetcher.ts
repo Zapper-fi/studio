@@ -10,7 +10,8 @@ import { isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { GroContractFactory, GroVesting } from '../contracts';
+import { GroViemContractFactory } from '../contracts';
+import { GroVesting } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumGroVestingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<GroVesting> {
@@ -18,12 +19,12 @@ export class EthereumGroVestingContractPositionFetcher extends ContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GroContractFactory) private readonly contractFactory: GroContractFactory,
+    @Inject(GroViemContractFactory) private readonly contractFactory: GroViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GroVesting {
+  getContract(address: string) {
     return this.contractFactory.groVesting({ network: this.network, address });
   }
 
@@ -55,6 +56,6 @@ export class EthereumGroVestingContractPositionFetcher extends ContractPositionT
     address,
     contract,
   }: GetTokenBalancesParams<GroVesting, DefaultDataProps>): Promise<BigNumberish[]> {
-    return Promise.all([contract.vestedBalance(address), contract.vestingBalance(address)]);
+    return Promise.all([contract.read.vestedBalance([address]), contract.read.vestingBalance([address])]);
   }
 }

@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverVotingEscrow } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverVotingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCleverVotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CleverVotingEscrow> {
@@ -20,12 +21,12 @@ export class EthereumCleverVotingEscrowContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CleverVotingEscrow {
+  getContract(address: string) {
     return this.contractFactory.cleverVotingEscrow({ address, network: this.network });
   }
 
@@ -37,7 +38,7 @@ export class EthereumCleverVotingEscrowContractPositionFetcher extends ContractP
     return [
       {
         metaType: MetaType.LOCKED,
-        address: await contract.token(),
+        address: await contract.read.token(),
         network: this.network,
       },
     ];
@@ -49,7 +50,7 @@ export class EthereumCleverVotingEscrowContractPositionFetcher extends ContractP
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverVotingEscrow>) {
-    const lockedBalance = await contract.locked(address);
+    const lockedBalance = await contract.read.locked([address]);
     return [lockedBalance.amount];
   }
 }

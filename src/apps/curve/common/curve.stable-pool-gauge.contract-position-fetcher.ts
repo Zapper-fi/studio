@@ -5,26 +5,27 @@ import {
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
 } from '../common/curve.pool-gauge.contract-position-fetcher';
-import { CurveStableRegistry } from '../contracts';
+import { CurveStableRegistry } from '../contracts/viem';
+import { CurveStableRegistryContract } from '../contracts/viem/CurveStableRegistry';
 
 export abstract class CurveStablePoolGaugeContractPositionFetcher extends CurvePoolGaugeContractPositionFetcher<CurveStableRegistry> {
-  resolveRegistry(address: string): CurveStableRegistry {
+  resolveRegistry(address: string): CurveStableRegistryContract {
     return this.contractFactory.curveStableRegistry({ address, network: this.network });
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveStableRegistry>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveStableRegistry>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([BigInt(poolIndex)]);
   }
 
   async resolveTokenAddress({ contract, swapAddress }: ResolveTokenAddressParams<CurveStableRegistry>) {
-    return contract.get_lp_token(swapAddress);
+    return contract.read.get_lp_token([swapAddress]);
   }
 
   async resolveGaugeAddresses({ contract, swapAddress }: ResolveGaugeAddressParams<CurveStableRegistry>) {
-    return contract.get_gauges(swapAddress).then(v => v[0]);
+    return contract.read.get_gauges([swapAddress]).then(v => [...v[0]]);
   }
 }

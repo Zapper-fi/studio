@@ -6,7 +6,7 @@ import {
   UwuLendReserveApyData,
   UwuLendReserveTokenAddressesData,
 } from '../common/uwu-lend.lending.token-fetcher';
-import { UwuLendUToken } from '../contracts';
+import { UwuLendUToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumUwuLendVariableDebtTokenFetcher extends UwuLendLendingTokenFetcher {

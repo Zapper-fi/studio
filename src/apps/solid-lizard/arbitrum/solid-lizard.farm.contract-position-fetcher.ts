@@ -15,7 +15,8 @@ import {
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
 import { SolidLizardDefinitionsResolver } from '../common/solid-lizard.definitions-resolver';
-import { SolidLizardContractFactory, SolidLizardGauge } from '../contracts';
+import { SolidLizardViemContractFactory } from '../contracts';
+import { SolidLizardGauge } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<SolidLizardGauge> {
@@ -23,13 +24,13 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SolidLizardContractFactory) protected readonly contractFactory: SolidLizardContractFactory,
+    @Inject(SolidLizardViemContractFactory) protected readonly contractFactory: SolidLizardViemContractFactory,
     @Inject(SolidLizardDefinitionsResolver) protected readonly definitionsResolver: SolidLizardDefinitionsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SolidLizardGauge {
+  getContract(address: string) {
     return this.contractFactory.solidLizardGauge({ address, network: this.network });
   }
 
@@ -38,12 +39,12 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<SolidLizardGauge>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<SolidLizardGauge>) {
-    const numRewards = Number(await contract.rewardTokensLength());
-    return Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
+    const numRewards = Number(await contract.read.rewardTokensLength());
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([BigInt(n)])));
   }
 
   // @TODO: Find rewards rates which matches the APY returned from their API
@@ -56,7 +57,7 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
     address,
     contract,
   }: GetTokenBalancesParams<SolidLizardGauge, SingleStakingFarmDataProps>) {
-    const balance = await contract.balanceOf(address);
+    const balance = await contract.read.balanceOf([address]);
     return balance;
   }
 
@@ -66,6 +67,6 @@ export class ArbitrumSolidLizardStakingContractPositionFetcher extends SingleSta
     contractPosition,
   }: GetTokenBalancesParams<SolidLizardGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.earned(rt.address, address)));
+    return Promise.all(rewardTokens.map(rt => contract.read.earned([rt.address, address])));
   }
 }

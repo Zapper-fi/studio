@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { SentimentAccountsResolver } from '../common/sentiment.accounts-resolver';
-import { SentimentContractFactory, SentimentLToken } from '../contracts';
+import { SentimentViemContractFactory } from '../contracts';
+import { SentimentLToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SentimentLToken> {
@@ -23,13 +24,13 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SentimentContractFactory) private readonly contractFactory: SentimentContractFactory,
+    @Inject(SentimentViemContractFactory) private readonly contractFactory: SentimentViemContractFactory,
     @Inject(SentimentAccountsResolver) private readonly accountResolver: SentimentAccountsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SentimentLToken {
+  getContract(address: string) {
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
@@ -47,7 +48,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPosi
     return [
       {
         metaType: MetaType.BORROWED,
-        address: await contract.asset(),
+        address: await contract.read.asset(),
         network: this.network,
       },
     ];
@@ -65,7 +66,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPosi
     const accountAddresses = await this.accountResolver.getAccountsOfOwner(address);
 
     const borrowRaw = await Promise.all(
-      accountAddresses.map(address => multicall.wrap(contract).getBorrowBalance(address)),
+      accountAddresses.map(address => multicall.wrap(contract).read.getBorrowBalance([address])),
     );
     const borrowedAmountRaw = _.sum(borrowRaw);
 

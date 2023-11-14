@@ -7,7 +7,8 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { AelinContractFactory, AelinPool } from '../contracts';
+import { AelinViemContractFactory } from '../contracts';
+import { AelinPool } from '../contracts/viem';
 
 type AelinPoolsResponse = {
   poolCreateds: {
@@ -29,12 +30,12 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AelinContractFactory) protected readonly contractFactory: AelinContractFactory,
+    @Inject(AelinViemContractFactory) protected readonly contractFactory: AelinViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AelinPool {
+  getContract(address: string) {
     return this.contractFactory.aelinPool({ address, network: this.network });
   }
 
@@ -44,7 +45,7 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AelinPool>) {
-    return [{ address: await contract.purchaseToken(), network: this.network }];
+    return [{ address: await contract.read.purchaseToken(), network: this.network }];
   }
 
   async getPricePerShare() {
@@ -52,7 +53,7 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<AelinPool>) {
-    const name = await contract.name();
+    const name = await contract.read.name();
     const maybeName = name.replace(/^(aePool-|aeP-)/, '');
     const labelPrefix = ethers.utils.isHexString(maybeName) ? ethers.utils.parseBytes32String(maybeName) : maybeName;
     return `${labelPrefix} Aelin Pool`;

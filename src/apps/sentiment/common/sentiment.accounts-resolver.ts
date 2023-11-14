@@ -8,7 +8,6 @@ import { Cache } from '~cache/cache.decorator';
 type GetAccountsResponse = {
   accounts: {
     id: string;
-    blockNumber: string;
     owner: {
       id: string;
     };
@@ -16,10 +15,9 @@ type GetAccountsResponse = {
 };
 
 const GET_ALL_ACCOUNTS_QUERY = gql`
-  query getFirstAccounts($first: Int!, $lastId: String) {
-    accounts(first: $first, orderBy: id, orderDirection: asc, where: { id_gt: $lastId }) {
+  {
+    accounts(orderBy: id, orderDirection: asc) {
       id
-      blockNumber
       owner {
         id
       }
@@ -39,7 +37,6 @@ export class SentimentAccountsResolver {
     const data = await gqlFetchAll<GetAccountsResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/r0ohafza/sentiment?source=zapper`,
       query: GET_ALL_ACCOUNTS_QUERY,
-      variables: undefined,
       dataToSearch: 'accounts',
     });
 

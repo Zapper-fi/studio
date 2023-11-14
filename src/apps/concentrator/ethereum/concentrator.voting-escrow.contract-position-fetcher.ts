@@ -5,7 +5,10 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { ConcentratorContractFactory, AladdinConcentratorVe, AladdinConcentratorVeRewards } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AladdinConcentratorVe, AladdinConcentratorVeRewards } from '../contracts/viem';
+import { AladdinConcentratorVeContract } from '../contracts/viem/AladdinConcentratorVe';
+import { AladdinConcentratorVeRewardsContract } from '../contracts/viem/AladdinConcentratorVeRewards';
 
 @PositionTemplate()
 export class EthereumConcentratorVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -18,32 +21,32 @@ export class EthereumConcentratorVotingEscrowContractPositionFetcher extends Vot
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) protected readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) protected readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): AladdinConcentratorVe {
+  getEscrowContract(address: string): AladdinConcentratorVeContract {
     return this.contractFactory.aladdinConcentratorVe({ address, network: this.network });
   }
 
-  getRewardContract(address: string): AladdinConcentratorVeRewards {
+  getRewardContract(address: string): AladdinConcentratorVeRewardsContract {
     return this.contractFactory.aladdinConcentratorVeRewards({ address, network: this.network });
   }
 
-  getEscrowedTokenAddress(contract: AladdinConcentratorVe): Promise<string> {
-    return contract.token();
+  getEscrowedTokenAddress(contract: AladdinConcentratorVeContract): Promise<string> {
+    return contract.read.token();
   }
 
-  async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewards): Promise<BigNumberish> {
-    return contract.callStatic.claim(address);
+  async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewardsContract): Promise<BigNumberish> {
+    return contract.simulate.claim([address]).then(v => v.result);
   }
 
-  getRewardTokenAddress(contract: AladdinConcentratorVeRewards): Promise<string> {
-    return contract.token();
+  getRewardTokenAddress(contract: AladdinConcentratorVeRewardsContract): Promise<string> {
+    return contract.read.token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: AladdinConcentratorVe): Promise<BigNumberish> {
-    return contract.balanceOf(address);
+  async getEscrowedTokenBalance(address: string, contract: AladdinConcentratorVeContract): Promise<BigNumberish> {
+    return contract.read.balanceOf([address]);
   }
 }

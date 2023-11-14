@@ -18,7 +18,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { NETWORK_IDS } from '~types';
 
-import { KeeperContractFactory, KeeperJobManager } from '../contracts';
+import { KeeperViemContractFactory } from '../contracts';
+import { KeeperJobManager } from '../contracts/viem';
 
 import { KeeperJob, SUBGRAPH_URL, GET_JOBS, GET_USER_JOBS } from './keeper.job.queries';
 
@@ -76,12 +77,12 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KeeperContractFactory) protected readonly contractFactory: KeeperContractFactory,
+    @Inject(KeeperViemContractFactory) protected readonly contractFactory: KeeperViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): KeeperJobManager {
+  getContract(address: string) {
     return this.contractFactory.keeperJobManager({ address, network: this.network });
   }
 

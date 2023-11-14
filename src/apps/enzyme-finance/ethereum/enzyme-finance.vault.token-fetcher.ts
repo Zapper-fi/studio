@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { EnzymeFinanceContractFactory, EnzymeFinanceVault } from '../contracts';
+import { EnzymeFinanceViemContractFactory } from '../contracts';
+import { EnzymeFinanceVault } from '../contracts/viem';
 
 const query = gql`
   query fetchEnzymeVaults {
@@ -34,7 +35,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
   groupLabel = 'Vaults';
 
   constructor(
-    @Inject(EnzymeFinanceContractFactory) private readonly contractFactory: EnzymeFinanceContractFactory,
+    @Inject(EnzymeFinanceViemContractFactory) private readonly contractFactory: EnzymeFinanceViemContractFactory,
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
   ) {
     super(appToolkit);
@@ -46,16 +47,16 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return data.funds.map(v => v.id.toLowerCase());
   }
 
-  getContract(address: string): EnzymeFinanceVault {
+  getContract(address: string) {
     return this.contractFactory.enzymeFinanceVault({ network: this.network, address });
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<EnzymeFinanceVault>): Promise<string> {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {
-    return (await contract.getTrackedAssets()).map(x => ({ address: x.toLowerCase(), network: this.network }));
+    return (await contract.read.getTrackedAssets()).map(x => ({ address: x.toLowerCase(), network: this.network }));
   }
 
   async getPricePerShare({
@@ -66,8 +67,11 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
 
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        const reserveRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
+        const uTokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
+        const reserveRaw = await multicall.wrap(uTokenContract).read.balanceOf([appToken.address]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),

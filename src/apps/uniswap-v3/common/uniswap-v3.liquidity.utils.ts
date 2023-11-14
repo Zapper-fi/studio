@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import {
   UniswapV3LiquidityPositionContractData,
@@ -12,14 +12,14 @@ function subIn256(x: BigNumber, y: BigNumber): BigNumber {
 }
 
 const getCounterfactualFees = (
-  liquidity: BigNumber,
+  liquidity: BigNumberish,
   tickCurrent: number,
   tickLower: number,
   tickUpper: number,
-  feeGrowthGlobal: BigNumber,
-  feeGrowthOutsideLower: BigNumber,
-  feeGrowthOutsideUpper: BigNumber,
-  feeGrowthInsideLast: BigNumber,
+  feeGrowthGlobal: BigNumberish,
+  feeGrowthOutsideLower: BigNumberish,
+  feeGrowthOutsideUpper: BigNumberish,
+  feeGrowthInsideLast: BigNumberish,
 ) => {
   const feeGrowthBelow = BigNumber.from(tickCurrent).gte(tickLower)
     ? BigNumber.from(feeGrowthOutsideLower)
@@ -50,8 +50,8 @@ export const getClaimable = ({
   slot: UniswapV3LiquiditySlotContractData;
   ticksLower: UniswapV3LiquidityTickContractData;
   ticksUpper: UniswapV3LiquidityTickContractData;
-  feeGrowth0: BigNumber;
-  feeGrowth1: BigNumber;
+  feeGrowth0: BigNumberish;
+  feeGrowth1: BigNumberish;
 }) => {
   const counterfactualFees0 = getCounterfactualFees(
     position.liquidity,

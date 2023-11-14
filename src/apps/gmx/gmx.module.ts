@@ -10,11 +10,11 @@ import { AvalancheGmxEsGmxTokenFetcher } from './avalanche/gmx.es-gmx.token-fetc
 import { AvalancheGmxFarmContractPositionFetcher } from './avalanche/gmx.farm.contract-position-fetcher';
 import { AvalancheGmxGlpTokenFetcher } from './avalanche/gmx.glp.token-fetcher';
 import { AvalancheGmxPerpContractPositionFetcher } from './avalanche/gmx.perp.contract-position-fetcher';
-import { GmxContractFactory } from './contracts';
+import { GmxViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    GmxContractFactory,
+    GmxViemContractFactory,
     // Arbitrum
     ArbitrumGmxEsGmxTokenFetcher,
     ArbitrumGmxFarmContractPositionFetcher,

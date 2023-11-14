@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { IndexCoopContractFactory, IndexCoopToken } from '../contracts';
+import { IndexCoopViemContractFactory } from '../contracts';
+import { IndexCoopToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePositionFetcher<IndexCoopToken> {
@@ -22,12 +23,12 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IndexCoopContractFactory) protected readonly contractFactory: IndexCoopContractFactory,
+    @Inject(IndexCoopViemContractFactory) protected readonly contractFactory: IndexCoopViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IndexCoopToken {
+  getContract(address: string) {
     return this.contractFactory.indexCoopToken({ address, network: this.network });
   }
 
@@ -46,13 +47,13 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IndexCoopToken>) {
-    return (await contract.getComponents()).map(address => ({ address, network: this.network }));
+    return (await contract.read.getComponents()).map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ appToken, contract }: GetDataPropsParams<IndexCoopToken>) {
     const pricePerShare = await Promise.all(
       appToken.tokens.map(async underlyingToken => {
-        const ratio = await contract.getTotalComponentRealUnits(underlyingToken.address);
+        const ratio = await contract.read.getTotalComponentRealUnits([underlyingToken.address]);
         return Number(ratio) / 10 ** underlyingToken.decimals;
       }),
     );

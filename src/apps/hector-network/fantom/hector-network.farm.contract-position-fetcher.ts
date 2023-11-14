@@ -8,8 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { HectorNetworkContractFactory } from '../contracts';
-import { HectorNetworkStakingRewards } from '../contracts/ethers/HectorNetworkStakingRewards';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkStakingRewards } from '../contracts/viem/HectorNetworkStakingRewards';
 
 // NOTE: Hector Network also has two other pools staked in the SpookySwap MasterChef
 const FARMS = [
@@ -26,12 +26,12 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HectorNetworkContractFactory) protected readonly contractFactory: HectorNetworkContractFactory,
+    @Inject(HectorNetworkViemContractFactory) protected readonly contractFactory: HectorNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): HectorNetworkStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.hectorNetworkStakingRewards({ address, network: this.network });
   }
 
@@ -40,20 +40,20 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
   }
 
   getRewardRates({ contract }: GetDataPropsParams<HectorNetworkStakingRewards>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({
     contract,
   }: GetDataPropsParams<HectorNetworkStakingRewards, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.rewardRate().then(v => v.gt(0));
+    return contract.read.rewardRate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HectorNetworkStakingRewards>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<HectorNetworkStakingRewards>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

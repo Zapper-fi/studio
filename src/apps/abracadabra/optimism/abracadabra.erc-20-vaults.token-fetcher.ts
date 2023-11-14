@@ -12,7 +12,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { AbracadabraContractFactory, AbracadabraErc20Vault } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { AbracadabraErc20Vault } from '../contracts/viem';
 
 import { OPTIMISM_ERC20_VAULT_CAULDRONS } from './abracadabra.optimism.constants';
 
@@ -22,12 +23,12 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AbracadabraErc20Vault {
+  getContract(address: string) {
     return this.contractFactory.abracadabraErc20Vault({
       address,
       network: this.network,
@@ -44,7 +45,7 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
           }),
         );
 
-        return cauldron.collateral();
+        return cauldron.read.collateral();
       }),
     );
   }
@@ -54,29 +55,29 @@ export class OptimismAbracadabraErc20VaultsTokenFetcher extends AppTokenTemplate
   }: GetUnderlyingTokensParams<AbracadabraErc20Vault, DefaultAppTokenDefinition>): Promise<
     UnderlyingTokenDefinition[]
   > {
-    const underlyingTokenAddress = await contract.underlying();
+    const underlyingTokenAddress = await contract.read.underlying();
     return [{ address: underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ multicall, address, appToken }: GetPricePerShareParams<AbracadabraErc20Vault>) {
-    const underlying = multicall.wrap(this.contractFactory.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(address);
+    const underlying = multicall.wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];
   }
 
   async getLiquidity({ multicall, address, appToken }: GetDataPropsParams<AbracadabraErc20Vault>) {
-    const underlying = multicall.wrap(this.contractFactory.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(address);
+    const underlying = multicall.wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
     return liquidity;
   }
 
   async getReserves({ multicall, address, appToken }: GetDataPropsParams<AbracadabraErc20Vault>) {
-    const underlying = multicall.wrap(this.contractFactory.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(address);
+    const underlying = multicall.wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }

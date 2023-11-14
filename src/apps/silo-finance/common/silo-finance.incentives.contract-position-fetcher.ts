@@ -11,7 +11,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { SiloFinanceContractFactory, SiloIncentives } from '../contracts';
+import { SiloFinanceViemContractFactory } from '../contracts';
+import { SiloIncentives } from '../contracts/viem';
 
 export type SiloFinanceIncentivesContractPositionDefinition = {
   address: string;
@@ -31,7 +32,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SiloFinanceContractFactory) protected readonly contractFactory: SiloFinanceContractFactory,
+    @Inject(SiloFinanceViemContractFactory) protected readonly contractFactory: SiloFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -55,7 +56,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
   async getTokenDefinitions({ contract }) {
     return [
       {
-        address: await contract.REWARD_TOKEN(),
+        address: await contract.read.REWARD_TOKEN(),
         metaType: MetaType.CLAIMABLE,
         network: this.network,
       },
@@ -83,6 +84,6 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
   }: GetTokenBalancesParams<SiloIncentives, SiloFinanceIncentivesContractPositionDataProps>): Promise<BigNumberish[]> {
     const sTokenAddresses = contractPosition.dataProps.sTokenAddresses;
 
-    return [await contract.getRewardsBalance(sTokenAddresses, address)];
+    return [await contract.read.getRewardsBalance([sTokenAddresses, address])];
   }
 }

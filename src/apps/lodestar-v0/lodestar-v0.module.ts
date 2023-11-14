@@ -6,11 +6,11 @@ import { ArbitrumLodestarV0BorrowContractPositionFetcher } from './arbitrum/lode
 import { ArbitrumLodestarV0ClaimableContractPositionFetcher } from './arbitrum/lodestar-v0.claimable.contract-position-fetcher';
 import { ArbitrumLodestarV0PositionPresenter } from './arbitrum/lodestar-v0.position-presenter';
 import { ArbitrumLodestarV0SupplyTokenFetcher } from './arbitrum/lodestar-v0.supply.token-fetcher';
-import { LodestarV0ContractFactory } from './contracts';
+import { LodestarV0ViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    LodestarV0ContractFactory,
+    LodestarV0ViemContractFactory,
     // Arbitrum
     ArbitrumLodestarV0BorrowContractPositionFetcher,
     ArbitrumLodestarV0PositionPresenter,

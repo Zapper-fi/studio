@@ -10,8 +10,8 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
-import { IMulticallWrapper } from '~multicall';
+import { Erc20 } from '~contract/contracts/viem';
+import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -24,9 +24,10 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { CurveContractFactory } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type CurvePoolTokenDataProps = DefaultAppTokenDataProps & {
   swapAddress: string;
@@ -39,42 +40,42 @@ export type CurvePoolDefinition = {
   swapAddress: string;
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveSwapAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveSwapAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveCoinAddressesParams<T extends Contract> = {
-  contract: T;
+export type ResolveCoinAddressesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveReservesParams<T extends Contract> = {
-  contract: T;
+export type ResolveReservesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveFeesParams<T extends Contract> = {
-  contract: T;
+export type ResolveFeesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class CurvePoolDynamicTokenFetcher<T extends Abi> extends AppTokenTemplatePositionFetcher<
   Erc20,
   CurvePoolTokenDataProps,
   CurvePoolDefinition
@@ -86,7 +87,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
 
   skipVolume = false;
 
-  abstract resolveRegistry(address: string): T;
+  abstract resolveRegistry(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveSwapAddress(params: ResolveSwapAddressParams<T>): Promise<string>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
@@ -96,14 +97,14 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
     @Inject(CurveVolumeDataLoader) protected readonly curveVolumeDataLoader: CurveVolumeDataLoader,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {

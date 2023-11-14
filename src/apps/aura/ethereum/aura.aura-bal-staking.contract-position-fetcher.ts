@@ -3,7 +3,7 @@ import { GetDisplayPropsParams } from '~position/template/contract-position.temp
 import { SingleStakingFarmDataProps } from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { AuraFarmContractPositionFetcher } from '../common/aura.farm.contract-position-fetcher';
-import { AuraBaseRewardPool } from '../contracts';
+import { AuraBaseRewardPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAuraAuraBalStakingContractPositionFetcher extends AuraFarmContractPositionFetcher {

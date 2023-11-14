@@ -14,7 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AuraContractFactory, AuraLocker } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraLocker } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAuraLockerContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AuraLocker> {
@@ -22,12 +23,12 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AuraLocker {
+  getContract(address: string) {
     return this.contractFactory.auraLocker({ network: this.network, address });
   }
 
@@ -36,8 +37,8 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<AuraLocker>) {
-    const stakedTokenAddress = await contract.stakingToken();
-    const rewardTokenAddress = await contract.rewardTokens(0);
+    const stakedTokenAddress = await contract.read.stakingToken();
+    const rewardTokenAddress = await contract.read.rewardTokens([BigInt(0)]);
 
     return [
       {
@@ -63,8 +64,8 @@ export class EthereumAuraLockerContractPositionFetcher extends ContractPositionT
     contract,
   }: GetTokenBalancesParams<AuraLocker, DefaultDataProps>): Promise<BigNumberish[]> {
     return Promise.all([
-      contract.lockedBalances(address).then(v => v.total),
-      contract.claimableRewards(address).then(v => v[0].amount),
+      contract.read.lockedBalances([address]).then(v => v[0]),
+      contract.read.claimableRewards([address]).then(v => v[0].amount),
     ]);
   }
 }

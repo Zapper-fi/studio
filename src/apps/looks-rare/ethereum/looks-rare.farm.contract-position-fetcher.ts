@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LooksRareContractFactory, LooksRareFeeSharing } from '../contracts';
+import { LooksRareViemContractFactory } from '../contracts';
+import { LooksRareFeeSharing } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
@@ -20,12 +21,12 @@ export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LooksRareContractFactory) protected readonly contractFactory: LooksRareContractFactory,
+    @Inject(LooksRareViemContractFactory) protected readonly contractFactory: LooksRareViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LooksRareFeeSharing {
+  getContract(address: string) {
     return this.contractFactory.looksRareFeeSharing({ address, network: this.network });
   }
 
@@ -37,12 +38,12 @@ export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositi
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.looksRareToken(), // LOOKS
+        address: await contract.read.looksRareToken(), // LOOKS
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.rewardToken(), // WETH
+        address: await contract.read.rewardToken(), // WETH
         network: this.network,
       },
     ];
@@ -57,8 +58,8 @@ export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositi
     contract,
   }: GetTokenBalancesParams<LooksRareFeeSharing, DefaultDataProps>): Promise<BigNumberish[]> {
     const [suppliedBalance, claimableBalance] = await Promise.all([
-      contract.calculateSharesValueInLOOKS(address),
-      contract.calculatePendingRewards(address),
+      contract.read.calculateSharesValueInLOOKS([address]),
+      contract.read.calculatePendingRewards([address]),
     ]);
 
     return [suppliedBalance, claimableBalance];

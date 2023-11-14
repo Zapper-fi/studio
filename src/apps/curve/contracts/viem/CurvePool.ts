@@ -303,7 +303,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '5227',
   },
   {
     name: 'get_virtual_price',
@@ -316,7 +315,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1133537',
   },
   {
     name: 'calc_token_amount',
@@ -338,7 +336,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '4508776',
   },
   {
     name: 'add_liquidity',
@@ -355,7 +352,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '6954858',
   },
   {
     name: 'get_dy',
@@ -381,7 +377,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2673791',
   },
   {
     name: 'get_dy_underlying',
@@ -407,7 +402,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2673474',
   },
   {
     name: 'exchange',
@@ -432,7 +426,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '2818066',
   },
   {
     name: 'remove_liquidity',
@@ -449,7 +442,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '192846',
   },
   {
     name: 'remove_liquidity_imbalance',
@@ -466,7 +458,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '6951851',
   },
   {
     name: 'calc_withdraw_one_coin',
@@ -488,7 +479,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1102',
   },
   {
     name: 'remove_liquidity_one_coin',
@@ -509,7 +499,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '4025523',
   },
   {
     name: 'ramp_A',
@@ -526,7 +515,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '151919',
   },
   {
     name: 'stop_ramp_A',
@@ -534,7 +522,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '148637',
   },
   {
     name: 'commit_new_fee',
@@ -551,7 +538,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '110461',
   },
   {
     name: 'apply_new_fee',
@@ -559,7 +545,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '97242',
   },
   {
     name: 'revert_new_parameters',
@@ -567,7 +552,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21895',
   },
   {
     name: 'commit_transfer_ownership',
@@ -580,7 +564,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '74572',
   },
   {
     name: 'apply_transfer_ownership',
@@ -588,7 +571,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '60710',
   },
   {
     name: 'revert_transfer_ownership',
@@ -596,7 +578,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21985',
   },
   {
     name: 'admin_balances',
@@ -614,7 +595,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '3481',
   },
   {
     name: 'withdraw_admin_fees',
@@ -622,7 +602,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21502',
   },
   {
     name: 'donate_admin_fees',
@@ -630,7 +609,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '111389',
   },
   {
     name: 'kill_me',
@@ -638,7 +616,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37998',
   },
   {
     name: 'unkill_me',
@@ -646,7 +623,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '22135',
   },
   {
     name: 'coins',
@@ -664,7 +640,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2220',
   },
   {
     name: 'balances',
@@ -682,7 +657,6 @@ export const curvePoolAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2250',
   },
   {
     name: 'fee',
@@ -695,7 +669,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2171',
   },
   {
     name: 'admin_fee',
@@ -708,7 +681,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2201',
   },
   {
     name: 'owner',
@@ -721,7 +693,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2231',
   },
   {
     name: 'initial_A',
@@ -734,7 +705,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2261',
   },
   {
     name: 'future_A',
@@ -747,7 +717,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2291',
   },
   {
     name: 'initial_A_time',
@@ -760,7 +729,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2321',
   },
   {
     name: 'future_A_time',
@@ -773,7 +741,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2351',
   },
   {
     name: 'admin_actions_deadline',
@@ -786,7 +753,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2381',
   },
   {
     name: 'transfer_ownership_deadline',
@@ -799,7 +765,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2411',
   },
   {
     name: 'future_fee',
@@ -812,7 +777,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2441',
   },
   {
     name: 'future_admin_fee',
@@ -825,7 +789,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2471',
   },
   {
     name: 'future_owner',
@@ -838,7 +801,6 @@ export const curvePoolAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2501',
   },
 ] as const;
 

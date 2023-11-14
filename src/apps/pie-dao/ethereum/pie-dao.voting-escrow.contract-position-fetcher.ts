@@ -1,11 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { PieDaoContractFactory, PieDaoVoteLockedDough } from '../contracts';
+import { PieDaoViemContractFactory } from '../contracts';
+import { PieDaoVoteLockedDough } from '../contracts/viem';
+import { PieDaoVoteLockedDoughContract } from '../contracts/viem/PieDaoVoteLockedDough';
 
 @PositionTemplate()
 export class EthereumPieDaoVotingEscrowContractPositionFether extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -18,34 +20,34 @@ export class EthereumPieDaoVotingEscrowContractPositionFether extends VotingEscr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PieDaoContractFactory) protected readonly contractFactory: PieDaoContractFactory,
+    @Inject(PieDaoViemContractFactory) protected readonly contractFactory: PieDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): PieDaoVoteLockedDough {
+  getEscrowContract(address: string): PieDaoVoteLockedDoughContract {
     return this.contractFactory.pieDaoVoteLockedDough({ address, network: this.network });
   }
 
-  getRewardContract(address: string): PieDaoVoteLockedDough {
+  getRewardContract(address: string): PieDaoVoteLockedDoughContract {
     return this.contractFactory.pieDaoVoteLockedDough({ address, network: this.network });
   }
 
-  async getEscrowedTokenAddress(contract: PieDaoVoteLockedDough) {
-    return contract.depositToken();
+  async getEscrowedTokenAddress(contract: PieDaoVoteLockedDoughContract) {
+    return contract.read.depositToken();
   }
 
-  async getRewardTokenAddress(contract: PieDaoVoteLockedDough) {
-    return contract.depositToken();
+  async getRewardTokenAddress(contract: PieDaoVoteLockedDoughContract) {
+    return contract.read.depositToken();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: PieDaoVoteLockedDough) {
-    const userData = await contract.getStakingData(address);
+  async getEscrowedTokenBalance(address: string, contract: PieDaoVoteLockedDoughContract) {
+    const userData = await contract.read.getStakingData([address]);
     return userData.accountVeTokenBalance;
   }
 
-  async getRewardTokenBalance(address: string, contract: PieDaoVoteLockedDough): Promise<BigNumberish> {
-    const userData = await contract.getStakingData(address);
-    return userData.accountWithdrawableRewards.sub(userData.accountWithdrawnRewards);
+  async getRewardTokenBalance(address: string, contract: PieDaoVoteLockedDoughContract): Promise<BigNumberish> {
+    const userData = await contract.read.getStakingData([address]);
+    return BigNumber.from(userData.accountWithdrawableRewards).sub(userData.accountWithdrawnRewards);
   }
 }

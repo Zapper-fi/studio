@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PodsYieldContractFactory, PodsYieldVault } from '../contracts';
+import { PodsYieldViemContractFactory } from '../contracts';
+import { PodsYieldVault } from '../contracts/viem';
 
 import { strategyAddresses, strategyDetails } from './config';
 
@@ -19,7 +20,7 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PodsYieldContractFactory) protected readonly contractFactory: PodsYieldContractFactory,
+    @Inject(PodsYieldViemContractFactory) protected readonly contractFactory: PodsYieldViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -33,11 +34,11 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PodsYieldVault>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PodsYieldVault>) {
-    const [assetsRaw, supplyRaw] = await Promise.all([contract.totalAssets(), contract.totalSupply()]);
+    const [assetsRaw, supplyRaw] = await Promise.all([contract.read.totalAssets(), contract.read.totalSupply()]);
     const supply = Number(supplyRaw) / 10 ** appToken.decimals;
     const assets = Number(assetsRaw) / 10 ** appToken.tokens[0].decimals;
 

@@ -9,7 +9,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { StakefishFeePool, StakefishContractFactory } from '../contracts';
+import { StakefishViemContractFactory } from '../contracts';
+import { StakefishFeePool } from '../contracts/viem';
 
 type StakeFishApiResponse = {
   effective_balance: string;
@@ -26,12 +27,12 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakefishContractFactory) protected readonly contractFactory: StakefishContractFactory,
+    @Inject(StakefishViemContractFactory) protected readonly contractFactory: StakefishViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakefishFeePool {
+  getContract(address: string) {
     return this.contractFactory.stakefishFeePool({ address, network: this.network });
   }
 
@@ -73,7 +74,7 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakefishFeePool>) {
-    const [pending, claimed] = await contract.pendingReward(address);
+    const [pending, claimed] = await contract.read.pendingReward([address]);
     const [staked, total] = await this.getStakedBalances(address, Number(pending) + Number(claimed));
     return [staked, total - staked, pending];
   }

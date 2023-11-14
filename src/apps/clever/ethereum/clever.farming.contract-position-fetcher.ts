@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverGauge } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverGauge } from '../contracts/viem';
 
 import { CLEV } from './addresses';
 
@@ -31,17 +32,17 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CleverGauge {
+  getContract(address: string) {
     return this.contractFactory.cleverGauge({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<CleverFarmingContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const gaugeAddresses = [
       '0xc5022291ca8281745d173bb855dcd34dda67f2f0', // abcCVX
       '0x86e917ad6cb44f9e6c8d9fa012acf0d0cfcf114f', // CLEV/ETH
@@ -50,7 +51,7 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
     const definitions = await Promise.all(
       gaugeAddresses.map(async address => {
         const cleverGaugeContract = this.contractFactory.cleverGauge({ address, network: this.network });
-        const lpTokenAddress = await multicall.wrap(cleverGaugeContract).lp_token();
+        const lpTokenAddress = await multicall.wrap(cleverGaugeContract).read.lp_token();
         return {
           address,
           underlyingTokenAddress: lpTokenAddress.toLowerCase(),
@@ -83,7 +84,10 @@ export class EthereumCleverFarmingContractPositionFetcher extends ContractPositi
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverGauge>) {
-    const [supplied, claimable] = await Promise.all([contract.balanceOf(address), contract.claimable_tokens(address)]);
+    const [supplied, claimable] = await Promise.all([
+      contract.read.balanceOf([address]),
+      contract.read.claimable_tokens([address]),
+    ]);
 
     return [supplied, claimable];
   }

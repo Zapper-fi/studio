@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BarnbridgeSmartAlphaContractFactory, BarnbridgeSmartAlphaToken } from '../contracts';
+import { BarnbridgeSmartAlphaViemContractFactory } from '../contracts';
+import { BarnbridgeSmartAlphaToken } from '../contracts/viem';
 
 export type BarnbridgeSmartAlphaJuniorPoolTokenDefinition = {
   address: string;
@@ -30,8 +31,8 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BarnbridgeSmartAlphaContractFactory)
-    protected readonly contractFactory: BarnbridgeSmartAlphaContractFactory,
+    @Inject(BarnbridgeSmartAlphaViemContractFactory)
+    protected readonly contractFactory: BarnbridgeSmartAlphaViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -44,8 +45,8 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
           network: this.network,
         });
         const [juniorAddressRaw, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(poolContract).juniorToken(),
-          multicall.wrap(poolContract).poolToken(),
+          multicall.wrap(poolContract).read.juniorToken(),
+          multicall.wrap(poolContract).read.poolToken(),
         ]);
 
         return {
@@ -59,7 +60,7 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     return poolAlphaPositions;
   }
 
-  getContract(address: string): BarnbridgeSmartAlphaToken {
+  getContract(address: string) {
     return this.contractFactory.barnbridgeSmartAlphaToken({ network: this.network, address });
   }
 
@@ -88,7 +89,7 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
       network: this.network,
     });
 
-    const pricePerShareRaw = await multicall.wrap(alphaPoolContract).estimateCurrentJuniorTokenPrice();
+    const pricePerShareRaw = await multicall.wrap(alphaPoolContract).read.estimateCurrentJuniorTokenPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return [pricePerShare];
   }
@@ -106,7 +107,7 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
       address: definition.smartPoolAddress,
       network: this.network,
     });
-    const durationRaw = await multicall.wrap(alphaPoolContract).epochDuration();
+    const durationRaw = await multicall.wrap(alphaPoolContract).read.epochDuration();
     const duration = moment.duration(Number(durationRaw), 'seconds').format('w [weeks]');
 
     return [appToken.tokens[0].symbol, 'Junior Pool', '-', duration].join(' ');

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { SynthetixContractFactory, SynthetixRewards } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixRewards } from '../contracts/viem';
 
 const FARMS = [
   // iBTC
@@ -100,12 +101,12 @@ export class EthereumSynthetixFarmContractPositionFetcher extends SingleStakingF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixRewards {
+  getContract(address: string) {
     return this.contractFactory.synthetixRewards({ address, network: this.network });
   }
 
@@ -114,18 +115,18 @@ export class EthereumSynthetixFarmContractPositionFetcher extends SingleStakingF
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<SynthetixRewards>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<SynthetixRewards>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

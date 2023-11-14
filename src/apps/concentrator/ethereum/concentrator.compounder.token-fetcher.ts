@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { AladdinConcentratorCompounder, ConcentratorContractFactory } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AladdinConcentratorCompounder } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConcentratorCompounderTokenFetcher extends AppTokenTemplatePositionFetcher<AladdinConcentratorCompounder> {
@@ -13,12 +14,12 @@ export class EthereumConcentratorCompounderTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) protected readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) protected readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConcentratorCompounder {
+  getContract(address: string) {
     return this.contractFactory.aladdinConcentratorCompounder({ address, network: this.network });
   }
 
@@ -32,11 +33,11 @@ export class EthereumConcentratorCompounderTokenFetcher extends AppTokenTemplate
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AladdinConcentratorCompounder>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AladdinConcentratorCompounder>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = appToken.supply > 0 ? reserve / appToken.supply : 0;
     return [pricePerShare];

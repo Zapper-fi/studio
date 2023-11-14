@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { AbcCvx, ConcentratorContractFactory } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AbcCvx } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePositionFetcher<AbcCvx> {
@@ -13,12 +14,12 @@ export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) protected readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) protected readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AbcCvx {
+  getContract(address: string) {
     return this.contractFactory.abcCvx({ address, network: this.network });
   }
 
@@ -28,14 +29,14 @@ export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePosi
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AbcCvx>) {
     return [
-      { address: await contract.curveLpToken(), network: this.network },
-      { address: await contract.debtToken(), network: this.network },
+      { address: await contract.read.curveLpToken(), network: this.network },
+      { address: await contract.read.debtToken(), network: this.network },
     ];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AbcCvx>) {
-    const supply = await contract.totalSupply();
-    const reserves = await Promise.all([contract.totalCurveLpToken(), contract.totalDebtToken()]);
+    const supply = await contract.read.totalSupply();
+    const reserves = await Promise.all([contract.read.totalCurveLpToken(), contract.read.totalDebtToken()]);
     return reserves.map(r => Number(r) / Number(supply));
   }
 }

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import moment from 'moment';
 import 'moment-duration-format';
 
@@ -15,7 +15,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { OriginDollarGovernanceContractFactory, Veogv } from '../contracts';
+import { OriginDollarGovernanceViemContractFactory } from '../contracts';
+import { Veogv } from '../contracts/viem';
 
 const oneEther = ethers.constants.WeiPerEther;
 // Daily emissions in format: start_timestamp, end_timestamp, daily emissions
@@ -40,13 +41,13 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarGovernanceContractFactory)
-    private readonly contractFactory: OriginDollarGovernanceContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Veogv {
+  getContract(address: string) {
     return this.contractFactory.veogv({ network: this.network, address });
   }
 
@@ -55,16 +56,16 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Veogv>) {
-    return [{ address: await contract.ogv(), network: this.network }];
+    return [{ address: await contract.read.ogv(), network: this.network }];
   }
 
   async getPrice({ appToken, contract, multicall }: GetPriceParams<Veogv>): Promise<number> {
-    const supplyRaw = await contract.totalSupply();
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const supplyRaw = await contract.read.totalSupply();
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       network: this.network,
       address: appToken.tokens[0].address,
     });
-    const underlyingBalance = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);
+    const underlyingBalance = await multicall.wrap(underlyingTokenContract).read.balanceOf([appToken.address]);
     const ratio = Number(supplyRaw) / Number(underlyingBalance);
     const price = appToken.tokens[0].price / ratio;
 
@@ -72,12 +73,12 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<Veogv>) {
-    const supplyRaw = await contract.totalSupply();
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const supplyRaw = await contract.read.totalSupply();
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       network: this.network,
       address: appToken.tokens[0].address,
     });
-    const underlyingBalance = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);
+    const underlyingBalance = await multicall.wrap(underlyingTokenContract).read.balanceOf([appToken.address]);
     const ratio = Number(supplyRaw) / Number(underlyingBalance);
 
     return [1 / ratio];
@@ -86,16 +87,22 @@ export class EthereumOriginDollarGovernanceVoteEscrowedTokenFetcher extends AppT
   async getApy({ contract }: GetDataPropsParams<Veogv>) {
     const stakeAmount = ethers.BigNumber.from('1000000000000000000000');
     const fourYears = ethers.BigNumber.from(moment.duration(4, 'years').asSeconds());
-    const [expectedVeOGV] = await contract.previewPoints(stakeAmount, fourYears);
-    const supplyRaw = await contract.totalSupply();
 
-    const pctShare = expectedVeOGV.mul(oneEther).div(supplyRaw.add(expectedVeOGV));
+    const [expectedVeOGV] = await contract.read.previewPoints([
+      BigInt(stakeAmount.toString()),
+      BigInt(fourYears.toString()),
+    ]);
+
+    const supplyRaw = await contract.read.totalSupply();
+    const pctShare = BigNumber.from(expectedVeOGV).mul(oneEther).div(BigNumber.from(supplyRaw).add(expectedVeOGV));
+
     const now = stamp();
     const dailyEmissionsRow = dailyEmissionsTable.find(([startTime, endTime]) => now > startTime && now < endTime);
     const dailyEmissions = dailyEmissionsRow ? dailyEmissionsRow[2] : 0;
     const dailyRewards = toBN(dailyEmissions).mul(pctShare);
     const yearlyRewards = dailyRewards.mul(floatToBN(365.25)).div(oneEther);
     const apr = yearlyRewards.mul(oneEther).div(stakeAmount);
+
     return parseFloat(format(apr));
   }
 

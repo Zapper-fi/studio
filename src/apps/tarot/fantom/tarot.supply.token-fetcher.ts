@@ -17,7 +17,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { TarotBorrowable, TarotContractFactory } from '../contracts';
+import { TarotViemContractFactory } from '../contracts';
+import { TarotBorrowable } from '../contracts/viem';
 
 type TarotSupplyDataProps = DefaultAppTokenDataProps & {
   poolTokenLabel: string;
@@ -45,12 +46,12 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(TarotContractFactory) private readonly contractFactory: TarotContractFactory,
+    @Inject(TarotViemContractFactory) private readonly contractFactory: TarotViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TarotBorrowable {
+  getContract(address: string) {
     return this.contractFactory.tarotBorrowable({ address, network: this.network });
   }
 
@@ -65,12 +66,12 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
       }),
     );
 
-    const vaultTokenAddress = await collateralTokenContract.underlying();
+    const vaultTokenAddress = await collateralTokenContract.read.underlying();
     const vaultTokenContract = multicall.wrap(
       this.contractFactory.tarotBorrowable({ network: this.network, address: vaultTokenAddress }),
     );
 
-    return await multicall.wrap(vaultTokenContract).underlying();
+    return await multicall.wrap(vaultTokenContract).read.underlying();
   }
 
   async getDefinitions({ multicall, tokenLoader }: GetDefinitionsParams): Promise<Definition[]> {
@@ -80,28 +81,29 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
           this.contractFactory.tarotFactory({ address: tarotFactoryAddress, network: this.network }),
         );
 
-        const numPoolsRaw = await tarotFactory.allLendingPoolsLength();
+        const numPoolsRaw = await tarotFactory.read.allLendingPoolsLength();
 
         return Promise.all(
           _.range(0, Number(numPoolsRaw)).map(async index => {
-            const tarotVaultAddressRaw = await tarotFactory.allLendingPools(index);
+            const tarotVaultAddressRaw = await tarotFactory.read.allLendingPools([BigInt(index)]);
             const tarotVaultAddress = tarotVaultAddressRaw.toLowerCase();
 
             const tarotVault = this.contractFactory.tarotVault({ network: this.network, address: tarotVaultAddress });
             const isVault = await multicall
               .wrap(tarotVault)
-              .isVaultToken()
+              .read.isVaultToken()
               .catch(() => false);
             if (!isVault) return null;
 
-            const { borrowable0, borrowable1, collateral } = await tarotFactory.getLendingPool(tarotVaultAddress);
+            const lendingPool = await tarotFactory.read.getLendingPool([tarotVaultAddress]);
+
             const poolTokenAddress = await this.getPoolTokenAddress({
               multicall,
               tokenLoader,
-              collateralAddress: collateral,
+              collateralAddress: lendingPool[2],
             });
 
-            return [borrowable0, borrowable1].map(address => ({
+            return [lendingPool[3], lendingPool[4]].map(address => ({
               address: address.toLowerCase(),
               poolTokenAddress: poolTokenAddress.toLowerCase(),
             }));
@@ -128,11 +130,11 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TarotBorrowable, Definition>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TarotBorrowable>) {
-    const exchangeRateRaw = await contract.callStatic.exchangeRate();
+    const exchangeRateRaw = await contract.simulate.exchangeRate().then(v => v.result);
     const exchangeRate = Number(exchangeRateRaw) / 10 ** appToken.decimals;
     return [exchangeRate];
   }

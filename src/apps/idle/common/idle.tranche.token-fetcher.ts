@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -10,7 +10,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { IdleContractFactory } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
 
 import { IdleTranchesDefinitionsResolver } from './idle.tranche.token-definitions-resolver';
 
@@ -27,15 +27,15 @@ export abstract class EthereumIdleTranchesPoolTokenFetcher extends AppTokenTempl
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
     @Inject(IdleTranchesDefinitionsResolver)
     protected readonly trancheDefinitionResolver: IdleTranchesDefinitionsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ network: this.network, address });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ network: this.network, address });
   }
 
   async getAddresses({ definitions }: GetAddressesParams<IdleAppTokenDefinition>): Promise<string[]> {
@@ -55,7 +55,7 @@ export abstract class EthereumIdleTranchesPoolTokenFetcher extends AppTokenTempl
       address: definition.cdoAddress,
       network: this.network,
     });
-    const pricePerShareRaw = await multicall.wrap(perpYieldTrancheContract).tranchePrice(appToken.address);
+    const pricePerShareRaw = await multicall.wrap(perpYieldTrancheContract).read.tranchePrice([appToken.address]);
     const decimals = appToken.tokens[0].decimals;
 
     return [Number(pricePerShareRaw) / 10 ** decimals];

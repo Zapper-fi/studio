@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { SentimentAccountsResolver } from '../common/sentiment.accounts-resolver';
-import { SentimentContractFactory, SentimentLToken } from '../contracts';
+import { SentimentViemContractFactory } from '../contracts';
+import { SentimentLToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumSentimentSupplyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SentimentLToken> {
@@ -21,14 +22,14 @@ export class ArbitrumSentimentSupplyContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SentimentContractFactory) private readonly contractFactory: SentimentContractFactory,
+    @Inject(SentimentViemContractFactory) private readonly contractFactory: SentimentViemContractFactory,
     @Inject(SentimentAccountsResolver) private readonly accountResolver: SentimentAccountsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SentimentLToken {
-    return this.contractFactory.sentimentLToken({ address, network: this.network });
+  getContract(address: string) {
+    return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
   async getDefinitions() {
@@ -45,7 +46,7 @@ export class ArbitrumSentimentSupplyContractPositionFetcher extends ContractPosi
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.asset(),
+        address: await contract.read.asset(),
         network: this.network,
       },
     ];
@@ -61,8 +62,13 @@ export class ArbitrumSentimentSupplyContractPositionFetcher extends ContractPosi
     const supplyRaw = await Promise.all(
       accountAddresses.map(async address => {
         const supplyRaw = await multicall
-          .wrap(this.contractFactory.erc20({ address: contractPosition.tokens[0].address, network: this.network }))
-          .balanceOf(address);
+          .wrap(
+            this.appToolkit.globalViemContracts.erc20({
+              address: contractPosition.tokens[0].address,
+              network: this.network,
+            }),
+          )
+          .read.balanceOf([address]);
         return Number(supplyRaw);
       }),
     );

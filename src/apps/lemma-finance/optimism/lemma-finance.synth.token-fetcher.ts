@@ -10,7 +10,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory, LemmaSynth } from '../contracts';
+import { LemmaFinanceViemContractFactory } from '../contracts';
+import { LemmaSynth } from '../contracts/viem';
 
 export type LemmaFinanceSynthDefinition = {
   address: string;
@@ -54,12 +55,12 @@ export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LemmaFinanceContractFactory) protected readonly contractFactory: LemmaFinanceContractFactory,
+    @Inject(LemmaFinanceViemContractFactory) protected readonly contractFactory: LemmaFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LemmaSynth {
+  getContract(address: string) {
     return this.contractFactory.lemmaSynth({ address, network: this.network });
   }
 
@@ -79,8 +80,8 @@ export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePosit
     const perpContract = this.contractFactory.lemmaPerp({ address: definition.perpAddress, network: this.network });
 
     const [collateralTokenAddress, usdcAddress] = await Promise.all([
-      multicall.wrap(synthContract).tailCollateral(),
-      multicall.wrap(perpContract).usdc(),
+      multicall.wrap(synthContract).read.tailCollateral(),
+      multicall.wrap(perpContract).read.usdc(),
     ]);
 
     return [
@@ -95,7 +96,7 @@ export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePosit
     appToken,
   }: GetPricePerShareParams<LemmaSynth, DefaultAppTokenDataProps, LemmaFinanceSynthDefinition>) {
     const perpContract = this.contractFactory.lemmaPerp({ address: definition.perpAddress, network: this.network });
-    const indexPriceRaw = await multicall.wrap(perpContract).getIndexPrice();
+    const indexPriceRaw = await multicall.wrap(perpContract).read.getIndexPrice();
     const indexPrice = Number(indexPriceRaw) / 10 ** appToken.decimals;
     return [indexPrice, 0];
   }

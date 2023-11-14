@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleSanToken } from '../contracts';
+import { AngleViemContractFactory } from '../contracts';
+import { AngleSanToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionFetcher<AngleSanToken> {
@@ -21,13 +22,13 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AngleContractFactory) protected readonly contractFactory: AngleContractFactory,
+    @Inject(AngleViemContractFactory) protected readonly contractFactory: AngleViemContractFactory,
     @Inject(AngleApiHelper) protected readonly angleApiHelper: AngleApiHelper,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AngleSanToken {
+  getContract(address: string) {
     return this.contractFactory.angleSanToken({ address, network: this.network });
   }
 
@@ -44,8 +45,8 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
 
   async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<AngleSanToken>) {
     const [stableMasterAddress, poolManagerAddress] = await Promise.all([
-      contract.stableMaster(),
-      contract.poolManager(),
+      contract.read.stableMaster(),
+      contract.read.poolManager(),
     ]);
 
     const stableMaster = this.contractFactory.angleStablemaster({
@@ -53,14 +54,14 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
       network: this.network,
     });
 
-    const collateralMap = await multicall.wrap(stableMaster).collateralMap(poolManagerAddress);
-    return [{ address: collateralMap.token, network: this.network }];
+    const collateralMap = await multicall.wrap(stableMaster).read.collateralMap([poolManagerAddress]);
+    return [{ address: collateralMap[0], network: this.network }];
   }
 
   async getPricePerShare({ contract, multicall }: GetPricePerShareParams<AngleSanToken>) {
     const [stableMasterAddress, poolManagerAddress] = await Promise.all([
-      contract.stableMaster(),
-      contract.poolManager(),
+      contract.read.stableMaster(),
+      contract.read.poolManager(),
     ]);
 
     const stableMaster = this.contractFactory.angleStablemaster({
@@ -68,8 +69,8 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
       network: this.network,
     });
 
-    const collateralMap = await multicall.wrap(stableMaster).collateralMap(poolManagerAddress);
-    const pricePerShare = Number(collateralMap.sanRate) / 10 ** 18;
+    const collateralMap = await multicall.wrap(stableMaster).read.collateralMap([poolManagerAddress]);
+    const pricePerShare = Number(collateralMap[5]) / 10 ** 18;
 
     return [pricePerShare];
   }

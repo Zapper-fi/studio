@@ -10,7 +10,9 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PickleContractFactory, PickleJarMasterchef } from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
+import { PickleJarMasterchef } from '../contracts/viem';
+import { PickleJarMasterchefContract } from '../contracts/viem/PickleJarMasterchef';
 
 @PositionTemplate()
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
@@ -20,40 +22,40 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PickleJarMasterchef {
+  getContract(address: string) {
     return this.contractFactory.pickleJarMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PickleJarMasterchef) {
-    return contract.poolLength();
+  async getPoolLength(contract: PickleJarMasterchefContract) {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PickleJarMasterchef, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: PickleJarMasterchefContract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: PickleJarMasterchef) {
-    return contract.pickle();
+  async getRewardTokenAddress(contract: PickleJarMasterchefContract) {
+    return contract.read.pickle();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.picklePerBlock();
+    return contract.read.picklePerBlock();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -61,7 +63,7 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -69,6 +71,6 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PickleJarMasterchef>): Promise<BigNumberish> {
-    return contract.pendingPickle(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingPickle([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

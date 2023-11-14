@@ -5,7 +5,8 @@ import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { GmxContractFactory, GmxRewardTracker } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
+import { GmxRewardTracker } from '../contracts/viem';
 
 type GmxFarmType = {
   address: string;
@@ -20,12 +21,12 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GmxRewardTracker {
+  getContract(address: string) {
     return this.contractFactory.gmxRewardTracker({ address, network: this.network });
   }
 
@@ -47,7 +48,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
 
     const depositBalances = await multicall
       .wrap(readerContract)
-      .getDepositBalances(address, [stakedToken.address], [contractPosition.address]);
+      .read.getDepositBalances([address, [stakedToken.address], [contractPosition.address]]);
 
     return depositBalances[0];
   }
@@ -60,7 +61,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
     if (!rewardTrackers.length) return [];
 
     const readerContract = this.contractFactory.gmxRewardReader({ address: this.readerAddress, network: this.network });
-    const stakingInfo = await multicall.wrap(readerContract).getStakingInfo(address, rewardTrackers);
+    const stakingInfo = await multicall.wrap(readerContract).read.getStakingInfo([address, rewardTrackers]);
     return [stakingInfo[0].toString(), stakingInfo[5].toString()];
   }
 }

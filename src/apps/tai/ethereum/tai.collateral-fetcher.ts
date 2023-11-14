@@ -5,11 +5,11 @@ import { mapKeys, map, pickBy, toPairs } from 'lodash';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { TaiContractFactory } from '../contracts';
+import { TaiViemContractFactory } from '../contracts';
 
 @Injectable()
 export class TaiCollateralResolver {
-  constructor(@Inject(TaiContractFactory) protected readonly contractFactory: TaiContractFactory) {}
+  constructor(@Inject(TaiViemContractFactory) protected readonly contractFactory: TaiViemContractFactory) {}
 
   @Cache({
     key: `studio:tai:collateral`,
@@ -29,7 +29,7 @@ export class TaiCollateralResolver {
     const collaterals = await Promise.all(
       map(results, async ([name, address]) => {
         const contract = this.contractFactory.taiCollateralJoin({ address, network });
-        const collateral = await contract.collateral();
+        const collateral = await contract.read.collateral();
         return [name, collateral];
       }),
     );

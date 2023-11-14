@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { TokemakContractFactory, TokemakTokeStaking } from '../contracts';
+import { TokemakViemContractFactory } from '../contracts';
+import { TokemakTokeStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -25,12 +26,12 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
+    @Inject(TokemakViemContractFactory) private readonly contractFactory: TokemakViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TokemakTokeStaking {
+  getContract(address: string) {
     return this.contractFactory.tokemakTokeStaking({ address, network: this.network });
   }
 
@@ -47,7 +48,7 @@ export class EthereumTokemakFarmContractPositionFetcher extends SingleStakingFar
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<TokemakTokeStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances() {

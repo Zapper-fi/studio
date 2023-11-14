@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
+import { Erc20, Erc4626 } from '~contract/contracts/viem';
 import { isAppToken } from '~position/position.interface';
 import {
   DefaultAppTokenDataProps,
@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
 
-import { AbracadabraContractFactory } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { BigNumber } from 'ethers';
 
 const SECONDS_PER_YEAR = 31536000;
 const BASIS_POINTS_DIVISOR = 10000;
@@ -26,7 +27,7 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -44,13 +45,13 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
     return [{ address: glpUnderlying.address, network: this.network }];
   }
 
-  async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
-    return contract.name();
+  async getLabel({ contract }: GetDisplayPropsParams<Erc4626>): Promise<string> {
+    return contract.read.name();
   }
 
   async getImages({
     appToken,
-  }: GetDisplayPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
+  }: GetDisplayPropsParams<Erc4626, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
   }
 
@@ -58,7 +59,7 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
     multicall,
     appToken,
     tokenLoader,
-  }: GetDataPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
+  }: GetDataPropsParams<Erc4626, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
     const [magicGlpHarvestorAddress, magicGlpAnnualHarvests, rewardTrackerAddresses] = await Promise.all([
       this.magicGlpHarvestorAddress,
       this.magicGlpAnnualHarvests,
@@ -80,12 +81,12 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
     );
 
     const [magicGlpFeeProcent, annualUsdRewards] = await Promise.all([
-      magicGlpHarvestor.feePercentBips().then(magicGlpFeeProcent => magicGlpFeeProcent / BASIS_POINTS_DIVISOR),
+      magicGlpHarvestor.read.feePercentBips().then(magicGlpFeeProcent => magicGlpFeeProcent / BASIS_POINTS_DIVISOR),
       Promise.all(
         rewardTrackers.map(async tracker => {
           const [tokensPerInterval, rewardToken] = await Promise.all([
-            tracker.tokensPerInterval(),
-            tracker.rewardToken().then(rewardTokenAddress =>
+            tracker.read.tokensPerInterval(),
+            tracker.read.rewardToken().then(rewardTokenAddress =>
               tokenLoader.getOne({
                 network: this.network,
                 address: rewardTokenAddress,
@@ -96,7 +97,7 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
           if (rewardToken == null) {
             return 0;
           } else {
-            const tokensPerYearRaw = tokensPerInterval.mul(SECONDS_PER_YEAR);
+            const tokensPerYearRaw = BigNumber.from(tokensPerInterval).mul(SECONDS_PER_YEAR);
             const tokensPerYear = Number(tokensPerYearRaw) / 10 ** rewardToken.decimals;
             return tokensPerYear * rewardToken.price;
           }

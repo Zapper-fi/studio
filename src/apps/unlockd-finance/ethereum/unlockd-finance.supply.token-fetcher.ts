@@ -12,7 +12,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { UnlockdFinanceContractFactory, UnlockdFinanceUToken } from '../contracts';
+import { UnlockdFinanceViemContractFactory } from '../contracts';
+import { UnlockdFinanceUToken } from '../contracts/viem';
 
 const SECONDS_PER_YEAR = 31536000;
 
@@ -25,14 +26,13 @@ export class EthereumUnlockdFinanceSupplyTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UnlockdFinanceContractFactory)
-    private readonly unlockdFinanceContractFactory: UnlockdFinanceContractFactory,
+    @Inject(UnlockdFinanceViemContractFactory) private readonly contractFactory: UnlockdFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): UnlockdFinanceUToken {
-    return this.unlockdFinanceContractFactory.unlockdFinanceUToken({ network: this.network, address });
+  getContract(address: string) {
+    return this.contractFactory.unlockdFinanceUToken({ network: this.network, address });
   }
 
   async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
@@ -40,7 +40,7 @@ export class EthereumUnlockdFinanceSupplyTokenFetcher extends AppTokenTemplatePo
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<UnlockdFinanceUToken>) {
-    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
+    return [{ address: await contract.read.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getPricePerShare() {
@@ -49,15 +49,15 @@ export class EthereumUnlockdFinanceSupplyTokenFetcher extends AppTokenTemplatePo
 
   async getApy({ multicall }: GetDataPropsParams<UnlockdFinanceUToken>): Promise<number> {
     const pool = multicall.wrap(
-      this.unlockdFinanceContractFactory.unlockdFinanceProtocolDataProvider({
+      this.contractFactory.unlockdFinanceProtocolDataProvider({
         network: this.network,
         address: this.dataProviderAddress,
       }),
     );
 
-    const reservesData = await pool.getReserveData(this.wethAddress);
+    const reservesData = await pool.read.getReserveData([this.wethAddress]);
 
-    const aprNumber = Number(reservesData.liquidityRate) / 10 ** 27;
+    const aprNumber = Number(reservesData[2]) / 10 ** 27;
 
     const apyNumber = (aprNumber / SECONDS_PER_YEAR + 1) ** SECONDS_PER_YEAR - 1;
 

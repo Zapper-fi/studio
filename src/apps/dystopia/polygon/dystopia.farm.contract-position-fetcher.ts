@@ -15,7 +15,8 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { DystopiaContractFactory, DystopiaGauge } from '../contracts';
+import { DystopiaViemContractFactory } from '../contracts';
+import { DystopiaGauge } from '../contracts/viem';
 
 import { DYSTOPIA_QUERY, DystopiaQueryResponse } from './dystopia.pool.token-fetcher';
 
@@ -25,12 +26,12 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DystopiaContractFactory) protected readonly contractFactory: DystopiaContractFactory,
+    @Inject(DystopiaViemContractFactory) protected readonly contractFactory: DystopiaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DystopiaGauge {
+  getContract(address: string) {
     return this.contractFactory.dystopiaGauge({ address, network: this.network });
   }
 
@@ -43,24 +44,24 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<DystopiaGauge>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<DystopiaGauge>) {
-    const numRewards = Number(await contract.rewardTokensLength());
-    return Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
+    const numRewards = Number(await contract.read.rewardTokensLength());
+    return Promise.all(range(numRewards).map(async n => await contract.read.rewardTokens([BigInt(n)])));
   }
 
   getRewardRates({ contract, contractPosition }: GetDataPropsParams<DystopiaGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.rewardPerToken(rt.address)));
+    return Promise.all(rewardTokens.map(rt => contract.read.rewardPerToken([rt.address])));
   }
 
   async getStakedTokenBalance({
     address,
     contract,
   }: GetTokenBalancesParams<DystopiaGauge, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({
@@ -69,6 +70,6 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
     contractPosition,
   }: GetTokenBalancesParams<DystopiaGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.earned(rt.address, address)));
+    return Promise.all(rewardTokens.map(rt => contract.read.earned([rt.address, address])));
   }
 }

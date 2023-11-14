@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { SaddleCommunalFarm, SaddleContractFactory } from '../contracts';
+import { SaddleViemContractFactory } from '../contracts';
+import { SaddleCommunalFarm } from '../contracts/viem';
 
 const FARMS = [
   // Saddle D4 Communal Farm
@@ -27,12 +28,12 @@ export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleSta
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+    @Inject(SaddleViemContractFactory) protected readonly contractFactory: SaddleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SaddleCommunalFarm {
+  getContract(address: string) {
     return this.contractFactory.saddleCommunalFarm({ address, network: this.network });
   }
 
@@ -42,29 +43,29 @@ export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleSta
 
   async getRewardRates({ contract }: GetDataPropsParams<SaddleCommunalFarm>) {
     return Promise.all([
-      contract.rewardRates(0),
-      contract.rewardRates(1),
-      contract.rewardRates(2),
-      contract.rewardRates(3),
+      contract.read.rewardRates([BigInt(0)]),
+      contract.read.rewardRates([BigInt(1)]),
+      contract.read.rewardRates([BigInt(2)]),
+      contract.read.rewardRates([BigInt(3)]),
     ]);
   }
 
   async getIsActive({ contract }: GetDataPropsParams<SaddleCommunalFarm>): Promise<boolean> {
     const rewardRates = await Promise.all([
-      contract.rewardRates(0),
-      contract.rewardRates(1),
-      contract.rewardRates(2),
-      contract.rewardRates(3),
+      contract.read.rewardRates([BigInt(0)]),
+      contract.read.rewardRates([BigInt(1)]),
+      contract.read.rewardRates([BigInt(2)]),
+      contract.read.rewardRates([BigInt(3)]),
     ]);
 
-    return rewardRates.some(rate => rate.gt(0));
+    return rewardRates.some(rate => rate > 0);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
-    return contract.lockedLiquidityOf(address);
+    return contract.read.lockedLiquidityOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
-    return contract.earned(address);
+    return contract.read.earned([address]).then(v => [...v]);
   }
 }

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -20,8 +20,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MuxContractFactory } from '../contracts';
-import { MuxVault } from '../contracts/ethers/MuxVault';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxVault } from '../contracts/viem/MuxVault';
 
 export type MuxPerpContractPositionDefinition = {
   address: string;
@@ -54,12 +54,12 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MuxVault {
+  getContract(address: string) {
     return this.contractFactory.muxVault({ address, network: this.network });
   }
 
@@ -158,25 +158,25 @@ export abstract class MuxPerpContractPositionFetcher extends ContractPositionTem
     if (!subAccountId) return [0, 0, 0];
 
     const reader = this.contractFactory.muxReader({ address: this.readerAddress, network: this.network });
-    const subAccounts = await multicall.wrap(reader).getSubAccounts([subAccountId]);
+    const subAccounts = await multicall.wrap(reader).read.getSubAccounts([[subAccountId]]);
     const [{ collateral, size, entryPrice, lastIncreasedTime }] = subAccounts;
 
     const { pnlUsd } = computePositionPnlUsd(
       indexToken.price,
       contractPosition.dataProps.indexTokenMinProfitTime,
       contractPosition.dataProps.indexTokenMinProfitRate,
-      fromWei(size),
-      fromWei(entryPrice),
+      fromWei(BigNumber.from(size)),
+      fromWei(BigNumber.from(entryPrice)),
       lastIncreasedTime,
       isLong,
     );
 
-    const collateralAmount = fromWei(collateral);
+    const collateralAmount = fromWei(BigNumber.from(collateral));
     if (Number(collateralAmount) == 0) return [0, 0, 0];
 
     const collateralAmountUsd = collateralAmount.times(collateralToken.price);
 
-    const hasProfit = pnlUsd.gt(0);
+    const hasProfit = Number(pnlUsd) > 0;
     const profitToken = isLong ? indexToken : usdcToken;
 
     const collateralBalanceRaw = hasProfit

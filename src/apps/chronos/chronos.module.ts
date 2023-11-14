@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapV2ViemContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { ArbitrumChronosPoolTokenFetcher } from './arbitrum/chronos.pool.token-fetcher';
-import { ChronosContractFactory } from './contracts';
+import { ChronosViemContractFactory } from './contracts';
 
 @Module({
-  providers: [UniswapV2ContractFactory, ChronosContractFactory, ArbitrumChronosPoolTokenFetcher],
+  providers: [UniswapV2ViemContractFactory, ChronosViemContractFactory, ArbitrumChronosPoolTokenFetcher],
 })
 export class ChronosAppModule extends AbstractApp() {}

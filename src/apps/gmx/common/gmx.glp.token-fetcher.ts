@@ -3,7 +3,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -11,7 +11,7 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { GmxContractFactory } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
 
 export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract glmManagerAddress: string;
@@ -20,13 +20,13 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getAddresses() {
@@ -39,12 +39,14 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
       network: this.network,
     });
 
-    const vaultAddress = await multicall.wrap(glpManagerContract).vault();
+    const vaultAddress = await multicall.wrap(glpManagerContract).read.vault();
     const vault = this.contractFactory.gmxVault({ address: vaultAddress, network: this.network });
 
-    const tokenCount = await multicall.wrap(vault).allWhitelistedTokensLength();
+    const tokenCount = await multicall.wrap(vault).read.allWhitelistedTokensLength();
     const tokenRange = range(0, Number(tokenCount));
-    const tokenAddresses = await Promise.all(tokenRange.map(i => multicall.wrap(vault).allWhitelistedTokens(i)));
+    const tokenAddresses = await Promise.all(
+      tokenRange.map(i => multicall.wrap(vault).read.allWhitelistedTokens([BigInt(i)])),
+    );
 
     const validTokenAddresses = tokenAddresses.filter(v => !this.blockedTokenAddresses.includes(v.toLowerCase()));
     return validTokenAddresses.map(address => ({ address, network: this.network }));
@@ -56,11 +58,11 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
       network: this.network,
     });
 
-    const vaultAddress = await multicall.wrap(glpManagerContract).vault();
+    const vaultAddress = await multicall.wrap(glpManagerContract).read.vault();
     const vault = this.contractFactory.gmxVault({ address: vaultAddress, network: this.network });
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const reserveRaw = await multicall.wrap(vault).getRedemptionCollateral(token.address);
+        const reserveRaw = await multicall.wrap(vault).read.getRedemptionCollateral([token.address]);
         return Number(reserveRaw) / 10 ** token.decimals;
       }),
     );

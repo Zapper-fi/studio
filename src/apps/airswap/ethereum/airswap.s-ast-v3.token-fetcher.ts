@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { AirswapContractFactory, StakingV2 } from '../contracts';
+import { AirswapViemContractFactory } from '../contracts';
+import { StakingV2 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAirswapSAstV3TokenFetcher extends AppTokenTemplatePositionFetcher<StakingV2> {
@@ -13,12 +14,12 @@ export class EthereumAirswapSAstV3TokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AirswapContractFactory) private readonly contractFactory: AirswapContractFactory,
+    @Inject(AirswapViemContractFactory) private readonly contractFactory: AirswapViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakingV2 {
+  getContract(address: string) {
     return this.contractFactory.stakingV2({ network: this.network, address });
   }
 
@@ -27,7 +28,7 @@ export class EthereumAirswapSAstV3TokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StakingV2>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare() {

@@ -15,7 +15,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { KwentaContractFactory, KwentaStakingV2 } from '../contracts';
+import { KwentaViemContractFactory } from '../contracts';
+import { KwentaStakingV2 } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -31,12 +32,12 @@ export class OptimismKwentaStakingV2ContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KwentaContractFactory) protected readonly contractFactory: KwentaContractFactory,
+    @Inject(KwentaViemContractFactory) protected readonly contractFactory: KwentaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): KwentaStakingV2 {
+  getContract(address: string) {
     return this.contractFactory.kwentaStakingV2({ address, network: this.network });
   }
 
@@ -50,18 +51,18 @@ export class OptimismKwentaStakingV2ContractPositionFetcher extends SingleStakin
   }
 
   getRewardRates({ contract }: GetDataPropsParams<KwentaStakingV2, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({ contract }: GetDataPropsParams<KwentaStakingV2>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<KwentaStakingV2, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<KwentaStakingV2, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

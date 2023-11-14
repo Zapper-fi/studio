@@ -16,7 +16,8 @@ import type {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { ExactlyContractFactory, type Market } from '../contracts';
+import { ExactlyViemContractFactory } from '../contracts';
+import { Market } from '../contracts/viem';
 
 import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 
@@ -27,7 +28,7 @@ export abstract class ExactlyTokenFetcher<
 > extends AppTokenTemplatePositionFetcher<Market, V, ExactlyMarketDefinition> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ExactlyContractFactory) protected readonly contractFactory: ExactlyContractFactory,
+    @Inject(ExactlyViemContractFactory) protected readonly contractFactory: ExactlyViemContractFactory,
     @Inject(ExactlyDefinitionsResolver) protected readonly definitionsResolver: ExactlyDefinitionsResolver,
   ) {
     super(appToolkit);

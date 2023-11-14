@@ -17,7 +17,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Y2KFinanceContractFactory, Y2KFinanceStakingRewards } from '../contracts';
+import { Y2KFinanceViemContractFactory } from '../contracts';
+import { Y2KFinanceStakingRewards } from '../contracts/viem';
 
 export const FARMS_QUERY = gql`
   {
@@ -40,12 +41,12 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(Y2KFinanceContractFactory) protected readonly contractFactory: Y2KFinanceContractFactory,
+    @Inject(Y2KFinanceViemContractFactory) protected readonly contractFactory: Y2KFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Y2KFinanceStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.y2KFinanceStakingRewards({ address, network: this.network });
   }
 
@@ -63,9 +64,9 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
     UnderlyingTokenDefinition[] | null
   > {
     const [stakingToken, tokenIdRaw, rewardsToken] = await Promise.all([
-      contract.stakingToken(),
-      contract.id(),
-      contract.rewardsToken(),
+      contract.read.stakingToken(),
+      contract.read.id(),
+      contract.read.rewardsToken(),
     ]);
 
     return [
@@ -95,15 +96,15 @@ export class ArbitrumY2KFinanceFarmV1ContractPositionFetcher extends ContractPos
       address: stakingTokenAddress.address,
       network: this.network,
     });
-    const name = await vault.name();
+    const name = await vault.read.name();
     return `${name} Farming`;
   }
 
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<Y2KFinanceStakingRewards, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const supply = await params.contract.balanceOf(params.address);
-    const rewards = await params.contract.earned(params.address);
+    const supply = await params.contract.read.balanceOf([params.address]);
+    const rewards = await params.contract.read.earned([params.address]);
     return [supply, rewards];
   }
 }

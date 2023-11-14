@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { TarotContractFactory } from './contracts';
+import { TarotViemContractFactory } from './contracts';
 import { FantomTarotBorrowContractPositionFetcher } from './fantom/tarot.borrow.contract-position-fetcher';
 import { FantomTarotSupplyTokenFetcher } from './fantom/tarot.supply.token-fetcher';
 import { FantomTarotVaultTokenFetcher } from './fantom/tarot.vault.token-fetcher';
 
 @Module({
   providers: [
-    TarotContractFactory,
+    TarotViemContractFactory,
     FantomTarotBorrowContractPositionFetcher,
     FantomTarotSupplyTokenFetcher,
     FantomTarotVaultTokenFetcher,

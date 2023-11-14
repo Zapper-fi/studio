@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { UwuLendContractFactory, UwuLendUToken } from '../contracts';
+import { UwuLendViemContractFactory } from '../contracts';
+import { UwuLendUToken } from '../contracts/viem';
 
 export type UwuLendTokenDataProps = {
   apy: number;
@@ -37,7 +38,7 @@ export type UwuLendReserveConfigurationData = {
 export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositionFetcher<UwuLendUToken> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UwuLendContractFactory) protected readonly contractFactory: UwuLendContractFactory,
+    @Inject(UwuLendViemContractFactory) protected readonly contractFactory: UwuLendViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -46,12 +47,12 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
   abstract getTokenAddress(reserveTokenAddressesData: UwuLendReserveTokenAddressesData): string;
   abstract getApyFromReserveData(reserveApyData: UwuLendReserveApyData): number;
 
-  getContract(address: string): UwuLendUToken {
+  getContract(address: string) {
     return this.contractFactory.uwuLendUToken({ network: this.network, address });
   }
 
   async getAddresses(): Promise<string[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const pool = multicall.wrap(
       this.contractFactory.uwuLendDataProvider({
@@ -60,8 +61,8 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
       }),
     );
 
-    const reserveTokenAddreses = await pool.getReservesList();
-    const reserveTokensData = await Promise.all(reserveTokenAddreses.map(r => pool.getReserveData(r)));
+    const reserveTokenAddreses = await pool.read.getReservesList();
+    const reserveTokensData = await Promise.all(reserveTokenAddreses.map(r => pool.read.getReserveData([r])));
 
     return reserveTokensData.map(v =>
       this.getTokenAddress({
@@ -73,7 +74,7 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<UwuLendUToken>) {
-    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
+    return [{ address: await contract.read.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getPricePerShare() {
@@ -86,7 +87,7 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
       address: this.providerAddress,
     });
 
-    const reservesData = await multicall.wrap(pool).getReserveData(appToken.tokens[0].address);
+    const reservesData = await multicall.wrap(pool).read.getReserveData([appToken.tokens[0].address]);
     const supplyApy = (Number(reservesData.currentLiquidityRate) / 10 ** 27) * 100;
     const stableBorrowApy = (Number(reservesData.currentStableBorrowRate) / 10 ** 27) * 100;
     const variableBorrowApy = (Number(reservesData.currentVariableBorrowRate) / 10 ** 27) * 100;

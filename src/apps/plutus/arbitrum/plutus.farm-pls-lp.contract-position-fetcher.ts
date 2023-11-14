@@ -13,7 +13,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusFarmPlsJonesLp } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusFarmPlsJonesLp } from '../contracts/viem';
 
 export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
   label: string;
@@ -29,12 +30,12 @@ export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsJonesLp {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsJonesLp({ address, network: this.network });
   }
 
@@ -68,11 +69,11 @@ export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakin
   }
 
   getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsJonesLp, SingleStakingFarmDataProps>) {
-    return contract.plsPerSecond();
+    return contract.read.plsPerSecond();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PlutusFarmPlsJonesLp>) {
-    return contract.plsPerSecond().then(v => v.gt(0));
+    return contract.read.plsPerSecond().then(v => v > 0);
   }
 
   async getLabel({
@@ -82,10 +83,10 @@ export class ArbitrumPlutusFarmPlsLpContractPositionFetcher extends SingleStakin
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJonesLp>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJonesLp>) {
-    return contract.pendingRewards(address);
+    return contract.read.pendingRewards([address]);
   }
 }

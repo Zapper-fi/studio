@@ -11,7 +11,8 @@ import { isVesting } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverVesting } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverVesting } from '../contracts/viem';
 
 import { CLEV } from './addresses';
 
@@ -21,12 +22,12 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) private readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) private readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CleverVesting {
+  getContract(address: string) {
     return this.contractFactory.cleverVesting({ network: this.network, address });
   }
 
@@ -58,8 +59,8 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
     address,
     contract,
   }: GetTokenBalancesParams<CleverVesting, DefaultDataProps>): Promise<BigNumberish[]> {
-    const locked = await contract.locked(address);
-    const userVesting = await contract.getUserVest(address);
+    const locked = await contract.read.locked([address]);
+    const userVesting = await contract.read.getUserVest([address]);
     const toBeClaimbedRaw = userVesting.map(x => {
       return Number(x.vestingAmount) - Number(x.claimedAmount);
     });
