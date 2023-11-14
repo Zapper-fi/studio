@@ -42,6 +42,8 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
       '0x0b498ff89709d3838a063f1dfa463091f9801c2b', // BTC x2 Flex Leverage
       '0x341c05c0e9b33c0e38d64de76516b2ce970bb3be', // DSETH
       '0xc30fba978743a43e736fc32fbeed364b8a2039cd', // Money Market Index
+      '0x1b5e16c5b20fb5ee87c61fe9afe735cca3b21a65', // ic21
+      '0x55b2cfcfe99110c773f00b023560dd9ef6c8a13b', // cdETI
       ...this.deprecatedProducts,
     ];
   }
