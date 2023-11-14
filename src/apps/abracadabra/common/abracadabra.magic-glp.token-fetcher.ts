@@ -21,6 +21,7 @@ const BASIS_POINTS_DIVISOR = 10000;
 
 export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTemplateTokenFetcher {
   groupLabel = 'Magic GLP';
+  abstract glpTokenAddress: string;
   abstract get rewardTrackerAddresses(): string[] | Promise<string>[];
   abstract get magicGlpHarvestorAddress(): string | Promise<string>;
   abstract get magicGlpAnnualHarvests(): number | Promise<number>;
@@ -32,17 +33,9 @@ export abstract class AbracadabraMagicGlpTokenFetcher extends Erc4626VaultTempla
     super(appToolkit);
   }
 
-  // Override as the underlying is sGLP, but users expect to see GLP
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {
-    const glpTokenDefinitions = await this.appToolkit.getAppTokenPositionsFromDatabase({
-      appId: 'gmx',
-      groupIds: ['glp'],
-      network: this.network,
-    });
-
-    const glpUnderlying = glpTokenDefinitions[0];
-
-    return [{ address: glpUnderlying.address, network: this.network }];
+    // Override as the underlying is sGLP, but users expect to see GLP
+    return [{ address: this.glpTokenAddress, network: this.network }];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<Erc4626>): Promise<string> {

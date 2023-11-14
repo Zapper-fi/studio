@@ -10,7 +10,6 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceViemContractFactory } from '../contracts';
 import { UmamiFinanceCompound } from '../contracts/viem';
 
@@ -20,8 +19,6 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceYieldResolver)
-    private readonly yieldResolver: UmamiFinanceYieldResolver,
     @Inject(UmamiFinanceViemContractFactory) protected readonly contractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
@@ -60,11 +57,6 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
     const balanceRaw = await underlyingTokenContract.read.balanceOf([appToken.address]);
     const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
     return [reserve];
-  }
-
-  async getApy(_params: GetDataPropsParams<UmamiFinanceCompound>) {
-    const { apy } = await this.yieldResolver.getStakingYield();
-    return Number(apy);
   }
 
   async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceCompound>): Promise<string[]> {
