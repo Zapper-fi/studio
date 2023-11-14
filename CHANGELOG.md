@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.546.0](https://github.com/Zapper-fi/studio/compare/v0.545.2...v0.546.0) (2023-11-14)
+
+
+### Features
+
+* **index-coop:** Add Index Coop Large Cap Index & ETH Trend Index ([#3038](https://github.com/Zapper-fi/studio/issues/3038)) ([cfad834](https://github.com/Zapper-fi/studio/commit/cfad834611a029c4f48c47dd98d383e97686d960))
+* **studio:** Fix migration to Viem issues ([#3043](https://github.com/Zapper-fi/studio/issues/3043)) ([3859bd2](https://github.com/Zapper-fi/studio/commit/3859bd2a6561aa0353160fa04b9a996280591515))
+
+
+### Bug Fixes
+
+* **studio:** Fix linting errors ([#3041](https://github.com/Zapper-fi/studio/issues/3041)) ([7f743cb](https://github.com/Zapper-fi/studio/commit/7f743cb80da6f2ce978bce9102b2d65ab0b5e0ec))
+
 ## [0.545.2](https://github.com/Zapper-fi/studio/compare/v0.545.1...v0.545.2) (2023-11-14)
 
 
