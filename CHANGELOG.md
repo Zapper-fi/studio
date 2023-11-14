@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.546.2](https://github.com/Zapper-fi/studio/compare/v0.546.1...v0.546.2) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** More failing position fetchers ([#3046](https://github.com/Zapper-fi/studio/issues/3046)) ([fac3641](https://github.com/Zapper-fi/studio/commit/fac3641122a032aed7190693606807b52ebec1ce))
+
 ## [0.546.1](https://github.com/Zapper-fi/studio/compare/v0.546.0...v0.546.1) (2023-11-14)
 
 
