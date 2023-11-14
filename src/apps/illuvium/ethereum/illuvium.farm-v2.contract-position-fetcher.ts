@@ -44,6 +44,6 @@ export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStaking
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<IlluviumIlvPoolV2>) {
-    return (await contract.read.pendingRewards([address])).pendingYield;
+    return (await contract.read.pendingRewards([address]))[0];
   }
 }

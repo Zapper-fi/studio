@@ -65,13 +65,13 @@ export abstract class RevertFinanceCompoundorRewardsContractPositionFetcher exte
       network: this.network,
     });
 
-    const balanceRaw = await compoundor.balanceOf(address);
+    const balanceRaw = await compoundor.read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
     const maybeTokens = await Promise.all(
       range(0, balance).map(async i => {
-        const positionId = await multicall.wrap(compoundor).read.accountTokens([address, i]);
+        const positionId = await multicall.wrap(compoundor).read.accountTokens([address, BigInt(i)]);
         return this.uniswapV3LiquidityContractPositionBuilder.getTokensForPosition({
           positionId,
           multicall,

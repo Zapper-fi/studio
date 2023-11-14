@@ -10,10 +10,10 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/velodrome.voting-rewards.contract-position-fetcher';
-import { VelodromeV2Bribe } from '../contracts';
+import { VelodromeV2Bribe } from '../contracts/viem';
 
 @PositionTemplate()
-export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<VelodromeV2Bribe> {
+export class OptimismVelodromeV2BribeContractPositionFetcher extends VotingRewardsContractPositionFetcher {
   groupLabel = 'Bribe';
 
   getContract(address: string) {

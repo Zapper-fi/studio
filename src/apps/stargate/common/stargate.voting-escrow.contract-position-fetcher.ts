@@ -6,6 +6,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { StargateViemContractFactory } from '../contracts';
 import { StargateVe } from '../contracts/viem';
+import { StargateVeContract } from '../contracts/viem/StargateVe';
 
 export abstract class StargateVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<StargateVe> {
   constructor(
@@ -15,7 +16,7 @@ export abstract class StargateVotingEscrowContractPositionFetcher extends Voting
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): StargateVe {
+  getEscrowContract(address: string): StargateVeContract {
     return this.contractFactory.stargateVe({ address, network: this.network });
   }
 
@@ -24,6 +25,6 @@ export abstract class StargateVotingEscrowContractPositionFetcher extends Voting
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<StargateVe>) {
-    return (await contract.read.locked([address])).amount;
+    return (await contract.read.locked([address]))[0];
   }
 }

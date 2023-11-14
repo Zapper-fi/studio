@@ -8,6 +8,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { DystopiaViemContractFactory } from '../contracts';
 import { DystopiaVe } from '../contracts/viem';
+import { DystopiaVeContract } from '../contracts/viem/DystopiaVe';
 
 @PositionTemplate()
 export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<DystopiaVe> {
@@ -21,7 +22,7 @@ export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEs
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): DystopiaVe {
+  getEscrowContract(address: string): DystopiaVeContract {
     return this.contractFactory.dystopiaVe({ address, network: this.network });
   }
 
@@ -34,7 +35,7 @@ export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEs
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await contract.read.tokenOfOwnerByIndex([address, i]);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const balance = await contract.read.balanceOfNFT([tokenId]);
         return Number(balance);
       }),

@@ -49,7 +49,7 @@ export class OptimismVelodromeV2PoolTokenFetcher extends AppTokenTemplatePositio
     return poolAddresses;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<VelodromeV2Pool>) {
+  async getAddresses({ definitions }: GetAddressesParams) {
     return definitions.map(v => v.address);
   }
 

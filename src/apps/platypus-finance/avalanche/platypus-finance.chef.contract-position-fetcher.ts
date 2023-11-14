@@ -11,6 +11,7 @@ import {
 
 import { PlatypusFinanceViemContractFactory } from '../contracts';
 import { PlatypusFinanceMasterPlatypusV2 } from '../contracts/viem';
+import { PlatypusFinanceMasterPlatypusV2Contract } from '../contracts/viem/PlatypusFinanceMasterPlatypusV2';
 
 @PositionTemplate()
 export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlatypusFinanceMasterPlatypusV2> {
@@ -28,15 +29,15 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
     return this.contractFactory.platypusFinanceMasterPlatypusV2({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PlatypusFinanceMasterPlatypusV2) {
+  async getPoolLength(contract: PlatypusFinanceMasterPlatypusV2Contract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PlatypusFinanceMasterPlatypusV2, poolIndex: number): Promise<string> {
-    return (await contract.read.poolInfo([BigInt(poolIndex)])).lpToken;
+  async getStakedTokenAddress(contract: PlatypusFinanceMasterPlatypusV2Contract, poolIndex: number): Promise<string> {
+    return (await contract.read.poolInfo([BigInt(poolIndex)]))[0];
   }
 
-  async getRewardTokenAddress(contract: PlatypusFinanceMasterPlatypusV2): Promise<string> {
+  async getRewardTokenAddress(contract: PlatypusFinanceMasterPlatypusV2Contract): Promise<string> {
     return contract.read.ptp();
   }
 
@@ -49,7 +50,7 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PlatypusFinanceMasterPlatypusV2>) {
-    return (await contract.read.poolInfo([BigInt(definition.poolIndex)])).adjustedAllocPoint;
+    return (await contract.read.poolInfo([BigInt(definition.poolIndex)]))[7];
   }
 
   async getStakedTokenBalance({
@@ -57,7 +58,7 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlatypusFinanceMasterPlatypusV2>) {
-    return (await contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address])).amount;
+    return (await contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]))[0];
   }
 
   async getRewardTokenBalance({
@@ -65,9 +66,9 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlatypusFinanceMasterPlatypusV2>) {
-    return contract
-      .pendingTokens(contractPosition.dataProps.poolIndex, address)
-      .then(v => v.pendingPtp)
+    return contract.read
+      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address])
+      .then(v => v[0])
       .catch(err => {
         if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;

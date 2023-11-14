@@ -81,9 +81,16 @@ export function fromWei(n: ethers.BigNumber): BigNumber {
 }
 
 async function getReaderAssets(network: Network, appToolkit: IAppToolkit): Promise<ReaderAssets[]> {
-  const multicall = appToolkit.getMulticall(network);
-  const readerContract = new MuxContractFactory(appToolkit).muxReader({ address: READER_ADDRESS[network], network });
-  const storage = await multicall.wrap(readerContract).callStatic.getChainStorage();
+  const multicall = appToolkit.getViemMulticall(network);
+  const readerContract = new MuxViemContractFactory(appToolkit).muxReader({
+    address: READER_ADDRESS[network],
+    network,
+  });
+
+  const storage = await multicall
+    .wrap(readerContract)
+    .simulate.getChainStorage()
+    .then(v => v.result);
 
   return storage[1]
     .filter(item => item.tokenAddress !== ZERO_ADDRESS)

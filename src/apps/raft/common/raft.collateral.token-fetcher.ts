@@ -29,7 +29,7 @@ export abstract class RaftCollateralTokenFetcher extends AppTokenTemplatePositio
       address: this.positionManagerAddress,
       network: this.network,
     });
-    return [await positionManager.raftCollateralToken(this.collateral)];
+    return [await positionManager.read.raftCollateralToken([this.collateral])];
   }
 
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {

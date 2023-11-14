@@ -1,34 +1,32 @@
 import { PercentMath, WadRayMath } from '@morpho-labs/ethers-utils/lib/maths';
 import { minBN } from '@morpho-labs/ethers-utils/lib/utils';
-import { BigNumber, BigNumberish, constants } from 'ethers';
-
-import { Types } from '~apps/morpho/contracts/ethers/MorphoAaveV3';
+import { BigNumber, constants } from 'ethers';
 
 import { MorphoAaveMath } from './AaveV3.maths';
 
-import MarketSideDeltaStruct = Types.MarketSideDeltaStruct;
-import DeltasStruct = Types.DeltasStruct;
+type MarketSideDeltaStruct = any;
+type DeltasStruct = any;
 
 export interface MarketSizeIndexes {
   /** The pool index (in ray). */
-  poolIndex: BigNumberish;
+  poolIndex: BigNumber;
 
   /** The peer-to-peer index (in ray). */
-  p2pIndex: BigNumberish;
+  p2pIndex: BigNumber;
 }
 
 export interface GrowthFactors {
   /** The pool's supply index growth factor (in ray). */
-  poolSupplyGrowthFactor: BigNumberish;
+  poolSupplyGrowthFactor: BigNumber;
 
   /** Peer-to-peer supply index growth factor (in ray). */
-  p2pSupplyGrowthFactor: BigNumberish;
+  p2pSupplyGrowthFactor: BigNumber;
 
   /** The pool's borrow index growth factor (in ray). */
-  poolBorrowGrowthFactor: BigNumberish;
+  poolBorrowGrowthFactor: BigNumber;
 
   /** Peer-to-peer borrow index growth factor (in ray). */
-  p2pBorrowGrowthFactor: BigNumberish;
+  p2pBorrowGrowthFactor: BigNumber;
 }
 
 export interface IndexesParams {
@@ -39,48 +37,48 @@ export interface IndexesParams {
   lastBorrowIndexes: MarketSizeIndexes;
 
   /** The current pool supply index (in ray). */
-  poolSupplyIndex: BigNumberish;
+  poolSupplyIndex: BigNumber;
 
   /** The current pool borrow index (in ray). */
-  poolBorrowIndex: BigNumberish;
+  poolBorrowIndex: BigNumber;
 
   /** The reserve factor percentage (10 000 = 100%). */
-  reserveFactor: BigNumberish;
+  reserveFactor: BigNumber;
 
   /** The peer-to-peer index cursor (10 000 = 100%). */
-  p2pIndexCursor: BigNumberish;
+  p2pIndexCursor: BigNumber;
 
   /** The deltas and peer-to-peer amounts. */
   deltas: DeltasStruct;
 
   /** The amount of proportion idle (in underlying). */
-  proportionIdle: BigNumberish;
+  proportionIdle: BigNumber;
 }
 
 export interface RateParams {
   /** The pool supply rate per year (in ray). */
-  poolSupplyRatePerYear: BigNumberish;
+  poolSupplyRatePerYear: BigNumber;
 
   /** The pool borrow rate per year (in ray). */
-  poolBorrowRatePerYear: BigNumberish;
+  poolBorrowRatePerYear: BigNumber;
 
   /** The last stored pool index (in ray). */
-  poolIndex: BigNumberish;
+  poolIndex: BigNumber;
 
   /** The last stored peer-to-peer index (in ray). */
-  p2pIndex: BigNumberish;
+  p2pIndex: BigNumber;
 
   /** The delta and peer-to-peer amount. */
   delta: MarketSideDeltaStruct;
 
   /** The index cursor of the given market (in bps). */
-  p2pIndexCursor: BigNumberish;
+  p2pIndexCursor: BigNumber;
 
   /** The reserve factor of the given market (in bps). */
-  reserveFactor: BigNumberish;
+  reserveFactor: BigNumber;
 
   /** The proportion idle of the given market (in underlying). */
-  proportionIdle: BigNumberish;
+  proportionIdle: BigNumber;
 }
 
 export default class P2PInterestRates {

@@ -110,10 +110,16 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
       proportionIdle,
       p2pIndexCursor: BigNumber.from(p2pIndexCursor),
       reserveFactor: BigNumber.from(reserveFactor),
-      lastBorrowIndexes: indexes.borrow,
-      lastSupplyIndexes: indexes.supply,
-      poolBorrowIndex: variableBorrowIndex,
-      poolSupplyIndex: liquidityIndex,
+      lastBorrowIndexes: {
+        poolIndex: BigNumber.from(indexes.borrow.poolIndex),
+        p2pIndex: BigNumber.from(indexes.borrow.p2pIndex),
+      },
+      lastSupplyIndexes: {
+        poolIndex: BigNumber.from(indexes.supply.poolIndex),
+        p2pIndex: BigNumber.from(indexes.supply.p2pIndex),
+      },
+      poolBorrowIndex: BigNumber.from(variableBorrowIndex),
+      poolSupplyIndex: BigNumber.from(liquidityIndex),
     });
 
     const supplyInP2P = this.__MATH__.indexMul(deltas.supply.scaledP2PTotal, newP2PSupplyIndex);
@@ -128,15 +134,16 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
       p2pIndexCursor: BigNumber.from(p2pIndexCursor),
       reserveFactor: BigNumber.from(reserveFactor),
       delta: deltas.supply,
-      poolBorrowRatePerYear: currentVariableBorrowRate,
-      poolSupplyRatePerYear: currentLiquidityRate,
-      poolIndex: liquidityIndex,
+      poolBorrowRatePerYear: BigNumber.from(currentVariableBorrowRate),
+      poolSupplyRatePerYear: BigNumber.from(currentLiquidityRate),
+      poolIndex: BigNumber.from(liquidityIndex),
     });
+
     const p2pBorrowRate = this.__IRM__.computeP2PBorrowRatePerYear({
       p2pIndex: newP2PBorrowIndex,
-      poolSupplyRatePerYear: currentLiquidityRate,
-      poolIndex: variableBorrowIndex,
-      poolBorrowRatePerYear: currentVariableBorrowRate,
+      poolSupplyRatePerYear: BigNumber.from(currentLiquidityRate),
+      poolIndex: BigNumber.from(variableBorrowIndex),
+      poolBorrowRatePerYear: BigNumber.from(currentVariableBorrowRate),
       delta: deltas.borrow,
       reserveFactor: BigNumber.from(reserveFactor),
       p2pIndexCursor: BigNumber.from(p2pIndexCursor),

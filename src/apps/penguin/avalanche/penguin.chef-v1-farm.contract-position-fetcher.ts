@@ -12,6 +12,7 @@ import {
 
 import { PenguinViemContractFactory } from '../contracts';
 import { PenguinChef } from '../contracts/viem';
+import { PenguinChefContract } from '../contracts/viem/PenguinChef';
 
 @PositionTemplate()
 export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PenguinChef> {
@@ -35,7 +36,7 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
   }
 
   async getStakedTokenAddress(contract: PenguinChefContract, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
   async getRewardTokenAddress(contract: PenguinChefContract): Promise<string> {
@@ -51,7 +52,7 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PenguinChef>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -59,7 +60,7 @@ export class AvalanchePenguinChefV1FarmContractPositionFetcher extends MasterChe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PenguinChef>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

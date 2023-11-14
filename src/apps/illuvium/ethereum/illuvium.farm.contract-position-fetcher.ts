@@ -57,9 +57,9 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
       const LAST_V1_YIELD_CREATED = 1642660625;
       const depositsLength = Number(await contract.read.getDepositsLength([address]));
       const depositIndexes = range(0, depositsLength);
-      const deposits = await Promise.all(depositIndexes.map(v => contract.read.getDeposit([address, v])));
+      const deposits = await Promise.all(depositIndexes.map(v => contract.read.getDeposit([address, BigInt(v)])));
       const v1YieldMinted = await Promise.all(
-        depositIndexes.map(v => v2Stakingcontract.read.v1YieldMinted([address, v])),
+        depositIndexes.map(v => v2StakingContract.read.v1YieldMinted([address, BigInt(v)])),
       );
 
       const voidDeposits = deposits.filter((v, i) => {

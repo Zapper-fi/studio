@@ -56,16 +56,16 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
       contract.read.currentDay(),
     ]);
 
-    const stakedSupply = Number(stakedAndUnstakedSupply.toBigInt() - unstakedSupply.toBigInt());
+    const stakedSupply = Number(stakedAndUnstakedSupply - unstakedSupply);
     const liquidity = (stakedSupply / 10 ** hexToken.decimals) * hexToken.price;
 
     // HEX Average APR is the latest daily payout annualized divided by total amount staked
     const [latestDailyData] = await Promise.all([
       // Need to use day - 1 as data is only available for previous day
-      contract.dailyData(currentDay.toNumber() - 1),
+      contract.read.dailyData([currentDay - BigInt(1)]),
     ]);
 
-    const apy = (Number(latestDailyData.dayPayoutTotal) / stakedSupply) * 100 * 365;
+    const apy = (Number(latestDailyData[0]) / stakedSupply) * 100 * 365;
 
     return { liquidity, apy };
   }
@@ -76,10 +76,12 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Hex, DefaultDataProps>) {
     const stakeCount = await contract.read.stakeCount([address]);
-    if (stakeCount.isZero()) return [0];
+    if (Number(stakeCount) === 0) return [0];
 
-    const allStakes = await Promise.all(range(0, +stakeCount).map(i => contract.read.stakeLists([address, i])));
-    const totalStaked = allStakes.reduce((acc, v) => acc.add(v.stakedHearts), BigNumber.from(0));
+    const allStakes = await Promise.all(
+      range(0, Number(stakeCount)).map(i => contract.read.stakeLists([address, BigInt(i)])),
+    );
+    const totalStaked = allStakes.reduce((acc, v) => acc.add(v[1]), BigNumber.from(0));
     return [totalStaked.toString()];
   }
 }

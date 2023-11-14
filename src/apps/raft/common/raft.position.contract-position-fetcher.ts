@@ -85,11 +85,13 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
       address: contractPosition.tokens[0].address,
       network: this.network,
     });
+
     const debt = this.raftContractFactory.raftToken({
       address: contractPosition.tokens[1].address,
       network: this.network,
     });
-    const balances = await Promise.all([collateral.balanceOf(address), debt.balanceOf(address)]);
+
+    const balances = await Promise.all([collateral.read.balanceOf([address]), debt.read.balanceOf([address])]);
     return balances;
   }
 }

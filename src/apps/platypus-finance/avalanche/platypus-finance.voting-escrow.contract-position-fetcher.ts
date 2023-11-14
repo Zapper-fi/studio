@@ -7,6 +7,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { PlatypusFinanceViemContractFactory } from '../contracts';
 import { PlatypusFinanceVotingEscrow } from '../contracts/viem';
+import { PlatypusFinanceVotingEscrowContract } from '../contracts/viem/PlatypusFinanceVotingEscrow';
 
 @PositionTemplate()
 export class AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<PlatypusFinanceVotingEscrow> {
@@ -20,7 +21,7 @@ export class AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher extends
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): PlatypusFinanceVotingEscrow {
+  getEscrowContract(address: string): PlatypusFinanceVotingEscrowContract {
     return this.contractFactory.platypusFinanceVotingEscrow({ address, network: this.network });
   }
 

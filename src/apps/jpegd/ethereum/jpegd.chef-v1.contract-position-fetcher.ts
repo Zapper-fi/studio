@@ -11,6 +11,7 @@ import {
 
 import { JpegdViemContractFactory } from '../contracts';
 import { JpegdLpFarm } from '../contracts/viem';
+import { JpegdLpFarmContract } from '../contracts/viem/JpegdLpFarm';
 
 @PositionTemplate()
 export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JpegdLpFarm> {
@@ -28,15 +29,15 @@ export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTempla
     return this.contractFactory.jpegdLpFarm({ address, network: this.network });
   }
 
-  async getPoolLength(contract: JpegdLpFarm): Promise<BigNumberish> {
+  async getPoolLength(contract: JpegdLpFarmContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: JpegdLpFarm, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: JpegdLpFarmContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: JpegdLpFarm): Promise<string> {
+  async getRewardTokenAddress(contract: JpegdLpFarmContract): Promise<string> {
     return contract.read.jpeg();
   }
 
@@ -45,11 +46,11 @@ export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTempla
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
-    return contract.read.epoch().then(v => v.rewardPerBlock);
+    return contract.read.epoch().then(v => v[2]);
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -57,7 +58,7 @@ export class EthereumJpegdChefV1ContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JpegdLpFarm>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

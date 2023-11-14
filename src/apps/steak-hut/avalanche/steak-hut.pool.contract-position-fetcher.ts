@@ -10,6 +10,7 @@ import {
 
 import { SteakHutViemContractFactory } from '../contracts';
 import { SteakHutPool } from '../contracts/viem';
+import { SteakHutPoolContract } from '../contracts/viem/SteakHutPool';
 
 @PositionTemplate()
 export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<SteakHutPool> {
@@ -27,15 +28,15 @@ export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemp
     return this.contractFactory.steakHutPool({ address, network: this.network });
   }
 
-  async getPoolLength(contract: SteakHutPool): Promise<BigNumberish> {
+  async getPoolLength(contract: SteakHutPoolContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: SteakHutPool, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: SteakHutPoolContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: SteakHutPool): Promise<string> {
+  async getRewardTokenAddress(contract: SteakHutPoolContract): Promise<string> {
     return contract.read.JOE();
   }
 
@@ -56,7 +57,7 @@ export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemp
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<SteakHutPool>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   getRewardTokenBalance({

@@ -44,7 +44,7 @@ export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStaki
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SteakHutStaking>) {
-    return contract.read.userInfo([address]).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SteakHutStaking>) {

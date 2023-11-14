@@ -102,13 +102,13 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
         const llamapay = multicall.wrap(llamapayContract);
 
         const [disabledAt, endTime, cliff] = await Promise.all([
-          llamapay.disabled_at(),
-          llamapay.end_time(),
-          llamapay.cliff_length(),
+          llamapay.read.disabled_at(),
+          llamapay.read.end_time(),
+          llamapay.read.cliff_length(),
         ]);
-        const lockedBalanceRaw = Number(disabledAt) > moment().unix() ? await llamapay.locked() : 0;
 
-        const claimableBalanceRaw = await llamapay.unclaimed();
+        const lockedBalanceRaw = Number(disabledAt) > moment().unix() ? await llamapay.read.locked() : 0;
+        const claimableBalanceRaw = await llamapay.read.unclaimed();
 
         const token = tokenDependencies.find(t => t.address === vestingEscrow.token.id);
         if (!token) return null;
@@ -121,7 +121,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
         const balanceUSD = sumBy(tokenBalances, v => v.balanceUSD);
 
         const formattedEndTime = unix(Number(endTime)).format('LL');
-        const formattedCliff = cliff.toNumber() / duration(1, 'day').asSeconds();
+        const formattedCliff = Number(cliff) / duration(1, 'day').asSeconds();
 
         const statsItems = [
           {

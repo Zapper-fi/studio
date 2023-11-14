@@ -15,6 +15,8 @@ import {
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
 } from './pancakeswap.pool-dynamic.token-fetcher';
+import { PancakeswapStablePoolRegistryContract } from '../contracts/viem/PancakeswapStablePoolRegistry';
+import { PancakeswapStablePoolContract } from '../contracts/viem/PancakeswapStablePool';
 
 export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolDynamicTokenFetcher<
   PancakeswapStablePoolRegistry,
@@ -27,11 +29,11 @@ export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolD
     super(appToolkit, contractFactory);
   }
 
-  resolveRegistry(address: string): PancakeswapStablePoolRegistry {
+  resolveRegistry(address: string): PancakeswapStablePoolRegistryContract {
     return this.contractFactory.pancakeswapStablePoolRegistry({ address, network: this.network });
   }
 
-  resolveStablePool(address: string): PancakeswapStablePool {
+  resolveStablePool(address: string): PancakeswapStablePoolContract {
     return this.contractFactory.pancakeswapStablePool({ address, network: this.network });
   }
 
@@ -49,12 +51,16 @@ export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolD
 
   async resolveCoinAddresses({ contract }: ResolveCoinAddressesParams<PancakeswapStablePool>) {
     const coinCount = await contract.read.N_COINS();
-    return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.read.coins([coinIndex])));
+    return Promise.all(
+      range(0, Number(coinCount)).map(async coinIndex => await contract.read.coins([BigInt(coinIndex)])),
+    );
   }
 
   async resolveReserves({ contract }: ResolveReservesParams<PancakeswapStablePool>) {
     const coinCount = await contract.read.N_COINS();
-    return Promise.all(range(0, Number(coinCount)).map(async coinIndex => await contract.read.balances([coinIndex])));
+    return Promise.all(
+      range(0, Number(coinCount)).map(async coinIndex => await contract.read.balances([BigInt(coinIndex)])),
+    );
   }
 
   async resolveFees({ contract }: ResolveFeesParams<PancakeswapStablePool>) {

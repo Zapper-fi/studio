@@ -10,6 +10,7 @@ import {
 
 import { ConcentratorViemContractFactory } from '../contracts';
 import { AladdinConcentratorLegacyVault } from '../contracts/viem';
+import { AladdinConcentratorLegacyVaultContract } from '../contracts/viem/AladdinConcentratorLegacyVault';
 
 @PositionTemplate()
 export class EthereumConcentratorLegacyVaultContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorLegacyVault> {
@@ -28,12 +29,12 @@ export class EthereumConcentratorLegacyVaultContractPositionFetcher extends Mast
     return this.contractFactory.aladdinConcentratorLegacyVault({ address, network: this.network });
   }
 
-  async getPoolLength(contract: AladdinConcentratorLegacyVault): Promise<BigNumberish> {
+  async getPoolLength(contract: AladdinConcentratorLegacyVaultContract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: AladdinConcentratorLegacyVault, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: AladdinConcentratorLegacyVaultContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[4]);
   }
 
   async getRewardTokenAddress() {
@@ -57,7 +58,7 @@ export class EthereumConcentratorLegacyVaultContractPositionFetcher extends Mast
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorLegacyVault>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.shares);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

@@ -25,7 +25,7 @@ export class VelodromeV2AddressesResolver {
     ttl: 15 * 60,
   })
   private async getOnChainAddresses(network: Network): Promise<VelodromeV2OnChainAddresses> {
-    const multicall = this.appToolkit.getMulticall(network);
+    const multicall = this.appToolkit.getViemMulticall(network);
     const voterContract = this.contractFactory.velodromeV2Voter({
       address: '0x41c914ee0c7e1a5edcd0295623e6dc557b5abf3c',
       network,
@@ -41,8 +41,8 @@ export class VelodromeV2AddressesResolver {
 
     return Promise.all(
       poolAddresses.map(async poolAddress => {
-        const guageAddressRaw = await multicall.wrap(voterContract).gauges(poolAddress);
-        const bribeAddressRaw = await multicall.wrap(voterContract).gaugeToBribe(guageAddressRaw);
+        const guageAddressRaw = await multicall.wrap(voterContract).read.gauges([poolAddress]);
+        const bribeAddressRaw = await multicall.wrap(voterContract).read.gaugeToBribe([guageAddressRaw]);
 
         return {
           poolAddress,

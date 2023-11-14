@@ -6,7 +6,6 @@ import { GetMasterChefDataPropsParams } from '~position/template/master-chef.tem
 import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.contract-position-fetcher';
 import { StargateChef } from '../contracts/viem';
 import { StargateChefContract } from '../contracts/viem/StargateChef';
-import { StargateChefContract } from '../contracts/viem/StargateChef';
 
 @PositionTemplate()
 export class OptimismStargateFarmContractPositionFetcher extends StargateFarmContractPositionFetcher {

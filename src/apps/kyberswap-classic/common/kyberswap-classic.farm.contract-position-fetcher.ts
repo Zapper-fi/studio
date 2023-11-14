@@ -9,6 +9,7 @@ import {
 
 import { KyberswapClassicViemContractFactory } from '../contracts';
 import { KyberSwapClassicMasterchef } from '../contracts/viem';
+import { KyberSwapClassicMasterchefContract } from '../contracts/viem/KyberSwapClassicMasterchef';
 
 export abstract class KyberSwapClassicFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<KyberSwapClassicMasterchef> {
   constructor(
@@ -23,15 +24,15 @@ export abstract class KyberSwapClassicFarmContractPositionFetcher extends Master
     return this.contractFactory.kyberSwapClassicMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: KyberSwapClassicMasterChefContract) {
+  async getPoolLength(contract: KyberSwapClassicMasterchefContract) {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: KyberSwapClassicMasterChefContract, poolIndex: number) {
-    return contract.read.getpoolInfo([BigInt(poolIndex)]).then(v => v.stakeToken);
+  async getStakedTokenAddress(contract: KyberSwapClassicMasterchefContract, poolIndex: number) {
+    return contract.read.getPoolInfo([BigInt(poolIndex)]).then(v => v[1]);
   }
 
-  async getRewardTokenAddress(contract: KyberSwapClassicMasterChefContract) {
+  async getRewardTokenAddress(contract: KyberSwapClassicMasterchefContract) {
     return contract.read.getRewardTokens().then(v => v[0]);
   }
 
@@ -44,7 +45,7 @@ export abstract class KyberSwapClassicFarmContractPositionFetcher extends Master
   }
 
   async getTotalRewardRate({ contract, definition }: GetMasterChefDataPropsParams<KyberSwapClassicMasterchef>) {
-    return contract.read.getPoolInfo([BigInt(definition.poolIndex)]).then(v => v.rewardPerBlocks[0]);
+    return contract.read.getPoolInfo([BigInt(definition.poolIndex)]).then(v => v[5][0]);
   }
 
   async getStakedTokenBalance({
@@ -52,7 +53,7 @@ export abstract class KyberSwapClassicFarmContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<KyberSwapClassicMasterchef>) {
-    return contract.read.getuserInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.getUserInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({

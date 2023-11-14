@@ -6,6 +6,8 @@ import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/commo
 
 import { KyberswapClassicViemContractFactory } from '../contracts';
 import { KyberSwapClassicFactory, KyberSwapClassicPool } from '../contracts/viem';
+import { KyberSwapClassicPoolContract } from '../contracts/viem/KyberSwapClassicPool';
+import { KyberSwapClassicFactoryContract } from '../contracts/viem/KyberSwapClassicFactory';
 
 export abstract class KyberSwapClassicPoolTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
   KyberSwapClassicPool,
@@ -20,31 +22,32 @@ export abstract class KyberSwapClassicPoolTokenFetcher extends UniswapV2PoolOnCh
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): KyberSwapClassicPool {
+  getPoolTokenContract(address: string): KyberSwapClassicPoolContract {
     return this.contractFactory.kyberSwapClassicPool({ address, network: this.network });
   }
 
-  getPoolFactoryContract(address: string): KyberSwapClassicFactory {
+  getPoolFactoryContract(address: string): KyberSwapClassicFactoryContract {
     return this.contractFactory.kyberSwapClassicFactory({ address, network: this.network });
   }
 
-  getPoolsLength(contract: KyberSwapClassicFactory): Promise<BigNumberish> {
+  getPoolsLength(contract: KyberSwapClassicFactoryContract): Promise<BigNumberish> {
     return contract.read.allPoolsLength();
   }
 
-  getPoolAddress(contract: KyberSwapClassicFactory, index: number): Promise<string> {
-    return contract.read.allPools([index]);
+  getPoolAddress(contract: KyberSwapClassicFactoryContract, index: number): Promise<string> {
+    return contract.read.allPools([BigInt(index)]);
   }
 
-  getPoolToken0(contract: KyberSwapClassicPool): Promise<string> {
+  getPoolToken0(contract: KyberSwapClassicPoolContract): Promise<string> {
     return contract.read.token0();
   }
 
-  getPoolToken1(contract: KyberSwapClassicPool): Promise<string> {
+  getPoolToken1(contract: KyberSwapClassicPoolContract): Promise<string> {
     return contract.read.token1();
   }
 
-  getPoolReserves(contract: KyberSwapClassicPool): Promise<BigNumberish[]> {
-    return contract.read.getReserves();
+  async getPoolReserves(contract: KyberSwapClassicPoolContract): Promise<BigNumberish[]> {
+    const reserves = await contract.read.getReserves();
+    return [reserves[0], reserves[1]];
   }
 }

@@ -8,6 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { RamsesViemContractFactory } from '../contracts';
 import { RamsesVe, RamsesRewards } from '../contracts/viem';
+import { RamsesVeContract } from '../contracts/viem/RamsesVe';
+import { RamsesRewardsContract } from '../contracts/viem/RamsesRewards';
 
 @PositionTemplate()
 export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -25,26 +27,26 @@ export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEsc
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): RamsesVe {
+  getEscrowContract(address: string): RamsesVeContract {
     return this.contractFactory.ramsesVe({ address, network: this.network });
   }
 
-  getRewardContract(address: string): RamsesRewards {
+  getRewardContract(address: string): RamsesRewardsContract {
     return this.contractFactory.ramsesRewards({ address, network: this.network });
   }
 
-  getEscrowedTokenAddress(contract: RamsesVe): Promise<string> {
+  getEscrowedTokenAddress(contract: RamsesVeContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getRewardTokenBalance(address: string, contract: RamsesRewards): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string, contract: RamsesRewardsContract): Promise<BigNumberish> {
     const multicall = this.appToolkit.getViemMulticall(this.network);
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
-    const veCount = Number(await escrow.balanceOf(address));
+    const veCount = Number(await escrow.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await escrow.tokenOfOwnerByIndex(address, i);
+        const tokenId = await escrow.read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const balance = await contract.read.claimable([tokenId]);
         return Number(balance);
       }),
@@ -53,18 +55,18 @@ export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEsc
     return sum(balances);
   }
 
-  getRewardTokenAddress(contract: RamsesRewards): Promise<string> {
+  getRewardTokenAddress(contract: RamsesRewardsContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: RamsesVe): Promise<BigNumberish> {
+  async getEscrowedTokenBalance(address: string, contract: RamsesVeContract): Promise<BigNumberish> {
     const veCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await contract.read.tokenOfOwnerByIndex([address, i]);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const balance = await contract.read.locked([tokenId]);
-        return Number(balance.amount);
+        return Number(balance[0]);
       }),
     );
 

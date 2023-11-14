@@ -30,7 +30,7 @@ export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetch
       address: this.positionManagerAddress,
       network: this.network,
     });
-    return [await positionManager.raftDebtToken(this.collateral)];
+    return [await positionManager.read.raftDebtToken([this.collateral])];
   }
 
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {

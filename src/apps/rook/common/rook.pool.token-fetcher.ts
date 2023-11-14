@@ -36,7 +36,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<RookKToken>) {
-    let reserveRaw: BigNumber;
+    let reserveRaw: BigInt;
 
     if (this.isV3) {
       const pool = this.contractFactory.rookLiquidityPoolV3({

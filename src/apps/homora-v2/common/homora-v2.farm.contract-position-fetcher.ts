@@ -175,14 +175,14 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
         if (!contractPosition) return null;
 
         const [positionInfo, positionDebt] = await Promise.all([
-          multicall.wrap(bankContract).read.getPositionInfo([position.id]),
-          multicall.wrap(bankContract).read.getPositionDebts([position.id]),
+          multicall.wrap(bankContract).read.getPositionInfo([BigInt(position.id)]),
+          multicall.wrap(bankContract).read.getPositionDebts([BigInt(position.id)]),
         ]);
 
-        const collateralAmount = positionInfo.collateralSize;
+        const collateralAmount = positionInfo[3];
         const debtAmounts = contractPosition.tokens.filter(isBorrowed).map(t => {
-          const debtArrayIndex = positionDebt.tokens.findIndex(dt => dt.toLowerCase() === t.address);
-          return debtArrayIndex >= 0 ? positionDebt.debts[debtArrayIndex].toString() : '0';
+          const debtArrayIndex = positionDebt[0].findIndex(dt => dt.toLowerCase() === t.address);
+          return debtArrayIndex >= 0 ? positionDebt[1][debtArrayIndex].toString() : '0';
         });
 
         const amounts = [collateralAmount, ...debtAmounts];

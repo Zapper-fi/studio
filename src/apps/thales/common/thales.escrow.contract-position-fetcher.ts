@@ -6,6 +6,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { ThalesViemContractFactory } from '../contracts';
 import { EscrowThales } from '../contracts/viem';
+import { EscrowThalesContract } from '../contracts/viem/EscrowThales';
 
 export abstract class ThalesEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<EscrowThales> {
   groupLabel = 'Voting Escrow';
@@ -18,7 +19,7 @@ export abstract class ThalesEscrowContractPositionFetcher extends VotingEscrowTe
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): EscrowThales {
+  getEscrowContract(address: string): EscrowThalesContract {
     return this.contractFactory.escrowThales({ address, network: this.network });
   }
 

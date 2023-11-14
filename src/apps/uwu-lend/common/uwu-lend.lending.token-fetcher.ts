@@ -62,7 +62,7 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
     );
 
     const reserveTokenAddreses = await pool.read.getReservesList();
-    const reserveTokensData = await Promise.all(reserveTokenAddreses.map(r => pool.getReserveData(r)));
+    const reserveTokensData = await Promise.all(reserveTokenAddreses.map(r => pool.read.getReserveData([r])));
 
     return reserveTokensData.map(v =>
       this.getTokenAddress({

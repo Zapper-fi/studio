@@ -7,6 +7,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { ConcentratorViemContractFactory } from '../contracts';
 import { AladdinConcentratorVe, AladdinConcentratorVeRewards } from '../contracts/viem';
+import { AladdinConcentratorVeContract } from '../contracts/viem/AladdinConcentratorVe';
+import { AladdinConcentratorVeRewardsContract } from '../contracts/viem/AladdinConcentratorVeRewards';
 
 @PositionTemplate()
 export class EthereumConcentratorVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -24,27 +26,27 @@ export class EthereumConcentratorVotingEscrowContractPositionFetcher extends Vot
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): AladdinConcentratorVe {
+  getEscrowContract(address: string): AladdinConcentratorVeContract {
     return this.contractFactory.aladdinConcentratorVe({ address, network: this.network });
   }
 
-  getRewardContract(address: string): AladdinConcentratorVeRewards {
+  getRewardContract(address: string): AladdinConcentratorVeRewardsContract {
     return this.contractFactory.aladdinConcentratorVeRewards({ address, network: this.network });
   }
 
-  getEscrowedTokenAddress(contract: AladdinConcentratorVe): Promise<string> {
+  getEscrowedTokenAddress(contract: AladdinConcentratorVeContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewards): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewardsContract): Promise<BigNumberish> {
     return contract.simulate.claim([address]).then(v => v.result);
   }
 
-  getRewardTokenAddress(contract: AladdinConcentratorVeRewards): Promise<string> {
+  getRewardTokenAddress(contract: AladdinConcentratorVeRewardsContract): Promise<string> {
     return contract.read.token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: AladdinConcentratorVe): Promise<BigNumberish> {
+  async getEscrowedTokenBalance(address: string, contract: AladdinConcentratorVeContract): Promise<BigNumberish> {
     return contract.read.balanceOf([address]);
   }
 }

@@ -7,6 +7,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { QiDaoViemContractFactory } from '../contracts';
 import { QiDaoEscrowedQi } from '../contracts/viem';
+import { QiDaoEscrowedQiContract } from '../contracts/viem/QiDaoEscrowedQi';
 
 @PositionTemplate()
 export class PolygonQiDaoEscrowedQiContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<QiDaoEscrowedQi> {
@@ -20,7 +21,7 @@ export class PolygonQiDaoEscrowedQiContractPositionFetcher extends VotingEscrowT
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): QiDaoEscrowedQi {
+  getEscrowContract(address: string): QiDaoEscrowedQiContract {
     return this.contractFactory.qiDaoEscrowedQi({ address, network: this.network });
   }
 
@@ -29,6 +30,6 @@ export class PolygonQiDaoEscrowedQiContractPositionFetcher extends VotingEscrowT
   }
 
   async getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<QiDaoEscrowedQi>) {
-    return contract.read.userInfo([address]).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 }

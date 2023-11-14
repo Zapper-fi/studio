@@ -64,7 +64,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
 
     const definitions = await Promise.all(
       range(0, Number(numMarkets)).map(async i => {
-        const marketAddress = await pendleData.allMarkets(i);
+        const marketAddress = await pendleData.read.allMarkets([BigInt(i)]);
         const market = this.contractFactory.pendleMarket({ address: marketAddress, network: this.network });
         const [baseTokenAddress, yieldTokenAddress, expiryRaw] = await Promise.all([
           multicall.wrap(market).read.token(),
@@ -87,7 +87,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
         const forgeId = await multicall.wrap(forge).read.forgeId();
         const ownershipTokenAddress = await multicall
           .wrap(pendleData)
-          .read.otTokens([forgeId, underlyingAddress, expiry]);
+          .read.otTokens([forgeId, underlyingAddress, BigInt(expiry)]);
 
         return {
           address: ownershipTokenAddress.toLowerCase(),
@@ -143,9 +143,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     ]);
 
     const [baseReserve, otReserve] =
-      token0.toLowerCase() === baseTokenAddress
-        ? [reserves._reserve0, reserves._reserve1]
-        : [reserves._reserve1, reserves._reserve0];
+      token0.toLowerCase() === baseTokenAddress ? [reserves[0], reserves[1]] : [reserves[1], reserves[0]];
 
     const otPrice = new BigNumber(baseToken.price)
       .multipliedBy(Number(baseReserve) / 10 ** baseToken.decimals)

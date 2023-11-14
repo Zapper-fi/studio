@@ -71,9 +71,8 @@ export abstract class ThalesAmmContractPositionFetcher extends ContractPositionT
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Amm>): Promise<BigNumberish[]> {
     const currentRound = await contract.read.round();
-    const currentBalance = await contract.balancesPerRound(Number(currentRound), address);
-    const pendingDeposit = await contract.balancesPerRound(Number(currentRound) + 1, address);
-
-    return [currentBalance.add(pendingDeposit)];
+    const currentBalance = await contract.read.balancesPerRound([currentRound, address]);
+    const pendingDeposit = await contract.read.balancesPerRound([currentRound + BigInt(1), address]);
+    return [currentBalance + pendingDeposit];
   }
 }

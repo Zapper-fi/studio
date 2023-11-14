@@ -29,7 +29,7 @@ export class TokemakClaimableResolver {
   })
   private async getCycleRewardsHash() {
     const network = Network.ETHEREUM_MAINNET;
-    const multicall = this.appToolkit.getMulticall(network);
+    const multicall = this.appToolkit.getViemMulticall(network);
     const rewardsHashContract = this.contractFactory.tokemakRewardsHash({
       network,
       address: '0x5ec3ec6a8ac774c7d53665ebc5ddf89145d02fb6',
@@ -37,12 +37,12 @@ export class TokemakClaimableResolver {
 
     const currentCycleIndex = await multicall
       .wrap(rewardsHashContract)
-      .latestCycleIndex()
-      .catch(() => 0);
+      .read.latestCycleIndex()
+      .catch(() => BigInt(0));
 
     const [latestClaimableRewardsHash, currentCycleRewardsHash] = await multicall
       .wrap(rewardsHashContract)
-      .cycleHashes(currentCycleIndex)
+      .read.cycleHashes([currentCycleIndex])
       .catch(() => [null, null]);
 
     return [latestClaimableRewardsHash, currentCycleRewardsHash];

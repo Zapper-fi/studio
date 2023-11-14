@@ -71,7 +71,7 @@ export abstract class LyraAvalonPoolTokenFetcher extends AppTokenTemplatePositio
       marketsResponse.markets.map(market => multicall.wrap(registryContract).read.marketAddresses([market.id])),
     );
 
-    return markets.map(market => market.liquidityToken);
+    return markets.map(market => market[1]);
   }
 
   async getUnderlyingTokenDefinitions() {

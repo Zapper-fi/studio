@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { getAddress } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
 import { sumBy } from 'lodash';
@@ -122,14 +122,14 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
         const label = `Liquid Staking (#${positionId}) - Unlock: ${unlockDate}`;
 
         const [positionInfo, positionRewardInfo] = await Promise.all([
-          multicall.wrap(contract).read.positions([positionId]),
-          multicall.wrap(contract).read.viewPositionRewards([positionId]),
+          multicall.wrap(contract).read.positions([BigInt(positionId)]),
+          multicall.wrap(contract).read.viewPositionRewards([BigInt(positionId)]),
         ]);
 
         const stakedToken = lsdCnv.tokens.find(isSupplied)!;
         const rewardToken = lsdCnv.tokens.find(isClaimable)!;
-        const stakedTokenBalance = drillBalance(stakedToken, positionInfo.deposit.toString());
-        const rewardBalanceRaw = positionRewardInfo.totalRewards.sub(positionRewardInfo.amountDeposited).toString();
+        const stakedTokenBalance = drillBalance(stakedToken, positionInfo[4].toString());
+        const rewardBalanceRaw = BigNumber.from(positionRewardInfo[3]).sub(positionRewardInfo[0]).toString();
         const rewardTokenBalance = drillBalance(rewardToken, rewardBalanceRaw);
         const tokens = [stakedTokenBalance, rewardTokenBalance];
         const balanceUSD = sumBy(tokens, v => v.balanceUSD);

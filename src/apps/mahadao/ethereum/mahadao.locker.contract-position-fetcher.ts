@@ -8,6 +8,7 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 
 import { MahadaoViemContractFactory } from '../contracts';
 import { MahadoMahaxLocker } from '../contracts/viem';
+import { MahadoMahaxLockerContract } from '../contracts/viem/MahadoMahaxLocker';
 
 @PositionTemplate()
 export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<MahadoMahaxLocker> {
@@ -21,7 +22,7 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): MahadoMahaxLocker {
+  getEscrowContract(address: string): MahadoMahaxLockerContract {
     return this.contractFactory.mahadoMahaxLocker({ address, network: this.network });
   }
 
@@ -34,10 +35,9 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
 
     const balances = await Promise.all(
       range(positionCount).map(async i => {
-        const tokenId = await contract.read.tokenOfOwnerByIndex([address, i]);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, BigInt(i)]);
         const lockedAmount = await contract.read.locked([tokenId]);
-
-        return Number(lockedAmount.amount);
+        return Number(lockedAmount[0]);
       }),
     );
 

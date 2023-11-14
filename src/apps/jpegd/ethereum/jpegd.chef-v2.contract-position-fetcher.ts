@@ -11,6 +11,7 @@ import {
 
 import { JpegdViemContractFactory } from '../contracts';
 import { JpegdLpFarmV2 } from '../contracts/viem';
+import { JpegdLpFarmV2Contract } from '../contracts/viem/JpegdLpFarmV2';
 
 @PositionTemplate()
 export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JpegdLpFarmV2> {
@@ -28,15 +29,15 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
     return this.contractFactory.jpegdLpFarmV2({ address, network: this.network });
   }
 
-  async getPoolLength(contract: JpegdLpFarmV2): Promise<BigNumberish> {
+  async getPoolLength(contract: JpegdLpFarmV2Contract): Promise<BigNumberish> {
     return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: JpegdLpFarmV2, poolIndex: number): Promise<string> {
-    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: JpegdLpFarmV2Contract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: JpegdLpFarmV2): Promise<string> {
+  async getRewardTokenAddress(contract: JpegdLpFarmV2Contract): Promise<string> {
     return contract.read.jpeg();
   }
 
@@ -45,14 +46,14 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JpegdLpFarmV2>): Promise<BigNumberish> {
-    return contract.read.epoch().then(v => v.rewardPerBlock);
+    return contract.read.epoch().then(v => v[2]);
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<JpegdLpFarmV2>): Promise<BigNumberish> {
-    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -60,7 +61,7 @@ export class EthereumJpegdChefV2ContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<JpegdLpFarmV2>): Promise<BigNumberish> {
-    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
