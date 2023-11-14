@@ -8,8 +8,6 @@ import { execCodeFormatting } from '../../format/exec-code-formatting';
 import { appPath } from '../../paths/app-path';
 import { strings } from '../../strings';
 
-import { generateEthersContract } from './generate-ethers-contract';
-import { generateEthersContractFactory } from './generate-ethers-contract-factory';
 import { generateIndex } from './generate-index';
 import { generateViemContract } from './generate-viem-contract';
 import { generateViemContractFactory } from './generate-viem-contract-factory';
@@ -42,14 +40,8 @@ export default class GenerateContractFactory extends Command {
       await normalizeAbis(location);
       console.log(chalk.green(`Contracts abis have been normalized at ${location}`));
 
-      await generateEthersContract(location);
-      console.log(chalk.green(`Ethers contract generated at ${location}`));
-
       await generateViemContract(location);
       console.log(chalk.green(`Viem contract generated at ${location}`));
-
-      await generateEthersContractFactory(location);
-      console.log(chalk.green(`Ethers factory class generated at ${location}`));
 
       await generateViemContractFactory(location);
       console.log(chalk.green(`Viem factory class generated at ${location}`));
