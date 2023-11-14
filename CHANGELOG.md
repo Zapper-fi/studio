@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.546.1](https://github.com/Zapper-fi/studio/compare/v0.546.0...v0.546.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** Fix remaining viem migration regressions ([#3044](https://github.com/Zapper-fi/studio/issues/3044)) ([55d9b08](https://github.com/Zapper-fi/studio/commit/55d9b0877689fe5955d3978988e1d2a530fd40ff))
+
 ## [0.546.0](https://github.com/Zapper-fi/studio/compare/v0.545.2...v0.546.0) (2023-11-14)
 
 
