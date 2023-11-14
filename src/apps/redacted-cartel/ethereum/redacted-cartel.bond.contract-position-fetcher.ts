@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -13,7 +14,6 @@ import {
 
 import { RedactedCartelViemContractFactory } from '../contracts';
 import { RedactedBondDepository } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumRedactedCartelBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedBondDepository> {

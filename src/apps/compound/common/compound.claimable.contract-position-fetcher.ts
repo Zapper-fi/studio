@@ -1,4 +1,4 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';

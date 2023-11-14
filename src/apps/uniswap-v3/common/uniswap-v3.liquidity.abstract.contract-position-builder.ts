@@ -1,21 +1,19 @@
 import { BigNumber } from 'bignumber.js';
-import { BaseContract, BigNumber as EtherBigNumber, BigNumberish } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Standard, Token } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
-import { TokenDependency, TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
+import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types';
-
-import { UniswapV3Pool, UniswapV3PositionManager } from '../contracts/viem';
 
 import { UniswapV3LiquidityPositionDataProps } from './uniswap-v3.liquidity.contract-position-fetcher';
 import {
@@ -24,7 +22,6 @@ import {
   UniswapV3LiquidityTickContractData,
 } from './uniswap-v3.liquidity.types';
 import { getClaimable } from './uniswap-v3.liquidity.utils';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 type UniswapV3LiquidityContractPositionHelperParams = {
   multicall: ViemMulticallDataLoader;

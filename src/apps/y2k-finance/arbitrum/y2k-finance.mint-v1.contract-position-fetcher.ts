@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';

@@ -10,6 +10,7 @@ import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
+
 import { EulerStakingRewardsContract } from '../contracts/viem';
 
 @PositionTemplate()

@@ -14,8 +14,8 @@ import { GetDataPropsParams, GetTokenDefinitionsParams } from '~position/templat
 
 import { InverseViemContractFactory } from '../contracts';
 import { InverseController, InverseLendingPool } from '../contracts/viem';
-import { InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
 import { InverseControllerContract } from '../contracts/viem/InverseController';
+import { InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
 
 @PositionTemplate()
 export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<

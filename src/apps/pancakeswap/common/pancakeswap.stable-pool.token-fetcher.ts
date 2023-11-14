@@ -5,6 +5,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { PancakeswapViemContractFactory } from '../contracts';
 import { PancakeswapStablePool, PancakeswapStablePoolRegistry } from '../contracts/viem';
+import { PancakeswapStablePoolContract } from '../contracts/viem/PancakeswapStablePool';
+import { PancakeswapStablePoolRegistryContract } from '../contracts/viem/PancakeswapStablePoolRegistry';
 
 import {
   PancakeswapPoolDynamicTokenFetcher,
@@ -15,8 +17,6 @@ import {
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
 } from './pancakeswap.pool-dynamic.token-fetcher';
-import { PancakeswapStablePoolRegistryContract } from '../contracts/viem/PancakeswapStablePoolRegistry';
-import { PancakeswapStablePoolContract } from '../contracts/viem/PancakeswapStablePool';
 
 export abstract class PancakeswapStablePoolTokenFetcher extends PancakeswapPoolDynamicTokenFetcher<
   PancakeswapStablePoolRegistry,

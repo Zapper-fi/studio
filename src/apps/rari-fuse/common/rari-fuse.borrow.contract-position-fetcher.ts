@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 

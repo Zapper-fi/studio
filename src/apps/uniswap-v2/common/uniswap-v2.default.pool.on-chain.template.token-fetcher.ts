@@ -6,8 +6,8 @@ import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/commo
 
 import { UniswapV2ViemContractFactory } from '../contracts';
 import { UniswapFactory, UniswapPair } from '../contracts/viem';
-import { UniswapPairContract } from '../contracts/viem/UniswapPair';
 import { UniswapFactoryContract } from '../contracts/viem/UniswapFactory';
+import { UniswapPairContract } from '../contracts/viem/UniswapPair';
 
 export abstract class UniswapV2DefaultPoolOnChainTemplateTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
   UniswapPair,

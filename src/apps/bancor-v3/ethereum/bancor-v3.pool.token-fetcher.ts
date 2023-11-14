@@ -13,7 +13,7 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { BancorV3ViemContractFactory } from '../contracts';
-import { PoolCollection, PoolToken } from '../contracts/viem';
+import { PoolToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFetcher<PoolToken> {

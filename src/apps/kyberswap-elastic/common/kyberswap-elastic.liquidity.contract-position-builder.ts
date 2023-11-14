@@ -7,6 +7,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Standard } from '~position/position.interface';
@@ -22,7 +23,6 @@ import {
   KyberswapElasticPoolStateData,
 } from './kyberswap-elastic.liquidity.types';
 import { getSupplied, getRange } from './kyberswap-elastic.liquidity.utils';
-import { ViemMulticallDataLoader } from '~multicall';
 
 type KyberswapElasticLiquidityContractPositionHelperParams = {
   multicall: ViemMulticallDataLoader;

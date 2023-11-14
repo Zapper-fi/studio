@@ -12,8 +12,8 @@ import {
 
 import { InverseViemContractFactory } from '../contracts';
 import { InverseController } from '../contracts/viem';
-import { InverseLendingPool, InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
 import { InverseControllerContract } from '../contracts/viem/InverseController';
+import { InverseLendingPool, InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
 
 @PositionTemplate()
 export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetcher<

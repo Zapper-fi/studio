@@ -1,5 +1,4 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { Contract } from 'ethers';
 import _, { sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';

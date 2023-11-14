@@ -8,8 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { PickleVotingEscrow, PickleVotingEscrowReward, PickleVotingEscrowRewardV2 } from '../contracts/viem';
 import { PickleViemContractFactory } from '../contracts';
+import { PickleVotingEscrow, PickleVotingEscrowReward } from '../contracts/viem';
 import { PickleVotingEscrowContract } from '../contracts/viem/PickleVotingEscrow';
 import { PickleVotingEscrowRewardContract } from '../contracts/viem/PickleVotingEscrowReward';
 import { PickleVotingEscrowRewardV2Contract } from '../contracts/viem/PickleVotingEscrowRewardV2';

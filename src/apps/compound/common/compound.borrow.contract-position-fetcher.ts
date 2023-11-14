@@ -1,4 +1,4 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';

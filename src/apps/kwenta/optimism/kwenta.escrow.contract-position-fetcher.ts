@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -8,7 +9,6 @@ import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/
 import { KwentaViemContractFactory } from '../contracts';
 import { KwentaEscrow } from '../contracts/viem';
 import { KwentaEscrowContract } from '../contracts/viem/KwentaEscrow';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class OptimismKwentaEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<KwentaEscrow> {

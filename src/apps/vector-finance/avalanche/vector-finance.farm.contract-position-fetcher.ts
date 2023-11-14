@@ -4,7 +4,7 @@ import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
