@@ -16,7 +16,6 @@ import {
 
 import { UwuLendViemContractFactory } from '../contracts';
 import { UwuLendStakingV1 } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositionTemplatePositionFetcher<UwuLendStakingV1> {

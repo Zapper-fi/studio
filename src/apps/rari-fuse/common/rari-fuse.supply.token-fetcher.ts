@@ -1,12 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';

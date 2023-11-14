@@ -3,9 +3,8 @@ import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { VelodromeBribeContractPositionFetcher } from '../common/velodrome.bribe.contract-position-fetcher';
-import { VelodromeFees } from '../contracts/viem';
 import { VelodromeFeesContractPositionFetcher } from '../common/velodrome.fees.contract-position-fetcher';
+import { VelodromeFees } from '../contracts/viem';
 
 export type VelodromeFeesDefinition = {
   address: string;

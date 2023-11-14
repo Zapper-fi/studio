@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -12,8 +13,8 @@ import {
 import { MorphoCompound } from '~apps/morpho/contracts/viem';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { GetDataPropsParams, GetDefinitionsParams } from '~position/template/contract-position.template.types';
+
 import { MorphoViemContractFactory } from '../contracts';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoSupplyContractPositionFetcher<MorphoCompound> {

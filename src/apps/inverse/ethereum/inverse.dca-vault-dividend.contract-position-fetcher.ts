@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -14,7 +15,6 @@ import {
 
 import { InverseViemContractFactory } from '../contracts';
 import { InverseDcaVaultToken } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class EthereumInverseDcaVaultDividendContractPositionFetcher extends ContractPositionTemplatePositionFetcher<InverseDcaVaultToken> {

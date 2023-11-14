@@ -21,10 +21,9 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { AbracadabraViemContractFactory } from '../contracts';
-import { AbracadabraCauldron, AbracadabraMarketLens } from '../contracts/viem';
+import { AbracadabraCauldron } from '../contracts/viem';
 
 import { CAULDRON_V1_RISK_CONSTANTS, MARKET_LENS_ADDRESS } from './abracadabra.common.constants';
-import { GetContractReturnType } from 'viem';
 
 interface AbracadabraCommonCauldronContractPositionDefinition extends DefaultContractPositionDefinition {
   type: 'REGULAR' | 'CONVEX' | 'GLP';

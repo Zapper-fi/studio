@@ -26,6 +26,7 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
+
 import { SpoolStaking } from '../contracts/viem';
 
 type SpoolStakingDataProps = {

@@ -8,8 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { SolidLizardViemContractFactory } from '../contracts';
 import { SolidLizardVe, SolidLizardRewards } from '../contracts/viem';
-import { SolidLizardVeContract } from '../contracts/viem/SolidLizardVe';
 import { SolidLizardRewardsContract } from '../contracts/viem/SolidLizardRewards';
+import { SolidLizardVeContract } from '../contracts/viem/SolidLizardVe';
 
 @PositionTemplate()
 export class ArbitrumSolidLizardVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

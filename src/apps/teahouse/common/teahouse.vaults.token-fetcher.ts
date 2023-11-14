@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -6,7 +7,6 @@ import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/tem
 
 import { TeahouseViemContractFactory } from '../contracts';
 import { TeahouseVault } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<TeahouseVault> {
   fromBlock: number | null;

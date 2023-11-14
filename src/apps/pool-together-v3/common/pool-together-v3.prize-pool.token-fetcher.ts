@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Contract } from 'ethers';
 import { compact, sum } from 'lodash';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -13,7 +13,6 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ViemContractFactory } from '../contracts';
-import { Abi } from 'viem';
 
 export type PoolTogetherV3PrizePoolDefinition = DefaultAppTokenDefinition & {
   ticketAddress: string;

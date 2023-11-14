@@ -8,8 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 
 import { RamsesViemContractFactory } from '../contracts';
 import { RamsesVe, RamsesRewards } from '../contracts/viem';
-import { RamsesVeContract } from '../contracts/viem/RamsesVe';
 import { RamsesRewardsContract } from '../contracts/viem/RamsesRewards';
+import { RamsesVeContract } from '../contracts/viem/RamsesVe';
 
 @PositionTemplate()
 export class ArbitrumRamsesVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

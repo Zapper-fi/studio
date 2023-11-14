@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -16,7 +17,6 @@ import {
 
 import { RadiantCapitalViemContractFactory } from '../contracts';
 import { RadiantCapitalPlatformFees } from '../contracts/viem/RadiantCapitalPlatformFees';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<RadiantCapitalPlatformFees> {

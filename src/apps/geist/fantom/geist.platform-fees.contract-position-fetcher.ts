@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -17,7 +18,6 @@ import {
 
 import { GeistViemContractFactory } from '../contracts';
 import { GeistStaking } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 @PositionTemplate()
 export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistStaking> {

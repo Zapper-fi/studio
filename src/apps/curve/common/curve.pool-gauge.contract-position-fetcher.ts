@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract, ethers } from 'ethers';
+import { BigNumber, BigNumberish, ethers } from 'ethers';
 import { range } from 'lodash';
 import moment from 'moment';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -20,7 +21,6 @@ import {
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveGauge } from '../contracts/viem';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export enum GaugeType {
   SINGLE = 'single',

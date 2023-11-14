@@ -8,8 +8,8 @@ import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~positio
 import { AngleApiHelper } from '../common/angle.api';
 import { AngleViemContractFactory } from '../contracts';
 import { AngleVeAngle, AngleLiquidityGauge } from '../contracts/viem';
-import { AngleVeAngleContract } from '../contracts/viem/AngleVeAngle';
 import { AngleLiquidityGaugeContract } from '../contracts/viem/AngleLiquidityGauge';
+import { AngleVeAngleContract } from '../contracts/viem/AngleVeAngle';
 
 @PositionTemplate()
 export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<

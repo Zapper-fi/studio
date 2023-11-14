@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -7,8 +7,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { FusePoolStruct, MidasMarketTokenFetcher } from '../common/midas.market.token-fetcher';
 import { MidasViemContractFactory } from '../contracts';
 import { MidasCErc20Token, MidasPoolDirectory, MidasPoolLens } from '../contracts/viem';
-import { MidasPoolDirectoryContract } from '../contracts/viem/MidasPoolDirectory';
 import { MidasCErc20TokenContract } from '../contracts/viem/MidasCErc20Token';
+import { MidasPoolDirectoryContract } from '../contracts/viem/MidasPoolDirectory';
 import { MidasPoolLensContract } from '../contracts/viem/MidasPoolLens';
 
 @PositionTemplate()

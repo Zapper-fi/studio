@@ -7,10 +7,10 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { RariFuseSupplyTokenFetcher } from '../common/rari-fuse.supply.token-fetcher';
 import { RariFuseViemContractFactory } from '../contracts';
 import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
-import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
 import { RariFuseComptrollerContract } from '../contracts/viem/RariFuseComptroller';
-import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 import { RariFusePoolLensContract } from '../contracts/viem/RariFusePoolLens';
+import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
+import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 
 @PositionTemplate()
 export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetcher<

@@ -4,6 +4,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveTricryptoFactory } from '../contracts/viem';
+import { CurveTricryptoFactoryContract } from '../contracts/viem/CurveTricryptoFactory';
 
 import {
   CurvePoolDynamicV2TokenFetcher,
@@ -13,7 +14,6 @@ import {
   ResolveTokenAddressParams,
 } from './curve.pool-dynamic-v2.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
-import { CurveTricryptoFactoryContract } from '../contracts/viem/CurveTricryptoFactory';
 
 export abstract class CurveFactoryV2PoolTokenFetcher extends CurvePoolDynamicV2TokenFetcher<CurveTricryptoFactory> {
   constructor(

@@ -3,14 +3,11 @@ import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { ContractPositionBalance } from '~position/position-balance.interface';
-import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
+import { UniswapV3LiquidityContractPositionFetcher } from '../common/uniswap-v3.liquidity.contract-position-fetcher';
 import { UniswapV3ViemContractFactory } from '../contracts';
-import { UniswapV3PositionManager } from '../contracts/viem';
 
 import { BaseUniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.contract-position-builder';
-import { UniswapV3LiquidityContractPositionFetcher } from '../common/uniswap-v3.liquidity.contract-position-fetcher';
 
 @PositionTemplate()
 export class BaseUniswapV3LiquidityContractPositionFetcher extends UniswapV3LiquidityContractPositionFetcher {

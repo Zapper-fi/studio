@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -10,7 +11,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -27,7 +28,6 @@ import { CurveViemContractFactory } from '../contracts';
 import { CurveTricryptoPool } from '../contracts/viem';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type CurvePoolTokenDataProps = DefaultAppTokenDataProps & {
   volume: number;

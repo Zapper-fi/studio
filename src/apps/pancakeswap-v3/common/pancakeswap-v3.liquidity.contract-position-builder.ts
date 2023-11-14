@@ -10,17 +10,13 @@ import {
   UniswapV3LiquiditySlotContractData,
   UniswapV3LiquidityTickContractData,
 } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.types';
-import { Erc20 } from '~contract/contracts';
-import { IMulticallWrapper } from '~multicall';
 import { Token } from '~position/position.interface';
-import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 import { PancakeswapV3ViemContractFactory } from '../contracts';
-
 import { PancakeswapFactory, PancakeswapNfPositionManager, PancakeswapPool } from '../contracts/viem';
-import { PancakeswapNfPositionManagerContract } from '../contracts/viem/PancakeswapNfPositionManager';
 import { PancakeswapFactoryContract } from '../contracts/viem/PancakeswapFactory';
+import { PancakeswapNfPositionManagerContract } from '../contracts/viem/PancakeswapNfPositionManager';
 import { PancakeswapPoolContract } from '../contracts/viem/PancakeswapPool';
 
 export class PancakeswapV3LiquidityContractPositionBuilder extends AbstractUniswapV3LiquidityContractPositionBuilder<

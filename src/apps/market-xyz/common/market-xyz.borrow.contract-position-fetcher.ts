@@ -1,15 +1,15 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { RariFuseBorrowContractPositionFetcher } from '~apps/rari-fuse/common/rari-fuse.borrow.contract-position-fetcher';
 
 import { MarketXyzViemContractFactory } from '../contracts';
 import { MarketXyzPoolDirectory, MarketXyzComptroller, MarketXyzToken, MarketXyzPoolLens } from '../contracts/viem';
-import { MarketXyzPoolDirectoryContract } from '../contracts/viem/MarketXyzPoolDirectory';
 import { MarketXyzComptrollerContract } from '../contracts/viem/MarketXyzComptroller';
-import { MarketXyzTokenContract } from '../contracts/viem/MarketXyzToken';
+import { MarketXyzPoolDirectoryContract } from '../contracts/viem/MarketXyzPoolDirectory';
 import { MarketXyzPoolLensContract } from '../contracts/viem/MarketXyzPoolLens';
+import { MarketXyzTokenContract } from '../contracts/viem/MarketXyzToken';
 
 export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
   MarketXyzPoolDirectory,

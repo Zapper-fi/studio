@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import { compact, range } from 'lodash';
 
