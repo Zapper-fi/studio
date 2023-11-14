@@ -62,7 +62,7 @@ export abstract class RevertFinanceCompoundorContractPositionFetcher extends Cus
       network: this.network,
     });
 
-    const balanceRaw = await compoundor.read.balanceOf(p);
+    const balanceRaw = await compoundor.read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 

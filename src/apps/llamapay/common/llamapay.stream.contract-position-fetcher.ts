@@ -89,8 +89,8 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
           network: this.network,
         });
         const llamapay = multicall.wrap(llamapayContract);
-        const streamBalanceRaw = await llamapay
-          .withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec)
+        const streamBalanceRaw = await llamapay.read
+          .withdrawable([stream.payer.id, stream.payee.id, BigInt(stream.amountPerSec)])
           .catch(err => {
             if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
