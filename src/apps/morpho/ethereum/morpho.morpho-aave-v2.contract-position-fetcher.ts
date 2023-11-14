@@ -1,14 +1,17 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
+import {
+  MorphoContractPositionDataProps,
+  MorphoSupplyContractPositionFetcher,
+} from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoViemContractFactory } from '~apps/morpho/contracts';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
-import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import { GetDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { MorphoAaveV2 } from '../contracts/viem';
 
@@ -98,15 +101,20 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
     };
   }
 
-  async getTokenBalancesPerPosition({ address, contractPosition, multicall }): Promise<BigNumber[]> {
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    multicall,
+  }: GetTokenBalancesParams<MorphoAaveV2, MorphoContractPositionDataProps>): Promise<BigNumberish[]> {
     const lens = multicall.wrap(
       this.contractFactory.morphoAaveV2Lens({ address: this.lensAddress, network: this.network }),
     );
 
-    const [{ totalBalance: supplyRaw }, { totalBalance: borrowRaw }] = await Promise.all([
-      lens.getCurrentSupplyBalanceInOf(contractPosition.dataProps.marketAddress, address),
-      lens.getCurrentBorrowBalanceInOf(contractPosition.dataProps.marketAddress, address),
+    const [[, , supplyRaw], [, , borrowRaw]] = await Promise.all([
+      lens.read.getCurrentSupplyBalanceInOf([contractPosition.dataProps.marketAddress, address]),
+      lens.read.getCurrentBorrowBalanceInOf([contractPosition.dataProps.marketAddress, address]),
     ]);
+
     return [supplyRaw, borrowRaw];
   }
 }
