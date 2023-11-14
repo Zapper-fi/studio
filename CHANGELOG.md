@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.545.0](https://github.com/Zapper-fi/studio/compare/v0.544.1...v0.545.0) (2023-11-14)
+
+
+### Features
+
+* **studio:** Add Viem multicall dataloader and CLI for contract factory ([#3021](https://github.com/Zapper-fi/studio/issues/3021)) ([299f02d](https://github.com/Zapper-fi/studio/commit/299f02db0cb60c84d46a132c459311dfb5b94d77))
+* **studio:** Generate Viem contract factories ([#3025](https://github.com/Zapper-fi/studio/issues/3025)) ([1ab2b0e](https://github.com/Zapper-fi/studio/commit/1ab2b0ea5f4f2322d6b2c0995b59d1bd57555188))
+* **studio:** Migrate all apps to Viem toolkit ([#3026](https://github.com/Zapper-fi/studio/issues/3026)) ([315fdc6](https://github.com/Zapper-fi/studio/commit/315fdc6e5e80819d5435cd5874d8f133da8059d4))
+* **wombat-exchange:** Add new pools ([#3027](https://github.com/Zapper-fi/studio/issues/3027)) ([a14e7d4](https://github.com/Zapper-fi/studio/commit/a14e7d46b8e5c70cb4ec8327fe0bbb89fb3106ac))
+
 ## [0.544.1](https://github.com/Zapper-fi/studio/compare/v0.544.0...v0.544.1) (2023-11-07)
 
 
