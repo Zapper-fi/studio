@@ -137,7 +137,7 @@ export default class P2PInterestRates {
     proportionIdle,
     delta,
   }: RateParams) {
-    let p2pSupplyRate;
+    let p2pSupplyRate: BigNumber;
 
     if (poolSupplyRatePerYear.gt(poolBorrowRatePerYear)) p2pSupplyRate = poolBorrowRatePerYear;
     else {
@@ -173,7 +173,7 @@ export default class P2PInterestRates {
     proportionIdle,
     delta,
   }: RateParams) {
-    let p2pBorrowRate;
+    let p2pBorrowRate: BigNumber;
 
     if (poolSupplyRatePerYear.gt(poolBorrowRatePerYear)) p2pBorrowRate = poolBorrowRatePerYear;
     else {
