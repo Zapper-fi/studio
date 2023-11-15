@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.546.3](https://github.com/Zapper-fi/studio/compare/v0.546.2...v0.546.3) (2023-11-15)
+
+
+### Bug Fixes
+
+* **studio:** Fix PoolTogether community pool fetcher ([#3049](https://github.com/Zapper-fi/studio/issues/3049)) ([0876d47](https://github.com/Zapper-fi/studio/commit/0876d47f515768bf13a51e81a6ec6f416ad48722))
+
 ## [0.546.2](https://github.com/Zapper-fi/studio/compare/v0.546.1...v0.546.2) (2023-11-14)
 
 
