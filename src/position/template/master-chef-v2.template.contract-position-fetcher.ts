@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -17,7 +18,6 @@ import {
   MasterChefContractPositionDefinition,
   MasterChefTemplateContractPositionFetcher,
 } from './master-chef.template.contract-position-fetcher';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type MasterChefV2ContractPositionDataProps = MasterChefContractPositionDataProps & {
   extraRewarderAddress: string;
