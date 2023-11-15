@@ -6,6 +6,7 @@ import { ethers } from 'ethers';
 import { PublicClient } from 'viem';
 
 import { ContractFactory } from '~contract';
+import { ContractViemContractFactory } from '~contract/contracts';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { DefaultDataProps } from '~position/display.interface';
@@ -19,7 +20,6 @@ import { PriceSelectorService } from '~token/selectors/token-price-selector.serv
 import { Network } from '~types/network.interface';
 
 import { IAppToolkit } from './app-toolkit.interface';
-import { ContractViemContractFactory } from '~contract/contracts';
 
 @Injectable()
 export class AppToolkit implements IAppToolkit {
@@ -81,10 +81,6 @@ export class AppToolkit implements IAppToolkit {
   // Positions
 
   getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
-    return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
-  }
-
-  getAppTokenPositionsFromDatabase<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
   }
 
