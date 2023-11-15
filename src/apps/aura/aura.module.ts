@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumAuraDepositTokenFetcher } from './arbitrum/aura.deposit.token-fetcher';
+import { BaseAuraDepositTokenFetcher } from './base/aura.deposit.token-fetcher';
+import { BaseAuraLpFarmContractPositionFetcher } from './base/aura.lp-farm.contract-position-fetcher';
 import { AuraBalancerPoolResolver } from './common/aura.balancer-pool.resolver';
 import { AuraViemContractFactory } from './contracts';
 import { EthereumAuraAuraBalCompounderContractPositionFetcher } from './ethereum/aura.aura-bal-compounder.contract-position-fetcher';
@@ -22,6 +24,9 @@ import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-f
     AuraBalancerPoolResolver,
     // Arbitrum
     ArbitrumAuraDepositTokenFetcher,
+    // Base
+    BaseAuraDepositTokenFetcher,
+    BaseAuraLpFarmContractPositionFetcher,
     // Ethereum
     EthereumAuraAuraBalTokenFetcher,
     EthereumAuraChefContractPositionFetcher,
