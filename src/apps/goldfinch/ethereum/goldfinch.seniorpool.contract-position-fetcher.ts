@@ -12,7 +12,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { GoldfinchContractFactory, GoldfinchSeniorPool } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
+import { GoldfinchSeniorPool } from '../contracts/viem';
 
 export type GoldfinchSeniorPoolDataProps = {
   assetStandard: Standard;
@@ -33,12 +34,12 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoldfinchContractFactory) protected readonly contractFactory: GoldfinchContractFactory,
+    @Inject(GoldfinchViemContractFactory) protected readonly contractFactory: GoldfinchViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GoldfinchSeniorPool {
+  getContract(address: string) {
     return this.contractFactory.goldfinchSeniorPool({ address, network: this.network });
   }
 
@@ -98,7 +99,7 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
     const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
     const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<GoldfinchSeniorPoolDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],
@@ -118,14 +119,16 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
     });
 
     // get balance of user
-    const balanceRaw = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).balanceOf(address);
+    const balanceRaw = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
     // get withdrawal token id of user
-    const tokenId = await multicall.wrap(goldfinchWithdrawalRequestTokenContract).tokenOfOwnerByIndex(address, 0);
+    const tokenId = await multicall
+      .wrap(goldfinchWithdrawalRequestTokenContract)
+      .read.tokenOfOwnerByIndex([address, BigInt(0)]);
 
-    const positionData = await multicall.wrap(goldfinchSeniorPoolContract).withdrawalRequest(tokenId);
+    const positionData = await multicall.wrap(goldfinchSeniorPoolContract).read.withdrawalRequest([tokenId]);
 
     // get FIDU amount supplied
     const suppliedFIDU = [drillBalance(fiduPosition.tokens[0], positionData.fiduRequested.toString())];

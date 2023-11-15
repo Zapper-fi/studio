@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LlamaAirforceContractFactory, LlamaAirforceMerkleDistributor } from '../contracts';
+import { LlamaAirforceViemContractFactory } from '../contracts';
+import { LlamaAirforceMerkleDistributor } from '../contracts/viem';
 
 import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
@@ -30,13 +31,13 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamaAirforceContractFactory) protected readonly contractFactory: LlamaAirforceContractFactory,
+    @Inject(LlamaAirforceViemContractFactory) protected readonly contractFactory: LlamaAirforceViemContractFactory,
     @Inject(EthereumLlamaAirforceMerkleCache) private readonly merkleCache: EthereumLlamaAirforceMerkleCache,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LlamaAirforceMerkleDistributor {
+  getContract(address: string) {
     return this.contractFactory.llamaAirforceMerkleDistributor({ address, network: this.network });
   }
 
@@ -79,7 +80,7 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
     if (!rewardsData) return [0];
 
     const { index, amount } = rewardsData;
-    const isClaimed = await contract.isClaimed(index);
+    const isClaimed = await contract.read.isClaimed([BigInt(index)]);
     if (isClaimed) return [0];
 
     return [amount];

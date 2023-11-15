@@ -4,6 +4,72 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.546.4](https://github.com/Zapper-fi/studio/compare/v0.546.3...v0.546.4) (2023-11-15)
+
+
+### Bug Fixes
+
+* **morpho:** Fix regressions on APY calculations ([#3053](https://github.com/Zapper-fi/studio/issues/3053)) ([55690dd](https://github.com/Zapper-fi/studio/commit/55690ddd8eea4c2da2ffa3d43565be061a9ecdce))
+* **raft:** Fix Raft regression ([#3051](https://github.com/Zapper-fi/studio/issues/3051)) ([d79cecf](https://github.com/Zapper-fi/studio/commit/d79cecf5f5c4ab7a25f89c5a27d30f3d0b085a33))
+
+## [0.546.3](https://github.com/Zapper-fi/studio/compare/v0.546.2...v0.546.3) (2023-11-15)
+
+
+### Bug Fixes
+
+* **studio:** Fix PoolTogether community pool fetcher ([#3049](https://github.com/Zapper-fi/studio/issues/3049)) ([0876d47](https://github.com/Zapper-fi/studio/commit/0876d47f515768bf13a51e81a6ec6f416ad48722))
+
+## [0.546.2](https://github.com/Zapper-fi/studio/compare/v0.546.1...v0.546.2) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** More failing position fetchers ([#3046](https://github.com/Zapper-fi/studio/issues/3046)) ([fac3641](https://github.com/Zapper-fi/studio/commit/fac3641122a032aed7190693606807b52ebec1ce))
+
+## [0.546.1](https://github.com/Zapper-fi/studio/compare/v0.546.0...v0.546.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** Fix remaining viem migration regressions ([#3044](https://github.com/Zapper-fi/studio/issues/3044)) ([55d9b08](https://github.com/Zapper-fi/studio/commit/55d9b0877689fe5955d3978988e1d2a530fd40ff))
+
+## [0.546.0](https://github.com/Zapper-fi/studio/compare/v0.545.2...v0.546.0) (2023-11-14)
+
+
+### Features
+
+* **index-coop:** Add Index Coop Large Cap Index & ETH Trend Index ([#3038](https://github.com/Zapper-fi/studio/issues/3038)) ([cfad834](https://github.com/Zapper-fi/studio/commit/cfad834611a029c4f48c47dd98d383e97686d960))
+* **studio:** Fix migration to Viem issues ([#3043](https://github.com/Zapper-fi/studio/issues/3043)) ([3859bd2](https://github.com/Zapper-fi/studio/commit/3859bd2a6561aa0353160fa04b9a996280591515))
+
+
+### Bug Fixes
+
+* **studio:** Fix linting errors ([#3041](https://github.com/Zapper-fi/studio/issues/3041)) ([7f743cb](https://github.com/Zapper-fi/studio/commit/7f743cb80da6f2ce978bce9102b2d65ab0b5e0ec))
+
+## [0.545.2](https://github.com/Zapper-fi/studio/compare/v0.545.1...v0.545.2) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** Fix multicall call struct types ([#3035](https://github.com/Zapper-fi/studio/issues/3035)) ([8df61a2](https://github.com/Zapper-fi/studio/commit/8df61a2dfdd57069773d64d8438a03d304288c63))
+
+## [0.545.1](https://github.com/Zapper-fi/studio/compare/v0.545.0...v0.545.1) (2023-11-14)
+
+
+### Bug Fixes
+
+* **studio:** Remove CLI from include ([7ae4797](https://github.com/Zapper-fi/studio/commit/7ae4797feb3c772e611f98779bcd3ca583f3d4d8))
+
+## [0.545.0](https://github.com/Zapper-fi/studio/compare/v0.544.1...v0.545.0) (2023-11-14)
+
+
+### Features
+
+* **studio:** Add Viem multicall dataloader and CLI for contract factory ([#3021](https://github.com/Zapper-fi/studio/issues/3021)) ([299f02d](https://github.com/Zapper-fi/studio/commit/299f02db0cb60c84d46a132c459311dfb5b94d77))
+* **studio:** Generate Viem contract factories ([#3025](https://github.com/Zapper-fi/studio/issues/3025)) ([1ab2b0e](https://github.com/Zapper-fi/studio/commit/1ab2b0ea5f4f2322d6b2c0995b59d1bd57555188))
+* **studio:** Migrate all apps to Viem toolkit ([#3026](https://github.com/Zapper-fi/studio/issues/3026)) ([315fdc6](https://github.com/Zapper-fi/studio/commit/315fdc6e5e80819d5435cd5874d8f133da8059d4))
+* **wombat-exchange:** Add new pools ([#3027](https://github.com/Zapper-fi/studio/issues/3027)) ([a14e7d4](https://github.com/Zapper-fi/studio/commit/a14e7d46b8e5c70cb4ec8327fe0bbb89fb3106ac))
+
 ## [0.544.1](https://github.com/Zapper-fi/studio/compare/v0.544.0...v0.544.1) (2023-11-07)
 
 

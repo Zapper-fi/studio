@@ -5,7 +5,8 @@ import { isClaimable, isSupplied } from '~position/position.utils';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MetavaultTradeContractFactory, MetavaultTradeRewardTracker } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
+import { MetavaultTradeRewardTracker } from '../contracts/viem';
 
 type MetavaultTradeFarmType = {
   address: string;
@@ -20,12 +21,12 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetavaultTradeContractFactory) protected readonly contractFactory: MetavaultTradeContractFactory,
+    @Inject(MetavaultTradeViemContractFactory) protected readonly contractFactory: MetavaultTradeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MetavaultTradeRewardTracker {
+  getContract(address: string) {
     return this.contractFactory.metavaultTradeRewardTracker({ address, network: this.network });
   }
 
@@ -54,7 +55,7 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
 
     const depositBalances = await multicall
       .wrap(readerContract)
-      .getDepositBalances(address, [stakedToken.address], [contractPosition.address]);
+      .read.getDepositBalances([address, [stakedToken.address], [contractPosition.address]]);
 
     return depositBalances[0];
   }
@@ -74,7 +75,7 @@ export abstract class MetavaultTradeFarmContractPositionFetcher extends SingleSt
       address: this.readerAddress,
       network: this.network,
     });
-    const stakingInfo = await multicall.wrap(readerContract).getStakingInfo(address, rewardTrackers);
+    const stakingInfo = await multicall.wrap(readerContract).read.getStakingInfo([address, rewardTrackers]);
     return [stakingInfo[0].toString(), stakingInfo[5].toString()];
   }
 }

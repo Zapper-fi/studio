@@ -6,7 +6,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { MahadaoContractFactory, MahadoMahaxLocker } from '../contracts';
+import { MahadaoViemContractFactory } from '../contracts';
+import { MahadoMahaxLocker } from '../contracts/viem';
+import { MahadoMahaxLockerContract } from '../contracts/viem/MahadoMahaxLocker';
 
 @PositionTemplate()
 export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<MahadoMahaxLocker> {
@@ -15,12 +17,12 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MahadaoContractFactory) protected readonly contractFactory: MahadaoContractFactory,
+    @Inject(MahadaoViemContractFactory) protected readonly contractFactory: MahadaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): MahadoMahaxLocker {
+  getEscrowContract(address: string): MahadoMahaxLockerContract {
     return this.contractFactory.mahadoMahaxLocker({ address, network: this.network });
   }
 
@@ -29,14 +31,13 @@ export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTe
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<MahadoMahaxLocker>) {
-    const positionCount = Number(await contract.balanceOf(address));
+    const positionCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(positionCount).map(async i => {
-        const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-        const lockedAmount = await contract.locked(tokenId);
-
-        return Number(lockedAmount.amount);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, BigInt(i)]);
+        const lockedAmount = await contract.read.locked([tokenId]);
+        return Number(lockedAmount[0]);
       }),
     );
 

@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { JonesDaoContractFactory, JonesStakingRewards } from '../contracts';
+import { JonesDaoViemContractFactory } from '../contracts';
+import { JonesStakingRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<JonesStakingRewards> {
@@ -18,17 +19,17 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JonesDaoContractFactory) protected readonly contractFactory: JonesDaoContractFactory,
+    @Inject(JonesDaoViemContractFactory) protected readonly contractFactory: JonesDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): JonesStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.jonesStakingRewards({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const factoryContract = this.contractFactory.jonesStakingRewardsFactory({
       address: '0x2c2082e4062bfd02141adc86cbd5e437201a1cf3',
       network: this.network,
@@ -38,15 +39,17 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
         async i =>
           await multicall
             .wrap(factoryContract)
-            .stakingID(i)
+            .read.stakingID([BigInt(i)])
             .catch(() => null),
       ),
     );
     const stakingIds = _.compact(maybeStakingIds).map(v => Number(v));
     const stakingInfo = await Promise.all(
-      stakingIds.map(async i => await multicall.wrap(factoryContract).stakingRewardsInfoByStakingToken(i)),
+      stakingIds.map(
+        async i => await multicall.wrap(factoryContract).read.stakingRewardsInfoByStakingToken([BigInt(i)]),
+      ),
     );
-    const stakingAddresses = stakingInfo.map(v => v.stakingRewards.toLowerCase());
+    const stakingAddresses = stakingInfo.map(v => v[0].toLowerCase());
 
     return Promise.all(
       stakingAddresses.map(async address => {
@@ -54,7 +57,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
           address,
           network: this.network,
         });
-        const stakedTokenAddress = await multicall.wrap(jonesStakingContract).stakingToken();
+        const stakedTokenAddress = await multicall.wrap(jonesStakingContract).read.stakingToken();
 
         return {
           address,
@@ -66,24 +69,25 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFa
   }
 
   getRewardRates({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.rewardRateJONES();
+    return contract.read.rewardRateJONES();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    const periodFinish = await contract.read.periodFinish();
+    return Number(periodFinish) > Math.floor(Date.now() / 1000);
   }
 
   getStakedTokenBalance({
     address,
     contract,
   }: GetTokenBalancesParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

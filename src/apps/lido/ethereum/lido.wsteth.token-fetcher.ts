@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { LidoContractFactory, LidoWsteth } from '../contracts';
+import { LidoViemContractFactory } from '../contracts';
+import { LidoWsteth } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLidoWstethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoWsteth> {
@@ -15,12 +16,12 @@ export class EthereumLidoWstethTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LidoContractFactory) protected readonly contractFactory: LidoContractFactory,
+    @Inject(LidoViemContractFactory) protected readonly contractFactory: LidoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LidoWsteth {
+  getContract(address: string) {
     return this.contractFactory.lidoWsteth({ network: this.network, address });
   }
 
@@ -29,11 +30,11 @@ export class EthereumLidoWstethTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<LidoWsteth>) {
-    return [{ address: await contract.stETH(), network: this.network }];
+    return [{ address: await contract.read.stETH(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<LidoWsteth>) {
-    const pricePerShareRaw = await contract.stEthPerToken();
+    const pricePerShareRaw = await contract.read.stEthPerToken();
     return [Number(pricePerShareRaw) / 10 ** appToken.decimals];
   }
 }

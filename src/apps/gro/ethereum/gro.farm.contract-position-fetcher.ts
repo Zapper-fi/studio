@@ -9,7 +9,9 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GroContractFactory, GroLpTokenStaker } from '../contracts';
+import { GroViemContractFactory } from '../contracts';
+import { GroLpTokenStaker } from '../contracts/viem';
+import { GroLpTokenStakerContract } from '../contracts/viem/GroLpTokenStaker';
 
 @PositionTemplate()
 export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GroLpTokenStaker> {
@@ -19,7 +21,7 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GroContractFactory) private readonly contractFactory: GroContractFactory,
+    @Inject(GroViemContractFactory) private readonly contractFactory: GroViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -28,28 +30,28 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
     return this.contractFactory.groLpTokenStaker({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GroLpTokenStaker): Promise<BigNumberish> {
-    return contract.poolLength();
+  async getPoolLength(contract: GroLpTokenStakerContract): Promise<BigNumberish> {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GroLpTokenStaker, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: GroLpTokenStakerContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[3]);
   }
 
-  async getRewardTokenAddress(contract: GroLpTokenStaker) {
-    return contract.poolInfo(0).then(v => v.lpToken);
+  async getRewardTokenAddress(contract: GroLpTokenStakerContract) {
+    return contract.read.poolInfo([BigInt(0)]).then(v => v[3]);
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<GroLpTokenStaker>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<GroLpTokenStaker>) {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<GroLpTokenStaker>): Promise<BigNumberish> {
-    return contract.groPerBlock();
+    return contract.read.groPerBlock();
   }
 
   async getStakedTokenBalance({
@@ -57,7 +59,7 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GroLpTokenStaker>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -65,6 +67,6 @@ export class EthereumGroFarmContractPositionFetcher extends MasterChefTemplateCo
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GroLpTokenStaker>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.rewardDebt);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[1]);
   }
 }

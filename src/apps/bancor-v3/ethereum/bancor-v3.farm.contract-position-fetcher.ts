@@ -9,7 +9,9 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BancorV3ContractFactory, StandardRewards } from '../contracts';
+import { BancorV3ViemContractFactory } from '../contracts';
+import { StandardRewards } from '../contracts/viem';
+import { StandardRewardsContract } from '../contracts/viem/StandardRewards';
 
 @PositionTemplate()
 export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StandardRewards> {
@@ -18,25 +20,25 @@ export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BancorV3ContractFactory) protected readonly contractFactory: BancorV3ContractFactory,
+    @Inject(BancorV3ViemContractFactory) protected readonly contractFactory: BancorV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StandardRewards {
+  getContract(address: string) {
     return this.contractFactory.standardRewards({ address, network: this.network });
   }
 
-  async getPoolLength(contract: StandardRewards) {
-    return contract.programIds().then(ids => ids.length);
+  async getPoolLength(contract: StandardRewardsContract) {
+    return contract.read.programIds().then(ids => ids.length);
   }
 
-  async getStakedTokenAddress(contract: StandardRewards, poolIndex: number) {
-    return contract.programs([poolIndex + 1]).then(v => v[0][2]);
+  async getStakedTokenAddress(contract: StandardRewardsContract, poolIndex: number) {
+    return contract.read.programs([[BigInt(poolIndex + 1)]]).then(v => v[0][2]);
   }
 
-  async getRewardTokenAddress(contract: StandardRewards, poolIndex: number) {
-    return contract.programs([poolIndex + 1]).then(v => v[0][3]);
+  async getRewardTokenAddress(contract: StandardRewardsContract, poolIndex: number) {
+    return contract.read.programs([[BigInt(poolIndex + 1)]]).then(v => v[0][3]);
   }
 
   async getTotalAllocPoints(_params: GetMasterChefDataPropsParams<StandardRewards>) {
@@ -56,7 +58,7 @@ export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StandardRewards>): Promise<BigNumberish> {
-    return contract.providerStake(address, contractPosition.dataProps.poolIndex + 1);
+    return contract.read.providerStake([address, BigInt(contractPosition.dataProps.poolIndex + 1)]);
   }
 
   getRewardTokenBalance({
@@ -64,6 +66,6 @@ export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StandardRewards>): Promise<BigNumberish> {
-    return contract.pendingRewards(address, [contractPosition.dataProps.poolIndex + 1]);
+    return contract.read.pendingRewards([address, [BigInt(contractPosition.dataProps.poolIndex + 1)]]);
   }
 }

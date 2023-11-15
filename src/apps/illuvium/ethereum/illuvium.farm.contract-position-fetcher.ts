@@ -8,7 +8,8 @@ import { isSupplied } from '~position/position.utils';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { IlluviumContractFactory, IlluviumCorePool } from '../contracts';
+import { IlluviumViemContractFactory } from '../contracts';
+import { IlluviumCorePool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumCorePool> {
@@ -16,12 +17,12 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IlluviumContractFactory) protected readonly contractFactory: IlluviumContractFactory,
+    @Inject(IlluviumViemContractFactory) protected readonly contractFactory: IlluviumViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IlluviumCorePool {
+  getContract(address: string) {
     return this.contractFactory.illuviumCorePool({ address, network: this.network });
   }
 
@@ -30,11 +31,11 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
   }
 
   getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<IlluviumCorePool>) {
-    return contract.poolToken();
+    return contract.read.poolToken();
   }
 
   getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<IlluviumCorePool>) {
-    return contract.ilv();
+    return contract.read.ilv();
   }
 
   async getRewardRates() {
@@ -54,10 +55,12 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
     let voidAmountBN = new BigNumber(0);
     if (stakedToken.symbol === 'ILV') {
       const LAST_V1_YIELD_CREATED = 1642660625;
-      const depositsLength = Number(await contract.getDepositsLength(address));
+      const depositsLength = Number(await contract.read.getDepositsLength([address]));
       const depositIndexes = range(0, depositsLength);
-      const deposits = await Promise.all(depositIndexes.map(v => contract.getDeposit(address, v)));
-      const v1YieldMinted = await Promise.all(depositIndexes.map(v => v2StakingContract.v1YieldMinted(address, v)));
+      const deposits = await Promise.all(depositIndexes.map(v => contract.read.getDeposit([address, BigInt(v)])));
+      const v1YieldMinted = await Promise.all(
+        depositIndexes.map(v => v2StakingContract.read.v1YieldMinted([address, BigInt(v)])),
+      );
 
       const voidDeposits = deposits.filter((v, i) => {
         const isAfterLastV1Yield = Number(v.lockedFrom) > LAST_V1_YIELD_CREATED;
@@ -68,7 +71,7 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
       voidAmountBN = voidDeposits.reduce((acc, v) => acc.plus(v.tokenAmount.toString()), new BigNumber(0));
     }
 
-    const stakedBalance = await contract.balanceOf(address);
+    const stakedBalance = await contract.read.balanceOf([address]);
     return new BigNumber(stakedBalance.toString()).minus(voidAmountBN).toString();
   }
 

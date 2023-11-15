@@ -117,7 +117,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '820723',
   },
   {
     name: 've_for_at',
@@ -139,7 +138,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '249417',
   },
   {
     name: 'checkpoint_total_supply',
@@ -147,7 +145,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '10592405',
   },
   {
     name: 'claim',
@@ -194,7 +191,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '26281905',
   },
   {
     name: 'burn',
@@ -212,7 +208,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '823450',
   },
   {
     name: 'commit_admin',
@@ -225,7 +220,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37898',
   },
   {
     name: 'apply_admin',
@@ -233,7 +227,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '39534',
   },
   {
     name: 'toggle_allow_checkpoint_token',
@@ -241,7 +234,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '38673',
   },
   {
     name: 'kill_me',
@@ -249,7 +241,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '39587',
   },
   {
     name: 'recover_balance',
@@ -267,7 +258,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '7778',
   },
   {
     name: 'start_time',
@@ -280,7 +270,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1541',
   },
   {
     name: 'time_cursor',
@@ -293,7 +282,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1571',
   },
   {
     name: 'time_cursor_of',
@@ -311,7 +299,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1816',
   },
   {
     name: 'user_epoch_of',
@@ -329,7 +316,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1846',
   },
   {
     name: 'last_token_time',
@@ -342,7 +328,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1661',
   },
   {
     name: 'tokens_per_week',
@@ -360,7 +345,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1800',
   },
   {
     name: 'voting_escrow',
@@ -373,7 +357,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1721',
   },
   {
     name: 'token',
@@ -386,7 +369,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1751',
   },
   {
     name: 'total_received',
@@ -399,7 +381,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1781',
   },
   {
     name: 'token_last_balance',
@@ -412,7 +393,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1811',
   },
   {
     name: 've_supply',
@@ -430,7 +410,6 @@ export const pickleVotingEscrowRewardAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1950',
   },
   {
     name: 'admin',
@@ -443,7 +422,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1871',
   },
   {
     name: 'future_admin',
@@ -456,7 +434,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1901',
   },
   {
     name: 'can_checkpoint_token',
@@ -469,7 +446,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1931',
   },
   {
     name: 'emergency_return',
@@ -482,7 +458,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1961',
   },
   {
     name: 'is_killed',
@@ -495,7 +470,6 @@ export const pickleVotingEscrowRewardAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1991',
   },
 ] as const;
 

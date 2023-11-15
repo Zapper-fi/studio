@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -14,8 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { RadiantCapitalContractFactory } from '../contracts';
-import { RadiantCapitalPlatformFees } from '../contracts/ethers/RadiantCapitalPlatformFees';
+import { RadiantCapitalViemContractFactory } from '../contracts';
+import { RadiantCapitalPlatformFees } from '../contracts/viem/RadiantCapitalPlatformFees';
 
 @PositionTemplate()
 export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<RadiantCapitalPlatformFees> {
@@ -23,7 +24,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RadiantCapitalContractFactory) private readonly contractFactory: RadiantCapitalContractFactory,
+    @Inject(RadiantCapitalViemContractFactory) private readonly contractFactory: RadiantCapitalViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -39,8 +40,8 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RadiantCapitalPlatformFees>) {
     const [rewards, radiantTokenAddressRaw] = await Promise.all([
-      contract.claimableRewards(ZERO_ADDRESS),
-      contract.stakingToken(),
+      contract.read.claimableRewards([ZERO_ADDRESS]),
+      contract.read.stakingToken(),
     ]);
     const rewardTokenAddressesRaw = rewards
       .map(x => x.token.toLowerCase())
@@ -88,19 +89,19 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
     contractPosition,
   }: GetTokenBalancesParams<RadiantCapitalPlatformFees>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
-      contract.lockedBalances(address),
-      contract.withdrawableBalance(address),
-      contract.claimableRewards(address),
+      contract.read.lockedBalances([address]),
+      contract.read.withdrawableBalance([address]),
+      contract.read.claimableRewards([address]),
     ]);
 
-    const withdrawableBalanceRaw = withdrawableDataRaw.amount.sub(withdrawableDataRaw.penaltyAmount).toString();
+    const withdrawableBalanceRaw = BigNumber.from(withdrawableDataRaw[0]).sub(withdrawableDataRaw[1]).toString();
 
     return contractPosition.tokens.map((token, idx) => {
-      if (idx === 0) return lockedBalancesData.total; // Locked RDNT
+      if (idx === 0) return lockedBalancesData[0]; // Locked RDNT
       if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked RDNT
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
-        ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,
+        ({ token: tokenAddressRaw }) => tokenAddressRaw.toLowerCase() === token.address,
       );
 
       return rewardTokenMatch?.amount ?? 0;

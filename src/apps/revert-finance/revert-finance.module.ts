@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
+import { UniswapV3ViemContractFactory } from '~apps/uniswap-v3/contracts';
 
 import { ArbitrumRevertFinanceCompoundorRewardsContractPositionFetcher } from './arbitrum/revert-finance.compoundor-rewards.contract-position-fetcher';
 import { ArbitrumRevertFinanceCompoundorContractPositionFetcher } from './arbitrum/revert-finance.compoundor.contract-position-fetcher';
-import { RevertFinanceContractFactory } from './contracts';
+import { RevertFinanceViemContractFactory } from './contracts';
 import { EthereumRevertFinanceCompoundorRewardsContractPositionFetcher } from './ethereum/revert-finance.compoundor-rewards.contract-position-fetcher';
 import { EthereumRevertFinanceCompoundorContractPositionFetcher } from './ethereum/revert-finance.compoundor.contract-position-fetcher';
 import { OptimismRevertFinanceCompoundorRewardsContractPositionFetcher } from './optimism/revert-finance.compoundor-rewards.contract-position-fetcher';
@@ -16,8 +16,8 @@ import { PolygonRevertFinanceCompoundorContractPositionFetcher } from './polygon
 
 @Module({
   providers: [
-    RevertFinanceContractFactory,
-    UniswapV3ContractFactory,
+    RevertFinanceViemContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumRevertFinanceCompoundorContractPositionFetcher,
     ArbitrumRevertFinanceCompoundorRewardsContractPositionFetcher,

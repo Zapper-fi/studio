@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { constants } from 'ethers';
+import { BigNumber, constants } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -8,7 +8,7 @@ import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-import { MorphoAaveV2Lens, MorphoAaveV3, MorphoCompoundLens, MorphoContractFactory } from '../contracts';
+import { MorphoViemContractFactory } from '../contracts';
 
 export type EthereumMorphoPositionPresenterDataProps = {
   healthFactorMA2: number;
@@ -23,56 +23,59 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
+    @Inject(MorphoViemContractFactory) protected readonly contractFactory: MorphoViemContractFactory,
   ) {
     super();
   }
 
   override async dataProps(address: string): Promise<EthereumMorphoPositionPresenterDataProps | undefined> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
+
     const aaveV2Lens = multicall.wrap(
       this.contractFactory.morphoAaveV2Lens({
         address: this.morphoAaveLensAddress,
         network: this.network,
       }),
-    ) as MorphoAaveV2Lens;
+    );
+
     const compoundLens = multicall.wrap(
       this.contractFactory.morphoCompoundLens({
         address: this.morphoCompoundLensAddress,
         network: this.network,
       }),
-    ) as MorphoCompoundLens;
+    );
 
     const morphoAaveV3 = multicall.wrap(
       this.contractFactory.morphoAaveV3({
         address: this.morphoAaveV3Address,
         network: this.network,
       }),
-    ) as MorphoAaveV3;
+    );
 
     const [healthFactorMA2, healthFactorMC, liquidityDataMA3] = await Promise.all([
-      aaveV2Lens.getUserHealthFactor(address).catch(err => {
-        if (isMulticallUnderlyingError(err)) return;
+      aaveV2Lens.read.getUserHealthFactor([address]).catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
-      compoundLens.getUserHealthFactor(address, []).catch(err => {
-        if (isMulticallUnderlyingError(err)) return;
+      compoundLens.read.getUserHealthFactor([address, []]).catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
-      morphoAaveV3.liquidityData(address).catch(err => {
-        if (isMulticallUnderlyingError(err)) return;
+      morphoAaveV3.read.liquidityData([address]).catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
     ]);
 
     if (!healthFactorMA2 || !healthFactorMC || !liquidityDataMA3) return;
+
     return {
       healthFactorMA2: +formatUnits(healthFactorMA2),
       healthFactorMC: +formatUnits(healthFactorMC),
       healthFactorMA3: +formatUnits(
-        liquidityDataMA3.debt.isZero()
+        liquidityDataMA3[2] === BigInt(0)
           ? constants.MaxInt256
-          : liquidityDataMA3.maxDebt.mul(parseUnits('1')).div(liquidityDataMA3.debt),
+          : BigNumber.from(liquidityDataMA3[1]).mul(parseUnits('1')).div(liquidityDataMA3[2]),
       ),
     };
   }

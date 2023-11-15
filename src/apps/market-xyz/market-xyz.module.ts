@@ -5,7 +5,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { AvalancheMarketXyzBorrowContractPositionFetcher } from './avalanche/market-xyz.borrow.contract-position-fetcher';
 import { AvalancheMarketXyzPositionPresenter } from './avalanche/market-xyz.position-presenter';
 import { AvalancheMarketXyzSupplyTokenFetcher } from './avalanche/market-xyz.supply.token-fetcher';
-import { MarketXyzContractFactory } from './contracts';
+import { MarketXyzViemContractFactory } from './contracts';
 import { FantomMarketXyzBorrowContractPositionFetcher } from './fantom/market-xyz.borrow.contract-position-fetcher';
 import { FantomMarketXyzPositionPresenter } from './fantom/market-xyz.position-presenter';
 import { FantomMarketXyzSupplyTokenFetcher } from './fantom/market-xyz.supply.token-fetcher';
@@ -15,7 +15,7 @@ import { PolygonMarketXyzSupplyTokenFetcher } from './polygon/market-xyz.supply.
 
 @Module({
   providers: [
-    MarketXyzContractFactory,
+    MarketXyzViemContractFactory,
     // Avalanche
     AvalancheMarketXyzBorrowContractPositionFetcher,
     AvalancheMarketXyzPositionPresenter,

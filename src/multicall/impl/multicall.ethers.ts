@@ -7,17 +7,18 @@ import { Multicall } from '~contract/contracts';
 import { DEFAULT_DATALOADER_OPTIONS } from '../multicall.constants';
 import { MulticallContract } from '../multicall.contract';
 import { ContractCall, IMulticallWrapper, TargetContract } from '../multicall.interface';
+import { MulticallCallStruct } from '~multicall/multicall.types';
 
 export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
 
 export type MulticallCallbackHooks = {
-  beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
+  beforeCallHook?: (calls: ContractCall[], callRequests: MulticallCallStruct[]) => void;
 };
 
 export class EthersMulticallDataLoader implements IMulticallWrapper {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, ethers.utils.Result>;
-  private beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
+  private beforeCallHook?: (calls: ContractCall[], callRequests: MulticallCallStruct[]) => void;
 
   constructor(
     multicall: Multicall,

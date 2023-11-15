@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -8,12 +8,11 @@ import { MetaType } from '~position/position.interface';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import {
-  PickleContractFactory,
-  PickleVotingEscrow,
-  PickleVotingEscrowReward,
-  PickleVotingEscrowRewardV2,
-} from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
+import { PickleVotingEscrow, PickleVotingEscrowReward } from '../contracts/viem';
+import { PickleVotingEscrowContract } from '../contracts/viem/PickleVotingEscrow';
+import { PickleVotingEscrowRewardContract } from '../contracts/viem/PickleVotingEscrowReward';
+import { PickleVotingEscrowRewardV2Contract } from '../contracts/viem/PickleVotingEscrowRewardV2';
 
 @PositionTemplate()
 export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
@@ -28,33 +27,33 @@ export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEsc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): PickleVotingEscrow {
+  getEscrowContract(address: string) {
     return this.contractFactory.pickleVotingEscrow({ address, network: this.network });
   }
 
-  getRewardContract(address: string): PickleVotingEscrowReward {
+  getRewardContract(address: string) {
     return this.contractFactory.pickleVotingEscrowReward({ address, network: this.network });
   }
 
-  getEscrowedTokenAddress(contract: PickleVotingEscrow): Promise<string> {
-    return contract.token();
+  getEscrowedTokenAddress(contract: PickleVotingEscrowContract): Promise<string> {
+    return contract.read.token();
   }
 
-  getRewardTokenAddress(contract: PickleVotingEscrowReward): Promise<string> {
-    return contract.token();
+  getRewardTokenAddress(contract: PickleVotingEscrowRewardContract): Promise<string> {
+    return contract.read.token();
   }
 
-  getEscrowedTokenBalance(address: string, contract: PickleVotingEscrow): Promise<BigNumberish> {
-    return contract.locked(address).then(v => v.amount);
+  getEscrowedTokenBalance(address: string, contract: PickleVotingEscrowContract): Promise<BigNumberish> {
+    return contract.read.locked([address]).then(v => v[0]);
   }
 
-  getRewardTokenBalance(address: string, contract: PickleVotingEscrowReward): Promise<BigNumberish> {
-    return contract.callStatic['claim()']({ from: address });
+  getRewardTokenBalance(address: string, contract: PickleVotingEscrowRewardContract): Promise<BigNumberish> {
+    return contract.simulate.claim({ account: address }).then(v => v.result);
   }
 
   // Overriding template methods to accomodate dual rewards & new rewarder address
@@ -97,11 +96,11 @@ export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEsc
 
   async getRewardTokenBalances(
     address: string,
-    contract: PickleVotingEscrowReward,
-    contract2: PickleVotingEscrowRewardV2,
+    contract: PickleVotingEscrowRewardContract,
+    contract2: PickleVotingEscrowRewardV2Contract,
   ): Promise<[BigNumberish, BigNumberish]> {
-    const pickleV1Claim = await contract.callStatic['claim()']({ from: address });
-    const v2Rewards: [BigNumberish, BigNumberish] = await contract2.callStatic['claim()']({ from: address });
-    return [pickleV1Claim.add(v2Rewards[0]), v2Rewards[1]];
+    const pickleV1Claim = await contract.simulate.claim({ account: address }).then(v => v.result);
+    const v2Rewards = await contract2.simulate.claim({ account: address }).then(v => v.result);
+    return [BigNumber.from(pickleV1Claim).add(v2Rewards[0]), BigNumber.from(v2Rewards[1])];
   }
 }

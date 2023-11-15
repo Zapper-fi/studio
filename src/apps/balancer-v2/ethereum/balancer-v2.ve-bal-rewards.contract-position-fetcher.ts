@@ -7,7 +7,8 @@ import { isClaimable } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { BalancerFeeDistributor, BalancerV2ContractFactory } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerFeeDistributor } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BalancerFeeDistributor> {
@@ -15,12 +16,12 @@ export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
+    @Inject(BalancerV2ViemContractFactory) protected readonly contractFactory: BalancerV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BalancerFeeDistributor {
+  getContract(address: string) {
     return this.contractFactory.balancerFeeDistributor({ address, network: this.network });
   }
 
@@ -64,7 +65,9 @@ export class EthereumBalancerV2VeBalRewardsContractPositionFetcher extends Contr
   }: GetTokenBalancesParams<BalancerFeeDistributor>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const claimableTokenAddresses = claimableTokens.map(x => x.address);
-    const claimableBalances = await contract.callStatic.claimTokens(address, claimableTokenAddresses);
+    const claimableBalances = await contract.simulate
+      .claimTokens([address, claimableTokenAddresses])
+      .then(v => v.result);
 
     return [...claimableBalances];
   }

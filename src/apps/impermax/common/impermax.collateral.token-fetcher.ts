@@ -5,19 +5,20 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetAddressesParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { ImpermaxContractFactory, Collateral } from '../contracts';
+import { ImpermaxViemContractFactory } from '../contracts';
+import { Collateral } from '../contracts/viem';
 
 export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePositionFetcher<Collateral> {
   abstract factoryAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(ImpermaxContractFactory) private readonly contractFactory: ImpermaxContractFactory,
+    @Inject(ImpermaxViemContractFactory) private readonly contractFactory: ImpermaxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Collateral {
+  getContract(address: string) {
     return this.contractFactory.collateral({ address, network: this.network });
   }
 
@@ -26,11 +27,11 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
       this.contractFactory.factory({ network: this.network, address: this.factoryAddress }),
     );
 
-    const poolLength = await factoryContract.allLendingPoolsLength().then(length => Number(length));
+    const poolLength = await factoryContract.read.allLendingPoolsLength().then(length => Number(length));
     const collateralAddresses = await Promise.all(
       _.range(poolLength).map(async i => {
-        const poolAddress = await factoryContract.allLendingPools(i);
-        const { initialized, collateral } = await factoryContract.getLendingPool(poolAddress);
+        const poolAddress = await factoryContract.read.allLendingPools([BigInt(i)]);
+        const [initialized, , collateral] = await factoryContract.read.getLendingPool([poolAddress]);
         return initialized ? collateral : null;
       }),
     );
@@ -39,7 +40,7 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Collateral>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare() {

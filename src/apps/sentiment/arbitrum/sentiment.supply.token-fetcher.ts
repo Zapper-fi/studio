@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { SentimentContractFactory, SentimentLToken } from '../contracts';
+import { SentimentViemContractFactory } from '../contracts';
+import { SentimentLToken } from '../contracts/viem';
 
 export type SentimentSupplyAppTokenDefinition = {
   address: string;
@@ -30,27 +31,27 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SentimentContractFactory) protected readonly contractFactory: SentimentContractFactory,
+    @Inject(SentimentViemContractFactory) protected readonly contractFactory: SentimentViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SentimentLToken {
+  getContract(address: string) {
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
   async getDefinitions(): Promise<SentimentSupplyAppTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const registryContract = this.contractFactory.sentimentRegistry({
       address: '0x17b07cfbab33c0024040e7c299f8048f4a49679b',
       network: this.network,
     });
-    const marketAddressRaw = await multicall.wrap(registryContract).getAllLTokens();
+    const marketAddressRaw = await multicall.wrap(registryContract).read.getAllLTokens();
 
     const definitions = await Promise.all(
       marketAddressRaw.map(async address => {
         const lTokenContract = this.contractFactory.sentimentLToken({ address, network: this.network });
-        const underlyingTokenAddressRaw = await multicall.wrap(lTokenContract).asset();
+        const underlyingTokenAddressRaw = await multicall.wrap(lTokenContract).read.asset();
         return {
           address,
           underlyingTokenAddress: underlyingTokenAddressRaw,
@@ -73,8 +74,8 @@ export class ArbitrumSentimentSupplyTokenFetcher extends AppTokenTemplatePositio
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<SentimentLToken>) {
     const decimals = appToken.tokens[0].decimals;
-    const oneUnit = ethers.BigNumber.from(10).pow(decimals);
-    const pricePerShareRaw = await contract.convertToAssets(oneUnit);
+    const oneUnit = ethers.BigNumber.from(10).pow(decimals).toString();
+    const pricePerShareRaw = await contract.read.convertToAssets([BigInt(oneUnit)]);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
 
     return [pricePerShare];

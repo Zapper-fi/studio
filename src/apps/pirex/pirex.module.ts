@@ -6,7 +6,7 @@ import { ArbitrumPirexApxglpTokenFetcher } from './arbitrum/pirex.apxglp.token-f
 import { ArbitrumPirexApxgmxTokenFetcher } from './arbitrum/pirex.apxgmx.token-fetcher';
 import { ArbitrumPirexPxGlpTokenFetcher } from './arbitrum/pirex.pxglp.token-fetcher';
 import { ArbitrumPirexPxGmxTokenFetcher } from './arbitrum/pirex.pxgmx.token-fetcher';
-import { PirexContractFactory } from './contracts';
+import { PirexViemContractFactory } from './contracts';
 import { EthereumPirexApxBtrflyTokenFetcher } from './ethereum/pirex.apxbtrfly.token-fetcher';
 import { EthereumPirexPxBtrflyTokenFetcher } from './ethereum/pirex.pxbtrfly.token-fetcher';
 import { EthereumPirexPxCvxTokenFetcher } from './ethereum/pirex.pxcvx.token-fetcher';
@@ -20,7 +20,7 @@ import { EthereumPirexPxCvxTokenFetcher } from './ethereum/pirex.pxcvx.token-fet
     EthereumPirexApxBtrflyTokenFetcher,
     EthereumPirexPxCvxTokenFetcher,
     EthereumPirexPxBtrflyTokenFetcher,
-    PirexContractFactory,
+    PirexViemContractFactory,
   ],
 })
 export class PirexAppModule extends AbstractApp() {}

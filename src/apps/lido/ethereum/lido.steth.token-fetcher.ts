@@ -4,8 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { LidoContractFactory } from '../contracts';
-import { LidoSteth } from '../contracts/ethers/LidoSteth';
+import { LidoViemContractFactory } from '../contracts';
+import { LidoSteth } from '../contracts/viem/LidoSteth';
 
 @PositionTemplate()
 export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoSteth> {
@@ -13,12 +13,12 @@ export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LidoContractFactory) protected readonly contractFactory: LidoContractFactory,
+    @Inject(LidoViemContractFactory) protected readonly contractFactory: LidoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LidoSteth {
+  getContract(address: string) {
     return this.contractFactory.lidoSteth({ network: this.network, address });
   }
 

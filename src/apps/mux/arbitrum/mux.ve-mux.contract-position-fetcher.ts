@@ -13,8 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MuxContractFactory } from '../contracts';
-import { MuxVeMux } from '../contracts/ethers/MuxVeMux';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxVeMux } from '../contracts/viem/MuxVeMux';
 
 @PositionTemplate()
 export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MuxVeMux> {
@@ -22,12 +22,12 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MuxVeMux {
+  getContract(address: string) {
     return this.contractFactory.muxVeMux({ address, network: this.network });
   }
 
@@ -39,17 +39,17 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.mcbToken(),
+        address: await contract.read.mcbToken(),
         network: this.network,
       },
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.muxToken(),
+        address: await contract.read.muxToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.muxToken(),
+        address: await contract.read.muxToken(),
         network: this.network,
       },
       {
@@ -80,11 +80,17 @@ export class ArbitrumMuxVeMuxContractPositionFetcher extends ContractPositionTem
     });
 
     const [staked, feeRewards, muxRewards] = await Promise.all([
-      contract.depositedBalances(address),
-      multicall.wrap(veFeeRewardTracker).callStatic.claimable(address),
-      multicall.wrap(veMuxRewardTracker).callStatic.claimable(address),
+      contract.read.depositedBalances([address]),
+      multicall
+        .wrap(veFeeRewardTracker)
+        .simulate.claimable([address])
+        .then(v => v.result),
+      multicall
+        .wrap(veMuxRewardTracker)
+        .simulate.claimable([address])
+        .then(v => v.result),
     ]);
 
-    return [staked.mcbAmount, staked.muxAmount, muxRewards, feeRewards];
+    return [staked[0], staked[1], muxRewards, feeRewards];
   }
 }

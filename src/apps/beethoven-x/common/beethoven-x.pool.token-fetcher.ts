@@ -6,7 +6,7 @@ import {
   BalancerV2PoolTokenDefinition,
   BalancerV2PoolTokenFetcher,
 } from '~apps/balancer-v2/common/balancer-v2.pool.token-fetcher';
-import { BalancerPool } from '~apps/balancer-v2/contracts';
+import { BalancerPool } from '~apps/balancer-v2/contracts/viem';
 import { GetDisplayPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 type GetPoolsResponse = {
@@ -66,16 +66,16 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
       (definition.poolType === 'WEIGHTED' && this.weightedPoolV2Factories.includes(definition.factory))
     ) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getActualSupply();
+      return multicall.wrap(phantomPoolContract).read.getActualSupply();
     } else if (definition.poolType === 'LINEAR' || definition.poolType === 'PHANTOM_STABLE') {
       const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getVirtualSupply();
+      return multicall.wrap(phantomPoolContract).read.getVirtualSupply();
     }
 
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<BalancerPool>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

@@ -6,7 +6,7 @@ import { ArbitrumAuraDepositTokenFetcher } from './arbitrum/aura.deposit.token-f
 import { BaseAuraDepositTokenFetcher } from './base/aura.deposit.token-fetcher';
 import { BaseAuraLpFarmContractPositionFetcher } from './base/aura.lp-farm.contract-position-fetcher';
 import { AuraBalancerPoolResolver } from './common/aura.balancer-pool.resolver';
-import { AuraContractFactory } from './contracts';
+import { AuraViemContractFactory } from './contracts';
 import { EthereumAuraAuraBalCompounderContractPositionFetcher } from './ethereum/aura.aura-bal-compounder.contract-position-fetcher';
 import { EthereumAuraAuraBalStakingContractPositionFetcher } from './ethereum/aura.aura-bal-staking.contract-position-fetcher';
 import { EthereumAuraAuraBalTokenFetcher } from './ethereum/aura.aura-bal.token-fetcher';
@@ -19,7 +19,7 @@ import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-f
 
 @Module({
   providers: [
-    AuraContractFactory,
+    AuraViemContractFactory,
     // helpers
     AuraBalancerPoolResolver,
     // Arbitrum

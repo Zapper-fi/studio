@@ -17,37 +17,41 @@ import {
   MasterChefContractPositionDefinition,
   MasterChefTemplateContractPositionFetcher,
 } from './master-chef.template.contract-position-fetcher';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type MasterChefV2ContractPositionDataProps = MasterChefContractPositionDataProps & {
   extraRewarderAddress: string;
 };
 
 export type GetMasterChefV2ExtraRewardTokenRewardRates<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > = GetMasterChefDataPropsParams<T> & {
-  rewarderContract: V;
+  rewarderContract: GetContractReturnType<V, PublicClient>;
 };
 
 export type GetMasterChefV2ExtraRewardTokenBalancesParams<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > = GetMasterChefTokenBalancesParams<T> & {
-  rewarderContract: V;
+  rewarderContract: GetContractReturnType<V, PublicClient>;
 };
 
 export abstract class MasterChefV2TemplateContractPositionFetcher<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > extends MasterChefTemplateContractPositionFetcher<T, MasterChefV2ContractPositionDataProps> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
 
   // Tokens
-  abstract getExtraRewarder(contract: T, poolIndex: number): Promise<string>;
-  abstract getExtraRewarderContract(address: string): V;
-  abstract getExtraRewardTokenAddresses(contract: V, poolIndex: number): Promise<string[]>;
+  abstract getExtraRewarder(contract: GetContractReturnType<T, PublicClient>, poolIndex: number): Promise<string>;
+  abstract getExtraRewarderContract(address: string): GetContractReturnType<V, PublicClient>;
+  abstract getExtraRewardTokenAddresses(
+    contract: GetContractReturnType<V, PublicClient>,
+    poolIndex: number,
+  ): Promise<string[]>;
 
   // APY
   abstract getExtraRewardTokenRewardRates(

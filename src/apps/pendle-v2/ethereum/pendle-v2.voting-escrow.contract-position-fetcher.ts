@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { PendleV2ContractFactory, PendleVotingEscrow } from '../contracts';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendleVotingEscrow } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumPendleV2VotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<PendleVotingEscrow> {
@@ -14,7 +15,7 @@ export class EthereumPendleV2VotingEscrowContractPositionFetcher extends VotingE
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
+    @Inject(PendleV2ViemContractFactory) protected readonly pendleV2ContractFactory: PendleV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -24,10 +25,10 @@ export class EthereumPendleV2VotingEscrowContractPositionFetcher extends VotingE
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<PendleVotingEscrow>) {
-    return contract.pendle();
+    return contract.read.pendle();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<PendleVotingEscrow>) {
-    return contract.positionData(address).then(data => data.amount);
+    return contract.read.positionData([address]).then(data => data[0]);
   }
 }

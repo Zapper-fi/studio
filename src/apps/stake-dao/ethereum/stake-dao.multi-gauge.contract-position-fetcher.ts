@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { StakeDaoContractFactory, StakeDaoMultiGauge } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoMultiGauge } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StakeDaoMultiGauge> {
@@ -20,12 +21,12 @@ export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoMultiGauge {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoMultiGauge({ address, network: this.network });
   }
 
@@ -41,7 +42,7 @@ export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractP
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.stakingToken(),
+        address: await contract.read.stakingToken(),
         network: this.network,
       },
     ];
@@ -52,7 +53,7 @@ export class EthereumStakeDaoMultiGaugeContractPositionFetcher extends ContractP
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakeDaoMultiGauge>) {
-    const stakes = await contract.lockedStakesOf(address);
+    const stakes = await contract.read.lockedStakesOf([address]);
     const balanceRaw = stakes.map(x => x.liquidity);
 
     const sum = balanceRaw.reduce((sum, cur) => sum.add(cur), BigNumber.from(0));

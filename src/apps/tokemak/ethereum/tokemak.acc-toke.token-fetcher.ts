@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { TokemakContractFactory } from '../contracts';
-import { TokemakAccToke } from '../contracts/ethers/TokemakAccToke';
+import { TokemakViemContractFactory } from '../contracts';
+import { TokemakAccToke } from '../contracts/viem/TokemakAccToke';
 
 @PositionTemplate()
 export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePositionFetcher<TokemakAccToke> {
@@ -14,12 +14,12 @@ export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
+    @Inject(TokemakViemContractFactory) private readonly contractFactory: TokemakViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TokemakAccToke {
+  getContract(address: string) {
     return this.contractFactory.tokemakAccToke({ network: this.network, address });
   }
 
@@ -28,7 +28,7 @@ export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TokemakAccToke>) {
-    return [{ address: await contract.toke(), network: this.network }];
+    return [{ address: await contract.read.toke(), network: this.network }];
   }
 
   async getPricePerShare() {

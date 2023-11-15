@@ -13,7 +13,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SentimentAccountsResolver } from '../common/sentiment.accounts-resolver';
-import { SentimentContractFactory, SentimentLToken } from '../contracts';
+import { SentimentViemContractFactory } from '../contracts';
+import { SentimentLToken } from '../contracts/viem';
 
 export type SentimentSupplyAppTokenDefinition = {
   address: string;
@@ -30,13 +31,13 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SentimentContractFactory) private readonly contractFactory: SentimentContractFactory,
+    @Inject(SentimentViemContractFactory) private readonly contractFactory: SentimentViemContractFactory,
     @Inject(SentimentAccountsResolver) private readonly accountResolver: SentimentAccountsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SentimentLToken {
+  getContract(address: string) {
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
@@ -76,7 +77,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
@@ -93,18 +94,21 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends CustomContra
 
         const [accountAddresses, underlyingTokenAddress] = await Promise.all([
           this.accountResolver.getAccountsOfOwner(address),
-          multicall.wrap(supplyTokenContract).asset(),
+          multicall.wrap(supplyTokenContract).read.asset(),
         ]);
 
         const borrowRaw = await Promise.all(
-          accountAddresses.map(address => multicall.wrap(supplyTokenContract).getBorrowBalance(address)),
+          accountAddresses.map(address => multicall.wrap(supplyTokenContract).read.getBorrowBalance([address])),
         );
         const supplyRaw = await Promise.all(
-          accountAddresses.map(address =>
-            multicall
-              .wrap(this.contractFactory.erc20({ address: underlyingTokenAddress, network: this.network }))
-              .balanceOf(address),
-          ),
+          accountAddresses.map(address => {
+            const tokenContract = this.appToolkit.globalViemContracts.erc20({
+              address: underlyingTokenAddress,
+              network: this.network,
+            });
+
+            return multicall.wrap(tokenContract).read.balanceOf([address]);
+          }),
         );
         const depositedAmountRaw = _.sum(supplyRaw);
         const borrowedAmountRaw = _.sum(borrowRaw);

@@ -6,7 +6,7 @@ import { ArbitrumSushiswapKashiLendingTokenFetcher } from './arbitrum/sushiswap-
 import { ArbitrumSushiswapKashiLeverageContractPositionFetcher } from './arbitrum/sushiswap-kashi.leverage.contract-position-fetcher';
 import { BinanceSmartChainSushiswapKashiLendingTokenFetcher } from './binance-smart-chain/sushiswap-kashi.lending.token-fetcher';
 import { BinanceSmartChainSushiswapKashiLeverageContractPositionFetcher } from './binance-smart-chain/sushiswap-kashi.leverage.contract-position-fetcher';
-import { SushiswapKashiContractFactory } from './contracts';
+import { SushiswapKashiViemContractFactory } from './contracts';
 import { EthereumSushiswapKashiLendingTokenFetcher } from './ethereum/sushiswap-kashi.lending.token-fetcher';
 import { EthereumSushiswapKashiLeverageContractPositionFetcher } from './ethereum/sushiswap-kashi.leverage.contract-position-fetcher';
 import { PolygonSushiswapKashiLendingTokenFetcher } from './polygon/sushiswap-kashi.lending.token-fetcher';
@@ -14,7 +14,7 @@ import { PolygonSushiswapKashiLeverageContractPositionFetcher } from './polygon/
 
 @Module({
   providers: [
-    SushiswapKashiContractFactory,
+    SushiswapKashiViemContractFactory,
     // Arbitrum
     ArbitrumSushiswapKashiLendingTokenFetcher,
     ArbitrumSushiswapKashiLeverageContractPositionFetcher,

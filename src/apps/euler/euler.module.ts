@@ -4,7 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { EulerApiStakingRegistry } from '~apps/euler/common/euler.api.staking-registry';
 
 import { EulerTokenDefinitionsResolver } from './common/euler.token-definition-resolver';
-import { EulerContractFactory } from './contracts';
+import { EulerViemContractFactory } from './contracts';
 import { EthereumEulerDTokenTokenFetcher } from './ethereum/euler.d-token.token-fetcher';
 import { EthereumEulerETokenTokenFetcher } from './ethereum/euler.e-token.token-fetcher';
 import { EthereumEulerPTokenTokenFetcher } from './ethereum/euler.p-token.token-fetcher';
@@ -18,7 +18,7 @@ import { EthereumEulerSingleStakingFarmContractPositionFetcher } from './ethereu
     EthereumEulerPTokenTokenFetcher,
     EthereumEulerPositionPresenter,
     EthereumEulerSingleStakingFarmContractPositionFetcher,
-    EulerContractFactory,
+    EulerViemContractFactory,
     EulerTokenDefinitionsResolver,
     EulerApiStakingRegistry,
   ],

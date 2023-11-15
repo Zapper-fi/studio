@@ -6,8 +6,8 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
-import { SideshiftContractFactory } from '../contracts';
-import { SvxaiVault } from '../contracts/ethers';
+import { SideshiftViemContractFactory } from '../contracts';
+import { SvxaiVault } from '../contracts/viem';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -17,12 +17,12 @@ export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(SideshiftContractFactory) private readonly contractFactory: SideshiftContractFactory,
+    @Inject(SideshiftViemContractFactory) private readonly contractFactory: SideshiftViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SvxaiVault {
+  getContract(address: string) {
     return this.contractFactory.svxaiVault({ address, network });
   }
 
@@ -31,11 +31,11 @@ export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<SvxaiVault>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<SvxaiVault>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

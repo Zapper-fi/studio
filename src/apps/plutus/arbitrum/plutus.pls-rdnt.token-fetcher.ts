@@ -3,8 +3,8 @@ import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { ChronosContractFactory } from '~apps/chronos/contracts';
-import { Erc20 } from '~contract/contracts';
+import { ChronosViemContractFactory } from '~apps/chronos/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -28,13 +28,13 @@ export class ArbitrumPlutusPlsRdntTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ChronosContractFactory) protected readonly chronosContractFactory: ChronosContractFactory,
+    @Inject(ChronosViemContractFactory) protected readonly chronosContractFactory: ChronosViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<PlutusVaultAppTokenDefinition[]> {
@@ -59,8 +59,10 @@ export class ArbitrumPlutusPlsRdntTokenFetcher extends AppTokenTemplatePositionF
       address: '0x3fb69d8720816a604487f2fd5813b72c15dd77ea',
       network: this.network,
     });
-    const oneUnit = BigNumber.from(10).pow(18);
-    const pricePerShare = await multicall.wrap(chronosPairContract).getAmountOut(oneUnit, appToken.address);
+    const oneUnit = BigNumber.from(10).pow(18).toString();
+    const pricePerShare = await multicall
+      .wrap(chronosPairContract)
+      .read.getAmountOut([BigInt(oneUnit), appToken.address]);
 
     return [Number(pricePerShare) / 10 ** appToken.decimals];
   }

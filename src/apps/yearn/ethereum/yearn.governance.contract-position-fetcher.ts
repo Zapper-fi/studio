@@ -8,8 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { YearnContractFactory } from '../contracts';
-import { YearnGovernance } from '../contracts/ethers/YearnGovernance';
+import { YearnViemContractFactory } from '../contracts';
+import { YearnGovernance } from '../contracts/viem/YearnGovernance';
 
 @PositionTemplate()
 export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnGovernance> {
@@ -19,12 +19,12 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
+    @Inject(YearnViemContractFactory) protected readonly contractFactory: YearnViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YearnGovernance {
+  getContract(address: string) {
     return this.contractFactory.yearnGovernance({ address, network: this.network });
   }
 
@@ -39,18 +39,18 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<YearnGovernance>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<YearnGovernance>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
-    return contract.rewards(address);
+    return contract.read.rewards([address]);
   }
 }

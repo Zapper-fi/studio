@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VestingEscrowTemplateContractPositionFetcher } from '~position/template/vesting-escrow.template-contract-position-fetcher';
 
-import { CurveContractFactory, CurveVestingEscrow } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveVestingEscrow } from '../contracts/viem';
+import { CurveVestingEscrowContract } from '../contracts/viem/CurveVestingEscrow';
 
 @PositionTemplate()
 export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEscrowTemplateContractPositionFetcher<CurveVestingEscrow> {
@@ -14,24 +16,24 @@ export class EthereumCurveVestingEscrowContractPositionFetcher extends VestingEs
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): CurveVestingEscrow {
+  getEscrowContract(address: string): CurveVestingEscrowContract {
     return this.contractFactory.curveVestingEscrow({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<CurveVestingEscrow>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   getLockedTokenBalance({ address, contract }: GetTokenBalancesParams<CurveVestingEscrow>) {
-    return contract.lockedOf(address);
+    return contract.read.lockedOf([address]);
   }
 
   getUnlockedTokenBalance({ address, contract }: GetTokenBalancesParams<CurveVestingEscrow>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 }

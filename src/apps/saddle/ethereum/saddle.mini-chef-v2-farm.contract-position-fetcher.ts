@@ -13,9 +13,9 @@ import {
   GetMasterChefTokenBalancesParams,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { SaddleContractFactory } from '../contracts';
-import { SaddleMiniChefV2 } from '../contracts/ethers/SaddleMiniChefV2';
-import { SaddleMiniChefV2Rewarder } from '../contracts/ethers/SaddleMiniChefV2Rewarder';
+import { SaddleViemContractFactory } from '../contracts';
+import { SaddleMiniChefV2, SaddleMiniChefV2Contract } from '../contracts/viem/SaddleMiniChefV2';
+import { SaddleMiniChefV2Rewarder, SaddleMiniChefV2RewarderContract } from '../contracts/viem/SaddleMiniChefV2Rewarder';
 
 @PositionTemplate()
 export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
@@ -27,12 +27,12 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+    @Inject(SaddleViemContractFactory) protected readonly contractFactory: SaddleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SaddleMiniChefV2 {
+  getContract(address: string) {
     return this.contractFactory.saddleMiniChefV2({ address, network: this.network });
   }
 
@@ -40,42 +40,42 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     return this.contractFactory.saddleMiniChefV2Rewarder({ address, network: this.network });
   }
 
-  async getPoolLength(contract: SaddleMiniChefV2) {
-    return contract.poolLength();
+  async getPoolLength(contract: SaddleMiniChefV2Contract) {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: SaddleMiniChefV2, poolIndex: number) {
-    return contract.lpToken(poolIndex);
+  async getStakedTokenAddress(contract: SaddleMiniChefV2Contract, poolIndex: number) {
+    return contract.read.lpToken([BigInt(poolIndex)]);
   }
 
-  async getRewardTokenAddress(contract: SaddleMiniChefV2) {
-    return contract.SADDLE();
+  async getRewardTokenAddress(contract: SaddleMiniChefV2Contract) {
+    return contract.read.SADDLE();
   }
 
-  async getExtraRewarder(contract: SaddleMiniChefV2, poolIndex: number) {
-    return contract.rewarder(poolIndex);
+  async getExtraRewarder(contract: SaddleMiniChefV2Contract, poolIndex: number) {
+    return contract.read.rewarder([BigInt(poolIndex)]);
   }
 
-  async getExtraRewardTokenAddresses(contract: SaddleMiniChefV2Rewarder, poolIndex: number) {
-    return contract.pendingTokens(poolIndex, ZERO_ADDRESS, 0).then(v => [v.rewardTokens[0]]);
+  async getExtraRewardTokenAddresses(contract: SaddleMiniChefV2RewarderContract, poolIndex: number) {
+    return contract.read.pendingTokens([BigInt(poolIndex), ZERO_ADDRESS, BigInt(0)]).then(v => [v[0][0]]);
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
-    return contract.saddlePerSecond();
+    return contract.read.saddlePerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[2]);
   }
 
   async getExtraRewardTokenRewardRates({
     rewarderContract,
   }: GetMasterChefV2ExtraRewardTokenRewardRates<SaddleMiniChefV2, SaddleMiniChefV2Rewarder>) {
-    return rewarderContract.rewardPerSecond().catch(_err => 0);
+    return rewarderContract.read.rewardPerSecond().catch(_err => 0);
   }
 
   async getStakedTokenBalance({
@@ -83,7 +83,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<SaddleMiniChefV2>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -91,7 +91,7 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<SaddleMiniChefV2>) {
-    return contract.pendingSaddle(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingSaddle([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 
   async getExtraRewardTokenBalances({
@@ -99,8 +99,8 @@ export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterC
     rewarderContract,
     contractPosition,
   }: GetMasterChefV2ExtraRewardTokenBalancesParams<SaddleMiniChefV2, SaddleMiniChefV2Rewarder>) {
-    return rewarderContract
-      .pendingTokens(contractPosition.dataProps.poolIndex, address, 0)
-      .then(v => v.rewardAmounts[0]);
+    return rewarderContract.read
+      .pendingTokens([BigInt(contractPosition.dataProps.poolIndex), address, BigInt(0)])
+      .then(v => v[1][0]);
   }
 }

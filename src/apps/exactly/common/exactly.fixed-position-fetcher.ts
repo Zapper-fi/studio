@@ -4,7 +4,8 @@ import type { BigNumber } from 'ethers';
 import { APP_TOOLKIT, type IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
-import { ExactlyContractFactory, type Market } from '../contracts';
+import { ExactlyViemContractFactory } from '../contracts';
+import { Market } from '../contracts/viem';
 
 import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 import { type ExactlyMarketProps, ExactlyTokenFetcher } from './exactly.token-fetcher';
@@ -18,7 +19,7 @@ export abstract class ExactlyFixedPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ExactlyContractFactory) protected readonly contractFactory: ExactlyContractFactory,
+    @Inject(ExactlyViemContractFactory) protected readonly contractFactory: ExactlyViemContractFactory,
     @Inject(ExactlyDefinitionsResolver) protected readonly definitionsResolver: ExactlyDefinitionsResolver,
   ) {
     super(appToolkit, contractFactory, definitionsResolver);

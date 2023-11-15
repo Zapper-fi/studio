@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ConcaveContractFactory } from './contracts';
+import { ConcaveViemContractFactory } from './contracts';
 import { EthereumConcaveLiquidStakingContractPositionFetcher } from './ethereum/concave.liquid-staking.contract-position-fetcher';
 
 @Module({
   providers: [
-    ConcaveContractFactory,
+    ConcaveViemContractFactory,
     // Ethereum
     EthereumConcaveLiquidStakingContractPositionFetcher,
   ],

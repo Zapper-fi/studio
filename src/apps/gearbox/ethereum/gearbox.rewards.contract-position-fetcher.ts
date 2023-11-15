@@ -7,7 +7,8 @@ import { GetTokenBalancesParams } from '~position/template/contract-position.tem
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
 import { Network } from '~types';
 
-import { AirdropDistributor, GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { AirdropDistributor } from '../contracts/viem';
 
 import { EthereumGearboxRewardsMerkleCache, AIRDROP_DISTRIBUTOR, GEAR_TOKEN } from './gearbox.rewards.merkle-cache';
 
@@ -22,13 +23,13 @@ export class EthereumGearboxRewardsPositionFetcher extends MerkleTemplateContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) protected readonly contractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) protected readonly contractFactory: GearboxViemContractFactory,
     @Inject(EthereumGearboxRewardsMerkleCache) private readonly merkleCache: EthereumGearboxRewardsMerkleCache,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AirdropDistributor {
+  getContract(address: string) {
     return this.contractFactory.airdropDistributor({ address, network: this.network });
   }
 
@@ -41,7 +42,7 @@ export class EthereumGearboxRewardsPositionFetcher extends MerkleTemplateContrac
     if (!rewardsData) return [0];
 
     const { amount } = rewardsData;
-    const totalClaimed = await contract.claimed(address);
+    const totalClaimed = await contract.read.claimed([address]);
     return [BigNumber.from(amount).sub(totalClaimed)];
   }
 }

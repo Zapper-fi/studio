@@ -10,7 +10,9 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GammaStrategiesContractFactory, GammaStrategiesUniOpMasterchef } from '../contracts';
+import { GammaStrategiesViemContractFactory } from '../contracts';
+import { GammaStrategiesUniOpMasterchef } from '../contracts/viem';
+import { GammaStrategiesUniOpMasterchefContract } from '../contracts/viem/GammaStrategiesUniOpMasterchef';
 
 @PositionTemplate()
 export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesUniOpMasterchef> {
@@ -20,21 +22,21 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GammaStrategiesContractFactory) protected readonly contractFactory: GammaStrategiesContractFactory,
+    @Inject(GammaStrategiesViemContractFactory) protected readonly contractFactory: GammaStrategiesViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GammaStrategiesUniOpMasterchef {
+  getContract(address: string) {
     return this.contractFactory.gammaStrategiesUniOpMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesUniOpMasterchef) {
-    return contract.poolLength();
+  async getPoolLength(contract: GammaStrategiesUniOpMasterchefContract) {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterchef, poolIndex: number) {
-    return contract.lpToken(poolIndex);
+  async getStakedTokenAddress(contract: GammaStrategiesUniOpMasterchefContract, poolIndex: number) {
+    return contract.read.lpToken([BigInt(poolIndex)]);
   }
 
   async getRewardTokenAddress() {
@@ -45,20 +47,20 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
   async getTotalAllocPoints({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.sushiPerSecond();
+    return contract.read.sushiPerSecond();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[2]);
   }
 
   async getStakedTokenBalance({
@@ -66,7 +68,7 @@ export class OptimismGammaStrategiesUniFarmContractPositionFetcher extends Maste
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesUniOpMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance(): Promise<BigNumberish> {

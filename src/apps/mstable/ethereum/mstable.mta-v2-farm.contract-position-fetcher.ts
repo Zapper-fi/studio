@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableStakingV2 } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableStakingV2 } from '../contracts/viem';
 
 const MTA_V2_FARMS = [
   {
@@ -31,12 +32,12 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MstableStakingV2 {
+  getContract(address: string) {
     return this.contractFactory.mstableStakingV2({ address, network: this.network });
   }
 
@@ -45,19 +46,19 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    const lastRewardTimeRaw = await contract.lastTimeRewardApplicable();
+    const lastRewardTimeRaw = await contract.read.lastTimeRewardApplicable();
 
     // Add an hour buffer for determining active state
     const now = Math.floor(Date.now() / 1000) - 60 * 60;
     const isActive = Number(lastRewardTimeRaw) >= now;
     if (!isActive) return [0];
 
-    const globalData = await contract.globalData();
-    return [globalData.rewardRate];
+    const globalData = await contract.read.globalData();
+    return [globalData[2]];
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableStakingV2>) {
-    const lastRewardTimeRaw = await contract.lastTimeRewardApplicable();
+    const lastRewardTimeRaw = await contract.read.lastTimeRewardApplicable();
     const now = Math.floor(Date.now() / 1000) - 60 * 60;
     const isActive = Number(lastRewardTimeRaw) >= now;
     return isActive;
@@ -67,9 +68,9 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     address,
     contract,
   }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    return contract
-      .rawBalanceOf(address)
-      .then(v => v[0].add(v[1]))
+    return contract.read
+      .rawBalanceOf([address])
+      .then(v => BigNumber.from(v[0]).add(v[1]))
       .catch(() => BigNumber.from('0'));
   }
 
@@ -77,6 +78,6 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     address,
     contract,
   }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

@@ -7,45 +7,45 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { GainsNetworkContractFactory, GainsNetworkStaking } from '../contracts';
+import { GainsNetworkViemContractFactory } from '../contracts';
+import { GainsNetworkStaking } from '../contracts/viem';
 
 export abstract class GainsNetworkStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<GainsNetworkStaking> {
   groupLabel = 'Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
+    @Inject(GainsNetworkViemContractFactory) protected readonly contractFactory: GainsNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GainsNetworkStaking {
+  getContract(address: string) {
     return this.contractFactory.gainsNetworkStaking({ address, network: this.network });
   }
 
   getRewardRates({ contract }: GetDataPropsParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    return contract.accDaiPerToken();
+    return contract.read.accDaiPerToken();
   }
 
   getIsActive({ contract }: GetDataPropsParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    return contract.accDaiPerToken().then(rate => rate.gt(0));
+    return contract.read.accDaiPerToken().then(rate => rate > 0);
   }
 
   async getStakedTokenBalance({
     address,
     contract,
   }: GetTokenBalancesParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    return (await contract.users(address)).stakedTokens;
+    return (await contract.read.users([address]))[0];
   }
 
   async getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<GainsNetworkStaking, SingleStakingFarmDataProps>) {
-    const [userPosition, rate] = await Promise.all([contract.users(address), contract.accDaiPerToken()]);
+    const [userPosition, rate] = await Promise.all([contract.read.users([address]), contract.read.accDaiPerToken()]);
     const rewardBalance =
-      ((Number(userPosition.stakedTokens) + Number(userPosition.totalBoostTokens)) * Number(rate)) / 1e18 -
-      Number(userPosition.debtDai);
+      ((Number(userPosition[0]) + Number(userPosition[3])) * Number(rate)) / 1e18 - Number(userPosition[1]);
     return rewardBalance;
   }
 }

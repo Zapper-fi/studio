@@ -2,12 +2,10 @@ import { PercentMath, WadRayMath } from '@morpho-labs/ethers-utils/lib/maths';
 import { minBN } from '@morpho-labs/ethers-utils/lib/utils';
 import { BigNumber, constants } from 'ethers';
 
-import { Types } from '~apps/morpho/contracts/ethers/MorphoAaveV3';
-
 import { MorphoAaveMath } from './AaveV3.maths';
 
-import MarketSideDeltaStruct = Types.MarketSideDeltaStruct;
-import DeltasStruct = Types.DeltasStruct;
+type MarketSideDeltaStruct = any;
+type DeltasStruct = any;
 
 export interface MarketSizeIndexes {
   /** The pool index (in ray). */
@@ -139,7 +137,7 @@ export default class P2PInterestRates {
     proportionIdle,
     delta,
   }: RateParams) {
-    let p2pSupplyRate;
+    let p2pSupplyRate: BigNumber;
 
     if (poolSupplyRatePerYear.gt(poolBorrowRatePerYear)) p2pSupplyRate = poolBorrowRatePerYear;
     else {
@@ -175,7 +173,7 @@ export default class P2PInterestRates {
     proportionIdle,
     delta,
   }: RateParams) {
-    let p2pBorrowRate;
+    let p2pBorrowRate: BigNumber;
 
     if (poolSupplyRatePerYear.gt(poolBorrowRatePerYear)) p2pBorrowRate = poolBorrowRatePerYear;
     else {

@@ -3,9 +3,9 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumUnstoppableGlpCompounderTokenFetcher } from './arbitrum/unstoppable.glp-compounder.token-fetcher';
-import { UnstoppableContractFactory } from './contracts';
+import { UnstoppableViemContractFactory } from './contracts';
 
 @Module({
-  providers: [ArbitrumUnstoppableGlpCompounderTokenFetcher, UnstoppableContractFactory],
+  providers: [ArbitrumUnstoppableGlpCompounderTokenFetcher, UnstoppableViemContractFactory],
 })
 export class UnstoppableAppModule extends AbstractApp() {}

@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { HectorNetworkBondNoTreasury, HectorNetworkContractFactory } from '../contracts';
+import { HectorNetworkViemContractFactory } from '../contracts';
+import { HectorNetworkBondNoTreasury } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondNoTreasury> {
@@ -21,7 +22,7 @@ export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends Co
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HectorNetworkContractFactory) protected readonly contractFactory: HectorNetworkContractFactory,
+    @Inject(HectorNetworkViemContractFactory) protected readonly contractFactory: HectorNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -39,7 +40,7 @@ export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends Co
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondNoTreasury>) {
-    const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
+    const [principle, claimable] = await Promise.all([contract.read.principle(), contract.read.HEC()]);
 
     return [
       {
@@ -69,12 +70,14 @@ export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends Co
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondNoTreasury>) {
-    const count = await contract.depositCounts(address);
-    const depositIds = await Promise.all(range(0, Number(count)).map(i => contract.ownedDeposits(address, i)));
-    const bondInfos = await Promise.all(depositIds.map(id => contract.bondInfo(id)));
-    const claimablePayouts = await Promise.all(depositIds.map(id => contract.pendingPayoutFor(id)));
+    const count = await contract.read.depositCounts([address]);
+    const depositIds = await Promise.all(
+      range(0, Number(count)).map(i => contract.read.ownedDeposits([address, BigInt(i)])),
+    );
+    const bondInfos = await Promise.all(depositIds.map(id => contract.read.bondInfo([id])));
+    const claimablePayouts = await Promise.all(depositIds.map(id => contract.read.pendingPayoutFor([id])));
 
-    const totalPayout = bondInfos.reduce((acc, v) => acc.add(v.payout), BigNumber.from(0));
+    const totalPayout = bondInfos.reduce((acc, v) => acc.add(v[0]), BigNumber.from(0));
     const totalClaimablePayout = claimablePayouts.reduce((acc, v) => acc.add(v), BigNumber.from(0));
     const totalVestingAmount = totalPayout.sub(totalClaimablePayout);
 

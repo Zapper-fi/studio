@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -11,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AcrossContractFactory, AcrossPoolV2 } from '../contracts';
+import { AcrossViemContractFactory } from '../contracts';
+import { AcrossPoolV2 } from '../contracts/viem';
 
 export type AcrossPoolV2TokenDefinition = {
   address: string;
@@ -28,12 +30,12 @@ export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AcrossContractFactory) protected readonly contractFactory: AcrossContractFactory,
+    @Inject(AcrossViemContractFactory) protected readonly contractFactory: AcrossViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AcrossPoolV2 {
+  getContract(address: string) {
     return this.contractFactory.acrossPoolV2({ network: this.network, address });
   }
 
@@ -53,8 +55,8 @@ export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionF
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<AcrossPoolV2>) {
     const hub = this.contractFactory.acrossHubPoolV2({ address: this.hubAddress, network: this.network });
-    const poolInfo = await multicall.wrap(hub).pooledTokens(appToken.tokens[0].address);
-    const reserveRaw = poolInfo.liquidReserves.add(poolInfo.utilizedReserves).sub(poolInfo.undistributedLpFees);
+    const poolInfo = await multicall.wrap(hub).read.pooledTokens([appToken.tokens[0].address]);
+    const reserveRaw = BigNumber.from(poolInfo[4]).add(poolInfo[3]).sub(poolInfo[5]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve / appToken.supply];
   }

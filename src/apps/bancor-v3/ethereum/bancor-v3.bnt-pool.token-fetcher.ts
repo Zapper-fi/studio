@@ -11,7 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { BancorV3ContractFactory, PoolToken } from '../contracts';
+import { BancorV3ViemContractFactory } from '../contracts';
+import { PoolToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBancorV3BntPoolTokenFetcher extends AppTokenTemplatePositionFetcher<PoolToken> {
@@ -22,12 +23,12 @@ export class EthereumBancorV3BntPoolTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BancorV3ContractFactory) protected readonly contractFactory: BancorV3ContractFactory,
+    @Inject(BancorV3ViemContractFactory) protected readonly contractFactory: BancorV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PoolToken {
+  getContract(address: string) {
     return this.contractFactory.poolToken({ address, network: this.network });
   }
 
@@ -36,7 +37,7 @@ export class EthereumBancorV3BntPoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PoolToken, DefaultAppTokenDefinition>) {
-    const underlyingTokenAddressRaw = await contract.reserveToken();
+    const underlyingTokenAddressRaw = await contract.read.reserveToken();
     const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
     return [{ address: underlyingTokenAddress, network: this.network }];
   }
@@ -52,7 +53,7 @@ export class EthereumBancorV3BntPoolTokenFetcher extends AppTokenTemplatePositio
 
     const ratioRaw = await multicall
       .wrap(bntPoolContract)
-      .poolTokenToUnderlying((10 ** appToken.tokens[0].decimals).toString());
+      .read.poolTokenToUnderlying([BigInt(10 ** appToken.tokens[0].decimals)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
 
     return [ratio];

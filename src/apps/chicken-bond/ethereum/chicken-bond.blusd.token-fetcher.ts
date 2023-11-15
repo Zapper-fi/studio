@@ -6,7 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPriceParams } from '~position/template/app-token.template.types';
 
-import { ChickenBondBlusd, ChickenBondContractFactory } from '../contracts';
+import { ChickenBondViemContractFactory } from '../contracts';
+import { ChickenBondBlusd } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositionFetcher<ChickenBondBlusd> {
@@ -14,12 +15,12 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ChickenBondContractFactory) protected readonly contractFactory: ChickenBondContractFactory,
+    @Inject(ChickenBondViemContractFactory) protected readonly contractFactory: ChickenBondViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ChickenBondBlusd {
+  getContract(address: string) {
     return this.contractFactory.chickenBondBlusd({ address, network: this.network });
   }
 
@@ -41,9 +42,9 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
       address: '0x74ed5d42203806c8cdcf2f04ca5f60dc777b901c',
       network: this.network,
     });
-    const oneUnit = BigNumber.from(10).pow(18);
+    const oneUnit = BigNumber.from(10).pow(18).toString();
 
-    const priceRaw = await multicall.wrap(curvePoolContract).get_dy(0, 1, oneUnit);
+    const priceRaw = await multicall.wrap(curvePoolContract).read.get_dy([BigInt(0), BigInt(1), BigInt(oneUnit)]);
     const price = Number(priceRaw) / 10 ** 18;
 
     return price;

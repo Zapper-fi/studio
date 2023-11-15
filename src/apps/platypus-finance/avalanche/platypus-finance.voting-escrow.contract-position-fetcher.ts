@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { PlatypusFinanceContractFactory, PlatypusFinanceVotingEscrow } from '../contracts';
+import { PlatypusFinanceViemContractFactory } from '../contracts';
+import { PlatypusFinanceVotingEscrow } from '../contracts/viem';
+import { PlatypusFinanceVotingEscrowContract } from '../contracts/viem/PlatypusFinanceVotingEscrow';
 
 @PositionTemplate()
 export class AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<PlatypusFinanceVotingEscrow> {
@@ -14,20 +16,20 @@ export class AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher extends
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlatypusFinanceContractFactory) protected readonly contractFactory: PlatypusFinanceContractFactory,
+    @Inject(PlatypusFinanceViemContractFactory) protected readonly contractFactory: PlatypusFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): PlatypusFinanceVotingEscrow {
+  getEscrowContract(address: string): PlatypusFinanceVotingEscrowContract {
     return this.contractFactory.platypusFinanceVotingEscrow({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<PlatypusFinanceVotingEscrow>) {
-    return contract.ptp();
+    return contract.read.ptp();
   }
 
   getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<PlatypusFinanceVotingEscrow>) {
-    return contract.getStakedPtp(address);
+    return contract.read.getStakedPtp([address]);
   }
 }

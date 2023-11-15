@@ -14,7 +14,8 @@ import { ContractPositionTemplatePositionFetcher } from '~position/template/cont
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
-import { SynthetixContractFactory, SynthetixLoan } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixLoan } from '../contracts/viem';
 
 export type SynthetixLoanContractPositionHelperParams = {
   loanContractAddress: string;
@@ -47,12 +48,12 @@ export abstract class SynthetixLoanContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixLoan {
+  getContract(address: string) {
     return this.contractFactory.synthetixLoan({ address, network: this.network });
   }
 
