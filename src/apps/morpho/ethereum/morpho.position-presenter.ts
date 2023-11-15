@@ -57,8 +57,8 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
       morphoAaveV3.read.liquidityData([address]),
     ]);
 
-    const maxDebtMA3 = BigNumber.from(liquidityDataMA3Raw[1]);
-    const debtMA3 = BigNumber.from(liquidityDataMA3Raw[2]);
+    const maxDebtMA3 = BigNumber.from(liquidityDataMA3Raw.maxDebt);
+    const debtMA3 = BigNumber.from(liquidityDataMA3Raw.debt);
     const unit = parseUnits('1');
 
     const healthFactorMA2 = +formatUnits(BigNumber.from(healthFactorMA2Raw));
