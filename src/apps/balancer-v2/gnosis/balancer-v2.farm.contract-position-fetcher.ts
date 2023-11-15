@@ -5,7 +5,5 @@ import { BalancerV2FarmContractPositionFetcher } from '../common/balancer-v2.far
 @PositionTemplate()
 export class GnosisBalancerV2FarmContractPositionFetcher extends BalancerV2FarmContractPositionFetcher {
   groupLabel = 'Staked';
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gnosis-chain-v2';
-
-  faultyRewardAddress = [''];
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gauges-gnosis-chain';
 }
