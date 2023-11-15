@@ -5,7 +5,6 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { MorphoViemContractFactory } from '../contracts';
@@ -52,32 +51,21 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
       }),
     );
 
-    const [healthFactorMA2, healthFactorMC, liquidityDataMA3] = await Promise.all([
-      aaveV2Lens.read.getUserHealthFactor([address]).catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
-        throw err;
-      }),
-      compoundLens.read.getUserHealthFactor([address, []]).catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
-        throw err;
-      }),
-      morphoAaveV3.read.liquidityData([address]).catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
-        throw err;
-      }),
+    const [healthFactorMA2Raw, healthFactorMCRaw, liquidityDataMA3Raw] = await Promise.all([
+      aaveV2Lens.read.getUserHealthFactor([address]),
+      compoundLens.read.getUserHealthFactor([address, []]),
+      morphoAaveV3.read.liquidityData([address]),
     ]);
 
-    if (!healthFactorMA2 || !healthFactorMC || !liquidityDataMA3) return;
+    const maxDebtMA3 = BigNumber.from(liquidityDataMA3Raw[1]);
+    const debtMA3 = BigNumber.from(liquidityDataMA3Raw[2]);
+    const unit = parseUnits('1');
 
-    return {
-      healthFactorMA2: +formatUnits(healthFactorMA2),
-      healthFactorMC: +formatUnits(healthFactorMC),
-      healthFactorMA3: +formatUnits(
-        liquidityDataMA3[2] === BigInt(0)
-          ? constants.MaxInt256
-          : BigNumber.from(liquidityDataMA3[1]).mul(parseUnits('1')).div(liquidityDataMA3[2]),
-      ),
-    };
+    const healthFactorMA2 = +formatUnits(BigNumber.from(healthFactorMA2Raw));
+    const healthFactorMC = +formatUnits(BigNumber.from(healthFactorMCRaw));
+    const healthFactorMA3 = +formatUnits(debtMA3.eq(0) ? constants.MaxInt256 : maxDebtMA3.mul(unit).div(debtMA3));
+
+    return { healthFactorMA2, healthFactorMC, healthFactorMA3 };
   }
 
   override metadataItemsForBalanceGroup(
