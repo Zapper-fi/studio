@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { TarotBorrowable, TarotContractFactory } from '../contracts';
+import { TarotViemContractFactory } from '../contracts';
+import { TarotBorrowable } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TarotBorrowable> {
@@ -29,12 +30,12 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(TarotContractFactory) private readonly contractFactory: TarotContractFactory,
+    @Inject(TarotViemContractFactory) private readonly contractFactory: TarotViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TarotBorrowable {
+  getContract(address: string) {
     return this.contractFactory.tarotBorrowable({ address, network: this.network });
   }
 
@@ -45,22 +46,22 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
           this.contractFactory.tarotFactory({ address: tarotFactoryAddress, network: this.network }),
         );
 
-        const numPoolsRaw = await tarotFactory.allLendingPoolsLength();
+        const numPoolsRaw = await tarotFactory.read.allLendingPoolsLength();
 
         return Promise.all(
           _.range(0, Number(numPoolsRaw)).map(async index => {
-            const tarotVaultAddressRaw = await tarotFactory.allLendingPools(index);
+            const tarotVaultAddressRaw = await tarotFactory.read.allLendingPools([BigInt(index)]);
             const tarotVaultAddress = tarotVaultAddressRaw.toLowerCase();
 
             const tarotVault = this.contractFactory.tarotVault({ network: this.network, address: tarotVaultAddress });
             const isVault = await multicall
               .wrap(tarotVault)
-              .isVaultToken()
+              .read.isVaultToken()
               .catch(() => false);
             if (!isVault) return null;
 
-            const { borrowable0, borrowable1 } = await tarotFactory.getLendingPool(tarotVaultAddress);
-            return [borrowable0, borrowable1];
+            const lendingPool = await tarotFactory.read.getLendingPool([tarotVaultAddress]);
+            return [lendingPool[3], lendingPool[4]];
           }),
         );
       }),
@@ -72,7 +73,7 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<TarotBorrowable>) {
-    const underlyingAddress = await contract.underlying();
+    const underlyingAddress = await contract.read.underlying();
     return [
       {
         metaType: MetaType.BORROWED,
@@ -95,7 +96,7 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<TarotBorrowable>) {
-    const balanceRaw = await contract.borrowBalance(address);
+    const balanceRaw = await contract.read.borrowBalance([address]);
     return [balanceRaw];
   }
 }

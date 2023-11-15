@@ -6,7 +6,7 @@ import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/solid-lizard.voting-rewards.contract-position-fetcher';
-import { SolidLizardBribe } from '../contracts';
+import { SolidLizardBribe } from '../contracts/viem';
 
 export type SolidLizardBribeDefinition = {
   address: string;
@@ -14,10 +14,10 @@ export type SolidLizardBribeDefinition = {
 };
 
 @PositionTemplate()
-export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<SolidLizardBribe> {
+export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher {
   groupLabel = 'Bribe';
 
-  getContract(address: string): SolidLizardBribe {
+  getContract(address: string) {
     return this.contractFactory.solidLizardBribe({ address, network: this.network });
   }
 
@@ -26,8 +26,10 @@ export class ArbitrumSolidLizardBribeContractPositionFetcher extends VotingRewar
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<SolidLizardBribe>) {
-    const numRewards = Number(await contract.rewardTokensLength());
-    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewardTokens(n)));
+    const numRewards = Number(await contract.read.rewardTokensLength());
+    const bribeTokens = await Promise.all(
+      range(numRewards).map(async n => await contract.read.rewardTokens([BigInt(n)])),
+    );
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());

@@ -13,7 +13,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusFarmPlsJones } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusFarmPlsJones } from '../contracts/viem';
 
 export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
   label: string;
@@ -29,12 +30,12 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsJones {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsJones({ address, network: this.network });
   }
 
@@ -55,27 +56,27 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsJones, SingleStakingFarmDataProps>) {
-    const rewardsDistro = await contract.rewardsDistro();
+    const rewardsDistro = await contract.read.rewardsDistro();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsJones({
       address: rewardsDistro,
       network: this.network,
     });
 
-    const emissions = await rewardsDistroContract.getEmissions();
-    return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.jones_];
+    const [pls, plsDpx, plsJones, jones] = await rewardsDistroContract.read.getEmissions();
+    return [pls, plsDpx, plsJones, jones];
   }
 
   async getIsActive({
     contract,
   }: GetDataPropsParams<PlutusFarmPlsJones, SingleStakingFarmDataProps, PlutusFarmDefinition>): Promise<boolean> {
-    const rewardsDistro = await contract.rewardsDistro();
+    const rewardsDistro = await contract.read.rewardsDistro();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsJones({
       address: rewardsDistro,
       network: this.network,
     });
 
-    const emissions = await rewardsDistroContract.getEmissions();
-    return emissions.pls_.gt(0) || emissions.plsDpx_.gt(0) || emissions.plsJones_.gt(0) || emissions.jones_.gt(0);
+    const [pls, plsDpx, plsJones, jones] = await rewardsDistroContract.read.getEmissions();
+    return pls > 0 || plsDpx > 0 || plsJones > 0 || jones > 0;
   }
 
   async getLabel({
@@ -85,10 +86,10 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJones>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJones>) {
-    return contract.pendingRewards(address);
+    return contract.read.pendingRewards([address]).then(v => [...v]);
   }
 }

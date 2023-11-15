@@ -15,7 +15,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
-import { DieselToken, GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { DieselToken } from '../contracts/viem';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -31,64 +32,61 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
 > {
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) private readonly gearboxContractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) private readonly gearboxContractFactory: GearboxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
   groupLabel = 'Lending';
 
-  private async _getPoolAddresses(): Promise<string[]> {
+  async getAddresses({ multicall }: GetAddressesParams): Promise<string[]> {
     const contractsRegister = this.gearboxContractFactory.contractsRegister({
       address: '0xa50d4e7d8946a7c90652339cdbd262c375d54d99',
       network,
     });
-    return contractsRegister.getPools();
+
+    return contractsRegister.read.getPools().then(v => [...v]);
   }
 
-  private async _getDieselTokens(pools: string[]): Promise<string[]> {
-    const multicall = this.appToolkit.getMulticall(network);
-    return Promise.all(
-      pools.map(pool =>
-        multicall.wrap(this.gearboxContractFactory.poolService({ address: pool, network })).dieselToken(),
-      ),
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<GearboxLendingDefinition[]> {
+    const contractsRegister = this.gearboxContractFactory.contractsRegister({
+      address: '0xa50d4e7d8946a7c90652339cdbd262c375d54d99',
+      network,
+    });
+
+    const poolAddresses = await contractsRegister.read.getPools().then(v => [...v]);
+
+    const dieselTokens = await Promise.all(
+      poolAddresses.map(poolAddress => {
+        const contract = this.gearboxContractFactory.poolService({ address: poolAddress, network });
+        return multicall.wrap(contract).read.dieselToken();
+      }),
     );
+
+    return poolAddresses.map((pool, idx) => ({ address: dieselTokens[idx], poolAddress: pool }));
   }
 
-  private _getPoolContract(definition: GearboxLendingDefinition) {
-    return this.gearboxContractFactory.poolService({ address: definition.poolAddress, network });
-  }
-
-  async getAddresses(_: GetAddressesParams): Promise<string[]> {
-    const pools = await this._getPoolAddresses();
-    return this._getDieselTokens(pools);
-  }
-
-  async getDefinitions(_: GetDefinitionsParams): Promise<GearboxLendingDefinition[]> {
-    const pools = await this._getPoolAddresses();
-    const dieselTokens = await this._getDieselTokens(pools);
-    return pools.map((pool, idx) => ({ address: dieselTokens[idx], poolAddress: pool }));
-  }
-
-  getContract(address: string): DieselToken {
+  getContract(address: string) {
     return this.gearboxContractFactory.dieselToken({ address, network });
   }
 
-  async getLiquidity(
-    params: GetDataPropsParams<DieselToken, DefaultAppTokenDataProps, GearboxLendingDefinition>,
-  ): Promise<number> {
-    const multicall = this.appToolkit.getMulticall(network);
-    const poolContract = this._getPoolContract(params.definition);
+  async getLiquidity({
+    multicall,
+    definition,
+    appToken,
+  }: GetDataPropsParams<DieselToken, DefaultAppTokenDataProps, GearboxLendingDefinition>): Promise<number> {
+    const poolContract = this.gearboxContractFactory.poolService({ address: definition.poolAddress, network });
+
     const [liquidity, underlyingToken] = await Promise.all([
-      multicall.wrap(poolContract).expectedLiquidity(),
-      multicall.wrap(poolContract).underlyingToken(),
+      multicall.wrap(poolContract).read.expectedLiquidity(),
+      multicall.wrap(poolContract).read.underlyingToken(),
     ]);
-    const underlyingTokenDecimals = await this.gearboxContractFactory
-      .erc20({ address: underlyingToken, network })
-      .decimals();
+
+    const tokenContract = this.appToolkit.globalViemContracts.erc20({ address: underlyingToken, network });
+    const underlyingTokenDecimals = await multicall.wrap(tokenContract).read.decimals();
     const underlyingBalance = +formatUnits(liquidity, underlyingTokenDecimals);
 
-    return underlyingBalance * params.appToken.tokens[0].price;
+    return underlyingBalance * appToken.tokens[0].price;
   }
 
   async getReserves(_: GetDataPropsParams<DieselToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
@@ -97,27 +95,29 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
 
   async getUnderlyingTokenDefinitions({
     definition,
+    multicall,
   }: GetUnderlyingTokensParams<DieselToken, GearboxLendingDefinition>) {
-    const underlyingTokenAddress = await this._getPoolContract(definition).underlyingToken();
+    const poolContract = this.gearboxContractFactory.poolService({ address: definition.poolAddress, network });
+    const underlyingTokenAddress = await multicall.wrap(poolContract).read.underlyingToken();
     return [{ address: underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({
     contract: dieselTokenContract,
     definition,
+    multicall,
   }: GetPricePerShareParams<DieselToken, DefaultAppTokenDataProps, GearboxLendingDefinition>) {
-    const multicall = this.appToolkit.getMulticall(network);
-    const poolContract = this._getPoolContract(definition);
+    const poolContract = this.gearboxContractFactory.poolService({ address: definition.poolAddress, network });
 
     const [underlying, underlyingToken, dieselTokenTotalSupply, dieselTokenDecimals] = await Promise.all([
-      multicall.wrap(poolContract).expectedLiquidity(),
-      multicall.wrap(poolContract).underlyingToken(),
-      multicall.wrap(dieselTokenContract).totalSupply(),
-      multicall.wrap(dieselTokenContract).decimals(),
+      multicall.wrap(poolContract).read.expectedLiquidity(),
+      multicall.wrap(poolContract).read.underlyingToken(),
+      multicall.wrap(dieselTokenContract).read.totalSupply(),
+      multicall.wrap(dieselTokenContract).read.decimals(),
     ]);
 
-    const underlyingTokenContract = this.gearboxContractFactory.erc20({ address: underlyingToken, network });
-    const underlyingTokenDecimals = await underlyingTokenContract.decimals();
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({ address: underlyingToken, network });
+    const underlyingTokenDecimals = await underlyingTokenContract.read.decimals();
     const pricePerShare =
       +formatUnits(underlying, underlyingTokenDecimals) / +formatUnits(dieselTokenTotalSupply, dieselTokenDecimals);
 

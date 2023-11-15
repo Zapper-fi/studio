@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { MuxContractFactory, MuxRewardRouter } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
+import { MuxRewardRouter } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MuxRewardRouter> {
@@ -21,12 +22,12 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MuxRewardRouter {
+  getContract(address: string) {
     return this.contractFactory.muxRewardRouter({ address, network: this.network });
   }
 
@@ -38,17 +39,17 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.mlp(),
+        address: await contract.read.mlp(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.mux(),
+        address: await contract.read.mux(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.weth(),
+        address: await contract.read.weth(),
         network: this.network,
       },
     ];
@@ -74,9 +75,15 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
     });
 
     const [staked, mlpRewards, muxRewards] = await Promise.all([
-      contract.stakedMlpAmount(address),
-      multicall.wrap(mlpRewardTracker).callStatic.claimable(address),
-      multicall.wrap(muxRewardTracker).callStatic.claimable(address),
+      contract.read.stakedMlpAmount([address]),
+      multicall
+        .wrap(mlpRewardTracker)
+        .simulate.claimable([address])
+        .then(v => v.result),
+      multicall
+        .wrap(muxRewardTracker)
+        .simulate.claimable([address])
+        .then(v => v.result),
     ]);
 
     return [staked, mlpRewards, muxRewards];

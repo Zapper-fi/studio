@@ -13,8 +13,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { YearnContractFactory } from '../contracts';
-import { YearnStaking } from '../contracts/ethers/YearnStaking';
+import { YearnViemContractFactory } from '../contracts';
+import { YearnStaking } from '../contracts/viem/YearnStaking';
 
 @PositionTemplate()
 export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnStaking> {
@@ -22,12 +22,12 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
+    @Inject(YearnViemContractFactory) protected readonly contractFactory: YearnViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YearnStaking {
+  getContract(address: string) {
     return this.contractFactory.yearnStaking({ address, network: this.network });
   }
 
@@ -37,11 +37,11 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
       network: this.network,
     });
 
-    const numTokens = await multicall.wrap(stakingRewardRegistryContract).numTokens();
+    const numTokens = await multicall.wrap(stakingRewardRegistryContract).read.numTokens();
 
     const vaultTokenAddresses = await Promise.all(
       _.range(0, Number(numTokens)).map(async index => {
-        return await multicall.wrap(stakingRewardRegistryContract).tokens(index);
+        return await multicall.wrap(stakingRewardRegistryContract).read.tokens([BigInt(index)]);
       }),
     );
 
@@ -49,7 +49,7 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
       vaultTokenAddresses.map(async vaultTokenAddress => {
         const stakingPoolAddressesRaw = await multicall
           .wrap(stakingRewardRegistryContract)
-          .stakingPool(vaultTokenAddress);
+          .read.stakingPool([vaultTokenAddress]);
         return stakingPoolAddressesRaw.toLowerCase();
       }),
     );
@@ -58,8 +58,8 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
       stakingPoolAddresses.map(async address => {
         const stakingPoolContract = this.contractFactory.yearnStaking({ address, network: this.network });
         const [stakedTokenAddress, rewardTokenAddresses] = await Promise.all([
-          multicall.wrap(stakingPoolContract).stakingToken(),
-          multicall.wrap(stakingPoolContract).rewardsToken(),
+          multicall.wrap(stakingPoolContract).read.stakingToken(),
+          multicall.wrap(stakingPoolContract).read.rewardsToken(),
         ]);
 
         return {
@@ -72,18 +72,18 @@ export class OptimismYearnSakingContractPositionFetcher extends SingleStakingFar
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<YearnStaking>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<YearnStaking>) {
-    return contract.rewardRate().then(rate => rate.gt(0));
+    return contract.read.rewardRate().then(rate => rate > 0);
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnStaking>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<YearnStaking>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

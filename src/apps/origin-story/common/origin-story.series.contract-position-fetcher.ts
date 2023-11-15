@@ -13,7 +13,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { OriginStoryContractFactory, Series } from '../contracts';
+import { OriginStoryViemContractFactory } from '../contracts';
+import { Series } from '../contracts/viem';
 
 export abstract class OriginStorySeriesContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   Series,
@@ -21,12 +22,12 @@ export abstract class OriginStorySeriesContractPositionFetcher extends ContractP
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginStoryContractFactory) protected readonly contractFactory: OriginStoryContractFactory,
+    @Inject(OriginStoryViemContractFactory) protected readonly contractFactory: OriginStoryViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Series {
+  getContract(address: string) {
     return this.contractFactory.series({ network: this.network, address });
   }
 
@@ -50,7 +51,7 @@ export abstract class OriginStorySeriesContractPositionFetcher extends ContractP
   }
 
   async getDataProps({ contract }: GetDataPropsParams<Series>) {
-    const liquidityRaw = await contract.totalSupply();
+    const liquidityRaw = await contract.read.totalSupply();
     const liquidity = Number(liquidityRaw) / 10 ** 18;
 
     return { liquidity };
@@ -60,7 +61,7 @@ export abstract class OriginStorySeriesContractPositionFetcher extends ContractP
     address,
     contract,
   }: GetTokenBalancesParams<Series, DefaultDataProps>): Promise<BigNumberish[]> {
-    const balances = await contract.balanceOf(address);
+    const balances = await contract.read.balanceOf([address]);
     return [balances];
   }
 }

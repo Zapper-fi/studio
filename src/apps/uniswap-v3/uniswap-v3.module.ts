@@ -9,14 +9,14 @@ import { BinanceSmartChainUniswapV3LiquidityContractPositionFetcher } from './bi
 import { CeloUniswapV3LiquidityContractPositionBuilder } from './celo/uniswap-v3.liquidity.contract-position-builder';
 import { CeloUniswapV3LiquidityContractPositionFetcher } from './celo/uniswap-v3.liquidity.contract-position-fetcher';
 import { UniswapV3LiquidityContractPositionBuilder } from './common/uniswap-v3.liquidity.contract-position-builder';
-import { UniswapV3ContractFactory } from './contracts';
+import { UniswapV3ViemContractFactory } from './contracts';
 import { EthereumUniswapV3LiquidityContractPositionFetcher } from './ethereum/uniswap-v3.liquidity.contract-position-fetcher';
 import { OptimismUniswapV3LiquidityContractPositionFetcher } from './optimism/uniswap-v3.liquidity.contract-position-fetcher';
 import { PolygonUniswapV3LiquidityContractPositionFetcher } from './polygon/uniswap-v3.liquidity.contract-position-fetcher';
 
 @Module({
   providers: [
-    UniswapV3ContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     // Arbitrum
     ArbitrumUniswapV3LiquidityContractPositionFetcher,

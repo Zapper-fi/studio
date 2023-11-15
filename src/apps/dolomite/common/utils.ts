@@ -1,9 +1,7 @@
-import { BigNumber, BigNumberish, ethers } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
-import { DolomiteMargin } from '~apps/dolomite/contracts';
-import { IsolationModeToken__factory } from '~apps/dolomite/contracts/ethers';
-import { Multicall } from '~contract/contracts/ethers';
-import { IMulticallWrapper } from '~multicall';
+import { DolomiteMargin } from '~apps/dolomite/contracts/viem';
+import { ViemMulticallDataLoader } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import {
@@ -14,6 +12,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
+
+import { DolomiteViemContractFactory } from '../contracts';
 
 export interface AccountStruct {
   accountOwner: string;
@@ -93,7 +93,7 @@ export async function getTokenDefinitionsLib(
 export async function mapTokensToDolomiteDataProps(
   params: GetDataPropsParams<DolomiteMargin, DolomiteDataProps, DolomiteContractPositionDefinition>,
   isFetchingDolomiteBalances: boolean,
-  multicall: IMulticallWrapper,
+  multicall: ViemMulticallDataLoader,
 ): Promise<DolomiteDataProps> {
   let liquidity: number | undefined = undefined;
   if (isFetchingDolomiteBalances) {
@@ -101,11 +101,11 @@ export async function mapTokensToDolomiteDataProps(
     liquidity = 0;
     for (let i = 0; i < params.definition.marketsCount; i++) {
       const contract = multicall.wrap(params.contract);
-      const totalPar = await contract.getMarketTotalPar(i);
-      const index = await contract.getMarketCurrentIndex(i);
-      const totalSupply = totalPar.supply.mul(index.supply).div(ONE_INDEX);
-      const totalBorrow = totalPar.borrow.mul(index.borrow).div(ONE_INDEX);
-      const price = (await contract.getMarketPrice(i)).value;
+      const totalPar = await contract.read.getMarketTotalPar([BigInt(i)]);
+      const index = await contract.read.getMarketCurrentIndex([BigInt(i)]);
+      const totalSupply = BigNumber.from(totalPar.supply).mul(index.supply).div(ONE_INDEX);
+      const totalBorrow = BigNumber.from(totalPar.borrow).mul(index.borrow).div(ONE_INDEX);
+      const price = (await contract.read.getMarketPrice([BigInt(i)])).value;
       liquidity += totalSupply.sub(totalBorrow).mul(price).div(ONE_DOLLAR.div(100000)).toNumber() / 100000.0;
     }
   }
@@ -122,16 +122,18 @@ export async function getTokenBalancesPerAccountStructLib(
   accountStruct: AccountStruct,
 ): Promise<Map<string, BigNumberish>> {
   const tokenAddressToAmount = new Map<string, BigNumberish>();
-  const [marketIds, tokenAddresses, , weiAmounts] = await params.contract.getAccountBalances({
-    owner: accountStruct.accountOwner,
-    number: accountStruct.accountNumber,
-  });
+  const [marketIds, tokenAddresses, , weiAmounts] = await params.contract.read.getAccountBalances([
+    {
+      owner: accountStruct.accountOwner,
+      number: BigInt(accountStruct.accountNumber),
+    },
+  ]);
   tokenAddresses.forEach((tokenAddress, i) => {
     let amount = BigNumber.from(weiAmounts[i].value);
     if (!weiAmounts[i].sign) {
       amount = amount.mul(-1);
     }
-    const marketId = marketIds[i].toNumber();
+    const marketId = Number(marketIds[i]);
     tokenAddress = params.contractPosition.dataProps.marketIdToMarketMap[marketId].underlyingTokenAddress;
     tokenAddressToAmount.set(tokenAddress, amount);
   });
@@ -142,24 +144,24 @@ export async function getTokenBalancesPerAccountStructLib(
 export async function getVaultAddresses(
   account: string,
   isolationModeTokenAddresses: string[],
-  multicall: Multicall,
+  multicall: ViemMulticallDataLoader,
+  contractFactory: DolomiteViemContractFactory,
 ): Promise<string[]> {
-  const calls: Multicall.CallStruct[] = isolationModeTokenAddresses.map(tokenAddress => {
-    return {
-      target: tokenAddress,
-      callData: IsolationModeToken__factory.createInterface().encodeFunctionData('getVaultByAccount', [account]),
-    };
-  });
-  const results = await multicall.callStatic.aggregate(calls, true);
-  return results.returnData.map(({ data }) => {
-    return ethers.utils.defaultAbiCoder.decode(['address'], data)[0].toLowerCase();
-  });
+  const results = await Promise.all(
+    isolationModeTokenAddresses.map(tokenAddress => {
+      const contract = contractFactory.isolationModeToken({ network: Network.ARBITRUM_MAINNET, address: tokenAddress });
+      return multicall.wrap(contract).read.getVaultByAccount([account]);
+    }),
+  );
+
+  return results.map(result => result.toLowerCase());
 }
 
 export async function getAllIsolationModeTokensFromContractPositions(
   account: string,
   contractPositions: ContractPosition<DolomiteDataProps>[],
-  multicall: IMulticallWrapper,
+  multicall: ViemMulticallDataLoader,
+  contractFactory: DolomiteViemContractFactory,
 ): Promise<string[]> {
   const isolationModeTokensMap = contractPositions.reduce<Record<string, string>>((memo, position) => {
     position.tokens.forEach((token, i) => {
@@ -171,5 +173,5 @@ export async function getAllIsolationModeTokensFromContractPositions(
     return memo;
   }, {});
   const isolationModeTokens = Object.values(isolationModeTokensMap);
-  return getVaultAddresses(account, isolationModeTokens, multicall.contract);
+  return getVaultAddresses(account, isolationModeTokens, multicall, contractFactory);
 }

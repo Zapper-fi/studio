@@ -117,7 +117,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '39108',
   },
   {
     name: 'fund',
@@ -134,7 +133,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '3962646',
   },
   {
     name: 'toggle_disable',
@@ -147,7 +145,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '40280',
   },
   {
     name: 'disable_can_disable',
@@ -155,7 +152,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21295',
   },
   {
     name: 'disable_fund_admins',
@@ -163,7 +159,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21325',
   },
   {
     name: 'vestedSupply',
@@ -176,7 +171,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '4468',
   },
   {
     name: 'lockedSupply',
@@ -189,7 +183,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '5465',
   },
   {
     name: 'vestedOf',
@@ -207,7 +200,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '5163',
   },
   {
     name: 'balanceOf',
@@ -225,7 +217,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '6275',
   },
   {
     name: 'lockedOf',
@@ -243,7 +234,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '6305',
   },
   {
     name: 'claim',
@@ -280,7 +270,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '38032',
   },
   {
     name: 'apply_transfer_ownership',
@@ -293,7 +282,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '38932',
   },
   {
     name: 'token',
@@ -306,7 +294,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1601',
   },
   {
     name: 'start_time',
@@ -319,7 +306,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1631',
   },
   {
     name: 'end_time',
@@ -332,7 +318,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1661',
   },
   {
     name: 'initial_locked',
@@ -350,7 +335,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1845',
   },
   {
     name: 'total_claimed',
@@ -368,7 +352,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1875',
   },
   {
     name: 'initial_locked_supply',
@@ -381,7 +364,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1751',
   },
   {
     name: 'unallocated_supply',
@@ -394,7 +376,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1781',
   },
   {
     name: 'can_disable',
@@ -407,7 +388,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1811',
   },
   {
     name: 'disabled_at',
@@ -425,7 +405,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1995',
   },
   {
     name: 'admin',
@@ -438,7 +417,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1871',
   },
   {
     name: 'future_admin',
@@ -451,7 +429,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1901',
   },
   {
     name: 'fund_admins_enabled',
@@ -464,7 +441,6 @@ export const curveVestingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1931',
   },
   {
     name: 'fund_admins',
@@ -482,7 +458,6 @@ export const curveVestingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2115',
   },
 ] as const;
 

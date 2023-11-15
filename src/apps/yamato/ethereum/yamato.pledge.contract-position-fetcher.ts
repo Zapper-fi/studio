@@ -12,8 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { YamatoContractFactory } from '../contracts';
-import { Yamato } from '../contracts/ethers/Yamato';
+import { YamatoViemContractFactory } from '../contracts';
+import { Yamato } from '../contracts/viem/Yamato';
 
 @PositionTemplate()
 export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -25,12 +25,12 @@ export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YamatoContractFactory) protected readonly yamatoContractFactory: YamatoContractFactory,
+    @Inject(YamatoViemContractFactory) protected readonly yamatoContractFactory: YamatoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Yamato {
+  getContract(address: string) {
     return this.yamatoContractFactory.yamato({ address, network: this.network });
   }
 
@@ -58,7 +58,7 @@ export class EthereumYamatoPledgeContractPositionFetcher extends ContractPositio
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Yamato>): Promise<BigNumberish[]> {
-    const pledge = await contract.getPledge(address);
+    const pledge = await contract.read.getPledge([address]);
     const coll = pledge[0];
     const debt = pledge[1];
     return [coll, debt];

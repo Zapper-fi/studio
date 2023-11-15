@@ -9,7 +9,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { UnstoppableGlpVault, UnstoppableContractFactory } from '../contracts';
+import { UnstoppableViemContractFactory } from '../contracts';
+import { UnstoppableGlpVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumUnstoppableGlpCompounderTokenFetcher extends AppTokenTemplatePositionFetcher<UnstoppableGlpVault> {
@@ -17,12 +18,12 @@ export class ArbitrumUnstoppableGlpCompounderTokenFetcher extends AppTokenTempla
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(UnstoppableContractFactory) private readonly unstoppableContractFactory: UnstoppableContractFactory,
+    @Inject(UnstoppableViemContractFactory) private readonly unstoppableContractFactory: UnstoppableViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): UnstoppableGlpVault {
+  getContract(_address: string) {
     return this.unstoppableContractFactory.unstoppableGlpVault({ address: _address, network: this.network });
   }
 
@@ -35,7 +36,7 @@ export class ArbitrumUnstoppableGlpCompounderTokenFetcher extends AppTokenTempla
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<UnstoppableGlpVault>) {
-    const reserveRaw = await contract.totalAssets();
+    const reserveRaw = await contract.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve / appToken.supply];
   }

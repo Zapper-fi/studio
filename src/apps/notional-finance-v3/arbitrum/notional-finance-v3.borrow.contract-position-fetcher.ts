@@ -15,7 +15,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { NotionalFinanceV3ContractFactory, NotionalView } from '../contracts';
+import { NotionalFinanceV3ViemContractFactory } from '../contracts';
+import { NotionalView } from '../contracts/viem';
 
 export type NotionalBorrowingDefinition = {
   address: string;
@@ -45,12 +46,13 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(NotionalFinanceV3ContractFactory) protected readonly contractFactory: NotionalFinanceV3ContractFactory,
+    @Inject(NotionalFinanceV3ViemContractFactory)
+    protected readonly contractFactory: NotionalFinanceV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): NotionalView {
+  getContract(address: string) {
     return this.contractFactory.notionalView({ address, network: this.network });
   }
 
@@ -60,13 +62,13 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
       network: this.network,
     });
 
-    const currencyCount = await multicall.wrap(notionalViewContract).getMaxCurrencyId();
+    const currencyCount = await multicall.wrap(notionalViewContract).read.getMaxCurrencyId();
     const currencyRange = range(1, currencyCount + 1);
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {
-        const currency = await multicall.wrap(notionalViewContract).getCurrency(currencyId);
-        const underlyingTokenAddress = currency.underlyingToken.tokenAddress.toLowerCase();
-        const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(currencyId);
+        const currency = await multicall.wrap(notionalViewContract).read.getCurrency([currencyId]);
+        const underlyingTokenAddress = currency[1].tokenAddress.toLowerCase();
+        const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([currencyId]);
 
         const markets = await Promise.all(
           activeMarkets.map(async activeMarket => {
@@ -74,7 +76,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
             const maturity = Number(activeMarket.maturity);
             const tokenId = await multicall
               .wrap(notionalViewContract)
-              .encodeToId(currencyId, maturity, 0)
+              .read.encodeToId([currencyId, maturity, 0])
               .then(v => v.toString());
 
             return {
@@ -119,8 +121,8 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
     contract,
   }: GetTokenBalancesParams<NotionalView, NotionalBorrowingDataProps>) {
     const { maturity, currencyId } = contractPosition.dataProps;
-    const portfolio = await contract.getAccountPortfolio(address);
-    const debtPositions = portfolio.filter(v => v.notional.isNegative());
+    const portfolio = await contract.read.getAccountPortfolio([address]);
+    const debtPositions = portfolio.filter(v => v.notional < 0);
     const position = debtPositions.find(v => Number(v.maturity) === maturity && Number(v.currencyId) === currencyId);
     if (!position) return [0];
 

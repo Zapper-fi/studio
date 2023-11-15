@@ -11,7 +11,7 @@ import { BinanceSmartChainKyberswapElasticLiquidityContractPositionFetcher } fro
 import { KyberswapElasticApyDataLoader } from './common/kyberswap-elastic.apy.data-loader';
 import { KyberswapElasticFarmContractPositionBuilder } from './common/kyberswap-elastic.farm.contract-position-builder';
 import { KyberswapElasticLiquidityContractPositionBuilder } from './common/kyberswap-elastic.liquidity.contract-position-builder';
-import { KyberswapElasticContractFactory } from './contracts';
+import { KyberswapElasticViemContractFactory } from './contracts';
 import { EthereumKyberswapElasticFarmContractPositionFetcher } from './ethereum/kyberswap-elastic.farm.contract-position-fetcher';
 import { EthereumKyberswapElasticLiquidityContractPositionFetcher } from './ethereum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { FantomKyberswapElasticLiquidityContractPositionFetcher } from './fantom/kyberswap-elastic.liquidity.contract-position-fetcher';
@@ -22,7 +22,7 @@ import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polyg
 
 @Module({
   providers: [
-    KyberswapElasticContractFactory,
+    KyberswapElasticViemContractFactory,
     KyberswapElasticApyDataLoader,
     KyberswapElasticFarmContractPositionBuilder,
     KyberswapElasticLiquidityContractPositionBuilder,

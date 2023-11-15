@@ -13,7 +13,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { BathToken, RubiconContractFactory } from '../contracts';
+import { RubiconViemContractFactory } from '../contracts';
+import { BathToken } from '../contracts/viem';
 
 import { RubiconBathTokenDefinitionResolver } from './rubicon.bath.token-definition-resolver';
 
@@ -31,12 +32,12 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(RubiconBathTokenDefinitionResolver)
     private readonly bathTokenDefinitionResolver: RubiconBathTokenDefinitionResolver,
-    @Inject(RubiconContractFactory) private readonly contractFactory: RubiconContractFactory,
+    @Inject(RubiconViemContractFactory) private readonly contractFactory: RubiconViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BathToken {
+  getContract(address: string) {
     return this.contractFactory.bathToken({ network: this.network, address });
   }
 
@@ -57,14 +58,14 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     definition,
     contract,
   }: GetTokenPropsParams<BathToken, DefaultAppTokenDataProps, RubiconPoolDefinition>) {
-    const underlyingAssetContract = this.contractFactory.erc20({
+    const underlyingAssetContract = this.appToolkit.globalViemContracts.erc20({
       address: definition.underlyingTokenAddress,
       network: this.network,
     });
 
-    const supplyRaw = await contract.totalSupply();
-    const decimal = await contract.decimals();
-    const decimalsUnderlying = await multicall.wrap(underlyingAssetContract).decimals();
+    const supplyRaw = await contract.read.totalSupply();
+    const decimal = await contract.read.decimals();
+    const decimalsUnderlying = await multicall.wrap(underlyingAssetContract).read.decimals();
     const supply = (Number(supplyRaw) / 10 ** decimalsUnderlying) * 10 ** decimal;
 
     return supply;
@@ -74,7 +75,8 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     contract,
   }: GetPricePerShareParams<BathToken, DefaultDataProps, RubiconPoolDefinition>) {
-    const ratioRaw = await contract.convertToAssets(BigNumber.from((1e18).toString()));
+    const oneUnit = BigNumber.from(10).pow(18).toString();
+    const ratioRaw = await contract.read.convertToAssets([BigInt(oneUnit)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];
   }

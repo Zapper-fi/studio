@@ -12,7 +12,8 @@ import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { RocketNodeDeposit, RocketPoolContractFactory } from '../contracts';
+import { RocketPoolViemContractFactory } from '../contracts';
+import { RocketNodeDeposit } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RocketNodeDeposit> {
@@ -22,12 +23,12 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RocketPoolContractFactory) protected readonly contractFactory: RocketPoolContractFactory,
+    @Inject(RocketPoolViemContractFactory) protected readonly contractFactory: RocketPoolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RocketNodeDeposit {
+  getContract(address: string) {
     return this.contractFactory.rocketNodeDeposit({ address, network: this.network });
   }
 
@@ -54,7 +55,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const miniPoolManager = this.contractFactory.rocketMinipoolManager({
       address: this.minipoolManagerAddress,
       network: this.network,
@@ -66,21 +67,21 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(miniPoolManager).getNodeMinipoolCount(address);
+    const numPositionsRaw = await multicall.wrap(miniPoolManager).read.getNodeMinipoolCount([address]);
 
     const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index => {
-        const miniPoolAddress = await multicall.wrap(miniPoolManager).getNodeMinipoolAt(address, index);
+      range(0, Number(numPositionsRaw)).map(async index => {
+        const miniPoolAddress = await multicall.wrap(miniPoolManager).read.getNodeMinipoolAt([address, BigInt(index)]);
 
         const miniPoolContract = this.contractFactory.rocketMinipool({
           address: miniPoolAddress,
           network: this.network,
         });
 
-        const isFinalized = await multicall.wrap(miniPoolContract).getFinalised();
+        const isFinalized = await multicall.wrap(miniPoolContract).read.getFinalised();
         if (isFinalized) return null;
 
-        const depositAmountRaw = await multicall.wrap(miniPoolContract).getNodeDepositBalance();
+        const depositAmountRaw = await multicall.wrap(miniPoolContract).read.getNodeDepositBalance();
         const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());
 
         return {
@@ -95,7 +96,7 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
   }
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
@@ -110,11 +111,11 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
       address: this.minipoolManagerAddress,
       network: this.network,
     });
-    const minipoolCount = await multicall.wrap(minipoolManagerContract).getNodeMinipoolCount(address);
+    const minipoolCount = await multicall.wrap(minipoolManagerContract).read.getNodeMinipoolCount([address]);
 
     const minipoolAddresses = await Promise.all(
-      range(0, minipoolCount.toNumber()).map(async i =>
-        multicall.wrap(minipoolManagerContract).getNodeMinipoolAt(address, i),
+      range(0, Number(minipoolCount)).map(async i =>
+        multicall.wrap(minipoolManagerContract).read.getNodeMinipoolAt([address, BigInt(i)]),
       ),
     );
     if (minipoolAddresses.length === 0) return [];
@@ -125,10 +126,10 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends CustomCon
           .map(async address => {
             const minipoolContract = this.contractFactory.rocketMinipool({ address, network: this.network });
 
-            const isFinalized = await multicall.wrap(minipoolContract).getFinalised();
+            const isFinalized = await multicall.wrap(minipoolContract).read.getFinalised();
             if (isFinalized) return null;
 
-            const nodeDepositBalance = await multicall.wrap(minipoolContract).getNodeDepositBalance();
+            const nodeDepositBalance = await multicall.wrap(minipoolContract).read.getNodeDepositBalance();
 
             return [
               {

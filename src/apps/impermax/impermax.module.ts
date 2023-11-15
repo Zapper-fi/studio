@@ -6,7 +6,7 @@ import { ArbitrumImpermaxBorrowContractPositionFetcher } from './arbitrum/imperm
 import { ArbitrumImpermaxCollateralTokenFetcher } from './arbitrum/impermax.collateral.token-fetcher';
 import { ArbitrumImpermaxLendTokenFetcher } from './arbitrum/impermax.lend.token-fetcher';
 import { ArbitrumImpermaxPositionPresenter } from './arbitrum/impermax.position-presenter';
-import { ImpermaxContractFactory } from './contracts';
+import { ImpermaxViemContractFactory } from './contracts';
 import { EthereumImpermaxBorrowContractPositionFetcher } from './ethereum/impermax.borrow.contract-position-fetcher';
 import { EthereumImpermaxCollateralTokenFetcher } from './ethereum/impermax.collateral.token-fetcher';
 import { EthereumImpermaxLendTokenFetcher } from './ethereum/impermax.lend.token-fetcher';
@@ -18,7 +18,7 @@ import { PolygonImpermaxPositionPresenter } from './polygon/impermax.position-pr
 
 @Module({
   providers: [
-    ImpermaxContractFactory,
+    ImpermaxViemContractFactory,
     // Arbitrum
     ArbitrumImpermaxPositionPresenter,
     ArbitrumImpermaxBorrowContractPositionFetcher,

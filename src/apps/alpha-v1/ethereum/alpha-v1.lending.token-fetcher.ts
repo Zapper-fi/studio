@@ -13,7 +13,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { AlphaBank, AlphaV1ContractFactory } from '../contracts';
+import { AlphaV1ViemContractFactory } from '../contracts';
+import { AlphaBank } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePositionFetcher<AlphaBank> {
@@ -21,12 +22,12 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AlphaV1ContractFactory) protected readonly contractFactory: AlphaV1ContractFactory,
+    @Inject(AlphaV1ViemContractFactory) protected readonly contractFactory: AlphaV1ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AlphaBank {
+  getContract(address: string) {
     return this.contractFactory.alphaBank({ network: this.network, address });
   }
 
@@ -43,13 +44,13 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
     contract,
   }: GetPriceParams<AlphaBank, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
     const ethPrice = appToken.tokens[0].price;
-    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.totalETH(), contract.totalSupply()]);
+    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.read.totalETH(), contract.read.totalSupply()]);
 
     return (ethPrice * Number(totalEthRaw)) / Number(totalSupplyRaw);
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AlphaBank>) {
-    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.totalETH(), contract.totalSupply()]);
+    const [totalEthRaw, totalSupplyRaw] = await Promise.all([contract.read.totalETH(), contract.read.totalSupply()]);
     return [Number(totalEthRaw) / Number(totalSupplyRaw)];
   }
 
@@ -58,14 +59,13 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getReserves({ appToken, contract }: GetDataPropsParams<AlphaBank>) {
-    const totalEthRaw = await contract.totalETH();
+    const totalEthRaw = await contract.read.totalETH();
     return [Number(totalEthRaw) / 10 ** appToken.tokens[0].decimals];
   }
 
   async getApy({ contract }: GetDataPropsParams<AlphaBank>) {
-    const [totalEthRaw, totalDebtValueRaw] = await Promise.all([contract.totalETH(), contract.glbDebtVal()]);
-
-    const utilizationRate = new BigNumber(totalDebtValueRaw.div(totalEthRaw).toString());
+    const [totalEthRaw, totalDebtValueRaw] = await Promise.all([contract.read.totalETH(), contract.read.glbDebtVal()]);
+    const utilizationRate = new BigNumber(totalDebtValueRaw.toString()).div(totalEthRaw.toString());
 
     const tripleSlope = utilizationRate.lt(new BigNumber(0.8))
       ? utilizationRate.times(new BigNumber(0.1)).div(new BigNumber(0.8))

@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Beanstalk, BeanstalkContractFactory } from '../contracts';
+import { BeanstalkViemContractFactory } from '../contracts';
+import { Beanstalk } from '../contracts/viem';
 
 export type BeanstalkSiloEarnedContractPositionDefinition = {
   address: string;
@@ -31,12 +32,12 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BeanstalkContractFactory) protected readonly beanstalkContractFactory: BeanstalkContractFactory,
+    @Inject(BeanstalkViemContractFactory) protected readonly beanstalkContractFactory: BeanstalkViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Beanstalk {
+  getContract(address: string) {
     return this.beanstalkContractFactory.beanstalk({ address, network: this.network });
   }
 
@@ -68,7 +69,7 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Beanstalk>): Promise<BigNumberish[]> {
-    const earnedBeans = await contract.balanceOfEarnedBeans(address);
+    const earnedBeans = await contract.read.balanceOfEarnedBeans([address]);
     return [earnedBeans];
   }
 }

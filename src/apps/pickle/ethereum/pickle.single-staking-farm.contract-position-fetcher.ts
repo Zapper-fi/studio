@@ -10,8 +10,8 @@ import {
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { PickleApiJarRegistry } from '../common/pickle.api.jar-registry';
-import { PickleContractFactory } from '../contracts';
-import { PickleJarSingleRewardStaking } from '../contracts/ethers/PickleJarSingleRewardStaking';
+import { PickleViemContractFactory } from '../contracts';
+import { PickleJarSingleRewardStaking } from '../contracts/viem/PickleJarSingleRewardStaking';
 
 @PositionTemplate()
 export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PickleJarSingleRewardStaking> {
@@ -19,13 +19,13 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
     @Inject(PickleApiJarRegistry) protected readonly jarCacheManager: PickleApiJarRegistry,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PickleJarSingleRewardStaking {
+  getContract(address: string) {
     return this.contractFactory.pickleJarSingleRewardStaking({ address, network: this.network });
   }
 
@@ -41,24 +41,24 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
   }
 
   getRewardRates({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({
     address,
     contract,
   }: GetTokenBalancesParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({
     address,
     contract,
   }: GetTokenBalancesParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

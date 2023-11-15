@@ -4,7 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { SpoolContractFactory, SpoolVospool } from '../contracts';
+import { SpoolViemContractFactory } from '../contracts';
+import { SpoolVospool } from '../contracts/viem';
 
 import { VOSPOOL_ADDRESS } from './spool.constants';
 
@@ -17,7 +18,7 @@ export class EthereumSpoolVoSpoolTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SpoolContractFactory) protected readonly contractFactory: SpoolContractFactory,
+    @Inject(SpoolViemContractFactory) protected readonly contractFactory: SpoolViemContractFactory,
   ) {
     super(appToolkit);
   }

@@ -3,7 +3,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -14,7 +14,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { MyceliumContractFactory } from '../contracts';
+import { MyceliumViemContractFactory } from '../contracts';
 
 export type MyceliumMlpTokenDefinition = {
   address: string;
@@ -33,30 +33,32 @@ export class ArbitrumMyceliumMlpTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MyceliumContractFactory) protected readonly contractFactory: MyceliumContractFactory,
+    @Inject(MyceliumViemContractFactory) protected readonly contractFactory: MyceliumViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ network: this.network, address });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ network: this.network, address });
   }
 
   async getDefinitions(): Promise<MyceliumMlpTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const mlpManagerContract = this.contractFactory.myceliumMlpManager({
       address: this.mlpManagerAddress,
       network: this.network,
     });
-    const vaultAddressRaw = await multicall.wrap(mlpManagerContract).vault();
+    const vaultAddressRaw = await multicall.wrap(mlpManagerContract).read.vault();
     const vaultContract = this.contractFactory.myceliumVault({
       address: vaultAddressRaw.toLowerCase(),
       network: this.network,
     });
 
-    const numTokens = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const numTokens = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const underlyingTokenAddressesRaw = await Promise.all(
-      range(0, Number(numTokens)).map(async i => await multicall.wrap(vaultContract).allWhitelistedTokens(i)),
+      range(0, Number(numTokens)).map(
+        async i => await multicall.wrap(vaultContract).read.allWhitelistedTokens([BigInt(i)]),
+      ),
     );
     return [
       {
@@ -86,8 +88,11 @@ export class ArbitrumMyceliumMlpTokenFetcher extends AppTokenTemplatePositionFet
   }: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, MyceliumMlpTokenDefinition>) {
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const underlyingTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(definition.vaultAddress);
+        const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
+        const reserveRaw = await multicall.wrap(underlyingTokenContract).read.balanceOf([definition.vaultAddress]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),

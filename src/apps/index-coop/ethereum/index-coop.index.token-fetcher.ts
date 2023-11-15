@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { IndexCoopContractFactory, IndexCoopToken } from '../contracts';
+import { IndexCoopViemContractFactory } from '../contracts';
+import { IndexCoopToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePositionFetcher<IndexCoopToken> {
@@ -22,12 +23,12 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IndexCoopContractFactory) protected readonly contractFactory: IndexCoopContractFactory,
+    @Inject(IndexCoopViemContractFactory) protected readonly contractFactory: IndexCoopViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IndexCoopToken {
+  getContract(address: string) {
     return this.contractFactory.indexCoopToken({ address, network: this.network });
   }
 
@@ -41,18 +42,20 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
       '0x0b498ff89709d3838a063f1dfa463091f9801c2b', // BTC x2 Flex Leverage
       '0x341c05c0e9b33c0e38d64de76516b2ce970bb3be', // DSETH
       '0xc30fba978743a43e736fc32fbeed364b8a2039cd', // Money Market Index
+      '0x1b5e16c5b20fb5ee87c61fe9afe735cca3b21a65', // ic21
+      '0x55b2cfcfe99110c773f00b023560dd9ef6c8a13b', // cdETI
       ...this.deprecatedProducts,
     ];
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IndexCoopToken>) {
-    return (await contract.getComponents()).map(address => ({ address, network: this.network }));
+    return (await contract.read.getComponents()).map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ appToken, contract }: GetDataPropsParams<IndexCoopToken>) {
     const pricePerShare = await Promise.all(
       appToken.tokens.map(async underlyingToken => {
-        const ratio = await contract.getTotalComponentRealUnits(underlyingToken.address);
+        const ratio = await contract.read.getTotalComponentRealUnits([underlyingToken.address]);
         return Number(ratio) / 10 ** underlyingToken.decimals;
       }),
     );

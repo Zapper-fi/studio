@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ArthContractFactory, TroveManager } from '../contracts';
+import { ArthViemContractFactory } from '../contracts';
+import { TroveManager } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumArthTroveContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TroveManager> {
@@ -16,12 +17,12 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArthContractFactory) protected readonly contractFactory: ArthContractFactory,
+    @Inject(ArthViemContractFactory) protected readonly contractFactory: ArthViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TroveManager {
+  getContract(address: string) {
     return this.contractFactory.troveManager({ address, network: this.network });
   }
 
@@ -49,6 +50,6 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
   }
 
   getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<TroveManager>) {
-    return Promise.all([contract.getTroveColl(address), contract.getTroveDebt(address)]);
+    return Promise.all([contract.read.getTroveColl([address]), contract.read.getTroveDebt([address])]);
   }
 }

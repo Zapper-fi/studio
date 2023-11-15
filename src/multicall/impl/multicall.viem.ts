@@ -16,6 +16,7 @@ import { MulticallWrappedReadRequestError } from '~multicall/errors/multicall.re
 import { DEFAULT_DATALOADER_OPTIONS } from '~multicall/multicall.constants';
 
 import { MulticallWrappedReadDecodeError } from '../errors/multicall.decode.error';
+import { MulticallCallStruct } from '~multicall/multicall.types';
 
 declare module 'abitype' {
   export interface Config {
@@ -35,20 +36,15 @@ export type ContractCall<T extends Abi = Abi, V extends string = string> = {
   stack?: string;
 };
 
-type CallStruct = {
-  target: string;
-  callData: string;
-};
-
 type MulticallCallbackHooks = {
-  beforeCallHook?: (calls: ContractCall[], callRequests: CallStruct[]) => void;
+  beforeCallHook?: (calls: ContractCall[], callRequests: MulticallCallStruct[]) => void;
   afterResultSerializer?: (result: ReadContractReturnType) => unknown;
 };
 
 export class ViemMulticallDataLoader {
   private multicall: MulticallContract;
   private dataLoader: DataLoader<ContractCall, ReadContractReturnType>;
-  private beforeCallHook?: (calls: ContractCall[], callRequests: CallStruct[]) => void;
+  private beforeCallHook?: (calls: ContractCall[], callRequests: MulticallCallStruct[]) => void;
   private afterResultSerializer?: (result: ReadContractReturnType) => unknown;
 
   constructor(
@@ -113,7 +109,7 @@ export class ViemMulticallDataLoader {
 
     const readProxy = new Proxy(contract, {
       get: (target, functionName: string) => {
-        return (args: any[]) => this.load({ abi, address, functionName, args, stack });
+        return (args: any[] = []) => this.load({ abi, address, functionName, args, stack });
       },
     });
 

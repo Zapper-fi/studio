@@ -11,7 +11,8 @@ import { MetaType } from '~position/position.interface';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ApecoinContractFactory, ApecoinStaking } from '../contracts';
+import { ApecoinViemContractFactory } from '../contracts';
+import { ApecoinStaking } from '../contracts/viem';
 
 enum PoolTypes {
   APECOIN = 0,
@@ -33,7 +34,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ApecoinContractFactory) private readonly contractFactory: ApecoinContractFactory,
+    @Inject(ApecoinViemContractFactory) private readonly contractFactory: ApecoinViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -58,7 +59,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
     ];
   }
 
-  getContract(address: string): ApecoinStaking {
+  getContract(address: string) {
     return this.contractFactory.apecoinStaking({ network: this.network, address });
   }
 
@@ -71,7 +72,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
@@ -83,7 +84,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
     if (!contractPosition) return [];
 
     const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    const positions = await multicall.wrap(stakingContract).read.getAllStakes([address]);
     if (positions.length === 0) return [];
 
     const allPositions = await Promise.all(
@@ -118,7 +119,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
   }
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
@@ -130,7 +131,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
     if (!contractPosition) return [];
 
     const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    const positions = await multicall.wrap(stakingContract).read.getAllStakes([address]);
     if (positions.length === 0) return [];
 
     return (

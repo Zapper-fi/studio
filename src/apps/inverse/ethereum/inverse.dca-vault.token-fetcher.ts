@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { InverseContractFactory, InverseDcaVaultToken } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseDcaVaultToken } from '../contracts/viem';
 
 export type InverseDcaVaultTokenDataProps = {
   targetAddress: string;
@@ -17,12 +18,12 @@ export class EthereumInverseDcaVaultTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): InverseDcaVaultToken {
+  getContract(address: string) {
     return this.contractFactory.inverseDcaVaultToken({ address, network: this.network });
   }
 
@@ -36,7 +37,7 @@ export class EthereumInverseDcaVaultTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<InverseDcaVaultToken>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare() {

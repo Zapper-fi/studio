@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
-import { PickleContractFactory } from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
 
 type GetJarDefinitionsParams = {
   network: Network;
@@ -18,21 +18,21 @@ const SUPPORTED_REGISTRIES = {
 export class PickleOnChainJarRegistry {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly pickleContractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly pickleContractFactory: PickleViemContractFactory,
   ) {}
 
   async getJarDefinitions({ network }: GetJarDefinitionsParams) {
     const registryAddress = SUPPORTED_REGISTRIES[network];
-    const multicall = this.appToolkit.getMulticall(network);
+    const multicall = this.appToolkit.getViemMulticall(network);
 
     const contract = this.pickleContractFactory.pickleRegistry({ address: registryAddress, network });
-    const vaultAddresses = await contract.developmentVaults();
+    const vaultAddresses = await contract.read.developmentVaults();
 
     const vaultData = await Promise.all(
       vaultAddresses.map(async vaultAddressRaw => {
         const vaultAddress = vaultAddressRaw.toLowerCase();
         const vaultContract = this.pickleContractFactory.pickleJar({ address: vaultAddress, network });
-        const tokenAddressRaw = await multicall.wrap(vaultContract).token();
+        const tokenAddressRaw = await multicall.wrap(vaultContract).read.token();
         const tokenAddress = tokenAddressRaw.toLowerCase();
         return { vaultAddress, tokenAddress };
       }),

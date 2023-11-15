@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { RocketPoolContractFactory } from './contracts';
+import { RocketPoolViemContractFactory } from './contracts';
 import { EthereumRocketPoolMinipoolContractPositionFetcher } from './ethereum/rocket-pool.minipool.contract-position-fetcher';
 import { EthereumRocketPoolOracleDaoBondContractPositionFetcher } from './ethereum/rocket-pool.oracle-dao-bond.contract-position-fetcher';
 import { EthereumRocketPoolStakingContractPositionFetcher } from './ethereum/rocket-pool.staking.contract-position-fetcher';
 
 @Module({
   providers: [
-    RocketPoolContractFactory,
+    RocketPoolViemContractFactory,
     // Ethereum
     EthereumRocketPoolOracleDaoBondContractPositionFetcher,
     EthereumRocketPoolStakingContractPositionFetcher,

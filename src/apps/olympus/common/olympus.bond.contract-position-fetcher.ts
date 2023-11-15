@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -20,7 +21,7 @@ export type OlympusBondContractPositionDefinition = {
 };
 
 export abstract class OlympusBondContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
   V extends DefaultDataProps = DefaultDataProps,
   R extends OlympusBondContractPositionDefinition = OlympusBondContractPositionDefinition,
 > extends ContractPositionTemplatePositionFetcher<T, V, R> {

@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { EnsuroApiRegistry } from '../common/ensuro.api-registry';
-import { EnsuroContractFactory, EnsuroEtoken } from '../contracts';
+import { EnsuroViemContractFactory } from '../contracts';
+import { EnsuroEtoken } from '../contracts/viem';
 
 const USDC = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174';
 
@@ -24,12 +25,12 @@ export class PolygonEnsuroETokenTokenFetcher extends AppTokenTemplatePositionFet
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EnsuroApiRegistry) protected readonly ensuroRegistry: EnsuroApiRegistry,
-    @Inject(EnsuroContractFactory) private readonly ensuroContractFactory: EnsuroContractFactory,
+    @Inject(EnsuroViemContractFactory) private readonly ensuroContractFactory: EnsuroViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): EnsuroEtoken {
+  getContract(_address: string) {
     return this.ensuroContractFactory.ensuroEtoken({ address: _address, network: this.network });
   }
 

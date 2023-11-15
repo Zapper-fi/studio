@@ -13,7 +13,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV4ContractFactory, PoolTogetherV4Ticket } from '../contracts';
+import { PoolTogetherV4ViemContractFactory } from '../contracts';
+import { PoolTogetherV4Ticket } from '../contracts/viem';
 
 import { PoolTogetherV4ApiPrizePoolRegistry } from './pool-together-v4.api.prize-pool-registry';
 
@@ -28,14 +29,14 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV4ContractFactory) private readonly contractFactory: PoolTogetherV4ContractFactory,
+    @Inject(PoolTogetherV4ViemContractFactory) private readonly contractFactory: PoolTogetherV4ViemContractFactory,
     @Inject(PoolTogetherV4ApiPrizePoolRegistry)
     private readonly poolTogetherV4ApiPrizePoolRegistry: PoolTogetherV4ApiPrizePoolRegistry,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PoolTogetherV4Ticket {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherV4Ticket({ address, network: this.network });
   }
 
@@ -63,11 +64,11 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
         const [ticketTokenAddress, underlyingTokenAddress] = await Promise.all([
           multicall
             .wrap(poolContract)
-            .getTicket()
+            .read.getTicket()
             .then(addr => addr.toLowerCase()),
           multicall
             .wrap(poolContract)
-            .getToken()
+            .read.getToken()
             .then(addr => addr.toLowerCase()),
         ]);
 

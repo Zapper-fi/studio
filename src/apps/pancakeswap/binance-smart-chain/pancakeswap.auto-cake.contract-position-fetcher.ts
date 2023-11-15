@@ -12,7 +12,9 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PancakeswapCakeChef, PancakeswapContractFactory } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
+import { PancakeswapCakeChef } from '../contracts/viem';
+import { PancakeswapCakeChefContract } from '../contracts/viem/PancakeswapCakeChef';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapCakeChef> {
@@ -24,7 +26,7 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -37,45 +39,45 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
     return 1;
   }
 
-  async getStakedTokenAddress(contract: PancakeswapCakeChef) {
-    return contract.token();
+  async getStakedTokenAddress(contract: PancakeswapCakeChefContract) {
+    return contract.read.token();
   }
 
-  async getRewardTokenAddress(contract: PancakeswapCakeChef) {
-    return contract.token();
+  async getRewardTokenAddress(contract: PancakeswapCakeChefContract) {
+    return contract.read.token();
   }
 
   async getReserve({ contractPosition, multicall }: GetDataPropsParams<PancakeswapCakeChef>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const userInfo = await multicall.wrap(mainChef).userInfo(0, contractPosition.address);
-    const reserve = Number(userInfo.amount) / 10 ** stakedToken.decimals;
+    const userInfo = await multicall.wrap(mainChef).read.userInfo([BigInt(0), contractPosition.address]);
+    const reserve = Number(userInfo[0]) / 10 ** stakedToken.decimals;
     return reserve;
   }
 
   async getTotalAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapCakeChef>): Promise<BigNumberish> {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    return multicall.wrap(mainChef).totalAllocPoint();
+    return multicall.wrap(mainChef).read.totalAllocPoint();
   }
 
   async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapCakeChef>) {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    const poolInfo = await multicall.wrap(mainChef).poolInfo(0);
-    return poolInfo.allocPoint;
+    const poolInfo = await multicall.wrap(mainChef).read.poolInfo([BigInt(0)]);
+    return poolInfo[1];
   }
 
   async getTotalRewardRate({ multicall }: GetMasterChefDataPropsParams<PancakeswapCakeChef>): Promise<BigNumberish> {
     const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
-    return multicall.wrap(mainChef).cakePerBlock();
+    return multicall.wrap(mainChef).read.cakePerBlock();
   }
 
   async getStakedTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<PancakeswapCakeChef>) {
     const [userInfo, pricePerShareRaw] = await Promise.all([
-      contract.userInfo(address),
-      contract.getPricePerFullShare(),
+      contract.read.userInfo([address]),
+      contract.read.getPricePerFullShare(),
     ]);
 
-    const shares = userInfo.shares.toString();
+    const shares = userInfo[0].toString();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return new BigNumber(shares).times(pricePerShare).toFixed(0);
   }

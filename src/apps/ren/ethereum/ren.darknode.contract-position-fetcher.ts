@@ -13,7 +13,8 @@ import { GetDisplayPropsParams } from '~position/template/contract-position.temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RenApiClient } from '../common/ren.api.client';
-import { RenContractFactory, RenDarknodeRegistry } from '../contracts';
+import { RenViemContractFactory } from '../contracts';
+import { RenDarknodeRegistry } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRenDarknodeContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RenDarknodeRegistry> {
@@ -21,7 +22,7 @@ export class EthereumRenDarknodeContractPositionFetcher extends CustomContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RenContractFactory) protected readonly contractFactory: RenContractFactory,
+    @Inject(RenViemContractFactory) protected readonly contractFactory: RenViemContractFactory,
     @Inject(RenApiClient) protected readonly apiClient: RenApiClient,
   ) {
     super(appToolkit);

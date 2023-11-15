@@ -7,7 +7,7 @@ import { AvalancheAaveV2PositionPresenter } from './avalanche/aave-v2.position-p
 import { AvalancheAaveV2StableDebtTokenFetcher } from './avalanche/aave-v2.stable-debt.token-fetcher';
 import { AvalancheAaveV2SupplyTokenFetcher } from './avalanche/aave-v2.supply.token-fetcher';
 import { AvalancheAaveV2VariableDebtTokenFetcher } from './avalanche/aave-v2.variable-debt.token-fetcher';
-import { AaveV2ContractFactory } from './contracts';
+import { AaveV2ViemContractFactory } from './contracts';
 import { EthereumAaveV2ClaimableContractPositionFetcher } from './ethereum/aave-v2.claimable.contract-position-fetcher';
 import { EthereumAaveV2PositionPresenter } from './ethereum/aave-v2.position-presenter';
 import { EthereumAaveV2StableDebtTokenFetcher } from './ethereum/aave-v2.stable-debt.token-fetcher';
@@ -21,7 +21,7 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
 
 @Module({
   providers: [
-    AaveV2ContractFactory,
+    AaveV2ViemContractFactory,
     AvalancheAaveV2ClaimableContractPositionFetcher,
     AvalancheAaveV2PositionPresenter,
     AvalancheAaveV2StableDebtTokenFetcher,

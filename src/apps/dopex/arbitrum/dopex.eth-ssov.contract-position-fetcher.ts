@@ -4,13 +4,13 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
-import { DopexEthSsov } from '../contracts';
+import { DopexEthSsov } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexEthSsov> {
   groupLabel = 'SSOVs';
 
-  getContract(address: string): DopexEthSsov {
+  getContract(address: string) {
     return this.contractFactory.dopexEthSsov({ address, network: this.network });
   }
 
@@ -51,7 +51,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     contractPosition,
   }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.totalEpochStrikeEthBalance(epoch, strike);
+    return contract.read.totalEpochStrikeEthBalance([BigInt(epoch), BigInt(strike)]);
   }
 
   async getTotalEpochStrikeRewardBalances({
@@ -61,15 +61,15 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
   }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch } = contractPosition.dataProps;
     const rewardDistributionName = ethers.utils.formatBytes32String('RewardsDistribution');
-    const rewardDistrbutionAddress = await multicall.wrap(contract).getAddress(rewardDistributionName);
+    const rewardDistrbutionAddress = await multicall.wrap(contract).read.getAddress([rewardDistributionName]);
     const rewardDistributionContract = this.contractFactory.dopexRewardDistribution({
       address: rewardDistrbutionAddress,
       network: this.network,
     });
 
     return Promise.all([
-      multicall.wrap(rewardDistributionContract).dpxReceived(epoch),
-      multicall.wrap(rewardDistributionContract).rdpxReceived(epoch),
+      multicall.wrap(rewardDistributionContract).read.dpxReceived([BigInt(epoch)]),
+      multicall.wrap(rewardDistributionContract).read.rdpxReceived([BigInt(epoch)]),
     ]);
   }
 }

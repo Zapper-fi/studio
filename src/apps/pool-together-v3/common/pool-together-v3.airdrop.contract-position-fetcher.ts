@@ -17,7 +17,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
-import { PoolTogetherMerkleDistributor, PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherMerkleDistributor } from '../contracts/viem';
 
 export abstract class PoolTogetherV3AirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolTogetherMerkleDistributor> {
   abstract merkleAddress: string;
@@ -26,7 +27,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) private readonly contractFactory: PoolTogetherV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -43,7 +44,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
       .catch(() => null);
   }
 
-  getContract(address: string): PoolTogetherMerkleDistributor {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherMerkleDistributor({ address, network: this.network });
   }
 
@@ -75,7 +76,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
     const airdropData = await this.getAirdropData(this.network, address);
     if (!airdropData) return [0];
 
-    const isClaimed = await contract.isClaimed(airdropData.index);
+    const isClaimed = await contract.read.isClaimed([BigInt(airdropData.index)]);
     if (isClaimed) return [0];
 
     const claimableBalanceRaw = String(parseInt(airdropData.amount, 16));

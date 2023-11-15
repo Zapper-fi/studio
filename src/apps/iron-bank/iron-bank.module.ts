@@ -5,7 +5,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { AvalancheIronBankBorrowContractPositionFetcher } from './avalanche/iron-bank.borrow.contract-position-fetcher';
 import { AvalancheIronBankPositionPresenter } from './avalanche/iron-bank.position-fetcher';
 import { AvalancheIronBankSupplyTokenFetcher } from './avalanche/iron-bank.supply.token-fetcher';
-import { IronBankContractFactory } from './contracts';
+import { IronBankViemContractFactory } from './contracts';
 import { EthereumIronBankBorrowContractPositionFetcher } from './ethereum/iron-bank.borrow.contract-position-fetcher';
 import { EthereumIronBankPositionPresenter } from './ethereum/iron-bank.position-fetcher';
 import { EthereumIronBankSupplyTokenFetcher } from './ethereum/iron-bank.supply.token-fetcher';
@@ -18,7 +18,7 @@ import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.
 
 @Module({
   providers: [
-    IronBankContractFactory,
+    IronBankViemContractFactory,
     // Avalanche
     AvalancheIronBankBorrowContractPositionFetcher,
     AvalancheIronBankPositionPresenter,

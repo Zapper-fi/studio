@@ -18,7 +18,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { VendorFinanceContractFactory, VendorFinancePool } from '../contracts';
+import { VendorFinanceViemContractFactory } from '../contracts';
+import { VendorFinancePool } from '../contracts/viem';
 
 import { LENDING_POOLS_QUERY } from './getLendingPoolsQuery';
 import {
@@ -32,12 +33,12 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VendorFinanceContractFactory) protected readonly contractFactory: VendorFinanceContractFactory,
+    @Inject(VendorFinanceViemContractFactory) protected readonly contractFactory: VendorFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): VendorFinancePool {
+  getContract(address: string) {
     return this.contractFactory.vendorFinancePool({ address, network: this.network });
   }
 
@@ -148,12 +149,15 @@ export abstract class VendorFinancePoolContractPositionFetcher extends ContractP
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const [borrowPosition, mintRatioRaw] = await Promise.all([contract.debt(address), contract.mintRatio()]);
+    const [borrowPosition, mintRatioRaw] = await Promise.all([
+      contract.read.debt([address]),
+      contract.read.mintRatio(),
+    ]);
 
     const poolRate = Number(mintRatioRaw) / 10 ** 18;
-    const suppliedBalance = Number(borrowPosition.borrowAmount) / 10 ** lentToken.decimals / poolRate;
+    const suppliedBalance = Number(borrowPosition[0]) / 10 ** lentToken.decimals / poolRate;
     const suppliedBalanceRaw = suppliedBalance * 10 ** collateralToken.decimals;
-    const borrowedBalance = Number(borrowPosition.borrowAmount);
+    const borrowedBalance = Number(borrowPosition[0]);
 
     // Deposit, borrow, no lending out (not pool creator)
     return [suppliedBalanceRaw.toString(), borrowedBalance.toString(), '0'];

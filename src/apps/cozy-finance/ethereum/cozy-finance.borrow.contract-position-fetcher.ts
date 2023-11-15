@@ -13,8 +13,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { CozyFinanceContractFactory } from '../contracts';
-import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/ethers';
+import { CozyFinanceViemContractFactory } from '../contracts';
+import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -26,7 +26,7 @@ export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CozyFinanceContractFactory) protected readonly contractFactory: CozyFinanceContractFactory,
+    @Inject(CozyFinanceViemContractFactory) protected readonly contractFactory: CozyFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -40,37 +40,37 @@ export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBo
   }
 
   async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<CozyFinanceCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
-    return contract.borrowRatePerBlock().catch(() => 0);
+    return contract.read.borrowRatePerBlock().catch(() => 0);
   }
 
   async getCash({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({
     address,
     contract,
   }: GetTokenBalancesParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
-    return contract.borrowBalanceCurrent(address);
+    return contract.read.borrowBalanceCurrent([address]);
   }
 }

@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { BigNumber, Contract } from 'ethers/lib/ethers';
+import { BigNumber } from 'ethers/lib/ethers';
 import _, { range, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -10,26 +10,25 @@ import { MetaType } from '~position/position.interface';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { VelodromeV2ContractFactory } from '../contracts';
+import { VelodromeV2ViemContractFactory } from '../contracts';
+import { VelodromeV2Bribe } from '../contracts/viem';
 
 import { VelodromeV2AddressesResolver } from './velodrome-v2.addresses-resolver';
 
-export abstract class VotingRewardsContractPositionFetcher<
-  T extends Contract,
-> extends CustomContractPositionTemplatePositionFetcher<T> {
+export abstract class VotingRewardsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<VelodromeV2Bribe> {
   veTokenAddress = '0xfaf8fd17d9840595845582fcb047df13f006787d';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) protected readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) protected readonly contractFactory: VelodromeV2ViemContractFactory,
     @Inject(VelodromeV2AddressesResolver) protected readonly definitionsResolver: VelodromeV2AddressesResolver,
   ) {
     super(appToolkit);
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<T>) {
-    const numRewards = Number(await contract.rewardsListLength());
-    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<VelodromeV2Bribe>) {
+    const numRewards = Number(await contract.read.rewardsListLength());
+    const bribeTokens = await Promise.all(range(numRewards).map(async n => await contract.read.rewards([BigInt(n)])));
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());
@@ -49,13 +48,15 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     // Get ve token IDs
     const escrow = this.contractFactory.velodromeV2Ve({ address: this.veTokenAddress, network: this.network });
     const mcEscrow = multicall.wrap(escrow);
-    const veCount = Number(await mcEscrow.balanceOf(address));
-    const veTokenIds = await Promise.all(range(veCount).map(async i => mcEscrow.ownerToNFTokenIdList(address, i)));
+    const veCount = Number(await mcEscrow.read.balanceOf([address]));
+    const veTokenIds = await Promise.all(
+      range(veCount).map(async i => mcEscrow.read.ownerToNFTokenIdList([address, BigInt(i)])),
+    );
     if (veTokenIds.length === 0) return [];
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
@@ -73,7 +74,9 @@ export abstract class VotingRewardsContractPositionFetcher<
 
         const tokens = await Promise.all(
           contractPosition.tokens.map(async bribeToken => {
-            const balancesPerBribePromises = veTokenIds.map(async id => bribeContract.earned(bribeToken.address, id));
+            const balancesPerBribePromises = veTokenIds.map(async id =>
+              bribeContract.read.earned([bribeToken.address, id]),
+            );
             const balancesPerBribe = await Promise.all(balancesPerBribePromises);
             const balancesPerBribeSum = balancesPerBribe.reduce((acc, v) => acc.add(v), BigNumber.from(0));
             return drillBalance(bribeToken, balancesPerBribeSum.toString());
@@ -90,13 +93,15 @@ export abstract class VotingRewardsContractPositionFetcher<
   }
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     // Get ve token IDs
     const escrow = this.contractFactory.velodromeV2Ve({ address: this.veTokenAddress, network: this.network });
     const mcEscrow = multicall.wrap(escrow);
-    const veCount = Number(await mcEscrow.balanceOf(address));
-    const veTokenIds = await Promise.all(range(veCount).map(async i => mcEscrow.ownerToNFTokenIdList(address, i)));
+    const veCount = Number(await mcEscrow.read.balanceOf([address]));
+    const veTokenIds = await Promise.all(
+      range(veCount).map(async i => mcEscrow.read.ownerToNFTokenIdList([address, BigInt(i)])),
+    );
     if (veTokenIds.length === 0) return [];
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
@@ -116,7 +121,9 @@ export abstract class VotingRewardsContractPositionFetcher<
           key: this.appToolkit.getPositionKey(contractPosition),
           tokens: await Promise.all(
             contractPosition.tokens.map(async bribeToken => {
-              const balancesPerBribePromises = veTokenIds.map(async id => bribeContract.earned(bribeToken.address, id));
+              const balancesPerBribePromises = veTokenIds.map(async id =>
+                bribeContract.read.earned([bribeToken.address, id]),
+              );
               const balancesPerBribe = await Promise.all(balancesPerBribePromises);
               const balancesPerBribeSum = balancesPerBribe.reduce((acc, v) => acc.add(v), BigNumber.from(0));
               return { key: this.appToolkit.getPositionKey(bribeToken), balance: balancesPerBribeSum.toString() };

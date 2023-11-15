@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapV2ViemContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { ArbitrumKyberSwapClassicFarmContractPositionFetcher } from './arbitrum/kyberswap-classic.farm-v2.contract-position-fetcher';
 import { ArbitrumKyberSwapClassicKsPoolTokenFetcher } from './arbitrum/kyberswap-classic.ks-pool.token-fetcher';
@@ -11,7 +11,7 @@ import { AvalancheKyberSwapKsClassicKsPoolTokenFetcher } from './avalanche/kyber
 import { BinanceSmartChainKyberSwapClassicDmmPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.dmm-pool.token-fetcher';
 import { BinanceSmartChainKyberSwapClassicFarmV2ContractPositionFetcher } from './binance-smart-chain/kyberswap-classic.farm-v2.contract-position-fetcher';
 import { BinanceSmartChainKyberSwapClassicKsPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.ks-pool.token-fetcher';
-import { KyberswapClassicContractFactory } from './contracts';
+import { KyberswapClassicViemContractFactory } from './contracts';
 import { EthereumKyberSwapClassicDmmPoolTokenFetcher } from './ethereum/kyberswap-classic.dmm-pool.token-fetcher';
 import { EthereumKyberSwapClassicFarmContractPositionFetcher } from './ethereum/kyberswap-classic.farm.contract-position-fetcher';
 import { EthereumKyberSwapClassicKsPoolTokenFetcher } from './ethereum/kyberswap-classic.ks-pool.token-fetcher';
@@ -27,8 +27,8 @@ import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './poly
 
 @Module({
   providers: [
-    KyberswapClassicContractFactory,
-    UniswapV2ContractFactory,
+    KyberswapClassicViemContractFactory,
+    UniswapV2ViemContractFactory,
     // Arbitrum
     ArbitrumKyberSwapClassicFarmContractPositionFetcher,
     ArbitrumKyberSwapClassicKsPoolTokenFetcher,

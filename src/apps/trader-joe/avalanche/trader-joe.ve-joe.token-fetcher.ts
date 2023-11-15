@@ -4,8 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { TraderJoeContractFactory } from '../contracts';
-import { TraderJoeVeJoe } from '../contracts/ethers/TraderJoeVeJoe';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeVeJoe } from '../contracts/viem/TraderJoeVeJoe';
 
 @PositionTemplate()
 export class AvalancheTraderJoeVeJoeTokenFetcher extends AppTokenTemplatePositionFetcher<TraderJoeVeJoe> {
@@ -16,7 +16,7 @@ export class AvalancheTraderJoeVeJoeTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) protected readonly contractFactory: TraderJoeContractFactory,
+    @Inject(TraderJoeViemContractFactory) protected readonly contractFactory: TraderJoeViemContractFactory,
   ) {
     super(appToolkit);
   }

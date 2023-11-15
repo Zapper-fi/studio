@@ -3,7 +3,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -14,7 +14,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 
-import { MetavaultTradeContractFactory } from '../contracts';
+import { MetavaultTradeViemContractFactory } from '../contracts';
 
 export type MetavaultTradeMvlpTokenDefinition = {
   address: string;
@@ -33,30 +33,32 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MetavaultTradeContractFactory) protected readonly contractFactory: MetavaultTradeContractFactory,
+    @Inject(MetavaultTradeViemContractFactory) protected readonly contractFactory: MetavaultTradeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ network: this.network, address });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ network: this.network, address });
   }
 
   async getDefinitions(): Promise<MetavaultTradeMvlpTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const mvlpManagerContract = this.contractFactory.metavaultTradeMvlpManager({
       address: this.mvlpManagerAddress,
       network: this.network,
     });
-    const vaultAddressRaw = await multicall.wrap(mvlpManagerContract).vault();
+    const vaultAddressRaw = await multicall.wrap(mvlpManagerContract).read.vault();
     const vaultContract = this.contractFactory.metavaultTradeVault({
       address: vaultAddressRaw.toLowerCase(),
       network: this.network,
     });
 
-    const numTokens = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const numTokens = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const underlyingTokenAddressesRaw = await Promise.all(
-      range(0, Number(numTokens)).map(async i => await multicall.wrap(vaultContract).allWhitelistedTokens(i)),
+      range(0, Number(numTokens)).map(
+        async i => await multicall.wrap(vaultContract).read.allWhitelistedTokens([BigInt(i)]),
+      ),
     );
     return [
       {
@@ -86,8 +88,11 @@ export class PolygonMetavaultTradeMvlpTokenFetcher extends AppTokenTemplatePosit
   }: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, MetavaultTradeMvlpTokenDefinition>) {
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const underlyingTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(definition.vaultAddress);
+        const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
+        const reserveRaw = await multicall.wrap(underlyingTokenContract).read.balanceOf([definition.vaultAddress]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),

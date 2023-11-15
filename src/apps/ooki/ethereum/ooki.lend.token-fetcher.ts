@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { OokiContractFactory, OokiIToken } from '../contracts';
+import { OokiViemContractFactory } from '../contracts';
+import { OokiIToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOokiLendTokenFetcher extends AppTokenTemplatePositionFetcher<OokiIToken> {
@@ -15,12 +16,12 @@ export class EthereumOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OokiContractFactory) protected readonly contractFactory: OokiContractFactory,
+    @Inject(OokiViemContractFactory) protected readonly contractFactory: OokiViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): OokiIToken {
+  getContract(address: string) {
     return this.contractFactory.ookiIToken({ address, network: this.network });
   }
 
@@ -30,16 +31,16 @@ export class EthereumOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
       address: this.tokenRegistryAddress,
     });
 
-    const tokenAddresses = await registryContract.getTokens(0, 100);
+    const tokenAddresses = await registryContract.read.getTokens([BigInt(0), BigInt(100)]);
     return tokenAddresses.map(v => v.token);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OokiIToken>) {
-    return [{ address: await contract.loanTokenAddress(), network: this.network }];
+    return [{ address: await contract.read.loanTokenAddress(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OokiIToken>) {
-    const exchangeRateRaw = await contract.tokenPrice();
+    const exchangeRateRaw = await contract.read.tokenPrice();
     const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
     return [exchangeRate];
   }

@@ -17,7 +17,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { GmxContractFactory, GmxVault } from '../contracts';
+import { GmxViemContractFactory } from '../contracts';
+import { GmxVault } from '../contracts/viem';
 
 export type GmxOptionContractPositionDefinition = {
   address: string;
@@ -42,27 +43,29 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+    @Inject(GmxViemContractFactory) protected readonly contractFactory: GmxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GmxVault {
+  getContract(address: string) {
     return this.contractFactory.gmxVault({ address, network: this.network });
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<GmxOptionContractPositionDefinition[]> {
     const vaultContract = this.contractFactory.gmxVault({ address: this.vaultAddress, network: this.network });
-    const tokensCount = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
+    const tokensCount = await multicall.wrap(vaultContract).read.allWhitelistedTokensLength();
     const tokensRange = _.range(0, Number(tokensCount));
 
     const whitelistedTokens = await Promise.all(
-      tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).allWhitelistedTokens(tokenIndex)),
+      tokensRange.map(async tokenIndex =>
+        multicall.wrap(vaultContract).read.allWhitelistedTokens([BigInt(tokenIndex)]),
+      ),
     );
 
     const definitions = await Promise.all(
       whitelistedTokens.flatMap(async v => {
-        const isShortable = await multicall.wrap(vaultContract).shortableTokens(v.toLowerCase());
+        const isShortable = await multicall.wrap(vaultContract).read.shortableTokens([v.toLowerCase()]);
         if (!isShortable) return null;
         return whitelistedTokens.flatMap(t => {
           const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
@@ -113,7 +116,7 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<GmxOptionContractPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<GmxOptionContractPositionDataProps>({
       appId: this.appId,
       network: this.network,
@@ -130,18 +133,28 @@ export abstract class GmxPerpContractPositionFetcher extends CustomContractPosit
         const isLong = contractPosition.dataProps.isLong;
         const positionKey = contractPosition.dataProps.positionKey;
 
-        const position = await contract.getPosition(address, collateralToken.address, indexToken.address, isLong);
+        const position = await contract.read.getPosition([
+          address,
+          collateralToken.address,
+          indexToken.address,
+          isLong,
+        ]);
         // non existing position returns size and collateral = 0
         if (Number(position[0]) == 0 && Number(position[1]) == 0) return null;
 
         const [leverageRaw, basisPointDivisor] = await Promise.all([
-          contract.getPositionLeverage(address, collateralToken.address, indexToken.address, isLong),
-          contract.BASIS_POINTS_DIVISOR(),
+          contract.read.getPositionLeverage([address, collateralToken.address, indexToken.address, isLong]),
+          contract.read.BASIS_POINTS_DIVISOR(),
         ]);
         const leverage = (Number(leverageRaw) / Number(basisPointDivisor)).toFixed(2);
         const size = Number(position[0]) / 10 ** 30;
 
-        const delta = await contract.getPositionDelta(address, collateralToken.address, indexToken.address, isLong);
+        const delta = await contract.read.getPositionDelta([
+          address,
+          collateralToken.address,
+          indexToken.address,
+          isLong,
+        ]);
 
         const initialCollateralRaw = position[1];
         const initialCollateral = Number(initialCollateralRaw) / 10 ** 30;

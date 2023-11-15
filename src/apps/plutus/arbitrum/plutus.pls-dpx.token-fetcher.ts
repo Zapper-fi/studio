@@ -3,8 +3,8 @@ import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CamelotContractFactory } from '~apps/camelot/contracts';
-import { Erc20 } from '~contract/contracts';
+import { CamelotViemContractFactory } from '~apps/camelot/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -28,13 +28,13 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly camelotContractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) protected readonly camelotContractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<PlutusVaultAppTokenDefinition[]> {
@@ -59,8 +59,10 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
       address: '0x035d9815ae5af78d568721fa118bb93428c91f51',
       network: this.network,
     });
-    const oneUnit = BigNumber.from(10).pow(18);
-    const pricePerShare = await multicall.wrap(camelotPairContract).getAmountOut(oneUnit, appToken.address);
+    const oneUnit = BigNumber.from(10).pow(18).toString();
+    const pricePerShare = await multicall
+      .wrap(camelotPairContract)
+      .read.getAmountOut([BigInt(oneUnit), appToken.address]);
 
     return [Number(pricePerShare) / 10 ** appToken.decimals];
   }

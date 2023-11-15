@@ -120,7 +120,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '39108',
   },
   {
     name: 'fund',
@@ -137,7 +136,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '3962646',
   },
   {
     name: 'toggle_disable',
@@ -150,7 +148,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '40280',
   },
   {
     name: 'disable_can_disable',
@@ -158,7 +155,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21295',
   },
   {
     name: 'disable_fund_admins',
@@ -166,7 +162,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21325',
   },
   {
     name: 'vestedSupply',
@@ -179,7 +174,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '4468',
   },
   {
     name: 'lockedSupply',
@@ -192,7 +186,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '5465',
   },
   {
     name: 'vestedOf',
@@ -210,7 +203,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '5163',
   },
   {
     name: 'balanceOf',
@@ -228,7 +220,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '6275',
   },
   {
     name: 'lockedOf',
@@ -246,7 +237,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '6305',
   },
   {
     name: 'claim',
@@ -283,7 +273,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '38032',
   },
   {
     name: 'apply_transfer_ownership',
@@ -296,7 +285,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '38932',
   },
   {
     name: 'token',
@@ -309,7 +297,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1601',
   },
   {
     name: 'start_time',
@@ -322,7 +309,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1631',
   },
   {
     name: 'end_time',
@@ -335,7 +321,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1661',
   },
   {
     name: 'initial_locked',
@@ -353,7 +338,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1845',
   },
   {
     name: 'total_claimed',
@@ -371,7 +355,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1875',
   },
   {
     name: 'initial_locked_supply',
@@ -384,7 +367,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1751',
   },
   {
     name: 'unallocated_supply',
@@ -397,7 +379,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1781',
   },
   {
     name: 'can_disable',
@@ -410,7 +391,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1811',
   },
   {
     name: 'disabled_at',
@@ -428,7 +408,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1995',
   },
   {
     name: 'admin',
@@ -441,7 +420,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1871',
   },
   {
     name: 'future_admin',
@@ -454,7 +432,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1901',
   },
   {
     name: 'fund_admins_enabled',
@@ -467,7 +444,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1931',
   },
   {
     name: 'fund_admins',
@@ -485,7 +461,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2115',
   },
 ];
 

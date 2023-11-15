@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -16,7 +16,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { MeanFinanceContractFactory, MeanFinanceOptimismAirdrop } from '../contracts';
+import { MeanFinanceViemContractFactory } from '../contracts';
+import { MeanFinanceOptimismAirdrop } from '../contracts/viem';
 
 const TOKEN_DISTRIBUTOR = '0xf453cc2cb0d016a028a34162cf1f9efbb799c2d7';
 const OP_TOKEN = '0x4200000000000000000000000000000000000042';
@@ -35,26 +36,26 @@ export interface OptimismAirdropCampaingResponse {
 }
 
 @PositionTemplate()
-export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
+export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<MeanFinanceOptimismAirdrop> {
   groupLabel = 'Airdrop';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MeanFinanceContractFactory)
-    protected readonly meanFinanceContractFactory: MeanFinanceContractFactory,
+    @Inject(MeanFinanceViemContractFactory)
+    protected readonly contractFactory: MeanFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): Contract {
-    return this.meanFinanceContractFactory.meanFinanceOptimismAirdrop({
+  getContract(_address: string) {
+    return this.contractFactory.meanFinanceOptimismAirdrop({
       address: _address,
       network: this.network,
     });
   }
 
   async getLabel(
-    _params: GetDisplayPropsParams<Contract, DefaultDataProps, DefaultContractPositionDefinition>,
+    _params: GetDisplayPropsParams<MeanFinanceOptimismAirdrop, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
     return 'Optimism Airdrop';
   }
@@ -64,7 +65,7 @@ export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends C
   }
 
   async getTokenDefinitions(
-    _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
+    _params: GetTokenDefinitionsParams<MeanFinanceOptimismAirdrop, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return [{ metaType: MetaType.CLAIMABLE, address: OP_TOKEN, network: this.network }];
   }
@@ -72,7 +73,7 @@ export class OptimismMeanFinanceOptimismAirdropContractPositionFetcher extends C
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<MeanFinanceOptimismAirdrop, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const claimed = await params.contract.claimed(params.address);
+    const claimed = await params.contract.read.claimed([params.address]);
 
     if (claimed) {
       return [BigNumber.from(0)];

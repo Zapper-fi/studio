@@ -15,7 +15,8 @@ import {
 
 import { isUnderlyingDenominated } from '../common/formatters';
 import { PolynomialApiHelper } from '../common/polynomial.api';
-import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
+import { PolynomialViemContractFactory } from '../contracts';
+import { PolynomialCoveredCall } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialCoveredCall> {
@@ -23,13 +24,13 @@ export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher exte
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PolynomialContractFactory) protected readonly contractFactory: PolynomialContractFactory,
+    @Inject(PolynomialViemContractFactory) protected readonly contractFactory: PolynomialViemContractFactory,
     @Inject(PolynomialApiHelper) protected readonly apiHelper: PolynomialApiHelper,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PolynomialCoveredCall {
+  getContract(address: string) {
     return this.contractFactory.polynomialCoveredCall({ address, network: this.network });
   }
 
@@ -41,13 +42,13 @@ export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher exte
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PolynomialCoveredCall>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.UNDERLYING(), network: this.network },
-      { metaType: MetaType.CLAIMABLE, address: await contract.VAULT_TOKEN(), network: this.network },
+      { metaType: MetaType.SUPPLIED, address: await contract.read.UNDERLYING(), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await contract.read.VAULT_TOKEN(), network: this.network },
     ];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<PolynomialCoveredCall, DefaultDataProps>) {
-    return ethers.utils.parseBytes32String(await contract.name());
+    return ethers.utils.parseBytes32String(await contract.read.name());
   }
 
   async getTokenBalancesPerPosition({
@@ -55,28 +56,30 @@ export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher exte
     contract,
   }: GetTokenBalancesParams<PolynomialCoveredCall, DefaultDataProps>): Promise<BigNumberish[]> {
     const [depositHead, depositTail, withdrawalHead, withdrawalTail] = await Promise.all([
-      contract.queuedDepositHead(),
-      contract.nextQueuedDepositId(),
-      contract.queuedWithdrawalHead(),
-      contract.nextQueuedWithdrawalId(),
+      contract.read.queuedDepositHead(),
+      contract.read.nextQueuedDepositId(),
+      contract.read.queuedWithdrawalHead(),
+      contract.read.nextQueuedWithdrawalId(),
     ]);
 
     // Note: ignores pending withdrawals/deposits when queue is large (>250)
     const depositRange = range(Number(depositHead), min([Number(depositHead) + 250, Number(depositTail)]));
     const withdrawalRange = range(Number(withdrawalHead), min([Number(withdrawalHead) + 250, Number(withdrawalTail)]));
-    const pendingDeposits = await Promise.all(depositRange.map(async i => contract.depositQueue(i)));
-    const pendingWithdrawals = await Promise.all(withdrawalRange.map(async i => contract.withdrawalQueue(i)));
+    const pendingDeposits = await Promise.all(depositRange.map(async i => contract.read.depositQueue([BigInt(i)])));
+    const pendingWithdrawals = await Promise.all(
+      withdrawalRange.map(async i => contract.read.withdrawalQueue([BigInt(i)])),
+    );
 
     const userPendingDeposits = pendingDeposits
-      .filter(deposit => deposit.user.toLowerCase() === address.toLowerCase())
-      .filter(deposit => !Number(deposit.mintedTokens));
+      .filter(deposit => deposit[1].toLowerCase() === address.toLowerCase())
+      .filter(deposit => !Number(deposit[3]));
 
     const userPendingWithdrawals = pendingWithdrawals
-      .filter(withdrawal => withdrawal.user.toLowerCase() === address.toLowerCase())
-      .filter(withdrawal => !Number(withdrawal.returnedAmount));
+      .filter(withdrawal => withdrawal[1].toLowerCase() === address.toLowerCase())
+      .filter(withdrawal => !Number(withdrawal[3]));
 
-    const depositBalance = userPendingDeposits.reduce((acc, v) => acc.add(v.depositedAmount), BigNumber.from(0));
-    const withdrawalBalance = userPendingWithdrawals.reduce((acc, v) => acc.add(v.withdrawnTokens), BigNumber.from(0));
+    const depositBalance = userPendingDeposits.reduce((acc, v) => acc.add(v[2]), BigNumber.from(0));
+    const withdrawalBalance = userPendingWithdrawals.reduce((acc, v) => acc.add(v[2]), BigNumber.from(0));
 
     return [depositBalance, withdrawalBalance];
   }

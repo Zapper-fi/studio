@@ -7,7 +7,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { TenderizeContractFactory, TenderFarm } from '../contracts';
+import { TenderizeViemContractFactory } from '../contracts';
+import { TenderFarm } from '../contracts/viem';
 
 import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-resolver';
 
@@ -19,12 +20,12 @@ export abstract class FarmContractPositionFetcher extends SingleStakingFarmTempl
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(TenderizeTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: TenderizeTokenDefinitionsResolver,
-    @Inject(TenderizeContractFactory) protected readonly contractFactory: TenderizeContractFactory,
+    @Inject(TenderizeViemContractFactory) protected readonly contractFactory: TenderizeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TenderFarm {
+  getContract(address: string) {
     return this.contractFactory.tenderFarm({ network: this.network, address });
   }
 
@@ -38,11 +39,11 @@ export abstract class FarmContractPositionFetcher extends SingleStakingFarmTempl
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<TenderFarm, SingleStakingFarmDataProps>) {
-    return contract.stakeOf(address);
+    return contract.read.stakeOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<TenderFarm, SingleStakingFarmDataProps>) {
-    return contract.availableRewards(address);
+    return contract.read.availableRewards([address]);
   }
 
   async getRewardRates({ address }: GetDataPropsParams<TenderFarm, SingleStakingFarmDataProps>) {

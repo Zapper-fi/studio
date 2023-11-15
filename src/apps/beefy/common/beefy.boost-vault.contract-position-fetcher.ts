@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { BeefyBoostVaultDefinitionsResolver } from '../common/beefy.boost-vault.definition-resolver';
-import { BeefyBoostVault, BeefyContractFactory } from '../contracts';
+import { BeefyViemContractFactory } from '../contracts';
+import { BeefyBoostVault } from '../contracts/viem';
 
 export type BeefyBoostVaultDefinition = {
   address: string;
@@ -30,12 +31,12 @@ export abstract class BeefyBoostVaultContractPositionFetcher extends ContractPos
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BeefyBoostVaultDefinitionsResolver)
     private readonly boostDefinitionsResolver: BeefyBoostVaultDefinitionsResolver,
-    @Inject(BeefyContractFactory) protected readonly contractFactory: BeefyContractFactory,
+    @Inject(BeefyViemContractFactory) protected readonly contractFactory: BeefyViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BeefyBoostVault {
+  getContract(address: string) {
     return this.contractFactory.beefyBoostVault({ address, network: this.network });
   }
 
@@ -66,8 +67,8 @@ export abstract class BeefyBoostVaultContractPositionFetcher extends ContractPos
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<BeefyBoostVault>) {
     const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.earned(address),
+      contract.read.balanceOf([address]),
+      contract.read.earned([address]),
     ]);
     return [stakedBalanceRaw, rewardBalanceRaw];
   }

@@ -4,13 +4,13 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheInsuraceMiningTokenFetcher } from './avalanche/insurace.mining.token-fetcher';
 import { BinanceSmartChainInsuraceMiningTokenFetcher } from './binance-smart-chain/insurace.mining.token-fetcher';
-import { InsuraceContractFactory } from './contracts';
+import { InsuraceViemContractFactory } from './contracts';
 import { EthereumInsuraceMiningTokenFetcher } from './ethereum/insurace.mining.token-fetcher';
 import { PolygonInsuraceMiningTokenFetcher } from './polygon/insurace.mining.token-fetcher';
 
 @Module({
   providers: [
-    InsuraceContractFactory,
+    InsuraceViemContractFactory,
     // Avalanche
     AvalancheInsuraceMiningTokenFetcher,
     // Binance-smart-chain

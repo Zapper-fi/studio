@@ -10,7 +10,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { ArtGobblers, ArtGobblersContractFactory } from '../contracts';
+import { ArtGobblersViemContractFactory } from '../contracts';
+import { ArtGobblers } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ArtGobblers> {
@@ -18,7 +19,7 @@ export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArtGobblersContractFactory) private readonly contractFactory: ArtGobblersContractFactory,
+    @Inject(ArtGobblersViemContractFactory) private readonly contractFactory: ArtGobblersViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -37,7 +38,7 @@ export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPo
     ];
   }
 
-  getContract(address: string): ArtGobblers {
+  getContract(address: string) {
     return this.contractFactory.artGobblers({ network: this.network, address });
   }
 
@@ -49,7 +50,7 @@ export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPo
     address,
     contract,
   }: GetTokenBalancesParams<ArtGobblers>): Promise<BigNumberish[]> {
-    const gooBalance = await contract.gooBalance(address);
+    const gooBalance = await contract.read.gooBalance([address]);
 
     return [gooBalance];
   }

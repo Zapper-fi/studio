@@ -133,7 +133,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37597',
   },
   {
     name: 'apply_transfer_ownership',
@@ -141,7 +140,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '38497',
   },
   {
     name: 'commit_smart_wallet_checker',
@@ -154,7 +152,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '36307',
   },
   {
     name: 'apply_smart_wallet_checker',
@@ -162,7 +159,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37095',
   },
   {
     name: 'get_last_user_slope',
@@ -180,7 +176,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2569',
   },
   {
     name: 'user_point_history__ts',
@@ -202,7 +197,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1672',
   },
   {
     name: 'locked__end',
@@ -220,7 +214,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1593',
   },
   {
     name: 'checkpoint',
@@ -228,7 +221,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37052342',
   },
   {
     name: 'deposit_for',
@@ -245,7 +237,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '74279891',
   },
   {
     name: 'create_lock',
@@ -262,7 +253,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '74281465',
   },
   {
     name: 'increase_amount',
@@ -275,7 +265,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '74280830',
   },
   {
     name: 'increase_unlock_time',
@@ -288,7 +277,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '74281578',
   },
   {
     name: 'withdraw',
@@ -296,7 +284,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37223566',
   },
   {
     name: 'balanceOf',
@@ -356,7 +343,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '514333',
   },
   {
     name: 'totalSupply',
@@ -403,7 +389,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '812560',
   },
   {
     name: 'changeController',
@@ -416,7 +401,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '36907',
   },
   {
     name: 'token',
@@ -429,7 +413,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1841',
   },
   {
     name: 'supply',
@@ -442,7 +425,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1871',
   },
   {
     name: 'locked',
@@ -464,7 +446,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '3359',
   },
   {
     name: 'epoch',
@@ -477,7 +458,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1931',
   },
   {
     name: 'point_history',
@@ -507,7 +487,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '5550',
   },
   {
     name: 'user_point_history',
@@ -541,7 +520,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '6079',
   },
   {
     name: 'user_point_epoch',
@@ -559,7 +537,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2175',
   },
   {
     name: 'slope_changes',
@@ -577,7 +554,6 @@ export const curveVotingEscrowAbi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2166',
   },
   {
     name: 'controller',
@@ -590,7 +566,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2081',
   },
   {
     name: 'transfersEnabled',
@@ -603,7 +578,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2111',
   },
   {
     name: 'name',
@@ -616,7 +590,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '8543',
   },
   {
     name: 'symbol',
@@ -629,7 +602,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '7596',
   },
   {
     name: 'version',
@@ -642,7 +614,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '7626',
   },
   {
     name: 'decimals',
@@ -655,7 +626,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2231',
   },
   {
     name: 'future_smart_wallet_checker',
@@ -668,7 +638,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2261',
   },
   {
     name: 'smart_wallet_checker',
@@ -681,7 +650,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2291',
   },
   {
     name: 'admin',
@@ -694,7 +662,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2321',
   },
   {
     name: 'future_admin',
@@ -707,7 +674,6 @@ export const curveVotingEscrowAbi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2351',
   },
 ] as const;
 

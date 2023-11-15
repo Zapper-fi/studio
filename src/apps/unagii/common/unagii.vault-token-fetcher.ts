@@ -7,11 +7,13 @@ import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
+  GetDefinitionsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { UnagiiContractFactory, UnagiiUtoken } from '../contracts';
+import { UnagiiViemContractFactory } from '../contracts';
+import { UnagiiUtoken } from '../contracts/viem';
 
 export type UnagiiTokenDefinition = {
   address: string;
@@ -28,12 +30,12 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UnagiiContractFactory) protected readonly contractFactory: UnagiiContractFactory,
+    @Inject(UnagiiViemContractFactory) protected readonly contractFactory: UnagiiViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  async getDefinitions({ multicall }): Promise<UnagiiTokenDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<UnagiiTokenDefinition[]> {
     const vaultDefinitions = await Promise.all(
       this.vaultManagerAddresses.map(async vaultAddress => {
         const vaultManagerContract = this.contractFactory.unagiiV2Vault({
@@ -41,8 +43,8 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
           network: this.network,
         });
         const [uTokenAddress, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(vaultManagerContract).uToken(),
-          multicall.wrap(vaultManagerContract).token(),
+          multicall.wrap(vaultManagerContract).read.uToken(),
+          multicall.wrap(vaultManagerContract).read.token(),
         ]);
         return {
           address: uTokenAddress.toLowerCase(),
@@ -72,7 +74,7 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
       address: definition.vaultManagerAddress,
       network: this.network,
     });
-    const totalAssetsRaw = await multicall.wrap(vaultManagerContract).totalAssets();
+    const totalAssetsRaw = await multicall.wrap(vaultManagerContract).read.totalAssets();
     const underlyingAssets = Number(totalAssetsRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = underlyingAssets / appToken.supply;
     return [pricePerShare];

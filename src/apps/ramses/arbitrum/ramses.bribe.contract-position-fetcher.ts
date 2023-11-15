@@ -7,7 +7,7 @@ import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { VotingRewardsContractPositionFetcher } from '../common/ramses.voting-rewards.contract-position-fetcher';
-import { RamsesBribe } from '../contracts';
+import { RamsesBribe } from '../contracts/viem';
 
 export type RamsesBribeDefinition = {
   address: string;
@@ -15,11 +15,11 @@ export type RamsesBribeDefinition = {
 };
 
 @PositionTemplate()
-export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher<RamsesBribe> {
+export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsContractPositionFetcher {
   groupLabel = 'Bribe';
   voterAddress = '0xaaa2564deb34763e3d05162ed3f5c2658691f499';
 
-  getContract(address: string): RamsesBribe {
+  getContract(address: string) {
     return this.contractFactory.ramsesBribe({ address, network: this.network });
   }
 
@@ -30,11 +30,11 @@ export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsCon
       groupIds: ['pool'],
     });
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const ramsesVoter = this.contractFactory.ramsesVoter({ network: this.network, address: this.voterAddress });
 
-    const gauges = await Promise.all(pools.map(p => multicall.wrap(ramsesVoter).gauges(p.address)));
-    const gaugeBribes = await Promise.all(gauges.map(g => multicall.wrap(ramsesVoter).feeDistributers(g)));
+    const gauges = await Promise.all(pools.map(p => multicall.wrap(ramsesVoter).read.gauges([p.address])));
+    const gaugeBribes = await Promise.all(gauges.map(g => multicall.wrap(ramsesVoter).read.feeDistributers([g])));
     const definitions = zip(pools, gaugeBribes).map(([pool, bribe]) => {
       if (bribe === ZERO_ADDRESS || !pool || !bribe) return null;
       return { address: bribe.toLowerCase(), name: pool.displayProps.label };
@@ -44,7 +44,7 @@ export class ArbitrumRamsesBribeContractPositionFetcher extends VotingRewardsCon
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RamsesBribe>) {
-    const bribeTokens = await contract.getRewardTokens();
+    const bribeTokens = await contract.read.getRewardTokens();
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
     const tokenDefinitions = bribeTokens.map(token => {
       const tokenFound = baseTokens.find(p => p.address === token.toLowerCase());

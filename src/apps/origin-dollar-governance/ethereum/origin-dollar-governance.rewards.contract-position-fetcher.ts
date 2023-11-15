@@ -12,7 +12,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { OriginDollarGovernanceContractFactory, Veogv } from '../contracts';
+import { OriginDollarGovernanceViemContractFactory } from '../contracts';
+import { Veogv } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Veogv> {
@@ -20,13 +21,13 @@ export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extend
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarGovernanceContractFactory)
-    private readonly contractFactory: OriginDollarGovernanceContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Veogv {
+  getContract(address: string) {
     return this.contractFactory.veogv({ address, network: this.network });
   }
 
@@ -52,7 +53,7 @@ export class EthereumOriginDollarGovernanceRewardsContractPositionFetcher extend
     address,
     contract,
   }: GetTokenBalancesParams<Veogv, DefaultDataProps>): Promise<BigNumberish[]> {
-    const rewardBalance = await contract.previewRewards(address);
+    const rewardBalance = await contract.read.previewRewards([address]);
     return [rewardBalance];
   }
 }

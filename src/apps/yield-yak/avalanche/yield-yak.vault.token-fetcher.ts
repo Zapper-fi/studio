@@ -12,7 +12,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { YieldYakContractFactory, YieldYakVault } from '../contracts';
+import { YieldYakViemContractFactory } from '../contracts';
+import { YieldYakVault } from '../contracts/viem';
 
 export type YieldYakFarmDetails = {
   address: string;
@@ -33,12 +34,12 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldYakContractFactory) private readonly contractFactory: YieldYakContractFactory,
+    @Inject(YieldYakViemContractFactory) private readonly contractFactory: YieldYakViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YieldYakVault {
+  getContract(address: string) {
     return this.contractFactory.yieldYakVault({ network: this.network, address });
   }
 
@@ -48,7 +49,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
-    return [{ address: await contract.depositToken(), network: this.network }];
+    return [{ address: await contract.read.depositToken(), network: this.network }];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault>): Promise<string> {
@@ -58,14 +59,14 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>) {
     const one_receipt_token = BigNumber.from(10).pow(_params.appToken.decimals);
     try {
-      const depositToken = await _params.contract.depositToken();
+      const depositToken = await _params.contract.read.depositToken();
       const depositTokenDecimals = await this.getDecimals({
         ..._params,
         address: depositToken,
         multicall: _params.multicall,
       });
 
-      const underlying = await _params.contract.getDepositTokensForShares(one_receipt_token);
+      const underlying = await _params.contract.read.getDepositTokensForShares([BigInt(one_receipt_token.toString())]);
       const pps = ethers.utils.formatUnits(underlying, depositTokenDecimals);
       return [+pps];
     } catch (err) {

@@ -13,7 +13,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendleYieldToken } from '../contracts/viem';
 
 import { PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 
@@ -36,7 +37,7 @@ export abstract class PendleV2YieldTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
+    @Inject(PendleV2ViemContractFactory) protected readonly pendleV2ContractFactory: PendleV2ViemContractFactory,
     @Inject(PendleV2MarketDefinitionsResolver) protected readonly pendleV2Resolver: PendleV2MarketDefinitionsResolver,
   ) {
     super(appToolkit);

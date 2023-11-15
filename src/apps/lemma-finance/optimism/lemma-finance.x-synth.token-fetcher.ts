@@ -10,7 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { LemmaFinanceContractFactory, LemmaXSynth } from '../contracts';
+import { LemmaFinanceViemContractFactory } from '../contracts';
+import { LemmaXSynth } from '../contracts/viem';
 
 export type LemmaFinanceXSynthDefinition = {
   address: string;
@@ -54,12 +55,12 @@ export class OptimismLemmaFinanceXSynthTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LemmaFinanceContractFactory) protected readonly contractFactory: LemmaFinanceContractFactory,
+    @Inject(LemmaFinanceViemContractFactory) protected readonly contractFactory: LemmaFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LemmaXSynth {
+  getContract(address: string) {
     return this.contractFactory.lemmaXSynth({ address, network: this.network });
   }
 
@@ -81,8 +82,8 @@ export class OptimismLemmaFinanceXSynthTokenFetcher extends AppTokenTemplatePosi
     });
 
     const [collateralTokenAddress, usdcAddress] = await Promise.all([
-      multicall.wrap(perpContract).usdlCollateral(),
-      multicall.wrap(perpContract).usdc(),
+      multicall.wrap(perpContract).read.usdlCollateral(),
+      multicall.wrap(perpContract).read.usdc(),
     ]);
 
     return [
@@ -95,7 +96,7 @@ export class OptimismLemmaFinanceXSynthTokenFetcher extends AppTokenTemplatePosi
     contract,
     appToken,
   }: GetPricePerShareParams<LemmaXSynth, DefaultAppTokenDataProps, LemmaFinanceXSynthDefinition>) {
-    const pricePerShareRaw = await contract.assetsPerShare();
+    const pricePerShareRaw = await contract.read.assetsPerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [pricePerShare, 0];
   }

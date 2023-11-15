@@ -6,14 +6,14 @@ import { ArbitrumTenderizeFarmTokenFetcher } from './arbitrum/tenderize.farm.con
 import { ArbitrumTenderizeSwapTokenFetcher } from './arbitrum/tenderize.swap.token-fetcher';
 import { ArbitrumTenderizeTenderTokenFetcher } from './arbitrum/tenderize.tender.token-fetcher';
 import { TenderizeTokenDefinitionsResolver } from './common/tenderize.token-definition-resolver';
-import { TenderizeContractFactory } from './contracts';
+import { TenderizeViemContractFactory } from './contracts';
 import { EthereumTenderizeFarmTokenFetcher } from './ethereum/tenderize.farm.contract-position-fetcher';
 import { EthereumTenderizeSwapTokenFetcher } from './ethereum/tenderize.swap.token-fetcher';
 import { EthereumTenderizeTenderTokenFetcher } from './ethereum/tenderize.tender.token-fetcher';
 
 @Module({
   providers: [
-    TenderizeContractFactory,
+    TenderizeViemContractFactory,
     TenderizeTokenDefinitionsResolver,
     // Arbitrum
     ArbitrumTenderizeSwapTokenFetcher,

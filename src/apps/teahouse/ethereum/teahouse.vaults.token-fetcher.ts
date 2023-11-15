@@ -5,6 +5,7 @@ import { TeahouseVaultsTokenFetcher } from '../common/teahouse.vaults.token-fetc
 @PositionTemplate()
 export class EthereumTeahouseVaultsTokenFetcher extends TeahouseVaultsTokenFetcher {
   groupLabel = 'Vault share';
+  fromBlock = 15615676;
 
   async getAddresses() {
     return [

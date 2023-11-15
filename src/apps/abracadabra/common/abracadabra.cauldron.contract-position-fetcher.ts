@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
@@ -20,8 +20,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AbracadabraContractFactory, AbracadabraCauldron, AbracadabraMarketLens } from '../contracts';
-import { MarketLens } from '../contracts/ethers/AbracadabraMarketLens';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { AbracadabraCauldron } from '../contracts/viem';
 
 import { CAULDRON_V1_RISK_CONSTANTS, MARKET_LENS_ADDRESS } from './abracadabra.common.constants';
 
@@ -85,12 +85,12 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AbracadabraCauldron {
+  getContract(address: string) {
     return this.contractFactory.abracadabraCauldron({ address, network: this.network });
   }
 
@@ -118,8 +118,8 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     contract,
   }: GetTokenDefinitionsParams<AbracadabraCauldron, AbracadabraCauldronContractPositionDefinition>) {
     const [collateralAddressRaw, debtAddressRaw] = await Promise.all([
-      contract.collateral(),
-      contract.magicInternetMoney(),
+      contract.read.collateral(),
+      contract.read.magicInternetMoney(),
     ]);
 
     return [
@@ -140,7 +140,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     contract,
     multicall,
   }: GetTokenDefinitionsParams<AbracadabraCauldron, AbracadabraCauldronContractPositionDefinition>) {
-    const convexWrapperPromise = contract.collateral().then(collateralTokenAddress =>
+    const convexWrapperPromise = contract.read.collateral().then(collateralTokenAddress =>
       multicall.wrap(
         this.contractFactory.abracadabraConvexWrapper({
           address: collateralTokenAddress.toLowerCase(),
@@ -150,15 +150,15 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     );
 
     const [collateralTokenAddress, debtTokenAddress, convexToken, rewardTokens] = await Promise.all([
-      convexWrapperPromise.then(convexWrapper => convexWrapper.convexToken()),
-      contract.magicInternetMoney(),
-      convexWrapperPromise.then(convexWrapper => convexWrapper.cvx()),
+      convexWrapperPromise.then(convexWrapper => convexWrapper.read.convexToken()),
+      contract.read.magicInternetMoney(),
+      convexWrapperPromise.then(convexWrapper => convexWrapper.read.cvx()),
       convexWrapperPromise.then(async convexWrapper => {
-        const poolCount = await convexWrapper.rewardLength();
+        const poolCount = await convexWrapper.read.rewardLength();
 
         return Promise.all(
           [...Array(poolCount).keys()].map(async poolId => {
-            const { reward_token: rewardToken } = await convexWrapper.rewards(poolId);
+            const [rewardToken] = await convexWrapper.read.rewards([BigInt(poolId)]);
             return rewardToken;
           }),
         );
@@ -190,8 +190,8 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     multicall,
   }: GetTokenDefinitionsParams<AbracadabraCauldron, AbracadabraCauldronContractPositionDefinition>) {
     const [collateralTokenAddress, debtTokenAddress] = await Promise.all([
-      contract.collateral(),
-      contract.magicInternetMoney(),
+      contract.read.collateral(),
+      contract.read.magicInternetMoney(),
     ]);
 
     const glpWrapper = multicall.wrap(
@@ -201,7 +201,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
       }),
     );
 
-    const sGlpAddress = await glpWrapper.underlying();
+    const sGlpAddress = await glpWrapper.read.underlying();
 
     const sGlp = multicall.wrap(
       this.contractFactory.abracadabraGmxSGlp({
@@ -210,7 +210,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
       }),
     );
 
-    const glpAddress = await sGlp.glp();
+    const glpAddress = await sGlp.read.glp();
 
     return [
       {
@@ -243,9 +243,9 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     );
 
     const [supplyRaw, borrowRaw, availableBorrowRaw] = await Promise.all([
-      marketLens.getTotalCollateral(cauldronAddress).then(totalCollateral => totalCollateral.amount),
-      cauldron.totalBorrow().then(totalBorrow => totalBorrow.elastic),
-      marketLens.getMaxMarketBorrowForCauldronV2(cauldronAddress),
+      marketLens.read.getTotalCollateral([cauldronAddress]).then(totalCollateral => totalCollateral.amount),
+      cauldron.read.totalBorrow().then(totalBorrow => totalBorrow[0]),
+      marketLens.read.getMaxMarketBorrowForCauldronV2([cauldronAddress]),
     ]);
 
     const {
@@ -266,27 +266,22 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     };
   }
 
-  private async getMarketInfoMarketLens(
-    marketLensCall: (
-      marketLens: AbracadabraMarketLens,
-      cauldronAddress: string,
-    ) => Promise<MarketLens.MarketInfoStructOutput>,
-    {
-      multicall,
-      definition: { address: cauldronAddress },
-    }: GetDataPropsParams<
-      AbracadabraCauldron,
-      AbracadabraCauldronDataProps,
-      AbracadabraCauldronContractPositionDefinition
-    >,
-  ) {
+  private async getMarketInfoCauldronV2({
+    multicall,
+    definition,
+  }: GetDataPropsParams<
+    AbracadabraCauldron,
+    AbracadabraCauldronDataProps,
+    AbracadabraCauldronV2ContractPositionDefinition
+  >) {
     const marketLens = multicall.wrap(
       this.contractFactory.abracadabraMarketLens({
         address: this.marketLensAddress,
         network: this.network,
       }),
     );
-    const marketInfo = await marketLensCall(marketLens, cauldronAddress);
+
+    const marketInfo = await marketLens.read.getMarketInfoCauldronV2([definition.address]);
 
     return {
       supplyRaw: marketInfo.totalCollateral.amount,
@@ -299,30 +294,32 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     };
   }
 
-  private async getMarketInfoCauldronV2(
-    params: GetDataPropsParams<
-      AbracadabraCauldron,
-      AbracadabraCauldronDataProps,
-      AbracadabraCauldronV2ContractPositionDefinition
-    >,
-  ) {
-    return this.getMarketInfoMarketLens(
-      (marketLens, cauldronAddress) => marketLens.getMarketInfoCauldronV2(cauldronAddress),
-      params,
+  private async getMarketInfoCauldronV3Plus({
+    multicall,
+    definition,
+  }: GetDataPropsParams<
+    AbracadabraCauldron,
+    AbracadabraCauldronDataProps,
+    AbracadabraCauldronV3PlusContractPositionDefinition
+  >) {
+    const marketLens = multicall.wrap(
+      this.contractFactory.abracadabraMarketLens({
+        address: this.marketLensAddress,
+        network: this.network,
+      }),
     );
-  }
 
-  private async getMarketInfoCauldronV3Plus(
-    params: GetDataPropsParams<
-      AbracadabraCauldron,
-      AbracadabraCauldronDataProps,
-      AbracadabraCauldronV3PlusContractPositionDefinition
-    >,
-  ) {
-    return this.getMarketInfoMarketLens(
-      (marketLens, cauldronAddress) => marketLens.getMarketInfoCauldronV2(cauldronAddress),
-      params,
-    );
+    const marketInfo = await marketLens.read.getMarketInfoCauldronV2([definition.address]);
+
+    return {
+      supplyRaw: marketInfo.totalCollateral.amount,
+      borrowRaw: marketInfo.totalBorrowed,
+      availableBorrowRaw: marketInfo.marketMaxBorrow,
+      borrowApyBips: marketInfo.interestPerYear,
+      borrowFeeBips: marketInfo.borrowFee,
+      maxLTVBips: marketInfo.maximumCollateralRatio,
+      liquidationFeeBips: marketInfo.liquidationFee,
+    };
   }
 
   private async getMarketInfoProtocolOwnedDebt({
@@ -332,7 +329,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     AbracadabraCauldronDataProps,
     AbracadabraCauldronProtocolOwnedDebtContractPositionDefinition
   >) {
-    const borrowRaw = await cauldron.totalBorrow().then(totalBorrow => totalBorrow.elastic);
+    const borrowRaw = await cauldron.read.totalBorrow().then(totalBorrow => totalBorrow[0]);
 
     return {
       supplyRaw: 0,
@@ -455,7 +452,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     contract,
     multicall,
   }: GetTokenBalancesParams<AbracadabraCauldron, AbracadabraCauldronDataProps>) {
-    const collateral = await contract.collateral().then(collateralTokenAddress =>
+    const collateral = await contract.read.collateral().then(collateralTokenAddress =>
       multicall.wrap(
         this.contractFactory.abracadabraConvexWrapper({
           address: collateralTokenAddress.toLowerCase(),
@@ -464,13 +461,13 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
       ),
     );
 
-    const earned = await collateral.earned(address);
+    const earned = await collateral.read.earned([address]);
     return Object.fromEntries(earned.map(({ token, amount }) => [token.toLowerCase(), amount]));
   }
 
   private async getClaimableTokens(
     params: GetTokenBalancesParams<AbracadabraCauldron, AbracadabraCauldronDataProps>,
-  ): Promise<{ [address: string]: BigNumber }> {
+  ): Promise<{ [address: string]: BigNumberish }> {
     switch (params.contractPosition.dataProps.definition.type) {
       case 'CONVEX':
         return this.getClaimableTokensConvex(params);
@@ -481,29 +478,29 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
 
   async getTokenBalancesPerPosition(params: GetTokenBalancesParams<AbracadabraCauldron, AbracadabraCauldronDataProps>) {
     const { address, contractPosition, contract, multicall } = params;
-    const [borrowPartRaw, totalBorrowRaw, suppliedBalanceRaw, claimableTokens] = await Promise.all([
-      contract.userBorrowPart(address),
-      contract.totalBorrow(),
-      Promise.all([contract.userCollateralShare(address), contract.bentoBox()]).then(
-        ([collateralShareRaw, bentoBoxAddress]) => {
-          const bentoBoxContract = multicall.wrap(
-            this.contractFactory.abracadabraBentoBoxTokenContract({
-              address: bentoBoxAddress,
-              network: this.network,
-            }),
-          );
+    const [borrowPartRaw, [totalBorrowElastic, totalBorrowBase], suppliedBalanceRaw, claimableTokens] =
+      await Promise.all([
+        contract.read.userBorrowPart([address]),
+        contract.read.totalBorrow(),
+        Promise.all([contract.read.userCollateralShare([address]), contract.read.bentoBox()]).then(
+          ([collateralShareRaw, bentoBoxAddress]) => {
+            const bentoBoxContract = multicall.wrap(
+              this.contractFactory.abracadabraBentoBoxTokenContract({
+                address: bentoBoxAddress,
+                network: this.network,
+              }),
+            );
 
-          const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+            const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+            return bentoBoxContract.read.toAmount([suppliedToken.address, collateralShareRaw, false]);
+          },
+        ),
+        this.getClaimableTokens(params),
+      ]);
 
-          return bentoBoxContract.toAmount(suppliedToken.address, collateralShareRaw, false);
-        },
-      ),
-      this.getClaimableTokens(params),
-    ]);
-
-    const borrowedBalanceRaw = totalBorrowRaw.base.eq(0)
+    const borrowedBalanceRaw = BigNumber.from(totalBorrowBase).eq(0)
       ? 0
-      : borrowPartRaw.mul(totalBorrowRaw.elastic).div(totalBorrowRaw.base);
+      : BigNumber.from(borrowPartRaw).mul(totalBorrowElastic).div(totalBorrowBase);
 
     return [
       suppliedBalanceRaw,

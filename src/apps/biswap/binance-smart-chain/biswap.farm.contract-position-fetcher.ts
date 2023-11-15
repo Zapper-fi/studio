@@ -9,7 +9,9 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BiswapContractFactory, BiswapMasterchef } from '../contracts';
+import { BiswapViemContractFactory } from '../contracts';
+import { BiswapMasterchef } from '../contracts/viem';
+import { BiswapMasterchefContract } from '../contracts/viem/BiswapMasterchef';
 
 @PositionTemplate()
 export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BiswapMasterchef> {
@@ -18,40 +20,40 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BiswapContractFactory) protected readonly contractFactory: BiswapContractFactory,
+    @Inject(BiswapViemContractFactory) protected readonly contractFactory: BiswapViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BiswapMasterchef {
+  getContract(address: string) {
     return this.contractFactory.biswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: BiswapMasterchef): Promise<BigNumberish> {
-    return contract.poolLength();
+  async getPoolLength(contract: BiswapMasterchefContract): Promise<BigNumberish> {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: BiswapMasterchef, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: BiswapMasterchefContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: BiswapMasterchef): Promise<string> {
-    return contract.BSW();
+  async getRewardTokenAddress(contract: BiswapMasterchefContract): Promise<string> {
+    return contract.read.BSW();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.BSWPerBlock();
+    return contract.read.BSWPerBlock();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -59,7 +61,7 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -67,6 +69,6 @@ export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTe
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<BiswapMasterchef>): Promise<BigNumberish> {
-    return contract.pendingBSW(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingBSW([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { MstableContractFactory } from '../contracts';
-import { MstableAsset } from '../contracts/ethers';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableAsset } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFetcher<MstableAsset> {
@@ -14,12 +14,12 @@ export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MstableAsset {
+  getContract(address: string) {
     return this.contractFactory.mstableAsset({ address, network: this.network });
   }
 
@@ -28,10 +28,10 @@ export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MstableAsset>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<MstableAsset>) {
-    return [await contract.exchangeRate().then(v => Number(v) / 10 ** appToken.tokens[0].decimals)];
+    return [await contract.read.exchangeRate().then(v => Number(v) / 10 ** appToken.tokens[0].decimals)];
   }
 }

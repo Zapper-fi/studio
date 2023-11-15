@@ -11,8 +11,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { PancakeswapContractFactory } from '../contracts';
-import { PancakeswapSmartChefInit } from '../contracts/ethers/PancakeswapSmartChefInit';
+import { PancakeswapViemContractFactory } from '../contracts';
+import { PancakeswapSmartChefInit } from '../contracts/viem/PancakeswapSmartChefInit';
 
 // @TODO: Should be indexed from BQ events or logs
 // https://github.com/pancakeswap/pancake-frontend/blob/develop/packages/pools/src/constants/pools/56.ts
@@ -194,7 +194,7 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -211,17 +211,17 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChefInit>) {
-    return contract.stakedToken();
+    return contract.read.stakedToken();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChefInit>) {
-    return [await contract.rewardToken()];
+    return [await contract.read.rewardToken()];
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<PancakeswapSmartChefInit>) {
-    const end = await contract.bonusEndBlock();
+    const end = await contract.read.bonusEndBlock();
     if (Number(end) > this.currentBlock) return [0];
-    return [await contract.rewardPerBlock()];
+    return [await contract.read.rewardPerBlock()];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PancakeswapSmartChefInit>) {
@@ -229,10 +229,10 @@ export class BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChefInit>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChefInit>) {
-    return contract.pendingReward(address);
+    return contract.read.pendingReward([address]);
   }
 }

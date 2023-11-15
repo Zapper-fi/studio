@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { QiDaoContractFactory, QiDaoEscrowedQi } from '../contracts';
+import { QiDaoViemContractFactory } from '../contracts';
+import { QiDaoEscrowedQi } from '../contracts/viem';
+import { QiDaoEscrowedQiContract } from '../contracts/viem/QiDaoEscrowedQi';
 
 @PositionTemplate()
 export class PolygonQiDaoEscrowedQiContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<QiDaoEscrowedQi> {
@@ -14,20 +16,20 @@ export class PolygonQiDaoEscrowedQiContractPositionFetcher extends VotingEscrowT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(QiDaoContractFactory) protected readonly contractFactory: QiDaoContractFactory,
+    @Inject(QiDaoViemContractFactory) protected readonly contractFactory: QiDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): QiDaoEscrowedQi {
+  getEscrowContract(address: string): QiDaoEscrowedQiContract {
     return this.contractFactory.qiDaoEscrowedQi({ address, network: this.network });
   }
 
   async getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<QiDaoEscrowedQi>) {
-    return contract.Qi();
+    return contract.read.Qi();
   }
 
   async getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<QiDaoEscrowedQi>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 }

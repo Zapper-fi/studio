@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { GearboxContractFactory } from './contracts';
+import { GearboxViemContractFactory } from './contracts';
 import { EthereumGearboxCreditAccountsContractPositionFetcher } from './ethereum/gearbox.credit-accounts.contract-position-fetcher';
 import { EthereumGearboxLendingTokenFetcher } from './ethereum/gearbox.lending.token-fetcher';
 import { EthereumGearboxPhantomTokenFetcher } from './ethereum/gearbox.phantom.token-fetcher';
@@ -15,7 +15,7 @@ import { EthereumGearboxRewardsMerkleCache } from './ethereum/gearbox.rewards.me
     EthereumGearboxLendingTokenFetcher,
     EthereumGearboxPhantomTokenFetcher,
     EthereumGearboxRewardsPositionFetcher,
-    GearboxContractFactory,
+    GearboxViemContractFactory,
     EthereumGearboxRewardsMerkleCache,
   ],
 })
