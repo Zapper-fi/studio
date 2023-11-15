@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.547.0](https://github.com/Zapper-fi/studio/compare/v0.546.4...v0.547.0) (2023-11-15)
+
+
+### Features
+
+* **aura:** Add Aura on Base ([#3030](https://github.com/Zapper-fi/studio/issues/3030)) ([5fc64b8](https://github.com/Zapper-fi/studio/commit/5fc64b8045e5ec1c79613eb5e8e031b320bf24cb))
+
+
+### Bug Fixes
+
+* **mux:** Fix destructure of assets ([#3055](https://github.com/Zapper-fi/studio/issues/3055)) ([510da9c](https://github.com/Zapper-fi/studio/commit/510da9c830cf45dac361b74bc52fcb1424747137))
+* **vector-finance:** Fix failing deposit token call ([#3056](https://github.com/Zapper-fi/studio/issues/3056)) ([1d58ec9](https://github.com/Zapper-fi/studio/commit/1d58ec9106ddde500945df8967b963fa2d3aca02))
+
 ## [0.546.4](https://github.com/Zapper-fi/studio/compare/v0.546.3...v0.546.4) (2023-11-15)
 
 
