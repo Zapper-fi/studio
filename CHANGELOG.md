@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.547.1](https://github.com/Zapper-fi/studio/compare/v0.547.0...v0.547.1) (2023-11-15)
+
+
+### Bug Fixes
+
+* **morpho:** Fix morpho balance calculation ([c60cdf5](https://github.com/Zapper-fi/studio/commit/c60cdf52c71f3a06d050e6cea28b6c7d0088818d))
+
 ## [0.547.0](https://github.com/Zapper-fi/studio/compare/v0.546.4...v0.547.0) (2023-11-15)
 
 
