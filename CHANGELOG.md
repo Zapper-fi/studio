@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.547.2](https://github.com/Zapper-fi/studio/compare/v0.547.1...v0.547.2) (2023-11-15)
+
+
+### Bug Fixes
+
+* **app-toolkit:** Remove duplicate function ([#3048](https://github.com/Zapper-fi/studio/issues/3048)) ([f0cd28d](https://github.com/Zapper-fi/studio/commit/f0cd28d713c3aa45438a66af6edc5ecd3a883846))
+* **morpho:** Fix max debt props ([0adee80](https://github.com/Zapper-fi/studio/commit/0adee80adc96423d3cc630703641c5e43345c455))
+* **morpho:** Fix Morpho position presenter ([41d1e3d](https://github.com/Zapper-fi/studio/commit/41d1e3d2ba1c98f50aba0bc6e59e8358720c20f2))
+
 ## [0.547.1](https://github.com/Zapper-fi/studio/compare/v0.547.0...v0.547.1) (2023-11-15)
 
 
