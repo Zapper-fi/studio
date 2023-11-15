@@ -27,7 +27,7 @@ import { VectorFinanceMasterChefContract } from '../contracts/viem/VectorFinance
 import { VectorFinanceMasterChefRewarderContract } from '../contracts/viem/VectorFinanceMasterChefRewarder';
 
 @PositionTemplate()
-export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
+export class AvalancheVectorFinanceFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
   VectorFinanceMasterChef,
   VectorFinanceMasterChefRewarder
 > {
@@ -62,13 +62,12 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     const registeredToken = await contract.read.registeredToken([BigInt(poolIndex)]);
     const poolInfo = await contract.read.addressToPoolInfo([registeredToken]);
 
-    const _helper = this.contractFactory.vectorFinanceMasterChefPoolHelper({
+    const helper = this.contractFactory.vectorFinanceMasterChefPoolHelper({
       address: poolInfo[5],
       network: this.network,
     });
 
-    const helper = multicall.wrap(_helper);
-    return helper.read.depositToken();
+    return multicall.wrap(helper).read.depositToken();
   }
 
   getRewardTokenAddress(contract: VectorFinanceMasterChefContract): Promise<string> {
