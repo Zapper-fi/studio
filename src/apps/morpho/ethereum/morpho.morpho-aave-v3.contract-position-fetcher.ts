@@ -155,7 +155,7 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
       ? BigNumber.from(currentLiquidityRate)
       : p2pSupplyRate.mul(supplyInP2P).add(BigNumber.from(currentLiquidityRate).mul(supplyOnPool)).div(totalSupply);
     const borrowRate = totalBorrow.isZero()
-      ? currentVariableBorrowRate
+      ? BigNumber.from(currentVariableBorrowRate)
       : p2pBorrowRate
           .mul(borrowInP2P)
           .add(BigNumber.from(currentVariableBorrowRate).mul(borrowOnPool))
