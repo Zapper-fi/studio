@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.546.4](https://github.com/Zapper-fi/studio/compare/v0.546.3...v0.546.4) (2023-11-15)
+
+
+### Bug Fixes
+
+* **morpho:** Fix regressions on APY calculations ([#3053](https://github.com/Zapper-fi/studio/issues/3053)) ([55690dd](https://github.com/Zapper-fi/studio/commit/55690ddd8eea4c2da2ffa3d43565be061a9ecdce))
+* **raft:** Fix Raft regression ([#3051](https://github.com/Zapper-fi/studio/issues/3051)) ([d79cecf](https://github.com/Zapper-fi/studio/commit/d79cecf5f5c4ab7a25f89c5a27d30f3d0b085a33))
+
 ## [0.546.3](https://github.com/Zapper-fi/studio/compare/v0.546.2...v0.546.3) (2023-11-15)
 
 
