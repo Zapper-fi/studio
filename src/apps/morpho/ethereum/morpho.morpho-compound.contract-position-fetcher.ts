@@ -12,7 +12,11 @@ import {
 } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoCompound } from '~apps/morpho/contracts/viem';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
-import { GetDataPropsParams, GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 import { MorphoViemContractFactory } from '../contracts';
 
@@ -109,13 +113,17 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoS
     };
   }
 
-  async getTokenBalancesPerPosition({ address, contractPosition, multicall }) {
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    multicall,
+  }: GetTokenBalancesParams<MorphoCompound, MorphoContractPositionDataProps>) {
     const lensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
     const _lens = this.contractFactory.morphoCompoundLens({ address: lensAddress, network: this.network });
     const lens = multicall.wrap(_lens);
 
-    const supplyRaw = await lens.getCurrentSupplyBalanceInOf(contractPosition.dataProps.marketAddress, address);
-    const borrowRaw = await lens.getCurrentBorrowBalanceInOf(contractPosition.dataProps.marketAddress, address);
-    return [supplyRaw.totalBalance, borrowRaw.totalBalance];
+    const supplyRaw = await lens.read.getCurrentSupplyBalanceInOf([contractPosition.dataProps.marketAddress, address]);
+    const borrowRaw = await lens.read.getCurrentBorrowBalanceInOf([contractPosition.dataProps.marketAddress, address]);
+    return [supplyRaw[2], borrowRaw[2]];
   }
 }
