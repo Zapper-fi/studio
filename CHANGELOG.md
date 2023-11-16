@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.549.0](https://github.com/Zapper-fi/studio/compare/v0.548.0...v0.549.0) (2023-11-16)
+
+
+### Features
+
+* **studio:** Throw error for wrapped Multicall request when address is invalid ([0ae16a0](https://github.com/Zapper-fi/studio/commit/0ae16a0c7e7b0be70884e780368eb660302ba391))
+
 ## [0.548.0](https://github.com/Zapper-fi/studio/compare/v0.547.2...v0.548.0) (2023-11-16)
 
 
