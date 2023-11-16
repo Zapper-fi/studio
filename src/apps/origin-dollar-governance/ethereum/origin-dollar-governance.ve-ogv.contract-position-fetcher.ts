@@ -66,7 +66,7 @@ export class EthereumOriginDollarGovernanceVeOgvContractPositionFetcher extends 
     contract,
   }: GetTokenBalancesParams<Veogv, DefaultDataProps>): Promise<BigNumberish[]> {
     const lockupsRaw = await Promise.all(
-      range(0, 15).map(async index => {
+      range(0, 30).map(async index => {
         const amount = await contract.read
           .lockups([address, BigInt(index)])
           .then(x => x[0])
