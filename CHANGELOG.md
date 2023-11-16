@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.550.0](https://github.com/Zapper-fi/studio/compare/v0.549.1...v0.550.0) (2023-11-16)
+
+
+### Features
+
+* **studio:** Fix Midas revert error ([#3063](https://github.com/Zapper-fi/studio/issues/3063)) ([f58621b](https://github.com/Zapper-fi/studio/commit/f58621bc98f4a04689329feb5db901320ea745e7))
+
+
+### Bug Fixes
+
+* **stake-dao:** Add vault tokens ([#3028](https://github.com/Zapper-fi/studio/issues/3028)) ([393b984](https://github.com/Zapper-fi/studio/commit/393b984fe380d2d706feb4582aded9884049891b))
+
 ## [0.549.1](https://github.com/Zapper-fi/studio/compare/v0.549.0...v0.549.1) (2023-11-16)
 
 
