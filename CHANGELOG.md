@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.550.1](https://github.com/Zapper-fi/studio/compare/v0.550.0...v0.550.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **dolomite:** Fix case when no contract positions exist ([7d4396c](https://github.com/Zapper-fi/studio/commit/7d4396c977d12aeac78d593a77626a4cdc21965a))
+
 ## [0.550.0](https://github.com/Zapper-fi/studio/compare/v0.549.1...v0.550.0) (2023-11-16)
 
 
