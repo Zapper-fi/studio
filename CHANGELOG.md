@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.548.0](https://github.com/Zapper-fi/studio/compare/v0.547.2...v0.548.0) (2023-11-16)
+
+
+### Features
+
+* **balancer-v2:** Support Gnosis ([#3031](https://github.com/Zapper-fi/studio/issues/3031)) ([e9da8be](https://github.com/Zapper-fi/studio/commit/e9da8bec689bb43ce5236cf71ac0be1a31875a08))
+
+
+### Bug Fixes
+
+* **origin-dollar-governance:** Fix veOGV underlying balance and combined both veOGV balance and rewards into a veOGV cp ([#3033](https://github.com/Zapper-fi/studio/issues/3033)) ([85f350d](https://github.com/Zapper-fi/studio/commit/85f350d1d93822da0160fd1d273c9e2ac29757da))
+
 ## [0.547.2](https://github.com/Zapper-fi/studio/compare/v0.547.1...v0.547.2) (2023-11-15)
 
 
