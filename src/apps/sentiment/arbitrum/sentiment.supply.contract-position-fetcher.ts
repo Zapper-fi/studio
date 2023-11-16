@@ -1,14 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 import _ from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  DefaultContractPositionDefinition,
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
@@ -20,7 +18,7 @@ import { SentimentViemContractFactory } from '../contracts';
 import { SentimentLToken } from '../contracts/viem';
 
 @PositionTemplate()
-export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SentimentLToken> {
+export class ArbitrumSentimentSupplyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SentimentLToken> {
   groupLabel = 'Lending';
 
   constructor(
@@ -35,7 +33,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPosi
     return this.contractFactory.sentimentLToken({ network: this.network, address });
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams) {
     const registryContract = this.contractFactory.sentimentRegistry({
       address: '0x17b07cfbab33c0024040e7c299f8048f4a49679b',
       network: this.network,
@@ -48,7 +46,7 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPosi
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<SentimentLToken>) {
     return [
       {
-        metaType: MetaType.BORROWED,
+        metaType: MetaType.SUPPLIED,
         address: await contract.read.asset(),
         network: this.network,
       },
@@ -59,18 +57,24 @@ export class ArbitrumSentimentBorrowContractPositionFetcher extends ContractPosi
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-    multicall,
-  }: GetTokenBalancesParams<SentimentLToken>): Promise<BigNumberish[]> {
+  async getTokenBalancesPerPosition({ address, contractPosition, multicall }: GetTokenBalancesParams<SentimentLToken>) {
     const accountAddresses = await this.accountResolver.getAccountsOfOwner(address);
 
-    const borrowRaw = await Promise.all(
-      accountAddresses.map(address => multicall.wrap(contract).read.getBorrowBalance([address])),
+    const supplyRaw = await Promise.all(
+      accountAddresses.map(async address => {
+        const supplyRaw = await multicall
+          .wrap(
+            this.appToolkit.globalViemContracts.erc20({
+              address: contractPosition.tokens[0].address,
+              network: this.network,
+            }),
+          )
+          .read.balanceOf([address]);
+        return Number(supplyRaw);
+      }),
     );
-    const borrowedAmountRaw = _.sum(borrowRaw);
+    const depositedAmountRaw = _.sum(supplyRaw);
 
-    return [borrowedAmountRaw];
+    return [depositedAmountRaw];
   }
 }
