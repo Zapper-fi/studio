@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.549.1](https://github.com/Zapper-fi/studio/compare/v0.549.0...v0.549.1) (2023-11-16)
+
+
+### Bug Fixes
+
+* **sentiment:** Fix lending balances ([#3032](https://github.com/Zapper-fi/studio/issues/3032)) ([3d5c23d](https://github.com/Zapper-fi/studio/commit/3d5c23d47f76bcc5e5d0f7d3831b8957a43355ef))
+* **spool:** Fix flaky data props ([f585e35](https://github.com/Zapper-fi/studio/commit/f585e35906c4a7e093f7965d96d2187e78bff504))
+
 ## [0.549.0](https://github.com/Zapper-fi/studio/compare/v0.548.0...v0.549.0) (2023-11-16)
 
 
