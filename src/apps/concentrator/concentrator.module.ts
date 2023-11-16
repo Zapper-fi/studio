@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ConcentratorContractFactory } from './contracts';
+import { ConcentratorViemContractFactory } from './contracts';
 import { EthereumConcentratorAbcCvxTokenFetcher } from './ethereum/concentrator.abc.token-fetcher';
 import { EthereumConcentratorAcrvVaultContractPositionFetcher } from './ethereum/concentrator.acrv-vault.contract-position-fetcher';
 import { EthereumConcentratorAfrxethVaultContractPositionFetcher } from './ethereum/concentrator.afrxeth-vault.contract-position-fetcher';
@@ -14,7 +14,7 @@ import { EthereumConcentratorVotingEscrowContractPositionFetcher } from './ether
 
 @Module({
   providers: [
-    ConcentratorContractFactory,
+    ConcentratorViemContractFactory,
     EthereumConcentratorAbcCvxTokenFetcher,
     EthereumConcentratorAcrvVaultContractPositionFetcher,
     EthereumConcentratorAfxsVaultContractPositionFetcher,

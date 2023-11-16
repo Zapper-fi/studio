@@ -7,7 +7,7 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { AuraContractFactory } from '../contracts';
+import { AuraViemContractFactory } from '../contracts';
 
 export type BalancerPool = {
   id: string;
@@ -87,7 +87,7 @@ const network = Network.ETHEREUM_MAINNET;
 export class AuraBalancerPoolResolver {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) private readonly contractFactory: AuraViemContractFactory,
   ) {}
 
   @Cache({
@@ -160,11 +160,11 @@ export class AuraBalancerPoolResolver {
 
     const joinPoolRequestStruct = {
       assets: tokens.map(token => token.address),
-      maxAmountsIn,
+      maxAmountsIn: maxAmountsIn.map(v => BigInt(v.toString())),
       userData: ethers.utils.defaultAbiCoder.encode(['uint256', 'uint256[]', 'uint256'], [1, maxAmountsIn, 0]),
       fromInternalBalance: false,
     };
 
-    return balancerHelpers.callStatic.queryJoin(id, sender, recipient, joinPoolRequestStruct);
+    return balancerHelpers.simulate.queryJoin([id, sender, recipient, joinPoolRequestStruct]).then(v => v.result);
   }
 }

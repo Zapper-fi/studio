@@ -5,10 +5,16 @@ import { Cache } from '~cache/cache.decorator';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 export type ClearpoolApiPoolResponse = {
-  pools: {
-    address: string;
-  }[];
-};
+  address: string;
+  currencyName: string;
+  currencyAddress: string;
+  borrowerName: string;
+  poolSize: string;
+  utilization: string;
+  cpoolAPR: number;
+  supplyAPR: number;
+  APR: number;
+}[];
 
 @Injectable()
 export class ClearpoolPoolDefinitionsResolver {
@@ -26,6 +32,6 @@ export class ClearpoolPoolDefinitionsResolver {
   async getPoolDefinitions(network: Network) {
     const definitionsData = await this.getPoolDefinitionsData(network);
 
-    return definitionsData.pools.map(x => x.address.toLowerCase());
+    return definitionsData.map(x => x.address.toLowerCase());
   }
 }

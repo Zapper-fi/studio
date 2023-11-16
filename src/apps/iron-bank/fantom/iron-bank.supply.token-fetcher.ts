@@ -9,7 +9,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
+import { IronBankViemContractFactory } from '../contracts';
+import { IronBankComptroller, IronBankCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher<IronBankCToken, IronBankComptroller> {
@@ -18,7 +19,7 @@ export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IronBankContractFactory) protected readonly contractFactory: IronBankContractFactory,
+    @Inject(IronBankViemContractFactory) protected readonly contractFactory: IronBankViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -32,18 +33,18 @@ export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher
   }
 
   async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<IronBankCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<IronBankCToken>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<IronBankCToken>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 }

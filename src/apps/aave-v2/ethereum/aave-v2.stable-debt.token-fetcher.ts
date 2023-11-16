@@ -7,7 +7,7 @@ import {
   AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
 } from '../common/aave-v2.lending.token-fetcher';
-import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
+import { AaveV2AToken } from '../contracts/viem/AaveV2AToken';
 
 @PositionTemplate()
 export class EthereumAaveV2StableDebtTokenFetcher extends AaveV2LendingTokenFetcher {

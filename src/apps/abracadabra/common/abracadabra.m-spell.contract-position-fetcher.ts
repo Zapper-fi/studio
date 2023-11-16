@@ -7,19 +7,20 @@ import {
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { AbracadabraContractFactory, AbracadabraMspell } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
+import { AbracadabraMspell } from '../contracts/viem';
 
 export abstract class AbracadabraMspellContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<AbracadabraMspell> {
   abstract mSpellAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AbracadabraMspell {
+  getContract(address: string) {
     return this.contractFactory.abracadabraMspell({ address, network: this.network });
   }
 
@@ -28,11 +29,11 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<AbracadabraMspell>) {
-    return contract.spell();
+    return contract.read.spell();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<AbracadabraMspell>) {
-    return contract.mim();
+    return contract.read.mim();
   }
 
   async getRewardRates() {
@@ -40,10 +41,10 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
-    return contract.pendingReward(address);
+    return contract.read.pendingReward([address]);
   }
 }

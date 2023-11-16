@@ -7,7 +7,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Standard } from '~position/position.interface';
@@ -15,7 +15,7 @@ import { claimable, supplied } from '~position/position.utils';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
-import { KyberswapElasticContractFactory } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
 
 import { KyberswapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
 import {
@@ -25,7 +25,7 @@ import {
 import { getSupplied, getRange } from './kyberswap-elastic.liquidity.utils';
 
 type KyberswapElasticLiquidityContractPositionHelperParams = {
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
   positionId: BigNumberish;
   poolId: BigNumberish;
@@ -40,7 +40,8 @@ export class KyberswapElasticFarmContractPositionBuilder {
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
   ) {}
 
   async buildPosition({
@@ -55,50 +56,52 @@ export class KyberswapElasticFarmContractPositionBuilder {
     const positionManager = this.contractFactory.positionManager({ address: this.positionManagerAddress, network });
     const factoryContract = this.contractFactory.factory({ address: this.factoryAddress, network });
     const elasticLmContract = this.contractFactory.kyberswapElasticLm({ address: kyberswapElasticLmAddress, network });
-    const position = await multicall.wrap(positionManager).positions(positionId);
+    const position = await multicall.wrap(positionManager).read.positions([BigInt(positionId.toString())]);
 
-    const fee = position.info?.fee;
-    const poolInfo = await multicall.wrap(elasticLmContract).getPoolInfo(poolId);
-    const rewardTokenAddresses = poolInfo.rewardTokens.map(x => x.toLowerCase());
-    const token0Address = position.info.token0.toLowerCase();
-    const token1Address = position.info.token1.toLowerCase();
+    const fee = position[1].fee;
+    const poolInfo = await multicall.wrap(elasticLmContract).read.getPoolInfo([BigInt(poolId.toString())]);
+    const rewardTokenAddresses = poolInfo[6].map(x => x.toLowerCase());
+    const token0Address = position[1].token0.toLowerCase();
+    const token1Address = position[1].token1.toLowerCase();
     const queries = [token0Address, token1Address, ...rewardTokenAddresses].map(t => ({ address: t, network }));
     const [token0, token1, claimableToken] = await tokenLoader.getMany(queries);
     if (!token0 || !token1 || !claimableToken) return null;
 
-    const poolAddr = await multicall.wrap(factoryContract).getPool(token0Address, token1Address, fee);
+    const poolAddr = await multicall.wrap(factoryContract).read.getPool([token0Address, token1Address, fee]);
     const poolAddress = poolAddr.toLowerCase();
     const poolContract = this.contractFactory.pool({ address: poolAddress, network });
-    const token0Contract = this.contractFactory.erc20(token0);
-    const token1Contract = this.contractFactory.erc20(token1);
+    const token0Contract = this.appToolkit.globalViemContracts.erc20(token0);
+    const token1Contract = this.appToolkit.globalViemContracts.erc20(token1);
 
     const [liquidityState, poolState, positionClaimables, reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(poolContract).getLiquidityState(),
-      multicall.wrap(poolContract).getPoolState(),
-      multicall.wrap(elasticLmContract).getUserInfo(positionId, poolId),
-      multicall.wrap(token0Contract).balanceOf(poolAddress),
-      multicall.wrap(token1Contract).balanceOf(poolAddress),
+      multicall.wrap(poolContract).read.getLiquidityState(),
+      multicall.wrap(poolContract).read.getPoolState(),
+      multicall.wrap(elasticLmContract).read.getUserInfo([BigInt(positionId.toString()), BigInt(poolId.toString())]),
+      multicall.wrap(token0Contract).read.balanceOf([poolAddress]),
+      multicall.wrap(token1Contract).read.balanceOf([poolAddress]),
     ]);
 
     const positionData: KyberswapElasticLiquidityPositionContractData = {
-      tickLower: position.pos.tickLower,
-      tickUpper: position.pos.tickUpper,
-      liquidity: position.pos.liquidity,
-      rTokenOwed: position.pos.rTokenOwed,
-      feeGrowthInsideLast: position.pos.feeGrowthInsideLast,
-      nonce: position.pos.nonce,
-      operator: position.pos.operator,
-      poolId: position.pos.poolId,
-      token0: position.info.token0,
-      token1: position.info.token1,
+      tickLower: position[0].tickLower,
+      tickUpper: position[0].tickUpper,
+      liquidity: position[0].liquidity,
+      rTokenOwed: position[0].rTokenOwed,
+      feeGrowthInsideLast: position[0].feeGrowthInsideLast,
+      nonce: position[0].nonce,
+      operator: position[0].operator,
+      poolId: position[0].poolId,
+      token0: position[1].token0,
+      token1: position[1].token1,
       fee: fee,
     };
+
     const state: KyberswapElasticPoolStateData = {
-      sqrtPriceX96: poolState.sqrtP,
-      reinvestL: liquidityState.reinvestL,
-      currentTick: poolState.currentTick,
-      liquidity: liquidityState.baseL,
+      sqrtPriceX96: poolState[0],
+      reinvestL: liquidityState[1],
+      currentTick: poolState[1],
+      liquidity: liquidityState[0],
     };
+
     // Retrieve underlying reserves, both supplied and claimable
     const range = getRange({ position: positionData, state, token0, token1, network });
     const suppliedBalances = getSupplied({ position: positionData, state, token0, token1, network });
@@ -108,7 +111,7 @@ export class KyberswapElasticFarmContractPositionBuilder {
 
     // claimables
     const claimableTokens = [claimableToken].map(v => claimable(v));
-    const claimablesBalance = positionClaimables.rewardPending.map(x => x.toString());
+    const claimablesBalance = positionClaimables[1].map(x => x.toString());
     const claimableTokenBalances = claimableTokens.map((t, i) => drillBalance(t, claimablesBalance[i]));
 
     // Build position price according to underlying reserves

@@ -9,7 +9,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { StrikeComptroller, StrikeContractFactory, StrikeSToken } from '../contracts';
+import { StrikeViemContractFactory } from '../contracts';
+import { StrikeComptroller, StrikeSToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher<StrikeSToken, StrikeComptroller> {
@@ -18,7 +19,7 @@ export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StrikeContractFactory) protected readonly contractFactory: StrikeContractFactory,
+    @Inject(StrikeViemContractFactory) protected readonly contractFactory: StrikeViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -32,18 +33,18 @@ export class EthereumStrikeSupplyTokenFetcher extends CompoundSupplyTokenFetcher
   }
 
   async getMarkets({ contract }: GetMarketsParams<StrikeComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<StrikeSToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<StrikeSToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<StrikeSToken>) {
-    return contract.supplyRatePerBlock();
+    return contract.read.supplyRatePerBlock();
   }
 }

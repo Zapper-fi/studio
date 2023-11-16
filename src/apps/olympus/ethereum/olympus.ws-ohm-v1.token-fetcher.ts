@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { OlympusContractFactory, OlympusWsOhmV1Token } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusWsOhmV1Token } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePositionFetcher<OlympusWsOhmV1Token> {
@@ -13,12 +14,12 @@ export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OlympusContractFactory) protected readonly contractFactory: OlympusContractFactory,
+    @Inject(OlympusViemContractFactory) protected readonly contractFactory: OlympusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): OlympusWsOhmV1Token {
+  getContract(address: string) {
     return this.contractFactory.olympusWsOhmV1Token({ address, network: this.network });
   }
 
@@ -27,11 +28,13 @@ export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OlympusWsOhmV1Token>) {
-    return [{ address: await contract.sOHM(), network: this.network }];
+    return [{ address: await contract.read.sOHM(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<OlympusWsOhmV1Token>) {
-    const reserveRaw = await multicall.wrap(this.contractFactory.erc20(appToken.tokens[0])).balanceOf(appToken.address);
+    const reserveRaw = await multicall
+      .wrap(this.appToolkit.globalViemContracts.erc20(appToken.tokens[0]))
+      .read.balanceOf([appToken.address]);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];

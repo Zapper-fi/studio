@@ -7,8 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { ConvexContractFactory } from '../contracts';
-import { ConvexDepositor } from '../contracts/ethers/ConvexDepositor';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexDepositor } from '../contracts/viem/ConvexDepositor';
 
 @PositionTemplate()
 export class EthereumConvexDepositorContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexDepositor> {
@@ -19,12 +19,12 @@ export class EthereumConvexDepositorContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexDepositor {
+  getContract(address: string) {
     return this.contractFactory.convexDepositor({ address, network: this.network });
   }
 

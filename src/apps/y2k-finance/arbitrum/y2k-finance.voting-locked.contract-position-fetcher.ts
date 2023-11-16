@@ -15,7 +15,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Y2KFinanceContractFactory, Y2KFinanceVotingLocked } from '../contracts';
+import { Y2KFinanceViemContractFactory } from '../contracts';
+import { Y2KFinanceVotingLocked } from '../contracts/viem';
 
 const VLY2K = [
   {
@@ -32,12 +33,12 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(Y2KFinanceContractFactory) protected readonly contractFactory: Y2KFinanceContractFactory,
+    @Inject(Y2KFinanceViemContractFactory) protected readonly contractFactory: Y2KFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Y2KFinanceVotingLocked {
+  getContract(address: string) {
     return this.contractFactory.y2KFinanceVotingLocked({ address, network: this.network });
   }
 
@@ -51,17 +52,17 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await params.contract.lockToken(),
+        address: await params.contract.read.lockToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: (await params.contract.rewardToken(0)).addr,
+        address: (await params.contract.read.rewardToken([BigInt(0)]))[0],
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: (await params.contract.rewardToken(1)).addr,
+        address: (await params.contract.read.rewardToken([BigInt(1)]))[0],
         network: this.network,
       },
     ];
@@ -70,14 +71,14 @@ export class ArbitrumY2KFinanceVotingLockedContractPositionFetcher extends Contr
   async getLabel(
     params: GetDisplayPropsParams<Y2KFinanceVotingLocked, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    const epochs = await params.contract.minEpochs();
+    const epochs = await params.contract.read.minEpochs();
     return `Lock${epochs.toString()}Rewards`;
   }
 
   async getTokenBalancesPerPosition(
     params: GetTokenBalancesParams<Y2KFinanceVotingLocked, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const info = await params.contract.getAccount(params.address);
-    return [info.balance, info.rewards1, info.rewards2];
+    const info = await params.contract.read.getAccount([params.address]);
+    return [info[0], info[3], info[4]];
   }
 }

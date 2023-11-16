@@ -12,7 +12,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { GoldfinchContractFactory, GoldfinchVault } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
+import { GoldfinchVault } from '../contracts/viem';
 
 export type GoldfinchVaultDataProps = {
   assetStandard: Standard;
@@ -33,12 +34,12 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoldfinchContractFactory) protected readonly contractFactory: GoldfinchContractFactory,
+    @Inject(GoldfinchViemContractFactory) protected readonly contractFactory: GoldfinchViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GoldfinchVault {
+  getContract(address: string) {
     return this.contractFactory.goldfinchVault({ address, network: this.network });
   }
 
@@ -94,7 +95,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
     const GFI = '0xdab396ccf3d84cf2d07c4454e10c8a6f5b008d2b';
     const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
     const SENIOR_POOL = '0x8481a6ebaf5c7dabc3f7e09e44a89531fd31f822';
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<GoldfinchVaultDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],
@@ -111,8 +112,8 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
     });
 
     // GFI
-    const gfiBalanceRaw = await multicall.wrap(goldfinchVaultContract).totalGFIHeldBy(address); // denominated in gfi units
-    const gfiTokens = [drillBalance(gfiPosition.tokens[0], gfiBalanceRaw.totalAmount.toString())];
+    const gfiBalanceRaw = await multicall.wrap(goldfinchVaultContract).read.totalGFIHeldBy([address]); // denominated in gfi units
+    const gfiTokens = [drillBalance(gfiPosition.tokens[0], gfiBalanceRaw[1].toString())];
     const gfiBalanceUSD = sumBy(gfiTokens, v => v.balanceUSD);
     const gfiContractPositionBalance = { ...gfiPosition, tokens: gfiTokens, balanceUSD: gfiBalanceUSD };
 
@@ -124,16 +125,14 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
       address: SENIOR_POOL,
       network: this.network,
     });
-    const capitalBalanceRaw = await multicall.wrap(goldfinchVaultContract).totalCapitalHeldBy(address); // response denominated in USDC
-    const fiduBalanceRaw = await multicall
-      .wrap(seniorPoolContract)
-      .getNumShares(capitalBalanceRaw.totalAmount.toString());
+    const capitalBalanceRaw = await multicall.wrap(goldfinchVaultContract).read.totalCapitalHeldBy([address]); // response denominated in USDC
+    const fiduBalanceRaw = await multicall.wrap(seniorPoolContract).read.getNumShares([capitalBalanceRaw[1]]);
     const fiduTokens = [drillBalance(fiduPosition.tokens[0], fiduBalanceRaw.toString())];
     const fiduBalanceUSD = sumBy(fiduTokens, v => v.balanceUSD);
     const fiduContractPositionBalance = { ...fiduPosition, tokens: fiduTokens, balanceUSD: fiduBalanceUSD };
 
     // Claimable FIDU from MembershipVaults
-    const claimableFIDU = await multicall.wrap(goldfinchVaultContract).claimableRewards(address);
+    const claimableFIDU = await multicall.wrap(goldfinchVaultContract).read.claimableRewards([address]);
     const claimableFiduTokens = [drillBalance(fiduPosition.tokens[1], claimableFIDU.toString())];
     const claimableFiduBalanceUSD = sumBy(claimableFiduTokens, v => v.balanceUSD);
     const claimableFiduContractPositionBalance = {

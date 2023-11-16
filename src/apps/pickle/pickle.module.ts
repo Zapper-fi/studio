@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
-import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
+import { UniswapV3ViemContractFactory } from '~apps/uniswap-v3/contracts';
 
 import { ArbitrumPickleJarTokenFetcher } from './arbitrum/pickle.jar.token-fetcher';
 import { ArbitrumPickleFarmContractPositionFetcher } from './arbitrum/pickle.masterchef-v2-farm.contract-position-fetcher';
 import { PickleApiJarRegistry } from './common/pickle.api.jar-registry';
-import { PickleContractFactory } from './contracts';
+import { PickleViemContractFactory } from './contracts';
 import { EthereumUniV3PickleJarTokenFetcher } from './ethereum/pickle.jar-univ3.token-fetcher';
 import { EthereumPickleJarTokenFetcher } from './ethereum/pickle.jar.token-fetcher';
 import { EthereumPickleFarmContractPositionFetcher } from './ethereum/pickle.masterchef-farm.contract-position-fetcher';
@@ -38,11 +38,11 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     OptimismUniV3PickleJarTokenFetcher,
     PickleApiJarRegistry,
 
-    PickleContractFactory,
+    PickleViemContractFactory,
     PolygonPickleFarmContractPositionFetcher,
     PolygonPickleJarTokenFetcher,
     PolygonUniV3PickleJarTokenFetcher,
-    UniswapV3ContractFactory,
+    UniswapV3ViemContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
   ],
 })

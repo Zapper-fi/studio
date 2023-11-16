@@ -6,7 +6,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverLocker } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverLocker } from '../contracts/viem';
 
 import { CVX, CLEVCVX } from './addresses';
 
@@ -16,12 +17,12 @@ export class EthereumCleverLockContractPositionFetcher extends ContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CleverLocker {
+  getContract(address: string) {
     return this.contractFactory.cleverLocker({ address, network: this.network });
   }
 
@@ -54,7 +55,7 @@ export class EthereumCleverLockContractPositionFetcher extends ContractPositionT
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverLocker>) {
-    const userInfo = await contract.userInfo(address);
-    return [userInfo.totalLocked, userInfo.totalUnlocked, userInfo.totalDebt];
+    const userInfo = await contract.read.userInfo([address]);
+    return [userInfo[4], userInfo[5], userInfo[0]];
   }
 }

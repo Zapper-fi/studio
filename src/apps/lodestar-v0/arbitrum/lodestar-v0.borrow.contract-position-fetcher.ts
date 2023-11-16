@@ -13,7 +13,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { LodestarV0Comptroller, LodestarV0ContractFactory, LodestarV0IToken } from '../contracts';
+import { LodestarV0ViemContractFactory } from '../contracts';
+import { LodestarV0Comptroller, LodestarV0IToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -25,7 +26,7 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LodestarV0ContractFactory) protected readonly contractFactory: LodestarV0ContractFactory,
+    @Inject(LodestarV0ViemContractFactory) protected readonly contractFactory: LodestarV0ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -39,37 +40,37 @@ export class ArbitrumLodestarV0BorrowContractPositionFetcher extends CompoundBor
   }
 
   async getMarkets({ contract }: GetMarketsParams<LodestarV0Comptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<LodestarV0IToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.borrowRatePerBlock().catch(() => 0);
+    return contract.read.borrowRatePerBlock().catch(() => 0);
   }
 
   async getCash({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({
     address,
     contract,
   }: GetTokenBalancesParams<LodestarV0IToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 }

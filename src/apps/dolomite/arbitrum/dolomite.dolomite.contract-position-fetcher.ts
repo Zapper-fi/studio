@@ -4,7 +4,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DolomiteContractPositionTemplatePositionFetcher } from '~apps/dolomite/common/dolomite.contract-position.template.position-fetcher';
 
-import { DolomiteContractFactory } from '../contracts';
+import { DolomiteViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class ArbitrumDolomiteDolomiteContractPositionFetcher extends DolomiteContractPositionTemplatePositionFetcher {
@@ -12,9 +12,9 @@ export class ArbitrumDolomiteDolomiteContractPositionFetcher extends DolomiteCon
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,
-    @Inject(DolomiteContractFactory) dolomiteContractFactory: DolomiteContractFactory,
+    @Inject(DolomiteViemContractFactory) contractFactory: DolomiteViemContractFactory,
   ) {
-    super(appToolkit, dolomiteContractFactory);
+    super(appToolkit, contractFactory);
   }
 
   protected isFetchingDolomiteBalances(): boolean {

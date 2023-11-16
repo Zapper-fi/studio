@@ -15,7 +15,10 @@ import {
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { DOLOMITE_AMM_FACTORY_ADDRESSES } from '../common/utils';
-import { DolomiteAmmFactory, DolomiteAmmPair, DolomiteContractFactory } from '../contracts';
+import { DolomiteViemContractFactory } from '../contracts';
+import { DolomiteAmmFactory, DolomiteAmmPair } from '../contracts/viem';
+import { DolomiteAmmFactoryContract } from '../contracts/viem/DolomiteAmmFactory';
+import { DolomiteAmmPairContract } from '../contracts/viem/DolomiteAmmPair';
 
 @PositionTemplate()
 export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
@@ -29,37 +32,38 @@ export class ArbitrumDolomitePoolsTokenFetcher extends UniswapV2PoolOnChainTempl
   groupLabel = 'Pools';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DolomiteContractFactory) private readonly dolomiteContractFactory: DolomiteContractFactory,
+    @Inject(DolomiteViemContractFactory) private readonly dolomiteContractFactory: DolomiteViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): DolomiteAmmPair {
+  getPoolTokenContract(address: string): DolomiteAmmPairContract {
     return this.dolomiteContractFactory.dolomiteAmmPair({ address, network: this.network });
   }
 
-  getPoolFactoryContract(address: string): DolomiteAmmFactory {
+  getPoolFactoryContract(address: string): DolomiteAmmFactoryContract {
     return this.dolomiteContractFactory.dolomiteAmmFactory({ address, network: this.network });
   }
 
-  getPoolsLength(contract: DolomiteAmmFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+  getPoolsLength(contract: DolomiteAmmFactoryContract): Promise<BigNumberish> {
+    return contract.read.allPairsLength();
   }
 
-  getPoolAddress(contract: DolomiteAmmFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+  getPoolAddress(contract: DolomiteAmmFactoryContract, index: number): Promise<string> {
+    return contract.read.allPairs([BigInt(index)]);
   }
 
-  getPoolToken0(contract: DolomiteAmmPair): Promise<string> {
-    return contract.token0();
+  getPoolToken0(contract: DolomiteAmmPairContract): Promise<string> {
+    return contract.read.token0();
   }
 
-  getPoolToken1(contract: DolomiteAmmPair): Promise<string> {
-    return contract.token1();
+  getPoolToken1(contract: DolomiteAmmPairContract): Promise<string> {
+    return contract.read.token1();
   }
 
-  getPoolReserves(contract: DolomiteAmmPair): Promise<BigNumberish[]> {
-    return contract.getReservesWei();
+  async getPoolReserves(contract: DolomiteAmmPairContract): Promise<BigNumberish[]> {
+    const reserves = await contract.read.getReservesWei();
+    return [reserves[0], reserves[1]];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<DolomiteAmmPair, UniswapV2TokenDataProps>): Promise<string> {

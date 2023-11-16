@@ -13,8 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { VelodromeV2AddressesResolver } from '../common/velodrome-v2.addresses-resolver';
-import { VelodromeV2ContractFactory } from '../contracts';
-import { VelodromeV2Gauge } from '../contracts/ethers/VelodromeV2Gauge';
+import { VelodromeV2ViemContractFactory } from '../contracts';
+import { VelodromeV2Gauge } from '../contracts/viem/VelodromeV2Gauge';
 
 @PositionTemplate()
 export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VelodromeV2Gauge> {
@@ -22,13 +22,13 @@ export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelodromeV2ContractFactory) protected readonly contractFactory: VelodromeV2ContractFactory,
+    @Inject(VelodromeV2ViemContractFactory) protected readonly contractFactory: VelodromeV2ViemContractFactory,
     @Inject(VelodromeV2AddressesResolver) protected readonly addressesResolver: VelodromeV2AddressesResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): VelodromeV2Gauge {
+  getContract(address: string) {
     return this.contractFactory.velodromeV2Gauge({ address, network: this.network });
   }
 
@@ -44,12 +44,12 @@ export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPos
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.stakingToken(),
+        address: await contract.read.stakingToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.rewardToken(),
+        address: await contract.read.rewardToken(),
         network: this.network,
       },
     ];
@@ -60,7 +60,10 @@ export class OptimismVelodromeV2GaugeContractPositionFetcher extends ContractPos
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<VelodromeV2Gauge>) {
-    const [supplied, claimable] = await Promise.all([contract.balanceOf(address), contract.earned(address)]);
+    const [supplied, claimable] = await Promise.all([
+      contract.read.balanceOf([address]),
+      contract.read.earned([address]),
+    ]);
 
     return [supplied, claimable];
   }

@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -12,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PikaProtocolV3ContractFactory, PikaProtocolV3Vault } from '../contracts';
+import { PikaProtocolV3ViemContractFactory } from '../contracts';
+import { PikaProtocolV3Vault } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPikaProtocolV3VaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolV3Vault> {
@@ -20,12 +22,12 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolV3ContractFactory) protected readonly contractFactory: PikaProtocolV3ContractFactory,
+    @Inject(PikaProtocolV3ViemContractFactory) protected readonly contractFactory: PikaProtocolV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PikaProtocolV3Vault {
+  getContract(address: string) {
     return this.contractFactory.pikaProtocolV3Vault({ address, network: this.network });
   }
 
@@ -53,19 +55,19 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher extends Contract
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PikaProtocolV3Vault>) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const rewardContract = this.contractFactory.pikaProtocolV3Rewards({
       address: '0x939c11c596b851447e5220584d37f12854ba02ae',
       network: this.network,
     });
     const [userShare, vault, totalShare, rewardBalance] = await Promise.all([
-      contract.getShare(address),
-      contract.getVault(),
-      contract.getTotalShare(),
-      multicall.wrap(rewardContract).getClaimableReward(address),
+      contract.read.getShare([address]),
+      contract.read.getVault(),
+      contract.read.getTotalShare(),
+      multicall.wrap(rewardContract).read.getClaimableReward([address]),
     ]);
 
-    const stakedBalanceRaw = userShare.mul(vault.balance).div(totalShare);
+    const stakedBalanceRaw = BigNumber.from(userShare).mul(vault.balance).div(totalShare);
     const stakedBalance = stakedBalanceRaw.div(100);
 
     return [stakedBalance, rewardBalance];

@@ -13,7 +13,8 @@ import type {
   DefaultContractPositionDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { ExactlyContractFactory, Previewer } from '../contracts';
+import { ExactlyViemContractFactory } from '../contracts';
+import { Previewer } from '../contracts/viem';
 
 import {
   ExactlyDefinitionsResolver,
@@ -34,7 +35,7 @@ export abstract class ExactlyRewardsFetcher extends ContractPositionTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ExactlyContractFactory) protected readonly contractFactory: ExactlyContractFactory,
+    @Inject(ExactlyViemContractFactory) protected readonly contractFactory: ExactlyViemContractFactory,
     @Inject(ExactlyDefinitionsResolver) protected readonly definitionsResolver: ExactlyDefinitionsResolver,
   ) {
     super(appToolkit);

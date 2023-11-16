@@ -7,7 +7,10 @@ import {
   UniswapV2PoolOnChainTemplateTokenFetcher,
   UniswapV2TokenDataProps,
 } from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
-import { UniswapPair, UniswapFactory, UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapV2ViemContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapPair, UniswapFactory } from '~apps/uniswap-v2/contracts/viem';
+import { UniswapFactoryContract } from '~apps/uniswap-v2/contracts/viem/UniswapFactory';
+import { UniswapPairContract } from '~apps/uniswap-v2/contracts/viem/UniswapPair';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { GetDisplayPropsParams, DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
 
@@ -21,37 +24,38 @@ export class ArbitrumRamsesPoolTokenFetcher extends UniswapV2PoolOnChainTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
+    @Inject(UniswapV2ViemContractFactory) protected readonly contractFactory: UniswapV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): UniswapPair {
+  getPoolTokenContract(address: string) {
     return this.contractFactory.uniswapPair({ address, network: this.network });
   }
 
-  getPoolFactoryContract(_address: string): UniswapFactory {
+  getPoolFactoryContract(_address: string) {
     return this.contractFactory.uniswapFactory({ address: this.factoryAddress, network: this.network });
   }
 
-  async getPoolsLength(contract: UniswapFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+  async getPoolsLength(contract: UniswapFactoryContract): Promise<BigNumberish> {
+    return contract.read.allPairsLength();
   }
 
-  async getPoolAddress(contract: UniswapFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+  async getPoolAddress(contract: UniswapFactoryContract, index: number): Promise<string> {
+    return contract.read.allPairs([BigInt(index)]);
   }
 
-  async getPoolToken0(contract: UniswapPair) {
-    return contract.token0();
+  async getPoolToken0(contract: UniswapPairContract) {
+    return contract.read.token0();
   }
 
-  async getPoolToken1(contract: UniswapPair) {
-    return contract.token1();
+  async getPoolToken1(contract: UniswapPairContract) {
+    return contract.read.token1();
   }
 
-  async getPoolReserves(contract: UniswapPair) {
-    return contract.getReserves();
+  async getPoolReserves(contract: UniswapPairContract) {
+    const [reserve0, reserve1] = await contract.read.getReserves();
+    return [reserve0, reserve1];
   }
 
   async getTertiaryLabel({

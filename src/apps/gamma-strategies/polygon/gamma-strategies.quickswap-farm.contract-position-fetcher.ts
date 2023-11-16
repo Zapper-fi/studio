@@ -10,7 +10,9 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { GammaStrategiesContractFactory, GammaStrategiesQuickswapMasterchef } from '../contracts';
+import { GammaStrategiesViemContractFactory } from '../contracts';
+import { GammaStrategiesQuickswapMasterchef } from '../contracts/viem';
+import { GammaStrategiesQuickswapMasterchefContract } from '../contracts/viem/GammaStrategiesQuickswapMasterchef';
 
 @PositionTemplate()
 export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<GammaStrategiesQuickswapMasterchef> {
@@ -20,21 +22,21 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GammaStrategiesContractFactory) protected readonly contractFactory: GammaStrategiesContractFactory,
+    @Inject(GammaStrategiesViemContractFactory) protected readonly contractFactory: GammaStrategiesViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GammaStrategiesQuickswapMasterchef {
+  getContract(address: string) {
     return this.contractFactory.gammaStrategiesQuickswapMasterchef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: GammaStrategiesQuickswapMasterchef) {
-    return contract.poolLength();
+  async getPoolLength(contract: GammaStrategiesQuickswapMasterchefContract) {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterchef, poolIndex: number) {
-    return (await contract.lpToken(poolIndex)).toLowerCase();
+  async getStakedTokenAddress(contract: GammaStrategiesQuickswapMasterchefContract, poolIndex: number) {
+    return (await contract.read.lpToken([BigInt(poolIndex)])).toLowerCase();
   }
 
   async getRewardTokenAddress() {
@@ -45,20 +47,20 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
   async getTotalAllocPoints({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({
     contract,
   }: GetMasterChefDataPropsParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.sushiPerSecond();
+    return contract.read.sushiPerSecond();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[2]);
   }
 
   async getStakedTokenBalance({
@@ -66,7 +68,7 @@ export class PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher extends 
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<GammaStrategiesQuickswapMasterchef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance(): Promise<BigNumberish> {

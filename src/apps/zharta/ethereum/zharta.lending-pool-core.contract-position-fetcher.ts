@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -13,7 +14,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { ZhartaContractFactory, ZhartaLendingPoolCore } from '../contracts';
+import { ZhartaViemContractFactory } from '../contracts';
+import { ZhartaLendingPoolCore } from '../contracts/viem';
 
 interface ZhartaLendingPoolCoreContractPositionDefinition extends DefaultContractPositionDefinition {
   type: 'LENDING_POOL_CORE';
@@ -26,12 +28,12 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ZhartaContractFactory) protected readonly contractFactory: ZhartaContractFactory,
+    @Inject(ZhartaViemContractFactory) protected readonly contractFactory: ZhartaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): ZhartaLendingPoolCore {
+  getContract(_address: string) {
     return this.contractFactory.zhartaLendingPoolCore({ address: _address, network: this.network });
   }
 
@@ -57,7 +59,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
   private async getRegularTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<ZhartaLendingPoolCore, ZhartaLendingPoolCoreContractPositionDefinition>) {
-    const [depositAddress] = await Promise.all([contract.erc20TokenContract()]);
+    const [depositAddress] = await Promise.all([contract.read.erc20TokenContract()]);
 
     return [
       {
@@ -85,10 +87,13 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
     multicall,
   }: GetTokenBalancesParams<ZhartaLendingPoolCore>) {
     const [lenderFundsRaw, withdrawableAmountRaw] = await Promise.all([
-      contract.funds(address),
-      contract.computeWithdrawableAmount(address),
+      contract.read.funds([address]),
+      contract.read.computeWithdrawableAmount([address]),
     ]);
 
-    return [lenderFundsRaw.currentAmountDeposited, withdrawableAmountRaw.sub(lenderFundsRaw.currentAmountDeposited)];
+    return [
+      lenderFundsRaw.currentAmountDeposited,
+      BigNumber.from(withdrawableAmountRaw).sub(lenderFundsRaw.currentAmountDeposited),
+    ];
   }
 }

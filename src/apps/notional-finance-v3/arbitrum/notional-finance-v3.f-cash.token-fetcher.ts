@@ -4,7 +4,7 @@ import { pick, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -18,7 +18,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { NotionalFCash, NotionalFinanceV3ContractFactory } from '../contracts';
+import { NotionalFinanceV3ViemContractFactory } from '../contracts';
+import { NotionalFCash } from '../contracts/viem';
 
 export type NotionalFCashTokenDefinition = {
   address: string;
@@ -50,12 +51,13 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(NotionalFinanceV3ContractFactory) protected readonly contractFactory: NotionalFinanceV3ContractFactory,
+    @Inject(NotionalFinanceV3ViemContractFactory)
+    protected readonly contractFactory: NotionalFinanceV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): NotionalFCash {
+  getContract(address: string) {
     return this.contractFactory.notionalFCash({ address, network: this.network });
   }
 
@@ -65,20 +67,20 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
       network: this.network,
     });
 
-    const currencyCount = await multicall.wrap(notionalViewContract).getMaxCurrencyId();
+    const currencyCount = await multicall.wrap(notionalViewContract).read.getMaxCurrencyId();
     const currencyRange = range(1, currencyCount + 1);
     const definitions = await Promise.all(
       currencyRange.map(async currencyId => {
-        const currency = await multicall.wrap(notionalViewContract).getCurrency(currencyId);
-        const underlyingTokenAddress = currency.underlyingToken.tokenAddress.toLowerCase();
-        const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(currencyId);
+        const currency = await multicall.wrap(notionalViewContract).read.getCurrency([currencyId]);
+        const underlyingTokenAddress = currency[1].tokenAddress.toLowerCase();
+        const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([currencyId]);
 
         const markets = await Promise.all(
           activeMarkets.map(async activeMarket => {
             const maturity = Number(activeMarket.maturity);
             const tokenId = await multicall
               .wrap(notionalViewContract)
-              .encodeToId(currencyId, maturity, 0)
+              .read.encodeToId([currencyId, maturity, 0])
               .then(v => v.toString());
 
             return {
@@ -129,7 +131,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
       network: this.network,
     });
 
-    const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(definition.currencyId);
+    const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([definition.currencyId]);
     const market = activeMarkets.find(v => Number(v.maturity) === definition.maturity);
     const apy = Number(market?.lastImpliedRate ?? 0) / NOTIONAL_CONSTANT;
 
@@ -158,7 +160,7 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
       network: this.network,
     });
 
-    const activeMarkets = await multicall.wrap(notionalViewContract).getActiveMarkets(definition.currencyId);
+    const activeMarkets = await multicall.wrap(notionalViewContract).read.getActiveMarkets([definition.currencyId]);
     const market = activeMarkets.find(v => Number(v.maturity) === definition.maturity);
     return Number(market?.lastImpliedRate ?? 0) / NOTIONAL_CONSTANT;
   }
@@ -190,8 +192,10 @@ export class ArbitrumNotionalFinanceV3FCashTokenFetcher extends AppTokenTemplate
   }: {
     address: string;
     appToken: AppTokenPosition<NotionalFCashTokenDataProps>;
-    multicall: IMulticallWrapper;
+    multicall: ViemMulticallDataLoader;
   }): Promise<BigNumberish> {
-    return multicall.wrap(this.getContract(appToken.address)).balanceOf(address, appToken.dataProps.tokenId);
+    return multicall
+      .wrap(this.getContract(appToken.address))
+      .read.balanceOf([address, BigInt(appToken.dataProps.tokenId)]);
   }
 }

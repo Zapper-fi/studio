@@ -4,13 +4,13 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
-import { DopexGmxSsov } from '../contracts';
+import { DopexGmxSsov } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexGmxSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexGmxSsov> {
   groupLabel = 'SSOVs';
 
-  getContract(address: string): DopexGmxSsov {
+  getContract(address: string) {
     return this.contractFactory.dopexGmxSsov({ address, network: this.network });
   }
 
@@ -36,7 +36,7 @@ export class ArbitrumDopexGmxSsovContractPositionFetcher extends DopexSsovContra
     contractPosition,
   }: GetTokenBalancesParams<DopexGmxSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
-    return contract.totalEpochStrikeGmxBalance(epoch, strike);
+    return contract.read.totalEpochStrikeGmxBalance([BigInt(epoch), BigInt(strike)]);
   }
 
   async getTotalEpochStrikeRewardBalances({
@@ -45,9 +45,9 @@ export class ArbitrumDopexGmxSsovContractPositionFetcher extends DopexSsovContra
   }: GetTokenBalancesParams<DopexGmxSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch, strike } = contractPosition.dataProps;
     const [claimedFees, totalEpochStrikeDeposits, totalEpochDeposits] = await Promise.all([
-      contract.totalGmxFeesClaimed(strike),
-      contract.totalEpochStrikeDeposits(epoch, strike),
-      contract.totalEpochDeposits(epoch),
+      contract.read.totalGmxFeesClaimed([BigInt(strike)]),
+      contract.read.totalEpochStrikeDeposits([BigInt(epoch), BigInt(strike)]),
+      contract.read.totalEpochDeposits([BigInt(epoch)]),
     ]);
 
     const totalFeesClaimableForStrike =

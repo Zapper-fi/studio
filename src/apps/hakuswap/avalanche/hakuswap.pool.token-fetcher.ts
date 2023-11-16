@@ -6,7 +6,10 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
 import { GetTokenPropsParams, DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
 
-import { HakuswapContractFactory, HakuswapFactory, HakuswapPool } from '../contracts';
+import { HakuswapViemContractFactory } from '../contracts';
+import { HakuswapFactory, HakuswapPool } from '../contracts/viem';
+import { HakuswapFactoryContract } from '../contracts/viem/HakuswapFactory';
+import { HakuswapPoolContract } from '../contracts/viem/HakuswapPool';
 
 const poolNotUsingDecimals = [
   '0x519de4668ea6661d1870928a3033a62dc2acc503',
@@ -33,44 +36,45 @@ export class AvalancheHakuswapPoolTokenFetcher extends UniswapV2PoolOnChainTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HakuswapContractFactory) protected readonly contractFactory: HakuswapContractFactory,
+    @Inject(HakuswapViemContractFactory) protected readonly contractFactory: HakuswapViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getPoolTokenContract(address: string): HakuswapPool {
+  getPoolTokenContract(address: string): HakuswapPoolContract {
     return this.contractFactory.hakuswapPool({ address, network: this.network });
   }
 
-  getPoolFactoryContract(address: string): HakuswapFactory {
+  getPoolFactoryContract(address: string): HakuswapFactoryContract {
     return this.contractFactory.hakuswapFactory({ address, network: this.network });
   }
 
-  getPoolsLength(contract: HakuswapFactory): Promise<BigNumberish> {
-    return contract.allPairsLength();
+  getPoolsLength(contract: HakuswapFactoryContract): Promise<BigNumberish> {
+    return contract.read.allPairsLength();
   }
 
-  getPoolAddress(contract: HakuswapFactory, index: number): Promise<string> {
-    return contract.allPairs(index);
+  getPoolAddress(contract: HakuswapFactoryContract, index: number): Promise<string> {
+    return contract.read.allPairs([BigInt(index)]);
   }
 
-  getPoolToken0(contract: HakuswapPool): Promise<string> {
-    return contract.token0();
+  getPoolToken0(contract: HakuswapPoolContract): Promise<string> {
+    return contract.read.token0();
   }
 
-  getPoolToken1(contract: HakuswapPool): Promise<string> {
-    return contract.token1();
+  getPoolToken1(contract: HakuswapPoolContract): Promise<string> {
+    return contract.read.token1();
   }
 
-  getPoolReserves(contract: HakuswapPool): Promise<BigNumberish[]> {
-    return contract.getReserves();
+  async getPoolReserves(contract: HakuswapPoolContract): Promise<BigNumberish[]> {
+    const reserves = await contract.read.getReserves();
+    return [reserves[0], reserves[1]];
   }
 
   async getDecimals({
     address,
     contract,
   }: GetTokenPropsParams<HakuswapPool, DefaultAppTokenDefinition, DefaultAppTokenDefinition>): Promise<number> {
-    const decimals = !poolNotUsingDecimals.includes(address) ? await contract.decimals() : 0;
+    const decimals = !poolNotUsingDecimals.includes(address) ? await contract.read.decimals() : 0;
 
     return decimals;
   }

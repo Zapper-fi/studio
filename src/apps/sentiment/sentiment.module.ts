@@ -5,11 +5,11 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { ArbitrumSentimentBorrowContractPositionFetcher } from './arbitrum/sentiment.borrow.contract-position-fetcher';
 import { ArbitrumSentimentSupplyTokenFetcher } from './arbitrum/sentiment.supply.token-fetcher';
 import { SentimentAccountsResolver } from './common/sentiment.accounts-resolver';
-import { SentimentContractFactory } from './contracts';
+import { SentimentViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    SentimentContractFactory,
+    SentimentViemContractFactory,
     SentimentAccountsResolver,
     ArbitrumSentimentSupplyTokenFetcher,
     ArbitrumSentimentBorrowContractPositionFetcher,

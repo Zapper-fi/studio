@@ -5,7 +5,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 
 import { UniswapV3LiquidityContractPositionBuilder } from '../common/uniswap-v3.liquidity.contract-position-builder';
 import { UniswapV3LiquidityContractPositionFetcher } from '../common/uniswap-v3.liquidity.contract-position-fetcher';
-import { UniswapV3ContractFactory } from '../contracts';
+import { UniswapV3ViemContractFactory } from '../contracts';
 
 import { CeloUniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.contract-position-builder';
 
@@ -19,7 +19,7 @@ export class CeloUniswapV3LiquidityContractPositionFetcher extends UniswapV3Liqu
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly contractFactory: UniswapV3ViemContractFactory,
     @Inject(CeloUniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { QiDaoContractFactory, QiDaoYieldToken } from '../contracts';
+import { QiDaoViemContractFactory } from '../contracts';
+import { QiDaoYieldToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetcher<QiDaoYieldToken> {
@@ -13,12 +14,12 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(QiDaoContractFactory) protected readonly contractFactory: QiDaoContractFactory,
+    @Inject(QiDaoViemContractFactory) protected readonly contractFactory: QiDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): QiDaoYieldToken {
+  getContract(address: string) {
     return this.contractFactory.qiDaoYieldToken({ address, network: this.network });
   }
 
@@ -35,17 +36,17 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<QiDaoYieldToken>) {
-    return [{ address: await contract.Token(), network: this.network }];
+    return [{ address: await contract.read.Token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken }: GetPricePerShareParams<QiDaoYieldToken>) {
     const underlyingToken = appToken.tokens[0];
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingToken.address,
       network: this.network,
     });
 
-    const reserveRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const reserveRaw = await underlyingTokenContract.read.balanceOf([appToken.address]);
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     const pricePerShare = reserve / appToken.supply;
 

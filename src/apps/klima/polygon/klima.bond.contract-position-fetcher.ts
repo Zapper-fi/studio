@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { OlympusBondContractPositionFetcher } from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { KlimaBondDepository, KlimaContractFactory } from '../contracts';
+import { KlimaViemContractFactory } from '../contracts';
+import { KlimaBondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContractPositionFetcher<KlimaBondDepository> {
@@ -46,12 +47,12 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KlimaContractFactory) protected readonly contractFactory: KlimaContractFactory,
+    @Inject(KlimaViemContractFactory) protected readonly contractFactory: KlimaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): KlimaBondDepository {
+  getContract(address: string) {
     return this.contractFactory.klimaBondDepository({ address, network: this.network });
   }
 
@@ -64,11 +65,14 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     contract,
   }: GetTokenBalancesParams<KlimaBondDepository>): Promise<BigNumberish> {
     const [bondInfo, pendingPayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
+      contract.read.bondInfo([address]),
+      contract.read.pendingPayoutFor([address]),
     ]);
 
-    const vestingBalanceRaw = bondInfo.payout.gt(pendingPayout) ? bondInfo.payout.sub(pendingPayout) : 0;
+    const vestingBalanceRaw = BigNumber.from(bondInfo[0]).gt(pendingPayout)
+      ? BigNumber.from(bondInfo[0]).sub(pendingPayout)
+      : BigNumber.from('0');
+
     return vestingBalanceRaw;
   }
 
@@ -76,6 +80,6 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     address,
     contract,
   }: GetTokenBalancesParams<KlimaBondDepository>): Promise<BigNumberish> {
-    return contract.pendingPayoutFor(address);
+    return contract.read.pendingPayoutFor([address]);
   }
 }

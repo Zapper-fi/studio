@@ -1,6 +1,7 @@
 import DataLoader from 'dataloader';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { difference, range, uniq } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
@@ -24,7 +25,7 @@ import {
 } from './uniswap-v2.pool.subgraph.types';
 
 export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends UniswapV2PoolOnChainTemplateTokenFetcher<T, any> {
   volumeDataLoader: DataLoader<string, number> | null;
 
@@ -79,7 +80,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     return filteredPoolIds;
   }
 
-  getPoolFactoryContract(_address: string) {
+  getPoolFactoryContract(_address: string): GetContractReturnType<any, PublicClient> {
     throw new Error('Method not implemented.');
   }
 

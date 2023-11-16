@@ -1,5 +1,5 @@
-import { MulticallWrappedReadDecodeError, MulticallWrappedReadDecodeErrorType } from './multicall.decode.error';
-import { MulticallWrappedReadRequestError, MulticallWrappedReadRequestErrorType } from './multicall.request.error';
+import { MulticallWrappedReadDecodeErrorType } from './multicall.decode.error';
+import { MulticallWrappedReadRequestErrorType } from './multicall.request.error';
 
 export type MulticallWrappedReadErrorType = MulticallWrappedReadRequestErrorType | MulticallWrappedReadDecodeErrorType;
 
@@ -7,5 +7,5 @@ export { MulticallWrappedReadRequestError, MulticallWrappedReadRequestErrorType 
 export { MulticallWrappedReadDecodeError, MulticallWrappedReadDecodeErrorType } from './multicall.decode.error';
 
 export const isViemMulticallUnderlyingError = (error: any): error is MulticallWrappedReadErrorType => {
-  return error instanceof MulticallWrappedReadRequestError || error instanceof MulticallWrappedReadDecodeError;
+  return error.name === 'MulticallWrappedReadRequestError' || error.name === 'MulticallWrappedReadDecodeError';
 };

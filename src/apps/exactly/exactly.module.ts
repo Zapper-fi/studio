@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ExactlyDefinitionsResolver } from './common/exactly.definitions-resolver';
-import { ExactlyContractFactory } from './contracts';
+import { ExactlyViemContractFactory } from './contracts';
 import { EthereumExactlyBorrowFetcher } from './ethereum/exactly.borrow.token-fetcher';
 import { EthereumExactlyDepositFetcher } from './ethereum/exactly.deposit.token-fetcher';
 import { EthereumExactlyFixedBorrowFetcher } from './ethereum/exactly.fixed-borrow.token-fetcher';
@@ -18,7 +18,7 @@ import { OptimismExactlyRewardsFetcher } from './optimism/exactly.rewards.contra
 
 @Module({
   providers: [
-    ExactlyContractFactory,
+    ExactlyViemContractFactory,
     ExactlyDefinitionsResolver,
     EthereumExactlyPositionPresenter,
     EthereumExactlyBorrowFetcher,

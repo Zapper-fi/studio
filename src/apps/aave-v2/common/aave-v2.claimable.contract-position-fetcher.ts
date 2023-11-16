@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { AaveStakedTokenIncentivesController, AaveV2ContractFactory } from '../contracts';
+import { AaveV2ViemContractFactory } from '../contracts';
+import { AaveStakedTokenIncentivesController } from '../contracts/viem';
 
 export type AaveV2ClaimableDataProps = {
   incentivesControllerAddress: string;
@@ -25,7 +26,7 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveV2ContractFactory) protected readonly contractFactory: AaveV2ContractFactory,
+    @Inject(AaveV2ViemContractFactory) protected readonly contractFactory: AaveV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -86,32 +87,28 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
     );
 
     // Resolve all supply, stable debt, and variable debt token addresses
-    const reserveTokens = await lendingContract.getAllReservesTokens();
-    const reserveTokenAddresses = reserveTokens.map(v => v[1].toLowerCase());
+    const reserveTokens = await lendingContract.read.getAllReservesTokens();
+    const reserveTokenAddresses = reserveTokens.map(v => v.tokenAddress.toLowerCase());
     const tokenAddresses = await Promise.all(
       reserveTokenAddresses.map(async reserveTokenAddress => {
-        const tokenAddresses = await lendingContract.getReserveTokensAddresses(reserveTokenAddress);
+        const tokenAddresses = await lendingContract.read.getReserveTokensAddresses([reserveTokenAddress]);
 
-        return [
-          tokenAddresses.aTokenAddress.toLowerCase(),
-          tokenAddresses.stableDebtTokenAddress.toLowerCase(),
-          tokenAddresses.variableDebtTokenAddress.toLowerCase(),
-        ];
+        return [tokenAddresses[0].toLowerCase(), tokenAddresses[1].toLowerCase(), tokenAddresses[2].toLowerCase()];
       }),
     );
 
     // Retrieve emissions for each token address
     const tokenAddressesFlat = tokenAddresses.flat();
-    const tokenEmissions = await Promise.all(
+    const tokenEmissionsPerSecond = await Promise.all(
       tokenAddressesFlat.map(async reserveTokenAddress => {
-        const assetDetails = await contract.assets(reserveTokenAddress);
-        return Number(assetDetails.emissionPerSecond);
+        const assetDetails = await contract.read.assets([reserveTokenAddress]);
+        return Number(assetDetails[0]);
       }),
     );
 
     // For assets earning non-zero emissions, retrieve claimable balances
-    const earningAddresses = tokenAddressesFlat.filter((_, i) => tokenEmissions[i] > 0);
-    const balanceRaw = await contract.getRewardsBalance(earningAddresses, address);
+    const earningAddresses = tokenAddressesFlat.filter((_, i) => tokenEmissionsPerSecond[i] > 0);
+    const balanceRaw = await contract.read.getRewardsBalance([earningAddresses, address]);
     return [balanceRaw];
   }
 }

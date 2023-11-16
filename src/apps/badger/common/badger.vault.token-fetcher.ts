@@ -10,7 +10,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { BadgerContractFactory, BadgerSett } from '../contracts';
+import { BadgerViemContractFactory } from '../contracts';
+import { BadgerSett } from '../contracts/viem';
 
 import { BadgerVaultTokenDefinitionsResolver } from './badger.vault.token-definition-resolver';
 
@@ -28,12 +29,12 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BadgerVaultTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: BadgerVaultTokenDefinitionsResolver,
-    @Inject(BadgerContractFactory) protected readonly contractFactory: BadgerContractFactory,
+    @Inject(BadgerViemContractFactory) protected readonly contractFactory: BadgerViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BadgerSett {
+  getContract(address: string) {
     return this.contractFactory.badgerSett({ network: this.network, address });
   }
 
@@ -57,8 +58,8 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
 
     const ratioRaw =
       contract.address === '0x4b92d19c11435614cd49af1b589001b7c08cd4d5'
-        ? await multicall.wrap(yVaultContract).pricePerShare()
-        : await multicall.wrap(contract).getPricePerFullShare();
+        ? await multicall.wrap(yVaultContract).read.pricePerShare()
+        : await multicall.wrap(contract).read.getPricePerFullShare();
 
     const ratio = Number(ratioRaw) / 10 ** decimals;
     return [ratio];
@@ -72,7 +73,7 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     if (contract.address === '0x7e7e112a68d8d2e221e11047a72ffc1065c38e1a') {
       // bDIGG is a rebalancing token, calculate its price based on the underlying balance of DIGG
       const settContract = this.contractFactory.badgerSett({ address: contract.address, network: appToken.network });
-      const contractDiggBalanceRaw = await multicall.wrap(settContract).balance();
+      const contractDiggBalanceRaw = await multicall.wrap(settContract).read.balance();
       const contractDiggBalance = Number(contractDiggBalanceRaw) / 10 ** appToken.tokens[0].decimals;
       price = (contractDiggBalance / appToken.supply) * appToken.tokens[0].price;
     }

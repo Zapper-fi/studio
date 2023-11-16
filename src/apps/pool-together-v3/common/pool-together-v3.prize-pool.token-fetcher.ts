@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Contract } from 'ethers';
 import { compact, sum } from 'lodash';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -12,7 +12,7 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
 
 export type PoolTogetherV3PrizePoolDefinition = DefaultAppTokenDefinition & {
   ticketAddress: string;
@@ -29,14 +29,14 @@ export type PoolTogetherV3PrizePoolDataProps = DefaultAppTokenDataProps & {
   faucetAddresses: string[];
 };
 
-export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Abi> extends AppTokenTemplatePositionFetcher<
   T,
   PoolTogetherV3PrizePoolDataProps,
   PoolTogetherV3PrizePoolDefinition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) protected readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) protected readonly contractFactory: PoolTogetherV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -63,13 +63,21 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
   }: GetDataPropsParams<T, PoolTogetherV3PrizePoolDataProps, PoolTogetherV3PrizePoolDefinition>) {
     const { tokenFaucets, sponsorshipAddress, ticketAddress } = definition;
 
-    const sponsorshipTokenContract = this.contractFactory.erc20({ address: sponsorshipAddress, network: this.network });
-    const ticketTokenContract = this.contractFactory.erc20({ address: ticketAddress, network: this.network });
+    const sponsorshipTokenContract = this.appToolkit.globalViemContracts.erc20({
+      address: sponsorshipAddress,
+      network: this.network,
+    });
+
+    const ticketTokenContract = this.appToolkit.globalViemContracts.erc20({
+      address: ticketAddress,
+      network: this.network,
+    });
+
     const [sponsorshipSupplyRaw, sponsorshipDecimals, ticketSupplyRaw, ticketDecimals] = await Promise.all([
-      sponsorshipTokenContract.totalSupply(),
-      sponsorshipTokenContract.decimals(),
-      ticketTokenContract.totalSupply(),
-      ticketTokenContract.decimals(),
+      sponsorshipTokenContract.read.totalSupply(),
+      sponsorshipTokenContract.read.decimals(),
+      ticketTokenContract.read.totalSupply(),
+      ticketTokenContract.read.decimals(),
     ]);
 
     const sponsorshipSupply = Number(sponsorshipSupplyRaw) / 10 ** sponsorshipDecimals;
@@ -86,16 +94,16 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
           address: tokenFaucetAddress,
           network: this.network,
         });
-        const assetContract = this.contractFactory.erc20({
+        const assetContract = this.appToolkit.globalViemContracts.erc20({
           address: assetAddress,
           network: this.network,
         });
 
         const [_dripRatePerSecond, totalUnclaimed, faucetBalance, decimals, tokenDependency] = await Promise.all([
-          multicall.wrap(tokenFaucetContract).dripRatePerSecond(),
-          multicall.wrap(tokenFaucetContract).totalUnclaimed(),
-          multicall.wrap(assetContract).balanceOf(tokenFaucetAddress),
-          multicall.wrap(assetContract).decimals(),
+          multicall.wrap(tokenFaucetContract).read.dripRatePerSecond(),
+          multicall.wrap(tokenFaucetContract).read.totalUnclaimed(),
+          multicall.wrap(assetContract).read.balanceOf([tokenFaucetAddress]),
+          multicall.wrap(assetContract).read.decimals(),
           tokenLoader.getOne({ address: assetAddress, network: this.network }),
         ]);
         const dripRatePerSecond = Number(_dripRatePerSecond) / 10 ** decimals;

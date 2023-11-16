@@ -12,7 +12,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
+import { OpenleverageViemContractFactory } from '../contracts';
+import { OpenleverageLpool } from '../contracts/viem';
 
 import { OpenleveragePoolAPYHelper } from './openleverage-pool.apy-helper';
 
@@ -37,7 +38,7 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(OpenleveragePoolAPYHelper)
     private readonly openleveragePoolAPYHelper: OpenleveragePoolAPYHelper,
-    @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
+    @Inject(OpenleverageViemContractFactory) protected readonly contractFactory: OpenleverageViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -56,11 +57,11 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OpenleverageLpool>) {
-    const exchangeRateCurrentRaw = await contract.exchangeRateStored();
+    const exchangeRateCurrentRaw = await contract.read.exchangeRateStored();
     const exchangeRate = Number(exchangeRateCurrentRaw) / 10 ** 18;
     return [exchangeRate];
   }

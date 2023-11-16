@@ -13,7 +13,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { SynthetixContractFactory, SynthetixSynthToken } from '../contracts';
+import { SynthetixViemContractFactory } from '../contracts';
+import { SynthetixSynthToken } from '../contracts/viem';
 
 type SynthetixSynthDataProps = DefaultAppTokenDataProps & {
   exchangeable: boolean;
@@ -30,12 +31,12 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(SynthetixViemContractFactory) protected readonly contractFactory: SynthetixViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixSynthToken {
+  getContract(address: string) {
     return this.contractFactory.synthetixSynthToken({ address, network: this.network });
   }
 
@@ -46,25 +47,25 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     });
 
     const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
-    const synthUtilAddress = await addressResolverContract.getAddress(synthUtilName);
+    const synthUtilAddress = await addressResolverContract.read.getAddress([synthUtilName]);
     const snxUtilsContract = this.contractFactory.synthetixSummaryUtil({
       address: synthUtilAddress,
       network: this.network,
     });
 
-    const synthRates = await snxUtilsContract.synthsRates();
+    const synthRates = await snxUtilsContract.read.synthsRates();
     const synthSymbolBytes = synthRates[0];
 
     const addresses = await Promise.all(
       synthSymbolBytes.map(async byte => {
-        const implAddressRaw = await multicall.wrap(addressResolverContract).getSynth(byte);
+        const implAddressRaw = await multicall.wrap(addressResolverContract).read.getSynth([byte]);
         const implAddress = implAddressRaw.toLowerCase();
         const implContract = this.contractFactory.synthetixNetworkToken({
           address: implAddress,
           network: this.network,
         });
 
-        const addressRaw = await multicall.wrap(implContract).proxy();
+        const addressRaw = await multicall.wrap(implContract).read.proxy();
         return addressRaw.toLowerCase();
       }),
     );
@@ -93,14 +94,14 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     });
 
     const synthExchangeRatesName = ethers.utils.formatBytes32String('ExchangeRates');
-    const synthExchangeRatesAddress = await addressResolverContract.getAddress(synthExchangeRatesName);
+    const synthExchangeRatesAddress = await addressResolverContract.read.getAddress([synthExchangeRatesName]);
     const synthExchangeRatesContract = this.contractFactory.synthetixExchangeRates({
       address: synthExchangeRatesAddress,
       network: this.network,
     });
 
-    const key = await contract.currencyKey();
-    const rate = await multicall.wrap(synthExchangeRatesContract).rateForCurrency(key);
+    const key = await contract.read.currencyKey();
+    const rate = await multicall.wrap(synthExchangeRatesContract).read.rateForCurrency([key]);
     const price = (Number(rate) * sUSDToken!.price) / 10 ** appToken.decimals;
     return price;
   }

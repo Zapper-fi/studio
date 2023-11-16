@@ -16,7 +16,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { OriginDollarGovernanceContractFactory, Veogv } from '../contracts';
+import { OriginDollarGovernanceViemContractFactory } from '../contracts';
+import { Veogv } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOriginDollarGovernanceVeOgvContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Veogv> {
@@ -24,13 +25,13 @@ export class EthereumOriginDollarGovernanceVeOgvContractPositionFetcher extends 
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarGovernanceContractFactory)
-    private readonly contractFactory: OriginDollarGovernanceContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Veogv {
+  getContract(address: string) {
     return this.contractFactory.veogv({ address, network: this.network });
   }
 
@@ -41,7 +42,7 @@ export class EthereumOriginDollarGovernanceVeOgvContractPositionFetcher extends 
   async getTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<Veogv>): Promise<UnderlyingTokenDefinition[] | null> {
-    const address = await contract.ogv();
+    const address = await contract.read.ogv();
     return [
       {
         address,
@@ -66,9 +67,9 @@ export class EthereumOriginDollarGovernanceVeOgvContractPositionFetcher extends 
   }: GetTokenBalancesParams<Veogv, DefaultDataProps>): Promise<BigNumberish[]> {
     const lockupsRaw = await Promise.all(
       range(0, 15).map(async index => {
-        const amount = await contract
-          .lockups(address, index)
-          .then(x => x.amount)
+        const amount = await contract.read
+          .lockups([address, BigInt(index)])
+          .then(x => x[0])
           .catch(() => null);
         return amount;
       }),
@@ -76,7 +77,7 @@ export class EthereumOriginDollarGovernanceVeOgvContractPositionFetcher extends 
     const lockups = compact(lockupsRaw);
     const locked = sum(lockups.map(x => Number(x)));
 
-    const rewardBalance = await contract.previewRewards(address);
+    const rewardBalance = await contract.read.previewRewards([address]);
     return [locked, rewardBalance];
   }
 }

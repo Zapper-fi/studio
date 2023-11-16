@@ -19,7 +19,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { LlamapayStreamApiClient } from '../common/llamapay.stream.api-client';
-import { LlamapayContractFactory, LlamapayVestingEscrow } from '../contracts';
+import { LlamapayViemContractFactory } from '../contracts';
+import { LlamapayVestingEscrow } from '../contracts/viem';
 
 export type LlamapayVestingEscrowContractPositionDefinition = {
   address: string;
@@ -36,7 +37,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamapayContractFactory) protected readonly contractFactory: LlamapayContractFactory,
+    @Inject(LlamapayViemContractFactory) protected readonly contractFactory: LlamapayViemContractFactory,
     @Inject(LlamapayStreamApiClient) protected readonly apiClient: LlamapayStreamApiClient,
   ) {
     super(appToolkit);
@@ -46,7 +47,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
     return this.apiClient.getTokens(this.subgraph);
   }
 
-  getContract(address: string): LlamapayVestingEscrow {
+  getContract(address: string) {
     return this.contractFactory.llamapayVestingEscrow({ address, network: this.network });
   }
 
@@ -76,7 +77,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const vestingEscrows = await this.apiClient.getVestingEscrows(address, this.subgraph);
     if (vestingEscrows.length === 0) return [];
 
@@ -101,13 +102,13 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
         const llamapay = multicall.wrap(llamapayContract);
 
         const [disabledAt, endTime, cliff] = await Promise.all([
-          llamapay.disabled_at(),
-          llamapay.end_time(),
-          llamapay.cliff_length(),
+          llamapay.read.disabled_at(),
+          llamapay.read.end_time(),
+          llamapay.read.cliff_length(),
         ]);
-        const lockedBalanceRaw = Number(disabledAt) > moment().unix() ? await llamapay.locked() : 0;
 
-        const claimableBalanceRaw = await llamapay.unclaimed();
+        const lockedBalanceRaw = Number(disabledAt) > moment().unix() ? await llamapay.read.locked() : 0;
+        const claimableBalanceRaw = await llamapay.read.unclaimed();
 
         const token = tokenDependencies.find(t => t.address === vestingEscrow.token.id);
         if (!token) return null;
@@ -120,7 +121,7 @@ export abstract class LlamapayVestingEscrowContractPositionFetcher extends Custo
         const balanceUSD = sumBy(tokenBalances, v => v.balanceUSD);
 
         const formattedEndTime = unix(Number(endTime)).format('LL');
-        const formattedCliff = cliff.toNumber() / duration(1, 'day').asSeconds();
+        const formattedCliff = Number(cliff) / duration(1, 'day').asSeconds();
 
         const statsItems = [
           {

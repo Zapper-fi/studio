@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { DopexContractFactory, DopexSingleRewardStaking } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexSingleRewardStaking } from '../contracts/viem';
 
 const FARMS = [
   // SUSHI DPX/WETH
@@ -28,12 +29,12 @@ export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFar
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DopexSingleRewardStaking {
+  getContract(address: string) {
     return this.contractFactory.dopexSingleRewardStaking({ address, network: this.network });
   }
 
@@ -42,18 +43,18 @@ export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFar
   }
 
   getRewardRates({ contract }: GetDataPropsParams<DopexSingleRewardStaking>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({ contract }: GetDataPropsParams<DopexSingleRewardStaking>): Promise<boolean> {
-    return contract.rewardRate().then(v => v.gt(0));
+    return contract.read.rewardRate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

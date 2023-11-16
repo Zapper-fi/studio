@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
-import { BigNumberish, Contract, ethers } from 'ethers';
+import { BigNumberish, ethers } from 'ethers';
 import { isArray, range } from 'lodash';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -17,7 +18,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { DopexContractFactory } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexDpxSsovContract } from '../contracts/viem/DopexDpxSsov';
 
 export type DopexSsovDefinition = {
   address: string;
@@ -39,9 +41,11 @@ export type DopexSsovEpochStrikeDefinition = {
   epoch: number;
 };
 
-export abstract class DopexSsovContractPositionFetcher<
-  T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<T, DopexSsovDataProps, DopexSsovEpochStrikeDefinition> {
+export abstract class DopexSsovContractPositionFetcher<T extends Abi> extends ContractPositionTemplatePositionFetcher<
+  T,
+  DopexSsovDataProps,
+  DopexSsovEpochStrikeDefinition
+> {
   abstract getSsovDefinitions(): DopexSsovDefinition[];
   abstract getTotalEpochStrikeDepositBalance(
     params: GetTokenBalancesParams<T, DopexSsovDataProps>,
@@ -52,7 +56,7 @@ export abstract class DopexSsovContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -64,15 +68,15 @@ export abstract class DopexSsovContractPositionFetcher<
       ssovDefinitions.map(async ({ address, depositTokenAddress, extraRewardTokenAddresses }) => {
         const _contract = this.contractFactory.dopexDpxSsov({ address, network: this.network });
         const contract = multicall.wrap(_contract);
-        const currentEpoch = Number(await contract.currentEpoch());
+        const currentEpoch = Number(await contract.read.currentEpoch());
 
         const nextEpoch = currentEpoch + 1;
-        const nextEpochStartTime = await contract.epochStartTimes(nextEpoch).then(Number);
+        const nextEpochStartTime = await contract.read.epochStartTimes([BigInt(nextEpoch)]).then(Number);
         const lastValidEpoch = nextEpochStartTime > 0 ? nextEpoch : currentEpoch;
 
         const definitions = await Promise.all(
           range(1, lastValidEpoch + 1).map(async epoch => {
-            const strikes = await contract.getEpochStrikes(epoch);
+            const strikes = await contract.read.getEpochStrikes([BigInt(epoch)]);
             return strikes.map(strike => ({
               address,
               depositTokenAddress,
@@ -128,9 +132,11 @@ export abstract class DopexSsovContractPositionFetcher<
     const strike = contractPosition.dataProps.strike;
 
     const userStrike = ethers.utils.solidityKeccak256(['address', 'uint256'], [address, strike]);
+    const castContract = contract as any as DopexDpxSsovContract;
+
     const [totalDepositBalanceRaw, userDepositBalanceRaw] = await Promise.all([
-      contract.totalEpochStrikeDeposits(epoch, strike),
-      contract.userEpochDeposits(epoch, userStrike),
+      castContract.read.totalEpochStrikeDeposits([BigInt(epoch), BigInt(strike)]),
+      castContract.read.userEpochDeposits([BigInt(epoch), userStrike]),
     ]);
 
     const share = Number(userDepositBalanceRaw) / Number(totalDepositBalanceRaw) || 0;
@@ -151,9 +157,10 @@ export abstract class DopexSsovContractPositionFetcher<
     const strike = contractPosition.dataProps.strike;
 
     const userStrike = ethers.utils.solidityKeccak256(['address', 'uint256'], [address, strike]);
+    const castContract = contract as any as DopexDpxSsovContract;
     const [totalDepositBalanceRaw, userDepositBalanceRaw] = await Promise.all([
-      contract.totalEpochStrikeDeposits(epoch, strike),
-      contract.userEpochDeposits(epoch, userStrike),
+      castContract.read.totalEpochStrikeDeposits([BigInt(epoch), BigInt(strike)]),
+      castContract.read.userEpochDeposits([BigInt(epoch), userStrike]),
     ]);
 
     const share = Number(userDepositBalanceRaw) / Number(totalDepositBalanceRaw) || 0;

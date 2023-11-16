@@ -10,8 +10,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { JonesDaoContractFactory } from '../contracts';
-import { JonesVault } from '../contracts/ethers/JonesVault';
+import { JonesDaoViemContractFactory } from '../contracts';
+import { JonesVault } from '../contracts/viem/JonesVault';
 
 export type JonesDaoVaultTokenDefinition = {
   address: string;
@@ -27,12 +27,12 @@ export class ArbitrumJonesDaoVaultTokenFetcher extends AppTokenTemplatePositionF
   groupLabel = 'Vaults';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JonesDaoContractFactory) protected readonly contractFactory: JonesDaoContractFactory,
+    @Inject(JonesDaoViemContractFactory) protected readonly contractFactory: JonesDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): JonesVault {
+  getContract(address: string) {
     return this.contractFactory.jonesVault({ network: this.network, address });
   }
 

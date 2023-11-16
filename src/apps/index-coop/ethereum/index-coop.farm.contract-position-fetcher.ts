@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { IndexCoopContractFactory, IndexCoopStaking } from '../contracts';
+import { IndexCoopViemContractFactory } from '../contracts';
+import { IndexCoopStaking } from '../contracts/viem';
 
 const FARMS = [
   // UNI-V2 DPI / ETH
@@ -38,12 +39,12 @@ export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IndexCoopContractFactory) protected readonly contractFactory: IndexCoopContractFactory,
+    @Inject(IndexCoopViemContractFactory) protected readonly contractFactory: IndexCoopViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IndexCoopStaking {
+  getContract(address: string) {
     return this.contractFactory.indexCoopStaking({ address, network: this.network });
   }
 
@@ -52,18 +53,18 @@ export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingF
   }
 
   getRewardRates({ contract }: GetDataPropsParams<IndexCoopStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<IndexCoopStaking, SingleStakingFarmDataProps>): Promise<boolean> {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<IndexCoopStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<IndexCoopStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc721 } from '~contract/contracts';
+import { Erc721 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -14,7 +14,7 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { SpiceFinanceContractFactory } from '../contracts';
+import { SpiceFinanceViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositionFetcher<Erc721> {
@@ -25,13 +25,14 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) public readonly appToolkit: IAppToolkit,
-    @Inject(SpiceFinanceContractFactory) private readonly spiceFinanceContractFactory: SpiceFinanceContractFactory,
+    @Inject(SpiceFinanceViemContractFactory)
+    private readonly spiceFinanceContractFactory: SpiceFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc721 {
-    return this.appToolkit.globalContracts.erc721({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc721({ address, network: this.network });
   }
 
   async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
@@ -55,7 +56,7 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
       address: this.vaultAddress,
       network: this.network,
     });
-    const reserveRaw = await vault.totalAssets();
+    const reserveRaw = await vault.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
     return liquidity;
@@ -66,7 +67,7 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
       address: this.vaultAddress,
       network: this.network,
     });
-    const reserveRaw = await vault.totalAssets();
+    const reserveRaw = await vault.read.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }

@@ -1,4 +1,5 @@
-import { CurveTricryptoFactory } from '../contracts';
+import { CurveTricryptoFactory } from '../contracts/viem';
+import { CurveTricryptoFactoryContract } from '../contracts/viem/CurveTricryptoFactory';
 
 import {
   CurvePoolGaugeV6ContractPositionFetcher,
@@ -8,19 +9,19 @@ import {
 } from './curve.pool-gauge-v6.contract-position-fetcher';
 
 export abstract class CurveTricryptoPoolGaugeContractPositionFetcher extends CurvePoolGaugeV6ContractPositionFetcher<CurveTricryptoFactory> {
-  resolveFactory(address: string): CurveTricryptoFactory {
+  resolveFactory(address: string): CurveTricryptoFactoryContract {
     return this.contractFactory.curveTricryptoFactory({ address, network: this.network });
   }
 
   async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveTricryptoFactory>) {
-    return contract.pool_count();
+    return contract.read.pool_count();
   }
 
   async resolveTokenAddress({ contract, poolIndex }: ResolveTokenAddressParams<CurveTricryptoFactory>) {
-    return contract.pool_list(poolIndex);
+    return contract.read.pool_list([BigInt(poolIndex)]);
   }
 
   async resolveGaugeAddress({ contract, tokenAddress }: ResolveGaugeAddressParams<CurveTricryptoFactory>) {
-    return contract.get_gauge(tokenAddress);
+    return contract.read.get_gauge([tokenAddress]);
   }
 }

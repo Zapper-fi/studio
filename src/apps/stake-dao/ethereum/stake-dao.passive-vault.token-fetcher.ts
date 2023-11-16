@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { StakeDaoContractFactory } from '../contracts';
-import { StakeDaoPassiveVault } from '../contracts/ethers/StakeDaoPassiveVault';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoPassiveVault } from '../contracts/viem/StakeDaoPassiveVault';
 
 @PositionTemplate()
 export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePositionFetcher<StakeDaoPassiveVault> {
@@ -14,12 +14,12 @@ export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoPassiveVault {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoPassiveVault({ address, network: this.network });
   }
 
@@ -34,11 +34,11 @@ export class EthereumStakeDaoPassiveVaultTokenFetcher extends AppTokenTemplatePo
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StakeDaoPassiveVault>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<StakeDaoPassiveVault>) {
-    const pricePerShareRaw = await contract.getPricePerFullShare();
+    const pricePerShareRaw = await contract.read.getPricePerFullShare();
 
     return [Number(pricePerShareRaw) / 10 ** appToken.decimals];
   }

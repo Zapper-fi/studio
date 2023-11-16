@@ -6,7 +6,8 @@ import { GetTokenBalancesParams } from '~position/template/contract-position.tem
 import { SingleStakingFarmDataProps } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { BottoContractFactory, BottoGovernance } from '../contracts';
+import { BottoViemContractFactory } from '../contracts';
+import { BottoGovernance } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<BottoGovernance> {
@@ -14,7 +15,7 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BottoContractFactory) protected readonly contractFactory: BottoContractFactory,
+    @Inject(BottoViemContractFactory) protected readonly contractFactory: BottoViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -29,7 +30,7 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
     ];
   }
 
-  getContract(address: string): BottoGovernance {
+  getContract(address: string) {
     return this.contractFactory.bottoGovernance({ address, network: this.network });
   }
 
@@ -41,7 +42,7 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
     address,
     contract,
   }: GetTokenBalancesParams<BottoGovernance, SingleStakingFarmDataProps>) {
-    return contract.userStakes(address);
+    return contract.read.userStakes([address]);
   }
 
   async getRewardTokenBalances() {

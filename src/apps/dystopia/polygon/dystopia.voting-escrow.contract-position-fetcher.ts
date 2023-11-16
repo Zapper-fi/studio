@@ -6,7 +6,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { DystopiaContractFactory, DystopiaVe } from '../contracts';
+import { DystopiaViemContractFactory } from '../contracts';
+import { DystopiaVe } from '../contracts/viem';
+import { DystopiaVeContract } from '../contracts/viem/DystopiaVe';
 
 @PositionTemplate()
 export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<DystopiaVe> {
@@ -15,26 +17,26 @@ export class PolygonDystopiaVotingEscrowContractPositionFetcher extends VotingEs
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DystopiaContractFactory) protected readonly contractFactory: DystopiaContractFactory,
+    @Inject(DystopiaViemContractFactory) protected readonly contractFactory: DystopiaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): DystopiaVe {
+  getEscrowContract(address: string): DystopiaVeContract {
     return this.contractFactory.dystopiaVe({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<DystopiaVe>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<DystopiaVe>) {
-    const veCount = Number(await contract.balanceOf(address));
+    const veCount = Number(await contract.read.balanceOf([address]));
 
     const balances = await Promise.all(
       range(veCount).map(async i => {
-        const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-        const balance = await contract.balanceOfNFT(tokenId);
+        const tokenId = await contract.read.tokenOfOwnerByIndex([address, BigInt(i)]);
+        const balance = await contract.read.balanceOfNFT([tokenId]);
         return Number(balance);
       }),
     );

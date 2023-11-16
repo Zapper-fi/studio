@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { LiquityContractFactory, StabilityPool } from '../contracts';
+import { LiquityViemContractFactory } from '../contracts';
+import { StabilityPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLiquityStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StabilityPool> {
@@ -20,12 +21,12 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory) protected readonly contractFactory: LiquityContractFactory,
+    @Inject(LiquityViemContractFactory) protected readonly contractFactory: LiquityViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StabilityPool {
+  getContract(address: string) {
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 
@@ -59,9 +60,9 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
 
   getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StabilityPool>) {
     return Promise.all([
-      contract.getCompoundedLUSDDeposit(address),
-      contract.getDepositorETHGain(address),
-      contract.getDepositorLQTYGain(address),
+      contract.read.getCompoundedLUSDDeposit([address]),
+      contract.read.getDepositorETHGain([address]),
+      contract.read.getDepositorLQTYGain([address]),
     ]);
   }
 }

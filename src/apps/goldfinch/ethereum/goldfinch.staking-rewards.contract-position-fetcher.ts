@@ -18,7 +18,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { GoldfinchContractFactory, GoldfinchStakingRewards } from '../contracts';
+import { GoldfinchViemContractFactory } from '../contracts';
+import { GoldfinchStakingRewards } from '../contracts/viem';
 
 export type GoldfinchStakingRewardsDataProps = {
   assetStandard: Standard;
@@ -39,12 +40,12 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GoldfinchContractFactory) protected readonly contractFactory: GoldfinchContractFactory,
+    @Inject(GoldfinchViemContractFactory) protected readonly contractFactory: GoldfinchViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): GoldfinchStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.goldfinchStakingRewards({ address, network: this.network });
   }
 
@@ -105,7 +106,7 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
     const GFI = '0xdab396ccf3d84cf2d07c4454e10c8a6f5b008d2b';
     const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
     const CURVE_FIDU_USDC = '0x42ec68ca5c2c80036044f3eead675447ab3a8065';
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<GoldfinchStakingRewardsDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],
@@ -122,11 +123,11 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
       address: fiduPosition.address,
       network: this.network,
     });
-    const balanceRaw = await multicall.wrap(stakingRewardsContract).balanceOf(address);
+    const balanceRaw = await multicall.wrap(stakingRewardsContract).read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
-    const claimableGFI = await multicall.wrap(stakingRewardsContract).totalOptimisticClaimable(address);
+    const claimableGFI = await multicall.wrap(stakingRewardsContract).read.totalOptimisticClaimable([address]);
     const claimableGFITokens = [drillBalance(gfiPosition.tokens[1], claimableGFI.toString())];
     const claimableGFIBalanceUSD = sumBy(claimableGFITokens, v => v.balanceUSD);
     const claimableGFIContractPositionBalance = {
@@ -141,14 +142,17 @@ export class EthereumGoldfinchStakingRewardsContractPositionFetcher extends Cust
     // Loop through all the user's positions, and sum up the total number of FIDU & CurveLP tokens
     await Promise.all(
       range(0, balance).map(async i => {
-        const tokenId = await multicall.wrap(stakingRewardsContract).tokenOfOwnerByIndex(address, i);
-        const positionData = await multicall.wrap(stakingRewardsContract).positions(tokenId);
-        if (positionData.positionType !== 0 && positionData.positionType !== 1) return null;
+        const tokenId = await multicall.wrap(stakingRewardsContract).read.tokenOfOwnerByIndex([address, BigInt(i)]);
+        const positionData = await multicall.wrap(stakingRewardsContract).read.positions([tokenId]);
+        const amount = positionData[0];
+        const positionType = positionData[4];
 
-        if (positionData.positionType === 1) {
-          sumOfCurveTotalTokens = sumOfCurveTotalTokens.plus(positionData.amount.toString());
-        } else if (positionData.positionType === 0) {
-          sumOfFiduTotalTokens = sumOfFiduTotalTokens.plus(positionData.amount.toString());
+        if (positionType !== 0 && positionType !== 1) return null;
+
+        if (positionType === 1) {
+          sumOfCurveTotalTokens = sumOfCurveTotalTokens.plus(amount.toString());
+        } else if (positionType === 0) {
+          sumOfFiduTotalTokens = sumOfFiduTotalTokens.plus(amount.toString());
         }
       }),
     );

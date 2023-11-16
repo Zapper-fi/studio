@@ -10,8 +10,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
-import { UmamiFinanceCompound, UmamiFinanceContractFactory } from '../contracts';
+import { UmamiFinanceViemContractFactory } from '../contracts';
+import { UmamiFinanceCompound } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePositionFetcher<UmamiFinanceCompound> {
@@ -19,14 +19,12 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceYieldResolver)
-    private readonly yieldResolver: UmamiFinanceYieldResolver,
-    @Inject(UmamiFinanceContractFactory) protected readonly contractFactory: UmamiFinanceContractFactory,
+    @Inject(UmamiFinanceViemContractFactory) protected readonly contractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): UmamiFinanceCompound {
+  getContract(address: string) {
     return this.contractFactory.umamiFinanceCompound({ network: this.network, address });
   }
 
@@ -44,7 +42,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
       network: this.network,
     });
 
-    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const balanceRaw = await underlyingTokenContract.read.balanceOf([appToken.address]);
     const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];
@@ -56,14 +54,9 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
       network: this.network,
     });
 
-    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const balanceRaw = await underlyingTokenContract.read.balanceOf([appToken.address]);
     const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
     return [reserve];
-  }
-
-  async getApy(_params: GetDataPropsParams<UmamiFinanceCompound>) {
-    const { apy } = await this.yieldResolver.getStakingYield();
-    return Number(apy);
   }
 
   async getImages({ appToken }: GetDisplayPropsParams<UmamiFinanceCompound>): Promise<string[]> {

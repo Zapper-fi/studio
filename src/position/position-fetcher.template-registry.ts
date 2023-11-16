@@ -2,7 +2,7 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 import { uniq } from 'lodash';
 
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { Network } from '~types/network.interface';
 import { buildTemplateRegistry } from '~utils/build-template-registry';
 

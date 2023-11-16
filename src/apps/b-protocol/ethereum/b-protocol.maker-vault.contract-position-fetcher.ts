@@ -4,7 +4,8 @@ import { ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { MakerContractFactory, MakerGemJoin } from '~apps/maker/contracts';
+import { MakerViemContractFactory } from '~apps/maker/contracts';
+import { MakerGemJoin } from '~apps/maker/contracts/viem';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -15,7 +16,7 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { BProtocolContractFactory } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
 
 export type BProtocolVaultDefinition = {
   address: string;
@@ -49,13 +50,13 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MakerContractFactory) protected readonly makerContractFactory: MakerContractFactory,
-    @Inject(BProtocolContractFactory) protected readonly bProtocolContractFactory: BProtocolContractFactory,
+    @Inject(MakerViemContractFactory) protected readonly makerContractFactory: MakerViemContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly bProtocolContractFactory: BProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MakerGemJoin {
+  getContract(address: string) {
     return this.makerContractFactory.makerGemJoin({ address, network: this.network });
   }
 
@@ -76,8 +77,8 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
     const definitions = await Promise.all(
       supportedIlks.map(async ilk => {
         const [gem, join] = await Promise.all([
-          multicall.wrap(ilkRegContract).gem(ilk),
-          multicall.wrap(ilkRegContract).join(ilk),
+          multicall.wrap(ilkRegContract).read.gem([ilk]),
+          multicall.wrap(ilkRegContract).read.join([ilk]),
         ]);
 
         const ilkName = ethers.utils.parseBytes32String(ilk);
@@ -120,9 +121,9 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
       network: this.network,
     });
 
-    const userInfo = await multicall
+    const { result: userInfo } = await multicall
       .wrap(infoContract)
-      .callStatic.getInfo(
+      .simulate.getInfo([
         address,
         contractPosition.dataProps.ilk,
         this.BCDP_MANGER,
@@ -132,7 +133,7 @@ export class EthereumBProtocolMakerVaultContractPositionFetcher extends Contract
         this.MCD_SPOT,
         this.PROXY_REGISTRY,
         this.JAR,
-      );
+      ]);
 
     const debt = userInfo.bCdpInfo.daiDebt.toString();
     const collateral = new BigNumber(userInfo.bCdpInfo.ethDeposit.toString())

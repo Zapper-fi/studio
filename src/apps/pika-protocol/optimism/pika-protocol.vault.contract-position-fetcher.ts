@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -12,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PikaProtocolContractFactory, PikaProtocolVault } from '../contracts';
+import { PikaProtocolViemContractFactory } from '../contracts';
+import { PikaProtocolVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolVault> {
@@ -20,12 +22,12 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolContractFactory) protected readonly contractFactory: PikaProtocolContractFactory,
+    @Inject(PikaProtocolViemContractFactory) protected readonly contractFactory: PikaProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PikaProtocolVault {
+  getContract(address: string) {
     return this.contractFactory.pikaProtocolVault({ address, network: this.network });
   }
 
@@ -53,16 +55,16 @@ export class OptimismPikaProtocolVaultContractPositionFetcher extends ContractPo
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PikaProtocolVault>) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const rewardContract = this.contractFactory.pikaProtocolVaultReward({
       address: '0x58488bb666d2da33f8e8938dbdd582d2481d4183',
       network: this.network,
     });
     const [stakedBalanceRaw, rewardBalance] = await Promise.all([
-      contract.getShareBalance(address),
-      multicall.wrap(rewardContract).getClaimableReward(address),
+      contract.read.getShareBalance([address]),
+      multicall.wrap(rewardContract).read.getClaimableReward([address]),
     ]);
-    const stakedBalance = stakedBalanceRaw.div(100);
+    const stakedBalance = BigNumber.from(stakedBalanceRaw).div(100);
     return [stakedBalance, rewardBalance];
   }
 }

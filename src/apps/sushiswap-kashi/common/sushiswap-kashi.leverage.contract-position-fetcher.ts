@@ -11,7 +11,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { SushiswapKashiContractFactory, SushiswapKashiLendingToken } from '../contracts';
+import { SushiswapKashiViemContractFactory } from '../contracts';
+import { SushiswapKashiLendingToken } from '../contracts/viem';
 
 export type SushiswapKashiLeverageDefinition = {
   address: string;
@@ -28,12 +29,12 @@ export class SushiswapKashiLeverageContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SushiswapKashiContractFactory) protected readonly contractFactory: SushiswapKashiContractFactory,
+    @Inject(SushiswapKashiViemContractFactory) protected readonly contractFactory: SushiswapKashiViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SushiswapKashiLendingToken {
+  getContract(address: string) {
     return this.contractFactory.sushiswapKashiLendingToken({ address, network: this.network });
   }
 
@@ -76,8 +77,8 @@ export class SushiswapKashiLeverageContractPositionFetcher extends ContractPosit
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SushiswapKashiLendingToken>) {
     const [debtBalanceRaw, collateralBalanceRaw] = await Promise.all([
-      contract.userBorrowPart(address),
-      contract.userCollateralShare(address),
+      contract.read.userBorrowPart([address]),
+      contract.read.userCollateralShare([address]),
     ]);
 
     return [debtBalanceRaw, collateralBalanceRaw];

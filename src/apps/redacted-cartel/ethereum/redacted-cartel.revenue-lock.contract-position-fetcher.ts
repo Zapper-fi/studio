@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -19,7 +19,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { RedactedEarningsResolver } from '../common/redacted.earnings-resolver';
-import { RedactedCartelContractFactory, RedactedRevenueLock } from '../contracts';
+import { RedactedCartelViemContractFactory } from '../contracts';
+import { RedactedRevenueLock } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedRevenueLock> {
@@ -29,13 +30,13 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RedactedCartelContractFactory) protected readonly contractFactory: RedactedCartelContractFactory,
+    @Inject(RedactedCartelViemContractFactory) protected readonly contractFactory: RedactedCartelViemContractFactory,
     @Inject(RedactedEarningsResolver) protected readonly earningsResolver: RedactedEarningsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RedactedRevenueLock {
+  getContract(address: string) {
     return this.contractFactory.redactedRevenueLock({ address, network: this.network });
   }
 
@@ -44,7 +45,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
   }
 
   async getTokenDefinitions(
-    _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
+    _params: GetTokenDefinitionsParams<RedactedRevenueLock, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return [
       {
@@ -72,7 +73,7 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
 
   async getLabel({
     contractPosition,
-  }: GetDisplayPropsParams<Contract, DefaultDataProps, DefaultContractPositionDefinition>): Promise<string> {
+  }: GetDisplayPropsParams<RedactedRevenueLock, DefaultDataProps, DefaultContractPositionDefinition>): Promise<string> {
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     return `Voting Escrow ${getLabelFromToken(suppliedToken)}`;
   }
@@ -80,8 +81,8 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
-    const { total } = await contract.lockedBalances(address);
+  }: GetTokenBalancesParams<RedactedRevenueLock, DefaultDataProps>): Promise<BigNumberish[]> {
+    const [total] = await contract.read.lockedBalances([address]);
 
     const [claimableBTRFLY, claimableETH, claimableWETH] = await this.earningsResolver.getClaimableAmount(
       address,

@@ -4,39 +4,50 @@ import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
-import { MorphoAaveV3, MorphoAToken, MorphoContractFactory, Pool } from '~apps/morpho/contracts';
+import {
+  MorphoContractPositionDataProps,
+  MorphoContractPositionDefinition,
+  MorphoSupplyContractPositionFetcher,
+} from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
+import { MorphoAaveV3 } from '~apps/morpho/contracts/viem';
 import { MorphoAaveMath, SECONDS_PER_YEAR } from '~apps/morpho/utils/AaveV3.maths';
 import P2PInterestRates from '~apps/morpho/utils/P2PInterestRates';
-import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
+
+import { MorphoViemContractFactory } from '../contracts';
+import { PoolContract } from '../contracts/viem/Pool';
 
 @PositionTemplate()
 export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSupplyContractPositionFetcher<MorphoAaveV3> {
   groupLabel = 'Morpho AaveV3';
   __IRM__ = new P2PInterestRates();
   __MATH__ = new MorphoAaveMath();
-  pool: Pool | null = null;
+  pool: PoolContract | null = null;
 
   morphoAddress = '0x33333aea097c193e66081e930c33020272b33333';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
+    @Inject(MorphoViemContractFactory) protected readonly contractFactory: MorphoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
   getContract(address: string) {
-    return this.contractFactory.morphoAaveV3({ address, network: this.network }) as MorphoAaveV3;
+    return this.contractFactory.morphoAaveV3({ address, network: this.network });
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
     const morphoAaveV3 = this.contractFactory.morphoAaveV3({ address: this.morphoAddress, network: this.network });
-
     const morpho = multicall.wrap(morphoAaveV3);
-    const [markets, pool] = await Promise.all([morpho.marketsCreated(), morpho.pool()]);
 
-    this.pool = multicall.wrap(this.contractFactory.pool({ address: pool, network: this.network })) as Pool;
+    const [markets, pool] = await Promise.all([morpho.read.marketsCreated(), morpho.read.pool()]);
+    this.pool = multicall.wrap(this.contractFactory.pool({ address: pool, network: this.network }));
+
     // Morpho AaveV3 uses underlyings as markets identifiers
     // @notice The function type forces to return a Promise
     return Promise.all(
@@ -49,10 +60,15 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
     );
   }
 
-  async getDataProps({ contractPosition, multicall, definition: { marketAddress } }) {
+  async getDataProps({
+    contractPosition,
+    multicall,
+    definition: { marketAddress },
+  }: GetDataPropsParams<MorphoAaveV3, MorphoContractPositionDataProps, MorphoContractPositionDefinition>) {
     const morpho = multicall.wrap(
       this.contractFactory.morphoAaveV3({ address: this.morphoAddress, network: this.network }),
-    ) as MorphoAaveV3;
+    );
+
     const [
       {
         idleSupply,
@@ -65,40 +81,46 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
         pauseStatuses: { isP2PDisabled },
       },
       { currentLiquidityRate, currentVariableBorrowRate, liquidityIndex, variableBorrowIndex },
-    ] = await Promise.all([morpho.market(marketAddress), this.pool!.getReserveData(marketAddress)]);
+    ] = await Promise.all([morpho.read.market([marketAddress]), this.pool!.read.getReserveData([marketAddress])]);
 
-    const aToken = multicall.wrap(
-      this.contractFactory.morphoAToken({ address: aTokenAddress, network: this.network }),
-    ) as MorphoAToken;
+    const aToken = multicall.wrap(this.contractFactory.morphoAToken({ address: aTokenAddress, network: this.network }));
     const variableDebtToken = multicall.wrap(
       this.contractFactory.morphoAToken({ address: variableDebtTokenAddress, network: this.network }),
     );
 
     const [supplyOnPool, borrowOnPool] = await Promise.all([
-      aToken.balanceOf(this.morphoAddress),
-      variableDebtToken.balanceOf(this.morphoAddress),
+      aToken.read.balanceOf([this.morphoAddress]),
+      variableDebtToken.read.balanceOf([this.morphoAddress]),
     ]);
+
     const minBN = (a: BigNumber, b: BigNumber) => (a.lt(b) ? a : b);
-    const proportionIdle = idleSupply.isZero()
-      ? constants.Zero
-      : minBN(
-          // To avoid proportionIdle > 1 with rounding errors
-          this.__MATH__.ONE,
-          this.__MATH__.indexDiv(
-            idleSupply,
-            this.__MATH__.indexMul(deltas.supply.scaledP2PTotal, indexes.supply.p2pIndex),
-          ),
-        );
+    const proportionIdle =
+      idleSupply === BigInt(0)
+        ? constants.Zero
+        : minBN(
+            // To avoid proportionIdle > 1 with rounding errors
+            this.__MATH__.ONE,
+            this.__MATH__.indexDiv(
+              idleSupply,
+              this.__MATH__.indexMul(deltas.supply.scaledP2PTotal, indexes.supply.p2pIndex),
+            ),
+          );
 
     const { newP2PSupplyIndex, newP2PBorrowIndex } = this.__IRM__.computeP2PIndexes({
       deltas,
       proportionIdle,
       p2pIndexCursor: BigNumber.from(p2pIndexCursor),
       reserveFactor: BigNumber.from(reserveFactor),
-      lastBorrowIndexes: indexes.borrow,
-      lastSupplyIndexes: indexes.supply,
-      poolBorrowIndex: variableBorrowIndex,
-      poolSupplyIndex: liquidityIndex,
+      lastBorrowIndexes: {
+        poolIndex: BigNumber.from(indexes.borrow.poolIndex),
+        p2pIndex: BigNumber.from(indexes.borrow.p2pIndex),
+      },
+      lastSupplyIndexes: {
+        poolIndex: BigNumber.from(indexes.supply.poolIndex),
+        p2pIndex: BigNumber.from(indexes.supply.p2pIndex),
+      },
+      poolBorrowIndex: BigNumber.from(variableBorrowIndex),
+      poolSupplyIndex: BigNumber.from(liquidityIndex),
     });
 
     const supplyInP2P = this.__MATH__.indexMul(deltas.supply.scaledP2PTotal, newP2PSupplyIndex);
@@ -113,15 +135,16 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
       p2pIndexCursor: BigNumber.from(p2pIndexCursor),
       reserveFactor: BigNumber.from(reserveFactor),
       delta: deltas.supply,
-      poolBorrowRatePerYear: currentVariableBorrowRate,
-      poolSupplyRatePerYear: currentLiquidityRate,
-      poolIndex: liquidityIndex,
+      poolBorrowRatePerYear: BigNumber.from(currentVariableBorrowRate),
+      poolSupplyRatePerYear: BigNumber.from(currentLiquidityRate),
+      poolIndex: BigNumber.from(liquidityIndex),
     });
+
     const p2pBorrowRate = this.__IRM__.computeP2PBorrowRatePerYear({
       p2pIndex: newP2PBorrowIndex,
-      poolSupplyRatePerYear: currentLiquidityRate,
-      poolIndex: variableBorrowIndex,
-      poolBorrowRatePerYear: currentVariableBorrowRate,
+      poolSupplyRatePerYear: BigNumber.from(currentLiquidityRate),
+      poolIndex: BigNumber.from(variableBorrowIndex),
+      poolBorrowRatePerYear: BigNumber.from(currentVariableBorrowRate),
       delta: deltas.borrow,
       reserveFactor: BigNumber.from(reserveFactor),
       p2pIndexCursor: BigNumber.from(p2pIndexCursor),
@@ -129,11 +152,14 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
     });
 
     const supplyRate = totalSupply.isZero()
-      ? currentLiquidityRate
-      : p2pSupplyRate.mul(supplyInP2P).add(currentLiquidityRate.mul(supplyOnPool)).div(totalSupply);
+      ? BigNumber.from(currentLiquidityRate)
+      : p2pSupplyRate.mul(supplyInP2P).add(BigNumber.from(currentLiquidityRate).mul(supplyOnPool)).div(totalSupply);
     const borrowRate = totalBorrow.isZero()
-      ? currentVariableBorrowRate
-      : p2pBorrowRate.mul(borrowInP2P).add(currentVariableBorrowRate.mul(borrowOnPool)).div(totalBorrow);
+      ? BigNumber.from(currentVariableBorrowRate)
+      : p2pBorrowRate
+          .mul(borrowInP2P)
+          .add(BigNumber.from(currentVariableBorrowRate).mul(borrowOnPool))
+          .div(totalBorrow);
 
     const supplyApy = Math.pow(1 + +formatUnits(supplyRate.div(SECONDS_PER_YEAR), 27), SECONDS_PER_YEAR) - 1;
     const borrowApy = Math.pow(1 + +formatUnits(borrowRate.div(SECONDS_PER_YEAR), 27), SECONDS_PER_YEAR) - 1;
@@ -160,14 +186,19 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
     };
   }
 
-  async getTokenBalancesPerPosition({ address, contractPosition, multicall }): Promise<BigNumber[]> {
-    const morpho = multicall.wrap(this.getContract(this.morphoAddress)) as MorphoAaveV3;
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    multicall,
+  }: GetTokenBalancesParams<MorphoAaveV3, MorphoContractPositionDataProps>) {
+    const morpho = multicall.wrap(this.getContract(this.morphoAddress));
 
     const [supplyBalance, collateralBalance, borrowBalance] = await Promise.all([
-      morpho.supplyBalance(contractPosition.dataProps.marketAddress, address),
-      morpho.collateralBalance(contractPosition.dataProps.marketAddress, address),
-      morpho.borrowBalance(contractPosition.dataProps.marketAddress, address),
+      morpho.read.supplyBalance([contractPosition.dataProps.marketAddress, address]),
+      morpho.read.collateralBalance([contractPosition.dataProps.marketAddress, address]),
+      morpho.read.borrowBalance([contractPosition.dataProps.marketAddress, address]),
     ]);
-    return [supplyBalance.add(collateralBalance), borrowBalance];
+
+    return [BigNumber.from(supplyBalance).add(collateralBalance), BigNumber.from(borrowBalance)];
   }
 }

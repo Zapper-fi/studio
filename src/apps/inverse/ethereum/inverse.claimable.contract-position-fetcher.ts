@@ -9,8 +9,9 @@ import {
 } from '~apps/compound/common/compound.claimable.contract-position-fetcher';
 import { ContractPosition } from '~position/position.interface';
 
-import { InverseContractFactory, InverseController } from '../contracts';
-import { InverseLens } from '../contracts/ethers/InverseLens';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseController } from '../contracts/viem';
+import { InverseLens, InverseLensContract } from '../contracts/viem/InverseLens';
 
 @PositionTemplate()
 export class EthereumInverseClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
@@ -25,16 +26,16 @@ export class EthereumInverseClaimableContractPositionFetcher extends CompoundCla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getCompoundComptrollerContract(address: string): InverseController {
+  getCompoundComptrollerContract(address: string) {
     return this.contractFactory.inverseController({ address, network: this.network });
   }
 
-  getCompoundLensContract(address: string): InverseLens {
+  getCompoundLensContract(address: string) {
     return this.contractFactory.inverseLens({ address, network: this.network });
   }
 
@@ -43,16 +44,19 @@ export class EthereumInverseClaimableContractPositionFetcher extends CompoundCla
     {
       contract,
       contractPosition,
-    }: { contract: InverseLens; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
+    }: {
+      contract: InverseLensContract;
+      contractPosition: ContractPosition<CompoundClaimablePositionDataProps>;
+    },
   ): Promise<BigNumberish> {
     const [rewardToken] = contractPosition.tokens;
     const { address: comptrollerAddress } = contractPosition;
 
-    const rewardMetadata = await contract.callStatic.getCompBalanceMetadataExt(
+    const { result: rewardMetadata } = await contract.simulate.getCompBalanceMetadataExt([
       rewardToken.address,
       comptrollerAddress,
       address,
-    );
+    ]);
 
     return rewardMetadata[3];
   }

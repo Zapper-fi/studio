@@ -20,7 +20,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { PendleContractFactory, PendleOwnershipToken } from '../contracts';
+import { PendleViemContractFactory } from '../contracts';
+import { PendleOwnershipToken } from '../contracts/viem';
 
 export type PendleOwnershipTokenDataProps = DefaultAppTokenDataProps & {
   expiry: number;
@@ -52,23 +53,23 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleContractFactory) protected readonly contractFactory: PendleContractFactory,
+    @Inject(PendleViemContractFactory) protected readonly contractFactory: PendleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleOwnershipTokenDefinition[]> {
     const pendleData = this.contractFactory.pendleData({ address: this.pendleDataAddress, network: this.network });
-    const numMarkets = await multicall.wrap(pendleData).allMarketsLength();
+    const numMarkets = await multicall.wrap(pendleData).read.allMarketsLength();
 
     const definitions = await Promise.all(
       range(0, Number(numMarkets)).map(async i => {
-        const marketAddress = await pendleData.allMarkets(i);
+        const marketAddress = await pendleData.read.allMarkets([BigInt(i)]);
         const market = this.contractFactory.pendleMarket({ address: marketAddress, network: this.network });
         const [baseTokenAddress, yieldTokenAddress, expiryRaw] = await Promise.all([
-          multicall.wrap(market).token(),
-          multicall.wrap(market).xyt(),
-          multicall.wrap(market).expiry(),
+          multicall.wrap(market).read.token(),
+          multicall.wrap(market).read.xyt(),
+          multicall.wrap(market).read.expiry(),
         ]);
 
         const expiry = Number(expiryRaw);
@@ -77,14 +78,16 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
           network: this.network,
         });
         const [underlyingAddress, underlyingYieldAddress, forgeAddress] = await Promise.all([
-          multicall.wrap(yieldToken).underlyingAsset(),
-          multicall.wrap(yieldToken).underlyingYieldToken(),
-          multicall.wrap(yieldToken).forge(),
+          multicall.wrap(yieldToken).read.underlyingAsset(),
+          multicall.wrap(yieldToken).read.underlyingYieldToken(),
+          multicall.wrap(yieldToken).read.forge(),
         ]);
 
         const forge = this.contractFactory.pendleForge({ address: forgeAddress, network: this.network });
-        const forgeId = await multicall.wrap(forge).forgeId();
-        const ownershipTokenAddress = await multicall.wrap(pendleData).otTokens(forgeId, underlyingAddress, expiry);
+        const forgeId = await multicall.wrap(forge).read.forgeId();
+        const ownershipTokenAddress = await multicall
+          .wrap(pendleData)
+          .read.otTokens([forgeId, underlyingAddress, BigInt(expiry)]);
 
         return {
           address: ownershipTokenAddress.toLowerCase(),
@@ -112,7 +115,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
-    return [{ address: await contract.underlyingYieldToken(), network: this.network }];
+    return [{ address: await contract.read.underlyingYieldToken(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -130,16 +133,17 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
       network: this.network,
     });
 
-    const pairAddress = await multicall.wrap(dexFactory).getPair(appToken.address, baseTokenAddress);
+    const pairAddress = await multicall.wrap(dexFactory).read.getPair([appToken.address, baseTokenAddress]);
     if (pairAddress === ZERO_ADDRESS) return [0];
 
     const pair = this.contractFactory.pendleDexPair({ address: pairAddress, network: this.network });
-    const [token0, reserves] = await Promise.all([multicall.wrap(pair).token0(), multicall.wrap(pair).getReserves()]);
+    const [token0, reserves] = await Promise.all([
+      multicall.wrap(pair).read.token0(),
+      multicall.wrap(pair).read.getReserves(),
+    ]);
 
     const [baseReserve, otReserve] =
-      token0.toLowerCase() === baseTokenAddress
-        ? [reserves._reserve0, reserves._reserve1]
-        : [reserves._reserve1, reserves._reserve0];
+      token0.toLowerCase() === baseTokenAddress ? [reserves[0], reserves[1]] : [reserves[1], reserves[0]];
 
     const otPrice = new BigNumber(baseToken.price)
       .multipliedBy(Number(baseReserve) / 10 ** baseToken.decimals)

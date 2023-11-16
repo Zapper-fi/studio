@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
+import { UmamiFinanceViemContractFactory } from '../contracts';
+import { UmamiFinanceMarinate } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends ContractPositionTemplatePositionFetcher<UmamiFinanceMarinate> {
@@ -20,12 +21,12 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceContractFactory) protected readonly contractFactory: UmamiFinanceContractFactory,
+    @Inject(UmamiFinanceViemContractFactory) protected readonly contractFactory: UmamiFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): UmamiFinanceMarinate {
+  getContract(address: string) {
     return this.contractFactory.umamiFinanceMarinate({ address, network: this.network });
   }
 
@@ -60,8 +61,8 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
     const rewardToken = contractPosition.tokens[1];
 
     const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.getAvailableTokenRewards(address, rewardToken.address),
+      contract.read.balanceOf([address]),
+      contract.read.getAvailableTokenRewards([address, rewardToken.address]),
     ]);
 
     return [stakedBalanceRaw, rewardBalanceRaw];

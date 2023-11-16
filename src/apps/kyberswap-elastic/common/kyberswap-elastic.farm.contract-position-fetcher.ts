@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { KyberswapElasticContractFactory, KyberswapElasticLm } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
+import { KyberswapElasticLm } from '../contracts/viem';
 
 import { KyberswapElasticFarmContractPositionBuilder } from './kyberswap-elastic.farm.contract-position-builder';
 
@@ -47,14 +48,15 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
     @Inject(KyberswapElasticFarmContractPositionBuilder)
     protected readonly kyberElasticFarmContractPositionBuilder: KyberswapElasticFarmContractPositionBuilder,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): KyberswapElasticLm {
+  getContract(address: string) {
     return this.contractFactory.kyberswapElasticLm({ address, network: this.network });
   }
 
@@ -64,12 +66,12 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
       network: this.network,
     });
 
-    const poolLengthRaw = await multicall.wrap(kyberswapElasticLmContract).poolLength();
+    const poolLengthRaw = await multicall.wrap(kyberswapElasticLmContract).read.poolLength();
 
     const definitionsRaw = await Promise.all(
-      range(0, poolLengthRaw.toNumber()).map(async index => {
-        const poolInfos = await multicall.wrap(kyberswapElasticLmContract).getPoolInfo(index);
-        const poolContract = this.contractFactory.pool({ address: poolInfos.poolAddress, network: this.network });
+      range(0, Number(poolLengthRaw)).map(async index => {
+        const poolInfos = await multicall.wrap(kyberswapElasticLmContract).read.getPoolInfo([BigInt(index)]);
+        const poolContract = this.contractFactory.pool({ address: poolInfos[0], network: this.network });
         // filtering out pool '0xf2057f0231bedcecf32436e3cd6b0b93c6675e0a' on Polygon, this
         // seems to not exist on Polygon and is actually on Arbitrum. KyberSwap is even filtering it out
         // from some of their own GQL queries.
@@ -81,19 +83,19 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
           return;
         }
         const [token0Raw, token1Raw, feeTier] = await Promise.all([
-          multicall.wrap(poolContract).token0(),
-          multicall.wrap(poolContract).token1(),
-          multicall.wrap(poolContract).swapFeeUnits(),
+          multicall.wrap(poolContract).read.token0(),
+          multicall.wrap(poolContract).read.token1(),
+          multicall.wrap(poolContract).read.swapFeeUnits(),
         ]);
 
-        if (Number(poolInfos.numStakes) === 0) return null;
+        if (Number(poolInfos[5]) === 0) return null;
 
         return {
           address: this.kyberswapElasticLmAddress,
-          poolAddress: poolInfos.poolAddress.toLowerCase(),
+          poolAddress: poolInfos[0].toLowerCase(),
           token0Address: token0Raw.toLowerCase(),
           token1Address: token1Raw.toLowerCase(),
-          rewardTokenAddresses: poolInfos.rewardTokens.map(x => x.toLowerCase()),
+          rewardTokenAddresses: poolInfos[6].map(x => x.toLowerCase()),
           feeTier: feeTier,
         };
       }),
@@ -139,8 +141,8 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
     const { tokens } = contractPosition;
 
     const [reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(this.contractFactory.erc20(tokens[0])).balanceOf(poolAddress),
-      multicall.wrap(this.contractFactory.erc20(tokens[1])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[0])).read.balanceOf([poolAddress]),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[1])).read.balanceOf([poolAddress]),
     ]);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];
@@ -170,7 +172,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<KyberswapElasticFarmPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });
@@ -180,11 +182,11 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
       network: this.network,
     });
 
-    const nftIds = await multicall.wrap(kyberswapElasticLmContract).getDepositedNFTs(address);
+    const nftIds = await multicall.wrap(kyberswapElasticLmContract).read.getDepositedNFTs([address]);
 
     const balances = await Promise.all(
       nftIds.map(async nftId => {
-        const poolIds = await multicall.wrap(kyberswapElasticLmContract).getJoinedPools(nftId);
+        const poolIds = await multicall.wrap(kyberswapElasticLmContract).read.getJoinedPools([nftId]);
 
         const position = await Promise.all(
           poolIds.map(poolId => {

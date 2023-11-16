@@ -4,13 +4,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { IdleContractFactory } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
 
 @Injectable()
 export class IdleTranchesDefinitionsResolver {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
   ) {}
 
   @Cache({
@@ -18,7 +18,7 @@ export class IdleTranchesDefinitionsResolver {
     ttl: 5 * 60, // 5 minutes
   })
   private async getTranchesDefinitionsData(network: Network) {
-    const multicall = this.appToolkit.getMulticall(network);
+    const multicall = this.appToolkit.getViemMulticall(network);
 
     const perpYieldTranchesAddresses = [
       '0x34dcd573c5de4672c8248cd12a99f875ca112ad8', // stETH
@@ -46,9 +46,9 @@ export class IdleTranchesDefinitionsResolver {
           network,
         });
         const [juniorAddressRaw, seniorAddressRaw, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(perpYieldTranchesContract).BBTranche(),
-          multicall.wrap(perpYieldTranchesContract).AATranche(),
-          multicall.wrap(perpYieldTranchesContract).token(),
+          multicall.wrap(perpYieldTranchesContract).read.BBTranche(),
+          multicall.wrap(perpYieldTranchesContract).read.AATranche(),
+          multicall.wrap(perpYieldTranchesContract).read.token(),
         ]);
 
         return {

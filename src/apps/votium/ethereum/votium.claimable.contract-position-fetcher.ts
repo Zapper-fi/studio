@@ -7,7 +7,8 @@ import { isClaimable } from '~position/position.utils';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
 
-import { VotiumContractFactory, VotiumMultiMerkle } from '../contracts';
+import { VotiumViemContractFactory } from '../contracts';
+import { VotiumMultiMerkle } from '../contracts/viem';
 
 import { EthereumVotiumMerkleCache, VotiumActiveTokenData } from './votium.merkle-cache';
 
@@ -18,13 +19,13 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VotiumContractFactory) protected readonly contractFactory: VotiumContractFactory,
+    @Inject(VotiumViemContractFactory) protected readonly contractFactory: VotiumViemContractFactory,
     @Inject(EthereumVotiumMerkleCache) private readonly merkleCache: EthereumVotiumMerkleCache,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): VotiumMultiMerkle {
+  getContract(address: string) {
     return this.contractFactory.votiumMultiMerkle({ address, network: this.network });
   }
 
@@ -44,7 +45,7 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
     if (!rewardsData?.index) return [0];
 
     const { index, amount } = rewardsData;
-    const isClaimed = await contract.isClaimed(rewardToken.address, index);
+    const isClaimed = await contract.read.isClaimed([rewardToken.address, BigInt(index)]);
     return isClaimed ? [0] : [amount];
   }
 }

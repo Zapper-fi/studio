@@ -10,7 +10,8 @@ import {
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
-import { JarvisContractFactory, JarvisSynth } from '../contracts';
+import { JarvisViemContractFactory } from '../contracts';
+import { JarvisSynth } from '../contracts/viem';
 
 type JarvisSynthDefinition = {
   address: string;
@@ -26,12 +27,12 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(JarvisContractFactory) protected readonly contractFactory: JarvisContractFactory,
+    @Inject(JarvisViemContractFactory) protected readonly contractFactory: JarvisViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): JarvisSynth {
+  getContract(address: string) {
     return this.contractFactory.jarvisSynth({ address, network: this.network });
   }
 
@@ -43,7 +44,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
           network: this.network,
         });
 
-        const synthAddress = await multicall.wrap(poolContract).syntheticToken();
+        const synthAddress = await multicall.wrap(poolContract).read.syntheticToken();
         return { address: synthAddress, poolAddress };
       }),
     );
@@ -72,19 +73,19 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
       network: this.network,
     });
 
-    const finderAddress = await multicall.wrap(poolContract).synthereumFinder();
+    const finderAddress = await multicall.wrap(poolContract).read.synthereumFinder();
     const finder = this.contractFactory.jarvisSynthereumFinder({ address: finderAddress, network: this.network });
 
     const priceFeedName = ethers.utils.formatBytes32String('PriceFeed');
-    const priceFeedAddress = await finder.getImplementationAddress(priceFeedName);
+    const priceFeedAddress = await finder.read.getImplementationAddress([priceFeedName]);
     const priceFeed = this.contractFactory.jarvisSynthereumPriceFeed({
       address: priceFeedAddress,
       network: this.network,
     });
 
     // Multicall crashes for some reason
-    const priceFeedIdentifier = await multicall.wrap(poolContract).priceFeedIdentifier();
-    const priceRaw = await priceFeed.getLatestPrice(priceFeedIdentifier).catch(() => 0);
+    const priceFeedIdentifier = await multicall.wrap(poolContract).read.priceFeedIdentifier();
+    const priceRaw = await priceFeed.read.getLatestPrice([priceFeedIdentifier]).catch(() => 0);
 
     return Number(priceRaw) / 10 ** 18;
   }

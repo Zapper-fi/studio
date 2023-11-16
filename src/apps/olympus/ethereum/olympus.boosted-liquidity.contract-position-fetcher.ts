@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { OlympusBoostedLiquidityManager, OlympusContractFactory } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusBoostedLiquidityManager } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusBleContractPositionFetcher extends ContractPositionTemplatePositionFetcher<OlympusBoostedLiquidityManager> {
@@ -26,12 +27,12 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OlympusContractFactory) protected readonly olympusContractFactory: OlympusContractFactory,
+    @Inject(OlympusViemContractFactory) protected readonly olympusContractFactory: OlympusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): OlympusBoostedLiquidityManager {
+  getContract(_address: string) {
     return this.olympusContractFactory.olympusBoostedLiquidityManager({ address: _address, network: this.network });
   }
 
@@ -40,11 +41,11 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
       address: this.LIQUIDITY_REGISTRY_ADDRESS,
       network: this.network,
     });
-    const activeVaultsCount = (await contract.activeVaultCount()).toNumber();
+    const activeVaultsCount = Number(await contract.read.activeVaultCount());
     const countArray = Array(activeVaultsCount).fill(0);
     const addresses = await Promise.all(
       countArray.map(async (value, position) => {
-        const address = await contract.activeVaults(position);
+        const address = await contract.read.activeVaults([BigInt(position)]);
         return { address };
       }),
     );
@@ -54,9 +55,9 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<OlympusBoostedLiquidityManager, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    const pairTokenAddress = await _params.contract.pairToken();
-    const reserveTokenAddress = await _params.contract.ohm();
-    const rewardTokens = await _params.contract.getRewardTokens();
+    const pairTokenAddress = await _params.contract.read.pairToken();
+    const reserveTokenAddress = await _params.contract.read.ohm();
+    const rewardTokens = await _params.contract.read.getRewardTokens();
     const rewardTokenMap = rewardTokens.map(token => {
       return { metaType: MetaType.CLAIMABLE, address: token, network: this.network };
     });
@@ -92,16 +93,15 @@ export class EthereumOlympusBleContractPositionFetcher extends ContractPositionT
   async getTokenBalancesPerPosition(
     _params: GetTokenBalancesParams<OlympusBoostedLiquidityManager, DefaultDataProps>,
   ): Promise<BigNumberish[]> {
-    const balance = await _params.contract.getUserPairShare(_params.address);
-    const ohmPrice = (await _params.contract.getOhmTknPoolPrice()).div(1e9);
-    const ohmBalance = balance.mul(ohmPrice).div(1e9);
-    const rewardTokens = await _params.contract.getRewardTokens();
+    const balance = BigNumber.from(await _params.contract.read.getUserPairShare([_params.address]));
+    const ohmPrice = BigNumber.from(await _params.contract.read.getOhmTknPoolPrice()).div(1e9);
+    const ohmBalance = BigNumber.from(balance).mul(ohmPrice).div(1e9);
+    const rewardTokens = await _params.contract.read.getRewardTokens();
     const rewardBalances = await Promise.all(
       rewardTokens.map(async token => {
-        const rewards = await _params.contract.getOutstandingRewards(_params.address);
-        const rewardBalances =
-          rewards.find(address => address.rewardToken === token)?.outstandingRewards || BigNumber.from('0');
-        return rewardBalances;
+        const rewards = await _params.contract.read.getOutstandingRewards([_params.address]);
+        const rewardBalances = rewards.find(address => address.rewardToken === token)?.outstandingRewards;
+        return rewardBalances ? BigNumber.from(rewardBalances) : BigNumber.from(0);
       }),
     );
     return [balance, ohmBalance, ohmBalance, ...rewardBalances];

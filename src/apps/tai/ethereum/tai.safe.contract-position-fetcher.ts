@@ -19,7 +19,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { TaiContractFactory, TaiSafeJoin } from '../contracts';
+import { TaiViemContractFactory } from '../contracts';
+import { TaiSafeJoin } from '../contracts/viem';
 
 import { TaiCollateralResolver } from './tai.collateral-fetcher';
 
@@ -94,13 +95,13 @@ export class TaiSafeContractPositionFetcher extends CustomContractPositionTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TaiContractFactory) protected readonly contractFactory: TaiContractFactory,
+    @Inject(TaiViemContractFactory) protected readonly contractFactory: TaiViemContractFactory,
     @Inject(TaiCollateralResolver) protected readonly collateralResolver: TaiCollateralResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TaiSafeJoin {
+  getContract(address: string) {
     return this.contractFactory.taiSafeJoin({ address, network: this.network });
   }
 
