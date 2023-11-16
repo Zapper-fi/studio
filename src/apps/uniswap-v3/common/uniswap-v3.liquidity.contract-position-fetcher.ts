@@ -14,7 +14,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { UniswapV3ContractFactory, UniswapV3PositionManager } from '../contracts';
+import { UniswapV3ViemContractFactory } from '../contracts';
+import { UniswapV3PositionManager } from '../contracts/viem';
 
 import { UniswapV3LiquidityContractPositionBuilder } from './uniswap-v3.liquidity.contract-position-builder';
 
@@ -76,14 +77,14 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
+    @Inject(UniswapV3ViemContractFactory) protected readonly contractFactory: UniswapV3ViemContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): UniswapV3PositionManager {
+  getContract(address: string) {
     return this.contractFactory.uniswapV3PositionManager({ address, network: this.network });
   }
 
@@ -132,8 +133,8 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
     const { tokens } = contractPosition;
 
     const [reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(this.contractFactory.erc20(tokens[0])).balanceOf(poolAddress),
-      multicall.wrap(this.contractFactory.erc20(tokens[1])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[0])).read.balanceOf([poolAddress]),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[1])).read.balanceOf([poolAddress]),
     ]);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];
@@ -164,7 +165,7 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
 
   async getBalances(address: string): Promise<ContractPositionBalance<UniswapV3LiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });
@@ -174,11 +175,11 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomCo
       network: this.network,
     });
 
-    const numPositionsRaw = await positionManager.balanceOf(address);
+    const numPositionsRaw = await positionManager.read.balanceOf([address]);
     const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index =>
+      range(0, Number(numPositionsRaw)).map(async index =>
         this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
-          positionId: await multicall.wrap(positionManager).tokenOfOwnerByIndex(address, index),
+          positionId: await multicall.wrap(positionManager).read.tokenOfOwnerByIndex([address, BigInt(index)]),
           network: this.network,
           multicall,
           tokenLoader,

@@ -1,4 +1,5 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPosition, MetaType } from '~position/position.interface';
@@ -17,21 +18,24 @@ export type CompoundClaimablePositionDataProps = {
 };
 
 export abstract class CompoundClaimableContractPositionFetcher<
-  R extends Contract,
-  S extends Contract,
+  R extends Abi,
+  S extends Abi,
 > extends ContractPositionTemplatePositionFetcher<R> {
   abstract lensAddress: string;
   abstract rewardTokenAddress: string;
   abstract comptrollerAddress: string;
 
-  abstract getCompoundComptrollerContract(address: string): R;
-  abstract getCompoundLensContract(address: string): S;
+  abstract getCompoundComptrollerContract(address: string): GetContractReturnType<R, PublicClient>;
+  abstract getCompoundLensContract(address: string): GetContractReturnType<S, PublicClient>;
   abstract getClaimableBalance(
     address: string,
-    opts: { contract: S; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
+    opts: {
+      contract: GetContractReturnType<S, PublicClient>;
+      contractPosition: ContractPosition<CompoundClaimablePositionDataProps>;
+    },
   ): Promise<BigNumberish>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getCompoundComptrollerContract(address);
   }
 

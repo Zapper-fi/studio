@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { LiquityContractFactory, TroveManager } from '../contracts';
+import { LiquityViemContractFactory } from '../contracts';
+import { TroveManager } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLiquityTroveContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TroveManager> {
@@ -20,12 +21,12 @@ export class EthereumLiquityTroveContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory) protected readonly contractFactory: LiquityContractFactory,
+    @Inject(LiquityViemContractFactory) protected readonly contractFactory: LiquityViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TroveManager {
+  getContract(address: string) {
     return this.contractFactory.troveManager({ address, network: this.network });
   }
 
@@ -53,6 +54,6 @@ export class EthereumLiquityTroveContractPositionFetcher extends ContractPositio
   }
 
   getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<TroveManager>) {
-    return Promise.all([contract.getTroveColl(address), contract.getTroveDebt(address)]);
+    return Promise.all([contract.read.getTroveColl([address]), contract.read.getTroveDebt([address])]);
   }
 }

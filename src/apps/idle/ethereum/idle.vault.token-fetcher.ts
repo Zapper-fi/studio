@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { IdleContractFactory, IdleToken } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
+import { IdleToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetcher<IdleToken> {
@@ -23,12 +24,12 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IdleToken {
+  getContract(address: string) {
     return this.contractFactory.idleToken({ network: this.network, address });
   }
 
@@ -38,11 +39,11 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
       network: this.network,
     });
 
-    const vaultTokens = await controller.getAllMarkets();
+    const vaultTokens = await controller.read.getAllMarkets().then(v => [...v]);
     const liveVaultTokens = await Promise.all(
       vaultTokens.map(async address => {
         const contract = this.contractFactory.idleToken({ network: this.network, address });
-        const isPaused = await multicall.wrap(contract).paused();
+        const isPaused = await multicall.wrap(contract).read.paused();
         return isPaused ? null : address;
       }),
     );
@@ -51,18 +52,18 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IdleToken>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<IdleToken>) {
-    const priceRaw = await contract.tokenPrice();
+    const priceRaw = await contract.read.tokenPrice();
     const price = Number(priceRaw) / 10 ** appToken.tokens[0].decimals;
 
     return [price / appToken.tokens[0].price];
   }
 
   async getApy({ contract }: GetDataPropsParams<IdleToken>): Promise<number> {
-    const apyRaw = await contract.getAvgAPR();
+    const apyRaw = await contract.read.getAvgAPR();
     return Number(apyRaw) / 10 ** 18 / 100;
   }
 }

@@ -6,8 +6,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { PStakeContractFactory } from '../contracts';
-import { PStakeStkToken } from '../contracts/ethers/PStakeStkToken';
+import { PStakeViemContractFactory } from '../contracts';
+import { PStakeStkToken } from '../contracts/viem/PStakeStkToken';
 
 @PositionTemplate()
 export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePositionFetcher<PStakeStkToken> {
@@ -15,12 +15,12 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PStakeContractFactory) protected readonly contractFactory: PStakeContractFactory,
+    @Inject(PStakeViemContractFactory) protected readonly contractFactory: PStakeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PStakeStkToken {
+  getContract(address: string) {
     return this.contractFactory.pStakeStkToken({ address, network: this.network });
   }
 
@@ -35,8 +35,8 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
   async getPricePerShare({ multicall }: GetPricePerShareParams<PStakeStkToken>) {
     const stakePoolAddress = '0xc228cefdf841defdbd5b3a18dfd414cc0dbfa0d8';
     const stakePool = this.contractFactory.pStakePool({ address: stakePoolAddress, network: this.network });
-    const exchangeRateRaw = await multicall.wrap(stakePool).exchangeRate();
-    const exchangeRate = Number(exchangeRateRaw.totalWei) / Number(exchangeRateRaw.poolTokenSupply);
+    const exchangeRateRaw = await multicall.wrap(stakePool).read.exchangeRate();
+    const exchangeRate = Number(exchangeRateRaw[0]) / Number(exchangeRateRaw[1]);
     return [exchangeRate];
   }
 }

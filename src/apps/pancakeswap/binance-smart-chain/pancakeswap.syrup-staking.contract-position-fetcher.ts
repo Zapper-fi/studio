@@ -11,7 +11,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { PancakeswapContractFactory, PancakeswapSmartChef } from '../contracts';
+import { PancakeswapViemContractFactory } from '../contracts';
+import { PancakeswapSmartChef } from '../contracts/viem';
 
 // @TODO: Should be indexed from BQ events or logs
 // https://github.com/pancakeswap/pancake-frontend/blob/develop/src/config/constants/pools.tsx
@@ -133,7 +134,7 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher ext
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapViemContractFactory) protected readonly contractFactory: PancakeswapViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -150,17 +151,17 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher ext
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChef>) {
-    return contract.syrup();
+    return contract.read.syrup();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChef>) {
-    return [await contract.rewardToken()];
+    return [await contract.read.rewardToken()];
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<PancakeswapSmartChef>) {
-    const end = await contract.bonusEndBlock();
+    const end = await contract.read.bonusEndBlock();
     if (Number(end) > this.currentBlock) return [0];
-    return [await contract.rewardPerBlock()];
+    return [await contract.read.rewardPerBlock()];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PancakeswapSmartChef>) {
@@ -168,10 +169,10 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher ext
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChef>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChef>) {
-    return contract.pendingReward(address);
+    return contract.read.pendingReward([address]);
   }
 }

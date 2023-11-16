@@ -10,19 +10,20 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { TempusContractFactory, TempusAmm } from '../contracts';
+import { TempusViemContractFactory } from '../contracts';
+import { TempusAmm } from '../contracts/viem';
 
 import { getTempusData } from './tempus.datasource';
 
 export abstract class TempusAmmTokenFetcher extends AppTokenTemplatePositionFetcher<TempusAmm> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TempusContractFactory) protected readonly contractFactory: TempusContractFactory,
+    @Inject(TempusViemContractFactory) protected readonly contractFactory: TempusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TempusAmm {
+  getContract(address: string) {
     return this.contractFactory.tempusAmm({ address, network: this.network });
   }
 
@@ -35,18 +36,18 @@ export abstract class TempusAmmTokenFetcher extends AppTokenTemplatePositionFetc
     contract,
     multicall,
   }: GetUnderlyingTokensParams<TempusAmm, DefaultAppTokenDefinition>) {
-    const poolAddress = await contract.tempusPool();
+    const poolAddress = await contract.read.tempusPool();
     const pool = multicall.wrap(this.contractFactory.tempusPool({ address: poolAddress, network: this.network }));
 
     return [
-      { address: await pool.principalShare(), network: this.network },
-      { address: await pool.yieldShare(), network: this.network },
+      { address: await pool.read.principalShare(), network: this.network },
+      { address: await pool.read.yieldShare(), network: this.network },
     ];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusAmm>) {
-    const totalSupply = await contract.totalSupply();
-    const reservesRaw = await contract.getExpectedTokensOutGivenBPTIn(totalSupply);
+    const totalSupply = await contract.read.totalSupply();
+    const reservesRaw = await contract.read.getExpectedTokensOutGivenBPTIn([totalSupply]);
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(r => r / appToken.supply);
   }

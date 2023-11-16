@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { ConvexContractFactory, ConvexCvxStaking } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexCvxStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -25,12 +26,12 @@ export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStaki
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexCvxStaking {
+  getContract(address: string) {
     return this.contractFactory.convexCvxStaking({ address, network: this.network });
   }
 
@@ -39,20 +40,20 @@ export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStaki
   }
 
   getRewardRates({ contract }: GetDataPropsParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   getIsActive({
     contract,
   }: GetDataPropsParams<ConvexCvxStaking, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.rewardRate().then(v => v.gt(0));
+    return contract.read.rewardRate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

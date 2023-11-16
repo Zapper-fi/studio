@@ -11,8 +11,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { AuraContractFactory } from '../contracts';
-import { AuraBalStakingToken } from '../contracts/ethers/AuraBalStakingToken';
+import { AuraViemContractFactory } from '../contracts';
+import { AuraBalStakingToken } from '../contracts/viem/AuraBalStakingToken';
 
 @PositionTemplate()
 export class EthereumAuraStakedAuraBalTokenFetcher extends AppTokenTemplatePositionFetcher<AuraBalStakingToken> {
@@ -23,12 +23,12 @@ export class EthereumAuraStakedAuraBalTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AuraBalStakingToken {
+  getContract(address: string) {
     return this.contractFactory.auraBalStakingToken({ address, network: this.network });
   }
 
@@ -37,11 +37,12 @@ export class EthereumAuraStakedAuraBalTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AuraBalStakingToken>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AuraBalStakingToken>) {
-    const ratioRaw = await contract.convertToAssets(BigNumber.from((1e18).toString()));
+    const amount = BigNumber.from((1e18).toString()).toString();
+    const ratioRaw = await contract.read.convertToAssets([BigInt(amount)]);
     const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
     return [ratio];
   }

@@ -55,8 +55,7 @@
     "outputs": [],
     "inputs": [{ "type": "uint256", "name": "_amount" }],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "39108"
+    "type": "function"
   },
   {
     "name": "fund",
@@ -66,72 +65,63 @@
       { "type": "uint256[100]", "name": "_amounts" }
     ],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "3962646"
+    "type": "function"
   },
   {
     "name": "toggle_disable",
     "outputs": [],
     "inputs": [{ "type": "address", "name": "_recipient" }],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "40280"
+    "type": "function"
   },
   {
     "name": "disable_can_disable",
     "outputs": [],
     "inputs": [],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "21295"
+    "type": "function"
   },
   {
     "name": "disable_fund_admins",
     "outputs": [],
     "inputs": [],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "21325"
+    "type": "function"
   },
   {
     "name": "vestedSupply",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "4468"
+    "type": "function"
   },
   {
     "name": "lockedSupply",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "5465"
+    "type": "function"
   },
   {
     "name": "vestedOf",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [{ "type": "address", "name": "_recipient" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "5163"
+    "type": "function"
   },
   {
     "name": "balanceOf",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [{ "type": "address", "name": "_recipient" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "6275"
+    "type": "function"
   },
   {
     "name": "lockedOf",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [{ "type": "address", "name": "_recipient" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "6305"
+    "type": "function"
   },
   { "name": "claim", "outputs": [], "inputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
@@ -146,119 +136,104 @@
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [{ "type": "address", "name": "addr" }],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "38032"
+    "type": "function"
   },
   {
     "name": "apply_transfer_ownership",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": "38932"
+    "type": "function"
   },
   {
     "name": "token",
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1601"
+    "type": "function"
   },
   {
     "name": "start_time",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1631"
+    "type": "function"
   },
   {
     "name": "end_time",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1661"
+    "type": "function"
   },
   {
     "name": "initial_locked",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [{ "type": "address", "name": "arg0" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1845"
+    "type": "function"
   },
   {
     "name": "total_claimed",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [{ "type": "address", "name": "arg0" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1875"
+    "type": "function"
   },
   {
     "name": "initial_locked_supply",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1751"
+    "type": "function"
   },
   {
     "name": "unallocated_supply",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1781"
+    "type": "function"
   },
   {
     "name": "can_disable",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1811"
+    "type": "function"
   },
   {
     "name": "disabled_at",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [{ "type": "address", "name": "arg0" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1995"
+    "type": "function"
   },
   {
     "name": "admin",
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1871"
+    "type": "function"
   },
   {
     "name": "future_admin",
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1901"
+    "type": "function"
   },
   {
     "name": "fund_admins_enabled",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "1931"
+    "type": "function"
   },
   {
     "name": "fund_admins",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [{ "type": "address", "name": "arg0" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": "2115"
+    "type": "function"
   }
 ]

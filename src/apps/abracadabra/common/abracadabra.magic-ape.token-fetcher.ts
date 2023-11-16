@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
+import { Erc4626 } from '~contract/contracts/viem';
 import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
@@ -11,7 +11,7 @@ import {
 } from '~position/template/app-token.template.types';
 import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
 
-import { AbracadabraContractFactory } from '../contracts';
+import { AbracadabraViemContractFactory } from '../contracts';
 
 const BASIS_POINTS_DIVISOR = 10000;
 
@@ -23,25 +23,25 @@ export abstract class AbracadabraMagicApeTokenFetcher extends Erc4626VaultTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) protected readonly contractFactory: AbracadabraContractFactory,
+    @Inject(AbracadabraViemContractFactory) protected readonly contractFactory: AbracadabraViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
-    return contract.name();
+  async getLabel({ contract }: GetDisplayPropsParams<Erc4626>): Promise<string> {
+    return contract.read.name();
   }
 
   async getImages({
     appToken,
-  }: GetDisplayPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
+  }: GetDisplayPropsParams<Erc4626, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
   }
 
   async getApy({
     multicall,
     appToken,
-  }: GetDataPropsParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
+  }: GetDataPropsParams<Erc4626, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number> {
     const [magicApeLensAddress, magicApeAnnualHarvests] = await Promise.all([
       this.magicApeLensAddress,
       this.magicApeAnnualHarvests,
@@ -60,8 +60,8 @@ export abstract class AbracadabraMagicApeTokenFetcher extends Erc4626VaultTempla
     );
 
     const [feePercent, apr] = await Promise.all([
-      magicApe.feePercentBips().then(feeBips => feeBips / BASIS_POINTS_DIVISOR),
-      magicApeLens.getApeCoinInfo().then(apeCoinInfo => Number(apeCoinInfo.apr) / BASIS_POINTS_DIVISOR),
+      magicApe.read.feePercentBips().then(feeBips => feeBips / BASIS_POINTS_DIVISOR),
+      magicApeLens.read.getApeCoinInfo().then(apeCoinInfo => Number(apeCoinInfo.apr) / BASIS_POINTS_DIVISOR),
     ]);
 
     const apy = Math.pow(1 + apr / magicApeAnnualHarvests, magicApeAnnualHarvests) - 1;

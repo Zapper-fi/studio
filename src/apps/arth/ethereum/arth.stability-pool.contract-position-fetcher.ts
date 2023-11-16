@@ -8,7 +8,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ArthContractFactory, StabilityPool } from '../contracts';
+import { ArthViemContractFactory } from '../contracts';
+import { StabilityPool } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StabilityPool> {
@@ -16,12 +17,12 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArthContractFactory) protected readonly contractFactory: ArthContractFactory,
+    @Inject(ArthViemContractFactory) protected readonly contractFactory: ArthViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StabilityPool {
+  getContract(address: string) {
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 
@@ -55,9 +56,9 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StabilityPool, DefaultDataProps>) {
     return Promise.all([
-      contract.getCompoundedARTHDeposit(address),
-      contract.getDepositorETHGain(address),
-      contract.getDepositorMAHAGain(address),
+      contract.read.getCompoundedARTHDeposit([address]),
+      contract.read.getDepositorETHGain([address]),
+      contract.read.getDepositorMAHAGain([address]),
     ]);
   }
 }

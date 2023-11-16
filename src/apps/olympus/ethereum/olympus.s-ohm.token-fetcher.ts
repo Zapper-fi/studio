@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { OlympusContractFactory, OlympusSOhmToken } from '../contracts';
+import { OlympusViemContractFactory } from '../contracts';
+import { OlympusSOhmToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFetcher<OlympusSOhmToken> {
@@ -13,12 +14,12 @@ export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFet
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OlympusContractFactory) protected readonly contractFactory: OlympusContractFactory,
+    @Inject(OlympusViemContractFactory) protected readonly contractFactory: OlympusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): OlympusSOhmToken {
+  getContract(address: string) {
     return this.contractFactory.olympusSOhmToken({ address, network: this.network });
   }
 
@@ -37,12 +38,12 @@ export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFet
   async getLiquidity({ appToken, multicall }: GetDataPropsParams<OlympusSOhmToken>) {
     const underlyingToken = appToken.tokens[0];
     const reserveAddress = '0xb63cac384247597756545b500253ff8e607a8020';
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingToken.address,
       network: this.network,
     });
 
-    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).read.balanceOf([reserveAddress]);
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     return reserve * underlyingToken.price;
   }
@@ -50,12 +51,12 @@ export class EthereumOlympusSOhmTokenFetcher extends AppTokenTemplatePositionFet
   async getReserves({ appToken, multicall }: GetDataPropsParams<OlympusSOhmToken>) {
     const underlyingToken = appToken.tokens[0];
     const reserveAddress = '0xb63cac384247597756545b500253ff8e607a8020';
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: underlyingToken.address,
       network: this.network,
     });
 
-    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).read.balanceOf([reserveAddress]);
     return [Number(reserveRaw) / 10 ** underlyingToken.decimals];
   }
 }

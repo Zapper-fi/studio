@@ -15,8 +15,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { ReserveProtocolContractFactory } from '../contracts';
-import { StakedRsr } from '../contracts/ethers/StakedRsr';
+import { ReserveProtocolViemContractFactory } from '../contracts';
+import { StakedRsr } from '../contracts/viem/StakedRsr';
 
 import { getRTokens, RTokens } from './reserve-protocol.staked-rsr.queries';
 
@@ -39,13 +39,13 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReserveProtocolContractFactory)
-    protected readonly contractFactory: ReserveProtocolContractFactory,
+    @Inject(ReserveProtocolViemContractFactory)
+    protected readonly contractFactory: ReserveProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakedRsr {
+  getContract(address: string) {
     return this.contractFactory.stakedRsr({ address, network: this.network });
   }
 
@@ -85,7 +85,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
    async getDataProps(params: GetDataPropsParams<StakedRsr>) {
      const defaultDataProps = await super.getDataProps(params);
      const { contract } = params;
-     const inCoolDownTotalBalance = await contract.getTotalDrafts();
+     const inCoolDownTotalBalance = await contract.read.getTotalDrafts();
      return { ...defaultDataProps, inCoolDownTotalBalance };
    }
 
@@ -99,7 +99,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakedRsr>): Promise<BigNumberish[]> {
     // Get FacadeRead
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const facadeRead = multicall.wrap(
       this.contractFactory.facadeRead({
         network: this.network,
@@ -111,7 +111,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const main = multicall.wrap(
       this.contractFactory.main({
         network: this.network,
-        address: await contract.main(),
+        address: await contract.read.main(),
       }),
     );
 
@@ -119,7 +119,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const bh = multicall.wrap(
       this.contractFactory.basketHandler({
         network: this.network,
-        address: await main.basketHandler(),
+        address: await main.read.basketHandler(),
       }),
     );
 
@@ -127,7 +127,7 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const rToken = multicall.wrap(
       this.contractFactory.rtoken({
         network: this.network,
-        address: await main.rToken(),
+        address: await main.read.rToken(),
       }),
     );
 
@@ -137,13 +137,13 @@ export class EthereumReserveProtocolCooldownContractPositionFetcher extends Cont
     const timestamp = (await provider.getBlock(blockNumber)).timestamp;
 
     // Check if claiming is disabled
-    const fullyCollateralized = await bh.fullyCollateralized();
-    const basketSound = (await bh.status()) == CollateralStatus.SOUND;
-    const mainPausedOrFrozen = await main.pausedOrFrozen();
+    const fullyCollateralized = await bh.read.fullyCollateralized();
+    const basketSound = (await bh.read.status()) == CollateralStatus.SOUND;
+    const mainPausedOrFrozen = await main.read.pausedOrFrozen();
     const claimingDisabled = !fullyCollateralized || !basketSound || mainPausedOrFrozen;
 
     // Process pending unstakings
-    const pendingUnstakings = await facadeRead.pendingUnstakings(rToken.address, address);
+    const pendingUnstakings = await facadeRead.read.pendingUnstakings([rToken.address, address]);
 
     let lockedBalance = BigNumber.from(0);
     let claimableBalance = BigNumber.from(0);

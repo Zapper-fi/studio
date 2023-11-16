@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
+import { UniswapV2ViemContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.auto-cake.contract-position-fetcher';
 import { BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher } from './binance-smart-chain/pancakeswap.boosted-farm-v2.contract-position-fetcher';
@@ -14,12 +14,12 @@ import { BinanceSmartChainPancakeswapStablePoolTokenFetcher } from './binance-sm
 import { BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-cake.contract-position-fetcher';
 import { BinanceSmartChainPancakeswapSyrupStakingInitContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-staking-init.contract-position-fetcher';
 import { BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-staking.contract-position-fetcher';
-import { PancakeswapContractFactory } from './contracts';
+import { PancakeswapViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    PancakeswapContractFactory,
-    UniswapV2ContractFactory,
+    PancakeswapViemContractFactory,
+    UniswapV2ViemContractFactory,
     BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher,
     BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher,
     BinanceSmartChainPancakeswapFarmContractPositionFetcher,

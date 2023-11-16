@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AaveSafetyModuleContractFactory } from './contracts';
+import { AaveSafetyModuleViemContractFactory } from './contracts';
 import { EthereumAaveSafetyModuleAbptTokenFetcher } from './ethereum/aave-safety-module.abpt.token-fetcher';
 import { EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher } from './ethereum/aave-safety-module.stk-aave-claimable.contract-position-fetcher';
 import { EthereumAaveSafetyModuleStkAaveTokenFetcher } from './ethereum/aave-safety-module.stk-aave.token-fetcher';
@@ -11,7 +11,7 @@ import { EthereumAaveSafetyModuleStkAbptTokenFetcher } from './ethereum/aave-saf
 
 @Module({
   providers: [
-    AaveSafetyModuleContractFactory,
+    AaveSafetyModuleViemContractFactory,
     EthereumAaveSafetyModuleAbptTokenFetcher,
     EthereumAaveSafetyModuleStkAaveTokenFetcher,
     EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher,

@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { DopexContractFactory, DopexDualRewardStaking } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexDualRewardStaking } from '../contracts/viem';
 
 const FARMS = [
   // rDPX v1
@@ -28,12 +29,12 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DopexDualRewardStaking {
+  getContract(address: string) {
     return this.contractFactory.dopexDualRewardStaking({ address, network: this.network });
   }
 
@@ -42,20 +43,20 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
   }
 
   getRewardRates({ contract }: GetDataPropsParams<DopexDualRewardStaking>) {
-    return Promise.all([contract.rewardRateDPX(), contract.rewardRateRDPX()]);
+    return Promise.all([contract.read.rewardRateDPX(), contract.read.rewardRateRDPX()]);
   }
 
   getIsActive({ contract }: GetDataPropsParams<DopexDualRewardStaking>) {
-    return Promise.all([contract.rewardRateDPX(), contract.rewardRateRDPX()]).then(([rateDPX, rateRDPX]) => {
-      return rateDPX.gt(0) || rateRDPX.gt(0);
+    return Promise.all([contract.read.rewardRateDPX(), contract.read.rewardRateRDPX()]).then(([rateDPX, rateRDPX]) => {
+      return rateDPX > 0 || rateRDPX > 0;
     });
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {
-    return contract.earned(address).then(v => [v.DPXtokensEarned, v.RDPXtokensEarned]);
+    return contract.read.earned([address]).then(v => [v[0], v[1]]);
   }
 }

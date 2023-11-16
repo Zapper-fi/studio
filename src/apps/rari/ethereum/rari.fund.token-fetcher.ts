@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -13,7 +13,7 @@ import {
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { RariContractFactory } from '../contracts';
+import { RariViemContractFactory } from '../contracts';
 
 const SYMBOL_TO_ADDRESS = {
   DAI: '0x6b175474e89094c44da98b954eedeac495271d0f',
@@ -52,13 +52,13 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariContractFactory) protected readonly contractFactory: RariContractFactory,
+    @Inject(RariViemContractFactory) protected readonly contractFactory: RariViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getAddresses() {
@@ -74,7 +74,10 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
       network: this.network,
     });
 
-    const symbols = await multicall.wrap(managerContract).callStatic.getAcceptedCurrencies();
+    const symbols = await multicall
+      .wrap(managerContract)
+      .simulate.getAcceptedCurrencies()
+      .then(v => v.result);
     return symbols.map(v => ({ address: SYMBOL_TO_ADDRESS[v]!, network: this.network }));
   }
 
@@ -86,7 +89,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
       network: this.network,
     });
 
-    const liquidityRaw = await managerContract.callStatic.getFundBalance();
+    const liquidityRaw = await managerContract.simulate.getFundBalance().then(v => v.result);
     const liquidity = Number(liquidityRaw) / 10 ** 18;
     const reserves = appToken.tokens.map(() => liquidity / appToken.tokens.length);
     const pricePerShare = reserves.map(v => v / appToken.supply);

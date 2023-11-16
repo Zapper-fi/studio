@@ -14,11 +14,11 @@ import { ArbitrumDopexSsovV3OptionTokenFetcher } from './arbitrum/dopex.ssov-v3-
 import { ArbitrumDopexVotingEscrowRewardsContractPositionFetcher } from './arbitrum/dopex.voting-escrow-rewards.contract-position-fetcher';
 import { ArbitrumDopexVotingEscrowContractPositionFetcher } from './arbitrum/dopex.voting-escrow.contract-position-fetcher';
 import { DopexSsovV3DefinitionsResolver } from './common/dopex.ssov-v3.definition-resolver';
-import { DopexContractFactory } from './contracts';
+import { DopexViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    DopexContractFactory,
+    DopexViemContractFactory,
     DopexSsovV3DefinitionsResolver,
     // Arbitrum
     ArbitrumDopexFarmContractPositionFetcher,

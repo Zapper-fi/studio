@@ -3,10 +3,10 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
-import { MuxContractFactory } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class ArbitrumMuxMuxTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
@@ -14,13 +14,13 @@ export class ArbitrumMuxMuxTokenFetcher extends AppTokenTemplatePositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+    @Inject(MuxViemContractFactory) protected readonly contractFactory: MuxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getAddresses() {

@@ -1,11 +1,11 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Erc20 } from '~contract/contracts';
+import { Erc20 } from '~contract/contracts/viem';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
-import { VelaContractFactory } from '../contracts';
+import { VelaViemContractFactory } from '../contracts';
 
 export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   groupLabel = 'VLP';
@@ -16,13 +16,13 @@ export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VelaContractFactory) private readonly velaContractFactory: VelaContractFactory,
+    @Inject(VelaViemContractFactory) private readonly velaContractFactory: VelaViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.appToolkit.globalContracts.erc20({
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({
       address,
       network: this.network,
     });
@@ -45,7 +45,7 @@ export abstract class VelaVlpTokenFetcher extends AppTokenTemplatePositionFetche
     );
     const basisPointsDivisor = 100000;
 
-    const vlpPrice = await velaVault.getVLPPrice();
+    const vlpPrice = await velaVault.read.getVLPPrice();
     const pricePerShare = Number(vlpPrice) / Number(basisPointsDivisor);
 
     return [pricePerShare];

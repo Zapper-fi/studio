@@ -11,8 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory } from '../contracts';
-import { CleverFeeDistributor } from '../contracts/ethers/CleverFeeDistributor';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverFeeDistributor } from '../contracts/viem/CleverFeeDistributor';
 
 @PositionTemplate()
 export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CleverFeeDistributor> {
@@ -20,12 +20,12 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CleverFeeDistributor {
+  getContract(address: string) {
     return this.contractFactory.cleverFeeDistributor({ address, network: this.network });
   }
 
@@ -40,7 +40,7 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
     return [
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.token(),
+        address: await contract.read.token(),
         network: this.network,
       },
     ];
@@ -51,7 +51,7 @@ export class EthereumCleverPlatformFeeContractPositionFetcher extends ContractPo
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverFeeDistributor>) {
-    const claimableAmount = await contract.callStatic['claim(address)'](address);
+    const { result: claimableAmount } = await contract.simulate.claim([address]);
     return [claimableAmount];
   }
 }

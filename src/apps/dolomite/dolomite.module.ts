@@ -5,14 +5,14 @@ import { ArbitrumDolomitePoolsTokenFetcher } from '~apps/dolomite/arbitrum/dolom
 
 import { ArbitrumDolomiteBorrowContractPositionFetcher } from './arbitrum/dolomite.borrow.contract-position-fetcher';
 import { ArbitrumDolomiteDolomiteContractPositionFetcher } from './arbitrum/dolomite.dolomite.contract-position-fetcher';
-import { DolomiteContractFactory } from './contracts';
+import { DolomiteViemContractFactory } from './contracts';
 
 @Module({
   providers: [
     ArbitrumDolomiteBorrowContractPositionFetcher,
     ArbitrumDolomiteDolomiteContractPositionFetcher,
     ArbitrumDolomitePoolsTokenFetcher,
-    DolomiteContractFactory,
+    DolomiteViemContractFactory,
   ],
 })
 export class DolomiteAppModule extends AbstractApp() {}

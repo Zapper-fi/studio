@@ -8,7 +8,8 @@ import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { RevertFinanceCompoundor, RevertFinanceContractFactory } from '../contracts';
+import { RevertFinanceViemContractFactory } from '../contracts';
+import { RevertFinanceCompoundor } from '../contracts/viem';
 
 export abstract class RevertFinanceCompoundorContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RevertFinanceCompoundor> {
   isExcludedFromExplore = true;
@@ -17,14 +18,14 @@ export abstract class RevertFinanceCompoundorContractPositionFetcher extends Cus
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RevertFinanceContractFactory) protected readonly contractFactory: RevertFinanceContractFactory,
+    @Inject(RevertFinanceViemContractFactory) protected readonly contractFactory: RevertFinanceViemContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     protected readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RevertFinanceCompoundor {
+  getContract(address: string) {
     return this.contractFactory.revertFinanceCompoundor({ address, network: this.network });
   }
 
@@ -45,7 +46,7 @@ export abstract class RevertFinanceCompoundorContractPositionFetcher extends Cus
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector();
 
     const [position] = await this.appToolkit.getAppContractPositions({
@@ -61,13 +62,13 @@ export abstract class RevertFinanceCompoundorContractPositionFetcher extends Cus
       network: this.network,
     });
 
-    const balanceRaw = await compoundor.balanceOf(address);
+    const balanceRaw = await compoundor.read.balanceOf([address]);
     const balance = Number(balanceRaw);
     if (balance === 0) return [];
 
     const positionBalances = await Promise.all(
       range(0, balance).map(async i => {
-        const positionId = await multicall.wrap(compoundor).accountTokens(address, i);
+        const positionId = await multicall.wrap(compoundor).read.accountTokens([address, BigInt(i)]);
 
         const uniV3Token = await this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
           positionId,

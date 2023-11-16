@@ -12,7 +12,8 @@ import {
 } from '~position/template/app-token.template.types';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { UnipilotContractFactory, UnipilotVault } from '../contracts';
+import { UnipilotViemContractFactory } from '../contracts';
+import { UnipilotVault } from '../contracts/viem';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
 import { UnipilotVaultDefinitionsResolver } from './unipilot.vault-definition-resolver';
@@ -30,13 +31,13 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UnipilotVaultDefinitionsResolver)
     private readonly vaultDefinitionsResolver: UnipilotVaultDefinitionsResolver,
-    @Inject(UnipilotContractFactory)
-    private readonly contractFactory: UnipilotContractFactory,
+    @Inject(UnipilotViemContractFactory)
+    private readonly contractFactory: UnipilotViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): UnipilotVault {
+  getContract(address: string) {
     return this.contractFactory.unipilotVault({ address, network: this.network });
   }
 

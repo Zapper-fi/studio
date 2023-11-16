@@ -18,7 +18,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { MeanFinanceContractFactory, MeanFinancePermissionManager } from '../contracts';
+import { MeanFinanceViemContractFactory } from '../contracts';
+import { MeanFinancePermissionManager } from '../contracts/viem';
 
 import { GET_USER_POSITIONS, GET_POSITIONS, MeanFinancePosition } from './mean-finance.dca-position.queries';
 
@@ -53,12 +54,12 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MeanFinanceContractFactory) protected readonly contractFactory: MeanFinanceContractFactory,
+    @Inject(MeanFinanceViemContractFactory) protected readonly contractFactory: MeanFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MeanFinancePermissionManager {
+  getContract(address: string) {
     return this.contractFactory.meanFinancePermissionManager({ address, network: this.network });
   }
 
@@ -136,7 +137,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<MeanFinanceDcaPositionDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const positions = await this.appToolkit.getAppContractPositions<MeanFinanceDcaPositionDataProps>({
       network: this.network,
@@ -180,7 +181,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
 
               const amountTransformedToUnderlying = await multicall
                 .wrap(transformerContract)
-                .calculateTransformToUnderlying(userPos.from.address, fromBalanceRaw);
+                .read.calculateTransformToUnderlying([userPos.from.address, BigInt(fromBalanceRaw)]);
               fromBalanceRaw = amountTransformedToUnderlying[0].amount.toString();
             }
 

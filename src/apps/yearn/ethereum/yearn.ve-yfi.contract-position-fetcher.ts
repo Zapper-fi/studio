@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { YearnContractFactory, YearnVeYfi } from '../contracts';
+import { YearnViemContractFactory } from '../contracts';
+import { YearnVeYfi } from '../contracts/viem';
+import { YearnVeYfiContract } from '../contracts/viem/YearnVeYfi';
 
 @PositionTemplate()
 export class EthereumYearnVeYfiContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<YearnVeYfi> {
@@ -14,20 +16,20 @@ export class EthereumYearnVeYfiContractPositionFetcher extends VotingEscrowTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
+    @Inject(YearnViemContractFactory) protected readonly contractFactory: YearnViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): YearnVeYfi {
+  getEscrowContract(address: string): YearnVeYfiContract {
     return this.contractFactory.yearnVeYfi({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<YearnVeYfi>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnVeYfi>) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v.amount);
   }
 }

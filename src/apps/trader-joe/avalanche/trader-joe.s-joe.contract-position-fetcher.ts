@@ -11,7 +11,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { TraderJoeContractFactory, TraderJoeStableStaking } from '../contracts';
+import { TraderJoeViemContractFactory } from '../contracts';
+import { TraderJoeStableStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<TraderJoeStableStaking> {
@@ -19,12 +20,12 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) protected readonly contractFactory: TraderJoeContractFactory,
+    @Inject(TraderJoeViemContractFactory) protected readonly contractFactory: TraderJoeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): TraderJoeStableStaking {
+  getContract(address: string) {
     return this.contractFactory.traderJoeStableStaking({ address, network: this.network });
   }
 
@@ -33,12 +34,12 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<TraderJoeStableStaking>) {
-    return contract.joe();
+    return contract.read.joe();
   }
 
   async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<TraderJoeStableStaking>) {
-    const length = await contract.rewardTokensLength().then(Number);
-    return Promise.all(_.range(length).map(i => contract.rewardTokens(i)));
+    const length = await contract.read.rewardTokensLength().then(Number);
+    return Promise.all(_.range(length).map(i => contract.read.rewardTokens([BigInt(i)])));
   }
 
   async getRewardRates(_params: GetDataPropsParams<TraderJoeStableStaking>) {
@@ -47,11 +48,11 @@ export class AvalancheTraderJoeSJoeContractPositionFetcher extends SingleStaking
 
   async getStakedTokenBalance({ address, contract, contractPosition }: GetTokenBalancesParams<TraderJoeStableStaking>) {
     const supplied = contractPosition.tokens.find(isSupplied)!;
-    return contract.getUserInfo(address, supplied.address).then(v => v[0]);
+    return contract.read.getUserInfo([address, supplied.address]).then(v => v[0]);
   }
 
   getRewardTokenBalances({ address, contract, contractPosition }: GetTokenBalancesParams<TraderJoeStableStaking>) {
     const claimable = contractPosition.tokens.find(isClaimable)!;
-    return contract.pendingReward(address, claimable.address);
+    return contract.read.pendingReward([address, claimable.address]);
   }
 }

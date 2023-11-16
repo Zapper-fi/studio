@@ -6,7 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { RedactedRewardDistributor__factory } from '../contracts/ethers';
+import { RedactedRewardDistributor__factory } from '../contracts/viem';
 
 const BTRFLY_REWARDS =
   'https://raw.githubusercontent.com/redacted-cartel/distributions/master/protocol-v2/latest/btrfly.json';
@@ -63,22 +63,24 @@ export class RedactedEarningsResolver {
   private async getClaimedRewards(address: string, network: Network) {
     const contract = RedactedRewardDistributor__factory.connect(
       '0xd7807e5752b368a6a64b76828aaff0750522a76e', // Reward Distributor
-      this.appToolkit.getNetworkProvider(network),
+      this.appToolkit.getViemNetworkProvider(network),
     );
-    const btrflyClaimed = await contract.claimed(
+
+    const btrflyClaimed = await contract.read.claimed([
       '0xc55126051b22ebb829d00368f4b12bde432de5da', // BTRFLY mapping
       address,
-    );
+    ]);
 
-    const ethClaimed = await contract.claimed(
+    const ethClaimed = await contract.read.claimed([
       '0xa52fd396891e7a74b641a2cb1a6999fcf56b077e', // ETH mapping
       address,
-    );
+    ]);
 
-    const wethClaimed = await contract.claimed(
+    const wethClaimed = await contract.read.claimed([
       '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', // WETH mapping
       address,
-    );
+    ]);
+
     return [btrflyClaimed, ethClaimed, wethClaimed];
   }
 

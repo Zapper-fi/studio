@@ -7,7 +7,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Standard } from '~position/position.interface';
@@ -15,7 +15,7 @@ import { claimable, supplied } from '~position/position.utils';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
-import { KyberswapElasticContractFactory } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
 
 import { KyberswapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
 import {
@@ -25,7 +25,7 @@ import {
 import { getSupplied, getRange } from './kyberswap-elastic.liquidity.utils';
 
 type KyberswapElasticLiquidityContractPositionHelperParams = {
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
   positionId: BigNumberish;
   network: Network;
@@ -39,7 +39,8 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
   ) {}
 
   async buildPosition({
@@ -51,49 +52,52 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
   }: KyberswapElasticLiquidityContractPositionHelperParams) {
     const positionManager = this.contractFactory.positionManager({ address: this.managerAddress, network });
     const factoryContract = this.contractFactory.factory({ address: this.factoryAddress, network });
-    const position = await multicall.wrap(positionManager).positions(positionId);
+    const position = await multicall.wrap(positionManager).read.positions([BigInt(positionId.toString())]);
 
-    const fee = position.info?.fee;
-    const token0Address = position.info.token0.toLowerCase();
-    const token1Address = position.info.token1.toLowerCase();
+    const fee = position[1].fee;
+    const token0Address = position[1].token0.toLowerCase();
+    const token1Address = position[1].token1.toLowerCase();
     const queries = [token0Address, token1Address].map(t => ({ address: t, network }));
     const [token0, token1] = await tokenLoader.getMany(queries);
     if (!token0 || !token1) return null;
 
-    const poolAddr = await multicall.wrap(factoryContract).getPool(token0Address, token1Address, fee);
+    const poolAddr = await multicall.wrap(factoryContract).read.getPool([token0Address, token1Address, fee]);
     const poolAddress = poolAddr.toLowerCase();
     const poolContract = this.contractFactory.pool({ address: poolAddress, network });
     const tickReaderContract = this.contractFactory.tickReader({ address: this.tickerReaderAddress, network });
-    const token0Contract = this.contractFactory.erc20(token0);
-    const token1Contract = this.contractFactory.erc20(token1);
+    const token0Contract = this.appToolkit.globalViemContracts.erc20(token0);
+    const token1Contract = this.appToolkit.globalViemContracts.erc20(token1);
 
     const [liquidityState, poolState, claimableBalances, reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(poolContract).getLiquidityState(),
-      multicall.wrap(poolContract).getPoolState(),
-      multicall.wrap(tickReaderContract).getTotalRTokensOwedToPosition(this.managerAddress, poolAddress, positionId),
-      multicall.wrap(token0Contract).balanceOf(poolAddress),
-      multicall.wrap(token1Contract).balanceOf(poolAddress),
+      multicall.wrap(poolContract).read.getLiquidityState(),
+      multicall.wrap(poolContract).read.getPoolState(),
+      multicall
+        .wrap(tickReaderContract)
+        .read.getTotalRTokensOwedToPosition([this.managerAddress, poolAddress, BigInt(positionId.toString())]),
+      multicall.wrap(token0Contract).read.balanceOf([poolAddress]),
+      multicall.wrap(token1Contract).read.balanceOf([poolAddress]),
     ]);
 
     const positionData: KyberswapElasticLiquidityPositionContractData = {
-      tickLower: position.pos.tickLower,
-      tickUpper: position.pos.tickUpper,
-      liquidity: position.pos.liquidity,
-      rTokenOwed: position.pos.rTokenOwed,
-      feeGrowthInsideLast: position.pos.feeGrowthInsideLast,
-      nonce: position.pos.nonce,
-      operator: position.pos.operator,
-      poolId: position.pos.poolId,
-      token0: position.info.token0,
-      token1: position.info.token1,
+      tickLower: position[0].tickLower,
+      tickUpper: position[0].tickUpper,
+      liquidity: position[0].liquidity,
+      rTokenOwed: position[0].rTokenOwed,
+      feeGrowthInsideLast: position[0].feeGrowthInsideLast,
+      nonce: position[0].nonce,
+      operator: position[0].operator,
+      poolId: position[0].poolId,
+      token0: position[1].token0,
+      token1: position[1].token1,
       fee: fee,
     };
     const state: KyberswapElasticPoolStateData = {
-      sqrtPriceX96: poolState.sqrtP,
-      reinvestL: liquidityState.reinvestL,
-      currentTick: poolState.currentTick,
-      liquidity: liquidityState.baseL,
+      sqrtPriceX96: poolState[0],
+      reinvestL: liquidityState[1],
+      currentTick: poolState[1],
+      liquidity: liquidityState[0],
     };
+
     // Retrieve underlying reserves, both supplied and claimable
     const range = getRange({ position: positionData, state, token0, token1, network });
     const suppliedBalances = getSupplied({ position: positionData, state, token0, token1, network });

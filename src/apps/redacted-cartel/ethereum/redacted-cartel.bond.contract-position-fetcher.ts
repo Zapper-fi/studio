@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -11,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { RedactedBondDepository, RedactedCartelContractFactory } from '../contracts';
+import { RedactedCartelViemContractFactory } from '../contracts';
+import { RedactedBondDepository } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumRedactedCartelBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedBondDepository> {
@@ -19,7 +21,7 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RedactedCartelContractFactory) protected readonly contractFactory: RedactedCartelContractFactory,
+    @Inject(RedactedCartelViemContractFactory) protected readonly contractFactory: RedactedCartelViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -37,7 +39,7 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RedactedBondDepository>) {
-    const [principle, claimable] = await Promise.all([contract.principal(), contract.BTRFLY()]);
+    const [principle, claimable] = await Promise.all([contract.read.principal(), contract.read.BTRFLY()]);
 
     return [
       {
@@ -68,10 +70,10 @@ export class EthereumRedactedCartelBondContractPositionFetcher extends ContractP
 
   async getTokenBalancesPerPosition({ address, contract, multicall }: GetTokenBalancesParams<RedactedBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      multicall.wrap(contract).bondInfo(address),
-      multicall.wrap(contract).pendingPayoutFor(address),
+      multicall.wrap(contract).read.bondInfo([address]),
+      multicall.wrap(contract).read.pendingPayoutFor([address]),
     ]);
 
-    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
+    return [BigNumber.from(bondInfo[0]).sub(claimablePayout).toString(), claimablePayout.toString()];
   }
 }

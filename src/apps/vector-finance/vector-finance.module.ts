@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { VectorFinanceFarmContractPositionFetcher } from './avalanche/vector-finance.farm.contract-position-fetcher';
-import { VectorFinanceContractFactory } from './contracts';
+import { AvalancheVectorFinanceFarmContractPositionFetcher } from './avalanche/vector-finance.farm.contract-position-fetcher';
+import { VectorFinanceViemContractFactory } from './contracts';
 
 @Module({
-  providers: [VectorFinanceContractFactory, VectorFinanceFarmContractPositionFetcher],
+  providers: [VectorFinanceViemContractFactory, AvalancheVectorFinanceFarmContractPositionFetcher],
 })
 export class VectorFinanceAppModule extends AbstractApp() {}

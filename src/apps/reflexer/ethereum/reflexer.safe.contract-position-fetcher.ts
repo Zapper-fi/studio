@@ -12,8 +12,8 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ReflexerContractFactory } from '../contracts';
-import { ReflexerSafeJoin } from '../contracts/ethers/ReflexerSafeJoin';
+import { ReflexerViemContractFactory } from '../contracts';
+import { ReflexerSafeJoin } from '../contracts/viem/ReflexerSafeJoin';
 
 type ReflexerSafesResponse = {
   collateralType: {
@@ -63,12 +63,12 @@ export class ReflexerSafeContractPositionFetcher extends CustomContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReflexerContractFactory) protected readonly contractFactory: ReflexerContractFactory,
+    @Inject(ReflexerViemContractFactory) protected readonly contractFactory: ReflexerViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ReflexerSafeJoin {
+  getContract(address: string) {
     return this.contractFactory.reflexerSafeJoin({ address, network: this.network });
   }
 

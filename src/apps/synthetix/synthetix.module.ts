@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixMintrSnxHoldersCache } from './common/synthetix.mintr.snx-holders.cache';
-import { SynthetixContractFactory } from './contracts';
+import { SynthetixViemContractFactory } from './contracts';
 import { EthereumSynthetixFarmContractPositionFetcher } from './ethereum/synthetix.farm.contract-position-fetcher';
 import { EthereumSynthetixLoanContractPositionFetcher } from './ethereum/synthetix.loan.contract-position-fetcher';
 import { EthereumSynthetixMintrContractPositionFetcher } from './ethereum/synthetix.mintr.contract-position-fetcher';
@@ -20,7 +20,7 @@ import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.t
 
 @Module({
   providers: [
-    SynthetixContractFactory,
+    SynthetixViemContractFactory,
     SynthetixMintrSnxHoldersCache,
     // Ethereum
     EthereumSynthetixFarmContractPositionFetcher,

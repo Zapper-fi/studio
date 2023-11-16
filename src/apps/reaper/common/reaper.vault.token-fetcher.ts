@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -11,7 +11,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { ReaperContractFactory, ReaperCrypt } from '../contracts';
+import { ReaperViemContractFactory } from '../contracts';
+import { ReaperCrypt } from '../contracts/viem';
 
 import { ReaperVaultCacheManager } from './reaper.vault.cache-manager';
 
@@ -29,13 +30,13 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReaperContractFactory) protected readonly contractFactory: ReaperContractFactory,
+    @Inject(ReaperViemContractFactory) protected readonly contractFactory: ReaperViemContractFactory,
     @Inject(ReaperVaultCacheManager) protected readonly cacheManager: ReaperVaultCacheManager,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ReaperCrypt {
+  getContract(address: string) {
     return this.contractFactory.reaperCrypt({ address, network: this.network });
   }
 
@@ -55,8 +56,8 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     contract,
   }: GetPricePerShareParams<ReaperCrypt, DefaultAppTokenDataProps, ReaperVaultDefinition>) {
-    const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+    const pricePerShareRaw = await contract.read.getPricePerFullShare().catch(err => {
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
 
@@ -65,6 +66,6 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<ReaperCrypt>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

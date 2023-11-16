@@ -16,7 +16,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { DopexSsovV3DefinitionsResolver } from '../common/dopex.ssov-v3.definition-resolver';
-import { DopexContractFactory, DopexSsovV3 } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexSsovV3 } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<DopexSsovV3> {
@@ -27,13 +28,13 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
     @Inject(DopexSsovV3DefinitionsResolver) protected readonly ssovDefinitionResolver: DopexSsovV3DefinitionsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DopexSsovV3 {
+  getContract(address: string) {
     return this.contractFactory.dopexSsovV3({ network: this.network, address });
   }
 
@@ -51,14 +52,14 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.collateralToken(),
+        address: await contract.read.collateralToken(),
         network: this.network,
       },
     ];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<DopexSsovV3>) {
-    return contract.name();
+    return contract.read.name();
   }
 
   getTokenBalancesPerPosition(): never {
@@ -66,7 +67,7 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
@@ -80,21 +81,21 @@ export class ArbitrumDopexSsovV3DepositContractPositionFetcher extends CustomCon
           address: contractPosition.address,
           network: this.network,
         });
-        const numPositionsRaw = await multicall.wrap(ssovV3Contract).balanceOf(address);
+        const numPositionsRaw = await multicall.wrap(ssovV3Contract).read.balanceOf([address]);
 
         return await Promise.all(
-          range(0, numPositionsRaw.toNumber()).map(async index => {
-            const tokenId = await multicall.wrap(ssovV3Contract).tokenOfOwnerByIndex(address, index);
+          range(0, Number(numPositionsRaw)).map(async index => {
+            const tokenId = await multicall.wrap(ssovV3Contract).read.tokenOfOwnerByIndex([address, BigInt(index)]);
 
-            const writePosition = await multicall.wrap(ssovV3Contract).writePosition(tokenId);
-            const suppliedAmountRaw = writePosition.collateralAmount;
+            const writePosition = await multicall.wrap(ssovV3Contract).read.writePosition([tokenId]);
+            const suppliedAmountRaw = writePosition[2];
 
             const suppliedAmount = drillBalance(contractPosition.tokens[0], suppliedAmountRaw.toString());
 
-            const strike = Number(writePosition.strike) / 10 ** 8;
-            const epoch = Number(writePosition.epoch);
-            const epochTimes = await multicall.wrap(ssovV3Contract).getEpochTimes(epoch);
-            const epochEndDate = unix(Number(epochTimes.end)).format('MMMM D, yyyy');
+            const epoch = Number(writePosition[0]);
+            const strike = Number(writePosition[1]) / 10 ** 8;
+            const epochTimes = await multicall.wrap(ssovV3Contract).read.getEpochTimes([BigInt(epoch)]);
+            const epochEndDate = unix(Number(epochTimes[1])).format('MMMM D, yyyy');
 
             const dataProps = {
               ...contractPosition.dataProps,

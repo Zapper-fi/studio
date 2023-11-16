@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableVmta } from '../contracts';
+import { MstableViemContractFactory } from '../contracts';
+import { MstableVmta } from '../contracts/viem';
 
 const MTA_V1_FARMS = [
   // MTA staking v1
@@ -27,12 +28,12 @@ export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStaki
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+    @Inject(MstableViemContractFactory) protected readonly contractFactory: MstableViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MstableVmta {
+  getContract(address: string) {
     return this.contractFactory.mstableVmta({ address, network: this.network });
   }
 
@@ -41,21 +42,21 @@ export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStaki
   }
 
   getRewardRates({ contract }: GetDataPropsParams<MstableVmta, SingleStakingFarmDataProps>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<MstableVmta>) {
-    return (await contract.rewardRate()).gt(0);
+    return (await contract.read.rewardRate()) > 0;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
-    return contract
-      .locked(address)
-      .then(v => v.amount)
+    return contract.read
+      .locked([address])
+      .then(v => v[0])
       .catch(() => BigNumber.from('0'));
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

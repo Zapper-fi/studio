@@ -11,8 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { SonneContractFactory } from '../contracts';
-import { SonneStakedSonne } from '../contracts/ethers/SonneStakedSonne';
+import { SonneViemContractFactory } from '../contracts';
+import { SonneStakedSonne } from '../contracts/viem/SonneStakedSonne';
 
 export type SonneStakingContractPositionDefinition = {
   address: string;
@@ -26,12 +26,12 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SonneContractFactory) protected readonly contractFactory: SonneContractFactory,
+    @Inject(SonneViemContractFactory) protected readonly contractFactory: SonneViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SonneStakedSonne {
+  getContract(address: string) {
     return this.contractFactory.sonneStakedSonne({ address, network: this.network });
   }
 
@@ -80,17 +80,17 @@ export class OptimismSonneStakingContractPositionFetcher extends ContractPositio
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<SonneStakedSonne>) {
-    return `${await contract.symbol()}`;
+    return `${await contract.read.symbol()}`;
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<SonneStakedSonne>) {
     const rewardToken = contractPosition.tokens.filter(isClaimable);
     if (!rewardToken) return [0, 0, 0, 0, 0];
 
-    const supplied = await contract.balanceOf(address);
+    const supplied = await contract.read.balanceOf([address]);
     const rewards = await Promise.all(
       rewardToken.map(token => {
-        return contract.getClaimable(token.address, address);
+        return contract.read.getClaimable([token.address, address]);
       }),
     );
 

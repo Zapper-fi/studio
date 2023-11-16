@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { HelioContractFactory, HelioJar } from '../contracts';
+import { HelioViemContractFactory } from '../contracts';
+import { HelioJar } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -25,12 +26,12 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HelioContractFactory) protected readonly contractFactory: HelioContractFactory,
+    @Inject(HelioViemContractFactory) protected readonly contractFactory: HelioViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): HelioJar {
+  getContract(address: string) {
     return this.contractFactory.helioJar({ address, network: this.network });
   }
 
@@ -39,20 +40,20 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher extends Single
   }
 
   getRewardRates({ contract }: GetDataPropsParams<HelioJar, SingleStakingFarmDataProps>) {
-    return contract.rate();
+    return contract.read.rate();
   }
 
   getIsActive({
     contract,
   }: GetDataPropsParams<HelioJar, SingleStakingFarmDataProps, SingleStakingFarmDefinition>): Promise<boolean> {
-    return contract.rate().then(v => v.gt(0));
+    return contract.read.rate().then(v => v > 0);
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HelioJar, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<HelioJar, SingleStakingFarmDataProps>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

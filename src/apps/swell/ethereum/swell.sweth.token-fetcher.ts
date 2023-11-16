@@ -12,7 +12,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { SwellContractFactory, Sweth } from '../contracts';
+import { SwellViemContractFactory } from '../contracts';
+import { Sweth } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumSwellSwethTokenFetcher extends AppTokenTemplatePositionFetcher<Sweth> {
@@ -20,12 +21,12 @@ export class EthereumSwellSwethTokenFetcher extends AppTokenTemplatePositionFetc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SwellContractFactory) protected readonly contractFactory: SwellContractFactory,
+    @Inject(SwellViemContractFactory) protected readonly contractFactory: SwellViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(_address: string): Sweth {
+  getContract(_address: string) {
     return this.contractFactory.sweth({ network: this.network, address: _address });
   }
 
@@ -43,7 +44,7 @@ export class EthereumSwellSwethTokenFetcher extends AppTokenTemplatePositionFetc
     contract,
     appToken,
   }: GetPricePerShareParams<Sweth, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number[]> {
-    const pricePerShareRaw = await contract.getRate();
+    const pricePerShareRaw = await contract.read.getRate();
     return [Number(pricePerShareRaw) / 10 ** appToken.decimals];
   }
 }

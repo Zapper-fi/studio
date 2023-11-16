@@ -5,7 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { StakeDaoContractFactory, StakeDaoVault } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoVault } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumStakeDaoVaultTokenFetcher extends AppTokenTemplatePositionFetcher<StakeDaoVault> {
@@ -13,12 +14,12 @@ export class EthereumStakeDaoVaultTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoVault {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoVault({ address, network: this.network });
   }
 
@@ -152,7 +153,7 @@ export class EthereumStakeDaoVaultTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StakeDaoVault>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare() {

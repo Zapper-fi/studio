@@ -10,7 +10,8 @@ import { MetaType } from '~position/position.interface';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { ChickenBondBondNft, ChickenBondContractFactory } from '../contracts';
+import { ChickenBondViemContractFactory } from '../contracts';
+import { ChickenBondBondNft } from '../contracts/viem';
 
 enum BondStatus {
   PENDING = 1,
@@ -24,7 +25,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ChickenBondContractFactory) protected readonly contractFactory: ChickenBondContractFactory,
+    @Inject(ChickenBondViemContractFactory) protected readonly contractFactory: ChickenBondViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -48,7 +49,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
     ];
   }
 
-  getContract(address: string): ChickenBondBondNft {
+  getContract(address: string) {
     return this.contractFactory.chickenBondBondNft({ network: this.network, address });
   }
 
@@ -61,7 +62,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const bondManagerContract = this.contractFactory.chickenBondManager({
       address: '0x57619fe9c539f890b19c61812226f9703ce37137',
       network: this.network,
@@ -77,18 +78,18 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(bondNftContract).balanceOf(address);
+    const numPositionsRaw = await multicall.wrap(bondNftContract).read.balanceOf([address]);
 
     const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index => {
-        const bondId = await multicall.wrap(bondNftContract).tokenOfOwnerByIndex(address, index);
+      range(0, Number(numPositionsRaw)).map(async index => {
+        const bondId = await multicall.wrap(bondNftContract).read.tokenOfOwnerByIndex([address, BigInt(index)]);
 
-        const bondStatus = await multicall.wrap(bondNftContract).getBondStatus(bondId);
+        const bondStatus = await multicall.wrap(bondNftContract).read.getBondStatus([bondId]);
         if (bondStatus !== BondStatus.PENDING) return null;
 
         const [depositAmountRaw, claimableAmountRaw] = await Promise.all([
-          multicall.wrap(bondNftContract).getBondAmount(bondId),
-          multicall.wrap(bondManagerContract).calcAccruedBLUSD(bondId),
+          multicall.wrap(bondNftContract).read.getBondAmount([bondId]),
+          multicall.wrap(bondManagerContract).read.calcAccruedBLUSD([bondId]),
         ]);
 
         const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());

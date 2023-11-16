@@ -20,8 +20,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { PolygonStakingContractFactory } from '../contracts';
-import { PolygonStakeManager } from '../contracts/ethers/PolygonStakeManager';
+import { PolygonStakingViemContractFactory } from '../contracts';
+import { PolygonStakeManager } from '../contracts/viem/PolygonStakeManager';
 
 type ValidatorsResponse = {
   result: {
@@ -92,7 +92,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PolygonStakingContractFactory) protected readonly contractFactory: PolygonStakingContractFactory,
+    @Inject(PolygonStakingViemContractFactory) protected readonly contractFactory: PolygonStakingViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -108,7 +108,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
     return data;
   }
 
-  getContract(address: string): PolygonStakeManager {
+  getContract(address: string) {
     return this.contractFactory.polygonStakeManager({ address, network: this.network });
   }
 
@@ -165,7 +165,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<PolygonStakingDepositDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const data = await gqlFetchAll<DelegatedMaticResponse>({
       endpoint: GQL_ENDPOINT,
@@ -193,8 +193,8 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
         });
 
         const [balanceRaw, claimableBalanceRaw] = await Promise.all([
-          multicall.wrap(contract).balanceOf(address),
-          multicall.wrap(contract).getLiquidRewards(address),
+          multicall.wrap(contract).read.balanceOf([address]),
+          multicall.wrap(contract).read.getLiquidRewards([address]),
         ]);
 
         const suppliedToken = position.tokens.find(isSupplied)!;

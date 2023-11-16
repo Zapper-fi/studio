@@ -7,7 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { CleverContractFactory, CleverFurnace } from '../contracts';
+import { CleverViemContractFactory } from '../contracts';
+import { CleverFurnace } from '../contracts/viem';
 
 import { CVX, CLEVCVX } from './addresses';
 
@@ -17,12 +18,12 @@ export class EthereumCleverFurnaceContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CleverContractFactory) protected readonly contractFactory: CleverContractFactory,
+    @Inject(CleverViemContractFactory) protected readonly contractFactory: CleverViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CleverFurnace {
+  getContract(address: string) {
     return this.contractFactory.cleverFurnace({ address, network: this.network });
   }
 
@@ -50,7 +51,7 @@ export class EthereumCleverFurnaceContractPositionFetcher extends ContractPositi
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverFurnace>) {
-    const userInfo = await contract.userInfo(address);
-    return [userInfo.unrealised, userInfo.realised];
+    const [unrealized, realized] = await contract.read.userInfo([address]);
+    return [unrealized, realized];
   }
 }

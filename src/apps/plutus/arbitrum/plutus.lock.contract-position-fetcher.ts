@@ -10,7 +10,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory, PlutusLock } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusLock } from '../contracts/viem';
 
 const PLUTUS_LOCKS = [
   {
@@ -51,12 +52,12 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusLock {
+  getContract(address: string) {
     return this.contractFactory.plutusLock({ address, network: this.network });
   }
 
@@ -78,7 +79,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusLock>) {
-    return contract.stakedDetails(address).then(details => details.amount);
+    return contract.read.stakedDetails([address]).then(details => details[0]);
   }
 
   async getRewardTokenBalances({ contractPosition, contract, address, multicall }: GetTokenBalancesParams<PlutusLock>) {
@@ -88,38 +89,35 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
       network: this.network,
     });
 
-    const currentEpoch = await multicall.wrap(contract).currentEpoch();
+    const currentEpoch = await multicall.wrap(contract).read.currentEpoch();
     const epochsToClaim = range(0, Number(currentEpoch));
     const claimAmounts = await Promise.all(
       epochsToClaim.map(async epoch => {
         const EPOCH_DURATION = 2_628_000; // seconds
 
-        const rewardsForEpoch = await multicall.wrap(rewardsContract).epochRewards(epoch);
-        const claimDetails = await multicall.wrap(rewardsContract).claimDetails(address, epoch);
+        const rewardsForEpoch = await multicall.wrap(rewardsContract).read.epochRewards([epoch]);
+        const claimDetails = await multicall.wrap(rewardsContract).read.claimDetails([address, epoch]);
 
         const userPlsDpxShare = await multicall
           .wrap(rewardsContract)
-          .calculateShare(address, epoch, rewardsForEpoch.plsDpx);
+          .read.calculateShare([address, epoch, rewardsForEpoch[1]]);
         const userPlsJonesShare = await multicall
           .wrap(rewardsContract)
-          .calculateShare(address, epoch, rewardsForEpoch.plsJones);
+          .read.calculateShare([address, epoch, rewardsForEpoch[2]]);
         if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0)
           return [new BigNumber(0), new BigNumber(0)];
 
         const now = Date.now() / 1000;
-        const vestedDuration =
-          claimDetails.lastClaimedTimestamp > rewardsForEpoch.addedAtTimestamp
-            ? now - claimDetails.lastClaimedTimestamp
-            : now - rewardsForEpoch.addedAtTimestamp;
+        const vestedDuration = claimDetails[1] > rewardsForEpoch[0] ? now - claimDetails[1] : now - rewardsForEpoch[0];
 
         const claimablePlsDpx = BigNumber.min(
           new BigNumber(userPlsDpxShare.toString()).times(vestedDuration).div(EPOCH_DURATION),
-          new BigNumber(userPlsDpxShare.toString()).minus(claimDetails.plsDpxClaimedAmt.toString()),
+          new BigNumber(userPlsDpxShare.toString()).minus(claimDetails[2].toString()),
         );
 
         const claimablePlsJones = BigNumber.min(
           new BigNumber(userPlsJonesShare.toString()).times(vestedDuration).div(EPOCH_DURATION),
-          new BigNumber(userPlsJonesShare.toString()).minus(claimDetails.plsJonesClaimedAmt.toString()),
+          new BigNumber(userPlsJonesShare.toString()).minus(claimDetails[3].toString()),
         );
 
         return [claimablePlsDpx, claimablePlsJones];

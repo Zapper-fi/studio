@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ManifoldFinanceContractFactory } from './contracts';
+import { ManifoldFinanceViemContractFactory } from './contracts';
 import { EthereumManifoldFinanceStakingTokenFetcher } from './ethereum/manifold-finance.staking.token-fetcher';
 
 @Module({
-  providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceContractFactory],
+  providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceViemContractFactory],
 })
 export class ManifoldFinanceAppModule extends AbstractApp() {}

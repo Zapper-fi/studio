@@ -7,11 +7,11 @@ import { ArbitrumJonesDaoMetavaultTokenFetcher } from './arbitrum/jones-dao.meta
 import { ArbitrumJonesDaoMillinerV2ContractPositionFetcher } from './arbitrum/jones-dao.milliner-v2.contract-position-fetcher';
 import { ArbitrumJonesDaoStrategyTokenFetcher } from './arbitrum/jones-dao.strategy.token-fetcher';
 import { ArbitrumJonesDaoVaultTokenFetcher } from './arbitrum/jones-dao.vault.token-fetcher';
-import { JonesDaoContractFactory } from './contracts';
+import { JonesDaoViemContractFactory } from './contracts';
 
 @Module({
   providers: [
-    JonesDaoContractFactory,
+    JonesDaoViemContractFactory,
     ArbitrumJonesDaoFarmContractPositionFetcher,
     ArbitrumJonesDaoMillinerV2ContractPositionFetcher,
     ArbitrumJonesDaoVaultTokenFetcher,

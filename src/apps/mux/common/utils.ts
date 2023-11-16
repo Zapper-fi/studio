@@ -18,7 +18,7 @@ import {
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
-import { MuxContractFactory } from '../contracts';
+import { MuxViemContractFactory } from '../contracts';
 
 interface ReaderAssets {
   symbol: string;
@@ -81,27 +81,32 @@ export function fromWei(n: ethers.BigNumber): BigNumber {
 }
 
 async function getReaderAssets(network: Network, appToolkit: IAppToolkit): Promise<ReaderAssets[]> {
-  const multicall = appToolkit.getMulticall(network);
-  const readerContract = new MuxContractFactory(appToolkit).muxReader({ address: READER_ADDRESS[network], network });
-  const storage = await multicall.wrap(readerContract).callStatic.getChainStorage();
+  const multicall = appToolkit.getViemMulticall(network);
+  const readerContract = new MuxViemContractFactory(appToolkit).muxReader({
+    address: READER_ADDRESS[network],
+    network,
+  });
 
-  return storage[1]
+  const storage = await multicall
+    .wrap(readerContract)
+    .simulate.getChainStorage()
+    .then(v => v.result);
+
+  return storage.assets
     .filter(item => item.tokenAddress !== ZERO_ADDRESS)
-    .map(a => {
-      return {
-        symbol: ethers.utils.parseBytes32String(a.symbol),
-        id: a.id,
-        tokenAddress: a.tokenAddress,
-        decimals: a.decimals,
-        isStable: test64(a.flags.toNumber(), ASSET_IS_STABLE),
-        isTradable: test64(a.flags.toNumber(), ASSET_IS_TRADABLE),
-        isOpenable: test64(a.flags.toNumber(), ASSET_IS_OPENABLE),
-        useStableTokenForProfit: test64(a.flags.toNumber(), ASSET_USE_STABLE_TOKEN_FOR_PROFIT),
-        isEnabled: test64(a.flags.toNumber(), ASSET_IS_ENABLED),
-        minProfitTime: a.minProfitTime,
-        minProfitRate: fromRate(a.minProfitRate),
-      };
-    });
+    .map(a => ({
+      symbol: ethers.utils.parseBytes32String(a.symbol),
+      id: a.id,
+      tokenAddress: a.tokenAddress,
+      decimals: a.decimals,
+      isStable: test64(Number(a.flags), ASSET_IS_STABLE),
+      isTradable: test64(Number(a.flags), ASSET_IS_TRADABLE),
+      isOpenable: test64(Number(a.flags), ASSET_IS_OPENABLE),
+      useStableTokenForProfit: test64(Number(a.flags), ASSET_USE_STABLE_TOKEN_FOR_PROFIT),
+      isEnabled: test64(Number(a.flags), ASSET_IS_ENABLED),
+      minProfitTime: a.minProfitTime,
+      minProfitRate: fromRate(a.minProfitRate),
+    }));
 }
 
 export async function getMarketTokensByNetwork(network: Network, appToolkit: IAppToolkit): Promise<MuxBaseToken[]> {
