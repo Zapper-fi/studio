@@ -218,6 +218,8 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       groupIds: [this.groupId],
     });
 
+    if (defaultContractPositions.length === 0) return [];
+
     if (this.isFetchingDolomiteBalances()) {
       const isolationModeVaults = await getAllIsolationModeTokensFromContractPositions(
         account,
