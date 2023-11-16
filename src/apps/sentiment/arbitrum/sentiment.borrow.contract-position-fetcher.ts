@@ -9,6 +9,7 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
+  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
