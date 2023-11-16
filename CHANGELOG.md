@@ -4,6 +4,62 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.548.0](https://github.com/Zapper-fi/studio/compare/v0.547.2...v0.548.0) (2023-11-16)
+
+
+### Features
+
+* **balancer-v2:** Support Gnosis ([#3031](https://github.com/Zapper-fi/studio/issues/3031)) ([e9da8be](https://github.com/Zapper-fi/studio/commit/e9da8bec689bb43ce5236cf71ac0be1a31875a08))
+
+
+### Bug Fixes
+
+* **origin-dollar-governance:** Fix veOGV underlying balance and combined both veOGV balance and rewards into a veOGV cp ([#3033](https://github.com/Zapper-fi/studio/issues/3033)) ([85f350d](https://github.com/Zapper-fi/studio/commit/85f350d1d93822da0160fd1d273c9e2ac29757da))
+
+## [0.547.2](https://github.com/Zapper-fi/studio/compare/v0.547.1...v0.547.2) (2023-11-15)
+
+
+### Bug Fixes
+
+* **app-toolkit:** Remove duplicate function ([#3048](https://github.com/Zapper-fi/studio/issues/3048)) ([f0cd28d](https://github.com/Zapper-fi/studio/commit/f0cd28d713c3aa45438a66af6edc5ecd3a883846))
+* **morpho:** Fix max debt props ([0adee80](https://github.com/Zapper-fi/studio/commit/0adee80adc96423d3cc630703641c5e43345c455))
+* **morpho:** Fix Morpho position presenter ([41d1e3d](https://github.com/Zapper-fi/studio/commit/41d1e3d2ba1c98f50aba0bc6e59e8358720c20f2))
+
+## [0.547.1](https://github.com/Zapper-fi/studio/compare/v0.547.0...v0.547.1) (2023-11-15)
+
+
+### Bug Fixes
+
+* **morpho:** Fix morpho balance calculation ([c60cdf5](https://github.com/Zapper-fi/studio/commit/c60cdf52c71f3a06d050e6cea28b6c7d0088818d))
+
+## [0.547.0](https://github.com/Zapper-fi/studio/compare/v0.546.4...v0.547.0) (2023-11-15)
+
+
+### Features
+
+* **aura:** Add Aura on Base ([#3030](https://github.com/Zapper-fi/studio/issues/3030)) ([5fc64b8](https://github.com/Zapper-fi/studio/commit/5fc64b8045e5ec1c79613eb5e8e031b320bf24cb))
+
+
+### Bug Fixes
+
+* **mux:** Fix destructure of assets ([#3055](https://github.com/Zapper-fi/studio/issues/3055)) ([510da9c](https://github.com/Zapper-fi/studio/commit/510da9c830cf45dac361b74bc52fcb1424747137))
+* **vector-finance:** Fix failing deposit token call ([#3056](https://github.com/Zapper-fi/studio/issues/3056)) ([1d58ec9](https://github.com/Zapper-fi/studio/commit/1d58ec9106ddde500945df8967b963fa2d3aca02))
+
+## [0.546.4](https://github.com/Zapper-fi/studio/compare/v0.546.3...v0.546.4) (2023-11-15)
+
+
+### Bug Fixes
+
+* **morpho:** Fix regressions on APY calculations ([#3053](https://github.com/Zapper-fi/studio/issues/3053)) ([55690dd](https://github.com/Zapper-fi/studio/commit/55690ddd8eea4c2da2ffa3d43565be061a9ecdce))
+* **raft:** Fix Raft regression ([#3051](https://github.com/Zapper-fi/studio/issues/3051)) ([d79cecf](https://github.com/Zapper-fi/studio/commit/d79cecf5f5c4ab7a25f89c5a27d30f3d0b085a33))
+
+## [0.546.3](https://github.com/Zapper-fi/studio/compare/v0.546.2...v0.546.3) (2023-11-15)
+
+
+### Bug Fixes
+
+* **studio:** Fix PoolTogether community pool fetcher ([#3049](https://github.com/Zapper-fi/studio/issues/3049)) ([0876d47](https://github.com/Zapper-fi/studio/commit/0876d47f515768bf13a51e81a6ec6f416ad48722))
+
 ## [0.546.2](https://github.com/Zapper-fi/studio/compare/v0.546.1...v0.546.2) (2023-11-14)
 
 

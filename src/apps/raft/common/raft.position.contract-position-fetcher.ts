@@ -7,6 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
+  GetDataPropsParams,
+  GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
@@ -39,8 +41,11 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
     return [{ address: this.positionManagerAddress }];
   }
 
-  async getTokenDefinitions({ contract }): Promise<UnderlyingTokenDefinition[]> {
-    const { collateralToken, debtToken } = await contract.read.collateralInfo([this.collateral]);
+  async getTokenDefinitions({
+    contract,
+  }: GetTokenDefinitionsParams<RaftPositionManager>): Promise<UnderlyingTokenDefinition[]> {
+    const [collateralToken, debtToken] = await contract.read.collateralInfo([this.collateral]);
+
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -55,14 +60,15 @@ export abstract class RaftPositionContractPositionFetcher extends ContractPositi
     ];
   }
 
-  async getDataProps({ contractPosition, multicall }) {
+  async getDataProps({ contractPosition, multicall }: GetDataPropsParams<RaftPositionManager, RaftDataProps>) {
     const positionManager = this.raftContractFactory.raftPositionManager({
       address: this.positionManagerAddress,
       network: this.network,
     });
     const liquidiationContractAddress = await multicall
       .wrap(positionManager)
-      .read.splitLiquidationCollateral(this.collateral);
+      .read.splitLiquidationCollateral([this.collateral]);
+
     const liquidationContract = this.raftContractFactory.raftLiquiditation({
       address: liquidiationContractAddress,
       network: this.network,

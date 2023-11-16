@@ -43,10 +43,6 @@ export interface IAppToolkit {
     ...appTokenDefinition: AppGroupsDefinition[]
   ): Promise<AppTokenPosition<T>[]>;
 
-  getAppTokenPositionsFromDatabase<T = DefaultDataProps>(
-    ...appTokenDefinition: AppGroupsDefinition[]
-  ): Promise<AppTokenPosition<T>[]>;
-
   getAppContractPositions<T = DefaultDataProps>(
     ...appTokenDefinition: AppGroupsDefinition[]
   ): Promise<ContractPosition<T>[]>;

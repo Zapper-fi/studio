@@ -74,8 +74,8 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
       poolBuilders.map(({ address, blockNumber }) =>
         this.logProvider.getPoolWithMultipleWinnersBuilderLogs({
           fromBlock: blockNumber,
-          address,
           network: this.network,
+          address,
         }),
       ),
     );
@@ -84,17 +84,16 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
     const definitions = await Promise.all(
       builderLogs.flatMap(logs =>
         flatMap(logs, (logsForType, type: PoolWithMultipleWinnersBuilderCreatedType) =>
-          logsForType.map(async log => {
-            const prizePool = log.args[0].toLowerCase();
-            const prizeStrategy = log.args[1].toLowerCase();
-            const contract = multicall.wrap(
-              this.contractFactory.poolTogetherV3MultipleWinners({
-                network: this.network,
-                address: prizeStrategy,
-              }),
-            );
+          logsForType.map(async ({ prizePool, prizeStrategy }) => {
+            const contract = this.contractFactory.poolTogetherV3MultipleWinners({
+              network: this.network,
+              address: prizeStrategy,
+            });
 
-            const ticketAddress = await contract.read.ticket().then(addr => addr.toLowerCase());
+            const ticketAddress = await multicall
+              .wrap(contract)
+              .read.ticket()
+              .then(addr => addr.toLowerCase());
 
             return {
               type,

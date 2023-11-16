@@ -41,9 +41,18 @@ export class PoolTogetherV3LogProvider {
     ]);
 
     return {
-      [PoolWithMultipleWinnersBuilderCreatedType.STAKE]: stakeLogs,
-      [PoolWithMultipleWinnersBuilderCreatedType.COMPOUND]: compoundLogs,
-      [PoolWithMultipleWinnersBuilderCreatedType.YIELD]: yieldLogs,
+      [PoolWithMultipleWinnersBuilderCreatedType.STAKE]: stakeLogs.map(log => ({
+        prizePool: log.args.prizePool!,
+        prizeStrategy: log.args.prizeStrategy!,
+      })),
+      [PoolWithMultipleWinnersBuilderCreatedType.COMPOUND]: compoundLogs.map(log => ({
+        prizePool: log.args.prizePool!,
+        prizeStrategy: log.args.prizeStrategy!,
+      })),
+      [PoolWithMultipleWinnersBuilderCreatedType.YIELD]: yieldLogs.map(log => ({
+        prizePool: log.args.prizePool!,
+        prizeStrategy: log.args.prizeStrategy!,
+      })),
     };
   }
 }
