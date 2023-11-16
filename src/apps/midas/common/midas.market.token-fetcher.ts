@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
+import { Abi, BaseError, ContractFunctionRevertedError, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -79,7 +79,18 @@ export abstract class MidasMarketTokenFetcher<
     const definitions = await Promise.all(
       poolIndexes.map(async poolId => {
         const { comptroller, name } = await this.getPool(poolDirectory, poolId);
-        const marketAddresses = await this.getMarketTokenAddresses(poolLens, comptroller);
+        const marketAddresses = await this.getMarketTokenAddresses(poolLens, comptroller).catch(e => {
+          if (e instanceof BaseError) {
+            const err = e.walk((e: Error) => e instanceof ContractFunctionRevertedError);
+
+            if (err) {
+              const reason = (err as ContractFunctionRevertedError).reason;
+              if (reason === 'Not implemented') return [];
+            }
+          }
+
+          throw e;
+        });
 
         return marketAddresses.map(marketAddress => ({
           address: marketAddress.toLowerCase(),

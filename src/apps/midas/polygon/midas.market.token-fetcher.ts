@@ -20,7 +20,7 @@ export class PolygonMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
   groupLabel = 'Lending';
 
   poolDirectoryAddress = '0x9a161e68ec0d5364f4d09a6080920daff6fff250';
-  poolLensAddress = '0xd94ca960132557385e9ad993c69cc22a3344c2e7';
+  poolLensAddress = '0x16d8c0ee982d5219285b1042d3675a6d9e247f9d';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -59,7 +59,6 @@ export class PolygonMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
 
   async getMarketTokenAddresses(contract: MidasPoolLensContract, poolAddress: string): Promise<string[]> {
     const assets = await contract.simulate.getPoolAssetsWithData([poolAddress]).then(v => v.result);
-
     return assets.map(asset => asset.cToken);
   }
 
