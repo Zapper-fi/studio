@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.550.2](https://github.com/Zapper-fi/studio/compare/v0.550.1...v0.550.2) (2023-11-17)
+
+
+### Bug Fixes
+
+* **dopex:** Catch error for calling optionValue ([#3065](https://github.com/Zapper-fi/studio/issues/3065)) ([590183c](https://github.com/Zapper-fi/studio/commit/590183c0aa0550c32b817b9f37699d4346f69f0a))
+
 ## [0.550.1](https://github.com/Zapper-fi/studio/compare/v0.550.0...v0.550.1) (2023-11-16)
 
 
