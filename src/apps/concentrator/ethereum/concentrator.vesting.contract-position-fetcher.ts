@@ -57,9 +57,11 @@ export class EthereumConcentratorVestingContractPositionFetcher extends Contract
     contract,
   }: GetTokenBalancesParams<AladdinConcentratorVest, DefaultDataProps>): Promise<BigNumberish[]> {
     const claimable = (await contract.read.getUserVest([address])).reduce(
-      (claimable: BigNumber, current) => claimable.add(current[0].sub(current[1])),
+      (claimable: BigNumber, current) =>
+        claimable.add(BigNumber.from(current.vestingAmount).sub(current.claimedAmount)),
       BigNumber.from(0),
     );
+
     return Promise.all([contract.read.locked([address]), claimable]);
   }
 }
