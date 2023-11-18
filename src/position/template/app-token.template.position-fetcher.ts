@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import _, { isEqual, isUndefined, uniqWith, compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
+import { BigNumberish } from 'ethers/lib/ethers';
+import _, { isEqual, isUndefined, uniqWith, compact, isArray, sortBy, sum } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { DEAD_ADDRESS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -11,11 +12,12 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ViemMulticallDataLoader } from '~multicall';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition, isNonFungibleToken, NonFungibleToken, Token } from '~position/position.interface';
+import { AppTokenPosition, isNonFungibleToken, Token } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import {
@@ -32,8 +34,6 @@ import {
   UnderlyingTokenDefinition,
 } from './app-token.template.types';
 import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
-import { isViemMulticallUnderlyingError } from '~multicall/errors';
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Abi,

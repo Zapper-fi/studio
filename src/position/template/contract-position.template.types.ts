@@ -1,6 +1,6 @@
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
-import { ViemMulticallDataLoader } from '~multicall';
 
+import { ViemMulticallDataLoader } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
