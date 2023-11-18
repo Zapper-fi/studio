@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.550.3](https://github.com/Zapper-fi/studio/compare/v0.550.2...v0.550.3) (2023-11-18)
+
+
+### Bug Fixes
+
+* **concentrator:** Fix vesting amount claimable ([e108790](https://github.com/Zapper-fi/studio/commit/e108790e9045b3fe7ad49e18222c4a4d4c68bbd7))
+
 ## [0.550.2](https://github.com/Zapper-fi/studio/compare/v0.550.1...v0.550.2) (2023-11-17)
 
 
