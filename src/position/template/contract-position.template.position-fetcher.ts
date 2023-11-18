@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import { BigNumberish } from 'ethers/lib/ethers';
 import _, { compact, sumBy } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -28,7 +29,6 @@ import {
   UnderlyingTokenDefinition,
 } from './contract-position.template.types';
 import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export abstract class ContractPositionTemplatePositionFetcher<
   T extends Abi,
