@@ -3,9 +3,8 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { RawTokenBalance } from '~position/position-balance.interface';
 
-import { RariFuseSupplyTokenDataProps, RariFuseSupplyTokenFetcher } from '../common/rari-fuse.supply.token-fetcher';
+import { RariFuseSupplyTokenFetcher } from '../common/rari-fuse.supply.token-fetcher';
 import { RariFuseViemContractFactory } from '../contracts';
 import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
 import { RariFuseComptrollerContract } from '../contracts/viem/RariFuseComptroller';
@@ -68,25 +67,11 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
     return contract.read.supplyRatePerBlock();
   }
 
-  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
-    const lens = this.getLensContract(this.lensAddress);
-    const [, comptrollers] = await lens.read.getPoolsBySupplier([address]);
-    const participatedComptrollers = comptrollers.map(t => t.comptroller.toLowerCase());
-
-    const multicall = this.appToolkit.getViemMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<RariFuseSupplyTokenDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    return Promise.all(
-      appTokens
-        .filter(v => participatedComptrollers.includes(v.dataProps.comptroller))
-        .map(async appToken => {
-          const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-          return { key: this.appToolkit.getPositionKey(appToken), balance: balanceRaw.toString() };
-        }),
-    );
+  async getPoolsBySupplier(
+    address: string,
+    contract: RariFusePoolLensContract,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]> {
+    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
+    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
   }
 }
