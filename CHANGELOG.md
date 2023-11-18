@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.551.0](https://github.com/Zapper-fi/studio/compare/v0.550.3...v0.551.0) (2023-11-18)
+
+
+### Features
+
+* **studio:** Revert removal of overrides for get raw balances and get balance per token ([#3068](https://github.com/Zapper-fi/studio/issues/3068)) ([e54c8a3](https://github.com/Zapper-fi/studio/commit/e54c8a379fbaa495524c4a12a82c4b916fc7ab90))
+
 ## [0.550.3](https://github.com/Zapper-fi/studio/compare/v0.550.2...v0.550.3) (2023-11-18)
 
 
