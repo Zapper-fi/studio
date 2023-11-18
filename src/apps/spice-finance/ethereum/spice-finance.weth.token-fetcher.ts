@@ -1,8 +1,12 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish, constants } from 'ethers';
+import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc721 } from '~contract/contracts/viem';
+import { ViemMulticallDataLoader } from '~multicall';
+import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -78,5 +82,34 @@ export class EthereumSpiceFinanceWethTokenFetcher extends AppTokenTemplatePositi
 
   async getDecimals(_params: GetDataPropsParams<Erc721>): Promise<number> {
     return 0;
+  }
+
+  async getBalancePerToken({
+    address,
+  }: {
+    address: string;
+    appToken: AppTokenPosition;
+    multicall: ViemMulticallDataLoader;
+  }): Promise<BigNumberish> {
+    const vault = this.spiceFinanceContractFactory.spiceFinanceNftVault({
+      address: this.vaultAddress,
+      network: this.network,
+    });
+
+    const balances = await Promise.all(
+      range(1, 555).map(async i => {
+        const owner = await vault.read.ownerOf([BigInt(i)]);
+
+        if (owner.toLowerCase() === address.toLowerCase()) {
+          const shares = await vault.read.tokenShares([BigInt(i)]);
+          const assets = await vault.read.convertToAssets([shares]);
+          return assets;
+        }
+
+        return 0;
+      }),
+    );
+
+    return balances.reduce((acc, curr) => acc.add(curr), constants.Zero);
   }
 }
