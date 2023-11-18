@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.552.0](https://github.com/Zapper-fi/studio/compare/v0.551.0...v0.552.0) (2023-11-18)
+
+
+### Features
+
+* **beethoven-x:** Update subgraph URL and factories ([8c10d4a](https://github.com/Zapper-fi/studio/commit/8c10d4a6a6df34ed6f918b48b20bb681d1d7fd53))
+
+
+### Bug Fixes
+
+* **studio:** Fix lint ([0a3accd](https://github.com/Zapper-fi/studio/commit/0a3accd1ffdc2ff0ec078094f7d268611a2a7f83))
+
 ## [0.551.0](https://github.com/Zapper-fi/studio/compare/v0.550.3...v0.551.0) (2023-11-18)
 
 
