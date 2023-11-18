@@ -8,6 +8,7 @@ import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/displa
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode } from '~position/display.interface';
+import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -146,5 +147,27 @@ export abstract class RariFuseSupplyTokenFetcher<
 
   async getBalanceDisplayMode() {
     return BalanceDisplayMode.UNDERLYING;
+  }
+
+  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
+    const lens = this.getLensContract(this.lensAddress);
+    const [, comptrollers] = await this.getPoolsBySupplier(address, lens);
+    const participatedComptrollers = comptrollers.map(t => t.comptroller.toLowerCase());
+
+    const multicall = this.appToolkit.getViemMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions<RariFuseSupplyTokenDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    return Promise.all(
+      appTokens
+        .filter(v => participatedComptrollers.includes(v.dataProps.comptroller))
+        .map(async appToken => {
+          const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+          return { key: this.appToolkit.getPositionKey(appToken), balance: balanceRaw.toString() };
+        }),
+    );
   }
 }

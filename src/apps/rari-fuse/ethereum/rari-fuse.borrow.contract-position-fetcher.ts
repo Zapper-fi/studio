@@ -71,12 +71,11 @@ export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorro
     return contract.read.borrowBalanceCurrent([address]);
   }
 
-  getPoolsBySupplier(
+  async getPoolsBySupplier(
     address: string,
     contract: RariFusePoolLensContract,
   ): Promise<[BigNumberish[], { comptroller: string }[]]> {
-    return contract.read
-      .getPoolsBySupplier([address])
-      .then(([pools, comptrollers]) => [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))]);
+    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
+    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
   }
 }
