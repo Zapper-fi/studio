@@ -68,18 +68,10 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
     return contract.read.supplyRatePerBlock();
   }
 
-  async getPoolsBySupplier(
-    address: string,
-    contract: RariFusePoolLensContract,
-  ): Promise<[BigNumberish[], { comptroller: string }[]]> {
-    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
-    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
-  }
-
   async getRawBalances(address: string): Promise<RawTokenBalance[]> {
     const lens = this.getLensContract(this.lensAddress);
-    const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
-    const participatedComptrollers = poolsBySupplier[1].map(t => t.comptroller.toLowerCase());
+    const [, comptrollers] = await lens.read.getPoolsBySupplier([address]);
+    const participatedComptrollers = comptrollers.map(t => t.comptroller.toLowerCase());
 
     const multicall = this.appToolkit.getViemMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions<RariFuseSupplyTokenDataProps>({
