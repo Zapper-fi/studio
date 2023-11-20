@@ -46,23 +46,6 @@ export const POOL_WITH_MULTIPLE_WINNERS_BUILDERS: Partial<Record<Network, { addr
         blockNumber: 6114878,
       },
     ],
-    [Network.GNOSIS_MAINNET]: [
-      // 3.4.3
-      {
-        address: '0xce7ff1e49e16f3ad30b23a04eda62f18d8f6d186',
-        blockNumber: 17105628,
-      },
-      // 3.3.5
-      {
-        address: '0xa6d1c81a07c080d11a39f151e0ae69543a20e6e5',
-        blockNumber: 15077726,
-      },
-      // 3.3.0
-      {
-        address: '0xb1d89477d1b505c261bab6e73f08fa834544cd21',
-        blockNumber: 14847369,
-      },
-    ],
     [Network.POLYGON_MAINNET]: [
       // 3.4.3
       {
