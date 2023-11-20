@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -6,10 +7,9 @@ import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/tem
 
 import { TeahouseViemContractFactory } from '../contracts';
 import { TeahouseVault } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositionFetcher<TeahouseVault> {
-  fromBlock: number | null;
+  fromBlock: number;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -32,13 +32,15 @@ export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositio
     const globalState = await contract.read.globalState();
     const currentIndex = globalState[2];
 
-    const enterNextCycleEvent = await contract.getEvents.EnterNextCycle(
+    const enterNextCycleEvents = await contract.getEvents.EnterNextCycle(
       { cycleIndex: currentIndex - 1 },
-      { fromBlock: this.fromBlock ? BigInt(this.fromBlock) : undefined, toBlock: 'latest' },
+      { fromBlock: BigInt(this.fromBlock), toBlock: 'latest' },
     );
 
-    const priceNumerator = enterNextCycleEvent[0].args.priceNumerator;
-    const priceDenominator = enterNextCycleEvent[0].args.priceDenominator;
+    if (!enterNextCycleEvents.length) return [0];
+
+    const priceNumerator = enterNextCycleEvents[0].args.priceNumerator;
+    const priceDenominator = enterNextCycleEvents[0].args.priceDenominator;
     const pricePerShare =
       BigNumber.from(priceNumerator)
         .mul('1' + '0'.repeat(shareDecimals))
@@ -46,6 +48,7 @@ export abstract class TeahouseVaultsTokenFetcher extends AppTokenTemplatePositio
         .div(BigNumber.from(priceDenominator))
         .div('1' + '0'.repeat(assetDecimals))
         .toNumber() / 100000000;
+
     return [pricePerShare];
   }
 }

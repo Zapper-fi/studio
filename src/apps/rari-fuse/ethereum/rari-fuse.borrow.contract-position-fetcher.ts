@@ -1,16 +1,16 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { RariFuseBorrowContractPositionFetcher } from '../common/rari-fuse.borrow.contract-position-fetcher';
-import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
 import { RariFuseViemContractFactory } from '../contracts';
-import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
+import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
 import { RariFuseComptrollerContract } from '../contracts/viem/RariFuseComptroller';
-import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 import { RariFusePoolLensContract } from '../contracts/viem/RariFusePoolLens';
+import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
+import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 
 @PositionTemplate()
 export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
@@ -71,12 +71,11 @@ export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorro
     return contract.read.borrowBalanceCurrent([address]);
   }
 
-  getPoolsBySupplier(
+  async getPoolsBySupplier(
     address: string,
     contract: RariFusePoolLensContract,
   ): Promise<[BigNumberish[], { comptroller: string }[]]> {
-    return contract.read
-      .getPoolsBySupplier([address])
-      .then(([pools, comptrollers]) => [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))]);
+    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
+    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
   }
 }

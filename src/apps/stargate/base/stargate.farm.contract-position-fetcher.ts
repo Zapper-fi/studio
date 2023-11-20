@@ -8,9 +8,8 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.contract-position-fetcher';
-import { StargateChefBase } from '../contracts/viem';
 import { StargateFarmBaseContractPositionFetcher } from '../common/stargate.farm-base.contract-position-fetcher';
+import { StargateChefBase } from '../contracts/viem';
 import { StargateChefBaseContract } from '../contracts/viem/StargateChefBase';
 
 @PositionTemplate()

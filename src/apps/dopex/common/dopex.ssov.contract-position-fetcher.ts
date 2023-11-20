@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
-import { BigNumberish, Contract, ethers } from 'ethers';
+import { BigNumberish, ethers } from 'ethers';
 import { isArray, range } from 'lodash';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -18,8 +19,6 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { DopexViemContractFactory } from '../contracts';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
-import { DopexDpxSsov } from '../contracts/viem';
 import { DopexDpxSsovContract } from '../contracts/viem/DopexDpxSsov';
 
 export type DopexSsovDefinition = {

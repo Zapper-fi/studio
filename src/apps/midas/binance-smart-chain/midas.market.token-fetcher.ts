@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -7,8 +7,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { FusePoolStruct, MidasMarketTokenFetcher } from '../common/midas.market.token-fetcher';
 import { MidasViemContractFactory } from '../contracts';
 import { MidasCErc20Token, MidasPoolDirectory, MidasPoolLens } from '../contracts/viem';
-import { MidasPoolDirectoryContract } from '../contracts/viem/MidasPoolDirectory';
 import { MidasCErc20TokenContract } from '../contracts/viem/MidasCErc20Token';
+import { MidasPoolDirectoryContract } from '../contracts/viem/MidasPoolDirectory';
 import { MidasPoolLensContract } from '../contracts/viem/MidasPoolLens';
 
 @PositionTemplate()
@@ -20,7 +20,7 @@ export class BinanceSmartChainMidasMarketTokenFetcher extends MidasMarketTokenFe
   groupLabel = 'Lending';
 
   poolDirectoryAddress = '0x295d7347606f4bd810c8296bb8d75d657001fcf7';
-  poolLensAddress = '0x6f4e0b5405f3751f7327cf8095004c34fc307f55';
+  poolLensAddress = '0x2d3c31e38d3ad71571b1406639003a6648481628';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -59,7 +59,6 @@ export class BinanceSmartChainMidasMarketTokenFetcher extends MidasMarketTokenFe
 
   async getMarketTokenAddresses(contract: MidasPoolLensContract, poolAddress: string): Promise<string[]> {
     const assets = await contract.simulate.getPoolAssetsWithData([poolAddress]).then(v => v.result);
-
     return assets.map(asset => asset.cToken);
   }
 

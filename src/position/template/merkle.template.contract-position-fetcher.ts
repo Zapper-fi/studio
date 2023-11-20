@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Contract } from 'ethers';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -9,7 +9,6 @@ import { isClaimable } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from './contract-position.template.types';
-import { Abi } from 'viem';
 
 export type MerkleContractPositionDefinition = {
   address: string;

@@ -1,4 +1,5 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
@@ -10,7 +11,6 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from './contract-position.template.types';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export abstract class VotingEscrowTemplateContractPositionFetcher<
   T extends Abi,

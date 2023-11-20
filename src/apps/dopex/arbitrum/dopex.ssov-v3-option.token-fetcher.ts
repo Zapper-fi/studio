@@ -4,6 +4,7 @@ import { compact } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -98,7 +99,11 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPrice({ appToken, contract }: GetPriceParams<DopexOptionToken>): Promise<number> {
-    const optionValueRaw = await contract.read.optionValue();
+    const optionValueRaw = await contract.read.optionValue().catch(err => {
+      if (isViemMulticallUnderlyingError(err)) return BigInt(0);
+      throw err;
+    });
+
     const optionValue = Number(optionValueRaw);
 
     return optionValue !== 0 ? optionValue / 10 ** appToken.decimals : 0;

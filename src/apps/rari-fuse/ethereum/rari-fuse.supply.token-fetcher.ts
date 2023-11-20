@@ -7,10 +7,10 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { RariFuseSupplyTokenFetcher } from '../common/rari-fuse.supply.token-fetcher';
 import { RariFuseViemContractFactory } from '../contracts';
 import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
-import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
 import { RariFuseComptrollerContract } from '../contracts/viem/RariFuseComptroller';
-import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 import { RariFusePoolLensContract } from '../contracts/viem/RariFusePoolLens';
+import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
+import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 
 @PositionTemplate()
 export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetcher<
@@ -67,12 +67,11 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
     return contract.read.supplyRatePerBlock();
   }
 
-  getPoolsBySupplier(
+  async getPoolsBySupplier(
     address: string,
     contract: RariFusePoolLensContract,
   ): Promise<[BigNumberish[], { comptroller: string }[]]> {
-    return contract.read
-      .getPoolsBySupplier([address])
-      .then(([pools, comptrollers]) => [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))]);
+    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
+    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
   }
 }

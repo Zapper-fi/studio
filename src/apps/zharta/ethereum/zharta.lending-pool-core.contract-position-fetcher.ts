@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -15,7 +16,6 @@ import {
 
 import { ZhartaViemContractFactory } from '../contracts';
 import { ZhartaLendingPoolCore } from '../contracts/viem';
-import { BigNumber } from 'ethers';
 
 interface ZhartaLendingPoolCoreContractPositionDefinition extends DefaultContractPositionDefinition {
   type: 'LENDING_POOL_CORE';

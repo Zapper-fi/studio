@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -10,6 +11,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts/viem';
+import { ViemMulticallDataLoader } from '~multicall';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -23,8 +25,6 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { PancakeswapViemContractFactory } from '../contracts';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
-import { ViemMulticallDataLoader } from '~multicall';
 
 export type PancakeswapPoolTokenDataProps = DefaultAppTokenDataProps & {
   swapAddress: string;

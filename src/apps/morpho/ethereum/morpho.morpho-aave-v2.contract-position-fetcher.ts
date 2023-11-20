@@ -1,14 +1,23 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
+import {
+  MorphoContractPositionDataProps,
+  MorphoContractPositionDefinition,
+  MorphoSupplyContractPositionFetcher,
+} from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoViemContractFactory } from '~apps/morpho/contracts';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
-import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
+
 import { MorphoAaveV2 } from '../contracts/viem';
 
 @PositionTemplate()
@@ -52,7 +61,11 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
     );
   }
 
-  async getDataProps({ contractPosition, multicall, definition }) {
+  async getDataProps({
+    contractPosition,
+    multicall,
+    definition,
+  }: GetDataPropsParams<MorphoAaveV2, MorphoContractPositionDataProps, MorphoContractPositionDefinition>) {
     const lens = this.contractFactory.morphoAaveV2Lens({ address: this.lensAddress, network: this.network });
     const lensContract = multicall.wrap(lens);
     const marketAddress = definition.marketAddress;
@@ -67,17 +80,17 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
       ]);
 
     const secondsPerYear = 3600 * 24 * 365;
-    const supplyRate = supplyRateRaw.avgSupplyRatePerYear;
-    const borrowRate = borrowRateRaw.avgBorrowRatePerYear;
+    const supplyRate = BigNumber.from(supplyRateRaw[0]);
+    const borrowRate = BigNumber.from(borrowRateRaw[0]);
     const supplyApy = Math.pow(1 + +formatUnits(supplyRate.div(secondsPerYear), 27), secondsPerYear) - 1;
     const borrowApy = Math.pow(1 + +formatUnits(borrowRate.div(secondsPerYear), 27), secondsPerYear) - 1;
-    const p2pDisabled = marketConfiguration.isP2PDisabled;
+    const p2pDisabled = marketConfiguration[2];
 
     const underlyingToken = contractPosition.tokens[0];
-    const supplyRaw = totalMarketSupplyRaw.p2pSupplyAmount.add(totalMarketSupplyRaw.poolSupplyAmount);
+    const supplyRaw = BigNumber.from(totalMarketSupplyRaw[0]).add(totalMarketSupplyRaw[1]);
     const supply = +formatUnits(supplyRaw, underlyingToken.decimals);
     const supplyUSD = supply * underlyingToken.price;
-    const borrowRaw = totalMarketBorrowRaw.p2pBorrowAmount.add(totalMarketBorrowRaw.poolBorrowAmount);
+    const borrowRaw = BigNumber.from(totalMarketBorrowRaw[0]).add(totalMarketBorrowRaw[1]);
     const matchedUSD = +formatUnits(borrowRaw, underlyingToken.decimals) * underlyingToken.price;
     const borrow = +formatUnits(borrowRaw, underlyingToken.decimals);
     const borrowUSD = borrow * underlyingToken.price;
@@ -97,15 +110,20 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends MorphoSup
     };
   }
 
-  async getTokenBalancesPerPosition({ address, contractPosition, multicall }): Promise<BigNumber[]> {
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    multicall,
+  }: GetTokenBalancesParams<MorphoAaveV2, MorphoContractPositionDataProps>): Promise<BigNumberish[]> {
     const lens = multicall.wrap(
       this.contractFactory.morphoAaveV2Lens({ address: this.lensAddress, network: this.network }),
     );
 
-    const [{ totalBalance: supplyRaw }, { totalBalance: borrowRaw }] = await Promise.all([
-      lens.getCurrentSupplyBalanceInOf(contractPosition.dataProps.marketAddress, address),
-      lens.getCurrentBorrowBalanceInOf(contractPosition.dataProps.marketAddress, address),
+    const [[, , supplyRaw], [, , borrowRaw]] = await Promise.all([
+      lens.read.getCurrentSupplyBalanceInOf([contractPosition.dataProps.marketAddress, address]),
+      lens.read.getCurrentBorrowBalanceInOf([contractPosition.dataProps.marketAddress, address]),
     ]);
+
     return [supplyRaw, borrowRaw];
   }
 }

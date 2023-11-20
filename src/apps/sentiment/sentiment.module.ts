@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumSentimentBorrowContractPositionFetcher } from './arbitrum/sentiment.borrow.contract-position-fetcher';
-import { ArbitrumSentimentSupplyTokenFetcher } from './arbitrum/sentiment.supply.token-fetcher';
+import { ArbitrumSentimentSupplyContractPositionFetcher } from './arbitrum/sentiment.supply.contract-position-fetcher';
 import { SentimentAccountsResolver } from './common/sentiment.accounts-resolver';
 import { SentimentViemContractFactory } from './contracts';
 
@@ -11,7 +11,7 @@ import { SentimentViemContractFactory } from './contracts';
   providers: [
     SentimentViemContractFactory,
     SentimentAccountsResolver,
-    ArbitrumSentimentSupplyTokenFetcher,
+    ArbitrumSentimentSupplyContractPositionFetcher,
     ArbitrumSentimentBorrowContractPositionFetcher,
   ],
 })

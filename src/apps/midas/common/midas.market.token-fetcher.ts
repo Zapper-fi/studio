@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, BaseError, ContractFunctionRevertedError, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -16,8 +17,6 @@ import {
   GetDisplayPropsParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type MidasMarketTokenDataProps = DefaultAppTokenDataProps & {
   marketName: string;
@@ -80,7 +79,18 @@ export abstract class MidasMarketTokenFetcher<
     const definitions = await Promise.all(
       poolIndexes.map(async poolId => {
         const { comptroller, name } = await this.getPool(poolDirectory, poolId);
-        const marketAddresses = await this.getMarketTokenAddresses(poolLens, comptroller);
+        const marketAddresses = await this.getMarketTokenAddresses(poolLens, comptroller).catch(e => {
+          if (e instanceof BaseError) {
+            const err = e.walk((e: Error) => e instanceof ContractFunctionRevertedError);
+
+            if (err) {
+              const reason = (err as ContractFunctionRevertedError).reason;
+              if (reason === 'Not implemented') return [];
+            }
+          }
+
+          throw e;
+        });
 
         return marketAddresses.map(marketAddress => ({
           address: marketAddress.toLowerCase(),

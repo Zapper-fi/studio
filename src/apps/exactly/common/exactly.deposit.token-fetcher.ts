@@ -1,6 +1,4 @@
-import { BigNumber, constants } from 'ethers';
-
-import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
+import type { GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 import type { ExactlyMarketDefinition } from '../common/exactly.definitions-resolver';
 import { type ExactlyMarketProps, ExactlyTokenFetcher } from '../common/exactly.token-fetcher';

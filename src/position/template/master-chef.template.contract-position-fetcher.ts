@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { isArray, range, sum } from 'lodash';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
@@ -7,7 +7,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -98,7 +99,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
     const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex, multicall).catch(
       err => {
-        if (isMulticallUnderlyingError(err)) return null;
+        if (isViemMulticallUnderlyingError(err)) return null;
         throw err;
       },
     );

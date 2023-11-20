@@ -9,14 +9,16 @@ import {
   encodeFunctionData,
   getAbiItem,
   getFunctionSignature,
+  isAddress,
 } from 'viem';
 
 import { MulticallContract } from '~contract/contracts/viem/Multicall';
+import { MulticallWrappedInvalidAddressError } from '~multicall/errors/multicall.address.error';
 import { MulticallWrappedReadRequestError } from '~multicall/errors/multicall.request.error';
 import { DEFAULT_DATALOADER_OPTIONS } from '~multicall/multicall.constants';
+import { MulticallCallStruct } from '~multicall/multicall.types';
 
 import { MulticallWrappedReadDecodeError } from '../errors/multicall.decode.error';
-import { MulticallCallStruct } from '~multicall/multicall.types';
 
 declare module 'abitype' {
   export interface Config {
@@ -63,14 +65,13 @@ export class ViemMulticallDataLoader {
   }
 
   async doCalls(calls: ContractCall[]): Promise<ReadContractReturnType[]> {
-    const callRequests = calls.map(call => ({
-      target: call.address,
-      callData: encodeFunctionData({
-        abi: call.abi,
-        args: call.args,
-        functionName: call.functionName,
-      }),
-    }));
+    const callRequests = calls.map(({ address, abi, functionName, args, stack }) => {
+      if (!isAddress(address))
+        throw new MulticallWrappedInvalidAddressError({ signature: functionName, args: args, stack: stack });
+
+      const callData = encodeFunctionData({ abi, functionName, args });
+      return { target: address, callData };
+    });
 
     if (this.beforeCallHook) this.beforeCallHook(calls, callRequests);
     const { result: res } = await this.multicall.simulate.aggregate([callRequests, false]);
@@ -109,7 +110,7 @@ export class ViemMulticallDataLoader {
 
     const readProxy = new Proxy(contract, {
       get: (target, functionName: string) => {
-        return (args: any[]) => this.load({ abi, address, functionName, args, stack });
+        return (args: any[] = []) => this.load({ abi, address, functionName, args, stack });
       },
     });
 

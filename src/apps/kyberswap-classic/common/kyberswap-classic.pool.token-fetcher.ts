@@ -6,8 +6,8 @@ import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/commo
 
 import { KyberswapClassicViemContractFactory } from '../contracts';
 import { KyberSwapClassicFactory, KyberSwapClassicPool } from '../contracts/viem';
-import { KyberSwapClassicPoolContract } from '../contracts/viem/KyberSwapClassicPool';
 import { KyberSwapClassicFactoryContract } from '../contracts/viem/KyberSwapClassicFactory';
+import { KyberSwapClassicPoolContract } from '../contracts/viem/KyberSwapClassicPool';
 
 export abstract class KyberSwapClassicPoolTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
   KyberSwapClassicPool,

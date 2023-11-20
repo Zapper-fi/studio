@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import _, { range } from 'lodash';
 import { duration } from 'moment';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -20,7 +21,6 @@ import {
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveGaugeV6 } from '../contracts/viem/CurveGaugeV6';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export type CurvePoolGaugeDataProps = {
   liquidity: number;
@@ -156,7 +156,7 @@ export abstract class CurvePoolGaugeV6ContractPositionFetcher<
 
     const inflationRateRaw = await contract.read.inflation_rate();
     const workingSupplyRaw = await contract.read.working_supply();
-    const relativeWeightRaw = await multicall.wrap(controller)['gauge_relative_weight(address)'](address);
+    const relativeWeightRaw = await multicall.wrap(controller).read.gauge_relative_weight([address]);
 
     const inflationRate = Number(inflationRateRaw) / 10 ** 18;
     const workingSupply = Number(workingSupplyRaw) / 10 ** 18;

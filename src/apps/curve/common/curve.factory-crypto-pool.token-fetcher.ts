@@ -5,6 +5,7 @@ import { isViemMulticallUnderlyingError } from '~multicall/errors';
 
 import { CurveViemContractFactory } from '../contracts';
 import { CurveCryptoFactory } from '../contracts/viem';
+import { CurveCryptoFactoryContract } from '../contracts/viem/CurveCryptoFactory';
 
 import {
   CurvePoolDynamicTokenFetcher,
@@ -16,7 +17,6 @@ import {
   ResolveTokenAddressParams,
 } from './curve.pool-dynamic.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
-import { CurveCryptoFactoryContract } from '../contracts/viem/CurveCryptoFactory';
 
 export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynamicTokenFetcher<CurveCryptoFactory> {
   constructor(

@@ -11,11 +11,9 @@ import {
   GetPricePerShareParams,
   DefaultAppTokenDataProps,
   GetDisplayPropsParams,
-  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceGlpVaultAddress } from '../common/umami-finance.constants';
-import { UmamiFinanceYieldResolver } from '../common/umami-finance.yield-resolver';
 import { UmamiFinanceViemContractFactory } from '../contracts';
 import { UmamiFinanceGlpVault } from '../contracts/viem/UmamiFinanceGlpVault';
 
@@ -35,8 +33,6 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceYieldResolver)
-    private readonly yieldResolver: UmamiFinanceYieldResolver,
     @Inject(UmamiFinanceViemContractFactory)
     private readonly umamiFinanceContractFactory: UmamiFinanceViemContractFactory,
   ) {
@@ -92,11 +88,5 @@ export class ArbitrumUmamiFinanceGlpVaultsTokenFetcher extends AppTokenTemplateP
     UmamiFinanceGlpVaultAppTokenDefinition
   >): Promise<string[]> {
     return [getTokenImg(appToken.address, this.network)];
-  }
-
-  async getApy(
-    _params: GetDataPropsParams<UmamiFinanceGlpVault, DefaultAppTokenDataProps, UmamiFinanceGlpVaultAppTokenDefinition>,
-  ): Promise<number> {
-    return this.yieldResolver.getVaultYield(_params.address);
   }
 }

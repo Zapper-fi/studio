@@ -25,7 +25,7 @@ import {
   DOLOMITE_MARGIN_ADDRESSES,
 } from '~apps/dolomite/common/utils';
 import { DolomiteViemContractFactory } from '~apps/dolomite/contracts';
-import { IMulticallWrapper, ViemMulticallDataLoader } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import {
@@ -37,6 +37,7 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
+
 import { DolomiteMargin } from '../contracts/viem';
 
 type MarginAccountsResponseType = {
@@ -216,6 +217,8 @@ export abstract class DolomiteContractPositionTemplatePositionFetcher extends Cu
       network: this.network,
       groupIds: [this.groupId],
     });
+
+    if (defaultContractPositions.length === 0) return [];
 
     if (this.isFetchingDolomiteBalances()) {
       const isolationModeVaults = await getAllIsolationModeTokensFromContractPositions(

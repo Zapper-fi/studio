@@ -9,7 +9,7 @@ import {
   MorphoContractPositionDefinition,
   MorphoSupplyContractPositionFetcher,
 } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
-import { MorphoAaveV3, MorphoAToken, Pool } from '~apps/morpho/contracts/viem';
+import { MorphoAaveV3 } from '~apps/morpho/contracts/viem';
 import { MorphoAaveMath, SECONDS_PER_YEAR } from '~apps/morpho/utils/AaveV3.maths';
 import P2PInterestRates from '~apps/morpho/utils/P2PInterestRates';
 import {
@@ -17,6 +17,7 @@ import {
   GetDefinitionsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
+
 import { MorphoViemContractFactory } from '../contracts';
 import { PoolContract } from '../contracts/viem/Pool';
 
@@ -154,7 +155,7 @@ export class EthereumMorphoAaveV3SupplyContractPositionFetcher extends MorphoSup
       ? BigNumber.from(currentLiquidityRate)
       : p2pSupplyRate.mul(supplyInP2P).add(BigNumber.from(currentLiquidityRate).mul(supplyOnPool)).div(totalSupply);
     const borrowRate = totalBorrow.isZero()
-      ? currentVariableBorrowRate
+      ? BigNumber.from(currentVariableBorrowRate)
       : p2pBorrowRate
           .mul(borrowInP2P)
           .add(BigNumber.from(currentVariableBorrowRate).mul(borrowOnPool))

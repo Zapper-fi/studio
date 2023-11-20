@@ -1,6 +1,7 @@
 import DataLoader from 'dataloader';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { difference, range, uniq } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
@@ -22,7 +23,6 @@ import {
   PoolsResponse,
   PoolVolumesResponse,
 } from './uniswap-v2.pool.subgraph.types';
-import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
   T extends Abi,
