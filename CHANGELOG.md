@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.552.1](https://github.com/Zapper-fi/studio/compare/v0.552.0...v0.552.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* **ethers:** Remove code generating ethers contract factories ([#3040](https://github.com/Zapper-fi/studio/issues/3040)) ([40c44fe](https://github.com/Zapper-fi/studio/commit/40c44fe9261e97cf6e752a5c93b77641c9ed14f2))
+* **pool-together-v3:** Remove app integration on Gnosis ([#3071](https://github.com/Zapper-fi/studio/issues/3071)) ([2a1b7d9](https://github.com/Zapper-fi/studio/commit/2a1b7d95890f6ebeab9ff186ca15b89c167c2e1f))
+
 ## [0.552.0](https://github.com/Zapper-fi/studio/compare/v0.551.0...v0.552.0) (2023-11-18)
 
 
