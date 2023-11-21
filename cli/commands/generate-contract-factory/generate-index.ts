@@ -12,10 +12,6 @@ export const generateIndex = async (location: string) => {
   /* eslint-disable */
   `;
 
-  if (await exists(path.join(location, `/contracts/ethers.contract-factory.ts`))) {
-    content += `export * from './ethers.contract-factory';\n`;
-  }
-
   if (await exists(path.join(location, `/contracts/viem.contract-factory.ts`))) {
     content += `export * from './viem.contract-factory';\n`;
   }
