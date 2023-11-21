@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.552.2](https://github.com/Zapper-fi/studio/compare/v0.552.1...v0.552.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* **velodrome:** Fix bribes and gauges ([#3073](https://github.com/Zapper-fi/studio/issues/3073)) ([3f47175](https://github.com/Zapper-fi/studio/commit/3f471755e96bc6583758a2c8eec68c784bc98e4e))
+
 ## [0.552.1](https://github.com/Zapper-fi/studio/compare/v0.552.0...v0.552.1) (2023-11-21)
 
 
