@@ -1,83 +1,69 @@
-import { Injectable } from '@nestjs/common';
-import Axios from 'axios';
-import _ from 'lodash';
+import { Inject, Injectable } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Cache } from '~cache/cache.decorator';
+import { Network } from '~types';
 
-export interface VelodromeApiPairData {
-  address: string;
-  symbol: string;
-  gauge_address: string;
-  token0_address: string;
-  token1_address: string;
-  apr: number;
-  gauge: {
-    wrapped_bribe_address: string;
-    fees_address: string;
-  };
-}
+import { VelodromeViemContractFactory } from '../contracts';
+
+type VelodromeOnChainAddresses = {
+  poolAddress: string;
+  guageAddress: string;
+  bribeAddress: string;
+}[];
 
 @Injectable()
 export class VelodromeDefinitionsResolver {
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(VelodromeViemContractFactory) private readonly contractFactory: VelodromeViemContractFactory,
+  ) {}
+
+  network = Network.OPTIMISM_MAINNET;
+
   @Cache({
-    key: `studio:velodrome:pool-token-data`,
-    ttl: 5 * 60, // 60 minutes
+    key: `studio:velodrome:on-chain-addresses`,
+    ttl: 15 * 60,
   })
-  private async getPoolDefinitionsData() {
-    const url = `https://api.velodrome.finance/api/v1/pairs`;
-    const { data } = await Axios.get<{ data: VelodromeApiPairData[] }>(url);
-
-    return data.data;
-  }
-
-  async getPoolTokenDefinitions() {
-    const definitionsData = await this.getPoolDefinitionsData();
-
-    return definitionsData.map(pool => {
-      // Definitely Not ideal, but seems like Velodrome's FE does same since their API returns humongous APY for certain pools
-      const apy = pool.apr < 300 ? pool.apr : 0;
-      return {
-        address: pool.address.toLowerCase(),
-        apy,
-      };
+  private async getOnChainAddresses(): Promise<VelodromeOnChainAddresses> {
+    const multicall = this.appToolkit.getViemMulticall(this.network);
+    const voterContract = this.contractFactory.velodromeVoter({
+      address: '0x09236cff45047dbee6b921e00704bed6d6b8cf7e',
+      network: this.network,
     });
+
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: 'velodrome',
+      network: this.network,
+      groupIds: ['pool'],
+    });
+
+    const poolAddresses = appTokens.map(x => x.address);
+
+    return Promise.all(
+      poolAddresses.map(async poolAddress => {
+        const guageAddressRaw = await multicall.wrap(voterContract).read.gauges([poolAddress]);
+        const bribeAddressRaw = await multicall.wrap(voterContract).read.internal_bribes([guageAddressRaw]);
+
+        return {
+          poolAddress,
+          guageAddress: guageAddressRaw.toLowerCase(),
+          bribeAddress: bribeAddressRaw.toLowerCase(),
+        };
+      }),
+    );
   }
 
-  async getFarmAddresses() {
-    const definitionsData = await this.getPoolDefinitionsData();
+  public async getGaugeAddresses() {
+    const velodromeAddressesData = await this.getOnChainAddresses();
 
-    return definitionsData.map(pool => pool.gauge_address.toLowerCase()).filter(v => !!v);
+    return velodromeAddressesData.map(x => x.guageAddress).filter(x => x != ZERO_ADDRESS);
   }
 
-  async getBribeDefinitions() {
-    const definitionsData = await this.getPoolDefinitionsData();
+  public async getBribeAddresses() {
+    const velodromeAddressesData = await this.getOnChainAddresses();
 
-    const definitionsRaw = definitionsData
-      .filter(v => !!v)
-      .filter(v => !!v.gauge)
-      .map(pool => {
-        const wBribeAddress = pool.gauge.wrapped_bribe_address;
-        if (wBribeAddress == null) return null;
-
-        return { address: wBribeAddress.toLowerCase(), name: pool.symbol };
-      });
-
-    return _.compact(definitionsRaw);
-  }
-
-  async getFeesDefinitions() {
-    const definitionsData = await this.getPoolDefinitionsData();
-
-    const definitionsRaw = definitionsData
-      .filter(v => !!v)
-      .filter(v => !!v.gauge)
-      .map(pool => {
-        const feeAddress = pool.gauge.fees_address;
-        if (feeAddress == null) return null;
-
-        return { address: feeAddress.toLowerCase(), name: pool.symbol, poolAddress: pool.address.toLowerCase() };
-      });
-
-    return _.compact(definitionsRaw);
+    return velodromeAddressesData.map(x => x.bribeAddress).filter(x => x != ZERO_ADDRESS);
   }
 }

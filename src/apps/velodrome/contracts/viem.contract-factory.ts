@@ -10,6 +10,7 @@ import {
   VelodromePool__factory,
   VelodromeRewards__factory,
   VelodromeVe__factory,
+  VelodromeVoter__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -35,5 +36,8 @@ export class VelodromeViemContractFactory {
   }
   velodromeVe({ address, network }: ContractOpts) {
     return VelodromeVe__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  velodromeVoter({ address, network }: ContractOpts) {
+    return VelodromeVoter__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }

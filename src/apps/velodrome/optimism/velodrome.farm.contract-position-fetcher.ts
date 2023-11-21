@@ -35,7 +35,7 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
   }
 
   async getFarmAddresses() {
-    return this.definitionsResolver.getFarmAddresses();
+    return this.definitionsResolver.getGaugeAddresses();
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<VelodromeGauge>) {
