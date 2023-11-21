@@ -7,7 +7,7 @@ import { Network } from '~types';
 
 import { VelodromeViemContractFactory } from '../contracts';
 
-type VelodromeV2OnChainAddresses = {
+type VelodromeOnChainAddresses = {
   poolAddress: string;
   guageAddress: string;
   bribeAddress: string;
@@ -26,7 +26,7 @@ export class VelodromeDefinitionsResolver {
     key: `studio:velodrome:on-chain-addresses`,
     ttl: 15 * 60,
   })
-  private async getOnChainAddresses(): Promise<VelodromeV2OnChainAddresses> {
+  private async getOnChainAddresses(): Promise<VelodromeOnChainAddresses> {
     const multicall = this.appToolkit.getViemMulticall(this.network);
     const voterContract = this.contractFactory.velodromeVoter({
       address: '0x09236cff45047dbee6b921e00704bed6d6b8cf7e',
