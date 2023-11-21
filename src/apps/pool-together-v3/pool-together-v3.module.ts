@@ -14,7 +14,6 @@ import { EthereumPoolTogetherV3CommunityTicketTokenFetcher } from './ethereum/po
 import { EthereumPoolTogetherV3PodTokenFetcher } from './ethereum/pool-together-v3.pod.token-fetcher';
 import { EthereumPoolTogetherV3SponsorshipTokenFetcher } from './ethereum/pool-together-v3.sponsorship.token-fetcher';
 import { EthereumPoolTogetherV3TicketTokenFetcher } from './ethereum/pool-together-v3.ticket.token-fetcher';
-import { GnosisPoolTogetherV3CommunityTicketTokenFetcher } from './gnosis/pool-together-v3.community-ticket.token-fetcher';
 import { PolygonPoolTogetherV3ClaimableContractPositionFetcher } from './polygon/pool-together-v3.claimable.contract-position-fetcher';
 import { PolygonPoolTogetherV3CommunityTicketTokenFetcher } from './polygon/pool-together-v3.community-ticket.token-fetcher';
 import { PolygonPoolTogetherV3SponsorshipTokenFetcher } from './polygon/pool-together-v3.sponsorship.token-fetcher';
@@ -23,7 +22,6 @@ import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together
 @Module({
   providers: [
     PoolTogetherV3ApiPrizePoolRegistry,
-
     PoolTogetherV3ViemContractFactory,
     PoolTogetherV3LogProvider,
     // Celo
@@ -37,8 +35,6 @@ import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together
     EthereumPoolTogetherV3PodTokenFetcher,
     EthereumPoolTogetherV3SponsorshipTokenFetcher,
     EthereumPoolTogetherV3TicketTokenFetcher,
-    // Gnosis
-    GnosisPoolTogetherV3CommunityTicketTokenFetcher,
     // Polygon
     PolygonPoolTogetherV3ClaimableContractPositionFetcher,
     PolygonPoolTogetherV3CommunityTicketTokenFetcher,

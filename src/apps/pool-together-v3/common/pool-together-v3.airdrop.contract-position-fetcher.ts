@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import axios from 'axios';
 import { ethers, BigNumberish } from 'ethers';
-import moment from 'moment';
+import { duration } from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -34,7 +34,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
 
   @Cache({
     key: (network: Network, address: string) => `pool-together-v3:aidrop-data:${network}:${address}:`,
-    ttl: moment.duration(30, 'minutes').asSeconds(),
+    ttl: duration(30, 'minutes').asSeconds(),
   })
   private async getAirdropData(_network: Network, address: string) {
     const checksumAddress = ethers.utils.getAddress(address);
