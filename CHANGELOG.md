@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.552.4](https://github.com/Zapper-fi/studio/compare/v0.552.3...v0.552.4) (2023-11-22)
+
+
+### Bug Fixes
+
+* **curve:** Filter out hacked crypto pool ([#3077](https://github.com/Zapper-fi/studio/issues/3077)) ([5e7321e](https://github.com/Zapper-fi/studio/commit/5e7321ebcd0a86e1c2e9578586bb9460692f044d))
+
 ## [0.552.3](https://github.com/Zapper-fi/studio/compare/v0.552.2...v0.552.3) (2023-11-21)
 
 
