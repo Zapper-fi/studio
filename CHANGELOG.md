@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.553.0](https://github.com/Zapper-fi/studio/compare/v0.552.4...v0.553.0) (2023-11-23)
+
+
+### Features
+
+* **aura:** Added Lp Staking positon on Arbitrum and Optimism ([#3081](https://github.com/Zapper-fi/studio/issues/3081)) ([dfe62ed](https://github.com/Zapper-fi/studio/commit/dfe62ed6771517e8dd1d9bc7b87b8e37142ad3c6))
+
+
+### Bug Fixes
+
+* **aura:** Fix Aura Lp Staking on Base ([#3079](https://github.com/Zapper-fi/studio/issues/3079)) ([39eff8e](https://github.com/Zapper-fi/studio/commit/39eff8ecd37536bd1c1f3057bdee8409eb616f33))
+
 ## [0.552.4](https://github.com/Zapper-fi/studio/compare/v0.552.3...v0.552.4) (2023-11-22)
 
 
