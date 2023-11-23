@@ -13,6 +13,7 @@ import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
+import { Network } from '~types';
 
 import { AuraViemContractFactory } from '../contracts';
 import { AuraBaseRewardPool } from '../contracts/viem';
@@ -72,6 +73,10 @@ export const claimedBalToMintedAura = (claimedBalAmount: string, currentAuraSupp
 export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<AuraBaseRewardPool> {
   abstract boosterMultiplierAddress: string;
 
+  abstract balancerTokenAddress: string;
+  abstract auraTokenAddress: string;
+  isBoosterLite = this.network !== Network.ETHEREUM_MAINNET;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(AuraViemContractFactory) protected readonly contractFactory: AuraViemContractFactory,
@@ -88,13 +93,6 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
   }
 
   async getRewardTokenAddresses({ contract, multicall }: GetTokenDefinitionsParams<AuraBaseRewardPool>) {
-    // BAL rewarded, AURA minted
-    const primaryRewardTokenAddresses = [
-      '0xba100000625a3754423978a60c9317c58a424e3d', // BAL
-      '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf', // AURA
-    ];
-
-    // Extra rewards
     const extraRewardTokenAddresses = await Promise.all(
       range(0, Number(await contract.read.extraRewardsLength())).map(async v => {
         const vbpAddress = await contract.read.extraRewards([BigInt(v)]);
@@ -119,22 +117,23 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
         }
 
         // We will combine AURA extra rewards with the amount minted
-        if (rewardTokenAddress === primaryRewardTokenAddresses[1]) return null;
+        if (rewardTokenAddress === this.auraTokenAddress) return null;
 
         return rewardTokenAddress;
       }),
     );
 
-    return [...primaryRewardTokenAddresses, ...compact(extraRewardTokenAddresses)];
+    return [this.balancerTokenAddress, this.auraTokenAddress, ...compact(extraRewardTokenAddresses)];
   }
 
   async getRewardRates({
     contract,
     multicall,
-    contractPosition,
   }: GetDataPropsParams<AuraBaseRewardPool, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
-    const auraToken = contractPosition.tokens.find(v => v.symbol === 'AURA')!;
-    const auraTokenContract = this.appToolkit.globalViemContracts.erc20(auraToken);
+    const auraTokenContract = this.appToolkit.globalViemContracts.erc20({
+      address: this.auraTokenAddress,
+      network: this.network,
+    });
     const auraSupplyRaw = await multicall.wrap(auraTokenContract).read.totalSupply();
 
     const balRewardRate = await multicall.wrap(contract).read.rewardRate();
@@ -176,12 +175,17 @@ export abstract class AuraFarmContractPositionFetcher extends SingleStakingFarmD
       network: this.network,
     });
 
-    const [rewardMultiplierDenominator, rewardMultipleRaw] = await Promise.all([
-      multicall.wrap(boosterMultiplierContract).read.REWARD_MULTIPLIER_DENOMINATOR(),
-      multicall.wrap(boosterMultiplierContract).read.getRewardMultipliers([contractPosition.address]),
-    ]);
+    let auraBalanceRaw: BigNumber;
 
-    let auraBalanceRaw = auraBalanceMintedRaw.mul(rewardMultipleRaw).div(rewardMultiplierDenominator);
+    if (!this.isBoosterLite) {
+      const [rewardMultiplierDenominator, rewardMultipleRaw] = await Promise.all([
+        multicall.wrap(boosterMultiplierContract).read.REWARD_MULTIPLIER_DENOMINATOR(),
+        multicall.wrap(boosterMultiplierContract).read.getRewardMultipliers([contractPosition.address]),
+      ]);
+      auraBalanceRaw = auraBalanceMintedRaw.mul(rewardMultipleRaw).div(rewardMultiplierDenominator);
+    } else {
+      auraBalanceRaw = auraBalanceMintedRaw;
+    }
 
     const numExtraRewards = await multicall.wrap(contract).read.extraRewardsLength();
     const extraRewardBalances = await Promise.all(
