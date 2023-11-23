@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumAuraDepositTokenFetcher } from './arbitrum/aura.deposit.token-fetcher';
+import { ArbitrumAuraLpFarmContractPositionFetcher } from './arbitrum/aura.lp-farm.contract-position-fetcher';
 import { BaseAuraDepositTokenFetcher } from './base/aura.deposit.token-fetcher';
 import { BaseAuraLpFarmContractPositionFetcher } from './base/aura.lp-farm.contract-position-fetcher';
 import { AuraBalancerPoolResolver } from './common/aura.balancer-pool.resolver';
@@ -16,6 +17,7 @@ import { EthereumAuraLockerContractPositionFetcher } from './ethereum/aura.locke
 import { EthereumAuraLpFarmContractPositionFetcher } from './ethereum/aura.lp-farm.contract-position-fetcher';
 import { EthereumAuraStakedAuraBalTokenFetcher } from './ethereum/aura.staked-aura-bal.token-fetcher';
 import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-fetcher';
+import { OptimismAuraLpFarmContractPositionFetcher } from './optimism/aura.lp-farm.contract-position-fetcher';
 
 @Module({
   providers: [
@@ -24,6 +26,7 @@ import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-f
     AuraBalancerPoolResolver,
     // Arbitrum
     ArbitrumAuraDepositTokenFetcher,
+    ArbitrumAuraLpFarmContractPositionFetcher,
     // Base
     BaseAuraDepositTokenFetcher,
     BaseAuraLpFarmContractPositionFetcher,
@@ -38,6 +41,7 @@ import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-f
     EthereumAuraAuraBalCompounderContractPositionFetcher,
     // Optimism
     OptimismAuraDepositTokenFetcher,
+    OptimismAuraLpFarmContractPositionFetcher,
   ],
 })
 export class AuraAppModule extends AbstractApp() {}
