@@ -8,6 +8,9 @@ import { AuraFarmContractPositionFetcher } from '../common/aura.farm.contract-po
 export class EthereumAuraLpFarmContractPositionFetcher extends AuraFarmContractPositionFetcher {
   groupLabel = 'Liquidity Pool Staking';
 
+  balancerTokenAddress = '0xba100000625a3754423978a60c9317c58a424e3d';
+  auraTokenAddress = '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf';
+
   BOOSTER_V1_ADDRESS = '0x7818a1da7bd1e64c199029e86ba244a9798eee10';
   boosterMultiplierAddress = '0xa57b8d98dae62b26ec3bcc4a365338157060b234';
 
