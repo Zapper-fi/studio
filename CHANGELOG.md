@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.554.0](https://github.com/Zapper-fi/studio/compare/v0.553.0...v0.554.0) (2023-11-27)
+
+
+### Features
+
+* **studio:** Remove tGAMMA fetcher because it is already supported by Tokemak ([#3084](https://github.com/Zapper-fi/studio/issues/3084)) ([6339d1f](https://github.com/Zapper-fi/studio/commit/6339d1f2641f3f921f7804ced518fd853b1fca57))
+
 ## [0.553.0](https://github.com/Zapper-fi/studio/compare/v0.552.4...v0.553.0) (2023-11-23)
 
 

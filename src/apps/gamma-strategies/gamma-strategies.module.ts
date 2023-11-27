@@ -8,7 +8,6 @@ import { CeloGammaStrategiesPoolTokenFetcher } from './celo/gamma-strategies.poo
 import { GammaStrategiesDefinitionResolver } from './common/gamma-strategies.definition-resolver';
 import { GammaStrategiesViemContractFactory } from './contracts';
 import { EthereumGammaStrategiesPoolTokenFetcher } from './ethereum/gamma-strategies.pool.token-fetcher';
-import { EthereumGammaStrategiesTGammaTokenFetcher } from './ethereum/gamma-strategies.t-gamma.token-fetcher';
 import { EthereumGammaStrategiesXGammaTokenFetcher } from './ethereum/gamma-strategies.x-gamma.token-fetcher';
 import { OptimismGammaStrategiesPoolTokenFetcher } from './optimism/gamma-strategies.pool.token-fetcher';
 import { OptimismGammaStrategiesUniFarmContractPositionFetcher } from './optimism/gamma-strategies.uni-farm.contract-position-fetcher';
@@ -21,7 +20,6 @@ import { PolygonGammaStrategiesQuickSwapFarmContractPositionFetcher } from './po
     ArbitrumGammaStrategiesZyberFarmContractPositionFetcher,
     CeloGammaStrategiesPoolTokenFetcher,
     EthereumGammaStrategiesPoolTokenFetcher,
-    EthereumGammaStrategiesTGammaTokenFetcher,
     EthereumGammaStrategiesXGammaTokenFetcher,
     GammaStrategiesViemContractFactory,
     GammaStrategiesDefinitionResolver,
