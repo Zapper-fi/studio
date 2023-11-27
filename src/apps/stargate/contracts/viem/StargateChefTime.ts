@@ -3,7 +3,7 @@
 /* eslint-disable */
 import { getContract, GetContractReturnType, PublicClient } from 'viem';
 
-export const stargateChefBaseAbi = [
+export const stargateChefTimeAbi = [
   {
     inputs: [
       {
@@ -549,11 +549,11 @@ export const stargateChefBaseAbi = [
   },
 ] as const;
 
-export type StargateChefBase = typeof stargateChefBaseAbi;
-export type StargateChefBaseContract = GetContractReturnType<StargateChefBase, PublicClient>;
+export type StargateChefTime = typeof stargateChefTimeAbi;
+export type StargateChefTimeContract = GetContractReturnType<StargateChefTime, PublicClient>;
 
-export class StargateChefBase__factory {
+export class StargateChefTime__factory {
   static connect(address: string, client: PublicClient) {
-    return getContract({ address, abi: stargateChefBaseAbi, publicClient: client });
+    return getContract({ address, abi: stargateChefTimeAbi, publicClient: client });
   }
 }

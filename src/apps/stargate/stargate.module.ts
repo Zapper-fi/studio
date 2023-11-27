@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumStargateEthTokenFetcher } from './arbitrum/stargate.eth.token-fetcher';
 import { ArbitrumStargateFarmContractPositionFetcher } from './arbitrum/stargate.farm.contract-position-fetcher';
+import { ArbitrumStargateLpStakingContractPositionFetcher } from './arbitrum/stargate.lp-staking.contract-position-fetcher';
 import { ArbitrumStargatePoolTokenFetcher } from './arbitrum/stargate.pool.token-fetcher';
 import { ArbitrumStargateVotingEscrowContractPositionFetcher } from './arbitrum/stargate.voting-escrow.contract-position-fetcher';
 import { AvalancheStargateFarmContractPositionFetcher } from './avalanche/stargate.farm.contract-position-fetcher';
@@ -25,6 +26,7 @@ import { FantomStargatePoolTokenFetcher } from './fantom/stargate.pool.token-fet
 import { FantomStargateVotingEscrowContractPositionFetcher } from './fantom/stargate.voting-escrow.contract-position-fetcher';
 import { OptimismStargateEthTokenFetcher } from './optimism/stargate.eth.token-fetcher';
 import { OptimismStargateFarmContractPositionFetcher } from './optimism/stargate.farm.contract-position-fetcher';
+import { OptimismStargateLpStakingContractPositionFetcher } from './optimism/stargate.lp-staking.contract-position-fetcher';
 import { OptimismStargatePoolTokenFetcher } from './optimism/stargate.pool.token-fetcher';
 import { OptimismStargateVotingEscrowContractPositionFetcher } from './optimism/stargate.voting-escrow.contract-position-fetcher';
 import { PolygonStargateFarmContractPositionFetcher } from './polygon/stargate.farm.contract-position-fetcher';
@@ -39,6 +41,7 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
     ArbitrumStargateFarmContractPositionFetcher,
     ArbitrumStargatePoolTokenFetcher,
     ArbitrumStargateVotingEscrowContractPositionFetcher,
+    ArbitrumStargateLpStakingContractPositionFetcher,
     // Avalanche
     AvalancheStargateFarmContractPositionFetcher,
     AvalancheStargatePoolTokenFetcher,
@@ -65,6 +68,7 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
     OptimismStargateFarmContractPositionFetcher,
     OptimismStargatePoolTokenFetcher,
     OptimismStargateVotingEscrowContractPositionFetcher,
+    OptimismStargateLpStakingContractPositionFetcher,
     // Polygon
     PolygonStargateFarmContractPositionFetcher,
     PolygonStargatePoolTokenFetcher,

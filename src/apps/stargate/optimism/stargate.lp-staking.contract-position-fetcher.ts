@@ -9,12 +9,13 @@ import {
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { StargateLpStakingTimeContractPositionFetcher } from '../common/stargate.farm-time.contract-position-fetcher';
-import { StargateChefTime, StargateChefTimeContract } from '../contracts/viem/StargateChefTime';
+import { StargateChefTime } from '../contracts/viem';
+import { StargateChefTimeContract } from '../contracts/viem/StargateChefTime';
 
 @PositionTemplate()
-export class BaseStargateFarmContractPositionFetcher extends StargateLpStakingTimeContractPositionFetcher {
+export class OptimismStargateLpStakingContractPositionFetcher extends StargateLpStakingTimeContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x06eb48763f117c7be887296cdcdfad2e4092739c';
+  chefAddress = '0x4dea9e918c6289a52cd469cac652727b7b412cd2';
   rewardRateUnit = RewardRateUnit.SECOND;
 
   getStargateChefContract(address: string): StargateChefTimeContract {
