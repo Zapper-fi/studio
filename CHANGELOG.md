@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.555.0](https://github.com/Zapper-fi/studio/compare/v0.554.0...v0.555.0) (2023-11-27)
+
+
+### Features
+
+* **stargate:** Added Lp Staking time position on Arbitrum and Optimism ([#3083](https://github.com/Zapper-fi/studio/issues/3083)) ([7d44c6a](https://github.com/Zapper-fi/studio/commit/7d44c6a4a50bbc82368560d262d3d296a8ce4ad8))
+
 ## [0.554.0](https://github.com/Zapper-fi/studio/compare/v0.553.0...v0.554.0) (2023-11-27)
 
 
