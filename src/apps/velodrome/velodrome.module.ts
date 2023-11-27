@@ -6,19 +6,15 @@ import { VelodromeDefinitionsResolver } from './common/velodrome.definitions-res
 import { VelodromeViemContractFactory } from './contracts';
 import { OptimismVelodromeBribeContractPositionFetcher } from './optimism/velodrome.bribe.contract-position-fetcher';
 import { OptimismVelodromeStakingContractPositionFetcher } from './optimism/velodrome.farm.contract-position-fetcher';
-import { OptimismVelodromeFeesContractPositionFetcher } from './optimism/velodrome.fees.contract-position-fetcher';
-import { OptimismVelodromePoolsTokenFetcher } from './optimism/velodrome.pool.token-fetcher';
 import { OptimismVelodromeVotingEscrowContractPositionFetcher } from './optimism/velodrome.voting-escrow.contract-position-fetcher';
 
 @Module({
   providers: [
     VelodromeViemContractFactory,
     VelodromeDefinitionsResolver,
-    OptimismVelodromePoolsTokenFetcher,
     OptimismVelodromeStakingContractPositionFetcher,
     OptimismVelodromeVotingEscrowContractPositionFetcher,
     OptimismVelodromeBribeContractPositionFetcher,
-    OptimismVelodromeFeesContractPositionFetcher,
   ],
 })
 export class VelodromeAppModule extends AbstractApp() {}

@@ -4,6 +4,59 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.553.0](https://github.com/Zapper-fi/studio/compare/v0.552.4...v0.553.0) (2023-11-23)
+
+
+### Features
+
+* **aura:** Added Lp Staking positon on Arbitrum and Optimism ([#3081](https://github.com/Zapper-fi/studio/issues/3081)) ([dfe62ed](https://github.com/Zapper-fi/studio/commit/dfe62ed6771517e8dd1d9bc7b87b8e37142ad3c6))
+
+
+### Bug Fixes
+
+* **aura:** Fix Aura Lp Staking on Base ([#3079](https://github.com/Zapper-fi/studio/issues/3079)) ([39eff8e](https://github.com/Zapper-fi/studio/commit/39eff8ecd37536bd1c1f3057bdee8409eb616f33))
+
+## [0.552.4](https://github.com/Zapper-fi/studio/compare/v0.552.3...v0.552.4) (2023-11-22)
+
+
+### Bug Fixes
+
+* **curve:** Filter out hacked crypto pool ([#3077](https://github.com/Zapper-fi/studio/issues/3077)) ([5e7321e](https://github.com/Zapper-fi/studio/commit/5e7321ebcd0a86e1c2e9578586bb9460692f044d))
+
+## [0.552.3](https://github.com/Zapper-fi/studio/compare/v0.552.2...v0.552.3) (2023-11-21)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Update Uniswap v2 subgraph url ([#3075](https://github.com/Zapper-fi/studio/issues/3075)) ([b84e830](https://github.com/Zapper-fi/studio/commit/b84e83038b43b42806b7a9af0108472c62842b7c))
+
+## [0.552.2](https://github.com/Zapper-fi/studio/compare/v0.552.1...v0.552.2) (2023-11-21)
+
+
+### Bug Fixes
+
+* **velodrome:** Fix bribes and gauges ([#3073](https://github.com/Zapper-fi/studio/issues/3073)) ([3f47175](https://github.com/Zapper-fi/studio/commit/3f471755e96bc6583758a2c8eec68c784bc98e4e))
+
+## [0.552.1](https://github.com/Zapper-fi/studio/compare/v0.552.0...v0.552.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* **ethers:** Remove code generating ethers contract factories ([#3040](https://github.com/Zapper-fi/studio/issues/3040)) ([40c44fe](https://github.com/Zapper-fi/studio/commit/40c44fe9261e97cf6e752a5c93b77641c9ed14f2))
+* **pool-together-v3:** Remove app integration on Gnosis ([#3071](https://github.com/Zapper-fi/studio/issues/3071)) ([2a1b7d9](https://github.com/Zapper-fi/studio/commit/2a1b7d95890f6ebeab9ff186ca15b89c167c2e1f))
+
+## [0.552.0](https://github.com/Zapper-fi/studio/compare/v0.551.0...v0.552.0) (2023-11-18)
+
+
+### Features
+
+* **beethoven-x:** Update subgraph URL and factories ([8c10d4a](https://github.com/Zapper-fi/studio/commit/8c10d4a6a6df34ed6f918b48b20bb681d1d7fd53))
+
+
+### Bug Fixes
+
+* **studio:** Fix lint ([0a3accd](https://github.com/Zapper-fi/studio/commit/0a3accd1ffdc2ff0ec078094f7d268611a2a7f83))
+
 ## [0.551.0](https://github.com/Zapper-fi/studio/compare/v0.550.3...v0.551.0) (2023-11-18)
 
 

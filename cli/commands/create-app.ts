@@ -5,7 +5,6 @@ import { generateAppModule } from '../generators/generate-app-module';
 import { promptAppId, promptAppName, promptAppNetworks } from '../prompts';
 import { strings } from '../strings';
 
-import { generateEthersContractFactory } from './generate-contract-factory/generate-ethers-contract-factory';
 import { generateViemContractFactory } from './generate-contract-factory/generate-viem-contract-factory';
 
 export default class CreateApp extends Command {
@@ -28,7 +27,6 @@ export default class CreateApp extends Command {
     }
 
     await generateAppModule(appId);
-    await generateEthersContractFactory(`./src/apps/${appId}`);
     await generateViemContractFactory(`./src/apps/${appId}`);
 
     this.log(`Done! Your app ${appName} has been generated`);
