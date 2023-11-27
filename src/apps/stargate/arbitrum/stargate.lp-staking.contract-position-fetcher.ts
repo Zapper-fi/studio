@@ -12,9 +12,9 @@ import { StargateLpStakingTimeContractPositionFetcher } from '../common/stargate
 import { StargateChefTime, StargateChefTimeContract } from '../contracts/viem/StargateChefTime';
 
 @PositionTemplate()
-export class BaseStargateFarmContractPositionFetcher extends StargateLpStakingTimeContractPositionFetcher {
+export class ArbitrumStargateLpStakingContractPositionFetcher extends StargateLpStakingTimeContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x06eb48763f117c7be887296cdcdfad2e4092739c';
+  chefAddress = '0x9774558534036ff2e236331546691b4eb70594b1';
   rewardRateUnit = RewardRateUnit.SECOND;
 
   getStargateChefContract(address: string): StargateChefTimeContract {

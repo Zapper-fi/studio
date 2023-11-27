@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 import {
   StargateChef__factory,
-  StargateChefBase__factory,
+  StargateChefTime__factory,
   StargateEth__factory,
   StargateFactory__factory,
   StargatePool__factory,
@@ -21,8 +21,8 @@ export class StargateViemContractFactory {
   stargateChef({ address, network }: ContractOpts) {
     return StargateChef__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
-  stargateChefBase({ address, network }: ContractOpts) {
-    return StargateChefBase__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  stargateChefTime({ address, network }: ContractOpts) {
+    return StargateChefTime__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   stargateEth({ address, network }: ContractOpts) {
     return StargateEth__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
