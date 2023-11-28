@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.556.0](https://github.com/Zapper-fi/studio/compare/v0.555.0...v0.556.0) (2023-11-28)
+
+
+### Features
+
+* **yearn:** Add yPrisma staking rewards ([#3087](https://github.com/Zapper-fi/studio/issues/3087)) ([4f1f7a3](https://github.com/Zapper-fi/studio/commit/4f1f7a3b9026a330eafbd4ba990652888daa68ba))
+
 ## [0.555.0](https://github.com/Zapper-fi/studio/compare/v0.554.0...v0.555.0) (2023-11-27)
 
 
