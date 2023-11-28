@@ -7,6 +7,7 @@ import {
   YearnGovernance__factory,
   YearnStakedYCrv__factory,
   YearnStaking__factory,
+  YearnStakingReward__factory,
   YearnStakingRewardRegistry__factory,
   YearnVeYfi__factory,
 } from './viem';
@@ -25,6 +26,9 @@ export class YearnViemContractFactory {
   }
   yearnStaking({ address, network }: ContractOpts) {
     return YearnStaking__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  yearnStakingReward({ address, network }: ContractOpts) {
+    return YearnStakingReward__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   yearnStakingRewardRegistry({ address, network }: ContractOpts) {
     return YearnStakingRewardRegistry__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
