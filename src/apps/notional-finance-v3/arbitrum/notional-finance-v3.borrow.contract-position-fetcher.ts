@@ -31,8 +31,13 @@ export type NotionalBorrowingDataProps = {
   currencyId: number;
   tokenId: string;
   maturity: number;
+  fCashPV: number;
+  positionKey: string;
   type: string;
 };
+
+const NOTIONAL_CONSTANT = 10 ** 7;
+const SECONDS_IN_YEAR = 31104000; // 360 days
 
 @PositionTemplate()
 export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -79,11 +84,19 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
               .read.encodeToId([currencyId, maturity, 0])
               .then(v => v.toString());
 
+            const apy = Number(activeMarket.lastImpliedRate ?? 0) / NOTIONAL_CONSTANT;
+
+            const dateNowEpoch = Date.now() / 1000;
+            const timeToMaturity = (maturity - dateNowEpoch) / SECONDS_IN_YEAR;
+            const lastImpliedRate = apy / 100;
+            const fCashPV = 1 / Math.exp(lastImpliedRate * timeToMaturity);
+
             return {
               address: this.notionalViewContractAddress,
               currencyId,
               underlyingTokenAddress,
               maturity,
+              fCashPV,
               tokenId,
               type,
             };
@@ -107,7 +120,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
     params: GetDataPropsParams<NotionalView, NotionalBorrowingDataProps, NotionalBorrowingDefinition>,
   ) {
     const defaultDataProps = await super.getDataProps(params);
-    const props = pick(params.definition, ['currencyId', 'tokenId', 'maturity', 'type']);
+    const props = pick(params.definition, ['currencyId', 'tokenId', 'maturity', 'fCashPV', 'type']);
     return { ...defaultDataProps, ...props, positionKey: Object.values(props).join(':') };
   }
 
@@ -120,7 +133,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
     contractPosition,
     contract,
   }: GetTokenBalancesParams<NotionalView, NotionalBorrowingDataProps>) {
-    const { maturity, currencyId } = contractPosition.dataProps;
+    const { maturity, currencyId, fCashPV } = contractPosition.dataProps;
     const portfolio = await contract.read.getAccountPortfolio([address]);
     const debtPositions = portfolio.filter(v => v.notional < 0);
     const position = debtPositions.find(v => Number(v.maturity) === maturity && Number(v.currencyId) === currencyId);
@@ -130,6 +143,8 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
       .times(10 ** contractPosition.tokens[0].decimals)
       .div(10 ** 8);
 
-    return [fcashAmountAtMaturity.abs().toString()];
+    const presentValue = fcashAmountAtMaturity.times(new BigNumber(fCashPV));
+
+    return [presentValue.toString()];
   }
 }
