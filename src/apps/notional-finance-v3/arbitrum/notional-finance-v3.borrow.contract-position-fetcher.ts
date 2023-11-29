@@ -23,6 +23,7 @@ export type NotionalBorrowingDefinition = {
   underlyingTokenAddress: string;
   currencyId: number;
   tokenId: string;
+  fCashPV: number;
   maturity: number;
   type: string;
 };
@@ -120,8 +121,9 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
     params: GetDataPropsParams<NotionalView, NotionalBorrowingDataProps, NotionalBorrowingDefinition>,
   ) {
     const defaultDataProps = await super.getDataProps(params);
-    const props = pick(params.definition, ['currencyId', 'tokenId', 'maturity', 'fCashPV', 'type']);
-    return { ...defaultDataProps, ...props, positionKey: Object.values(props).join(':') };
+    const props = pick(params.definition, ['currencyId', 'tokenId', 'maturity', 'type']);
+    const fCashPV = params.definition.fCashPV;
+    return { ...defaultDataProps, ...props, fCashPV, positionKey: Object.values(props).join(':') };
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<NotionalView>): Promise<string> {
