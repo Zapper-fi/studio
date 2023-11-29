@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.556.1](https://github.com/Zapper-fi/studio/compare/v0.556.0...v0.556.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Fix slow subgraph call ([4611f33](https://github.com/Zapper-fi/studio/commit/4611f33e33952fb2ff975cac0877a951e73c4cda))
+
 ## [0.556.0](https://github.com/Zapper-fi/studio/compare/v0.555.0...v0.556.0) (2023-11-28)
 
 
