@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.557.1](https://github.com/Zapper-fi/studio/compare/v0.557.0...v0.557.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* **notional-finance-v3:** Fix supply and borrow position key ([#3093](https://github.com/Zapper-fi/studio/issues/3093)) ([5000792](https://github.com/Zapper-fi/studio/commit/50007923876f33ab2014ee722feae67888d91159))
+
 ## [0.557.0](https://github.com/Zapper-fi/studio/compare/v0.556.1...v0.557.0) (2023-11-29)
 
 
