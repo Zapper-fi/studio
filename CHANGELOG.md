@@ -4,6 +4,32 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.557.1](https://github.com/Zapper-fi/studio/compare/v0.557.0...v0.557.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* **notional-finance-v3:** Fix supply and borrow position key ([#3093](https://github.com/Zapper-fi/studio/issues/3093)) ([5000792](https://github.com/Zapper-fi/studio/commit/50007923876f33ab2014ee722feae67888d91159))
+
+## [0.557.0](https://github.com/Zapper-fi/studio/compare/v0.556.1...v0.557.0) (2023-11-29)
+
+
+### Features
+
+* **stake-dao:** Updated vault definitions to rely on ATI ([#3091](https://github.com/Zapper-fi/studio/issues/3091)) ([07a7ef3](https://github.com/Zapper-fi/studio/commit/07a7ef33a64e9c48a36e49deec5e7daa1e191016))
+
+
+### Bug Fixes
+
+* **notional-finance-v3:** Remove fCash app token and move logic into supply and borrow positions ([#3089](https://github.com/Zapper-fi/studio/issues/3089)) ([ffb1616](https://github.com/Zapper-fi/studio/commit/ffb1616b3d5c4c5b2651b3d1662abcc2cfece7cd))
+
+## [0.556.1](https://github.com/Zapper-fi/studio/compare/v0.556.0...v0.556.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Fix slow subgraph call ([4611f33](https://github.com/Zapper-fi/studio/commit/4611f33e33952fb2ff975cac0877a951e73c4cda))
+
 ## [0.556.0](https://github.com/Zapper-fi/studio/compare/v0.555.0...v0.556.0) (2023-11-28)
 
 
