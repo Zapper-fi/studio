@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.558.0](https://github.com/Zapper-fi/studio/compare/v0.557.1...v0.558.0) (2023-12-01)
+
+
+### Features
+
+* **polynomial:** Fix smart wallet balances ([#3095](https://github.com/Zapper-fi/studio/issues/3095)) ([5d49ce6](https://github.com/Zapper-fi/studio/commit/5d49ce66651d752ee5b30d17ec1a3441a0aaea7b))
+
 ## [0.557.1](https://github.com/Zapper-fi/studio/compare/v0.557.0...v0.557.1) (2023-11-29)
 
 
