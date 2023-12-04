@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
-import { ethers } from 'ethers';
+import { getAddress } from 'viem';
 
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
@@ -27,7 +27,7 @@ export class BadgerClaimableRewardsResolver {
     ttl: 5 * 60, // 60 minutes
   })
   private async getCachedAccumulatedRewardsData(_network: Network, address: string) {
-    const checksumAddress = ethers.utils.getAddress(address);
+    const checksumAddress = getAddress(address);
     const { data } = await Axios.get<RewardTreeResponse>(
       `https://api.badger.finance/v2/reward/tree/${checksumAddress}`,
     ).catch(() => ({ data: { tokens: [] as string[], cumulativeAmounts: [] as string[] } }));

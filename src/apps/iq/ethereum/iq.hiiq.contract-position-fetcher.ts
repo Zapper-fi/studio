@@ -3,9 +3,14 @@ import { ethers } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 import { IqViemContractFactory } from '../contracts';
 import { IqHiiq } from '../contracts/viem';
@@ -39,8 +44,8 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
     ];
   }
 
-  async getLabel() {
-    return `HiIQ Lock`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<IqHiiq>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getDataProps(_params: GetDataPropsParams<IqHiiq>) {

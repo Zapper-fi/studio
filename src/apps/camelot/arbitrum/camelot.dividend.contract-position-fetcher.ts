@@ -3,12 +3,17 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
 import { GetDefinitionsParams } from '~position/template/app-token.template.types';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { CamelotViemContractFactory } from '../contracts';
 import { CamelotDividend } from '../contracts/viem';
@@ -75,8 +80,8 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
     ];
   }
 
-  async getLabel() {
-    return `Dividends`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<CamelotDividend>) {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<CamelotDividend>) {

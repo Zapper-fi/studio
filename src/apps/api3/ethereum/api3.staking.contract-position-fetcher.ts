@@ -44,7 +44,7 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Api3Staking>) {
-    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Api3Staking>) {

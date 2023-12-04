@@ -47,7 +47,7 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<TokemakRewards>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({

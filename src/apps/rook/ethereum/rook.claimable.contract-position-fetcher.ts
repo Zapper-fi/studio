@@ -93,7 +93,7 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<RookLiquidityPoolDistributor>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({

@@ -4,10 +4,14 @@ import _, { range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
+import {
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+} from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { ChickenBondViemContractFactory } from '../contracts';
@@ -53,8 +57,8 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
     return this.contractFactory.chickenBondBondNft({ network: this.network, address });
   }
 
-  async getLabel(): Promise<string> {
-    return `LUSD Bond`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<ChickenBondBondNft>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   getTokenBalancesPerPosition(): never {

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import dayjs from 'dayjs';
+import dayjs, { unix } from 'dayjs';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -65,7 +65,7 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
   async getPricePerShare({
     definition,
   }: GetPricePerShareParams<ArborFinanceBondToken, DefaultAppTokenDataProps, ArborFinanceBondTokenDefinition>) {
-    const m = dayjs.unix(definition.maturityDate);
+    const m = unix(definition.maturityDate);
     const date = dayjs(new Date());
     const yearsUntilMaturity = m.diff(date, 'year', true);
     const ytm = 1 / definition.clearingPrice - 1;

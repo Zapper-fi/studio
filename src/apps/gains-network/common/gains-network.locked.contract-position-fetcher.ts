@@ -48,7 +48,7 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<GainsNetworkGToken>): Promise<string> {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   getTokenBalancesPerPosition(): never {
