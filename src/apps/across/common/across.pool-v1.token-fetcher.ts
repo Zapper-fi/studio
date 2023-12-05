@@ -56,6 +56,6 @@ export abstract class AcrossPoolV1TokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<AcrossPoolV1>): Promise<string> {
-    return `${getLabelFromToken(appToken.tokens[0])} Pool (deprecated)`;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

@@ -65,8 +65,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PoolTogetherMerkleDistributor>) {
-    const rewardToken = contractPosition.tokens[0];
-    return `Claimable ${getLabelFromToken(rewardToken)}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({

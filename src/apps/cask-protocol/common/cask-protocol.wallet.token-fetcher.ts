@@ -1,8 +1,13 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import {
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { CaskProtocolViemContractFactory } from '../contracts';
 import { CaskVaultToken } from '../contracts/viem';
@@ -35,7 +40,7 @@ export abstract class CaskProtocolWalletTokenFetcher extends AppTokenTemplatePos
     return [pricePerShare];
   }
 
-  async getLabel() {
-    return 'Cask Wallet';
+  async getLabel({ appToken }: GetDisplayPropsParams<CaskVaultToken>) {
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

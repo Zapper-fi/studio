@@ -98,6 +98,6 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<InsuracePoolToken>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Pool`;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

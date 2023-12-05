@@ -74,7 +74,7 @@ export abstract class SiloFinanceIncentivesContractPositionfetcher extends Contr
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<SiloIncentives>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({

@@ -80,12 +80,7 @@ export class EthereumZhartaLendingPoolCoreContractPositionFetcher extends Contra
     return `${getLabelFromToken(suppliedToken)} Pool`;
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contractPosition,
-    contract,
-    multicall,
-  }: GetTokenBalancesParams<ZhartaLendingPoolCore>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ZhartaLendingPoolCore>) {
     const [lenderFundsRaw, withdrawableAmountRaw] = await Promise.all([
       contract.read.funds([address]),
       contract.read.computeWithdrawableAmount([address]),

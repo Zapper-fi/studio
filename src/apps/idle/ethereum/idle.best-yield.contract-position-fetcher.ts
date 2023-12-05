@@ -82,7 +82,7 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<IdleToken>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<IdleToken>) {
