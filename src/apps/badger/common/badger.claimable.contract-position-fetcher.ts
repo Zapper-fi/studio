@@ -56,9 +56,8 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     ];
   }
 
-  async getLabel(params: GetDisplayPropsParams<BadgerTree>): Promise<string> {
-    const suppliedToken = params.contractPosition.tokens[0];
-    return `Claimable ${getLabelFromToken(suppliedToken)}`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<BadgerTree>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({

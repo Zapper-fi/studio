@@ -62,6 +62,6 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<EaseRcaShield>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Ease Vault`;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

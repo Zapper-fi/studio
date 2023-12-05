@@ -39,6 +39,6 @@ export class EthereumOpnxContractPositionFetcher extends VotingEscrowTemplateCon
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Veox>) {
-    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 }

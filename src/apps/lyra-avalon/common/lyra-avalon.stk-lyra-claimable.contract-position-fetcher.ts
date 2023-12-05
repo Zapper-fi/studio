@@ -45,7 +45,7 @@ export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends 
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<LyraStkLyra>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LyraStkLyra>) {

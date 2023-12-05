@@ -41,7 +41,7 @@ export class EthereumAaveSafetyModuleStkAbptClaimableContractPositionFetcher ext
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<AaveStkAbpt>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<AaveStkAbpt>) {

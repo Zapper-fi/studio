@@ -41,7 +41,7 @@ export class AvalanchePenguinVaultClaimableContractPositionFetcher extends Contr
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PenguinVault>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PenguinVault>) {

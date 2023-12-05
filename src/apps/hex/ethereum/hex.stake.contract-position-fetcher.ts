@@ -71,7 +71,7 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Hex>) {
-    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Hex, DefaultDataProps>) {

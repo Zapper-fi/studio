@@ -3,6 +3,7 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -45,11 +46,10 @@ export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTem
     ];
   }
 
-  async getLabel(
-    params: GetDisplayPropsParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
-  ): Promise<string> {
-    const rewardToken = params.contractPosition.tokens[0];
-    return `Claimable ${rewardToken.symbol}`;
+  async getLabel({
+    contractPosition,
+  }: GetDisplayPropsParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   getContract(address: string) {

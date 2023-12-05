@@ -60,8 +60,7 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Borrowable>): Promise<DisplayProps['label']> {
-    const [underlyingToken] = contractPosition.tokens;
-    return getLabelFromToken(underlyingToken);
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getSecondaryLabel({

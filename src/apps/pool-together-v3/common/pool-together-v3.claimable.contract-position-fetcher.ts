@@ -55,8 +55,7 @@ export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends Con
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PoolTogetherV3TokenFaucet>) {
-    const rewardToken = contractPosition.tokens[0];
-    return `Claimable ${getLabelFromToken(rewardToken)}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({
