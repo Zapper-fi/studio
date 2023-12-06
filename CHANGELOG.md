@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.558.2](https://github.com/Zapper-fi/studio/compare/v0.558.1...v0.558.2) (2023-12-06)
+
+
+### Bug Fixes
+
+* **spice-finance:** Remove app integration in order to allow EIs ([#3101](https://github.com/Zapper-fi/studio/issues/3101)) ([e5e8665](https://github.com/Zapper-fi/studio/commit/e5e8665c02409f071f3330f3cdac88cf403b7463))
+
 ## [0.558.1](https://github.com/Zapper-fi/studio/compare/v0.558.0...v0.558.1) (2023-12-06)
 
 
