@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.558.3](https://github.com/Zapper-fi/studio/compare/v0.558.2...v0.558.3) (2023-12-06)
+
+
+### Bug Fixes
+
+* **keeper:** Removed dependencies on subgraph ([#3097](https://github.com/Zapper-fi/studio/issues/3097)) ([0fe2a09](https://github.com/Zapper-fi/studio/commit/0fe2a09e50aadc4b8a42ff23294a7eb6476cfc66))
+* **lyra-avalon:** Update subgraph endpoints ([#3103](https://github.com/Zapper-fi/studio/issues/3103)) ([88c4f11](https://github.com/Zapper-fi/studio/commit/88c4f119dc6afc71ae708783f349c68d6f4e8e11))
+
 ## [0.558.2](https://github.com/Zapper-fi/studio/compare/v0.558.1...v0.558.2) (2023-12-06)
 
 
