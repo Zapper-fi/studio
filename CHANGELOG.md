@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.558.1](https://github.com/Zapper-fi/studio/compare/v0.558.0...v0.558.1) (2023-12-06)
+
+
+### Bug Fixes
+
+* **hidden-hand:** add market identifiers to fetch claimed amounts ([#3099](https://github.com/Zapper-fi/studio/issues/3099)) ([02d5904](https://github.com/Zapper-fi/studio/commit/02d5904f510029e935f594a82c68bac8bc0554a2))
+
 ## [0.558.0](https://github.com/Zapper-fi/studio/compare/v0.557.1...v0.558.0) (2023-12-01)
 
 
