@@ -14,7 +14,6 @@ export type RoboVaultDetails = {
 @Injectable()
 export class RoboVaultApiClient {
   @Cache({
-    instance: 'business',
     key: (network: Network) => `studio:robovault:${network}:vaults`,
     ttl: 30 * 60,
   })

@@ -68,7 +68,6 @@ export class AngleApiHelper {
   }
 
   @Cache({
-    instance: 'business',
     key: (network: Network) => `studio:angle:apr:${network}:angle`,
     ttl: 15 * 60,
   })
@@ -77,7 +76,6 @@ export class AngleApiHelper {
   }
 
   @Cache({
-    instance: 'business',
     key: (network: Network) => `studio:angle:vaultmanagers:${network}:angle`,
     ttl: 15 * 60,
   })
@@ -86,7 +84,6 @@ export class AngleApiHelper {
   }
 
   @Cache({
-    instance: 'user',
     key: (network: Network) => `studio:angle:vaults:${network}:angle`,
     ttl: 15 * 60,
   })
@@ -102,7 +99,6 @@ export class AngleApiHelper {
   }
 
   @Cache({
-    instance: 'user',
     key: (network: Network) => `studio:angle:rewardsdata:${network}:angle`,
     ttl: 30 * 60,
   })
