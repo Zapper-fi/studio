@@ -130,7 +130,7 @@ export class ArbitrumLyraAvalonOptionsContractPositionFetcher extends ContractPo
 
   async getDefinitions(): Promise<LyraAvalonOptionTokenDefinition[]> {
     const response = await gqlFetch<OptionsResponse>({
-      endpoint: 'https://api.lyra.finance/subgraph/arbitrum/v2/api',
+      endpoint: 'https://subgraph.satsuma-prod.com/sw9vuxiQey3c/lyra/arbitrum-mainnet/api',
       query: OPTIONS_QUERY,
     });
 
