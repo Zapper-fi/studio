@@ -130,7 +130,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
 
   async getDefinitions(): Promise<LyraAvalonOptionTokenDefinition[]> {
     const response = await gqlFetch<OptionsResponse>({
-      endpoint: 'https://api.lyra.finance/subgraph/optimism/v1/api',
+      endpoint: 'https://subgraph.satsuma-prod.com/sw9vuxiQey3c/lyra/optimism-mainnet-newport/api',
       query: OPTIONS_QUERY,
     });
 
