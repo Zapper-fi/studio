@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.559.0](https://github.com/Zapper-fi/studio/compare/v0.558.3...v0.559.0) (2023-12-07)
+
+
+### Features
+
+* **general:** Remove caching instances ([#3105](https://github.com/Zapper-fi/studio/issues/3105)) ([d15be17](https://github.com/Zapper-fi/studio/commit/d15be172ce45357cf06ec0b5a69411e1323b7c10))
+
 ## [0.558.3](https://github.com/Zapper-fi/studio/compare/v0.558.2...v0.558.3) (2023-12-06)
 
 
