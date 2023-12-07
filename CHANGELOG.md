@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.559.1](https://github.com/Zapper-fi/studio/compare/v0.559.0...v0.559.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Updated endpoint used for options ([#3107](https://github.com/Zapper-fi/studio/issues/3107)) ([6912620](https://github.com/Zapper-fi/studio/commit/6912620bae5d0d9689875fa97da8a00ff5534433))
+
 ## [0.559.0](https://github.com/Zapper-fi/studio/compare/v0.558.3...v0.559.0) (2023-12-07)
 
 
