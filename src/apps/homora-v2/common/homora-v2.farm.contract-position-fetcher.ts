@@ -144,7 +144,6 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
   }
 
   @Cache({
-    instance: 'business',
     key: (network: Network) => `studio:homora-v2:${network}:positions-data`,
     ttl: 3 * 60,
   })
