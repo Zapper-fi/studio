@@ -72,6 +72,11 @@ export class ArbitrumPlutusFarmPlsRdntContractPositionFetcher extends SingleStak
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsRdnt>) {
-    return contract.read.pendingRewards([address]).then(v => [v.pls, v.wbtc, v.usdt, v.usdc, v.dai, v.weth]);
+    try {
+      const rewards = await contract.read.pendingRewards([address]);
+      return [rewards.pls, rewards.wbtc, rewards.usdt, rewards.usdc, rewards.dai, rewards.weth];
+    } catch (error) {
+      return [0, 0, 0, 0, 0, 0];
+    }
   }
 }
