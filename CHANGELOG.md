@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.559.3](https://github.com/Zapper-fi/studio/compare/v0.559.2...v0.559.3) (2023-12-08)
+
+
+### Bug Fixes
+
+* **lyra-finance:** Fix options balances on Optimism ([#3113](https://github.com/Zapper-fi/studio/issues/3113)) ([9d8cad4](https://github.com/Zapper-fi/studio/commit/9d8cad4adda82e42797e6e06bfc0385a00e2a187))
+
 ## [0.559.2](https://github.com/Zapper-fi/studio/compare/v0.559.1...v0.559.2) (2023-12-08)
 
 
