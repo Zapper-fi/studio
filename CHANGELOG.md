@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.559.2](https://github.com/Zapper-fi/studio/compare/v0.559.1...v0.559.2) (2023-12-08)
+
+
+### Bug Fixes
+
+* **defiedge:** Fix strategy symbol ([#3112](https://github.com/Zapper-fi/studio/issues/3112)) ([9a76078](https://github.com/Zapper-fi/studio/commit/9a760787e0aced3c4ba3af0d1cd4c884b995ef51))
+* **plutus:** Fixed farm pls rdnt rewards ([#3110](https://github.com/Zapper-fi/studio/issues/3110)) ([9d3f0d6](https://github.com/Zapper-fi/studio/commit/9d3f0d65867a7e88f9ea9e3a9686bb5b623042b4))
+* **silo-finance:** Removed deprecated incentives position ([#3109](https://github.com/Zapper-fi/studio/issues/3109)) ([687a003](https://github.com/Zapper-fi/studio/commit/687a00382f380f4ae5f453b014e38b5e5afecd47))
+
 ## [0.559.1](https://github.com/Zapper-fi/studio/compare/v0.559.0...v0.559.1) (2023-12-07)
 
 
