@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber } from 'ethers';
 import { formatEther, parseEther } from 'ethers/lib/utils';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -15,7 +15,6 @@ import {
   GetPricePerShareParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
-  GetTokenPropsParams,
   GetPriceParams,
 } from '~position/template/app-token.template.types';
 
@@ -79,8 +78,8 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     return definitions.map(v => v.address);
   }
 
-  async getSymbol({ contract }: GetTokenPropsParams<Strategy>) {
-    return ethers.utils.parseBytes32String(await contract.read.symbol());
+  async getSymbol() {
+    return 'DEShare';
   }
 
   async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<Strategy, DefiedgeStrategyDefinition>) {
