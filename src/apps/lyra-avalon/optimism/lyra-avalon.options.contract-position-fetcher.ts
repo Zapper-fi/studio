@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import _, { flattenDeep, omit } from 'lodash';
 
@@ -241,11 +241,21 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     if (!userPosition) return [];
 
     // Find amount of position
-    const quoteToken = contractPosition.tokens[0];
-    const price = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
-    const amountRaw = ((Number(price) * Number(userPosition.amount)) / 10 ** quoteToken.decimals).toString();
+    const priceRaw = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
+    const price = priceRaw / 10 ** 18;
+    const amountRaw = (
+      (Number(price) * Number(userPosition.amount)) /
+      10 ** (18 - contractPosition.tokens[0].decimals)
+    ).toString();
 
     if (optionType === 0 || optionType === 1) return [amountRaw];
-    return [amountRaw, userPosition.collateral];
+
+    const decimals =
+      optionType == 2
+        ? 10 ** (18 - contractPosition.tokens[1].decimals)
+        : 10 ** (18 - contractPosition.tokens[0].decimals);
+    const positionCollateral = BigNumber.from(userPosition.collateral).div(decimals);
+
+    return [amountRaw, positionCollateral];
   }
 }
