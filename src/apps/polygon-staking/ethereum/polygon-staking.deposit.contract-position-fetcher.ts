@@ -103,7 +103,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
     failOnMissingData: false,
   })
   async getValidators() {
-    const url = `https://sentinel.matic.network/api/v2/validators?limit=1000`;
+    const url = `https://staking-api.polygon.technology/api/v2/validators?limit=1000`;
     const { data } = await axios.get<ValidatorsResponse>(url);
     return data;
   }
