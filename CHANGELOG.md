@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.559.4](https://github.com/Zapper-fi/studio/compare/v0.559.3...v0.559.4) (2023-12-09)
+
+
+### Bug Fixes
+
+* **studio:** Update Polygon staking API endpoint ([9b05be2](https://github.com/Zapper-fi/studio/commit/9b05be20d4802b7974210d5c3910279ea32f1a5b))
+
 ## [0.559.3](https://github.com/Zapper-fi/studio/compare/v0.559.2...v0.559.3) (2023-12-08)
 
 
