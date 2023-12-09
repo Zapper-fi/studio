@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.560.0](https://github.com/Zapper-fi/studio/compare/v0.559.4...v0.560.0) (2023-12-09)
+
+
+### Features
+
+* **uniswap-v2:** Remove optimization for Uniswap pool token balances ([721b18e](https://github.com/Zapper-fi/studio/commit/721b18e17d9d6275f3387308a3674e3a29eea79a))
+
 ## [0.559.4](https://github.com/Zapper-fi/studio/compare/v0.559.3...v0.559.4) (2023-12-09)
 
 
