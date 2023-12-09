@@ -30,8 +30,8 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getAddresses() {
-    const vaults = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    return vaults.map(v => v.vaultAddress);
+    const jarDefinitionData = await this.jarRegistry.getJarDefinitions(this.network);
+    return jarDefinitionData.map(x => x.jarAddress);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJar>) {
@@ -59,13 +59,7 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
     return [reserve];
   }
 
-  async getApy({ appToken }: GetDataPropsParams<PickleJar>) {
-    const vaultDefinitions = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    const vaultDefinition = vaultDefinitions.find(v => v.vaultAddress === appToken.address);
-    return vaultDefinition?.apy ?? 0;
-  }
-
   async getLabel({ appToken }: GetDisplayPropsParams<PickleJar, DefaultDataProps>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Jar`;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

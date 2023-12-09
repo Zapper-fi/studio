@@ -154,8 +154,8 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
   }
 
   async getAddresses() {
-    const vaults = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    return vaults.map(v => v.vaultAddress);
+    const jarDefinitionData = await this.jarRegistry.getJarDefinitions(this.network);
+    return jarDefinitionData.map(x => x.jarAddress);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJarUniv3>) {
@@ -174,11 +174,5 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
     const reserveRaw = await contract.read.totalLiquidity();
     const reserve = Number(reserveRaw) / 10 ** 18;
     return [reserve];
-  }
-
-  async getApy({ appToken }: GetDataPropsParams<PickleJarUniv3>) {
-    const vaultDefinitions = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    const vaultDefinition = vaultDefinitions.find(v => v.vaultAddress === appToken.address);
-    return vaultDefinition?.apy ?? 0;
   }
 }
