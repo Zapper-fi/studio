@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.561.0](https://github.com/Zapper-fi/studio/compare/v0.560.0...v0.561.0) (2023-12-10)
+
+
+### Features
+
+* **abracadabra:** Add support for GM cauldrons on Arbitrum ([#3117](https://github.com/Zapper-fi/studio/issues/3117)) ([267512b](https://github.com/Zapper-fi/studio/commit/267512b06335f1dabbced95b68ce20d3e74c69a2))
+
+
+### Bug Fixes
+
+* **pickle:** Fix jars definitions ([#3118](https://github.com/Zapper-fi/studio/issues/3118)) ([37df230](https://github.com/Zapper-fi/studio/commit/37df230d6bd313619fbcf66e608f90917e864503))
+
 ## [0.560.0](https://github.com/Zapper-fi/studio/compare/v0.559.4...v0.560.0) (2023-12-09)
 
 
