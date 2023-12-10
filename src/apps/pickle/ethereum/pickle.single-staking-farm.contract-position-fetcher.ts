@@ -30,12 +30,12 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    const vaults = await this.jarCacheManager.getJarDefinitions({ network: this.network });
+    const vaults = await this.jarCacheManager.getJarDefinitions(this.network);
     const vaultsWithGauge = vaults.filter(v => v.gaugeAddress!);
 
-    return vaultsWithGauge.map(({ vaultAddress, gaugeAddress }) => ({
+    return vaultsWithGauge.map(({ jarAddress, gaugeAddress }) => ({
       address: gaugeAddress!,
-      stakedTokenAddress: vaultAddress,
+      stakedTokenAddress: jarAddress,
       rewardTokenAddresses: ['0x429881672b9ae42b8eba0e26cd9c73711b891ca5'],
     }));
   }
