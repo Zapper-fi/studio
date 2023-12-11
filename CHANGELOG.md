@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.562.1](https://github.com/Zapper-fi/studio/compare/v0.562.0...v0.562.1) (2023-12-11)
+
+
+### Bug Fixes
+
+* **reaper:** Fix vault definitions ([#3122](https://github.com/Zapper-fi/studio/issues/3122)) ([ef9d1d9](https://github.com/Zapper-fi/studio/commit/ef9d1d9b6dcf771c9597b37b0e52dd0453fe7e1a))
+
 ## [0.562.0](https://github.com/Zapper-fi/studio/compare/v0.561.0...v0.562.0) (2023-12-11)
 
 
