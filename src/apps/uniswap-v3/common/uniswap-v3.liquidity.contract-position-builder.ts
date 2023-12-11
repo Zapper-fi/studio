@@ -1,19 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { Token as TokenWrapper } from '@uniswap/sdk-core';
 import { Pool, Position, TickMath } from '@uniswap/v3-sdk';
-import { AbiEvent } from 'abitype';
 import { BigNumberish, BigNumber as EtherBigNumber } from 'ethers';
-import {
-  RpcLog,
-  EstimateGasParameters,
-  GetEnsAddressReturnType,
-  GetFilterChangesParameters,
-  GetTransactionParameters,
-  MulticallReturnType,
-  WaitForTransactionReceiptParameters,
-  WatchEventParameters,
-} from 'viem';
-import { VerifyTypedDataParameters } from 'viem/_types/actions/public/verifyTypedData';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Token } from '~position/position.interface';
