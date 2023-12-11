@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.562.0](https://github.com/Zapper-fi/studio/compare/v0.561.0...v0.562.0) (2023-12-11)
+
+
+### Features
+
+* **studio:** Eliminate dependencies on subgraphs for volume ([#3120](https://github.com/Zapper-fi/studio/issues/3120)) ([731d200](https://github.com/Zapper-fi/studio/commit/731d200bf54e43d3d4246b5410d4836cd6cf4944))
+
 ## [0.561.0](https://github.com/Zapper-fi/studio/compare/v0.560.0...v0.561.0) (2023-12-10)
 
 
