@@ -4,13 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { BalancerV1ViemContractFactory } from './contracts';
 import { EthereumBalancerV1PoolTokenFetcher } from './ethereum/balancer-v1.pool.token-fetcher';
-import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './ethereum/balancer-v1.volume.data-loader';
 
 @Module({
-  providers: [
-    BalancerV1ViemContractFactory,
-    EthereumBalancerV1PoolTokenFetcher,
-    EthereumBalancerV1PoolSubgraphVolumeDataLoader,
-  ],
+  providers: [BalancerV1ViemContractFactory, EthereumBalancerV1PoolTokenFetcher],
 })
 export class BalancerV1AppModule extends AbstractApp() {}

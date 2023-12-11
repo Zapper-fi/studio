@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import DataLoader from 'dataloader';
 import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
@@ -61,8 +60,6 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Abi> extends AppT
   CurveTricryptoPool,
   CurvePoolTokenDataProps
 > {
-  volumeDataLoader: DataLoader<string, number>;
-
   abstract factoryAddress: string;
   blacklistedTokenAddresses: string[] = [];
 
@@ -87,10 +84,6 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Abi> extends AppT
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    if (!this.skipVolume) {
-      this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
-    }
-
     const contract = multicall.wrap(this.resolveFactory(this.factoryAddress));
     const poolCount = await this.resolvePoolCount({ contract, multicall });
     const poolRange = range(0, Number(poolCount));
@@ -143,20 +136,11 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Abi> extends AppT
   async getDataProps(params: GetDataPropsParams<CurveTricryptoPool, CurvePoolTokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
 
-    const { contract, definition } = params;
-    let fee: number;
+    const { contract } = params;
+    const feeRaw = await contract.read.fee().catch(() => 0);
+    const fee = Number(feeRaw) / 10 ** 10;
 
-    try {
-      const fees = await contract.read.fee();
-      fee = Number(fees) / 10 ** 8;
-    } catch {
-      fee = 0;
-    }
-    const volume = this.skipVolume == false ? await this.volumeDataLoader.load(definition.address) : 0;
-    const feeVolume = fee * volume;
-    const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
-
-    return { ...defaultDataProps, fee, volume, apy };
+    return { ...defaultDataProps, fee };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<CurveTricryptoPool, CurvePoolTokenDataProps>) {

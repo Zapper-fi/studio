@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import DataLoader from 'dataloader';
 import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
@@ -80,8 +79,6 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Abi> extends AppTok
   CurvePoolTokenDataProps,
   CurvePoolDefinition
 > {
-  volumeDataLoader: DataLoader<string, number>;
-
   abstract registryAddress: string;
   blacklistedSwapAddresses: string[] = [];
 
@@ -108,10 +105,6 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Abi> extends AppTok
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    if (!this.skipVolume) {
-      this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
-    }
-
     const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const poolCount = await this.resolvePoolCount({ contract, multicall });
     const poolRange = range(0, Number(poolCount));
@@ -175,11 +168,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Abi> extends AppTok
     const fees = await this.resolveFees({ contract, swapAddress, multicall });
     const fee = Number(fees[0]) / 10 ** 8;
 
-    const volume = this.skipVolume == false ? await this.volumeDataLoader.load(definition.swapAddress) : 0;
-    const feeVolume = fee * volume;
-    const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
-
-    return { ...defaultDataProps, fee, volume, apy, swapAddress };
+    return { ...defaultDataProps, fee, swapAddress };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
