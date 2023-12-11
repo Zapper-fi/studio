@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.564.0](https://github.com/Zapper-fi/studio/compare/v0.563.0...v0.564.0) (2023-12-11)
+
+
+### Features
+
+* **studio:** Change strategy for calcluating balances for Kwenta and Polynomial ([#3131](https://github.com/Zapper-fi/studio/issues/3131)) ([d8c5546](https://github.com/Zapper-fi/studio/commit/d8c554667629f46b9aad774c7020c127212119b9))
+
+
+### Bug Fixes
+
+* **uniswap-v3:** Cleanup and update subgraph url ([#3128](https://github.com/Zapper-fi/studio/issues/3128)) ([954d23c](https://github.com/Zapper-fi/studio/commit/954d23c6eb76c0f6a7db7de0244b882381c589d8))
+
 ## [0.563.0](https://github.com/Zapper-fi/studio/compare/v0.562.2...v0.563.0) (2023-12-11)
 
 
