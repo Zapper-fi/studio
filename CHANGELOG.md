@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.562.2](https://github.com/Zapper-fi/studio/compare/v0.562.1...v0.562.2) (2023-12-11)
+
+
+### Bug Fixes
+
+* **pickle:** Fix Jars without getRatio method ([#3124](https://github.com/Zapper-fi/studio/issues/3124)) ([81bf3af](https://github.com/Zapper-fi/studio/commit/81bf3af3b15b4c9b205c53e72a23fc301bf5bd4d))
+
 ## [0.562.1](https://github.com/Zapper-fi/studio/compare/v0.562.0...v0.562.1) (2023-12-11)
 
 
