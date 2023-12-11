@@ -63,8 +63,6 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Abi> extends AppT
   abstract factoryAddress: string;
   blacklistedTokenAddresses: string[] = [];
 
-  skipVolume = false;
-
   abstract resolveFactory(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;

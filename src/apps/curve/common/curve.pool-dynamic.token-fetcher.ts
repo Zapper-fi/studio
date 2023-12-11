@@ -82,8 +82,6 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Abi> extends AppTok
   abstract registryAddress: string;
   blacklistedSwapAddresses: string[] = [];
 
-  skipVolume = false;
-
   abstract resolveRegistry(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveSwapAddress(params: ResolveSwapAddressParams<T>): Promise<string>;

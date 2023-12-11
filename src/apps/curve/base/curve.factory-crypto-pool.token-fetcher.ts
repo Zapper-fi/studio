@@ -6,6 +6,4 @@ import { CurveFactoryCryptoPoolTokenFetcher } from '../common/curve.factory-cryp
 export class BaseCurveFactoryCryptoPoolTokenFetcher extends CurveFactoryCryptoPoolTokenFetcher {
   groupLabel = 'Pools';
   registryAddress = '0x5ef72230578b3e399e6c6f4f6360edf95e83bbfd';
-
-  skipVolume = true;
 }
