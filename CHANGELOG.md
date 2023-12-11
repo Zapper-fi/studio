@@ -4,6 +4,53 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.563.0](https://github.com/Zapper-fi/studio/compare/v0.562.2...v0.563.0) (2023-12-11)
+
+
+### Features
+
+* **dhedge-v2:** Add staking position ([#3125](https://github.com/Zapper-fi/studio/issues/3125)) ([74580db](https://github.com/Zapper-fi/studio/commit/74580dba5037512450ba049a64be36a787e6343a))
+
+## [0.562.2](https://github.com/Zapper-fi/studio/compare/v0.562.1...v0.562.2) (2023-12-11)
+
+
+### Bug Fixes
+
+* **pickle:** Fix Jars without getRatio method ([#3124](https://github.com/Zapper-fi/studio/issues/3124)) ([81bf3af](https://github.com/Zapper-fi/studio/commit/81bf3af3b15b4c9b205c53e72a23fc301bf5bd4d))
+
+## [0.562.1](https://github.com/Zapper-fi/studio/compare/v0.562.0...v0.562.1) (2023-12-11)
+
+
+### Bug Fixes
+
+* **reaper:** Fix vault definitions ([#3122](https://github.com/Zapper-fi/studio/issues/3122)) ([ef9d1d9](https://github.com/Zapper-fi/studio/commit/ef9d1d9b6dcf771c9597b37b0e52dd0453fe7e1a))
+
+## [0.562.0](https://github.com/Zapper-fi/studio/compare/v0.561.0...v0.562.0) (2023-12-11)
+
+
+### Features
+
+* **studio:** Eliminate dependencies on subgraphs for volume ([#3120](https://github.com/Zapper-fi/studio/issues/3120)) ([731d200](https://github.com/Zapper-fi/studio/commit/731d200bf54e43d3d4246b5410d4836cd6cf4944))
+
+## [0.561.0](https://github.com/Zapper-fi/studio/compare/v0.560.0...v0.561.0) (2023-12-10)
+
+
+### Features
+
+* **abracadabra:** Add support for GM cauldrons on Arbitrum ([#3117](https://github.com/Zapper-fi/studio/issues/3117)) ([267512b](https://github.com/Zapper-fi/studio/commit/267512b06335f1dabbced95b68ce20d3e74c69a2))
+
+
+### Bug Fixes
+
+* **pickle:** Fix jars definitions ([#3118](https://github.com/Zapper-fi/studio/issues/3118)) ([37df230](https://github.com/Zapper-fi/studio/commit/37df230d6bd313619fbcf66e608f90917e864503))
+
+## [0.560.0](https://github.com/Zapper-fi/studio/compare/v0.559.4...v0.560.0) (2023-12-09)
+
+
+### Features
+
+* **uniswap-v2:** Remove optimization for Uniswap pool token balances ([721b18e](https://github.com/Zapper-fi/studio/commit/721b18e17d9d6275f3387308a3674e3a29eea79a))
+
 ## [0.559.4](https://github.com/Zapper-fi/studio/compare/v0.559.3...v0.559.4) (2023-12-09)
 
 

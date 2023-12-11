@@ -30,8 +30,8 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getAddresses() {
-    const vaults = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    return vaults.map(v => v.vaultAddress);
+    const jarDefinitionData = await this.jarRegistry.getJarDefinitions(this.network);
+    return jarDefinitionData.map(x => x.jarAddress);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJar>) {
@@ -44,7 +44,12 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PickleJar, DefaultDataProps>) {
-    return contract.read.getRatio().then(v => [Number(v) / 10 ** 18]);
+    try {
+      const ratioRaw = await contract.read.getRatio();
+      return [Number(ratioRaw) / 10 ** 18];
+    } catch (error) {
+      return [1];
+    }
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<PickleJar>) {
@@ -59,13 +64,7 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
     return [reserve];
   }
 
-  async getApy({ appToken }: GetDataPropsParams<PickleJar>) {
-    const vaultDefinitions = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    const vaultDefinition = vaultDefinitions.find(v => v.vaultAddress === appToken.address);
-    return vaultDefinition?.apy ?? 0;
-  }
-
   async getLabel({ appToken }: GetDisplayPropsParams<PickleJar, DefaultDataProps>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Jar`;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }
