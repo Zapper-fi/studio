@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.563.0](https://github.com/Zapper-fi/studio/compare/v0.562.2...v0.563.0) (2023-12-11)
+
+
+### Features
+
+* **dhedge-v2:** Add staking position ([#3125](https://github.com/Zapper-fi/studio/issues/3125)) ([74580db](https://github.com/Zapper-fi/studio/commit/74580dba5037512450ba049a64be36a787e6343a))
+
 ## [0.562.2](https://github.com/Zapper-fi/studio/compare/v0.562.1...v0.562.2) (2023-12-11)
 
 
