@@ -1,12 +1,12 @@
 import 'moment-duration-format';
 
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
 import { BigNumberish } from 'ethers';
 import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -16,18 +16,9 @@ import {
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
-import { NETWORK_IDS } from '~types';
 
 import { KeeperViemContractFactory } from '../contracts';
 import { KeeperJobManager } from '../contracts/viem';
-
-const KEEP3R_JOB_NAME_API = 'https://keep3r.vercel.app/api/registry';
-
-type KeeperJobRegistryApiResponse = {
-  chainID: number;
-  address: string;
-  name: string;
-}[];
 
 export type KeeperJobDefinition = {
   address: string;
@@ -87,16 +78,8 @@ export class EthereumKeeperJobContractPositionFetcher extends ContractPositionTe
       : [{ metaType: MetaType.LOCKED, address: keeperLpAddress, network: this.network }];
   }
 
-  async getLabel({
-    definition,
-  }: GetDisplayPropsParams<KeeperJobManager, KeeperJobDataProps, KeeperJobDefinition>): Promise<string> {
-    const data = await Axios.get<KeeperJobRegistryApiResponse>(KEEP3R_JOB_NAME_API).then(v =>
-      Object.values(v.data).map(job => ({ ...job, address: job.address.toLowerCase() })),
-    );
-    const filteredData = data.filter(job => job.chainID === NETWORK_IDS[this.network]);
-    const foundJob = filteredData.find(x => x.address === definition.jobAddress);
-
-    return (foundJob && `${foundJob.name} Keep3r Job`) || 'Keep3r Job';
+  async getLabel({ contractPosition }: GetDisplayPropsParams<KeeperJobManager>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getDataProps({
