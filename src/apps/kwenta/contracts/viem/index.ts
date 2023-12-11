@@ -4,10 +4,12 @@
 
 export type { KwentaAccountResolver } from './KwentaAccountResolver';
 export type { KwentaEscrow } from './KwentaEscrow';
+export type { KwentaPerp } from './KwentaPerp';
 export type { KwentaStakingV2 } from './KwentaStakingV2';
 export type { KwentaStaking } from './KwentaStaking';
 
 export { KwentaAccountResolver__factory } from './KwentaAccountResolver';
 export { KwentaEscrow__factory } from './KwentaEscrow';
+export { KwentaPerp__factory } from './KwentaPerp';
 export { KwentaStakingV2__factory } from './KwentaStakingV2';
 export { KwentaStaking__factory } from './KwentaStaking';
