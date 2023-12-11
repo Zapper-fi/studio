@@ -6,8 +6,10 @@ import { Network } from '~types/network.interface';
 import {
   PolynomialAccountResolver__factory,
   PolynomialCoveredCall__factory,
+  PolynomialPerp__factory,
   PolynomialPutSelling__factory,
   PolynomialResolver__factory,
+  PolynomialSmartWalletIndex__factory,
   PolynomialVaultToken__factory,
 } from './viem';
 
@@ -23,11 +25,17 @@ export class PolynomialViemContractFactory {
   polynomialCoveredCall({ address, network }: ContractOpts) {
     return PolynomialCoveredCall__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
+  polynomialPerp({ address, network }: ContractOpts) {
+    return PolynomialPerp__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
   polynomialPutSelling({ address, network }: ContractOpts) {
     return PolynomialPutSelling__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   polynomialResolver({ address, network }: ContractOpts) {
     return PolynomialResolver__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  polynomialSmartWalletIndex({ address, network }: ContractOpts) {
+    return PolynomialSmartWalletIndex__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   polynomialVaultToken({ address, network }: ContractOpts) {
     return PolynomialVaultToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));

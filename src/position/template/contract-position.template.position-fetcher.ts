@@ -200,10 +200,6 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return tokens;
   }
 
-  async getAccountAddress(address: string) {
-    return address;
-  }
-
   async getPositionsForBalances() {
     return this.appToolkit.getAppContractPositions<V>({
       appId: this.appId,
@@ -223,9 +219,8 @@ export abstract class ContractPositionTemplatePositionFetcher<
     multicall,
   }: GetTokenBalancesParams<T, V>): Promise<BigNumberish[]>;
 
-  async getBalances(_address: string): Promise<ContractPositionBalance<V>[]> {
+  async getBalances(address: string): Promise<ContractPositionBalance<V>[]> {
     const multicall = this.appToolkit.getViemMulticall(this.network);
-    const address = await this.getAccountAddress(_address);
     if (address === ZERO_ADDRESS) return [];
 
     const contractPositions = await this.getPositionsForBalances();
@@ -250,9 +245,8 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return balances;
   }
 
-  async getRawBalances(_address: string): Promise<RawContractPositionBalance[]> {
+  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
     const multicall = this.appToolkit.getViemMulticall(this.network);
-    const address = await this.getAccountAddress(_address);
     if (address === ZERO_ADDRESS) return [];
 
     const contractPositions = await this.getPositionsForBalances();

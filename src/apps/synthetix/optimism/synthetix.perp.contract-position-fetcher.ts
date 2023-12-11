@@ -8,7 +8,11 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 import { SynthetixViemContractFactory } from '../contracts';
 import { SynthetixPerp } from '../contracts/viem';
@@ -38,9 +42,13 @@ export type SynthetixPerpPositionDefinition = {
   asset: string;
 };
 
+export type SynthetixPerpDataProps = DefaultDataProps & {
+  asset: string;
+};
+
 export abstract class OptimismSynthetixPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   SynthetixPerp,
-  DefaultDataProps,
+  SynthetixPerpDataProps,
   SynthetixPerpPositionDefinition
 > {
   useCustomMarketLogos = false;
@@ -91,16 +99,23 @@ export abstract class OptimismSynthetixPerpContractPositionFetcher extends Contr
     ];
   }
 
+  async getDataProps(
+    params: GetDataPropsParams<SynthetixPerp, SynthetixPerpDataProps, SynthetixPerpPositionDefinition>,
+  ) {
+    const defaultDataProps = await super.getDataProps(params);
+    return { ...defaultDataProps, asset: params.definition.asset };
+  }
+
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, SynthetixPerpPositionDefinition>): Promise<string> {
+  }: GetDisplayPropsParams<SynthetixPerp, SynthetixPerpDataProps, SynthetixPerpPositionDefinition>): Promise<string> {
     return `${definition.asset}-PERP`;
   }
 
   async getImages({
     definition,
-  }: GetDisplayPropsParams<SynthetixPerp, DefaultDataProps, SynthetixPerpPositionDefinition>) {
-    return [getAppAssetImage(this.useCustomMarketLogos ? this.appId : 'synthetix', `s${definition.asset}`)];
+  }: GetDisplayPropsParams<SynthetixPerp, SynthetixPerpDataProps, SynthetixPerpPositionDefinition>) {
+    return [getAppAssetImage(this.appId, `s${definition.asset}`)];
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerp>) {

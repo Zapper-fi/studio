@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 import {
   KwentaAccountResolver__factory,
   KwentaEscrow__factory,
+  KwentaPerp__factory,
   KwentaStaking__factory,
   KwentaStakingV2__factory,
 } from './viem';
@@ -21,6 +22,9 @@ export class KwentaViemContractFactory {
   }
   kwentaEscrow({ address, network }: ContractOpts) {
     return KwentaEscrow__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  kwentaPerp({ address, network }: ContractOpts) {
+    return KwentaPerp__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   kwentaStaking({ address, network }: ContractOpts) {
     return KwentaStaking__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
