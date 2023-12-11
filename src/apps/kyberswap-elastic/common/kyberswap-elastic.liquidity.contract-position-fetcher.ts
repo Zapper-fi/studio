@@ -1,5 +1,4 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import DataLoader from 'dataloader';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -65,8 +64,6 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
   abstract blockSubgraphUrl: string;
   protected poolFeeMapping: Record<string, number> | null;
 
-  apyDataLoader: DataLoader<string, number>;
-
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(KyberswapElasticViemContractFactory)
@@ -84,11 +81,6 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
   }
 
   async getDefinitions(): Promise<KyberswapElasticLiquidityPositionDefinition[]> {
-    this.apyDataLoader = this.apyDataLoaderBuilder.getLoader({
-      subgraphUrl: this.subgraphUrl,
-      blockSubgraphUrl: this.blockSubgraphUrl,
-    });
-
     const data = await gqlFetch<GetTopPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_TOP_POOLS_QUERY,
@@ -141,9 +133,8 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
-    const apy = await this.apyDataLoader.load(poolAddress);
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard, apy, positionKey: `${feeTier}` };
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, positionKey: `${feeTier}` };
   }
 
   async getLabel({

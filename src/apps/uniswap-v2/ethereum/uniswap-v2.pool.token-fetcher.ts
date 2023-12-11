@@ -1,30 +1,6 @@
-import { gql } from 'graphql-request';
-
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { UniswapV2DefaultPoolSubgraphTemplateTokenFetcher } from '../common/uniswap-v2.default.subgraph.template.token-fetcher';
-
-type UniswapV2BalancesData = {
-  user?: {
-    liquidityPositions: {
-      pair: {
-        id: string;
-      };
-    }[];
-  };
-};
-
-const UNISWAP_V2_BALANCES_QUERY = gql`
-  query getBalances($address: String!) {
-    user(id: $address) {
-      liquidityPositions {
-        pair {
-          id
-        }
-      }
-    }
-  }
-`;
 
 @PositionTemplate()
 export class EthereumUniswapV2PoolTokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
@@ -35,6 +11,4 @@ export class EthereumUniswapV2PoolTokenFetcher extends UniswapV2DefaultPoolSubgr
   ignoredPools = ['0x3016a43b482d0480460f6625115bd372fe90c6bf'];
   orderBy = 'trackedReserveETH';
   first = 1000;
-  // Todo: remove when subgraph isn't throwing when calling volumeUSD
-  skipVolume = true;
 }

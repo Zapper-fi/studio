@@ -3,11 +3,11 @@ import { Contract, ethers } from 'ethers';
 import { FunctionFragment, Interface } from 'ethers/lib/utils';
 
 import { Multicall } from '~contract/contracts';
+import { MulticallCallStruct } from '~multicall/multicall.types';
 
 import { DEFAULT_DATALOADER_OPTIONS } from '../multicall.constants';
 import { MulticallContract } from '../multicall.contract';
 import { ContractCall, IMulticallWrapper, TargetContract } from '../multicall.interface';
-import { MulticallCallStruct } from '~multicall/multicall.types';
 
 export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
 
