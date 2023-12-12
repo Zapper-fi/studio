@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.564.2](https://github.com/Zapper-fi/studio/compare/v0.564.1...v0.564.2) (2023-12-12)
+
+
+### Bug Fixes
+
+* **dhedge-v2:** Early return if position has been unstaked ([#3134](https://github.com/Zapper-fi/studio/issues/3134)) ([629814b](https://github.com/Zapper-fi/studio/commit/629814bd2d0d0e94a5a9b59e7cb892f0347340b8))
+
 ## [0.564.1](https://github.com/Zapper-fi/studio/compare/v0.564.0...v0.564.1) (2023-12-12)
 
 
