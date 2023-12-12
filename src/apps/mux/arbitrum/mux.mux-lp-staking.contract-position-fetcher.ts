@@ -44,12 +44,12 @@ export class ArbitrumMuxMuxLpStakingContractPositionFetcher extends ContractPosi
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.read.mux(),
+        address: await contract.read.weth(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.read.weth(),
+        address: await contract.read.mux(),
         network: this.network,
       },
     ];
