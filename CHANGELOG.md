@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.566.0](https://github.com/Zapper-fi/studio/compare/v0.565.0...v0.566.0) (2023-12-12)
+
+
+### Features
+
+* **polygon-staking:** Remove subgraph dependency, change contract position addresses to help with interactions indexing ([#3139](https://github.com/Zapper-fi/studio/issues/3139)) ([0f2753e](https://github.com/Zapper-fi/studio/commit/0f2753e49931495eb69cc6647c97317aaf0d16ea))
+
 ## [0.565.0](https://github.com/Zapper-fi/studio/compare/v0.564.2...v0.565.0) (2023-12-12)
 
 
