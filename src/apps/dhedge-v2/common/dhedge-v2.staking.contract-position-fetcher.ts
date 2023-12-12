@@ -120,7 +120,7 @@ export abstract class DhedgeV2StakingContractPositionFetcher extends CustomContr
         const matchingPosition = contractPositions.find(x =>
           x.tokens.find(x => x.address == lpTokenAddress.toLowerCase()),
         );
-        if (!matchingPosition) return null;
+        if (!matchingPosition || suppliedBalances[6] == true) return null;
 
         const suppliedDht = suppliedBalances[0];
         const suppliedLp = suppliedBalances[3];
