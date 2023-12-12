@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.565.0](https://github.com/Zapper-fi/studio/compare/v0.564.2...v0.565.0) (2023-12-12)
+
+
+### Features
+
+* **studio:** Move Synthetix to a private module ([#3137](https://github.com/Zapper-fi/studio/issues/3137)) ([d5fe616](https://github.com/Zapper-fi/studio/commit/d5fe6165ba87d796bb2e770f7033a4724ed4e6f5))
+
 ## [0.564.2](https://github.com/Zapper-fi/studio/compare/v0.564.1...v0.564.2) (2023-12-12)
 
 
