@@ -4,6 +4,8 @@
 
 export type { LooksRareCompounder } from './LooksRareCompounder';
 export type { LooksRareFeeSharing } from './LooksRareFeeSharing';
+export type { LooksRareStakingRewardsV2 } from './LooksRareStakingRewardsV2';
 
 export { LooksRareCompounder__factory } from './LooksRareCompounder';
 export { LooksRareFeeSharing__factory } from './LooksRareFeeSharing';
+export { LooksRareStakingRewardsV2__factory } from './LooksRareStakingRewardsV2';

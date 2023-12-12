@@ -16,7 +16,7 @@ import { LooksRareViemContractFactory } from '../contracts';
 import { LooksRareFeeSharing } from '../contracts/viem';
 
 @PositionTemplate()
-export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
+export class EthereumLooksRareStakingV1ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
   groupLabel = 'Staking';
 
   constructor(
