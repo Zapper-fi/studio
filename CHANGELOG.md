@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.564.1](https://github.com/Zapper-fi/studio/compare/v0.564.0...v0.564.1) (2023-12-12)
+
+
+### Bug Fixes
+
+* **keeper:** Removed dependency to Keeper's API ([#3129](https://github.com/Zapper-fi/studio/issues/3129)) ([e45cb73](https://github.com/Zapper-fi/studio/commit/e45cb73a2e8ab6679dee044786b33b38f2ba7c48))
+* **mux:** Fix lp staking token definitions ([#3133](https://github.com/Zapper-fi/studio/issues/3133)) ([2025480](https://github.com/Zapper-fi/studio/commit/2025480b534fe2d24c812d252169d0e6e0ca0ea3))
+
 ## [0.564.0](https://github.com/Zapper-fi/studio/compare/v0.563.0...v0.564.0) (2023-12-11)
 
 
