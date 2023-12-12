@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -14,11 +13,11 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { LooksRareViemContractFactory } from '../contracts';
-import { LooksRareFeeSharing } from '../contracts/viem';
+import { LooksRareStakingPool } from '../contracts/viem';
 
 @PositionTemplate()
-export class EthereumLooksRareStakingV1ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
-  groupLabel = 'Staking V1';
+export class EthereumLooksRareStakingPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareStakingPool> {
+  groupLabel = 'Staking Pool';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -28,41 +27,38 @@ export class EthereumLooksRareStakingV1ContractPositionFetcher extends ContractP
   }
 
   getContract(address: string) {
-    return this.contractFactory.looksRareFeeSharing({ address, network: this.network });
+    return this.contractFactory.looksRareStakingPool({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce' }];
+    return [{ address: '0x2a70e7f51f6cd40c3e9956aa964137668cbfadc5' }];
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<LooksRareFeeSharing>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<LooksRareStakingPool>) {
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.read.looksRareToken(), // LOOKS
+        address: await contract.read.stakedToken(),
         network: this.network,
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.read.rewardToken(), // WETH
+        address: await contract.read.looksRareToken(),
         network: this.network,
       },
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<LooksRareFeeSharing>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<LooksRareStakingPool>) {
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-  }: GetTokenBalancesParams<LooksRareFeeSharing>): Promise<BigNumberish[]> {
-    const [suppliedBalance, claimableBalance] = await Promise.all([
-      contract.read.calculateSharesValueInLOOKS([address]),
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LooksRareStakingPool>) {
+    const [balanceRaw, claimable] = await Promise.all([
+      contract.read.userInfo([address]),
       contract.read.calculatePendingRewards([address]),
     ]);
 
-    return [suppliedBalance, claimableBalance];
+    return [balanceRaw[0], claimable];
   }
 }

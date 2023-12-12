@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { LooksRareViemContractFactory } from './contracts';
 import { EthereumLooksRareCompounderContractPositionFetcher } from './ethereum/looks-rare.compounder.contract-position-fetcher';
+import { EthereumLooksRareStakingPoolContractPositionFetcher } from './ethereum/looks-rare.staking-pool.contract-position-fetcher';
 import { EthereumLooksRareStakingV1ContractPositionFetcher } from './ethereum/looks-rare.staking-v1.contract-position-fetcher';
 import { EthereumLooksRareStakingV2ContractPositionFetcher } from './ethereum/looks-rare.staking-v2.contract-position-fetcher';
 
@@ -13,6 +14,7 @@ import { EthereumLooksRareStakingV2ContractPositionFetcher } from './ethereum/lo
     EthereumLooksRareStakingV1ContractPositionFetcher,
     EthereumLooksRareCompounderContractPositionFetcher,
     EthereumLooksRareStakingV2ContractPositionFetcher,
+    EthereumLooksRareStakingPoolContractPositionFetcher,
   ],
 })
 export class LooksRareAppModule extends AbstractApp() {}
