@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { SynthetixViemContractFactory } from '../synthetix/contracts';
-
 import { PolynomialAccountResolver } from './common/polynomial.account-resolver';
 import { PolynomialApiHelper } from './common/polynomial.api';
 import { PolynomialViemContractFactory } from './contracts';
@@ -19,7 +17,6 @@ import { OptimismPolynomialSmartWalletContractPositionFetcher } from './optimism
     PolynomialApiHelper,
     PolynomialAccountResolver,
     PolynomialViemContractFactory,
-    SynthetixViemContractFactory,
     OptimismPolynomialCallSellingVaultTokenFetcher,
     OptimismPolynomialCallSellingVaultQueueContractPositionFetcher,
     OptimismPolynomialPutSellingVaultTokenFetcher,

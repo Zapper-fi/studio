@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixViemContractFactory } from '~apps/synthetix/contracts';
 
 import { InverseViemContractFactory } from './contracts';
 import { EthereumInverseBorrowContractPositionFetcher } from './ethereum/inverse.borrow.contract-position-fetcher';
@@ -14,7 +13,6 @@ import { EthereumInverseSupplyTokenFetcher } from './ethereum/inverse.supply.tok
 @Module({
   providers: [
     InverseViemContractFactory,
-    SynthetixViemContractFactory,
     EthereumInverseBorrowContractPositionFetcher,
     EthereumInverseClaimableContractPositionFetcher,
     EthereumInverseDcaVaultTokenFetcher,
