@@ -3,7 +3,7 @@
 /* eslint-disable */
 import { getContract, GetContractReturnType, PublicClient } from 'viem';
 
-export const synthetixRewardsAbi = [
+export const inverseStakingAbi = [
   {
     constant: true,
     inputs: [
@@ -427,11 +427,11 @@ export const synthetixRewardsAbi = [
   },
 ] as const;
 
-export type SynthetixRewards = typeof synthetixRewardsAbi;
-export type SynthetixRewardsContract = GetContractReturnType<SynthetixRewards, PublicClient>;
+export type InverseStaking = typeof inverseStakingAbi;
+export type InverseStakingContract = GetContractReturnType<InverseStaking, PublicClient>;
 
-export class SynthetixRewards__factory {
+export class InverseStaking__factory {
   static connect(address: string, client: PublicClient) {
-    return getContract({ address, abi: synthetixRewardsAbi, publicClient: client });
+    return getContract({ address, abi: inverseStakingAbi, publicClient: client });
   }
 }

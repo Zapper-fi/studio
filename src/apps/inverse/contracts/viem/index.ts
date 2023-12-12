@@ -6,8 +6,10 @@ export type { InverseController } from './InverseController';
 export type { InverseDcaVaultToken } from './InverseDcaVaultToken';
 export type { InverseLendingPool } from './InverseLendingPool';
 export type { InverseLens } from './InverseLens';
+export type { InverseStaking } from './InverseStaking';
 
 export { InverseController__factory } from './InverseController';
 export { InverseDcaVaultToken__factory } from './InverseDcaVaultToken';
 export { InverseLendingPool__factory } from './InverseLendingPool';
 export { InverseLens__factory } from './InverseLens';
+export { InverseStaking__factory } from './InverseStaking';

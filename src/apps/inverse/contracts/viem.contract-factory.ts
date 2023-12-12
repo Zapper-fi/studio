@@ -8,6 +8,7 @@ import {
   InverseDcaVaultToken__factory,
   InverseLendingPool__factory,
   InverseLens__factory,
+  InverseStaking__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -27,5 +28,8 @@ export class InverseViemContractFactory {
   }
   inverseLens({ address, network }: ContractOpts) {
     return InverseLens__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  inverseStaking({ address, network }: ContractOpts) {
+    return InverseStaking__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }
