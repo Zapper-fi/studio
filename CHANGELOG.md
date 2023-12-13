@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.568.0](https://github.com/Zapper-fi/studio/compare/v0.567.0...v0.568.0) (2023-12-13)
+
+
+### Features
+
+* **opnx:** Remove and pull into private repo ([4ff10b5](https://github.com/Zapper-fi/studio/commit/4ff10b55915e37fa5e4ee337db45f10d3707c80c))
+
 ## [0.567.0](https://github.com/Zapper-fi/studio/compare/v0.566.0...v0.567.0) (2023-12-13)
 
 
