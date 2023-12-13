@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-//import { Cache } from '~cache/cache.decorator';
+import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
 type ReaperVaultData = {
@@ -24,10 +24,10 @@ const NETWORK_CHAIN_ID_HEX: Partial<Record<Network, string>> = {
 };
 
 export class ReaperVaultCacheManager {
-  /*@Cache({
-    key: (network: Network) => `studio:reaper:${network}:farms`,
-    ttl: 15 * 60, // 60 minutes
-  })*/
+  @Cache({
+    key: (network: Network) => `studio:reaper:${network}:vaults`,
+    ttl: 15 * 60, // 15 minutes
+  })
   private async getVaultData(network: Network) {
     const chainIdHex = NETWORK_CHAIN_ID_HEX[network];
     const url = `https://2ch9hbg8hh.execute-api.us-east-1.amazonaws.com/dev/api/vaults/${chainIdHex}`;
