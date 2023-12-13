@@ -4,6 +4,34 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.568.0](https://github.com/Zapper-fi/studio/compare/v0.567.0...v0.568.0) (2023-12-13)
+
+
+### Features
+
+* **opnx:** Remove and pull into private repo ([4ff10b5](https://github.com/Zapper-fi/studio/commit/4ff10b55915e37fa5e4ee337db45f10d3707c80c))
+
+## [0.567.0](https://github.com/Zapper-fi/studio/compare/v0.566.0...v0.567.0) (2023-12-13)
+
+
+### Features
+
+* **looksrare:** Add staking v2 position ([#3135](https://github.com/Zapper-fi/studio/issues/3135)) ([f2930d0](https://github.com/Zapper-fi/studio/commit/f2930d0a89e0d0e8212bb0855182a50e0e41809d))
+
+## [0.566.0](https://github.com/Zapper-fi/studio/compare/v0.565.0...v0.566.0) (2023-12-12)
+
+
+### Features
+
+* **polygon-staking:** Remove subgraph dependency, change contract position addresses to help with interactions indexing ([#3139](https://github.com/Zapper-fi/studio/issues/3139)) ([0f2753e](https://github.com/Zapper-fi/studio/commit/0f2753e49931495eb69cc6647c97317aaf0d16ea))
+
+## [0.565.0](https://github.com/Zapper-fi/studio/compare/v0.564.2...v0.565.0) (2023-12-12)
+
+
+### Features
+
+* **studio:** Move Synthetix to a private module ([#3137](https://github.com/Zapper-fi/studio/issues/3137)) ([d5fe616](https://github.com/Zapper-fi/studio/commit/d5fe6165ba87d796bb2e770f7033a4724ed4e6f5))
+
 ## [0.564.2](https://github.com/Zapper-fi/studio/compare/v0.564.1...v0.564.2) (2023-12-12)
 
 

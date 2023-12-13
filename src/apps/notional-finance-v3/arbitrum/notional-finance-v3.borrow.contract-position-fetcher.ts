@@ -112,9 +112,7 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<NotionalView, NotionalBorrowingDefinition>) {
-    return [
-      { metaType: MetaType.BORROWED, address: definition.address, network: this.network, tokenId: definition.tokenId },
-    ];
+    return [{ metaType: MetaType.BORROWED, address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getDataProps(
@@ -145,7 +143,8 @@ export class ArbitrumNotionalFinanceV3BorrowContractPositionFetcher extends Cont
       .times(10 ** contractPosition.tokens[0].decimals)
       .div(10 ** 8);
 
-    const presentValue = fcashAmountAtMaturity.times(new BigNumber(fCashPV));
+    const presentValueRaw = fcashAmountAtMaturity.times(new BigNumber(fCashPV));
+    const presentValue = presentValueRaw.absoluteValue();
 
     return [presentValue.toString()];
   }

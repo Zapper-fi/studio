@@ -1,27 +1,21 @@
 import { Inject } from '@nestjs/common';
 import axios from 'axios';
-import { gql } from 'graphql-request';
-import { compact, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { isClaimable, isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
-import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { PolygonStakingViemContractFactory } from '../contracts';
-import { PolygonStakeManager } from '../contracts/viem/PolygonStakeManager';
+import { PolygonValidatorShare } from '../contracts/viem';
 
 type ValidatorsResponse = {
   result: {
@@ -50,41 +44,20 @@ type ValidatorsResponse = {
   }[];
 };
 
-type DelegatedMaticResponse = {
-  delegators: {
-    validatorId: string;
-    delegatedAmount: string;
-  }[];
-};
-
-const GQL_ENDPOINT = `https://api.thegraph.com/subgraphs/name/maticnetwork/mainnet-root-subgraphs?source=zapper`;
-
-const DELEGATED_MATIC_QUERY = gql`
-  query getDelegatedMatic($address: String!, $first: Int, $lastId: String) {
-    delegators(where: { address: $address, id_gt: $lastId }, first: $first) {
-      validatorId
-      delegatedAmount
-    }
-  }
-`;
-
 type PolygonStakingDepositDefinition = {
-  address: string;
+  address: string; // share address
   validatorId: number;
   validatorName: string;
-  validatorShareAddress: string;
 };
 
 type PolygonStakingDepositDataProps = {
   validatorId: number;
   validatorName: string;
-  validatorShareAddress: string;
-  positionKey: string;
 };
 
 @PositionTemplate()
-export class EthereumPolygonStakingContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
-  PolygonStakeManager,
+export class EthereumPolygonStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  PolygonValidatorShare,
   PolygonStakingDepositDataProps,
   PolygonStakingDepositDefinition
 > {
@@ -109,21 +82,20 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
   }
 
   getContract(address: string) {
-    return this.contractFactory.polygonStakeManager({ address, network: this.network });
+    return this.contractFactory.polygonValidatorShare({ address, network: this.network });
   }
 
   async getDefinitions() {
     const validators = await this.getValidators();
 
     return validators.result.map(validator => ({
-      address: '0x5e3ef299fddf15eaa0432e6e66473ace8c13d908',
+      address: validator.contractAddress,
       validatorId: validator.id,
       validatorName: validator.name,
-      validatorShareAddress: validator.contractAddress,
     }));
   }
 
-  async getTokenDefinitions(_params: GetTokenDefinitionsParams<PolygonStakeManager>) {
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<PolygonValidatorShare>) {
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -141,82 +113,23 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
 
   async getDataProps({
     definition,
-  }: GetDataPropsParams<PolygonStakeManager, PolygonStakingDepositDataProps, PolygonStakingDepositDefinition>) {
+  }: GetDataPropsParams<PolygonValidatorShare, PolygonStakingDepositDataProps, PolygonStakingDepositDefinition>) {
     return {
       validatorId: definition.validatorId,
       validatorName: definition.validatorName,
-      validatorShareAddress: definition.validatorShareAddress,
-      positionKey: `${definition.validatorId}`,
     };
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<PolygonStakeManager, PolygonStakingDepositDataProps>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PolygonValidatorShare, PolygonStakingDepositDataProps>) {
     const validatorLabel = `${contractPosition.dataProps.validatorName} (ID: ${contractPosition.dataProps.validatorId})`;
     return `Delegated ${getLabelFromToken(contractPosition.tokens[0])}: ${validatorLabel}`;
   }
 
-  async getImages({ contractPosition }: GetDisplayPropsParams<PolygonStakeManager>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<PolygonValidatorShare>) {
     return getImagesFromToken(contractPosition.tokens[0]);
   }
 
-  // @ts-ignore
-  async getTokenBalancesPerPosition(_params: GetTokenBalancesParams<PolygonStakeManager>) {
-    throw new Error('Method not implemented.');
-  }
-
-  async getBalances(address: string): Promise<ContractPositionBalance<PolygonStakingDepositDataProps>[]> {
-    const multicall = this.appToolkit.getViemMulticall(this.network);
-
-    const data = await gqlFetchAll<DelegatedMaticResponse>({
-      endpoint: GQL_ENDPOINT,
-      query: DELEGATED_MATIC_QUERY,
-      dataToSearch: 'delegators',
-      variables: {
-        address: address.toLowerCase(),
-      },
-    });
-
-    const positions = await this.appToolkit.getAppContractPositions<PolygonStakingDepositDataProps>({
-      network: this.network,
-      appId: this.appId,
-      groupIds: [this.groupId],
-    });
-
-    const balances = await Promise.all(
-      data.delegators.map(async delegator => {
-        const position = positions.find(v => v.dataProps.validatorId === Number(delegator.validatorId));
-        if (!position) return null;
-
-        const contract = this.contractFactory.polygonValidatorShare({
-          address: position.dataProps.validatorShareAddress,
-          network: this.network,
-        });
-
-        const [balanceRaw, claimableBalanceRaw] = await Promise.all([
-          multicall.wrap(contract).read.balanceOf([address]),
-          multicall.wrap(contract).read.getLiquidRewards([address]),
-        ]);
-
-        const suppliedToken = position.tokens.find(isSupplied)!;
-        const claimableToken = position.tokens.find(isClaimable)!;
-        if (!suppliedToken || !claimableToken) return null;
-
-        const tokens = [
-          drillBalance(suppliedToken, balanceRaw.toString()),
-          drillBalance(claimableToken, claimableBalanceRaw.toString()),
-        ];
-
-        const balanceUSD = sumBy(tokens, v => v.balanceUSD);
-        const balance: ContractPositionBalance<PolygonStakingDepositDataProps> = {
-          ...position,
-          tokens,
-          balanceUSD,
-        };
-
-        return balance;
-      }),
-    );
-
-    return compact(balances);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PolygonValidatorShare>) {
+    return Promise.all([contract.read.balanceOf([address]), contract.read.getLiquidRewards([address])]);
   }
 }
