@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.570.0](https://github.com/Zapper-fi/studio/compare/v0.569.1...v0.570.0) (2023-12-13)
+
+
+### Features
+
+* **studio:** Extract ApeCoin to Studio ([#3147](https://github.com/Zapper-fi/studio/issues/3147)) ([2a080f2](https://github.com/Zapper-fi/studio/commit/2a080f23d1e6d463042f73fc4ef4892db805b214))
+
 ## [0.569.1](https://github.com/Zapper-fi/studio/compare/v0.569.0...v0.569.1) (2023-12-13)
 
 
