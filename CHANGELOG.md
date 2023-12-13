@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.569.1](https://github.com/Zapper-fi/studio/compare/v0.569.0...v0.569.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* **reaper:** Add cache response from external API ([#3148](https://github.com/Zapper-fi/studio/issues/3148)) ([9f40ab1](https://github.com/Zapper-fi/studio/commit/9f40ab1e200cc3dcc20763738903103eb761489c))
+
 ## [0.569.0](https://github.com/Zapper-fi/studio/compare/v0.568.0...v0.569.0) (2023-12-13)
 
 
