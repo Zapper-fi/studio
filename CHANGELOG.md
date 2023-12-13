@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.569.0](https://github.com/Zapper-fi/studio/compare/v0.568.0...v0.569.0) (2023-12-13)
+
+
+### Features
+
+* **dinero:** Add Dinero LSTs pxETH and apxETH ([#3141](https://github.com/Zapper-fi/studio/issues/3141)) ([72be905](https://github.com/Zapper-fi/studio/commit/72be90522e9a1d7d2b2c7e9facdf8b0767102fbc))
+* **notional-finance-v3:** Add claimables on Arbitrum ([#3146](https://github.com/Zapper-fi/studio/issues/3146)) ([ab59537](https://github.com/Zapper-fi/studio/commit/ab59537069be55af86df2ec58b9345614d3a9830))
+
+
+### Bug Fixes
+
+* **notional-finance-v3:** Fix borrow balances ([#3142](https://github.com/Zapper-fi/studio/issues/3142)) ([fb6b24a](https://github.com/Zapper-fi/studio/commit/fb6b24ac5f4118007472239f5f25be9bf1b89c81))
+
 ## [0.568.0](https://github.com/Zapper-fi/studio/compare/v0.567.0...v0.568.0) (2023-12-13)
 
 
