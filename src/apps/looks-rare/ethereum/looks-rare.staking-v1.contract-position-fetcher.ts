@@ -3,11 +3,12 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { DefaultDataProps } from '~position/display.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
@@ -16,8 +17,8 @@ import { LooksRareViemContractFactory } from '../contracts';
 import { LooksRareFeeSharing } from '../contracts/viem';
 
 @PositionTemplate()
-export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
-  groupLabel = 'Staking';
+export class EthereumLooksRareStakingV1ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareFeeSharing> {
+  groupLabel = 'Staking V1';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -49,14 +50,14 @@ export class EthereumLooksRareFarmContractPositionFetcher extends ContractPositi
     ];
   }
 
-  async getLabel() {
-    return 'Standard Method';
+  async getLabel({ contractPosition }: GetDisplayPropsParams<LooksRareFeeSharing>) {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<LooksRareFeeSharing, DefaultDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<LooksRareFeeSharing>): Promise<BigNumberish[]> {
     const [suppliedBalance, claimableBalance] = await Promise.all([
       contract.read.calculateSharesValueInLOOKS([address]),
       contract.read.calculatePendingRewards([address]),

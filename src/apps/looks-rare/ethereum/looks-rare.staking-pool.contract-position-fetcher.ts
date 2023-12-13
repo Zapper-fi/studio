@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -14,11 +13,11 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { LooksRareViemContractFactory } from '../contracts';
-import { LooksRareCompounder } from '../contracts/viem';
+import { LooksRareStakingPool } from '../contracts/viem';
 
 @PositionTemplate()
-export class EthereumLooksRareCompounderContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareCompounder> {
-  groupLabel = 'Compounder';
+export class EthereumLooksRareStakingPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareStakingPool> {
+  groupLabel = 'Staking Pool';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -28,36 +27,38 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
   }
 
   getContract(address: string) {
-    return this.contractFactory.looksRareCompounder({ address, network: this.network });
+    return this.contractFactory.looksRareStakingPool({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0x3ab16af1315dc6c95f83cbf522fecf98d00fd9ba' }];
+    return [{ address: '0x2a70e7f51f6cd40c3e9956aa964137668cbfadc5' }];
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<LooksRareCompounder>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<LooksRareStakingPool>) {
     return [
       {
         metaType: MetaType.SUPPLIED,
+        address: await contract.read.stakedToken(),
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
         address: await contract.read.looksRareToken(),
         network: this.network,
       },
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<LooksRareCompounder>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<LooksRareStakingPool>) {
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LooksRareCompounder>) {
-    const [shareBalanceRaw, pricePerShareRaw] = await Promise.all([
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LooksRareStakingPool>) {
+    const [balanceRaw, claimable] = await Promise.all([
       contract.read.userInfo([address]),
-      contract.read.calculateSharePriceInLOOKS(),
+      contract.read.calculatePendingRewards([address]),
     ]);
 
-    const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
-    const balanceRaw = new BigNumber(shareBalanceRaw.toString()).times(pricePerShare).toFixed(0);
-
-    return [balanceRaw];
+    return [balanceRaw[0], claimable];
   }
 }
