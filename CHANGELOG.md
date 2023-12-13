@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.567.0](https://github.com/Zapper-fi/studio/compare/v0.566.0...v0.567.0) (2023-12-13)
+
+
+### Features
+
+* **looksrare:** Add staking v2 position ([#3135](https://github.com/Zapper-fi/studio/issues/3135)) ([f2930d0](https://github.com/Zapper-fi/studio/commit/f2930d0a89e0d0e8212bb0855182a50e0e41809d))
+
 ## [0.566.0](https://github.com/Zapper-fi/studio/compare/v0.565.0...v0.566.0) (2023-12-12)
 
 
