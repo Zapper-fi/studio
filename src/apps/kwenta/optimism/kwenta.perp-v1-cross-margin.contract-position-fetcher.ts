@@ -8,7 +8,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { SynthetixPerp } from '~apps/synthetix/contracts/viem';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -64,7 +63,7 @@ export class OptimismKwentaPerpV1CrossMarginContractPositionFetcher extends Cust
     throw new Error('Method not implemented.');
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerp>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaPerp>) {
     const remainingMargin = await contract.read.remainingMargin([address]);
     return [remainingMargin[0]];
   }

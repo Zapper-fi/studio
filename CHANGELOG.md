@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.566.0](https://github.com/Zapper-fi/studio/compare/v0.565.0...v0.566.0) (2023-12-12)
+
+
+### Features
+
+* **polygon-staking:** Remove subgraph dependency, change contract position addresses to help with interactions indexing ([#3139](https://github.com/Zapper-fi/studio/issues/3139)) ([0f2753e](https://github.com/Zapper-fi/studio/commit/0f2753e49931495eb69cc6647c97317aaf0d16ea))
+
+## [0.565.0](https://github.com/Zapper-fi/studio/compare/v0.564.2...v0.565.0) (2023-12-12)
+
+
+### Features
+
+* **studio:** Move Synthetix to a private module ([#3137](https://github.com/Zapper-fi/studio/issues/3137)) ([d5fe616](https://github.com/Zapper-fi/studio/commit/d5fe6165ba87d796bb2e770f7033a4724ed4e6f5))
+
+## [0.564.2](https://github.com/Zapper-fi/studio/compare/v0.564.1...v0.564.2) (2023-12-12)
+
+
+### Bug Fixes
+
+* **dhedge-v2:** Early return if position has been unstaked ([#3134](https://github.com/Zapper-fi/studio/issues/3134)) ([629814b](https://github.com/Zapper-fi/studio/commit/629814bd2d0d0e94a5a9b59e7cb892f0347340b8))
+
 ## [0.564.1](https://github.com/Zapper-fi/studio/compare/v0.564.0...v0.564.1) (2023-12-12)
 
 

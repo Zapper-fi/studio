@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { SynthetixViemContractFactory } from '../synthetix/contracts';
-
 import { KwentaViemContractFactory } from './contracts';
 import { OptimismKwentaEscrowV2ContractPositionFetcher } from './optimism/kwenta.escrow-v2.contract-position-fetcher';
 import { OptimismKwentaEscrowContractPositionFetcher } from './optimism/kwenta.escrow.contract-position-fetcher';
@@ -15,7 +13,6 @@ import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.
 @Module({
   providers: [
     KwentaViemContractFactory,
-    SynthetixViemContractFactory,
     OptimismKwentaPerpV1CrossMarginContractPositionFetcher,
     OptimismKwentaPerpV2SmartMarginContractPositionFetcher,
     OptimismKwentaStakingContractPositionFetcher,
