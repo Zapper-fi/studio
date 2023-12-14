@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.571.0](https://github.com/Zapper-fi/studio/compare/v0.570.0...v0.571.0) (2023-12-14)
+
+
+### Features
+
+* **dinero:** add pxeth and apxeth logos ([#3151](https://github.com/Zapper-fi/studio/issues/3151)) ([61fd531](https://github.com/Zapper-fi/studio/commit/61fd5319a18127d48b0d022dd07cc9fcc1b06ef7))
+
 ## [0.570.0](https://github.com/Zapper-fi/studio/compare/v0.569.1...v0.570.0) (2023-12-13)
 
 
