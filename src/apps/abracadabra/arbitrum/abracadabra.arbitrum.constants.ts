@@ -5,10 +5,11 @@ export const ARBITRUM_CAULDRONS: AbracadabraCauldronContractPositionDefinition[]
   { version: 'V2', type: 'REGULAR', address: '0xc89958b03a55b5de2221acb25b58b89a000215e6' }, // wETH
   { version: 'V4', type: 'GLP', address: '0x5698135ca439f21a57bddbe8b582c62f090406d5' }, // GLP
   { version: 'V4', type: 'REGULAR', address: '0x726413d7402ff180609d0ebc79506df8633701b1' }, // magicGLP
-  { version: 'V4', type: 'REGULAR', address: '0x4F9737E994da9811B8830775Fd73E2F1C8e40741' }, // gmARB
-  { version: 'V4', type: 'REGULAR', address: '0xD7659D913430945600dfe875434B6d80646d552A' }, // gmBTC
-  { version: 'V4', type: 'REGULAR', address: '0x2b02bBeAb8eCAb792d3F4DDA7a76f63Aa21934FA' }, // gmETH
-  { version: 'V4', type: 'REGULAR', address: '0x7962ACFcfc2ccEBC810045391D60040F635404fb' }, // gmSOL
+  { version: 'V4', type: 'REGULAR', address: '0x4f9737e994da9811b8830775fd73e2f1c8e40741' }, // gmARB
+  { version: 'V4', type: 'REGULAR', address: '0xd7659d913430945600dfe875434b6d80646d552a' }, // gmBTC
+  { version: 'V4', type: 'REGULAR', address: '0x2b02bbeab8ecab792d3f4dda7a76f63aa21934fa' }, // gmETH
+  { version: 'V4', type: 'REGULAR', address: '0x7962acfcfc2ccebc810045391d60040f635404fb' }, // gmSOL
+  { version: 'V4', type: 'REGULAR', address: '0x66805f6e719d7e67d46e8b2501c1237980996c6a' }, // gmLINK
 ];
 
 export const ARBITRUM_GLP_TOKEN_ADDRESS = '0x4277f8f2c384827b5273592ff7cebd9f2c1ac258';
