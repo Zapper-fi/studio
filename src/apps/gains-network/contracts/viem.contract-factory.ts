@@ -7,6 +7,7 @@ import {
   GainsNetworkGToken__factory,
   GainsNetworkLockedDepositNft__factory,
   GainsNetworkStaking__factory,
+  GainsNetworkStakingV2__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -23,5 +24,8 @@ export class GainsNetworkViemContractFactory {
   }
   gainsNetworkStaking({ address, network }: ContractOpts) {
     return GainsNetworkStaking__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  gainsNetworkStakingV2({ address, network }: ContractOpts) {
+    return GainsNetworkStakingV2__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }
