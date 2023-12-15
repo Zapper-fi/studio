@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.572.0](https://github.com/Zapper-fi/studio/compare/v0.571.0...v0.572.0) (2023-12-14)
+
+
+### Features
+
+* **abracadabra:** Added GmSOL cauldron ([#3153](https://github.com/Zapper-fi/studio/issues/3153)) ([5651d01](https://github.com/Zapper-fi/studio/commit/5651d01fa57b4c101974c325ad08b96ea8760473))
+* **gains-networks:** Add staking positions (6.4.1) ([#3154](https://github.com/Zapper-fi/studio/issues/3154)) ([bd6dc48](https://github.com/Zapper-fi/studio/commit/bd6dc481f0264ed827b23e4cb1fe3936ad5baadf))
+
 ## [0.571.0](https://github.com/Zapper-fi/studio/compare/v0.570.0...v0.571.0) (2023-12-14)
 
 
