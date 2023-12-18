@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumAbracadabraCauldronContractPositionFetcher } from './arbitrum/abracadabra.cauldron.contract-position-fetcher';
+import { ArbitrumAbracadabraFarmBoostedContractPositionFetcher } from './arbitrum/abracadabra.farm-boosted.contract-position-fetcher';
 import { ArbitrumAbracadabraFarmContractPositionFetcher } from './arbitrum/abracadabra.farm.contract-position-fetcher';
 import { ArbitrumAbracadabraMspellContractPositionFetcher } from './arbitrum/abracadabra.m-spell.contract-position-fetcher';
 import { ArbitrumAbracadabraMagicGlpTokenFetcher } from './arbitrum/abracadabra.magic-glp.token-fetcher';
@@ -35,6 +36,7 @@ import { OptimismAbracadabraErc20VaultsTokenFetcher } from './optimism/abracadab
     ArbitrumAbracadabraMagicGlpTokenFetcher,
     ArbitrumAbracadabraMspellContractPositionFetcher,
     ArbitrumAbracadabraStakedSpellTokenFetcher,
+    ArbitrumAbracadabraFarmBoostedContractPositionFetcher,
     // Avalanche
     AvalancheAbracadabraCauldronContractPositionFetcher,
     AvalancheAbracadabraFarmContractPositionFetcher,

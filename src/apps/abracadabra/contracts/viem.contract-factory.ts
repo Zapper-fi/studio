@@ -8,6 +8,7 @@ import {
   AbracadabraCauldron__factory,
   AbracadabraConvexWrapper__factory,
   AbracadabraErc20Vault__factory,
+  AbracadabraFarmBoosted__factory,
   AbracadabraGlpWrapper__factory,
   AbracadabraGmxSGlp__factory,
   AbracadabraMagicApe__factory,
@@ -38,6 +39,9 @@ export class AbracadabraViemContractFactory {
   }
   abracadabraErc20Vault({ address, network }: ContractOpts) {
     return AbracadabraErc20Vault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  abracadabraFarmBoosted({ address, network }: ContractOpts) {
+    return AbracadabraFarmBoosted__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   abracadabraGlpWrapper({ address, network }: ContractOpts) {
     return AbracadabraGlpWrapper__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));

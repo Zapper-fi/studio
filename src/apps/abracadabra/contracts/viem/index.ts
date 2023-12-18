@@ -6,6 +6,7 @@ export type { AbracadabraBentoBoxTokenContract } from './AbracadabraBentoBoxToke
 export type { AbracadabraCauldron } from './AbracadabraCauldron';
 export type { AbracadabraConvexWrapper } from './AbracadabraConvexWrapper';
 export type { AbracadabraErc20Vault } from './AbracadabraErc20Vault';
+export type { AbracadabraFarmBoosted } from './AbracadabraFarmBoosted';
 export type { AbracadabraGlpWrapper } from './AbracadabraGlpWrapper';
 export type { AbracadabraGmxSGlp } from './AbracadabraGmxSGlp';
 export type { AbracadabraMagicApeLens } from './AbracadabraMagicApeLens';
@@ -22,6 +23,7 @@ export { AbracadabraBentoBoxTokenContract__factory } from './AbracadabraBentoBox
 export { AbracadabraCauldron__factory } from './AbracadabraCauldron';
 export { AbracadabraConvexWrapper__factory } from './AbracadabraConvexWrapper';
 export { AbracadabraErc20Vault__factory } from './AbracadabraErc20Vault';
+export { AbracadabraFarmBoosted__factory } from './AbracadabraFarmBoosted';
 export { AbracadabraGlpWrapper__factory } from './AbracadabraGlpWrapper';
 export { AbracadabraGmxSGlp__factory } from './AbracadabraGmxSGlp';
 export { AbracadabraMagicApeLens__factory } from './AbracadabraMagicApeLens';
