@@ -19,7 +19,7 @@ import { AngleViemContractFactory } from '../contracts';
 import { AngleVaultManager } from '../contracts/viem';
 
 @PositionTemplate()
-export class EthereumAngleVaultsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AngleVaultManager> {
+export class ArbitrumAngleVaultsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AngleVaultManager> {
   groupLabel = 'Vaults';
 
   constructor(

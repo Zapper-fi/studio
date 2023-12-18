@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { AngleApiHelper } from '../common/angle.api';
+import { AnglePositionResolver } from '../common/angle.position-resolver';
 import { AngleViemContractFactory } from '../contracts';
 import { AngleVeAngle, AngleLiquidityGauge } from '../contracts/viem';
 import { AngleLiquidityGaugeContract } from '../contracts/viem/AngleLiquidityGauge';
@@ -23,7 +23,7 @@ export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWit
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(AngleViemContractFactory) protected readonly contractFactory: AngleViemContractFactory,
-    @Inject(AngleApiHelper) protected readonly angleApiHelper: AngleApiHelper,
+    @Inject(AnglePositionResolver) protected readonly anglePositionResolver: AnglePositionResolver,
   ) {
     super(appToolkit);
   }
@@ -49,7 +49,7 @@ export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWit
   }
 
   async getRewardTokenBalance(address: string, _contract: AngleLiquidityGaugeContract): Promise<BigNumberish> {
-    const { rewardsData } = await this.angleApiHelper.getRewardsData(address, this.network);
+    const { rewardsData } = await this.anglePositionResolver.getRewardsData(address, this.network);
     return rewardsData.totalClaimable;
   }
 }
