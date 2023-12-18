@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.574.0](https://github.com/Zapper-fi/studio/compare/v0.573.0...v0.574.0) (2023-12-18)
+
+
+### Features
+
+* **angle:** Add vaults on Arbitrum ([#3158](https://github.com/Zapper-fi/studio/issues/3158)) ([f2494ac](https://github.com/Zapper-fi/studio/commit/f2494ac4e5370f2593855da68e0d8776872843c7))
+
 ## [0.573.0](https://github.com/Zapper-fi/studio/compare/v0.572.0...v0.573.0) (2023-12-18)
 
 
