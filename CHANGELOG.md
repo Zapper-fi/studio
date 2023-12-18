@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.573.0](https://github.com/Zapper-fi/studio/compare/v0.572.0...v0.573.0) (2023-12-18)
+
+
+### Features
+
+* **abracadabra:** Add MIM-2Crv STIP boosted position ([#3156](https://github.com/Zapper-fi/studio/issues/3156)) ([506a38d](https://github.com/Zapper-fi/studio/commit/506a38dfa842bf5146f55ab999cbba9fad742737))
+
 ## [0.572.0](https://github.com/Zapper-fi/studio/compare/v0.571.0...v0.572.0) (2023-12-14)
 
 
