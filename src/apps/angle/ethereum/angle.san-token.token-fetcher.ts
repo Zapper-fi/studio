@@ -12,7 +12,6 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AngleApiHelper } from '../common/angle.api';
 import { AngleViemContractFactory } from '../contracts';
 import { AngleSanToken } from '../contracts/viem';
 
@@ -23,7 +22,6 @@ export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionF
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(AngleViemContractFactory) protected readonly contractFactory: AngleViemContractFactory,
-    @Inject(AngleApiHelper) protected readonly angleApiHelper: AngleApiHelper,
   ) {
     super(appToolkit);
   }
