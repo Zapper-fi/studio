@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.574.1](https://github.com/Zapper-fi/studio/compare/v0.574.0...v0.574.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* **gearbox:** Fixed lending app tokens v2 and added lending app tokens v3 ([#3160](https://github.com/Zapper-fi/studio/issues/3160)) ([dfa2f49](https://github.com/Zapper-fi/studio/commit/dfa2f49625d65c93dbbe97c0cc0a78b4fa0a2da0))
+
 ## [0.574.0](https://github.com/Zapper-fi/studio/compare/v0.573.0...v0.574.0) (2023-12-18)
 
 
