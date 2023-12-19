@@ -9,6 +9,7 @@ import {
   ContractsRegister__factory,
   CreditManagerV2__factory,
   DieselToken__factory,
+  GearboxLendingTokenV3__factory,
   PhantomToken__factory,
   PoolService__factory,
 } from './viem';
@@ -33,6 +34,9 @@ export class GearboxViemContractFactory {
   }
   dieselToken({ address, network }: ContractOpts) {
     return DieselToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  gearboxLendingTokenV3({ address, network }: ContractOpts) {
+    return GearboxLendingTokenV3__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   phantomToken({ address, network }: ContractOpts) {
     return PhantomToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
