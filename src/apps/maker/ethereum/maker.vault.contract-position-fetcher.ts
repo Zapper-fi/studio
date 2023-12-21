@@ -172,6 +172,8 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
           positions.map(async position => {
             const ilk = ethers.utils.formatBytes32String(position.dataProps.ilkName);
             const [ink, art] = await multicall.wrap(vatContract).read.urns([ilk, urn.toLowerCase()]);
+            const ilks = await multicall.wrap(vatContract).read.ilks([ilk]);
+            const rate = new BigNumber(ilks[1].toString()).div(10 ** 27);
 
             const collateralToken = position.tokens.find(isSupplied);
             const debtToken = position.tokens.find(isBorrowed);
@@ -182,10 +184,10 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
               .div(10 ** 18)
               .times(10 ** collateralToken.decimals)
               .toFixed(0);
-            const debtRaw = new BigNumber(art.toString())
-              .div(10 ** 18)
-              .times(10 ** debtToken.decimals)
-              .toFixed(0);
+            const artRaw = new BigNumber(art.toString()).div(10 ** 18).times(10 ** debtToken.decimals);
+
+            const debtRaw = artRaw.times(rate).toFixed(0);
+
             const collateral = drillBalance(collateralToken, collateralRaw);
             const debt = drillBalance(debtToken, debtRaw, { isDebt: true });
             const tokens = [collateral, debt];
