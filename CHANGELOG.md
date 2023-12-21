@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.574.2](https://github.com/Zapper-fi/studio/compare/v0.574.1...v0.574.2) (2023-12-21)
+
+
+### Bug Fixes
+
+* **gearbox:** Fix lending token v3 liquidity and pricePerShare ([#3162](https://github.com/Zapper-fi/studio/issues/3162)) ([64c7ae1](https://github.com/Zapper-fi/studio/commit/64c7ae11536e8648eac40b20f068fbf236cf7920))
+
 ## [0.574.1](https://github.com/Zapper-fi/studio/compare/v0.574.0...v0.574.1) (2023-12-19)
 
 
