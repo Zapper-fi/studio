@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.574.3](https://github.com/Zapper-fi/studio/compare/v0.574.2...v0.574.3) (2023-12-21)
+
+
+### Bug Fixes
+
+* **maker:** Update vault debt balances to account for the ilk rate ([#3163](https://github.com/Zapper-fi/studio/issues/3163)) ([f56fa24](https://github.com/Zapper-fi/studio/commit/f56fa24ce94dffacb62573e7cfec70d87824ba5d))
+
 ## [0.574.2](https://github.com/Zapper-fi/studio/compare/v0.574.1...v0.574.2) (2023-12-21)
 
 
