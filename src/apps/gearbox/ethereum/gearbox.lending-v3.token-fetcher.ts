@@ -70,10 +70,10 @@ export class EthereumGearboxLendingV3TokenFetcher extends AppTokenTemplatePositi
     return [{ address: await contract.read.asset(), network: this.network }];
   }
 
-  async getPricePerShare({ appToken, contract }: GetPricePerShareParams<GearboxLendingTokenV3>) {
+  async getPricePerShare({ contract }: GetPricePerShareParams<GearboxLendingTokenV3>) {
     const amount = BigNumber.from((1e18).toString()).toString();
     const ratioRaw = await contract.read.convertToAssets([BigInt(amount)]);
-    const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
+    const ratio = Number(ratioRaw) / 10 ** 18;
     return [ratio];
   }
 }
