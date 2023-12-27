@@ -5,8 +5,6 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-type ApyData = Record<string, number>;
-
 type BeefyMarketResponse = {
   id: string;
   name: string;
@@ -41,20 +39,8 @@ export class BeefyVaultTokenDefinitionsResolver {
     return vaultData;
   }
 
-  @Cache({
-    key: `studio:beefy:vault-apy`,
-    ttl: 5 * 60, // 60 minutes
-  })
-  private async getVaultApyData() {
-    const { data } = await Axios.get<ApyData>(`https://beefy-api.herokuapp.com/apy`);
-    return data;
-  }
-
   async getVaultDefinitions(network: Network) {
-    const [definitionsDataRaw, apyData] = await Promise.all([
-      this.getVaultDefinitionsData(network),
-      this.getVaultApyData(),
-    ]);
+    const definitionsDataRaw = await this.getVaultDefinitionsData(network);
 
     const vaultDefinitions = definitionsDataRaw.map(t => {
       const tokenAddress = t.tokenAddress?.toLowerCase() ?? ZERO_ADDRESS; // Beefy doesn't have the concept of ZERO address to represent ETH
@@ -74,14 +60,9 @@ export class BeefyVaultTokenDefinitionsResolver {
         id: t.id,
         marketName: t.name,
         symbol: t.token,
-        apy: apyData[t.id] ?? 0,
       };
     });
 
     return vaultDefinitions;
-  }
-
-  async getVaultApys() {
-    return await this.getVaultApyData();
   }
 }

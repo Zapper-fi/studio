@@ -6,7 +6,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetTokenPropsParams,
@@ -24,7 +23,6 @@ export type BeefyVaultTokenDefinition = {
   id: string;
   marketName: string;
   symbol: string;
-  apy: number;
 };
 
 export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -71,9 +69,5 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
 
   async getLabel({ appToken }: GetDisplayPropsParams<BeefyVaultToken>) {
     return `${getLabelFromToken(appToken.tokens[0])} Vault`;
-  }
-
-  getApy({ definition }: GetDataPropsParams<BeefyVaultToken, DefaultAppTokenDataProps, BeefyVaultTokenDefinition>) {
-    return Promise.resolve(definition.apy * 100);
   }
 }
