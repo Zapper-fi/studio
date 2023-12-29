@@ -42,9 +42,21 @@ const FARMS = [
     stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
     rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
   },
-  // UNI-V2 FOX / ETH v6 (active)
+  // UNI-V2 FOX / ETH v6 (inactive)
   {
     address: '0xebb1761ad43034fd7faa64d84e5bbd8cb5c40b68',
+    stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
+    rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
+  },
+  // UNI-V2 FOX / ETH v7 (inactive)
+  {
+    address: '0x5939783dbf3e9f453a69bc9ddc1e492efac1fbcb',
+    stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
+    rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
+  },
+  // UNI-V2 FOX / ETH v8 (active)
+  {
+    address: '0x662da6c777a258382f08b979d9489c3fbbbd8ac3',
     stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
     rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
   },
