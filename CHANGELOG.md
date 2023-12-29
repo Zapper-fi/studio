@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.574.4](https://github.com/Zapper-fi/studio/compare/v0.574.3...v0.574.4) (2023-12-29)
+
+
+### Bug Fixes
+
+* **shapeshift:** update fox farms ([#3167](https://github.com/Zapper-fi/studio/issues/3167)) ([3fa3a25](https://github.com/Zapper-fi/studio/commit/3fa3a25d2454a71c76ef4ff72e135f888d3a37b1))
+
 ## [0.574.3](https://github.com/Zapper-fi/studio/compare/v0.574.2...v0.574.3) (2023-12-21)
 
 
