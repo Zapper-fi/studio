@@ -11,7 +11,6 @@ import {
   CamelotNitroFactory__factory,
   CamelotNitroPool__factory,
   CamelotPair__factory,
-  CamelotXGrail__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -40,8 +39,5 @@ export class CamelotViemContractFactory {
   }
   camelotPair({ address, network }: ContractOpts) {
     return CamelotPair__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  camelotXGrail({ address, network }: ContractOpts) {
-    return CamelotXGrail__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }
