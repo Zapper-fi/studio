@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { MstableViemContractFactory } from './contracts';
 import { EthereumMstableEarnContractPositionFetcher } from './ethereum/mstable.earn.contract-position-fetcher';
-import { EthereumMstableImusdTokenFetcher } from './ethereum/mstable.imusd.token-fetcher';
 import { EthereumMstableMetaVaultTokenFetcher } from './ethereum/mstable.meta-vault.token-fetcher';
 import { EthereumMstableMtaV1FarmContractPositionFetcher } from './ethereum/mstable.mta-v1-farm.contract-position-fetcher';
 import { EthereumMstableMtaV2FarmContractPositionFetcher } from './ethereum/mstable.mta-v2-farm.contract-position-fetcher';
@@ -16,7 +15,6 @@ import { PolygonMstableSavingsVaultContractPositionFetcher } from './polygon/mst
   providers: [
     MstableViemContractFactory,
     EthereumMstableEarnContractPositionFetcher,
-    EthereumMstableImusdTokenFetcher,
     EthereumMstableMtaV1FarmContractPositionFetcher,
     EthereumMstableMtaV2FarmContractPositionFetcher,
     EthereumMstableMetaVaultTokenFetcher,
