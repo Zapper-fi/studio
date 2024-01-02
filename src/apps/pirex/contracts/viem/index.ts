@@ -2,12 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type { ApxBtrfly } from './ApxBtrfly';
-export type { ApxGlp } from './ApxGlp';
-export type { ApxGmx } from './ApxGmx';
 export type { PirexPxCvx } from './PirexPxCvx';
 
-export { ApxBtrfly__factory } from './ApxBtrfly';
-export { ApxGlp__factory } from './ApxGlp';
-export { ApxGmx__factory } from './ApxGmx';
 export { PirexPxCvx__factory } from './PirexPxCvx';

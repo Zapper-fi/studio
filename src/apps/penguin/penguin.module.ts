@@ -6,7 +6,6 @@ import { AvalanchePenguinChefV1FarmContractPositionFetcher } from './avalanche/p
 import { AvalanchePenguinChefV2FarmContractPositionFetcher } from './avalanche/penguin.chef-v2-farm.contract-position-fetcher';
 import { AvalanchePenguinIPefiTokenFetcher } from './avalanche/penguin.i-pefi.token-fetcher';
 import { AvalanchePenguinVaultClaimableContractPositionFetcher } from './avalanche/penguin.vault-claimable.contract-position-fetcher';
-import { AvalanchePenguinVaultTokenFetcher } from './avalanche/penguin.vault.token-fetcher';
 import { AvalanchePenguinXPefiTokenFetcher } from './avalanche/penguin.x-pefi.token-fetcher';
 import { PenguinViemContractFactory } from './contracts';
 
@@ -17,7 +16,6 @@ import { PenguinViemContractFactory } from './contracts';
     AvalanchePenguinChefV2FarmContractPositionFetcher,
     AvalanchePenguinIPefiTokenFetcher,
     AvalanchePenguinXPefiTokenFetcher,
-    AvalanchePenguinVaultTokenFetcher,
     AvalanchePenguinVaultClaimableContractPositionFetcher,
   ],
 })

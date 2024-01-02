@@ -9,7 +9,6 @@ import {
   PenguinExtraRewarder__factory,
   PenguinIPefi__factory,
   PenguinRewarderRate__factory,
-  PenguinVault__factory,
   PenguinXPefi__factory,
 } from './viem';
 
@@ -33,9 +32,6 @@ export class PenguinViemContractFactory {
   }
   penguinRewarderRate({ address, network }: ContractOpts) {
     return PenguinRewarderRate__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  penguinVault({ address, network }: ContractOpts) {
-    return PenguinVault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   penguinXPefi({ address, network }: ContractOpts) {
     return PenguinXPefi__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
