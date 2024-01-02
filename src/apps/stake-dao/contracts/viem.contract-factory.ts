@@ -8,7 +8,6 @@ import {
   StakeDaoFarm__factory,
   StakeDaoGauge__factory,
   StakeDaoMultiGauge__factory,
-  StakeDaoPassiveVault__factory,
   StakeDaoVault__factory,
   StakeDaoVotingEscrow__factory,
 } from './viem';
@@ -30,9 +29,6 @@ export class StakeDaoViemContractFactory {
   }
   stakeDaoMultiGauge({ address, network }: ContractOpts) {
     return StakeDaoMultiGauge__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  stakeDaoPassiveVault({ address, network }: ContractOpts) {
-    return StakeDaoPassiveVault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   stakeDaoVault({ address, network }: ContractOpts) {
     return StakeDaoVault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));

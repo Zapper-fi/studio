@@ -7,7 +7,6 @@ import { EthereumStakeDaoFarmContractPositionFetcher } from './ethereum/stake-da
 import { EthereumStakeDaoGaugeContractPositionFetcher } from './ethereum/stake-dao.gauge.contract-position-fetcher';
 import { EthereumStakeDaoLockerTokenFetcher } from './ethereum/stake-dao.locker.token-fetcher';
 import { EthereumStakeDaoMultiGaugeContractPositionFetcher } from './ethereum/stake-dao.multi-gauge.contract-position-fetcher';
-import { EthereumStakeDaoPassiveVaultTokenFetcher } from './ethereum/stake-dao.passive-vault.token-fetcher';
 import { EthereumStakeDaoVaultTokenFetcher } from './ethereum/stake-dao.vault.token-fetcher';
 import { EthereumStakeDaoEscrowedQiContractPositionFetcher } from './ethereum/stake-dao.voting-escrow.contract-position-fetcher';
 
@@ -19,7 +18,6 @@ import { EthereumStakeDaoEscrowedQiContractPositionFetcher } from './ethereum/st
     EthereumStakeDaoFarmContractPositionFetcher,
     EthereumStakeDaoEscrowedQiContractPositionFetcher,
     EthereumStakeDaoVaultTokenFetcher,
-    EthereumStakeDaoPassiveVaultTokenFetcher,
     EthereumStakeDaoMultiGaugeContractPositionFetcher,
   ],
 })
