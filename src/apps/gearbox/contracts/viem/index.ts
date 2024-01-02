@@ -8,7 +8,6 @@ export type { ContractsRegister } from './ContractsRegister';
 export type { CreditManagerV2 } from './CreditManagerV2';
 export type { DieselToken } from './DieselToken';
 export type { GearboxLendingTokenV3 } from './GearboxLendingTokenV3';
-export type { PhantomToken } from './PhantomToken';
 export type { PoolService } from './PoolService';
 
 export { AccountFactory__factory } from './AccountFactory';
@@ -17,5 +16,4 @@ export { ContractsRegister__factory } from './ContractsRegister';
 export { CreditManagerV2__factory } from './CreditManagerV2';
 export { DieselToken__factory } from './DieselToken';
 export { GearboxLendingTokenV3__factory } from './GearboxLendingTokenV3';
-export { PhantomToken__factory } from './PhantomToken';
 export { PoolService__factory } from './PoolService';

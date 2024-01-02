@@ -2,8 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type { OriginStoryWoeth } from './OriginStoryWoeth';
 export type { Series } from './Series';
 
-export { OriginStoryWoeth__factory } from './OriginStoryWoeth';
 export { Series__factory } from './Series';

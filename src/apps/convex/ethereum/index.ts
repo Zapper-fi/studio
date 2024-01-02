@@ -6,7 +6,6 @@ import { EthereumConvexCvxStakingContractPositionFetcher } from './convex.cvx-st
 import { EthereumConvexDepositTokenFetcher } from './convex.deposit.token-fetcher';
 import { EthereumConvexDepositorContractPositionFetcher } from './convex.depositor.contract-position-fetcher';
 import { EthereumConvexLpFarmContractPositionFetcher } from './convex.lp-farm.contract-position-fetcher';
-import { EthereumConvexStashTokenWrappedTokenFetcher } from './convex.stash-token-wrapped.token-fetcher';
 import { EthereumConvexVotingEscrowContractPositionFetcher } from './convex.voting-escrow.contract-position-fetcher';
 
 export const CONVEX_ETHEREUM_PROVIDERS = [
@@ -19,5 +18,4 @@ export const CONVEX_ETHEREUM_PROVIDERS = [
   EthereumConvexLpFarmContractPositionFetcher,
   EthereumConvexVotingEscrowContractPositionFetcher,
   EthereumConvexCvxCrvStakingWrappedContractPositionFetcher,
-  EthereumConvexStashTokenWrappedTokenFetcher,
 ];

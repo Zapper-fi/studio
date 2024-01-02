@@ -7,7 +7,6 @@ import { KeeperViemContractFactory } from './contracts';
 import { EthereumKeeperBondContractPositionFetcher } from './ethereum/keeper.bond.contract-position-fetcher';
 import { EthereumKeeperJobContractPositionFetcher } from './ethereum/keeper.job.contract-position-fetcher';
 import { EthereumKeeperKlpTokenFetcher } from './ethereum/keeper.klp.token-fetcher';
-import { EthereumKeeperRedeemableTokenFetcher } from './ethereum/keeper.redeemable.token-fetcher';
 import { EthereumKeeperUnbondContractPositionFetcher } from './ethereum/keeper.unbond.contract-position-fetcher';
 import { EthereumKeeperVestContractPositionFetcher } from './ethereum/keeper.vest.contract-position-fetcher';
 
@@ -19,7 +18,6 @@ import { EthereumKeeperVestContractPositionFetcher } from './ethereum/keeper.ves
     EthereumKeeperBondContractPositionFetcher,
     EthereumKeeperJobContractPositionFetcher,
     EthereumKeeperKlpTokenFetcher,
-    EthereumKeeperRedeemableTokenFetcher,
     EthereumKeeperVestContractPositionFetcher,
   ],
 })

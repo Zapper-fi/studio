@@ -7,7 +7,6 @@ import { ArbitrumCamelotDividendContractPositionFetcher } from './arbitrum/camel
 import { ArbitrumCamelotFarmContractPositionFetcher } from './arbitrum/camelot.farm.contract-position-fetcher';
 import { ArbitrumCamelotNitroContractPositionFetcher } from './arbitrum/camelot.nitro.contract-position-fetcher';
 import { ArbitrumCamelotPoolV2TokenFetcher } from './arbitrum/camelot.pool-v2.token-fetcher';
-import { ArbitrumXGrailTokenFetcher } from './arbitrum/camelot.x-grail.token-fetcher';
 import { CamelotViemContractFactory } from './contracts';
 
 @Module({
@@ -16,7 +15,6 @@ import { CamelotViemContractFactory } from './contracts';
     UniswapV2ViemContractFactory,
     // Arbitrum
     ArbitrumCamelotPoolV2TokenFetcher,
-    ArbitrumXGrailTokenFetcher,
     ArbitrumCamelotDividendContractPositionFetcher,
     ArbitrumCamelotFarmContractPositionFetcher,
     ArbitrumCamelotNitroContractPositionFetcher,

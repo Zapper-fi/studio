@@ -6,7 +6,6 @@ export type { StakeDaoCurvePool } from './StakeDaoCurvePool';
 export type { StakeDaoFarm } from './StakeDaoFarm';
 export type { StakeDaoGauge } from './StakeDaoGauge';
 export type { StakeDaoMultiGauge } from './StakeDaoMultiGauge';
-export type { StakeDaoPassiveVault } from './StakeDaoPassiveVault';
 export type { StakeDaoVault } from './StakeDaoVault';
 export type { StakeDaoVotingEscrow } from './StakeDaoVotingEscrow';
 
@@ -14,6 +13,5 @@ export { StakeDaoCurvePool__factory } from './StakeDaoCurvePool';
 export { StakeDaoFarm__factory } from './StakeDaoFarm';
 export { StakeDaoGauge__factory } from './StakeDaoGauge';
 export { StakeDaoMultiGauge__factory } from './StakeDaoMultiGauge';
-export { StakeDaoPassiveVault__factory } from './StakeDaoPassiveVault';
 export { StakeDaoVault__factory } from './StakeDaoVault';
 export { StakeDaoVotingEscrow__factory } from './StakeDaoVotingEscrow';

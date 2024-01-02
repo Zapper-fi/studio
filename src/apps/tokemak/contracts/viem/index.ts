@@ -2,14 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type { TokemakAccToke } from './TokemakAccToke';
-export type { TokemakReactor } from './TokemakReactor';
 export type { TokemakRewardsHash } from './TokemakRewardsHash';
 export type { TokemakRewards } from './TokemakRewards';
 export type { TokemakTokeStaking } from './TokemakTokeStaking';
 
-export { TokemakAccToke__factory } from './TokemakAccToke';
-export { TokemakReactor__factory } from './TokemakReactor';
 export { TokemakRewardsHash__factory } from './TokemakRewardsHash';
 export { TokemakRewards__factory } from './TokemakRewards';
 export { TokemakTokeStaking__factory } from './TokemakTokeStaking';
