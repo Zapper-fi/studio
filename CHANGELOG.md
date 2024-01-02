@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.575.0](https://github.com/Zapper-fi/studio/compare/v0.574.4...v0.575.0) (2024-01-02)
+
+
+### Features
+
+* **silo-finance:** Added STIP claimables on Arbitrum ([#3170](https://github.com/Zapper-fi/studio/issues/3170)) ([18b4058](https://github.com/Zapper-fi/studio/commit/18b4058e50b187030e508870aab51ebee69723b6))
+
 ## [0.574.4](https://github.com/Zapper-fi/studio/compare/v0.574.3...v0.574.4) (2023-12-29)
 
 
