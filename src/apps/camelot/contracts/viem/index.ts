@@ -9,7 +9,6 @@ export type { CamelotNftPool } from './CamelotNftPool';
 export type { CamelotNitroFactory } from './CamelotNitroFactory';
 export type { CamelotNitroPool } from './CamelotNitroPool';
 export type { CamelotPair } from './CamelotPair';
-export type { CamelotXGrail } from './CamelotXGrail';
 
 export { CamelotDividend__factory } from './CamelotDividend';
 export { CamelotFactory__factory } from './CamelotFactory';
@@ -18,4 +17,3 @@ export { CamelotNftPool__factory } from './CamelotNftPool';
 export { CamelotNitroFactory__factory } from './CamelotNitroFactory';
 export { CamelotNitroPool__factory } from './CamelotNitroPool';
 export { CamelotPair__factory } from './CamelotPair';
-export { CamelotXGrail__factory } from './CamelotXGrail';
