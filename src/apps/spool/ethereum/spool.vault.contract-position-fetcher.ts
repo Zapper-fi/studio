@@ -232,7 +232,6 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
     address,
     contractPosition,
     contract,
-    multicall,
   }: GetTokenBalancesParams<SpoolVault, SpoolVaultDataProps>): Promise<BigNumberish[]> {
     const strategies = contractPosition.dataProps.strategies;
     const { result } = await contract.simulate.getUpdatedUser([strategies], { account: address });

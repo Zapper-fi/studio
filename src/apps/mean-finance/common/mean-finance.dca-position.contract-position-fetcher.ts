@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
 import { compact, merge, reduce, sumBy, uniqBy } from 'lodash';
-import moment from 'moment';
+import { duration } from 'moment';
 import 'moment-duration-format';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -198,8 +198,8 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
 
             // Display Properties
             const formattedRate = rate < 0.001 ? '<0.001' : rate.toFixed(3);
-            const intervalMoment = moment.duration(swapInterval, 'seconds');
-            const remainingMoment = moment.duration(remainingSwaps * swapInterval, 'seconds');
+            const intervalMoment = duration(swapInterval, 'seconds');
+            const remainingMoment = duration(remainingSwaps * swapInterval, 'seconds');
             const intervalLabel = intervalMoment.format('w [weeks], d [days], h [hours], m [minutes]', { trim: 'all' });
             const remainingLabel = remainingMoment.format('w [weeks], d [days], h [hours], m [minutes]', {
               trim: 'all',

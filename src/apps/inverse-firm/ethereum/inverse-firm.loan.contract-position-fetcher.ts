@@ -161,14 +161,14 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
       if (isCvxFxsMarket) {
         const stakeContract = this.contractFactory.stCvxFxs({ address: this.stCvxFxsAddress, network: this.network });
         const result = await multicall.wrap(stakeContract).read.claimableRewards([personalEscrow]);
-        claimablesAsTuple = result.map((v, i) => ({ token: v.token, amount: v.amount }));
+        claimablesAsTuple = result.map(v => ({ token: v.token, amount: v.amount }));
       } else {
         const stakeContract = this.contractFactory.stCvxCrv({ address: this.stCvxCrvAddress, network: this.network });
         const result = await multicall
           .wrap(stakeContract)
           .simulate.earned([personalEscrow])
           .then(v => v.result);
-        claimablesAsTuple = result.map((v, i) => ({ token: v.token, amount: v.amount }));
+        claimablesAsTuple = result.map(v => ({ token: v.token, amount: v.amount }));
       }
     }
 

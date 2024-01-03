@@ -4,7 +4,7 @@ import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 import { range, sum } from 'lodash';
-import moment from 'moment';
+import { duration } from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -110,12 +110,12 @@ export abstract class CurveChildLiquidityGaugeContractPositionFetcher extends Co
     // Calculate annual CRV rewards
     const period = await contract.read.period();
     const periodTimestamp = await contract.read.period_timestamp([period]);
-    const periodWeek = Math.floor(Number(periodTimestamp) / moment.duration(7, 'days').asSeconds()); // num weeks
+    const periodWeek = Math.floor(Number(periodTimestamp) / duration(7, 'days').asSeconds()); // num weeks
 
     const crvToken = rewardTokens.find(v => v.address === this.crvTokenAddress)!;
     const crvInflationRateRaw = await contract.read.inflation_rate([BigInt(periodWeek)]);
     const crvInflationRate = Number(crvInflationRateRaw) / 10 ** crvToken.decimals;
-    const crvYearlyReward = crvInflationRate * moment.duration(1, 'year').asSeconds();
+    const crvYearlyReward = crvInflationRate * duration(1, 'year').asSeconds();
     const crvYearlyRewardInUSD = crvYearlyReward * crvToken.price;
 
     // Calculate annual bonus rewards

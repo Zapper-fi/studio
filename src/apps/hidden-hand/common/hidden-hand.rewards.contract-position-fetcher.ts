@@ -75,7 +75,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     );
     const market = marketEntry ? marketEntry[0] : '';
 
-    if (!distribution?.hasOwnProperty(market)) return [];
+    if (!distribution[market]) return [];
 
     const claimableDistribution = distribution[market][neworkId] ?? {};
     const claimableTokens = Object.keys(claimableDistribution);

@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish, ethers } from 'ethers';
 import { range } from 'lodash';
-import moment from 'moment';
+import { duration } from 'moment';
 import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -199,7 +199,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     const workingSupply = Number(workingSupplyRaw) / 10 ** 18;
     const relativeWeight = Number(relativeWeightRaw) / 10 ** 18;
 
-    const secondsPerYear = moment.duration(1, 'year').asSeconds();
+    const secondsPerYear = duration(1, 'year').asSeconds();
     const ratePerSecond = (inflationRate * relativeWeight * 0.4) / workingSupply;
     const apy = ((ratePerSecond * secondsPerYear) / stakedToken.price) * rewardTokens[0].price * 100;
     const isActive = Number(inflationRate) > 0;
