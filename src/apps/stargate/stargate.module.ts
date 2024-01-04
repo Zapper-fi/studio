@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArbitrumStargateEthTokenFetcher } from './arbitrum/stargate.eth.token-fetcher';
 import { ArbitrumStargateFarmContractPositionFetcher } from './arbitrum/stargate.farm.contract-position-fetcher';
 import { ArbitrumStargateLpStakingContractPositionFetcher } from './arbitrum/stargate.lp-staking.contract-position-fetcher';
 import { ArbitrumStargatePoolTokenFetcher } from './arbitrum/stargate.pool.token-fetcher';
@@ -10,21 +9,18 @@ import { ArbitrumStargateVotingEscrowContractPositionFetcher } from './arbitrum/
 import { AvalancheStargateFarmContractPositionFetcher } from './avalanche/stargate.farm.contract-position-fetcher';
 import { AvalancheStargatePoolTokenFetcher } from './avalanche/stargate.pool.token-fetcher';
 import { AvalancheStargateVotingEscrowContractPositionFetcher } from './avalanche/stargate.voting-escrow.contract-position-fetcher';
-import { BaseStargateEthTokenFetcher } from './base/stargate.eth.token-fetcher';
 import { BaseStargateFarmContractPositionFetcher } from './base/stargate.farm.contract-position-fetcher';
 import { BaseStargatePoolTokenFetcher } from './base/stargate.pool.token-fetcher';
 import { BinanceSmartChainStargateFarmContractPositionFetcher } from './binance-smart-chain/stargate.farm.contract-position-fetcher';
 import { BinanceSmartChainStargatePoolTokenFetcher } from './binance-smart-chain/stargate.pool.token-fetcher';
 import { BinanceSmartChainStargateVotingEscrowContractPositionFetcher } from './binance-smart-chain/stargate.voting-escrow.contract-position-fetcher';
 import { StargateViemContractFactory } from './contracts';
-import { EthereumStargateEthTokenFetcher } from './ethereum/stargate.eth.token-fetcher';
 import { EthereumStargateFarmContractPositionFetcher } from './ethereum/stargate.farm.contract-position-fetcher';
 import { EthereumStargatePoolTokenFetcher } from './ethereum/stargate.pool.token-fetcher';
 import { EthereumStargateVotingEscrowContractPositionFetcher } from './ethereum/stargate.voting-escrow.contract-position-fetcher';
 import { FantomStargateFarmContractPositionFetcher } from './fantom/stargate.farm.contract-position-fetcher';
 import { FantomStargatePoolTokenFetcher } from './fantom/stargate.pool.token-fetcher';
 import { FantomStargateVotingEscrowContractPositionFetcher } from './fantom/stargate.voting-escrow.contract-position-fetcher';
-import { OptimismStargateEthTokenFetcher } from './optimism/stargate.eth.token-fetcher';
 import { OptimismStargateFarmContractPositionFetcher } from './optimism/stargate.farm.contract-position-fetcher';
 import { OptimismStargateLpStakingContractPositionFetcher } from './optimism/stargate.lp-staking.contract-position-fetcher';
 import { OptimismStargatePoolTokenFetcher } from './optimism/stargate.pool.token-fetcher';
@@ -37,7 +33,6 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
   providers: [
     StargateViemContractFactory,
     // Arbitrum
-    ArbitrumStargateEthTokenFetcher,
     ArbitrumStargateFarmContractPositionFetcher,
     ArbitrumStargatePoolTokenFetcher,
     ArbitrumStargateVotingEscrowContractPositionFetcher,
@@ -47,7 +42,6 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
     AvalancheStargatePoolTokenFetcher,
     AvalancheStargateVotingEscrowContractPositionFetcher,
     // Base
-    BaseStargateEthTokenFetcher,
     BaseStargateFarmContractPositionFetcher,
     BaseStargatePoolTokenFetcher,
     // Binance-smart-chain
@@ -55,7 +49,6 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
     BinanceSmartChainStargatePoolTokenFetcher,
     BinanceSmartChainStargateVotingEscrowContractPositionFetcher,
     // Ethereum
-    EthereumStargateEthTokenFetcher,
     EthereumStargateFarmContractPositionFetcher,
     EthereumStargatePoolTokenFetcher,
     EthereumStargateVotingEscrowContractPositionFetcher,
@@ -64,7 +57,6 @@ import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/st
     FantomStargatePoolTokenFetcher,
     FantomStargateVotingEscrowContractPositionFetcher,
     // Optimism
-    OptimismStargateEthTokenFetcher,
     OptimismStargateFarmContractPositionFetcher,
     OptimismStargatePoolTokenFetcher,
     OptimismStargateVotingEscrowContractPositionFetcher,
