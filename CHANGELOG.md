@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.575.1](https://github.com/Zapper-fi/studio/compare/v0.575.0...v0.575.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* **apps:** Migrated app tokens to ATI ([#3173](https://github.com/Zapper-fi/studio/issues/3173)) ([2716a64](https://github.com/Zapper-fi/studio/commit/2716a644502182392dd8fdd1aac876522bdea530))
+
 ## [0.575.0](https://github.com/Zapper-fi/studio/compare/v0.574.4...v0.575.0) (2024-01-02)
 
 
