@@ -10,7 +10,6 @@ import {
   QiDaoMasterChefV3__factory,
   QiDaoVaultInfo__factory,
   QiDaoVaultNft__factory,
-  QiDaoYieldToken__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -36,8 +35,5 @@ export class QiDaoViemContractFactory {
   }
   qiDaoVaultNft({ address, network }: ContractOpts) {
     return QiDaoVaultNft__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  qiDaoYieldToken({ address, network }: ContractOpts) {
-    return QiDaoYieldToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }

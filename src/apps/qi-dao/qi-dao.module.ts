@@ -18,7 +18,6 @@ import { PolygonQiDaoEscrowedQiContractPositionFetcher } from './polygon/qi-dao.
 import { PolygonQiDaoFarmV3ContractPositionFetcher } from './polygon/qi-dao.farm-v3.contract-position-fetcher';
 import { PolygonQiDaoFarmContractPositionFetcher } from './polygon/qi-dao.farm.contract-position-fetcher';
 import { PolygonQiDaoVaultPositionFetcher } from './polygon/qi-dao.vault.contract-position-fetcher';
-import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetcher';
 
 @Module({
   providers: [
@@ -46,7 +45,6 @@ import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetc
     PolygonQiDaoFarmContractPositionFetcher,
     PolygonQiDaoFarmV3ContractPositionFetcher,
     PolygonQiDaoVaultPositionFetcher,
-    PolygonQiDaoYieldTokenFetcher,
   ],
 })
 export class QiDaoAppModule extends AbstractApp() {}
