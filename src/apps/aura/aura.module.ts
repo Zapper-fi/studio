@@ -15,7 +15,6 @@ import { EthereumAuraChefContractPositionFetcher } from './ethereum/aura.chef.co
 import { EthereumAuraDepositTokenFetcher } from './ethereum/aura.deposit.token-fetcher';
 import { EthereumAuraLockerContractPositionFetcher } from './ethereum/aura.locker.contract-position-fetcher';
 import { EthereumAuraLpFarmContractPositionFetcher } from './ethereum/aura.lp-farm.contract-position-fetcher';
-import { EthereumAuraStakedAuraBalTokenFetcher } from './ethereum/aura.staked-aura-bal.token-fetcher';
 import { OptimismAuraDepositTokenFetcher } from './optimism/aura.deposit.token-fetcher';
 import { OptimismAuraLpFarmContractPositionFetcher } from './optimism/aura.lp-farm.contract-position-fetcher';
 
@@ -37,7 +36,6 @@ import { OptimismAuraLpFarmContractPositionFetcher } from './optimism/aura.lp-fa
     EthereumAuraLpFarmContractPositionFetcher,
     EthereumAuraLockerContractPositionFetcher,
     EthereumAuraAuraBalStakingContractPositionFetcher,
-    EthereumAuraStakedAuraBalTokenFetcher,
     EthereumAuraAuraBalCompounderContractPositionFetcher,
     // Optimism
     OptimismAuraDepositTokenFetcher,

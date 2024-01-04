@@ -12,10 +12,8 @@ export type { BalancerMerkleOrchard } from './BalancerMerkleOrchard';
 export type { BalancerMerkleRedeem } from './BalancerMerkleRedeem';
 export type { BalancerPool } from './BalancerPool';
 export type { BalancerStablePhantomPool } from './BalancerStablePhantomPool';
-export type { BalancerStaticAToken } from './BalancerStaticAToken';
 export type { BalancerVault } from './BalancerVault';
 export type { BalancerVeBal } from './BalancerVeBal';
-export type { BalancerWrappedAaveToken } from './BalancerWrappedAaveToken';
 
 export { BalancerBoostedPool__factory } from './BalancerBoostedPool';
 export { BalancerChildChainGaugeFactory__factory } from './BalancerChildChainGaugeFactory';
@@ -27,7 +25,5 @@ export { BalancerMerkleOrchard__factory } from './BalancerMerkleOrchard';
 export { BalancerMerkleRedeem__factory } from './BalancerMerkleRedeem';
 export { BalancerPool__factory } from './BalancerPool';
 export { BalancerStablePhantomPool__factory } from './BalancerStablePhantomPool';
-export { BalancerStaticAToken__factory } from './BalancerStaticAToken';
 export { BalancerVault__factory } from './BalancerVault';
 export { BalancerVeBal__factory } from './BalancerVeBal';
-export { BalancerWrappedAaveToken__factory } from './BalancerWrappedAaveToken';

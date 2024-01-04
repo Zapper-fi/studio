@@ -18,7 +18,7 @@ export class EthereumUnlockdFinancePositionPresenter extends PositionPresenterTe
           {
             viewType: 'list',
             label: 'Borrow',
-            groupIds: ['variable-debt'],
+            groupIds: ['variable-debt-2'],
           },
         ],
       },

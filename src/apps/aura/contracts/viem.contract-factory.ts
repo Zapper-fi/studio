@@ -4,7 +4,6 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
 import {
-  AuraBalStakingToken__factory,
   AuraBalToken__factory,
   AuraBalVirtualRewardPool__factory,
   AuraBalancerHelpers__factory,
@@ -25,9 +24,6 @@ type ContractOpts = { address: string; network: Network };
 export class AuraViemContractFactory {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  auraBalStakingToken({ address, network }: ContractOpts) {
-    return AuraBalStakingToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
   auraBalToken({ address, network }: ContractOpts) {
     return AuraBalToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }

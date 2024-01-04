@@ -14,10 +14,8 @@ import {
   BalancerMerkleRedeem__factory,
   BalancerPool__factory,
   BalancerStablePhantomPool__factory,
-  BalancerStaticAToken__factory,
   BalancerVault__factory,
   BalancerVeBal__factory,
-  BalancerWrappedAaveToken__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -56,16 +54,10 @@ export class BalancerV2ViemContractFactory {
   balancerStablePhantomPool({ address, network }: ContractOpts) {
     return BalancerStablePhantomPool__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
-  balancerStaticAToken({ address, network }: ContractOpts) {
-    return BalancerStaticAToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
   balancerVault({ address, network }: ContractOpts) {
     return BalancerVault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   balancerVeBal({ address, network }: ContractOpts) {
     return BalancerVeBal__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  balancerWrappedAaveToken({ address, network }: ContractOpts) {
-    return BalancerWrappedAaveToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }

@@ -25,15 +25,9 @@ interface FurucomboFund {
   name: string;
   token: {
     address: string;
-    symbol: string;
-    decimals: number;
-    name: string;
   };
   stakingToken: {
     address: string;
-    symbol: string;
-    decimals: number;
-    name: string;
   };
   liquidity: string;
   apy: string;

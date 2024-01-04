@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type { AuraBalStakingToken } from './AuraBalStakingToken';
 export type { AuraBalToken } from './AuraBalToken';
 export type { AuraBalVirtualRewardPool } from './AuraBalVirtualRewardPool';
 export type { AuraBalancerHelpers } from './AuraBalancerHelpers';
@@ -16,7 +15,6 @@ export type { AuraStashToken } from './AuraStashToken';
 export type { AuraToken } from './AuraToken';
 export type { AuraVirtualBalanceRewardPool } from './AuraVirtualBalanceRewardPool';
 
-export { AuraBalStakingToken__factory } from './AuraBalStakingToken';
 export { AuraBalToken__factory } from './AuraBalToken';
 export { AuraBalVirtualRewardPool__factory } from './AuraBalVirtualRewardPool';
 export { AuraBalancerHelpers__factory } from './AuraBalancerHelpers';
