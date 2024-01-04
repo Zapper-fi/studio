@@ -3,11 +3,5 @@
 /* eslint-disable */
 
 export type { KlimaBondDepository } from './KlimaBondDepository';
-export type { KlimaDistributor } from './KlimaDistributor';
-export type { KlimaSKlima } from './KlimaSKlima';
-export type { KlimaWsKlima } from './KlimaWsKlima';
 
 export { KlimaBondDepository__factory } from './KlimaBondDepository';
-export { KlimaDistributor__factory } from './KlimaDistributor';
-export { KlimaSKlima__factory } from './KlimaSKlima';
-export { KlimaWsKlima__factory } from './KlimaWsKlima';
