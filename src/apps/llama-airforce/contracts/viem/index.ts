@@ -3,9 +3,5 @@
 /* eslint-disable */
 
 export type { LlamaAirforceMerkleDistributor } from './LlamaAirforceMerkleDistributor';
-export type { LlamaAirforceUnionVaultPirex } from './LlamaAirforceUnionVaultPirex';
-export type { LlamaAirforceUnionVault } from './LlamaAirforceUnionVault';
 
 export { LlamaAirforceMerkleDistributor__factory } from './LlamaAirforceMerkleDistributor';
-export { LlamaAirforceUnionVaultPirex__factory } from './LlamaAirforceUnionVaultPirex';
-export { LlamaAirforceUnionVault__factory } from './LlamaAirforceUnionVault';
