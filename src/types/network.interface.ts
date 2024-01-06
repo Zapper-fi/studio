@@ -15,6 +15,7 @@ export enum Network {
   AURORA_MAINNET = 'aurora',
   EVMOS_MAINNET = 'evmos',
   BASE_MAINNET = 'base',
+  JBC_MAINNET = 'jbc',
 }
 
 export const NETWORK_IDS: Record<Network, number | null> = {
@@ -34,4 +35,5 @@ export const NETWORK_IDS: Record<Network, number | null> = {
   [Network.BITCOIN_MAINNET]: 1285,
   [Network.EVMOS_MAINNET]: 9001,
   [Network.BASE_MAINNET]: 8453,
+  [Network.JBC_MAINNET]: 8899,
 };

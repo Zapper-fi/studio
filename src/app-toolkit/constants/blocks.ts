@@ -17,4 +17,5 @@ export const BLOCKS_PER_DAY: Record<Network, number> = {
   [Network.AURORA_MAINNET]: 86400,
   [Network.EVMOS_MAINNET]: 17280,
   [Network.BASE_MAINNET]: 43200,
+  [Network.JBC_MAINNET]: 8899,
 };

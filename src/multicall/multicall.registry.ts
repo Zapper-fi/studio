@@ -16,5 +16,6 @@ export const MULTICALL_ADDRESSES: Record<Network, string | null> = {
   [Network.AURORA_MAINNET]: '0x67d66e8ec1fd25d98b3ccd3b19b7dc4b4b7fc493',
   [Network.EVMOS_MAINNET]: '0xa7d0561ead7da21bd6d2f0bc89849c60703be505',
   [Network.BASE_MAINNET]: '0xfc7e92958262d3078acfcccb89c615ae6995f96a',
+  [Network.JBC_MAINNET]: '0xc0c8c486d1466c57efe13c2bf000d4c56f47cbdc',
   [Network.BITCOIN_MAINNET]: null,
 };

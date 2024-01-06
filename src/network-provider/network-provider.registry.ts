@@ -16,4 +16,5 @@ export const DEFAULT_REGISTRY: Record<Exclude<Network, Network.BITCOIN_MAINNET>,
   [Network.AURORA_MAINNET]: 'https://mainnet.aurora.dev',
   [Network.EVMOS_MAINNET]: 'https://eth.bd.evmos.org:8545',
   [Network.BASE_MAINNET]: 'https://mainnet.base.org',
+  [Network.JBC_MAINNET]: 'https://rpc-l1.jibchain.net',
 };

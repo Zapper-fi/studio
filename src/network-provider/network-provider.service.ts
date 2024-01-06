@@ -20,6 +20,7 @@ import {
   moonriver,
   optimism,
   polygon,
+  jbc,
 } from 'viem/chains';
 
 import { Network } from '~types/network.interface';
@@ -42,6 +43,7 @@ export const NETWORK_TO_VIEM_CHAIN: Record<Exclude<Network, Network.BITCOIN_MAIN
   [Network.MOONRIVER_MAINNET]: moonriver,
   [Network.OPTIMISM_MAINNET]: optimism,
   [Network.POLYGON_MAINNET]: polygon,
+  [Network.JBC_MAINNET]: jbc,
 };
 
 @Injectable()
