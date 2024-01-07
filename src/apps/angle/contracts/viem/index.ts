@@ -5,7 +5,6 @@
 export type { AngleLiquidityGauge } from './AngleLiquidityGauge';
 export type { AnglePerpetualManager } from './AnglePerpetualManager';
 export type { AnglePoolManager } from './AnglePoolManager';
-export type { AngleSanToken } from './AngleSanToken';
 export type { AngleStablemaster } from './AngleStablemaster';
 export type { AngleVaultManager } from './AngleVaultManager';
 export type { AngleVeAngle } from './AngleVeAngle';
@@ -13,7 +12,6 @@ export type { AngleVeAngle } from './AngleVeAngle';
 export { AngleLiquidityGauge__factory } from './AngleLiquidityGauge';
 export { AnglePerpetualManager__factory } from './AnglePerpetualManager';
 export { AnglePoolManager__factory } from './AnglePoolManager';
-export { AngleSanToken__factory } from './AngleSanToken';
 export { AngleStablemaster__factory } from './AngleStablemaster';
 export { AngleVaultManager__factory } from './AngleVaultManager';
 export { AngleVeAngle__factory } from './AngleVeAngle';
