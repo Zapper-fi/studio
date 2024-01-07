@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Alp__factory } from './Alp__factory';
+export { AlpProxy__factory } from './AlpProxy__factory';
 export { AlpStaking__factory } from './AlpStaking__factory';
 export { Apx__factory } from './Apx__factory';

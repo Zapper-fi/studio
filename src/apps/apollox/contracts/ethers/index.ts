@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Alp } from './Alp';
+export type { AlpProxy } from './AlpProxy';
 export type { AlpStaking } from './AlpStaking';
 export type { Apx } from './Apx';
 export * as factories from './factories';
+export { AlpProxy__factory } from './factories/AlpProxy__factory';
 export { AlpStaking__factory } from './factories/AlpStaking__factory';
 export { Alp__factory } from './factories/Alp__factory';
 export { Apx__factory } from './factories/Apx__factory';

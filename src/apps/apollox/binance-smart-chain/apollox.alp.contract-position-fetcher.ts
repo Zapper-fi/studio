@@ -16,11 +16,14 @@ import {
 
 import { Alp, ApolloxContractFactory } from '../contracts';
 
+// 0x78f5d389f5cdccfc41594abab4b0ed02f31398b3
+// 0x4e47057f45adf24ba41375a175da0357cb3480e5
 const ALP_PROXY_CONTRACT = '0x4e47057f45adf24ba41375a175da0357cb3480e5';
+// const ALP_CONTRACT = '0x96cbcd9bbd63c8568dec83a991ef05f29058767d';
 
 @PositionTemplate()
 export class BinanceSmartChainApolloxAlpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Alp> {
-  groupLabel = 'Liquidity Pool';
+  groupLabel = 'Apollox Liquidity Pool';
   isDebt = false;
 
   constructor(
@@ -39,18 +42,22 @@ export class BinanceSmartChainApolloxAlpContractPositionFetcher extends Contract
   }
 
   async getTokenDefinitions(
-    params: GetTokenDefinitionsParams<Alp, DefaultContractPositionDefinition>,
+    _params: GetTokenDefinitionsParams<Alp, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: await params.contract.address, network: this.network, metaType: MetaType.SUPPLIED }];
+    return [{ address: ALP_PROXY_CONTRACT, network: this.network, metaType: MetaType.SUPPLIED }];
   }
 
   async getLabel(
     params: GetDisplayPropsParams<Alp, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    return `${params.contract.symbol()}`;
+    return params.contract.symbol();
   }
 
   async getTokenBalancesPerPosition(params: GetTokenBalancesParams<Alp, DefaultDataProps>): Promise<BigNumberish[]> {
+    /*const alpBalance: BigNumberish = utils.formatUnits(
+      await params.contract.balanceOf(params.address),
+      await params.contract.decimals(),
+    );*/
     return [await params.contract.balanceOf(params.address)];
   }
 }
