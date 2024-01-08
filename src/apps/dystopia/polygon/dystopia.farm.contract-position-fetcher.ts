@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { gql } from 'graphql-request';
 import { filter, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -18,7 +19,25 @@ import {
 import { DystopiaViemContractFactory } from '../contracts';
 import { DystopiaGauge } from '../contracts/viem';
 
-import { DYSTOPIA_QUERY, DystopiaQueryResponse } from './dystopia.pool.token-fetcher';
+export const DYSTOPIA_QUERY = gql`
+  query fetchDystopiaPairs {
+    pairs(first: 1000) {
+      id
+      gauge {
+        id
+      }
+    }
+  }
+`;
+
+export interface DystopiaQueryResponse {
+  pairs: {
+    id: string;
+    gauge: {
+      id: string;
+    };
+  }[];
+}
 
 @PositionTemplate()
 export class PolygonDystopiaStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<DystopiaGauge> {
