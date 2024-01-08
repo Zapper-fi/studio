@@ -8,9 +8,6 @@ import {
   JonesMillinerV2__factory,
   JonesStakingRewards__factory,
   JonesStakingRewardsFactory__factory,
-  JonesStrategyToken__factory,
-  JonesStrategyVault__factory,
-  JonesVault__factory,
 } from './viem';
 
 type ContractOpts = { address: string; network: Network };
@@ -30,14 +27,5 @@ export class JonesDaoViemContractFactory {
   }
   jonesStakingRewardsFactory({ address, network }: ContractOpts) {
     return JonesStakingRewardsFactory__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  jonesStrategyToken({ address, network }: ContractOpts) {
-    return JonesStrategyToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  jonesStrategyVault({ address, network }: ContractOpts) {
-    return JonesStrategyVault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  jonesVault({ address, network }: ContractOpts) {
-    return JonesVault__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
 }

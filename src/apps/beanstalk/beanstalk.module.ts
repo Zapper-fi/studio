@@ -6,7 +6,6 @@ import { BeanstalkBalanceResolver } from './common/beanstalk.balance-resolver';
 import { BeanstalkViemContractFactory } from './contracts';
 import { EthereumBeanstalkSiloDepositContractPositionFetcher } from './ethereum/beanstalk.silo-deposit.contract-position-fetcher';
 import { EthereumBeanstalkSiloEarnedContractPositionFetcher } from './ethereum/beanstalk.silo-earned.contract-position-fetcher';
-import { EthereumBeanstalkUnripeAssetsTokenFetcher } from './ethereum/beanstalk.unripe-assets.token-fetcher';
 
 @Module({
   providers: [
@@ -14,7 +13,6 @@ import { EthereumBeanstalkUnripeAssetsTokenFetcher } from './ethereum/beanstalk.
     BeanstalkBalanceResolver,
     EthereumBeanstalkSiloDepositContractPositionFetcher,
     EthereumBeanstalkSiloEarnedContractPositionFetcher,
-    EthereumBeanstalkUnripeAssetsTokenFetcher,
   ],
 })
 export class BeanstalkAppModule extends AbstractApp() {}

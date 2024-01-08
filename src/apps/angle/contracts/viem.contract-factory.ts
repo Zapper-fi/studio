@@ -7,7 +7,6 @@ import {
   AngleLiquidityGauge__factory,
   AnglePerpetualManager__factory,
   AnglePoolManager__factory,
-  AngleSanToken__factory,
   AngleStablemaster__factory,
   AngleVaultManager__factory,
   AngleVeAngle__factory,
@@ -27,9 +26,6 @@ export class AngleViemContractFactory {
   }
   anglePoolManager({ address, network }: ContractOpts) {
     return AnglePoolManager__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
-  }
-  angleSanToken({ address, network }: ContractOpts) {
-    return AngleSanToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   angleStablemaster({ address, network }: ContractOpts) {
     return AngleStablemaster__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
