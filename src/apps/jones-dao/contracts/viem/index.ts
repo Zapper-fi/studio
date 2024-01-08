@@ -6,14 +6,8 @@ export type { JonesMetavault } from './JonesMetavault';
 export type { JonesMillinerV2 } from './JonesMillinerV2';
 export type { JonesStakingRewardsFactory } from './JonesStakingRewardsFactory';
 export type { JonesStakingRewards } from './JonesStakingRewards';
-export type { JonesStrategyToken } from './JonesStrategyToken';
-export type { JonesStrategyVault } from './JonesStrategyVault';
-export type { JonesVault } from './JonesVault';
 
 export { JonesMetavault__factory } from './JonesMetavault';
 export { JonesMillinerV2__factory } from './JonesMillinerV2';
 export { JonesStakingRewardsFactory__factory } from './JonesStakingRewardsFactory';
 export { JonesStakingRewards__factory } from './JonesStakingRewards';
-export { JonesStrategyToken__factory } from './JonesStrategyToken';
-export { JonesStrategyVault__factory } from './JonesStrategyVault';
-export { JonesVault__factory } from './JonesVault';
