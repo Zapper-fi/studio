@@ -9,7 +9,6 @@ import { AvalancheTraderJoeChefV3FarmContractPositionFetcher } from './avalanche
 import { AvalancheTraderJoePoolTokenFetcher } from './avalanche/trader-joe.pool.token-fetcher';
 import { AvalancheTraderJoeSJoeContractPositionFetcher } from './avalanche/trader-joe.s-joe.contract-position-fetcher';
 import { AvalancheTraderJoeVeJoeContractPositionFetcher } from './avalanche/trader-joe.ve-joe-farm.contract-position-fetcher';
-import { AvalancheTraderJoeVeJoeTokenFetcher } from './avalanche/trader-joe.ve-joe.token-fetcher';
 import { AvalancheTraderJoeXJoeTokenFetcher } from './avalanche/trader-joe.x-joe.token-fetcher';
 import { TraderJoeViemContractFactory } from './contracts';
 
@@ -24,7 +23,6 @@ import { TraderJoeViemContractFactory } from './contracts';
     AvalancheTraderJoeXJoeTokenFetcher,
     AvalancheTraderJoeSJoeContractPositionFetcher,
     AvalancheTraderJoeVeJoeContractPositionFetcher,
-    AvalancheTraderJoeVeJoeTokenFetcher,
   ],
 })
 export class TraderJoeAppModule extends AbstractApp() {}

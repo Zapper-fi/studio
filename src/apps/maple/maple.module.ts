@@ -6,14 +6,12 @@ import { MaplePoolDefinitionResolver } from './common/maple.pool.definition-reso
 import { MapleViemContractFactory } from './contracts';
 import { EthereumMaplePendingWithdrawalContractPositionFetcher } from './ethereum/maple.pending-withdrawal.contract-position-fetcher';
 import { EthereumMaplePoolTokenFetcher } from './ethereum/maple.pool.token-fetcher';
-import { EthereumMapleXMplTokenFetcher } from './ethereum/maple.x-mpl.token-fetcher';
 
 @Module({
   providers: [
     MapleViemContractFactory,
     MaplePoolDefinitionResolver,
     EthereumMaplePoolTokenFetcher,
-    EthereumMapleXMplTokenFetcher,
     EthereumMaplePendingWithdrawalContractPositionFetcher,
   ],
 })
