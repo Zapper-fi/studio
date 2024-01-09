@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.575.2](https://github.com/Zapper-fi/studio/compare/v0.575.1...v0.575.2) (2024-01-09)
+
+
+### Bug Fixes
+
+* **app-tokens:** Migration to ATI ([#3176](https://github.com/Zapper-fi/studio/issues/3176)) ([14744e6](https://github.com/Zapper-fi/studio/commit/14744e642a1213e03092fc75a44791c59dd080de))
+* **apps:** App token migration to ATI ([#3179](https://github.com/Zapper-fi/studio/issues/3179)) ([efe6f5a](https://github.com/Zapper-fi/studio/commit/efe6f5aa4df251ac7d8f4af2b9d6203739a8a025))
+* **banano:** Fix farms on Ethereum ([#3178](https://github.com/Zapper-fi/studio/issues/3178)) ([9c08233](https://github.com/Zapper-fi/studio/commit/9c08233501d15f8d4f06f9ee87b712844c1b5a87))
+
 ## [0.575.1](https://github.com/Zapper-fi/studio/compare/v0.575.0...v0.575.1) (2024-01-04)
 
 
