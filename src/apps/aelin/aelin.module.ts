@@ -6,7 +6,6 @@ import { AelinViemContractFactory } from './contracts';
 import { EthereumAelinPoolTokenFetcher } from './ethereum/aelin.pool.token-fetcher';
 import { OptimismAelinFarmContractPositionFetcher } from './optimism/aelin.farm.contract-position-fetcher';
 import { OptimismAelinPoolTokenFetcher } from './optimism/aelin.pool.token-fetcher';
-import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-fetcher';
 
 @Module({
   providers: [
@@ -15,7 +14,6 @@ import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-
     EthereumAelinPoolTokenFetcher,
     // Optimism
     OptimismAelinPoolTokenFetcher,
-    OptimismAelinVAelinTokenFetcher,
     OptimismAelinFarmContractPositionFetcher,
   ],
 })
