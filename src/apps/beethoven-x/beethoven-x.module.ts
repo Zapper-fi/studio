@@ -5,7 +5,6 @@ import { BalancerV2ViemContractFactory } from '~apps/balancer-v2/contracts';
 
 import { BeethovenXViemContractFactory } from './contracts';
 import { FantomBeethovenXChefContractPositionFetcher } from './fantom/beethoven-x.chef.contract-position-fetcher';
-import { FantomBeethovenXFBeetsTokenFetcher } from './fantom/beethoven-x.f-beets.token-fetcher';
 import { FantomBeethovenXPoolTokenFetcher } from './fantom/beethoven-x.pool.token-fetcher';
 import { OptimismBeethovenXFarmContractPositionFetcher } from './optimism/beethoven-x.farm.contract-position-fetcher';
 import { OptimismBeethovenXPoolTokenFetcher } from './optimism/beethoven-x.pool.token-fetcher';
@@ -17,7 +16,6 @@ import { OptimismBeethovenXPoolTokenFetcher } from './optimism/beethoven-x.pool.
     // Fantom
     FantomBeethovenXChefContractPositionFetcher,
     FantomBeethovenXPoolTokenFetcher,
-    FantomBeethovenXFBeetsTokenFetcher,
     // Optimism
     OptimismBeethovenXFarmContractPositionFetcher,
     OptimismBeethovenXPoolTokenFetcher,
