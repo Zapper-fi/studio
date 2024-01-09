@@ -44,7 +44,9 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.read.wbanPerSecond();
+    const now = Date.now();
+    const endTime = (await contract.read.endTime()) * 1_000;
+    return endTime < now ? 0 : contract.read.wbanPerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
