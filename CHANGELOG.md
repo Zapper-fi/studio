@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.575.3](https://github.com/Zapper-fi/studio/compare/v0.575.2...v0.575.3) (2024-01-11)
+
+
+### Bug Fixes
+
+* **velodrome-v2:** Revert groupId update ([#3182](https://github.com/Zapper-fi/studio/issues/3182)) ([bd5d0f3](https://github.com/Zapper-fi/studio/commit/bd5d0f3d851b18c5dcd9c129db24312621042594))
+* **velodrome:** Update pool group id ([#3180](https://github.com/Zapper-fi/studio/issues/3180)) ([a8db4a0](https://github.com/Zapper-fi/studio/commit/a8db4a0b6c5b616757068224e2f0cb544026b309))
+
 ## [0.575.2](https://github.com/Zapper-fi/studio/compare/v0.575.1...v0.575.2) (2024-01-09)
 
 
