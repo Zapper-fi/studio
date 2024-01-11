@@ -34,7 +34,7 @@ export class VelodromeV2AddressesResolver {
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: 'velodrome-v2',
       network,
-      groupIds: ['pool-2'],
+      groupIds: ['pool'],
     });
 
     const poolAddresses = appTokens.map(x => x.address);
