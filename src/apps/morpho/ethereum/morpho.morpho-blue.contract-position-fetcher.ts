@@ -173,8 +173,9 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
     contractPosition,
     multicall,
   }: GetTokenBalancesParams<MorphoBlue, MorphoContractPositionDataProps>) {
-    const morpho = multicall.wrap(this.getContract(this.morphoAddress));
-
+    const morpho = multicall.wrap(
+      this.contractFactory.morphoBlue({ address: this.morphoAddress, network: this.network }),
+    );
     const [supplyShares, borrowShares, collateral] = await morpho.read.position([
       contractPosition.dataProps.marketId,
       address,
