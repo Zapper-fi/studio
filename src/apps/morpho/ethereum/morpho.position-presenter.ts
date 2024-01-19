@@ -158,21 +158,18 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
 
     const marketResults = await Promise.all(
       this.whitelistedIds.map(async marketId => {
-        // Fetch user position, market data, and market parameters for each market
         const [positionDataRaw, marketDataRaw, marketParamsRaw] = await Promise.all([
           morphoBlue.read.position([marketId, address]),
           morphoBlue.read.market([marketId]),
           morphoBlue.read.idToMarketParams([marketId]),
         ]);
 
-        // Convert the raw position data to UserPosition structure
         const positionData: UserPosition = {
           supplyShares: BigNumber.from(positionDataRaw[0]),
           borrowShares: BigNumber.from(positionDataRaw[1]),
           collateral: BigNumber.from(positionDataRaw[2]),
         };
 
-        // Convert the raw market data to MarketState structure (assuming it returns an array of BigNumbers)
         const marketState: MarketState = {
           totalSupplyAssets: BigNumber.from(marketDataRaw[0]),
           totalSupplyShares: BigNumber.from(marketDataRaw[1]),
@@ -182,7 +179,6 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
           fee: BigNumber.from(marketDataRaw[5]),
         };
 
-        // Convert the raw market params data to MarketParams structure (assuming it returns an array with the expected types)
         const marketParams: MarketParams = {
           loanToken: marketParamsRaw[0],
           collateralToken: marketParamsRaw[1],
@@ -226,17 +222,17 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
 
     const metadataItems: MetadataItemWithLabel[] = [];
 
-    // Handle Morpho Compound case
+    // Handle Morpho Compound Optimizer case
     if (groupLabel === 'Morpho Compound') {
       metadataItems.push(...format('Health Factor MC', dataProps.healthFactorMC));
     }
 
-    // Handle Morpho Aave case
+    // Handle Morpho AaveV2 Optimizer case
     if (groupLabel === 'Morpho Aave') {
       metadataItems.push(...format('Health Factor MA2', dataProps.healthFactorMA2));
     }
 
-    // Handle Morpho AaveV3 case
+    // Handle Morpho AaveV3-ETH Optimizer case
     if (groupLabel === 'Morpho AaveV3') {
       metadataItems.push(...format('Health Factor MA3', dataProps.healthFactorMA3));
     }

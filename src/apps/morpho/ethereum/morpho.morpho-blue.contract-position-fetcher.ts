@@ -54,8 +54,6 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
   async getDefinitions({ multicall }: GetDefinitionsParams) {
     const morphoBlue = this.contractFactory.morphoBlue({ address: this.morphoAddress, network: this.network });
     const morpho = multicall.wrap(morphoBlue);
-
-    // Fetch all market data in parallel
     const marketData = await Promise.all(
       this.whitelistedIds.map(async id => {
         const [loanToken, collateralToken, oracle, irm, lltvBigInt] = await morpho.read.idToMarketParams([id]);
@@ -63,8 +61,6 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
         return { loanToken, collateralToken, oracle, irm, lltv };
       }),
     );
-
-    // Map the fetched market data to your structure
     return marketData.map((data, i) => ({
       address: this.morphoAddress,
       marketId: this.whitelistedIds[i].toLowerCase(),
@@ -131,7 +127,7 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       collateralSupply = +formatUnits(
         BigNumber.from(marketCollateral.totalCollateral),
         contractPosition.tokens[1].decimals,
-      ); // TO FINALIZE
+      );
     }
 
     const collateralSupplyUSD = collateralSupply * underlyingToken.price;
@@ -205,7 +201,7 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       marketState,
       contractPosition.dataProps.borrowRate,
     );
-    // returns supply, collateral, borrow
+
     return this._computeBalances(
       BigNumber.from(supplyShares),
       BigNumber.from(borrowShares),
