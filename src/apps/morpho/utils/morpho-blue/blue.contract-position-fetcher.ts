@@ -25,7 +25,7 @@ export type MorphoContractPositionDefinition = {
   collateralTokenAddress: string;
   oracleAddress: string;
   irmAddress: string;
-  lltv: BigNumber;
+  lltv: bigint;
 };
 
 export type MorphoContractPositionDataProps = {
@@ -39,7 +39,7 @@ export type MorphoContractPositionDataProps = {
   collateralSupplyUSD: number;
   borrow: number;
   borrowUSD: number;
-  borrowRate: BigNumber;
+  borrowRate: bigint;
 };
 
 export abstract class MorphoSupplyContractPositionFetcher<

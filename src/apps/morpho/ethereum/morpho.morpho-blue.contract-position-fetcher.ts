@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -21,6 +20,10 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { MorphoViemContractFactory } from '../contracts';
+
+import { MulDiv, expN, getConvertToAssets, mulDivDown } from 'evm-maths/lib/utils';
+import { WAD } from 'evm-maths/lib/constants';
+
 import { MorphoBlueMath } from '../utils/morpho-blue/Blue.maths';
 import { MarketState } from '../utils/morpho-blue/interfaces';
 import { MorphoBlueMarkets, MarketCollateralResponse } from '../utils/morpho-blue/markets';
@@ -56,8 +59,7 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
     const morpho = multicall.wrap(morphoBlue);
     const marketData = await Promise.all(
       this.whitelistedIds.map(async id => {
-        const [loanToken, collateralToken, oracle, irm, lltvBigInt] = await morpho.read.idToMarketParams([id]);
-        const lltv = BigNumber.from(lltvBigInt);
+        const [loanToken, collateralToken, oracle, irm, lltv] = await morpho.read.idToMarketParams([id]);
         return { loanToken, collateralToken, oracle, irm, lltv };
       }),
     );
@@ -83,7 +85,6 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
 
     const [totalSupplyAssets, totalSupplyShares, totalBorrowAssets, totalBorrowShares, lastUpdate, fee] =
       await morpho.read.market([marketId]);
-    const _lltv: bigint = BigInt(Number(lltv));
     const irm = this.contractFactory.morphoAdaptiveCurve({ address: irmAddress, network: this.network });
     const borrowRate = await irm.read.borrowRateView([
       {
@@ -91,7 +92,7 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
         collateralToken: collateralTokenAddress,
         oracle: oracleAddress,
         irm: irmAddress,
-        lltv: _lltv,
+        lltv: lltv,
       },
       {
         totalSupplyAssets,
@@ -103,31 +104,28 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       },
     ]);
 
-    const borrowRateYear = BigNumber.from(borrowRate).mul(BigNumber.from(SECONDS_PER_YEAR));
-    const WAD = MorphoBlueMath.WAD;
-    const borrowApy: number = Number(
-      +formatUnits(MorphoBlueMath.expN(borrowRateYear, 3, WAD).sub(BigNumber.from(1)), 18),
-    );
-    const utilization: BigNumber = BigNumber.from(totalBorrowAssets).div(BigNumber.from(totalSupplyAssets));
+    const borrowRateYear = borrowRate * BigInt(SECONDS_PER_YEAR);
+    const borrowApy: number = +formatUnits(expN(borrowRateYear, BigInt(3), WAD) - BigInt(1), 18);
 
-    const supplyRate = utilization.mul(BigNumber.from(borrowRate)).mul(BigNumber.from(1).sub(BigNumber.from(fee)));
-    const supplyApy: number = +formatUnits(MorphoBlueMath.expN(supplyRate, 3, WAD).sub(BigNumber.from(1)), 18);
+    const utilization: bigint = totalSupplyAssets === BigInt(0) ? BigInt(1) : totalBorrowAssets / totalSupplyAssets;
+
+    const supplyRate = utilization * borrowRate * (BigInt(1) - BigInt(fee));
+    const supplyApy: number = +formatUnits(expN(supplyRate, BigInt(3), WAD) - BigInt(1), 18);
+
     const underlyingToken = contractPosition.tokens[0];
-    const supply = +formatUnits(BigNumber.from(totalSupplyAssets), underlyingToken.decimals);
+
+    const supply = +formatUnits(totalSupplyAssets, underlyingToken.decimals);
     const supplyUSD = supply * underlyingToken.price;
-    const borrow = +formatUnits(BigNumber.from(totalBorrowAssets), underlyingToken.decimals);
+    const borrow = +formatUnits(totalBorrowAssets, underlyingToken.decimals);
     const borrowUSD = borrow * underlyingToken.price;
     const collateralData = await this._fetchCollateralData();
     const marketCollateral = collateralData.markets.find(market => market.id === marketId);
     let collateralSupply: number;
 
     if (!marketCollateral) {
-      collateralSupply = +formatUnits(BigNumber.from(0), contractPosition.tokens[1].decimals);
+      collateralSupply = +formatUnits(BigInt(0), contractPosition.tokens[1].decimals);
     } else {
-      collateralSupply = +formatUnits(
-        BigNumber.from(marketCollateral.totalCollateral),
-        contractPosition.tokens[1].decimals,
-      );
+      collateralSupply = +formatUnits(BigInt(marketCollateral.totalCollateral), contractPosition.tokens[1].decimals);
     }
 
     const collateralSupplyUSD = collateralSupply * underlyingToken.price;
@@ -144,28 +142,31 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       collateralSupplyUSD,
       borrow,
       borrowUSD,
-      borrowRate: BigNumber.from(borrowRate),
+      borrowRate,
     };
   }
 
   private async _computeBalances(
-    supplyShares: BigNumber,
-    borrowShares: BigNumber,
-    collateral: BigNumber,
+    supplyShares: bigint,
+    borrowShares: bigint,
+    collateral: bigint,
     marketState: MarketState,
-  ): Promise<BigNumber[]> {
-    const supplyBalance = MorphoBlueMath.toAssetsDown(
+  ): Promise<bigint[]> {
+    const virtualAssets: bigint = BigInt(1);
+    const virtualShares: bigint = BigInt(1e6);
+    const mulDivFunction: MulDiv = mulDivDown;
+    const convertToAssetsFunction = getConvertToAssets(virtualAssets, virtualShares, mulDivFunction);
+    const supplyBalance = convertToAssetsFunction(
       supplyShares,
       marketState.totalSupplyAssets,
       marketState.totalSupplyShares,
     );
-    const collateralBalance = BigNumber.from(collateral);
-    const borrowBalance = MorphoBlueMath.toAssetsDown(
+    const borrowBalance = convertToAssetsFunction(
       borrowShares,
       marketState.totalBorrowAssets,
       marketState.totalBorrowShares,
     );
-    return [supplyBalance, collateralBalance, borrowBalance];
+    return [supplyBalance, collateral, borrowBalance];
   }
 
   async getTokenBalancesPerPosition({
@@ -189,25 +190,20 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       await morpho.read.market([contractPosition.dataProps.marketId]);
 
     const marketState: MarketState = {
-      totalSupplyAssets: BigNumber.from(totalSupplyAssets),
-      totalSupplyShares: BigNumber.from(totalSupplyShares),
-      totalBorrowAssets: BigNumber.from(totalBorrowAssets),
-      totalBorrowShares: BigNumber.from(totalBorrowShares),
-      lastUpdate: BigNumber.from(lastUpdate),
-      fee: BigNumber.from(fee),
+      totalSupplyAssets,
+      totalSupplyShares,
+      totalBorrowAssets,
+      totalBorrowShares,
+      lastUpdate,
+      fee,
     };
 
     const newMarketState = MorphoBlueMath.computeInterest(
-      BigNumber.from(timestamp),
+      BigInt(timestamp),
       marketState,
       contractPosition.dataProps.borrowRate,
     );
 
-    return this._computeBalances(
-      BigNumber.from(supplyShares),
-      BigNumber.from(borrowShares),
-      BigNumber.from(collateral),
-      newMarketState,
-    );
+    return this._computeBalances(supplyShares, borrowShares, collateral, newMarketState);
   }
 }

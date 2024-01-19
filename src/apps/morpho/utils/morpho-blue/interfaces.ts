@@ -1,24 +1,22 @@
-import { BigNumber } from 'ethers';
-
 export interface MarketParams {
   loanToken: string;
   collateralToken: string;
   oracle: string;
   irm: string;
-  lltv: BigNumber;
+  lltv: bigint;
 }
 
 export interface MarketState {
-  totalSupplyAssets: BigNumber;
-  totalSupplyShares: BigNumber;
-  totalBorrowAssets: BigNumber;
-  totalBorrowShares: BigNumber;
-  lastUpdate: BigNumber;
-  fee: BigNumber;
+  totalSupplyAssets: bigint;
+  totalSupplyShares: bigint;
+  totalBorrowAssets: bigint;
+  totalBorrowShares: bigint;
+  lastUpdate: bigint;
+  fee: bigint;
 }
 
 export interface UserPosition {
-  supplyShares: BigNumber;
-  borrowShares: BigNumber;
-  collateral: BigNumber;
+  supplyShares: bigint;
+  borrowShares: bigint;
+  collateral: bigint;
 }

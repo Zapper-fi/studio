@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, constants, Contract } from 'ethers';
+import { constants, Contract } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -67,8 +67,8 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
         network: this.network,
       }),
     );
-    const healthFactorMA2Raw = aaveV2Lens.read.getUserHealthFactor([address]);
-    return +formatUnits(BigNumber.from(healthFactorMA2Raw));
+    const healthFactorMA2Raw = await aaveV2Lens.read.getUserHealthFactor([address]);
+    return +formatUnits(healthFactorMA2Raw);
   }
 
   private async _fetchHealthFactorMC(address: string, multicall: ViemMulticallDataLoader): Promise<number> {
@@ -78,8 +78,8 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
         network: this.network,
       }),
     );
-    const healthFactorMCRaw = compoundLens.read.getUserHealthFactor([address, []]);
-    return +formatUnits(BigNumber.from(healthFactorMCRaw));
+    const healthFactorMCRaw = await compoundLens.read.getUserHealthFactor([address, []]);
+    return +formatUnits(healthFactorMCRaw);
   }
 
   private async _fetchHealthFactorMA3(address: string, multicall: ViemMulticallDataLoader): Promise<number> {
@@ -90,10 +90,10 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
       }),
     );
     const liquidityDataMA3Raw = await morphoAaveV3.read.liquidityData([address]);
-    const maxDebtMA3 = BigNumber.from(liquidityDataMA3Raw.maxDebt);
-    const debtMA3 = BigNumber.from(liquidityDataMA3Raw.debt);
-    const unit = parseUnits('1');
-    return +formatUnits(debtMA3.eq(0) ? constants.MaxInt256 : maxDebtMA3.mul(unit).div(debtMA3));
+    const maxDebtMA3 = liquidityDataMA3Raw.maxDebt;
+    const debtMA3 = liquidityDataMA3Raw.debt;
+    const unit = BigInt(1);
+    return +formatUnits(debtMA3 === BigInt(0) ? constants.MaxInt256 : (maxDebtMA3 * unit) / debtMA3);
   }
 
   private async _calculateHealthFactor(
@@ -103,7 +103,7 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
     address: string,
     multicall: ViemMulticallDataLoader,
     marketId: string,
-  ): Promise<{ marketId: string; healthFactor: BigNumber }> {
+  ): Promise<{ marketId: string; healthFactor: bigint }> {
     const provider = this.appToolkit.getNetworkProvider(this.network);
     const blockNumber = await provider.getBlockNumber();
     const timestamp = (await provider.getBlock(blockNumber)).timestamp;
@@ -120,27 +120,25 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
         collateralToken: marketParams.collateralToken,
         oracle: marketParams.oracle,
         irm: marketParams.irm,
-        lltv: BigInt(Number(marketParams.lltv)),
+        lltv: marketParams.lltv,
       },
       {
-        totalSupplyAssets: BigInt(Number(marketState.totalSupplyAssets)),
-        totalSupplyShares: BigInt(Number(marketState.totalSupplyShares)),
-        totalBorrowAssets: BigInt(Number(marketState.totalBorrowAssets)),
-        totalBorrowShares: BigInt(Number(marketState.totalBorrowShares)),
-        lastUpdate: BigInt(Number(marketState.lastUpdate)),
-        fee: BigInt(Number(marketState.fee)),
+        totalSupplyAssets: marketState.totalSupplyAssets,
+        totalSupplyShares: marketState.totalSupplyShares,
+        totalBorrowAssets: marketState.totalBorrowAssets,
+        totalBorrowShares: marketState.totalBorrowShares,
+        lastUpdate: marketState.lastUpdate,
+        fee: marketState.fee,
       },
     ]);
 
-    const rate = BigNumber.from(Number(borrowRate));
-    const newMarketState = MorphoBlueMath.computeInterest(BigNumber.from(timestamp), marketState, rate);
+    const newMarketState = MorphoBlueMath.computeInterest(BigInt(timestamp), marketState, borrowRate);
     const oracleContract = new Contract(
       marketParams.oracle,
       OraclePriceAbi,
       this.appToolkit.getNetworkProvider(this.network),
     );
-    const priceRaw = await oracleContract.price();
-    const price = BigNumber.from(priceRaw);
+    const price = await oracleContract.price();
     const healthFactor = MorphoBlueMath.getHealthFactor(positionData, newMarketState, marketParams, price);
     return { marketId, healthFactor };
   }
@@ -165,18 +163,18 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
         ]);
 
         const positionData: UserPosition = {
-          supplyShares: BigNumber.from(positionDataRaw[0]),
-          borrowShares: BigNumber.from(positionDataRaw[1]),
-          collateral: BigNumber.from(positionDataRaw[2]),
+          supplyShares: positionDataRaw[0],
+          borrowShares: positionDataRaw[1],
+          collateral: positionDataRaw[2],
         };
 
         const marketState: MarketState = {
-          totalSupplyAssets: BigNumber.from(marketDataRaw[0]),
-          totalSupplyShares: BigNumber.from(marketDataRaw[1]),
-          totalBorrowAssets: BigNumber.from(marketDataRaw[2]),
-          totalBorrowShares: BigNumber.from(marketDataRaw[3]),
-          lastUpdate: BigNumber.from(marketDataRaw[4]),
-          fee: BigNumber.from(marketDataRaw[5]),
+          totalSupplyAssets: marketDataRaw[0],
+          totalSupplyShares: marketDataRaw[1],
+          totalBorrowAssets: marketDataRaw[2],
+          totalBorrowShares: marketDataRaw[3],
+          lastUpdate: marketDataRaw[4],
+          fee: marketDataRaw[5],
         };
 
         const marketParams: MarketParams = {
@@ -184,11 +182,11 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
           collateralToken: marketParamsRaw[1],
           oracle: marketParamsRaw[2],
           irm: marketParamsRaw[3],
-          lltv: BigNumber.from(marketParamsRaw[4]),
+          lltv: marketParamsRaw[4],
         };
 
-        if (positionData.borrowShares.eq(0)) {
-          const healthFactor = BigNumber.from(MorphoBlueMath.MAX_UINT_256);
+        if (positionData.borrowShares === BigInt(0)) {
+          const healthFactor = MorphoBlueMath.MAX_UINT_256;
           return { marketId, healthFactor };
         }
         return this._calculateHealthFactor(positionData, marketState, marketParams, address, multicall, marketId);
