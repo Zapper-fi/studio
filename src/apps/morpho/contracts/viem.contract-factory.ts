@@ -8,6 +8,8 @@ import {
   MorphoAaveV2__factory,
   MorphoAaveV2Lens__factory,
   MorphoAaveV3__factory,
+  MorphoAdaptiveCurve__factory,
+  MorphoBlue__factory,
   MorphoCToken__factory,
   MorphoCompound__factory,
   MorphoCompoundLens__factory,
@@ -31,6 +33,12 @@ export class MorphoViemContractFactory {
   }
   morphoAaveV3({ address, network }: ContractOpts) {
     return MorphoAaveV3__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  morphoAdaptiveCurve({ address, network }: ContractOpts) {
+    return MorphoAdaptiveCurve__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
+  }
+  morphoBlue({ address, network }: ContractOpts) {
+    return MorphoBlue__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
   }
   morphoCToken({ address, network }: ContractOpts) {
     return MorphoCToken__factory.connect(address, this.appToolkit.getViemNetworkProvider(network));
