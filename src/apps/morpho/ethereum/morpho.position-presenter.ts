@@ -100,7 +100,6 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
     positionData: UserPosition,
     marketState: MarketState,
     marketParams: MarketParams,
-    address: string,
     multicall: ViemMulticallDataLoader,
     marketId: string,
   ): Promise<{ marketId: string; healthFactor: bigint }> {
@@ -189,7 +188,7 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
           const healthFactor = MorphoBlueMath.MAX_UINT_256;
           return { marketId, healthFactor };
         }
-        return this._calculateHealthFactor(positionData, marketState, marketParams, address, multicall, marketId);
+        return this._calculateHealthFactor(positionData, marketState, marketParams, multicall, marketId);
       }),
     );
 

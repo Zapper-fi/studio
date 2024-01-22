@@ -27,6 +27,7 @@ import { WAD } from 'evm-maths/lib/constants';
 import { MorphoBlueMath } from '../utils/morpho-blue/Blue.maths';
 import { MarketState } from '../utils/morpho-blue/interfaces';
 import { MorphoBlueMarkets, MarketCollateralResponse } from '../utils/morpho-blue/markets';
+import { wadDivDown, wadMulDown } from 'evm-maths/lib/wad';
 
 @PositionTemplate()
 export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSupplyContractPositionFetcher<MorphoBlue> {
@@ -105,15 +106,15 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
     ]);
 
     const borrowRateYear = borrowRate * BigInt(SECONDS_PER_YEAR);
-    const borrowApy: number = +formatUnits(expN(borrowRateYear, BigInt(3), WAD) - BigInt(1), 18);
+    const borrowApy: number = +formatUnits(expN(borrowRateYear, BigInt(3), WAD, mulDivDown) - WAD, 18);
+    const utilization: bigint =
+      totalSupplyAssets != BigInt(0) ? wadDivDown(totalBorrowAssets, totalSupplyAssets) : BigInt(1);
 
-    const utilization: bigint = totalSupplyAssets === BigInt(0) ? BigInt(1) : totalBorrowAssets / totalSupplyAssets;
-
-    const supplyRate = utilization * borrowRate * (BigInt(1) - BigInt(fee));
-    const supplyApy: number = +formatUnits(expN(supplyRate, BigInt(3), WAD) - BigInt(1), 18);
+    const supplyRate = wadMulDown(wadMulDown(utilization, borrowRateYear), BigInt(WAD) - BigInt(fee));
+    const supplyApy: number = +formatUnits(expN(supplyRate, BigInt(3), WAD) - BigInt(WAD), 18);
 
     const underlyingToken = contractPosition.tokens[0];
-
+    const collateralToken = contractPosition.tokens[1];
     const supply = +formatUnits(totalSupplyAssets, underlyingToken.decimals);
     const supplyUSD = supply * underlyingToken.price;
     const borrow = +formatUnits(totalBorrowAssets, underlyingToken.decimals);
@@ -128,7 +129,7 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       collateralSupply = +formatUnits(BigInt(marketCollateral.totalCollateral), contractPosition.tokens[1].decimals);
     }
 
-    const collateralSupplyUSD = collateralSupply * underlyingToken.price;
+    const collateralSupplyUSD = collateralSupply * collateralToken.price;
     const liquidity = supply * underlyingToken.price;
 
     return {
