@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { constants, Contract } from 'ethers';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';

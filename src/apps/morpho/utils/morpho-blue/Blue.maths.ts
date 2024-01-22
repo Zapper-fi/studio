@@ -1,9 +1,9 @@
-import { BigNumber, utils } from 'ethers';
-
 import { MarketParams, MarketState, UserPosition } from './interfaces';
+
 import { MulDiv, getConvertToAssets, getConvertToShares, mulDivDown, mulDivUp, pow } from 'evm-maths/lib/utils';
 import { wadDivUp, wadMulDown } from 'evm-maths/lib/wad';
 import { WAD } from 'evm-maths/lib/constants';
+
 export const OraclePriceAbi = [
   {
     constant: true,
@@ -45,11 +45,6 @@ export class MorphoBlueMath {
   /// @dev Calculates the value of `assets` quoted in shares, rounding down.
   static toSharesDown = (assets: bigint, totalAssets: bigint, totalShares: bigint): bigint => {
     return this.mulDivFunction(assets, totalShares + this.VIRTUAL_SHARES, totalAssets + this.VIRTUAL_ASSETS);
-  };
-
-  /// @dev Calculates the value of `shares` quoted in assets, rounding down.
-  static toAssetsDown = (shares: bigint, totalAssets: bigint, totalShares: bigint): bigint => {
-    return this.mulDivFunction(shares, totalAssets + this.VIRTUAL_ASSETS, totalShares + this.VIRTUAL_SHARES);
   };
 
   static toAssetsUp = (shares: bigint, totalAssets: bigint, totalShares: bigint): bigint => {
