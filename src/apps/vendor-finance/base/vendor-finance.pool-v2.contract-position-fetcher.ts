@@ -6,6 +6,6 @@ import { VendorFinancePoolV2ContractPositionFetcher } from '../common/vendor-fin
 export class BaseVendorFinancePoolV2ContractPositionFetcher extends VendorFinancePoolV2ContractPositionFetcher {
   groupLabel = 'Lending Pools V2';
 
-  positionTrackerAddr = '0x37D2f55F34f3F7D5A7Deb0367915e5ab4aC15193';
+  positionTrackerAddr = '0x37d2f55f34f3f7d5a7deb0367915e5ab4ac15193';
   entityUrl = 'https://us-central1-vendor-finace.cloudfunctions.net/getEntitiesFromSubgraph';
 }

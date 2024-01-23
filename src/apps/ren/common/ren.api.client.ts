@@ -11,7 +11,6 @@ export class RenApiClient {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   @Cache({
-    instance: 'business',
     key: () => `studio:ren:darknode:assets`,
     ttl: 5 * 60, // 5 minutes
   })
@@ -25,7 +24,6 @@ export class RenApiClient {
   }
 
   @Cache({
-    instance: 'user',
     key: (address: string) => `studio:ren:darknode:${address}:darknodes`,
     ttl: 5 * 60, // 5 minutes
   })

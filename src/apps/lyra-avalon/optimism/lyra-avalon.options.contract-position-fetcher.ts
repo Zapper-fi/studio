@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import _, { flattenDeep, omit } from 'lodash';
 
@@ -16,7 +16,8 @@ import {
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LyraAvalonContractFactory, LyraOptionToken } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraOptionToken } from '../contracts/viem';
 
 const OPTION_TYPES = {
   0: 'Long Call',
@@ -118,18 +119,18 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LyraAvalonContractFactory) protected readonly contractFactory: LyraAvalonContractFactory,
+    @Inject(LyraAvalonViemContractFactory) protected readonly contractFactory: LyraAvalonViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LyraOptionToken {
+  getContract(address: string) {
     return this.contractFactory.lyraOptionToken({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<LyraAvalonOptionTokenDefinition[]> {
     const response = await gqlFetch<OptionsResponse>({
-      endpoint: 'https://api.lyra.finance/subgraph/optimism/v1/api',
+      endpoint: 'https://subgraph.satsuma-prod.com/sw9vuxiQey3c/lyra/optimism-mainnet-newport/api',
       query: OPTIONS_QUERY,
     });
 
@@ -215,8 +216,11 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     LyraAvalonOptionContractPositionDataProps,
     LyraAvalonOptionTokenDefinition
   >) {
-    const baseContract = this.contractFactory.erc20({ address: definition.baseAddress, network: this.network });
-    const baseSymbol = await multicall.wrap(baseContract).symbol();
+    const baseContract = this.appToolkit.globalViemContracts.erc20({
+      address: definition.baseAddress,
+      network: this.network,
+    });
+    const baseSymbol = await multicall.wrap(baseContract).read.symbol();
     const optionLabel = OPTION_TYPES[definition.optionType];
     return `${optionLabel} ${baseSymbol} @ $${definition.strikePriceReadable}`;
   }
@@ -230,18 +234,28 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     const { strikeId, optionType, callPrice, putPrice } = contractPosition.dataProps;
 
     // Find matching user position for contract position
-    const ownerPositions = await contract.getOwnerPositions(address);
+    const ownerPositions = await contract.read.getOwnerPositions([address]);
     const userPosition = ownerPositions
       .filter(p => Number(p.strikeId) === strikeId)
       .find(p => p.optionType === optionType);
     if (!userPosition) return [];
 
     // Find amount of position
-    const quoteToken = contractPosition.tokens[0];
-    const price = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
-    const amountRaw = ((Number(price) * Number(userPosition.amount)) / 10 ** quoteToken.decimals).toString();
+    const priceRaw = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
+    const price = priceRaw / 10 ** 18;
+    const amountRaw = (
+      (Number(price) * Number(userPosition.amount)) /
+      10 ** (18 - contractPosition.tokens[0].decimals)
+    ).toString();
 
     if (optionType === 0 || optionType === 1) return [amountRaw];
-    return [amountRaw, userPosition.collateral];
+
+    const decimals =
+      optionType == 2
+        ? 10 ** (18 - contractPosition.tokens[1].decimals)
+        : 10 ** (18 - contractPosition.tokens[0].decimals);
+    const positionCollateral = BigNumber.from(userPosition.collateral).div(decimals);
+
+    return [amountRaw, positionCollateral];
   }
 }

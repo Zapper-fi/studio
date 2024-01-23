@@ -16,7 +16,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types';
 
-import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
+import { HomoraV2ViemContractFactory } from '../contracts';
+import { HomoraBank } from '../contracts/viem';
 import httpClient from '../helpers/httpClient';
 import { Exchange, Poolstatus } from '../interfaces/enums';
 import {
@@ -35,12 +36,12 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HomoraV2ContractFactory) protected readonly contractFactory: HomoraV2ContractFactory,
+    @Inject(HomoraV2ViemContractFactory) protected readonly contractFactory: HomoraV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): HomoraBank {
+  getContract(address: string) {
     return this.contractFactory.homoraBank({ address, network: this.network });
   }
 
@@ -143,7 +144,6 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
   }
 
   @Cache({
-    instance: 'business',
     key: (network: Network) => `studio:homora-v2:${network}:positions-data`,
     ttl: 3 * 60,
   })
@@ -161,7 +161,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
     if (!userPositions.length) return [];
 
     const bankContract = this.contractFactory.homoraBank({ address: this.homoraBankAddress, network: this.network });
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<HomoraV2FarmingPositionDataProps>({
       appId: this.appId,
       network: this.network,
@@ -174,14 +174,14 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
         if (!contractPosition) return null;
 
         const [positionInfo, positionDebt] = await Promise.all([
-          multicall.wrap(bankContract).getPositionInfo(position.id),
-          multicall.wrap(bankContract).getPositionDebts(position.id),
+          multicall.wrap(bankContract).read.getPositionInfo([BigInt(position.id)]),
+          multicall.wrap(bankContract).read.getPositionDebts([BigInt(position.id)]),
         ]);
 
-        const collateralAmount = positionInfo.collateralSize;
+        const collateralAmount = positionInfo[3];
         const debtAmounts = contractPosition.tokens.filter(isBorrowed).map(t => {
-          const debtArrayIndex = positionDebt.tokens.findIndex(dt => dt.toLowerCase() === t.address);
-          return debtArrayIndex >= 0 ? positionDebt.debts[debtArrayIndex].toString() : '0';
+          const debtArrayIndex = positionDebt[0].findIndex(dt => dt.toLowerCase() === t.address);
+          return debtArrayIndex >= 0 ? positionDebt[1][debtArrayIndex].toString() : '0';
         });
 
         const amounts = [collateralAmount, ...debtAmounts];

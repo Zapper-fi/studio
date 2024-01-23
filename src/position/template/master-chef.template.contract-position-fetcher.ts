@@ -1,13 +1,15 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 import { isArray, range, sum } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { ViemMulticallDataLoader } from '~multicall';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
+import { isMulticallUnderlyingError } from '~multicall/impl/multicall.ethers';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -38,19 +40,19 @@ export type MasterChefContractPositionDefinition = {
   poolIndex: number;
 };
 
-export type GetMasterChefDataPropsParams<T extends Contract> = GetDataPropsParams<
+export type GetMasterChefDataPropsParams<T extends Abi> = GetDataPropsParams<
   T,
   MasterChefContractPositionDataProps,
   MasterChefContractPositionDefinition
 >;
 
-export type GetMasterChefTokenBalancesParams<T extends Contract> = GetTokenBalancesParams<
+export type GetMasterChefTokenBalancesParams<T extends Abi> = GetTokenBalancesParams<
   T,
   MasterChefContractPositionDataProps
 >;
 
 export abstract class MasterChefTemplateContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
   V extends MasterChefContractPositionDataProps = MasterChefContractPositionDataProps,
 > extends ContractPositionTemplatePositionFetcher<T, V, MasterChefContractPositionDefinition> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
@@ -58,14 +60,18 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   }
 
   abstract chefAddress: string;
-  abstract getPoolLength(contract: T): Promise<BigNumberish>;
+  abstract getPoolLength(contract: GetContractReturnType<T, PublicClient>): Promise<BigNumberish>;
 
   // Tokens
-  abstract getStakedTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
-  abstract getRewardTokenAddress(
-    contract: T,
+  abstract getStakedTokenAddress(
+    contract: GetContractReturnType<T, PublicClient>,
     poolIndex: number,
-    multicall: IMulticallWrapper,
+    multicall: ViemMulticallDataLoader,
+  ): Promise<string>;
+  abstract getRewardTokenAddress(
+    contract: GetContractReturnType<T, PublicClient>,
+    poolIndex: number,
+    multicall: ViemMulticallDataLoader,
   ): Promise<string | string[]>;
 
   // APY
@@ -93,7 +99,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
     const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex, multicall).catch(
       err => {
-        if (isMulticallUnderlyingError(err)) return null;
+        if (isViemMulticallUnderlyingError(err)) return null;
         throw err;
       },
     );
@@ -116,8 +122,8 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   async getReserve({ contractPosition, multicall }: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
+    const stakedTokenContract = this.appToolkit.globalViemContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([contractPosition.address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     return reserve;
   }

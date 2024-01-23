@@ -3,11 +3,17 @@ import { ethers } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
-import { IqContractFactory, IqHiiq } from '../contracts';
+import { IqViemContractFactory } from '../contracts';
+import { IqHiiq } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTemplatePositionFetcher<IqHiiq> {
@@ -15,12 +21,12 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IqContractFactory) protected readonly iqContractFactory: IqContractFactory,
+    @Inject(IqViemContractFactory) protected readonly iqContractFactory: IqViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IqHiiq {
+  getContract(address: string) {
     return this.iqContractFactory.iqHiiq({ address, network: this.network });
   }
 
@@ -38,20 +44,20 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
     ];
   }
 
-  async getLabel() {
-    return `HiIQ Lock`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<IqHiiq>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getDataProps(_params: GetDataPropsParams<IqHiiq>) {
     const defaultDataProps = await super.getDataProps(_params);
     const { contract } = _params;
-    const totalHiIQ = await contract.totalHiIQSupplyStored();
+    const totalHiIQ = await contract.read.totalHiIQSupplyStored();
     const totalHiIQSupply = ethers.utils.formatUnits(totalHiIQ);
     return { ...defaultDataProps, totalHiIQSupply };
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<IqHiiq>) {
-    const earned = await contract.earned(address);
+    const earned = await contract.read.earned([address]);
     return [earned];
   }
 }

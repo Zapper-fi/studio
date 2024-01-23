@@ -1,9 +1,7 @@
-import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 import { getTimeDayAgo } from './kyberswap-elastic.liquidity.utils';
@@ -41,8 +39,6 @@ export const GET_POOL_INFOS = gql`
 `;
 
 export class KyberswapElasticApyDataLoader {
-  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
-
   getLoader({ subgraphUrl, blockSubgraphUrl }: { subgraphUrl: string; blockSubgraphUrl: string }) {
     const dataLoaderOptions = { cache: true, maxBatchSize: 1000 };
     return new DataLoader<string, number>(async (addresses: string[]) => {

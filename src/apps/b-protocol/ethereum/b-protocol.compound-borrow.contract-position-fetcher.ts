@@ -8,14 +8,15 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { CompoundContractFactory } from '~apps/compound/contracts';
+import { CompoundViemContractFactory } from '~apps/compound/contracts';
 import {
   GetTokenDefinitionsParams,
   GetDataPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { BProtocolCompoundComptroller, BProtocolCompoundToken, BProtocolContractFactory } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
+import { BProtocolCompoundComptroller, BProtocolCompoundToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -27,8 +28,8 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
-    @Inject(CompoundContractFactory) protected readonly compoundContractFactory: CompoundContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly contractFactory: BProtocolViemContractFactory,
+    @Inject(CompoundViemContractFactory) protected readonly compoundContractFactory: CompoundViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -42,52 +43,52 @@ export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends Comp
   }
 
   async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
-    const cTokenAddresses = await contract.getAllMarkets();
-    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
+    const cTokenAddresses = await contract.read.getAllMarkets().then(v => [...v]);
+    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.read.c2b([cTokenAddress])));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<BProtocolCompoundToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({
     contract,
     multicall,
   }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    const cTokenAddress = await contract.cToken();
+    const cTokenAddress = await contract.read.cToken();
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)
-      .borrowRatePerBlock()
+      .read.borrowRatePerBlock()
       .catch(() => 0);
   }
 
   async getCash({ contract, multicall }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    const cTokenAddress = await contract.cToken();
+    const cTokenAddress = await contract.read.cToken();
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall
       .wrap(cToken)
-      .getCash()
+      .read.getCash()
       .catch(() => 0);
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({
     address,
     contract,
   }: GetTokenBalancesParams<BProtocolCompoundToken, CompoundBorrowTokenDataProps>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 }

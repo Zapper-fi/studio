@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import dayjs from 'dayjs';
+import dayjs, { unix } from 'dayjs';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { ArborFinanceContractFactory, ArborFinanceBondToken } from '../contracts';
+import { ArborFinanceViemContractFactory } from '../contracts';
+import { ArborFinanceBondToken } from '../contracts/viem';
 import { BONDS_QUERY, BondHolders } from '../graphql';
 
 export type ArborFinanceBondTokenDefinition = {
@@ -31,12 +32,12 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ArborFinanceContractFactory) protected readonly contractFactory: ArborFinanceContractFactory,
+    @Inject(ArborFinanceViemContractFactory) protected readonly contractFactory: ArborFinanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ArborFinanceBondToken {
+  getContract(address: string) {
     return this.contractFactory.arborFinanceBondToken({ address, network: this.network });
   }
 
@@ -58,13 +59,13 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<ArborFinanceBondToken>) {
-    return [{ address: await contract.collateralToken(), network: this.network }];
+    return [{ address: await contract.read.collateralToken(), network: this.network }];
   }
 
   async getPricePerShare({
     definition,
   }: GetPricePerShareParams<ArborFinanceBondToken, DefaultAppTokenDataProps, ArborFinanceBondTokenDefinition>) {
-    const m = dayjs.unix(definition.maturityDate);
+    const m = unix(definition.maturityDate);
     const date = dayjs(new Date());
     const yearsUntilMaturity = m.diff(date, 'year', true);
     const ytm = 1 / definition.clearingPrice - 1;

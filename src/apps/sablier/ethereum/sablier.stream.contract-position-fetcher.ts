@@ -6,7 +6,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -14,7 +14,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
-import { SablierContractFactory, SablierStream } from '../contracts';
+import { SablierViemContractFactory } from '../contracts';
+import { SablierStream } from '../contracts/viem';
 
 export type SablierStreamContractPositionDataProps = {
   deposited: number;
@@ -36,7 +37,7 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SablierContractFactory) protected readonly contractFactory: SablierContractFactory,
+    @Inject(SablierViemContractFactory) protected readonly contractFactory: SablierViemContractFactory,
     @Inject(SablierStreamApiClient) protected readonly apiClient: SablierStreamApiClient,
   ) {
     super(appToolkit);
@@ -48,7 +49,7 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
     return tokens.map(v => ({ address: streamAddress, tokenAddress: v }));
   }
 
-  getContract(address: string): SablierStream {
+  getContract(address: string) {
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 
@@ -73,7 +74,7 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const streams = await this.apiClient.getStreams(address, this.network);
     if (streams.length === 0) return [];
 
@@ -90,8 +91,8 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
 
     const maybeRawStreams = await Promise.all(
       streams.map(async ({ streamId }) => {
-        const rawStream = await sablierStream.getStream(streamId).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+        const rawStream = await sablierStream.read.getStream([BigInt(streamId)]).catch(err => {
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
 
@@ -101,32 +102,37 @@ export class EthereumSablierStreamContractPositionFetcher extends CustomContract
     );
 
     const rawStreams = compact(maybeRawStreams);
-    const underlyingAddresses = rawStreams.map(({ tokenAddress }) => ({
+    const underlyingAddresses = rawStreams.map(data => ({
       network: this.network,
-      address: tokenAddress.toLowerCase(),
+      address: data[3].toLowerCase(),
     }));
 
     const tokenDependencies = await tokenLoader.getMany(underlyingAddresses).then(deps => compact(deps));
 
     const positions = await Promise.all(
       rawStreams.map(async stream => {
-        const streamBalanceRaw = await sablierStream.balanceOf(stream.streamId, address).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+        const tokenAddress = stream[3].toLowerCase();
+        const remainingBalanceData = stream[6];
+        const depositData = stream[2];
+        const recipientAddress = stream[1].toLowerCase();
+
+        const streamBalanceRaw = await sablierStream.read.balanceOf([BigInt(stream.streamId), address]).catch(err => {
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         });
         if (!streamBalanceRaw) return null;
 
-        const token = tokenDependencies.find(t => t.address === stream.tokenAddress.toLowerCase());
+        const token = tokenDependencies.find(t => t.address === tokenAddress.toLowerCase());
         if (!token) return null;
 
-        const remainingRaw = stream.remainingBalance.toString();
-        const depositRaw = stream.deposit.toString();
+        const remainingRaw = remainingBalanceData.toString();
+        const depositRaw = depositData.toString();
         const balanceRaw = streamBalanceRaw.toString();
 
         const deposited = Number(depositRaw) / 10 ** token.decimals;
         const remaining = Number(remainingRaw) / 10 ** token.decimals;
         const tokenBalance = drillBalance(token, balanceRaw);
-        const isRecipient = stream.recipient.toLowerCase() === address;
+        const isRecipient = recipientAddress === address;
 
         const position: ContractPositionBalance<SablierStreamContractPositionDataProps> = {
           type: ContractType.POSITION,

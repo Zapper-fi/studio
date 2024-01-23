@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { MaplePoolDefinitionResolver } from '../common/maple.pool.definition-resolver';
-import { MapleContractFactory, MaplePool } from '../contracts';
+import { MapleViemContractFactory } from '../contracts';
+import { MaplePool } from '../contracts/viem';
 
 export type MaplePoolTokenDefinition = {
   address: string;
@@ -31,13 +32,13 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MapleContractFactory) protected readonly contractFactory: MapleContractFactory,
+    @Inject(MapleViemContractFactory) protected readonly contractFactory: MapleViemContractFactory,
     @Inject(MaplePoolDefinitionResolver) protected readonly maplePoolDefinitionResolver: MaplePoolDefinitionResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): MaplePool {
+  getContract(address: string) {
     return this.contractFactory.maplePool({ network: this.network, address });
   }
 
@@ -50,7 +51,7 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MaplePool>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -58,8 +59,8 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
     appToken,
   }: GetPricePerShareParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {
     const [totalAssetsRaw, unrealizedLossesRaw] = await Promise.all([
-      contract.totalAssets(),
-      contract.unrealizedLosses(),
+      contract.read.totalAssets(),
+      contract.read.unrealizedLosses(),
     ]);
 
     const totalAssets = Number(totalAssetsRaw) / 10 ** appToken.decimals;

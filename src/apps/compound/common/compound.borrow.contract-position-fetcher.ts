@@ -1,4 +1,5 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -8,7 +9,7 @@ import {
   buildStringDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -30,17 +31,17 @@ export type CompoundBorrowTokenDataProps = {
   symbol: string;
 };
 
-export type GetMarketsParams<S> = GetDefinitionsParams & {
-  contract: S;
+export type GetMarketsParams<S extends Abi> = GetDefinitionsParams & {
+  contract: GetContractReturnType<S, PublicClient>;
 };
 
 export abstract class CompoundBorrowContractPositionFetcher<
-  R extends Contract,
-  S extends Contract,
+  R extends Abi,
+  S extends Abi,
 > extends ContractPositionTemplatePositionFetcher<R, CompoundBorrowTokenDataProps> {
   abstract comptrollerAddress: string;
-  abstract getCompoundCTokenContract(address: string): R;
-  abstract getCompoundComptrollerContract(address: string): S;
+  abstract getCompoundCTokenContract(address: string): GetContractReturnType<R, PublicClient>;
+  abstract getCompoundComptrollerContract(address: string): GetContractReturnType<S, PublicClient>;
 
   abstract getMarkets(params: GetMarketsParams<S>): Promise<string[]>;
   abstract getUnderlyingAddress(params: GetTokenDefinitionsParams<R>): Promise<string>;
@@ -51,7 +52,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
   abstract getCTokenDecimals(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<number>;
   abstract getBorrowBalance(params: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getCompoundCTokenContract(address);
   }
 
@@ -64,7 +65,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
   async getTokenDefinitions(params: GetTokenDefinitionsParams<R>): Promise<UnderlyingTokenDefinition[] | null> {
     const underlyingAddressRaw = await this.getUnderlyingAddress(params).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
-      if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+      if (isViemMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
     });
 
@@ -124,11 +125,11 @@ export abstract class CompoundBorrowContractPositionFetcher<
     const [underlyingToken] = params.contractPosition.tokens;
 
     const multicall = params.multicall;
-    const erc20 = this.appToolkit.globalContracts.erc20({
+    const erc20 = this.appToolkit.globalViemContracts.erc20({
       address: params.contractPosition.address,
       network: this.network,
     });
-    const symbol = await multicall.wrap(erc20).symbol();
+    const symbol = await multicall.wrap(erc20).read.symbol();
 
     const [decimals, supplyRaw, pricePerShare, apy, cashRaw, exchangeRate] = await Promise.all([
       this.getCTokenDecimals(params),
@@ -136,7 +137,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
       this.getPricePerShare(params),
       this.getApy(params),
       this.getCash(params).catch(e => {
-        if (isMulticallUnderlyingError(e)) return 0;
+        if (isViemMulticallUnderlyingError(e)) return 0;
         throw e;
       }),
       this.getPricePerShare(params),

@@ -4,9 +4,10 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
 
-import { RaftContractFactory, RaftToken } from '../contracts';
+import { RaftViemContractFactory } from '../contracts';
+import { RaftToken } from '../contracts/viem';
 
-export abstract class EthereumRaftDebtTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
+export abstract class RaftDebtTokenFetcher extends AppTokenTemplatePositionFetcher<RaftToken> {
   abstract collateral: string;
   abstract stablecoin: string;
   abstract positionManagerAddress: string;
@@ -15,12 +16,12 @@ export abstract class EthereumRaftDebtTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RaftContractFactory) protected readonly contractFactory: RaftContractFactory,
+    @Inject(RaftViemContractFactory) protected readonly contractFactory: RaftViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RaftToken {
+  getContract(address: string) {
     return this.contractFactory.raftToken({ address, network: this.network });
   }
 
@@ -29,7 +30,7 @@ export abstract class EthereumRaftDebtTokenFetcher extends AppTokenTemplatePosit
       address: this.positionManagerAddress,
       network: this.network,
     });
-    return [await positionManager.raftDebtToken(this.collateral)];
+    return [await positionManager.read.raftDebtToken([this.collateral])];
   }
 
   async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {
@@ -37,8 +38,8 @@ export abstract class EthereumRaftDebtTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPricePerShare({ contract }): Promise<number[]> {
-    const precision = Number(await contract.INDEX_PRECISION());
-    const index = Number(await contract.currentIndex());
+    const precision = Number(await contract.read.INDEX_PRECISION());
+    const index = Number(await contract.read.currentIndex());
     return [index / precision];
   }
 }

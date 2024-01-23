@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { SushiswapBentobox, SushiswapBentoboxContractFactory } from '../contracts';
+import { SushiswapBentoboxViemContractFactory } from '../contracts';
+import { SushiswapBentobox } from '../contracts/viem';
 
 import { SushiswapBentoboxVaultTokensResolver } from './sushiswap-bentobox.vault-tokens-resolver';
 
@@ -26,7 +27,8 @@ export abstract class SushiswapBentoboxVaultContractPositionFetcher extends Cont
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SushiswapBentoboxContractFactory) private readonly contractFactory: SushiswapBentoboxContractFactory,
+    @Inject(SushiswapBentoboxViemContractFactory)
+    private readonly contractFactory: SushiswapBentoboxViemContractFactory,
     @Inject(SushiswapBentoboxVaultTokensResolver)
     private readonly vaultTokenResolver: SushiswapBentoboxVaultTokensResolver,
   ) {
@@ -58,7 +60,7 @@ export abstract class SushiswapBentoboxVaultContractPositionFetcher extends Cont
     ];
   }
 
-  getContract(address: string): SushiswapBentobox {
+  getContract(address: string) {
     return this.contractFactory.sushiswapBentobox({ network: this.network, address });
   }
 
@@ -72,8 +74,8 @@ export abstract class SushiswapBentoboxVaultContractPositionFetcher extends Cont
     contractPosition,
   }: GetTokenBalancesParams<SushiswapBentobox>): Promise<BigNumberish[]> {
     const token = contractPosition.tokens[0].address;
-    const share = await contract.balanceOf(token, address);
-    const amount = await contract.toAmount(token, share, false);
+    const share = await contract.read.balanceOf([token, address]);
+    const amount = await contract.read.toAmount([token, share, false]);
 
     return [amount];
   }

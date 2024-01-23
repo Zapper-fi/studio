@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
-import DataLoader from 'dataloader';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -10,7 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -23,7 +23,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { CurveContractFactory, CurveTricryptoPool } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveTricryptoPool } from '../contracts/viem';
 
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
@@ -32,39 +33,37 @@ export type CurvePoolTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveCoinAddressesParams<T extends Contract> = {
-  contract: T;
+export type ResolveCoinAddressesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   tokenAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveReservesParams<T extends Contract> = {
-  contract: T;
+export type ResolveReservesParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   tokenAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class CurvePoolDynamicV2TokenFetcher<T extends Abi> extends AppTokenTemplatePositionFetcher<
   CurveTricryptoPool,
   CurvePoolTokenDataProps
 > {
-  volumeDataLoader: DataLoader<string, number>;
-
   abstract factoryAddress: string;
   blacklistedTokenAddresses: string[] = [];
 
-  abstract resolveFactory(address: string): T;
+  abstract resolveFactory(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
   abstract resolveCoinAddresses(params: ResolveCoinAddressesParams<T>): Promise<string[]>;
@@ -72,19 +71,17 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
     @Inject(CurveVolumeDataLoader) protected readonly curveVolumeDataLoader: CurveVolumeDataLoader,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CurveTricryptoPool {
+  getContract(address: string) {
     return this.contractFactory.curveTricryptoPool({ address, network: this.network });
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
-
     const contract = multicall.wrap(this.resolveFactory(this.factoryAddress));
     const poolCount = await this.resolvePoolCount({ contract, multicall });
     const poolRange = range(0, Number(poolCount));
@@ -137,16 +134,11 @@ export abstract class CurvePoolDynamicV2TokenFetcher<T extends Contract> extends
   async getDataProps(params: GetDataPropsParams<CurveTricryptoPool, CurvePoolTokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
 
-    const { contract, definition } = params;
+    const { contract } = params;
+    const feeRaw = await contract.read.fee().catch(() => 0);
+    const fee = Number(feeRaw) / 10 ** 10;
 
-    const fees = await contract.fee();
-    const fee = Number(fees) / 10 ** 8;
-
-    const volume = await this.volumeDataLoader.load(definition.address);
-    const feeVolume = fee * volume;
-    const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
-
-    return { ...defaultDataProps, fee, volume, apy };
+    return { ...defaultDataProps, fee };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<CurveTricryptoPool, CurvePoolTokenDataProps>) {

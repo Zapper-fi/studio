@@ -4,6 +4,7 @@ import { compact } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -16,7 +17,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { DopexSsovV3DefinitionsResolver } from '../common/dopex.ssov-v3.definition-resolver';
-import { DopexContractFactory, DopexOptionToken } from '../contracts';
+import { DopexViemContractFactory } from '../contracts';
+import { DopexOptionToken } from '../contracts/viem';
 
 export type SsovV3OptionAppTokenDefinition = {
   address: string;
@@ -33,13 +35,13 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+    @Inject(DopexViemContractFactory) protected readonly contractFactory: DopexViemContractFactory,
     @Inject(DopexSsovV3DefinitionsResolver) protected readonly ssovDefinitionResolver: DopexSsovV3DefinitionsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): DopexOptionToken {
+  getContract(address: string) {
     return this.contractFactory.dopexOptionToken({ address, network: this.network });
   }
 
@@ -50,16 +52,16 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
       addresses.map(async address => {
         const ssovV3Contract = this.contractFactory.dopexSsovV3({ address, network: this.network });
         const [epoch, collateralTokenAddressRaw] = await Promise.all([
-          multicall.wrap(ssovV3Contract).currentEpoch(),
-          multicall.wrap(ssovV3Contract).collateralToken(),
+          multicall.wrap(ssovV3Contract).read.currentEpoch(),
+          multicall.wrap(ssovV3Contract).read.collateralToken(),
         ]);
-        const epochData = await multicall.wrap(ssovV3Contract).getEpochData(epoch);
+        const epochData = await multicall.wrap(ssovV3Contract).read.getEpochData([BigInt(epoch)]);
 
         const strikesRaw = epochData.strikes;
 
         return await Promise.all(
           strikesRaw.map(async strike => {
-            const epochStrikeDate = await multicall.wrap(ssovV3Contract).getEpochStrikeData(epoch, strike);
+            const epochStrikeDate = await multicall.wrap(ssovV3Contract).read.getEpochStrikeData([epoch, strike]);
             const strikeTokenAddress = epochStrikeDate.strikeToken.toLowerCase();
             const collateralTokenAddress = collateralTokenAddressRaw.toLowerCase();
 
@@ -67,7 +69,7 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
               address: strikeTokenAddress,
               network: this.network,
             });
-            const isExpired = await multicall.wrap(strikeToken).hasExpired();
+            const isExpired = await multicall.wrap(strikeToken).read.hasExpired();
             if (isExpired) return null;
 
             return { address: strikeTokenAddress, collateralTokenAddress };
@@ -90,15 +92,21 @@ export class ArbitrumDopexSsovV3OptionTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getLabel({ appToken, contract }: GetDisplayPropsParams<DopexOptionToken>) {
-    const [isPut, strikeRaw] = await Promise.all([contract.isPut(), contract.strike()]);
+    const [isPut, strikeRaw] = await Promise.all([contract.read.isPut(), contract.read.strike()]);
     const optionType = isPut ? 'PUT' : 'CALL';
     const strike = Number(strikeRaw) / 10 ** 8;
     return `${optionType} - ${getLabelFromToken(appToken.tokens[0])} - ${strike}$`;
   }
 
   async getPrice({ appToken, contract }: GetPriceParams<DopexOptionToken>): Promise<number> {
-    const optionValueRaw = await contract.optionValue();
-    return Number(optionValueRaw) / 10 ** appToken.decimals;
+    const optionValueRaw = await contract.read.optionValue().catch(err => {
+      if (isViemMulticallUnderlyingError(err)) return BigInt(0);
+      throw err;
+    });
+
+    const optionValue = Number(optionValueRaw);
+
+    return optionValue !== 0 ? optionValue / 10 ** appToken.decimals : 0;
   }
 
   async getPricePerShare() {

@@ -12,7 +12,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { ConvexContractFactory, ConvexDepositToken } from '../contracts';
+import { ConvexViemContractFactory } from '../contracts';
+import { ConvexDepositToken } from '../contracts/viem';
 
 type ConvexDepositTokenDefinition = {
   address: string;
@@ -28,12 +29,12 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
+    @Inject(ConvexViemContractFactory) protected readonly contractFactory: ConvexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexDepositToken {
+  getContract(address: string) {
     return this.contractFactory.convexDepositToken({ address, network: this.network });
   }
 
@@ -43,13 +44,13 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
       network: this.network,
     });
 
-    const poolsCount = await multicall.wrap(depositContract).poolLength();
+    const poolsCount = await multicall.wrap(depositContract).read.poolLength();
     const poolsRange = range(0, Number(poolsCount));
 
     return Promise.all(
       poolsRange.flatMap(async poolIndex => {
-        const poolInfo = await depositContract.poolInfo(poolIndex);
-        return { address: poolInfo.rewards.toLowerCase(), poolIndex };
+        const poolInfo = await depositContract.read.poolInfo([BigInt(poolIndex)]);
+        return { address: poolInfo[2].toLowerCase(), poolIndex };
       }),
     );
   }
@@ -66,8 +67,8 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
       network: this.network,
     });
 
-    const poolInfo = await depositContract.poolInfo(definition.poolIndex);
-    return [{ address: poolInfo.lptoken, network: this.network }];
+    const poolInfo = await depositContract.read.poolInfo([BigInt(definition.poolIndex)]);
+    return [{ address: poolInfo[0], network: this.network }];
   }
 
   async getPricePerShare() {

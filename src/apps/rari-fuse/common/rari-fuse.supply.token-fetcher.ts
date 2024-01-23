@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -17,6 +17,7 @@ import {
   GetDisplayPropsParams,
   GetDefinitionsParams,
   DefaultAppTokenDataProps,
+  GetAddressesParams,
 } from '~position/template/app-token.template.types';
 
 export type RariFuseSupplyTokenDataProps = DefaultAppTokenDataProps & {
@@ -31,25 +32,28 @@ export type RariFuseSupplyTokenDefinition = {
 };
 
 export abstract class RariFuseSupplyTokenFetcher<
-  T extends Contract,
-  V extends Contract,
-  R extends Contract,
-  S extends Contract,
+  T extends Abi,
+  V extends Abi,
+  R extends Abi,
+  S extends Abi,
 > extends AppTokenTemplatePositionFetcher<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition> {
   abstract poolDirectoryAddress: string;
   abstract lensAddress: string;
 
-  abstract getPoolDirectoryContract(address: string): T;
-  abstract getComptrollerContract(address: string): V;
-  abstract getTokenContract(address: string): R;
-  abstract getLensContract(address: string): S;
+  abstract getPoolDirectoryContract(address: string): GetContractReturnType<T, PublicClient>;
+  abstract getComptrollerContract(address: string): GetContractReturnType<V, PublicClient>;
+  abstract getTokenContract(address: string): GetContractReturnType<R, PublicClient>;
+  abstract getLensContract(address: string): GetContractReturnType<S, PublicClient>;
 
-  abstract getPools(contract: T): Promise<{ name: string; comptroller: string }[]>;
-  abstract getMarketTokenAddresses(contract: V): Promise<string[]>;
-  abstract getUnderlyingTokenAddress(contract: R): Promise<string>;
-  abstract getExchangeRateCurrent(contract: R): Promise<BigNumberish>;
-  abstract getSupplyRateRaw(contract: R): Promise<BigNumberish>;
-  abstract getPoolsBySupplier(address: string, contract: S): Promise<[BigNumber[], { comptroller: string }[]]>;
+  abstract getPools(contract: GetContractReturnType<T, PublicClient>): Promise<{ name: string; comptroller: string }[]>;
+  abstract getMarketTokenAddresses(contract: GetContractReturnType<V, PublicClient>): Promise<string[]>;
+  abstract getUnderlyingTokenAddress(contract: GetContractReturnType<R, PublicClient>): Promise<string>;
+  abstract getExchangeRateCurrent(contract: GetContractReturnType<R, PublicClient>): Promise<BigNumberish>;
+  abstract getSupplyRateRaw(contract: GetContractReturnType<R, PublicClient>): Promise<BigNumberish>;
+  abstract getPoolsBySupplier(
+    address: string,
+    contract: GetContractReturnType<S, PublicClient>,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]>;
 
   minLiquidity = 0;
 
@@ -57,7 +61,7 @@ export abstract class RariFuseSupplyTokenFetcher<
     super(appToolkit);
   }
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getTokenContract(address);
   }
 
@@ -81,7 +85,7 @@ export abstract class RariFuseSupplyTokenFetcher<
     return definitions.flat();
   }
 
-  async getAddresses({ definitions }: { multicall: IMulticallWrapper; definitions: RariFuseSupplyTokenDefinition[] }) {
+  async getAddresses({ definitions }: GetAddressesParams<RariFuseSupplyTokenDefinition>) {
     return definitions.map(v => v.address);
   }
 
@@ -94,7 +98,7 @@ export abstract class RariFuseSupplyTokenFetcher<
     appToken,
   }: GetPricePerShareParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
     const supplyRateRaw = await this.getExchangeRateCurrent(contract).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
 
@@ -147,10 +151,10 @@ export abstract class RariFuseSupplyTokenFetcher<
 
   async getRawBalances(address: string): Promise<RawTokenBalance[]> {
     const lens = this.getLensContract(this.lensAddress);
-    const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
-    const participatedComptrollers = poolsBySupplier[1].map(t => t.comptroller.toLowerCase());
+    const [, comptrollers] = await this.getPoolsBySupplier(address, lens);
+    const participatedComptrollers = comptrollers.map(t => t.comptroller.toLowerCase());
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions<RariFuseSupplyTokenDataProps>({
       appId: this.appId,
       network: this.network,
@@ -162,11 +166,7 @@ export abstract class RariFuseSupplyTokenFetcher<
         .filter(v => participatedComptrollers.includes(v.dataProps.comptroller))
         .map(async appToken => {
           const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-
-          return {
-            key: this.appToolkit.getPositionKey(appToken),
-            balance: balanceRaw.toString(),
-          };
+          return { key: this.appToolkit.getPositionKey(appToken), balance: balanceRaw.toString() };
         }),
     );
   }

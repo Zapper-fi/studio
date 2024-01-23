@@ -21,7 +21,6 @@ export class PolynomialApiHelper {
   }
 
   @Cache({
-    instance: 'business',
     key: () => `studio:polynomial:vaults`,
     ttl: 15 * 60,
   })

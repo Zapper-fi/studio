@@ -9,44 +9,48 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BananoContractFactory, Benis } from '../contracts';
+import { BananoViemContractFactory } from '../contracts';
+import { Benis } from '../contracts/viem';
+import { BenisContract } from '../contracts/viem/Benis';
 
 export abstract class BananoFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<Benis> {
   rewardRateUnit = RewardRateUnit.SECOND;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BananoContractFactory) protected readonly contractFactory: BananoContractFactory,
+    @Inject(BananoViemContractFactory) protected readonly contractFactory: BananoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Benis {
+  getContract(address: string) {
     return this.contractFactory.benis({ address, network: this.network });
   }
 
-  async getPoolLength(contract: Benis): Promise<BigNumberish> {
-    return contract.poolLength();
+  async getPoolLength(contract: BenisContract): Promise<BigNumberish> {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: Benis, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.stakingToken);
+  async getStakedTokenAddress(contract: BenisContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: Benis): Promise<string> {
-    return contract.wban();
+  async getRewardTokenAddress(contract: BenisContract): Promise<string> {
+    return contract.read.wban();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.wbanPerSecond();
+    const now = Date.now();
+    const endTime = (await contract.read.endTime()) * 1_000;
+    return endTime < now ? 0 : contract.read.wbanPerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<Benis>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[4]);
   }
 
   async getStakedTokenBalance({
@@ -54,7 +58,7 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<Benis>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -62,6 +66,6 @@ export abstract class BananoFarmContractPositionFetcher extends MasterChefTempla
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<Benis>): Promise<BigNumberish> {
-    return contract.pendingWBAN(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingWBAN([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

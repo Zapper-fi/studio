@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract, ethers } from 'ethers';
+import { BigNumber, BigNumberish, ethers } from 'ethers';
 import { range } from 'lodash';
-import moment from 'moment';
+import { duration } from 'moment';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -18,7 +19,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { CurveContractFactory, CurveGauge } from '../contracts';
+import { CurveViemContractFactory } from '../contracts';
+import { CurveGauge } from '../contracts/viem';
 
 export enum GaugeType {
   SINGLE = 'single',
@@ -43,37 +45,37 @@ export type CurvePoolGaugeDefinition = {
   gaugeType: GaugeType;
 };
 
-export type ResolvePoolCountParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCountParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveSwapAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveSwapAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   poolIndex: number;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveTokenAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveTokenAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
-export type ResolveGaugeAddressParams<T extends Contract> = {
-  contract: T;
+export type ResolveGaugeAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
   swapAddress: string;
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
 export abstract class CurvePoolGaugeContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<CurveGauge, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition> {
   abstract registryAddress: string;
   abstract crvTokenAddress: string;
   abstract controllerAddress: string;
 
-  abstract resolveRegistry(address: string): T;
+  abstract resolveRegistry(address: string): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
   abstract resolveSwapAddress(params: ResolveSwapAddressParams<T>): Promise<string>;
   abstract resolveTokenAddress(params: ResolveTokenAddressParams<T>): Promise<string>;
@@ -81,12 +83,12 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveViemContractFactory) protected readonly contractFactory: CurveViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CurveGauge {
+  getContract(address: string) {
     return this.contractFactory.curveGauge({ address, network: this.network });
   }
 
@@ -145,14 +147,16 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     // Legacy "double" gauge supports one extra reward token
     if (definition.gaugeType === GaugeType.DOUBLE) {
       const doubleGauge = this.contractFactory.curveDoubleGauge({ address, network: this.network });
-      const rewardTokenAddress = await multicall.wrap(doubleGauge).rewarded_token();
+      const rewardTokenAddress = await multicall.wrap(doubleGauge).read.rewarded_token();
       definitions.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress, network: this.network });
     }
 
     // Modern "n" gauges supports multiple extra tokens
     if ([GaugeType.GAUGE_V4, GaugeType.N_GAUGE].includes(definition.gaugeType)) {
       const nGauge = this.contractFactory.curveNGauge({ address, network: this.network });
-      const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => multicall.wrap(nGauge).reward_tokens(i)));
+      const rewardTokenAddresses = await Promise.all(
+        range(0, 4).map(i => multicall.wrap(nGauge).read.reward_tokens([BigInt(i)])),
+      );
       const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
       filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));
     }
@@ -175,8 +179,8 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
     // Derive liquidity as the amount of the staked token held by the gauge contract
-    const stakedTokenContract = this.contractFactory.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(address);
+    const stakedTokenContract = this.appToolkit.globalViemContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     const liquidity = reserve * stakedToken.price;
     const gaugeType = definition.gaugeType;
@@ -187,15 +191,15 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
       network: this.network,
     });
 
-    const inflationRateRaw = await contract.inflation_rate();
-    const workingSupplyRaw = await contract.working_supply();
-    const relativeWeightRaw = await multicall.wrap(controller)['gauge_relative_weight(address)'](address);
+    const inflationRateRaw = await contract.read.inflation_rate();
+    const workingSupplyRaw = await contract.read.working_supply();
+    const relativeWeightRaw = await multicall.wrap(controller).read.gauge_relative_weight([address]);
 
     const inflationRate = Number(inflationRateRaw) / 10 ** 18;
     const workingSupply = Number(workingSupplyRaw) / 10 ** 18;
     const relativeWeight = Number(relativeWeightRaw) / 10 ** 18;
 
-    const secondsPerYear = moment.duration(1, 'year').asSeconds();
+    const secondsPerYear = duration(1, 'year').asSeconds();
     const ratePerSecond = (inflationRate * relativeWeight * 0.4) / workingSupply;
     const apy = ((ratePerSecond * secondsPerYear) / stakedToken.price) * rewardTokens[0].price * 100;
     const isActive = Number(inflationRate) > 0;
@@ -216,25 +220,27 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     multicall,
   }: GetTokenBalancesParams<CurveGauge, CurvePoolGaugeDataProps>): Promise<BigNumberish[]> {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    const balances = [await contract.balanceOf(address), await contract.claimable_tokens(address)];
+    const balances = [await contract.read.balanceOf([address]), await contract.read.claimable_tokens([address])];
 
     // Legacy "double" gauge supports one extra reward token
     if (contractPosition.dataProps.gaugeType === GaugeType.DOUBLE && rewardTokens.length > 1) {
       const doubleGauge = this.contractFactory.curveDoubleGauge(contractPosition);
       const [secondaryRewardBalanceTotal, secondaryRewardBalanceClaimed] = await Promise.all([
-        multicall.wrap(doubleGauge).claimable_reward(address),
-        multicall.wrap(doubleGauge).claimed_rewards_for(address),
+        multicall.wrap(doubleGauge).read.claimable_reward([address]),
+        multicall.wrap(doubleGauge).read.claimed_rewards_for([address]),
       ]);
 
-      const secondaryRewardBalance = secondaryRewardBalanceTotal.sub(secondaryRewardBalanceClaimed);
-      balances.push(secondaryRewardBalance);
+      const secondaryRewardBalance = BigNumber.from(secondaryRewardBalanceTotal)
+        .sub(secondaryRewardBalanceClaimed)
+        .toString();
+      balances.push(BigInt(secondaryRewardBalance));
     }
 
     // Modern "n" gauges supports multiple extra tokens. Call the read function for "n" gauge
     if (contractPosition.dataProps.gaugeType === GaugeType.N_GAUGE) {
       const nGauge = this.contractFactory.curveNGauge(contractPosition);
       const rewardTokenBalances = await Promise.all(
-        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).claimable_reward(address, t.address)),
+        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).read.claimable_reward([address, t.address])),
       );
       balances.push(...rewardTokenBalances);
     }
@@ -243,7 +249,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     if (contractPosition.dataProps.gaugeType === GaugeType.GAUGE_V4) {
       const nGauge = this.contractFactory.curveGaugeV2(contractPosition);
       const rewardTokenBalances = await Promise.all(
-        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).claimable_reward_write(address, t.address)),
+        rewardTokens.slice(1).map(t => multicall.wrap(nGauge).read.claimable_reward_write([address, t.address])),
       );
       balances.push(...rewardTokenBalances);
     }

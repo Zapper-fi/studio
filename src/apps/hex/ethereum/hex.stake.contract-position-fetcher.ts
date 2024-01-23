@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { Hex, HexContractFactory } from '../contracts';
+import { HexViemContractFactory } from '../contracts';
+import { Hex } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumHexStakeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Hex> {
@@ -24,12 +25,12 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HexContractFactory) protected readonly contractFactory: HexContractFactory,
+    @Inject(HexViemContractFactory) protected readonly contractFactory: HexViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Hex {
+  getContract(address: string) {
     return this.contractFactory.hex({ address, network: this.network });
   }
 
@@ -50,35 +51,37 @@ export class EthereumHexStakeContractPositionFetcher extends ContractPositionTem
     const hexToken = contractPosition.tokens.find(isSupplied)!;
 
     const [stakedAndUnstakedSupply, unstakedSupply, currentDay] = await Promise.all([
-      contract.allocatedSupply(),
-      contract.totalSupply(),
-      contract.currentDay(),
+      contract.read.allocatedSupply(),
+      contract.read.totalSupply(),
+      contract.read.currentDay(),
     ]);
 
-    const stakedSupply = Number(stakedAndUnstakedSupply.toBigInt() - unstakedSupply.toBigInt());
+    const stakedSupply = Number(stakedAndUnstakedSupply - unstakedSupply);
     const liquidity = (stakedSupply / 10 ** hexToken.decimals) * hexToken.price;
 
     // HEX Average APR is the latest daily payout annualized divided by total amount staked
     const [latestDailyData] = await Promise.all([
       // Need to use day - 1 as data is only available for previous day
-      contract.dailyData(currentDay.toNumber() - 1),
+      contract.read.dailyData([currentDay - BigInt(1)]),
     ]);
 
-    const apy = (Number(latestDailyData.dayPayoutTotal) / stakedSupply) * 100 * 365;
+    const apy = (Number(latestDailyData[0]) / stakedSupply) * 100 * 365;
 
     return { liquidity, apy };
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Hex>) {
-    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Hex, DefaultDataProps>) {
-    const stakeCount = await contract.stakeCount(address);
-    if (stakeCount.isZero()) return [0];
+    const stakeCount = await contract.read.stakeCount([address]);
+    if (Number(stakeCount) === 0) return [0];
 
-    const allStakes = await Promise.all(range(0, +stakeCount).map(i => contract.stakeLists(address, i)));
-    const totalStaked = allStakes.reduce((acc, v) => acc.add(v.stakedHearts), BigNumber.from(0));
+    const allStakes = await Promise.all(
+      range(0, Number(stakeCount)).map(i => contract.read.stakeLists([address, BigInt(i)])),
+    );
+    const totalStaked = allStakes.reduce((acc, v) => acc.add(v[1]), BigNumber.from(0));
     return [totalStaked.toString()];
   }
 }

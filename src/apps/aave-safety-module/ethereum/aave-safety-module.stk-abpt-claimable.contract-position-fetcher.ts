@@ -7,7 +7,8 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { AaveSafetyModuleContractFactory, AaveStkAbpt } from '../contracts';
+import { AaveSafetyModuleViemContractFactory } from '../contracts';
+import { AaveStkAbpt } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumAaveSafetyModuleStkAbptClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AaveStkAbpt> {
@@ -15,12 +16,13 @@ export class EthereumAaveSafetyModuleStkAbptClaimableContractPositionFetcher ext
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveSafetyModuleContractFactory) protected readonly contractFactory: AaveSafetyModuleContractFactory,
+    @Inject(AaveSafetyModuleViemContractFactory)
+    protected readonly contractFactory: AaveSafetyModuleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AaveStkAbpt {
+  getContract(address: string) {
     return this.contractFactory.aaveStkAbpt({ address, network: this.network });
   }
 
@@ -39,11 +41,11 @@ export class EthereumAaveSafetyModuleStkAbptClaimableContractPositionFetcher ext
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<AaveStkAbpt>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<AaveStkAbpt>) {
-    const rewardBalance = await contract.getTotalRewardsBalance(address);
+    const rewardBalance = await contract.read.getTotalRewardsBalance([address]);
     return [rewardBalance];
   }
 }

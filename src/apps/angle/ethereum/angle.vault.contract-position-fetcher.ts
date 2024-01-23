@@ -1,102 +1,86 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, utils } from 'ethers';
-import { compact, sumBy } from 'lodash';
+import { BigNumberish } from 'ethers';
+import { sum } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps } from '~position/display.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { isBorrowed, isSupplied } from '~position/position.utils';
-import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
-import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleVaultManager } from '../contracts';
-
-export type AngleVaultDefinition = {
-  address: string;
-  collateral: string;
-  stablecoin: string;
-};
+import { AnglePositionResolver } from '../common/angle.position-resolver';
+import { AngleViemContractFactory } from '../contracts';
+import { AngleVaultManager } from '../contracts/viem';
 
 @PositionTemplate()
-export class EthereumAngleVaultsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
-  AngleVaultManager,
-  DefaultDataProps,
-  AngleVaultDefinition
-> {
+export class EthereumAngleVaultsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AngleVaultManager> {
   groupLabel = 'Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AngleContractFactory) protected readonly contractFactory: AngleContractFactory,
-    @Inject(AngleApiHelper) protected readonly angleApiHelper: AngleApiHelper,
+    @Inject(AngleViemContractFactory) protected readonly contractFactory: AngleViemContractFactory,
+    @Inject(AnglePositionResolver) protected readonly anglePositionResolver: AnglePositionResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AngleVaultManager {
+  getContract(address: string) {
     return this.contractFactory.angleVaultManager({ address, network: this.network });
   }
 
-  async getDefinitions() {
-    const vaultManagers = Object.values(await this.angleApiHelper.getVaultManagers(this.network));
-    return vaultManagers;
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    const vaultAddresses = await this.anglePositionResolver.getVaultManagers(this.network);
+    return vaultAddresses.map(address => {
+      return {
+        address,
+      };
+    });
   }
 
-  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<AngleVaultManager, AngleVaultDefinition>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<AngleVaultManager>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.collateral, network: this.network },
-      { metaType: MetaType.BORROWED, address: definition.stablecoin, network: this.network },
+      { metaType: MetaType.SUPPLIED, address: await contract.read.collateral(), network: this.network },
+      { metaType: MetaType.BORROWED, address: await contract.read.stablecoin(), network: this.network },
     ];
   }
 
-  async getLabel({
-    contractPosition,
-  }: GetDisplayPropsParams<AngleVaultManager, DefaultDataProps, AngleVaultDefinition>): Promise<string> {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<AngleVaultManager>): Promise<string> {
     return `${getLabelFromToken(contractPosition.tokens[0])} - ${getLabelFromToken(contractPosition.tokens[1])}`;
   }
 
-  async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
-    throw new Error('Method not implemented.');
-  }
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+  }: GetTokenBalancesParams<AngleVaultManager>): Promise<BigNumberish[]> {
+    const userBalanceCount = await contract.read.balanceOf([address]);
 
-  async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const contractPositions = await this.appToolkit.getAppContractPositions({
-      appId: this.appId,
-      groupIds: [this.groupId],
-      network: this.network,
-    });
+    if (Number(userBalanceCount) < 1) return [0, 0];
 
-    const vaults = Object.values(await this.angleApiHelper.getUserVaults(address, this.network));
+    const vaultIds = Object.values(await this.anglePositionResolver.getVaultIds(address, this.network));
 
-    const balances = vaults.map(vault => {
-      const contractPosition = contractPositions.find(v => v.address.toLowerCase() === vault.address.toLowerCase());
-      if (!contractPosition) return null;
+    const balances = await Promise.all(
+      vaultIds.map(async vaultId => {
+        const [collateralData, vaultDebt] = await Promise.all([
+          contract.read.vaultData([BigInt(vaultId)]),
+          contract.read.getVaultDebt([BigInt(vaultId)]),
+        ]);
 
-      const collateralToken = contractPosition!.tokens.find(isSupplied)!;
-      const borrowedToken = contractPosition!.tokens.find(isBorrowed)!;
+        return {
+          supplied: collateralData[0],
+          borrowed: vaultDebt,
+        };
+      }),
+    );
 
-      const collateral = utils.parseUnits(vault.collateralAmount.toString(), collateralToken.decimals);
-      const debt = utils.parseUnits(vault.debt.toString(), borrowedToken.decimals);
+    const supplied = sum(balances.map(x => Number(x.supplied)));
+    const borrowed = sum(balances.map(x => Number(x.borrowed)));
 
-      const tokens = [
-        drillBalance(collateralToken, collateral.toString()),
-        drillBalance(borrowedToken, debt.toString(), { isDebt: true }),
-      ];
-
-      const balanceUSD = sumBy(tokens, t => t.balanceUSD);
-
-      return {
-        ...contractPosition,
-        balanceUSD,
-        tokens,
-      };
-    });
-
-    return compact(balances);
+    return [supplied, borrowed];
   }
 }

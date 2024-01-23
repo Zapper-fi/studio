@@ -5,7 +5,7 @@ import { generateAppModule } from '../generators/generate-app-module';
 import { promptAppId, promptAppName, promptAppNetworks } from '../prompts';
 import { strings } from '../strings';
 
-import { generateContractFactory } from './generate-contract-factory';
+import { generateViemContractFactory } from './generate-contract-factory/generate-viem-contract-factory';
 
 export default class CreateApp extends Command {
   static description = 'Creates the starting point for an app integration';
@@ -27,7 +27,7 @@ export default class CreateApp extends Command {
     }
 
     await generateAppModule(appId);
-    await generateContractFactory(`./src/apps/${appId}`);
+    await generateViemContractFactory(`./src/apps/${appId}`);
 
     this.log(`Done! Your app ${appName} has been generated`);
   }

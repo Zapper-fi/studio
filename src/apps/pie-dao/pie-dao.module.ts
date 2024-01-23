@@ -2,17 +2,15 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { PieDaoContractFactory } from './contracts';
-import { EthereumPieDaoEDoughTokenFetcher } from './ethereum/pie-dao.e-dough.token-fetcher';
+import { PieDaoViemContractFactory } from './contracts';
 import { EthereumPieDaoFarmMasterChefContractPositionFetcher } from './ethereum/pie-dao.farm-master-chef.contract-position-fetcher';
 import { EthereumPieDaoFarmSingleStakingContractPositionFetcher } from './ethereum/pie-dao.farm-single-staking.contract-position-fetcher';
 import { EthereumPieDaoVotingEscrowContractPositionFether } from './ethereum/pie-dao.voting-escrow.contract-position-fetcher';
 
 @Module({
   providers: [
-    PieDaoContractFactory,
+    PieDaoViemContractFactory,
     // Ethereum
-    EthereumPieDaoEDoughTokenFetcher,
     EthereumPieDaoFarmSingleStakingContractPositionFetcher,
     EthereumPieDaoFarmMasterChefContractPositionFetcher,
     EthereumPieDaoVotingEscrowContractPositionFether,

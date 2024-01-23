@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -17,7 +17,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BalancerPool, BalancerV2ContractFactory } from '../contracts';
+import { BalancerV2ViemContractFactory } from '../contracts';
+import { BalancerPool } from '../contracts/viem';
 
 import { PoolType } from './balancer-v2.pool-types';
 
@@ -62,7 +63,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
+    @Inject(BalancerV2ViemContractFactory) protected readonly contractFactory: BalancerV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -95,31 +96,31 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
   }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>) {
     // Logic derived from https://github.com/balancer-labs/frontend-v2/blob/f22a7bf8f7adfbf1158178322ce9aa12034b5894/src/services/balancer/contracts/contracts/vault.ts#L86-L93
     if (
-      definition.poolType === 'StablePhantom' ||
-      definition.poolType === 'AaveLinear' ||
-      definition.poolType === 'Linear'
+      definition.poolType === PoolType.StablePhantom ||
+      definition.poolType === PoolType.AaveLinear ||
+      definition.poolType === PoolType.Linear
     ) {
       const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getVirtualSupply();
+      return multicall.wrap(phantomPoolContract).read.getVirtualSupply();
     }
 
-    if (definition.poolType === 'ComposableStable') {
+    if (definition.poolType === PoolType.ComposableStable) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getActualSupply();
+      return multicall.wrap(phantomPoolContract).read.getActualSupply();
     }
 
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getUnderlyingTokenDefinitions({ address, contract, multicall }: GetUnderlyingTokensParams<BalancerPool>) {
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
-    const poolId = await contract.getPoolId();
-    const poolTokens = await vault.getPoolTokens(poolId);
+    const poolId = await contract.read.getPoolId();
+    const [tokens] = await vault.read.getPoolTokens([poolId]);
 
     // "Phantom" pools emit their own token address as an underlying token; filter this out
-    const underlyingTokenAddresses = poolTokens.tokens.map(v => v.toLowerCase());
+    const underlyingTokenAddresses = tokens.map(v => v.toLowerCase());
     const redundantIndex = underlyingTokenAddresses.findIndex(v => v === address);
     const tokenAddresses = underlyingTokenAddresses.filter((_, i) => i !== redundantIndex);
     return tokenAddresses.map(address => ({ address, network: this.network }));
@@ -129,13 +130,13 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
-    const poolId = await contract.getPoolId();
-    const poolTokens = await vault.getPoolTokens(poolId);
+    const poolId = await contract.read.getPoolId();
+    const [tokens, balances] = await vault.read.getPoolTokens([poolId]);
 
     // "Phantom" pools emit their own token address as an underlying token; filter this out
-    const underlyingTokenAddresses = poolTokens.tokens.map(v => v.toLowerCase());
+    const underlyingTokenAddresses = tokens.map(v => v.toLowerCase());
     const redundantIndex = underlyingTokenAddresses.findIndex(v => v === appToken.address);
-    const reservesRaw = poolTokens.balances.filter((_, i) => i !== redundantIndex);
+    const reservesRaw = balances.filter((_, i) => i !== redundantIndex);
     const reserves = reservesRaw.map((v, i) => Number(v) / 10 ** appToken.tokens[i].decimals);
     return reserves.map(r => r / appToken.supply);
   }
@@ -147,13 +148,13 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
 
     const { appToken, contract, definition } = params;
     const [poolId, feeRaw, weightsRaw] = await Promise.all([
-      contract.getPoolId(),
-      contract.getSwapFeePercentage().catch(err => {
-        if (isMulticallUnderlyingError(err)) return '100000000000000000';
+      contract.read.getPoolId(),
+      contract.read.getSwapFeePercentage().catch(err => {
+        if (isViemMulticallUnderlyingError(err)) return '100000000000000000';
         throw err;
       }),
-      contract.getNormalizedWeights().catch(err => {
-        if (isMulticallUnderlyingError(err)) return [];
+      contract.read.getNormalizedWeights().catch(err => {
+        if (isViemMulticallUnderlyingError(err)) return [];
         throw err;
       }),
     ]);

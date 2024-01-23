@@ -3,9 +3,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
+import { PublicClient } from 'viem';
 
-import { AppService } from '~app/app.service';
 import { ContractFactory } from '~contract';
+import { ContractViemContractFactory } from '~contract/contracts';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { DefaultDataProps } from '~position/display.interface';
@@ -23,8 +24,9 @@ import { IAppToolkit } from './app-toolkit.interface';
 @Injectable()
 export class AppToolkit implements IAppToolkit {
   private readonly contractFactory: ContractFactory;
+  private readonly viemContractFactory: ContractViemContractFactory;
+
   constructor(
-    @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(PositionKeyService)
@@ -36,20 +38,34 @@ export class AppToolkit implements IAppToolkit {
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
+    this.viemContractFactory = new ContractViemContractFactory((network: Network) =>
+      this.networkProviderService.getViemProvider(network),
+    );
   }
 
   // Network Related
-
   get globalContracts() {
     return this.contractFactory;
+  }
+
+  get globalViemContracts() {
+    return this.viemContractFactory;
   }
 
   getNetworkProvider(network: Network) {
     return this.networkProviderService.getProvider(network);
   }
 
+  getViemNetworkProvider(network: Network): PublicClient {
+    return this.networkProviderService.getViemProvider(network);
+  }
+
   getMulticall(network: Network) {
     return this.multicallService.getMulticall(network);
+  }
+
+  getViemMulticall(network: Network) {
+    return this.multicallService.getViemMulticall(network);
   }
 
   // Base Tokens
@@ -65,10 +81,6 @@ export class AppToolkit implements IAppToolkit {
   // Positions
 
   getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
-    return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
-  }
-
-  getAppTokenPositionsFromDatabase<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
   }
 

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -12,7 +12,9 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { OriginDollarContractFactory, Wousd } from '../contracts';
+import { OriginDollarGovernanceViemContractFactory } from '../contracts';
+import { Wousd } from '../contracts/viem';
+
 const oneEther = ethers.constants.WeiPerEther;
 const format = v => ethers.utils.formatUnits(v);
 
@@ -22,12 +24,13 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OriginDollarContractFactory) private readonly contractFactory: OriginDollarContractFactory,
+    @Inject(OriginDollarGovernanceViemContractFactory)
+    private readonly contractFactory: OriginDollarGovernanceViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Wousd {
+  getContract(address: string) {
     return this.contractFactory.wousd({ network: this.network, address });
   }
 
@@ -36,30 +39,30 @@ export class EthereumOriginDollarGovernanceWousdTokenFetcher extends AppTokenTem
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Wousd>) {
-    return [{ address: await contract.asset(), network: this.network }];
+    return [{ address: await contract.read.asset(), network: this.network }];
   }
 
   async getPrice({ appToken, contract, multicall }: GetPriceParams<Wousd>): Promise<number> {
-    const supplyRaw = await contract.totalSupply();
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const supplyRaw = await contract.read.totalSupply();
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       network: this.network,
       address: appToken.tokens[0].address,
     });
-    const underlyingBalance = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);
-    const ratio = parseFloat(format(supplyRaw.mul(oneEther).div(underlyingBalance)));
+    const underlyingBalance = await multicall.wrap(underlyingTokenContract).read.balanceOf([appToken.address]);
+    const ratio = parseFloat(format(BigNumber.from(supplyRaw).mul(oneEther).div(underlyingBalance)));
     const price = appToken.tokens[0].price / ratio;
 
     return price;
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<Wousd>) {
-    const supplyRaw = await contract.totalSupply();
-    const underlyingTokenContract = this.contractFactory.erc20({
+    const supplyRaw = await contract.read.totalSupply();
+    const underlyingTokenContract = this.appToolkit.globalViemContracts.erc20({
       network: this.network,
       address: appToken.tokens[0].address,
     });
-    const underlyingBalance = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);
-    const ratio = parseFloat(format(supplyRaw.mul(oneEther).div(underlyingBalance)));
+    const underlyingBalance = await multicall.wrap(underlyingTokenContract).read.balanceOf([appToken.address]);
+    const ratio = parseFloat(format(BigNumber.from(supplyRaw).mul(oneEther).div(underlyingBalance)));
 
     return [1 / ratio];
   }

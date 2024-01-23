@@ -8,13 +8,11 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
-
-import { OpenleveragePoolAPYHelper } from './openleverage-pool.apy-helper';
+import { OpenleverageViemContractFactory } from '../contracts';
+import { OpenleverageLpool } from '../contracts/viem';
 
 type OpenLeveragePoolsResponse = {
   pools: {
@@ -35,9 +33,7 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OpenleveragePoolAPYHelper)
-    private readonly openleveragePoolAPYHelper: OpenleveragePoolAPYHelper,
-    @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
+    @Inject(OpenleverageViemContractFactory) protected readonly contractFactory: OpenleverageViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -56,22 +52,16 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OpenleverageLpool>) {
-    const exchangeRateCurrentRaw = await contract.exchangeRateStored();
+    const exchangeRateCurrentRaw = await contract.read.exchangeRateStored();
     const exchangeRate = Number(exchangeRateCurrentRaw) / 10 ** 18;
     return [exchangeRate];
   }
 
-  async getApy({ appToken }: GetDataPropsParams<OpenleverageLpool>) {
-    const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
-    return (poolDetailMap[appToken.address]?.lendingYieldY || 0) * 100;
-  }
-
   async getLabel({ appToken }: GetDisplayPropsParams<OpenleverageLpool>) {
-    const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
-    return getLabelFromToken(appToken.tokens[0]) + '/' + poolDetailMap[appToken.address]?.token1Symbol;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

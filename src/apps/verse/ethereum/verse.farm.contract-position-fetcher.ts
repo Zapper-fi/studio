@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -16,7 +16,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { VerseContractFactory, VerseFarm } from '../contracts';
+import { VerseViemContractFactory } from '../contracts';
+import { VerseFarm } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VerseFarm> {
@@ -24,12 +25,12 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(VerseContractFactory) protected readonly contractFactory: VerseContractFactory,
+    @Inject(VerseViemContractFactory) protected readonly contractFactory: VerseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): VerseFarm {
+  getContract(address: string) {
     return this.contractFactory.verseFarm({ address, network: this.network });
   }
 
@@ -55,12 +56,12 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
   > {
     return [
       {
-        address: await contract.stakeToken(),
+        address: await contract.read.stakeToken(),
         metaType: MetaType.SUPPLIED,
         network: this.network,
       },
       {
-        address: await contract.rewardToken(),
+        address: await contract.read.rewardToken(),
         metaType: MetaType.CLAIMABLE,
         network: this.network,
       },
@@ -76,7 +77,7 @@ export class EthereumVerseFarmContractPositionFetcher extends ContractPositionTe
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
-    return [await contract.balanceOf(address), await contract.earned(address)];
+  }: GetTokenBalancesParams<VerseFarm, DefaultDataProps>): Promise<BigNumberish[]> {
+    return [await contract.read.balanceOf([address]), await contract.read.earned([address])];
   }
 }

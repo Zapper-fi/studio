@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { IdleContractFactory, IdleToken } from '../contracts';
+import { IdleViemContractFactory } from '../contracts';
+import { IdleToken } from '../contracts/viem';
 
 export type IdleBestYieldTokenDefinition = {
   address: string;
@@ -30,17 +31,17 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(IdleContractFactory) protected readonly contractFactory: IdleContractFactory,
+    @Inject(IdleViemContractFactory) protected readonly contractFactory: IdleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): IdleToken {
+  getContract(address: string) {
     return this.contractFactory.idleToken({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<IdleBestYieldTokenDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       groupIds: ['vault'],
@@ -50,10 +51,10 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
     const definitions = await Promise.all(
       appTokens.map(async appToken => {
         const idleTokenContract = this.contractFactory.idleToken({ address: appToken.address, network: this.network });
-        const isRiskAdjusted = await multicall.wrap(idleTokenContract).isRiskAdjusted();
+        const isRiskAdjusted = await multicall.wrap(idleTokenContract).read.isRiskAdjusted();
         if (isRiskAdjusted == true) return null;
 
-        const rewardTokenAddressesRaw = await multicall.wrap(idleTokenContract).getGovTokens();
+        const rewardTokenAddressesRaw = await multicall.wrap(idleTokenContract).read.getGovTokens();
         const rewardTokenAddresses = rewardTokenAddressesRaw.map(x => x.toLowerCase());
         return {
           address: appToken.address,
@@ -81,13 +82,13 @@ export class EthereumIdleBestYieldContractPositionFetcher extends ContractPositi
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<IdleToken>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<IdleToken>) {
     const [balanceRaw, rewardBalancesRaw] = await Promise.all([
-      contract.balanceOf(address),
-      contract.getGovTokensAmounts(address),
+      contract.read.balanceOf([address]),
+      contract.read.getGovTokensAmounts([address]),
     ]);
 
     return [balanceRaw, ...rewardBalancesRaw];

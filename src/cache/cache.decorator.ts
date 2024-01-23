@@ -6,18 +6,16 @@ type CacheKeyBuilder = (...args: any) => string;
 type CacheTtlBuilder = (...args: any) => number;
 
 export type CacheOptions = {
-  instance?: 'user' | 'business';
   key: string | CacheKeyBuilder;
   /** In seconds */
   ttl?: number | CacheTtlBuilder;
 };
 
-export const Cache = ({ key, ttl, instance }: CacheOptions) => {
+export const Cache = ({ key, ttl }: CacheOptions) => {
   return applyDecorators(
     SetMetadata(CACHE_DECORATOR, {
       key,
       ttl,
-      instance: instance || 'business',
     }),
   );
 };

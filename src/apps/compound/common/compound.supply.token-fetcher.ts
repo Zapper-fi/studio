@@ -1,4 +1,5 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -7,7 +8,7 @@ import {
   buildPercentageDisplayItem,
   buildStringDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { BalanceDisplayMode, DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -19,8 +20,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-export type GetMarketsParams<S> = GetAddressesParams & {
-  contract: S;
+export type GetMarketsParams<S extends Abi> = GetAddressesParams & {
+  contract: GetContractReturnType<S, PublicClient>;
 };
 
 export type CompoundSupplyTokenDataProps = DefaultAppTokenDataProps & {
@@ -28,22 +29,22 @@ export type CompoundSupplyTokenDataProps = DefaultAppTokenDataProps & {
 };
 
 export abstract class CompoundSupplyTokenFetcher<
-  R extends Contract,
-  S extends Contract,
+  R extends Abi,
+  S extends Abi,
 > extends AppTokenTemplatePositionFetcher<R> {
   protected isExchangeable = false;
 
   abstract comptrollerAddress: string;
 
-  abstract getCompoundCTokenContract(address: string): R;
-  abstract getCompoundComptrollerContract(address: string): S;
+  abstract getCompoundCTokenContract(address: string): GetContractReturnType<R, PublicClient>;
+  abstract getCompoundComptrollerContract(address: string): GetContractReturnType<S, PublicClient>;
 
   abstract getMarkets(params: GetMarketsParams<S>): Promise<string[]>;
   abstract getUnderlyingAddress(params: GetUnderlyingTokensParams<R>): Promise<string>;
   abstract getExchangeRate(params: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>): Promise<BigNumberish>;
   abstract getSupplyRate(params: GetDataPropsParams<R, CompoundSupplyTokenDataProps>): Promise<BigNumberish>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getCompoundCTokenContract(address);
   }
 
@@ -55,7 +56,7 @@ export abstract class CompoundSupplyTokenFetcher<
   async getUnderlyingTokenDefinitions(params: GetUnderlyingTokensParams<R>) {
     const underlyingAddressRaw = await this.getUnderlyingAddress(params).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
-      if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+      if (isViemMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
     });
 

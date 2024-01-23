@@ -306,7 +306,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '5227',
   },
   {
     name: 'get_virtual_price',
@@ -319,7 +318,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '1133537',
   },
   {
     name: 'calc_token_amount',
@@ -341,7 +339,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '4508776',
   },
   {
     name: 'add_liquidity',
@@ -358,7 +355,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '6954858',
   },
   {
     name: 'get_dy',
@@ -384,7 +380,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2673791',
   },
   {
     name: 'get_dy_underlying',
@@ -410,7 +405,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2673474',
   },
   {
     name: 'exchange',
@@ -435,7 +429,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '2818066',
   },
   {
     name: 'remove_liquidity',
@@ -452,7 +445,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '192846',
   },
   {
     name: 'remove_liquidity_imbalance',
@@ -469,7 +461,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '6951851',
   },
   {
     name: 'calc_withdraw_one_coin',
@@ -491,7 +482,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '1102',
   },
   {
     name: 'remove_liquidity_one_coin',
@@ -512,7 +502,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '4025523',
   },
   {
     name: 'ramp_A',
@@ -529,7 +518,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '151919',
   },
   {
     name: 'stop_ramp_A',
@@ -537,7 +525,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '148637',
   },
   {
     name: 'commit_new_fee',
@@ -554,7 +541,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '110461',
   },
   {
     name: 'apply_new_fee',
@@ -562,7 +548,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '97242',
   },
   {
     name: 'revert_new_parameters',
@@ -570,7 +555,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21895',
   },
   {
     name: 'commit_transfer_ownership',
@@ -583,7 +567,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '74572',
   },
   {
     name: 'apply_transfer_ownership',
@@ -591,7 +574,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '60710',
   },
   {
     name: 'revert_transfer_ownership',
@@ -599,7 +581,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21985',
   },
   {
     name: 'admin_balances',
@@ -617,7 +598,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '3481',
   },
   {
     name: 'withdraw_admin_fees',
@@ -625,7 +605,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '21502',
   },
   {
     name: 'donate_admin_fees',
@@ -633,7 +612,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '111389',
   },
   {
     name: 'kill_me',
@@ -641,7 +619,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '37998',
   },
   {
     name: 'unkill_me',
@@ -649,7 +626,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: '22135',
   },
   {
     name: 'coins',
@@ -667,7 +643,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2220',
   },
   {
     name: 'balances',
@@ -685,7 +660,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: '2250',
   },
   {
     name: 'fee',
@@ -698,7 +672,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2171',
   },
   {
     name: 'admin_fee',
@@ -711,7 +684,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2201',
   },
   {
     name: 'owner',
@@ -724,7 +696,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2231',
   },
   {
     name: 'initial_A',
@@ -737,7 +708,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2261',
   },
   {
     name: 'future_A',
@@ -750,7 +720,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2291',
   },
   {
     name: 'initial_A_time',
@@ -763,7 +732,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2321',
   },
   {
     name: 'future_A_time',
@@ -776,7 +744,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2351',
   },
   {
     name: 'admin_actions_deadline',
@@ -789,7 +756,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2381',
   },
   {
     name: 'transfer_ownership_deadline',
@@ -802,7 +768,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2411',
   },
   {
     name: 'future_fee',
@@ -815,7 +780,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2441',
   },
   {
     name: 'future_admin_fee',
@@ -828,7 +792,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2471',
   },
   {
     name: 'future_owner',
@@ -841,7 +804,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: '2501',
   },
 ];
 

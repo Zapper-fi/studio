@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import { BigNumberish } from 'ethers/lib/ethers';
 import { compact } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
@@ -28,7 +29,7 @@ import {
 import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
 export abstract class CustomContractPositionTemplatePositionFetcher<
-  T extends Contract,
+  T extends Abi,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
@@ -48,7 +49,7 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
   abstract getDefinitions(params: GetDefinitionsParams): Promise<R[]>;
 
   // 2. Get contract instance
-  abstract getContract(address: string): T;
+  abstract getContract(address: string): GetContractReturnType<T, PublicClient>;
 
   // 3. Get token definitions (supplied tokens, borrowed tokens, claimable tokens, etc.)
   abstract getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null>;
@@ -93,7 +94,7 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });

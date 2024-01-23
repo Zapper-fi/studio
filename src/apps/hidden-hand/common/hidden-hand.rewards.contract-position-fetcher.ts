@@ -1,5 +1,4 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { Contract } from 'ethers';
 import _, { sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -17,7 +16,8 @@ import {
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { NETWORK_IDS } from '~types';
 
-import { HiddenHandContractFactory, HiddenHandRewardDistributor } from '../contracts';
+import { HiddenHandViemContractFactory } from '../contracts';
+import { HiddenHandRewardDistributor } from '../contracts/viem';
 
 import { HiddenHandRewardsResolver, HiddenHandRewardsDefinition, PROTOCOLS } from './hidden-hand.rewards-resolver';
 
@@ -28,13 +28,13 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HiddenHandContractFactory) protected readonly contractFactory: HiddenHandContractFactory,
+    @Inject(HiddenHandViemContractFactory) protected readonly contractFactory: HiddenHandViemContractFactory,
     @Inject(HiddenHandRewardsResolver) protected readonly rewardsResolver: HiddenHandRewardsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): HiddenHandRewardDistributor {
+  getContract(address: string) {
     return this.contractFactory.hiddenHandRewardDistributor({ address, network: this.network });
   }
 
@@ -52,7 +52,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
   async getTokenDefinitions({
     address,
     contract,
-  }: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>): Promise<
+  }: GetTokenDefinitionsParams<HiddenHandRewardDistributor, DefaultContractPositionDefinition>): Promise<
     UnderlyingTokenDefinition[] | null
   > {
     const distribution = await this.rewardsResolver.getData();
@@ -67,7 +67,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     ) {
       vault = ZERO_ADDRESS;
     } else {
-      vault = (await contract.BRIBE_VAULT()).toLowerCase();
+      vault = (await contract.read.BRIBE_VAULT()).toLowerCase();
     }
 
     const marketEntry = Object.entries(protocols).find(
@@ -75,7 +75,7 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
     );
     const market = marketEntry ? marketEntry[0] : '';
 
-    if (!distribution?.hasOwnProperty(market)) return [];
+    if (!distribution[market]) return [];
 
     const claimableDistribution = distribution[market][neworkId] ?? {};
     const claimableTokens = Object.keys(claimableDistribution);
@@ -98,7 +98,11 @@ export abstract class HiddenHandRewardsContractPositionFetcher extends CustomCon
 
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<Contract, DefaultDataProps, HiddenHandRewardsDefinition>): Promise<string> {
+  }: GetDisplayPropsParams<
+    HiddenHandRewardDistributor,
+    DefaultDataProps,
+    HiddenHandRewardsDefinition
+  >): Promise<string> {
     return definition.name;
   }
 

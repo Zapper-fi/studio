@@ -20,7 +20,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { MakerContractFactory, MakerGemJoin } from '../contracts';
+import { MakerViemContractFactory } from '../contracts';
+import { MakerGemJoin } from '../contracts/viem';
 
 export type MakerVaultDefinition = {
   address: string;
@@ -46,7 +47,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MakerContractFactory) protected readonly contractFactory: MakerContractFactory,
+    @Inject(MakerViemContractFactory) protected readonly contractFactory: MakerViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -58,14 +59,14 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
   async getDefinitions({ multicall }: GetDefinitionsParams) {
     const ilkRegAddress = '0x5a464c28d19848f44199d003bef5ecc87d090f87';
     const ilkRegContract = this.contractFactory.makerIlkRegistry({ address: ilkRegAddress, network: this.network });
-    const numIlks = await ilkRegContract.count();
+    const numIlks = await ilkRegContract.read.count();
 
     const definitions = await Promise.all(
       range(0, Number(numIlks)).map(async ilkIndex => {
-        const ilk = await multicall.wrap(ilkRegContract).get(ilkIndex);
+        const ilk = await multicall.wrap(ilkRegContract).read.get([BigInt(ilkIndex)]);
         const [gem, join] = await Promise.all([
-          multicall.wrap(ilkRegContract).gem(ilk),
-          multicall.wrap(ilkRegContract).join(ilk),
+          multicall.wrap(ilkRegContract).read.gem([ilk]),
+          multicall.wrap(ilkRegContract).read.join([ilk]),
         ]);
 
         const ilkName = ethers.utils.parseBytes32String(ilk);
@@ -101,14 +102,14 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
     definition,
     multicall,
   }: GetDataPropsParams<MakerGemJoin, MakerVaultDataProps, MakerVaultDefinition>) {
-    const collateralTokenContract = this.contractFactory.erc20({
+    const collateralTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: definition.collateralTokenAddress,
       network: this.network,
     });
 
     const balanceRaw = await (definition.collateralTokenAddress === ZERO_ADDRESS
-      ? multicall.wrap(multicall.contract).getEthBalance(definition.address)
-      : multicall.wrap(collateralTokenContract).balanceOf(definition.address));
+      ? multicall.wrap(multicall.contract).read.getEthBalance([definition.address])
+      : multicall.wrap(collateralTokenContract).read.balanceOf([definition.address]));
 
     const collateralToken = contractPosition.tokens[0];
 
@@ -127,7 +128,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<MakerVaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<MakerVaultDataProps>({
       appId: this.appId,
       groupIds: [this.groupId],
@@ -140,7 +141,8 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
       address: proxyRegAddress,
       network: this.network,
     });
-    const proxyAddress = await proxyRegContract.proxies(address);
+
+    const proxyAddress = await proxyRegContract.read.proxies([address]);
     if (proxyAddress === ZERO_ADDRESS) return [];
 
     // Get the user's urn
@@ -152,16 +154,16 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
 
     // Retrieve all CDPs
     const cdps: number[] = [];
-    let next = await cdpManagerContract.first(proxyAddress).then(v => Number(v));
+    let next = await cdpManagerContract.read.first([proxyAddress]).then(v => Number(v));
     while (next !== 0) {
       cdps.push(next);
-      next = await cdpManagerContract.list(next).then(v => Number(v.next));
+      next = await cdpManagerContract.read.list([BigInt(next)]).then(v => Number(v[1]));
     }
 
     // Build balances across all CDPs
     const allPositions = await Promise.all(
       cdps.map(async cdp => {
-        const urn = await cdpManagerContract.urns(cdp);
+        const urn = await cdpManagerContract.read.urns([BigInt(cdp)]);
 
         // Gather balances
         const vatAddress = '0x35d1b3f3d7966a1dfe207aa4514c12a259a0492b';
@@ -169,7 +171,9 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
         const balances = await Promise.all(
           positions.map(async position => {
             const ilk = ethers.utils.formatBytes32String(position.dataProps.ilkName);
-            const { ink, art } = await multicall.wrap(vatContract).urns(ilk, urn.toLowerCase());
+            const [ink, art] = await multicall.wrap(vatContract).read.urns([ilk, urn.toLowerCase()]);
+            const ilks = await multicall.wrap(vatContract).read.ilks([ilk]);
+            const rate = new BigNumber(ilks[1].toString()).div(10 ** 27);
 
             const collateralToken = position.tokens.find(isSupplied);
             const debtToken = position.tokens.find(isBorrowed);
@@ -180,10 +184,10 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
               .div(10 ** 18)
               .times(10 ** collateralToken.decimals)
               .toFixed(0);
-            const debtRaw = new BigNumber(art.toString())
-              .div(10 ** 18)
-              .times(10 ** debtToken.decimals)
-              .toFixed(0);
+            const artRaw = new BigNumber(art.toString()).div(10 ** 18).times(10 ** debtToken.decimals);
+
+            const debtRaw = artRaw.times(rate).toFixed(0);
+
             const collateral = drillBalance(collateralToken, collateralRaw);
             const debt = drillBalance(debtToken, debtRaw, { isDebt: true });
             const tokens = [collateral, debt];

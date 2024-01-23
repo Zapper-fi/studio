@@ -12,7 +12,8 @@ import {
 
 import { isUnderlyingDenominated } from '../common/formatters';
 import { PolynomialApiHelper } from '../common/polynomial.api';
-import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
+import { PolynomialViemContractFactory } from '../contracts';
+import { PolynomialVaultToken } from '../contracts/viem';
 
 type PolynomialCallSellingVaultTokenDefinition = {
   address: string;
@@ -29,13 +30,13 @@ export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PolynomialContractFactory) protected readonly contractFactory: PolynomialContractFactory,
+    @Inject(PolynomialViemContractFactory) protected readonly contractFactory: PolynomialViemContractFactory,
     @Inject(PolynomialApiHelper) protected readonly apiHelper: PolynomialApiHelper,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PolynomialVaultToken {
+  getContract(address: string) {
     return this.contractFactory.polynomialVaultToken({ address, network: this.network });
   }
 
@@ -61,7 +62,7 @@ export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemp
       network: this.network,
     });
 
-    return [{ address: await multicall.wrap(vaultContract).UNDERLYING(), network: this.network }];
+    return [{ address: await multicall.wrap(vaultContract).read.UNDERLYING(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -78,7 +79,7 @@ export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemp
       network: this.network,
     });
 
-    const pricePerShareRaw = await multicall.wrap(vaultContract).getTokenPrice();
+    const pricePerShareRaw = await multicall.wrap(vaultContract).read.getTokenPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
 
     return [pricePerShare];

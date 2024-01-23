@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage, getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -13,7 +13,8 @@ import {
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
-import { DhedgeV2ContractFactory, DhedgeV2Token } from '../contracts';
+import { DhedgeV2ViemContractFactory } from '../contracts';
+import { DhedgeV2Token } from '../contracts/viem';
 
 const customImg = new Set<string>(['BEAR', 'BTCy', 'BULL', 'dSNX', 'USDy', 'mlETH', 'USDmny', 'dUSD']);
 
@@ -23,7 +24,7 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(DhedgeV2ContractFactory) protected readonly contractFactory: DhedgeV2ContractFactory,
+    @Inject(DhedgeV2ViemContractFactory) protected readonly contractFactory: DhedgeV2ViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -34,8 +35,8 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
 
   async getAddresses({ multicall }: GetAddressesParams) {
     const factory = this.contractFactory.dhedgeV2Factory({ address: this.factoryAddress, network: this.network });
-    const deployedFunds = await multicall.wrap(factory).getDeployedFunds();
-    return deployedFunds;
+    const deployedFunds = await multicall.wrap(factory).read.getDeployedFunds();
+    return [...deployedFunds];
   }
 
   async getUnderlyingTokenDefinitions() {
@@ -43,8 +44,8 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<DhedgeV2Token>) {
-    const pricePerShareRaw = await contract.tokenPrice().catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+    const pricePerShareRaw = await contract.read.tokenPrice().catch(err => {
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
     return [Number(pricePerShareRaw) / 10 ** 18];
@@ -55,7 +56,7 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<DhedgeV2Token>) {
-    return contract.name();
+    return contract.read.name();
   }
 
   async getImages({

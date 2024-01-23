@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -13,15 +12,14 @@ import {
   GetDisplayPropsParams,
   GetPriceParams,
 } from '~position/template/app-token.template.types';
-import { NETWORK_IDS } from '~types';
 
-import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
-import { PENDLE_V2_GRAPHQL_ENDPOINT, BACKEND_QUERIES } from '../pendle-v2.constant';
-import { MarketsQueryResponse } from '../pendle-v2.types';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendleYieldToken } from '../contracts/viem';
+
+import { PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 
 export type PendleV2YieldTokenDefinition = {
   address: string;
-  icon: string;
   name: string;
   price: number;
   expiry: string;
@@ -39,7 +37,8 @@ export abstract class PendleV2YieldTokenFetcher extends AppTokenTemplatePosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
+    @Inject(PendleV2ViemContractFactory) protected readonly pendleV2ContractFactory: PendleV2ViemContractFactory,
+    @Inject(PendleV2MarketDefinitionsResolver) protected readonly pendleV2Resolver: PendleV2MarketDefinitionsResolver,
   ) {
     super(appToolkit);
   }
@@ -49,17 +48,12 @@ export abstract class PendleV2YieldTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2YieldTokenDefinition[]> {
-    const marketsResponse = await gqlFetch<MarketsQueryResponse>({
-      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
-      query: BACKEND_QUERIES.getMarkets,
-      variables: { chainId: NETWORK_IDS[this.network] },
-    });
+    const marketsResponse = await this.pendleV2Resolver.getMarketDefinitions(this.network);
 
     const definitions = await Promise.all(
-      marketsResponse.markets.results.map(async market => {
+      marketsResponse.map(async market => {
         return {
           address: market.yt.address,
-          icon: market.yt.proIcon,
           name: market.yt.proName,
           price: market.yt.price.usd,
           expiry: market.expiry,
@@ -111,14 +105,6 @@ export abstract class PendleV2YieldTokenFetcher extends AppTokenTemplatePosition
     string | number | DollarDisplayItem | PercentageDisplayItem | undefined
   > {
     return moment(definition.expiry).format('MMM DD, YYYY');
-  }
-
-  async getImages({
-    definition,
-  }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<
-    string[]
-  > {
-    return [definition.icon];
   }
 
   async getDataProps(

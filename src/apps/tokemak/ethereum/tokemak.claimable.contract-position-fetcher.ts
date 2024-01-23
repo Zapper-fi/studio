@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { TokemakClaimableResolver } from '../common/tokemak.claimable.resolver';
-import { TokemakContractFactory, TokemakRewards } from '../contracts';
+import { TokemakViemContractFactory } from '../contracts';
+import { TokemakRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumTokemakClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TokemakRewards> {
@@ -21,7 +22,7 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(TokemakContractFactory) private readonly contractFactory: TokemakContractFactory,
+    @Inject(TokemakViemContractFactory) private readonly contractFactory: TokemakViemContractFactory,
     @Inject(TokemakClaimableResolver) private readonly claimableResolver: TokemakClaimableResolver,
   ) {
     super(appToolkit);
@@ -41,12 +42,12 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
     ];
   }
 
-  getContract(address: string): TokemakRewards {
+  getContract(address: string) {
     return this.contractFactory.tokemakRewards({ network: this.network, address });
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<TokemakRewards>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({
@@ -58,7 +59,9 @@ export class EthereumTokemakClaimableContractPositionFetcher extends ContractPos
 
     const { chainId, cycle, wallet, amount } = payload;
 
-    const claimableBalanceRaw = await contract.getClaimableAmount({ chainId, cycle, wallet, amount }).catch(() => 0);
+    const claimableBalanceRaw = await contract.read
+      .getClaimableAmount([{ chainId: BigInt(chainId), cycle: BigInt(cycle), wallet, amount: BigInt(amount) }])
+      .catch(() => 0);
 
     return [claimableBalanceRaw];
   }

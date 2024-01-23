@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -9,9 +10,9 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractFactory, Erc20 } from '~contract/contracts';
-import { IMulticallWrapper } from '~multicall';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { Erc20 } from '~contract/contracts/viem';
+import { ViemMulticallDataLoader } from '~multicall';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -35,44 +36,41 @@ export type CurvePoolDefinition = {
   isLegacy?: boolean;
 };
 
-export type ResolvePoolCoinAddressParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolCoinAddressParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
   index: number;
 };
 
-export type ResolvePoolReserveParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolReserveParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
   index: number;
 };
 
-export type ResolvePoolFeeParams<T extends Contract> = {
-  contract: T;
-  multicall: IMulticallWrapper;
+export type ResolvePoolFeeParams<T extends Abi> = {
+  contract: GetContractReturnType<T, PublicClient>;
+  multicall: ViemMulticallDataLoader;
 };
 
-export abstract class CurvePoolStaticTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class CurvePoolStaticTokenFetcher<T extends Abi> extends AppTokenTemplatePositionFetcher<
   Erc20,
   CurvePoolTokenDataProps,
   CurvePoolDefinition
 > {
   abstract poolDefinitions: CurvePoolDefinition[];
 
-  abstract resolvePoolContract(definition: CurvePoolDefinition): T;
+  abstract resolvePoolContract(definition: CurvePoolDefinition): GetContractReturnType<T, PublicClient>;
   abstract resolvePoolCoinAddress(opts: ResolvePoolCoinAddressParams<T>): Promise<string>;
   abstract resolvePoolReserve(opts: ResolvePoolReserveParams<T>): Promise<BigNumberish>;
   abstract resolvePoolFee(opts: ResolvePoolFeeParams<T>): Promise<BigNumberish>;
 
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ContractFactory) protected readonly contractFactory: ContractFactory,
-  ) {
+  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
 
-  getContract(address: string): Erc20 {
-    return this.contractFactory.erc20({ address, network: this.network });
+  getContract(address: string) {
+    return this.appToolkit.globalViemContracts.erc20({ address, network: this.network });
   }
 
   async getDefinitions() {
@@ -92,7 +90,7 @@ export abstract class CurvePoolStaticTokenFetcher<T extends Contract> extends Ap
     const coinAddressesRaw = await Promise.all(
       range(0, 4).map(index =>
         this.resolvePoolCoinAddress({ multicall, contract, index }).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
       ),

@@ -1,4 +1,5 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
@@ -12,14 +13,14 @@ import {
 } from './contract-position.template.types';
 
 export abstract class VotingEscrowTemplateContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<T> {
   abstract veTokenAddress: string;
-  abstract getEscrowContract(address: string): T;
+  abstract getEscrowContract(address: string): GetContractReturnType<T, PublicClient>;
   abstract getEscrowedTokenAddress(params: GetTokenDefinitionsParams<T>): Promise<string>;
   abstract getEscrowedTokenBalance(params: GetTokenBalancesParams<T>): Promise<BigNumberish>;
 
-  getContract(address: string): T {
+  getContract(address: string): GetContractReturnType<T, PublicClient> {
     return this.getEscrowContract(address);
   }
 

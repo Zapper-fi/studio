@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { HalofiContractFactory, HalofiAbi } from '../contracts';
+import { HalofiViemContractFactory } from '../contracts';
+import { HalofiAbi } from '../contracts/viem';
 
 import { HalofiGameGamesApiSource } from './halofi.game.games.api-source';
 
@@ -36,13 +37,13 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HalofiContractFactory) protected readonly contractFactory: HalofiContractFactory,
+    @Inject(HalofiViemContractFactory) protected readonly contractFactory: HalofiViemContractFactory,
     @Inject(HalofiGameGamesApiSource) protected readonly gamesApiSource: HalofiGameGamesApiSource,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): HalofiAbi {
+  getContract(address: string) {
     return this.contractFactory.halofiAbi({ address, network: this.network });
   }
 
@@ -82,7 +83,7 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
       groupIds: [this.groupId],
       network: this.network,
     });
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
@@ -90,17 +91,17 @@ export abstract class HalofiGameContractPositionFetcher extends CustomContractPo
           address: contractPosition.address,
           network: this.network,
         });
-        const player = await multicall.wrap(halofiContract).players(address);
+        const player = await multicall.wrap(halofiContract).read.players([address]);
 
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const balancesRaw: BigNumberish[] = [];
 
-        if (!player.withdrawn && stakedToken) {
-          const paidAmount = parseFloat(player.netAmountPaid.toString());
+        if (!player[0] && stakedToken) {
+          const paidAmount = parseFloat(player[7].toString());
           balancesRaw.push(paidAmount);
         }
 
-        const nonZeroBalancesRaw = balancesRaw.filter(balance => balance > 0);
+        const nonZeroBalancesRaw = balancesRaw.filter(balance => Number(balance) > 0);
         const allTokens = contractPosition.tokens.map((cp, idx) =>
           drillBalance(cp, nonZeroBalancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
         );

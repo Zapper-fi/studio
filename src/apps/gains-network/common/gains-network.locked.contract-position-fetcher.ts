@@ -13,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { GainsNetworkContractFactory, GainsNetworkGToken } from '../contracts';
+import { GainsNetworkViemContractFactory } from '../contracts';
+import { GainsNetworkGToken } from '../contracts/viem';
 
 export abstract class GainsNetworkLockedContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<GainsNetworkGToken> {
   groupLabel = 'Locked';
@@ -23,7 +24,7 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GainsNetworkContractFactory) protected readonly contractFactory: GainsNetworkContractFactory,
+    @Inject(GainsNetworkViemContractFactory) protected readonly contractFactory: GainsNetworkViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -42,12 +43,12 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
     ];
   }
 
-  getContract(address: string): GainsNetworkGToken {
+  getContract(address: string) {
     return this.contractFactory.gainsNetworkGToken({ network: this.network, address });
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<GainsNetworkGToken>): Promise<string> {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   getTokenBalancesPerPosition(): never {
@@ -55,7 +56,7 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const lockedDepositNftContract = this.contractFactory.gainsNetworkLockedDepositNft({
       address: this.gTokenLockedDepositAddress,
       network: this.network,
@@ -71,15 +72,17 @@ export abstract class GainsNetworkLockedContractPositionFetcher extends CustomCo
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(lockedDepositNftContract).balanceOf(address);
+    const numPositionsRaw = await multicall.wrap(lockedDepositNftContract).read.balanceOf([address]);
 
     const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index => {
-        const depositId = await multicall.wrap(lockedDepositNftContract).tokenOfOwnerByIndex(address, index);
+      range(0, Number(numPositionsRaw)).map(async index => {
+        const depositId = await multicall
+          .wrap(lockedDepositNftContract)
+          .read.tokenOfOwnerByIndex([address, BigInt(index)]);
 
-        const deposit = await multicall.wrap(gTokenContract).lockedDeposits(depositId);
+        const deposit = await multicall.wrap(gTokenContract).read.lockedDeposits([depositId]);
 
-        const depositAmount = drillBalance(contractPositions[0].tokens[0], deposit.shares.toString());
+        const depositAmount = drillBalance(contractPositions[0].tokens[0], deposit[1].toString());
 
         return {
           ...contractPositions[0],

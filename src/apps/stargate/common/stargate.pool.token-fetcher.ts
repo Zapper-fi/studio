@@ -11,12 +11,13 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { StargatePool, StargateContractFactory } from '../contracts';
+import { StargateViemContractFactory } from '../contracts';
+import { StargatePool } from '../contracts/viem';
 
 export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionFetcher<StargatePool> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+    @Inject(StargateViemContractFactory) protected readonly contractFactory: StargateViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -34,20 +35,20 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
       network: this.network,
     });
 
-    const numPools = await multicall.wrap(factory).allPoolsLength();
-    return Promise.all(range(0, Number(numPools)).map(pid => multicall.wrap(factory).allPools(pid)));
+    const numPools = await multicall.wrap(factory).read.allPoolsLength();
+    return Promise.all(range(0, Number(numPools)).map(pid => multicall.wrap(factory).read.allPools([BigInt(pid)])));
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StargatePool>) {
-    return [{ address: await contract.token(), network: this.network }];
+    return [{ address: await contract.read.token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<StargatePool, DefaultDataProps>) {
     const lpAmount = new BigNumber(10 ** appToken.tokens[0].decimals).toFixed(0);
     const [convertRate, localDecimalsRaw, pricePerShareRaw] = await Promise.all([
-      contract.convertRate(),
-      contract.localDecimals(),
-      contract.amountLPtoLD(lpAmount).catch(() => 0),
+      contract.read.convertRate(),
+      contract.read.localDecimals(),
+      contract.read.amountLPtoLD([BigInt(lpAmount)]).catch(() => 0),
     ]);
 
     const pricePerShare = this.useLocalDecimals

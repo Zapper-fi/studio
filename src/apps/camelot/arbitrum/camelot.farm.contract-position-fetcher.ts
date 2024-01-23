@@ -12,7 +12,8 @@ import { GetDefinitionsParams } from '~position/template/app-token.template.type
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { CamelotContractFactory, CamelotNftPool } from '../contracts';
+import { CamelotViemContractFactory } from '../contracts';
+import { CamelotNftPool } from '../contracts/viem';
 
 type CamelotFarmContractPositionDefinition = {
   address: string;
@@ -28,7 +29,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly contractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) protected readonly contractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -38,11 +39,11 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
       address: this.masterContractAddress,
       network: this.network,
     });
-    const poolLength = await multicall.wrap(masterContract).poolsLength();
+    const poolLength = await multicall.wrap(masterContract).read.poolsLength();
 
     const poolAddresses = await Promise.all(
       range(0, Number(poolLength)).map(async i => {
-        const poolAddressRaw = await multicall.wrap(masterContract).getPoolAddressByIndex(i);
+        const poolAddressRaw = await multicall.wrap(masterContract).read.getPoolAddressByIndex([BigInt(i)]);
         return poolAddressRaw.toLowerCase();
       }),
     );
@@ -50,8 +51,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
     const farmDefinitions = await Promise.all(
       poolAddresses.map(async address => {
         const nftPoolContract = this.contractFactory.camelotNftPool({ address, network: this.network });
-        const poolInfo = await multicall.wrap(nftPoolContract).getPoolInfo();
-        const { lpToken, grailToken, xGrailToken } = poolInfo;
+        const [lpToken, grailToken, xGrailToken] = await multicall.wrap(nftPoolContract).read.getPoolInfo();
 
         return {
           address,
@@ -81,12 +81,12 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
     ];
   }
 
-  getContract(address: string): CamelotNftPool {
+  getContract(address: string) {
     return this.contractFactory.camelotNftPool({ network: this.network, address });
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<CamelotNftPool>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   getTokenBalancesPerPosition(): never {
@@ -94,7 +94,7 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
@@ -109,23 +109,23 @@ export class ArbitrumCamelotFarmContractPositionFetcher extends CustomContractPo
           network: this.network,
         });
         const [numPositionsRaw, xGrailRewardsShareRaw] = await Promise.all([
-          multicall.wrap(nftPoolContract).balanceOf(address),
-          multicall.wrap(nftPoolContract).xGrailRewardsShare(),
+          multicall.wrap(nftPoolContract).read.balanceOf([address]),
+          multicall.wrap(nftPoolContract).read.xGrailRewardsShare(),
         ]);
 
         return await Promise.all(
           range(0, Number(numPositionsRaw)).map(async i => {
-            const tokenId = await multicall.wrap(nftPoolContract).tokenOfOwnerByIndex(address, i);
+            const tokenId = await multicall.wrap(nftPoolContract).read.tokenOfOwnerByIndex([address, BigInt(i)]);
             const [stakingPosition, rewardAmountsCombined] = await Promise.all([
-              multicall.wrap(nftPoolContract).getStakingPosition(tokenId),
-              multicall.wrap(nftPoolContract).pendingRewards(tokenId),
+              multicall.wrap(nftPoolContract).read.getStakingPosition([tokenId]),
+              multicall.wrap(nftPoolContract).read.pendingRewards([tokenId]),
             ]);
             const xGrailRewardsShare = Number(xGrailRewardsShareRaw) / 10 ** 4;
 
             const xGrailBalance = Number(rewardAmountsCombined) * xGrailRewardsShare;
             const grailBalance = Number(rewardAmountsCombined) - xGrailBalance;
 
-            const suppliedtAmount = drillBalance(contractPosition.tokens[0], stakingPosition.amount.toString());
+            const suppliedtAmount = drillBalance(contractPosition.tokens[0], stakingPosition[0].toString());
             const grailAmount = drillBalance(contractPosition.tokens[1], grailBalance.toString());
             const xGrailAmount = drillBalance(contractPosition.tokens[2], xGrailBalance.toString());
 

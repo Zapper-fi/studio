@@ -6,8 +6,9 @@ import {
   BalancerV2PoolTokenDefinition,
   BalancerV2PoolTokenFetcher,
 } from '~apps/balancer-v2/common/balancer-v2.pool.token-fetcher';
-import { BalancerPool } from '~apps/balancer-v2/contracts';
+import { BalancerPool } from '~apps/balancer-v2/contracts/viem';
 import { GetDisplayPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
+import { Network } from '~types';
 
 type GetPoolsResponse = {
   poolGetPools: {
@@ -22,9 +23,14 @@ type GetPoolsResponse = {
   }[];
 };
 
+const NETWORK_TO_CHAIN_CONSTANTS = {
+  [Network.FANTOM_OPERA_MAINNET]: 'FANTOM',
+  [Network.OPTIMISM_MAINNET]: 'OPTIMISM',
+};
+
 const GET_POOLS_QUERY = gql`
-  query {
-    poolGetPools(first: 1000, orderBy: totalLiquidity, orderDirection: desc) {
+  query GetPools($network: GqlChain!) {
+    poolGetPools(first: 1000, orderBy: totalLiquidity, orderDirection: desc, where: { chainIn: [$network] }) {
       id
       name
       address
@@ -45,6 +51,7 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
     const poolsResponse = await gqlFetch<GetPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_POOLS_QUERY,
+      variables: { network: NETWORK_TO_CHAIN_CONSTANTS[this.network] },
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -60,22 +67,21 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
     multicall,
   }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>) {
     // Logic derived from https://github.com/beethovenxfi/beethovenx-backend/blob/v2-main/modules/pool/lib/pool-on-chain-data.service.ts#L157-L172
-
     if (
       (definition.poolType === 'PHANTOM_STABLE' && this.composablePoolFactories.includes(definition.factory)) ||
       (definition.poolType === 'WEIGHTED' && this.weightedPoolV2Factories.includes(definition.factory))
     ) {
       const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getActualSupply();
+      return multicall.wrap(phantomPoolContract).read.getActualSupply();
     } else if (definition.poolType === 'LINEAR' || definition.poolType === 'PHANTOM_STABLE') {
       const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
-      return multicall.wrap(phantomPoolContract).getVirtualSupply();
+      return multicall.wrap(phantomPoolContract).read.getVirtualSupply();
     }
 
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<BalancerPool>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

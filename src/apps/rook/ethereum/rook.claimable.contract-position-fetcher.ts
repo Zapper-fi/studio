@@ -15,7 +15,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { RookContractFactory, RookLiquidityPoolDistributor } from '../contracts';
+import { RookViemContractFactory } from '../contracts';
+import { RookLiquidityPoolDistributor } from '../contracts/viem';
 
 type RewardOfLiquidityProviderResponse = {
   owner: string;
@@ -68,12 +69,12 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RookContractFactory) protected readonly contractFactory: RookContractFactory,
+    @Inject(RookViemContractFactory) protected readonly contractFactory: RookViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): RookLiquidityPoolDistributor {
+  getContract(address: string) {
     return this.contractFactory.rookLiquidityPoolDistributor({ address, network: this.network });
   }
 
@@ -92,7 +93,7 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<RookLiquidityPoolDistributor>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({
@@ -109,7 +110,7 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
       const earned = new BigNumber(earnedRaw, 16);
       if (earned.eq(0)) return [];
 
-      const claimedRaw = await contract.claimedAmount(address);
+      const claimedRaw = await contract.read.claimedAmount([address]);
       const claimed = new BigNumber(claimedRaw.toString());
       const claimableBalanceRaw = earned.minus(claimed).toFixed(0);
       return [claimableBalanceRaw];

@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { isArray, sum } from 'lodash';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -22,7 +23,7 @@ export type SingleStakingFarmDataProps = {
 };
 
 export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
   V extends SingleStakingFarmDataProps = SingleStakingFarmDataProps,
 > extends ContractPositionTemplatePositionFetcher<T, V> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
@@ -68,8 +69,8 @@ export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
 
   async getReserve({ contractPosition, multicall }: GetDataPropsParams<T, V>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
+    const stakedTokenContract = this.appToolkit.globalViemContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).read.balanceOf([contractPosition.address]);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
     return reserve;
   }

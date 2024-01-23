@@ -1,4 +1,5 @@
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import {
   buildDollarDisplayItem,
@@ -37,7 +38,7 @@ export type MorphoContractPositionDataProps = {
 };
 
 export abstract class MorphoSupplyContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<
   T,
   MorphoContractPositionDataProps,
@@ -47,7 +48,7 @@ export abstract class MorphoSupplyContractPositionFetcher<
     params: GetDataPropsParams<T, MorphoContractPositionDataProps, MorphoContractPositionDefinition>,
   ): Promise<MorphoContractPositionDataProps>;
 
-  abstract getContract(address: string): T;
+  abstract getContract(address: string): GetContractReturnType<T, PublicClient>;
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<T>): Promise<string> {
     return getLabelFromToken(contractPosition.tokens[0]);

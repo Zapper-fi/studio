@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
 import {
@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { QiDaoContractFactory, QiDaoVaultNft } from '../contracts';
+import { QiDaoViemContractFactory } from '../contracts';
+import { QiDaoVaultNft } from '../contracts/viem';
 
 type QiDaoVaultDataProps = {
   liquidity: number;
@@ -40,12 +41,12 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(QiDaoContractFactory) protected readonly contractFactory: QiDaoContractFactory,
+    @Inject(QiDaoViemContractFactory) protected readonly contractFactory: QiDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): QiDaoVaultNft {
+  getContract(address: string) {
     return this.contractFactory.qiDaoVaultNft({ address, network: this.network });
   }
 
@@ -62,16 +63,16 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
     const [collateralTokenAddressRaw, debtTokenAddressRaw] = await Promise.all([
       multicall
         .wrap(infoContract)
-        .collateral()
+        .read.collateral()
         .catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
       multicall
         .wrap(infoContract)
-        .mai()
+        .read.mai()
         .catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
+          if (isViemMulticallUnderlyingError(err)) return null;
           throw err;
         }),
     ]);
@@ -99,14 +100,14 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
   }: GetDataPropsParams<QiDaoVaultNft, QiDaoVaultDataProps, QiDaoVaultDefinition>): Promise<QiDaoVaultDataProps> {
     const vaultInfoAddress = definition.vaultInfoAddress;
     const collateralToken = contractPosition.tokens[0];
-    const collateralTokenContract = this.contractFactory.erc20({
+    const collateralTokenContract = this.appToolkit.globalViemContracts.erc20({
       address: collateralToken.address,
       network: this.network,
     });
 
     const reserveRaw = await (contractPosition.tokens[0].address === ZERO_ADDRESS
-      ? multicall.wrap(multicall.contract).getEthBalance(contractPosition.address)
-      : multicall.wrap(collateralTokenContract).balanceOf(contractPosition.address));
+      ? multicall.wrap(multicall.contract).read.getEthBalance([contractPosition.address])
+      : multicall.wrap(collateralTokenContract).read.balanceOf([contractPosition.address]));
 
     const reserve = Number(reserveRaw) / 10 ** collateralToken.decimals;
     const liquidity = reserve * collateralToken.price;
@@ -128,7 +129,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<QiDaoVaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<QiDaoVaultDataProps>({
       appId: this.appId,
       network: this.network,
@@ -147,18 +148,20 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
           network: this.network,
         });
 
-        const numOfVaults = await multicall.wrap(vaultNftContract).balanceOf(address).then(Number);
+        const numOfVaults = await multicall.wrap(vaultNftContract).read.balanceOf([address]).then(Number);
         if (numOfVaults === 0) return [];
 
         const tokenIds = await Promise.all(
-          range(0, numOfVaults).map(i => multicall.wrap(vaultNftContract).tokenOfOwnerByIndex(address, i)),
+          range(0, numOfVaults).map(i =>
+            multicall.wrap(vaultNftContract).read.tokenOfOwnerByIndex([address, BigInt(i)]),
+          ),
         );
 
         const positionBalances = await Promise.all(
           tokenIds.map(async tokenId => {
             const balancesRaw = await Promise.all([
-              multicall.wrap(vaultInfoContract).vaultCollateral(tokenId),
-              multicall.wrap(vaultInfoContract).vaultDebt(tokenId),
+              multicall.wrap(vaultInfoContract).read.vaultCollateral([tokenId]),
+              multicall.wrap(vaultInfoContract).read.vaultDebt([tokenId]),
             ]);
 
             const allTokens = contractPosition.tokens.map((cp, idx) =>

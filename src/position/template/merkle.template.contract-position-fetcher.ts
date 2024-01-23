@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Contract } from 'ethers';
+import { Abi } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -16,7 +16,7 @@ export type MerkleContractPositionDefinition = {
 };
 
 export abstract class MerkleTemplateContractPositionFetcher<
-  T extends Contract,
+  T extends Abi,
 > extends ContractPositionTemplatePositionFetcher<T, DefaultDataProps, MerkleContractPositionDefinition> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);

@@ -1,4 +1,6 @@
-import { IMulticallWrapper } from '~multicall/multicall.interface';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
+
+import { ViemMulticallDataLoader } from '~multicall';
 import { AppTokenPosition } from '~position/position.interface';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
@@ -22,26 +24,26 @@ export type UnderlyingTokenDefinition = {
 
 // PHASE 1: List addresses and definitions
 export type GetDefinitionsParams = {
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
 };
 
 export type GetAddressesParams<R = DefaultAppTokenDefinition> = {
   definitions: R[];
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
 };
 
 // PHASE 2: Build position objects
-type PositionBuilderContext<T, R = DefaultAppTokenDefinition> = {
-  multicall: IMulticallWrapper;
+type PositionBuilderContext<T extends Abi, R = DefaultAppTokenDefinition> = {
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
   address: string;
   definition: R;
-  contract: T;
+  contract: GetContractReturnType<T, PublicClient>;
 };
 
 type PositionBuilderContextWithAppToken<
-  T,
+  T extends Abi,
   V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
   K extends keyof AppTokenPosition = keyof AppTokenPosition,
@@ -49,10 +51,10 @@ type PositionBuilderContextWithAppToken<
   appToken: Omit<AppTokenPosition<V>, K>;
 };
 
-export type GetUnderlyingTokensParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
+export type GetUnderlyingTokensParams<T extends Abi, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
 
 export type GetTokenPropsParams<
-  T,
+  T extends Abi,
   V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<
@@ -63,25 +65,25 @@ export type GetTokenPropsParams<
 >;
 
 export type GetPricePerShareParams<
-  T,
+  T extends Abi,
   V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<T, V, R, 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'>;
 
 export type GetPriceParams<
-  T,
+  T extends Abi,
   V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<T, V, R, 'price' | 'dataProps' | 'displayProps'>;
 
 export type GetDataPropsParams<
-  T,
+  T extends Abi,
   V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<T, V, R, 'dataProps' | 'displayProps'>;
 
 export type GetDisplayPropsParams<
-  T,
+  T extends Abi,
   V = DefaultAppTokenDataProps,
   R = DefaultAppTokenDefinition,
 > = PositionBuilderContextWithAppToken<T, V, R, 'displayProps'>;

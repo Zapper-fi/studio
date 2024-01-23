@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -14,7 +14,8 @@ import {
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-import { YieldProtocolContractFactory, YieldProtocolPoolToken } from '../contracts';
+import { YieldProtocolViemContractFactory } from '../contracts';
+import { YieldProtocolPoolToken } from '../contracts/viem';
 
 import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 
@@ -30,12 +31,12 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) protected readonly contractFactory: YieldProtocolContractFactory,
+    @Inject(YieldProtocolViemContractFactory) protected readonly contractFactory: YieldProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YieldProtocolPoolToken {
+  getContract(address: string) {
     return this.contractFactory.yieldProtocolPoolToken({ address, network: this.network });
   }
 
@@ -44,31 +45,31 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolPoolToken>) {
-    return [{ address: await contract.base(), network: this.network }];
+    return [{ address: await contract.read.base(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<YieldProtocolPoolToken>) {
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     if (poolAddress === ZERO_ADDRESS) return [0];
 
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
     const baseReserves = await multicall
       .wrap(poolContract)
-      .getBaseBalance()
+      .read.getBaseBalance()
       .catch(err => {
-        if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+        if (isViemMulticallUnderlyingError(err)) return BigNumber.from(0);
         throw err;
       });
 
-    if (baseReserves.isZero()) return [0];
+    if (Number(baseReserves) === 0) return [0];
 
     const [fyTokenReserves, poolTotalSupply] = await Promise.all([
-      multicall.wrap(poolContract).getFYTokenBalance(),
-      multicall.wrap(poolContract).totalSupply(),
+      multicall.wrap(poolContract).read.getFYTokenBalance(),
+      multicall.wrap(poolContract).read.totalSupply(),
     ]);
 
-    const realFyTokenReserves = fyTokenReserves.sub(poolTotalSupply);
-    const reserveRaw = baseReserves.add(realFyTokenReserves);
+    const realFyTokenReserves = BigNumber.from(fyTokenReserves).sub(poolTotalSupply);
+    const reserveRaw = BigNumber.from(baseReserves).add(realFyTokenReserves);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];
@@ -78,11 +79,11 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     const defaultDataProps = await super.getDataProps(params);
 
     const { contract, multicall } = params;
-    const poolAddress = await contract.pool();
+    const poolAddress = await contract.read.pool();
     const poolContract = this.contractFactory.yieldProtocolPool({ address: poolAddress, network: this.network });
     if (poolAddress === ZERO_ADDRESS) return { ...defaultDataProps, maturity: 0 };
 
-    const maturity = await multicall.wrap(poolContract).maturity();
+    const maturity = await multicall.wrap(poolContract).read.maturity();
     return { ...defaultDataProps, maturity: Number(maturity) };
   }
 

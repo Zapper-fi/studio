@@ -6,14 +6,14 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetTokenPropsParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BeefyContractFactory, BeefyVaultToken } from '../contracts';
+import { BeefyViemContractFactory } from '../contracts';
+import { BeefyVaultToken } from '../contracts/viem';
 
 import { BeefyVaultTokenDefinitionsResolver } from './beefy.vault.token-definition-resolver';
 
@@ -23,7 +23,6 @@ export type BeefyVaultTokenDefinition = {
   id: string;
   marketName: string;
   symbol: string;
-  apy: number;
 };
 
 export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -35,12 +34,12 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BeefyVaultTokenDefinitionsResolver)
     private readonly tokenDefinitionsResolver: BeefyVaultTokenDefinitionsResolver,
-    @Inject(BeefyContractFactory) protected readonly contractFactory: BeefyContractFactory,
+    @Inject(BeefyViemContractFactory) protected readonly contractFactory: BeefyViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BeefyVaultToken {
+  getContract(address: string) {
     return this.contractFactory.beefyVaultToken({ network: this.network, address });
   }
 
@@ -63,16 +62,12 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getPricePerShare({ contract, multicall }: GetPricePerShareParams<BeefyVaultToken>) {
-    const ratioRaw = await multicall.wrap(contract).getPricePerFullShare();
+    const ratioRaw = await multicall.wrap(contract).read.getPricePerFullShare();
     const ratio = Number(ratioRaw) / 10 ** 18;
     return [ratio];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<BeefyVaultToken>) {
     return `${getLabelFromToken(appToken.tokens[0])} Vault`;
-  }
-
-  getApy({ definition }: GetDataPropsParams<BeefyVaultToken, DefaultAppTokenDataProps, BeefyVaultTokenDefinition>) {
-    return Promise.resolve(definition.apy * 100);
   }
 }

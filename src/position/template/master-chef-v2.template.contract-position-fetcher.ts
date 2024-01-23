@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -23,31 +24,34 @@ export type MasterChefV2ContractPositionDataProps = MasterChefContractPositionDa
 };
 
 export type GetMasterChefV2ExtraRewardTokenRewardRates<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > = GetMasterChefDataPropsParams<T> & {
-  rewarderContract: V;
+  rewarderContract: GetContractReturnType<V, PublicClient>;
 };
 
 export type GetMasterChefV2ExtraRewardTokenBalancesParams<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > = GetMasterChefTokenBalancesParams<T> & {
-  rewarderContract: V;
+  rewarderContract: GetContractReturnType<V, PublicClient>;
 };
 
 export abstract class MasterChefV2TemplateContractPositionFetcher<
-  T extends Contract,
-  V extends Contract,
+  T extends Abi,
+  V extends Abi,
 > extends MasterChefTemplateContractPositionFetcher<T, MasterChefV2ContractPositionDataProps> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
 
   // Tokens
-  abstract getExtraRewarder(contract: T, poolIndex: number): Promise<string>;
-  abstract getExtraRewarderContract(address: string): V;
-  abstract getExtraRewardTokenAddresses(contract: V, poolIndex: number): Promise<string[]>;
+  abstract getExtraRewarder(contract: GetContractReturnType<T, PublicClient>, poolIndex: number): Promise<string>;
+  abstract getExtraRewarderContract(address: string): GetContractReturnType<V, PublicClient>;
+  abstract getExtraRewardTokenAddresses(
+    contract: GetContractReturnType<V, PublicClient>,
+    poolIndex: number,
+  ): Promise<string[]>;
 
   // APY
   abstract getExtraRewardTokenRewardRates(

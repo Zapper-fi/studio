@@ -1,17 +1,16 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { RariFuseBorrowContractPositionFetcher } from '../common/rari-fuse.borrow.contract-position-fetcher';
-import {
-  RariFuseComptroller,
-  RariFuseContractFactory,
-  RariFusePoolLens,
-  RariFusePoolsDirectory,
-  RariFuseToken,
-} from '../contracts';
+import { RariFuseViemContractFactory } from '../contracts';
+import { RariFuseComptroller, RariFusePoolLens, RariFusePoolsDirectory, RariFuseToken } from '../contracts/viem';
+import { RariFuseComptrollerContract } from '../contracts/viem/RariFuseComptroller';
+import { RariFusePoolLensContract } from '../contracts/viem/RariFusePoolLens';
+import { RariFusePoolsDirectoryContract } from '../contracts/viem/RariFusePoolsDirectory';
+import { RariFuseTokenContract } from '../contracts/viem/RariFuseToken';
 
 @PositionTemplate()
 export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
@@ -27,52 +26,56 @@ export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorro
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariFuseContractFactory) protected readonly contractFactory: RariFuseContractFactory,
+    @Inject(RariFuseViemContractFactory) protected readonly contractFactory: RariFuseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getPoolDirectoryContract(address: string): RariFusePoolsDirectory {
+  getPoolDirectoryContract(address: string): RariFusePoolsDirectoryContract {
     return this.contractFactory.rariFusePoolsDirectory({ address, network: this.network });
   }
 
-  getComptrollerContract(address: string): RariFuseComptroller {
+  getComptrollerContract(address: string): RariFuseComptrollerContract {
     return this.contractFactory.rariFuseComptroller({ address, network: this.network });
   }
 
-  getTokenContract(address: string): RariFuseToken {
+  getTokenContract(address: string): RariFuseTokenContract {
     return this.contractFactory.rariFuseToken({ address, network: this.network });
   }
 
-  getLensContract(address: string): RariFusePoolLens {
+  getLensContract(address: string): RariFusePoolLensContract {
     return this.contractFactory.rariFusePoolLens({ address, network: this.network });
   }
 
-  getPools(contract: RariFusePoolsDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.getAllPools();
+  async getPools(contract: RariFusePoolsDirectoryContract): Promise<{ name: string; comptroller: string }[]> {
+    return (await contract.read.getAllPools()).map(pool => ({ name: pool.name, comptroller: pool.comptroller }));
   }
 
-  getMarketTokenAddresses(contract: RariFuseComptroller): Promise<string[]> {
-    return contract.getAllMarkets();
+  async getMarketTokenAddresses(contract: RariFuseComptrollerContract): Promise<string[]> {
+    return (await contract.read.getAllMarkets()).map(address => address.toLowerCase());
   }
 
-  getUnderlyingTokenAddress(contract: RariFuseToken): Promise<string> {
-    return contract.underlying();
+  getUnderlyingTokenAddress(contract: RariFuseTokenContract): Promise<string> {
+    return contract.read.underlying();
   }
 
-  getBorrowRateRaw(contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.borrowRatePerBlock();
+  getBorrowRateRaw(contract: RariFuseTokenContract): Promise<BigNumberish> {
+    return contract.read.borrowRatePerBlock();
   }
 
-  getTotalBorrows(contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.totalBorrows();
+  getTotalBorrows(contract: RariFuseTokenContract): Promise<BigNumberish> {
+    return contract.read.totalBorrows();
   }
 
-  getBorrowBalance(address: string, contract: RariFuseToken): Promise<BigNumberish> {
-    return contract.borrowBalanceCurrent(address);
+  getBorrowBalance(address: string, contract: RariFuseTokenContract): Promise<BigNumberish> {
+    return contract.read.borrowBalanceCurrent([address]);
   }
 
-  getPoolsBySupplier(address: string, contract: RariFusePoolLens): Promise<[BigNumber[], { comptroller: string }[]]> {
-    return contract.getPoolsBySupplier(address);
+  async getPoolsBySupplier(
+    address: string,
+    contract: RariFusePoolLensContract,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]> {
+    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
+    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
   }
 }

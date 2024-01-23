@@ -1,24 +1,24 @@
-import { BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 export type KyberswapElasticLiquidityPositionContractData = {
-  nonce: BigNumber;
+  nonce: BigNumberish;
   operator: string;
   token0: string;
   token1: string;
   tickLower: number;
   tickUpper: number;
-  liquidity: BigNumber;
+  liquidity: BigNumberish;
   fee: number;
-  feeGrowthInsideLast: BigNumber;
-  rTokenOwed: BigNumber;
-  poolId: BigNumber;
+  feeGrowthInsideLast: BigNumberish;
+  rTokenOwed: BigNumberish;
+  poolId: BigNumberish;
 };
 
 export type KyberswapElasticPoolStateData = {
-  sqrtPriceX96: BigNumber;
-  reinvestL: BigNumber;
+  sqrtPriceX96: BigNumberish;
+  reinvestL: BigNumberish;
   currentTick: number;
-  liquidity: BigNumber;
+  liquidity: BigNumberish;
 };
 
 export type KyberswapElasticPoolStats = {

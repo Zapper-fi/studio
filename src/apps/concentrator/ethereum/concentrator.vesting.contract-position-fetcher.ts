@@ -10,7 +10,8 @@ import { isVesting } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ConcentratorContractFactory, AladdinConcentratorVest } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AladdinConcentratorVest } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumConcentratorVestingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AladdinConcentratorVest> {
@@ -18,12 +19,12 @@ export class EthereumConcentratorVestingContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) private readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) private readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConcentratorVest {
+  getContract(address: string) {
     return this.contractFactory.aladdinConcentratorVest({ network: this.network, address });
   }
 
@@ -55,10 +56,12 @@ export class EthereumConcentratorVestingContractPositionFetcher extends Contract
     address,
     contract,
   }: GetTokenBalancesParams<AladdinConcentratorVest, DefaultDataProps>): Promise<BigNumberish[]> {
-    const claimable = (await contract.getUserVest(address)).reduce(
-      (claimable: BigNumber, current) => claimable.add(current[0].sub(current[1])),
+    const claimable = (await contract.read.getUserVest([address])).reduce(
+      (claimable: BigNumber, current) =>
+        claimable.add(BigNumber.from(current.vestingAmount).sub(current.claimedAmount)),
       BigNumber.from(0),
     );
-    return Promise.all([contract.locked(address), claimable]);
+
+    return Promise.all([contract.read.locked([address]), claimable]);
   }
 }

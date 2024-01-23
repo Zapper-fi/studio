@@ -4,13 +4,14 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { GeistContractFactory, GeistRewards } from '../contracts';
+import { GeistViemContractFactory } from '../contracts';
+import { GeistRewards } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomGeistIncentivesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistRewards> {
@@ -22,7 +23,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GeistContractFactory) private readonly contractFactory: GeistContractFactory,
+    @Inject(GeistViemContractFactory) private readonly contractFactory: GeistViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -46,8 +47,8 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
     ];
   }
 
-  async getLabel(): Promise<string> {
-    return 'Claimable GEIST';
+  async getLabel({ contractPosition }: GetDisplayPropsParams<GeistRewards>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getSecondaryLabel(params: GetDisplayPropsParams<GeistRewards>): Promise<DisplayProps['secondaryLabel']> {
@@ -70,7 +71,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
 
     // The calls fails when it's using the Multicall wrapped version of the contract
     const contract = this.contractFactory.geistRewards({ address: contractPosition.address, network: this.network });
-    const rewardBalanceRaw = await contract.claimableReward(address, appTokenAddresses, { from: address });
+    const rewardBalanceRaw = await contract.read.claimableReward([address, appTokenAddresses]);
     const sum = rewardBalanceRaw.reduce((sum, cur) => sum.add(cur), BigNumber.from(0));
 
     return [sum];

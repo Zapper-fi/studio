@@ -1,98 +1,49 @@
 import Axios from 'axios';
-import { uniqBy } from 'lodash';
 
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
+import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-type ReaperCryptsAPIData = {
+type ReaperVaultData = {
   data: {
-    _id: string;
-    provider: string;
-    cryptContent: {
-      tokens: { name: string; address: string }[];
-      name: string;
-      pid: number;
-      rfSymbol: string;
-      fees: {
-        depositFee: number;
-        withdrawFee: number;
-        interestFee: number;
-      };
-      strategy: {
-        address: string;
-        abiName: string;
-      };
-      lpToken: {
-        address: string;
-        abiName: string;
-      };
-      vault: {
-        address: string;
-        abiName: string;
-      };
-      url: string;
-      dead: boolean;
-      promo: boolean;
-    };
-    emissionMultiplier: number;
-    analytics: {
-      assets: {
-        name: string;
-        address: string;
-        value: number;
-      }[];
-      tvl: number;
-      yields: {
-        hour: number;
-        day: number;
-        week: number;
-        month: number;
-        threeMonths: number;
-        sixMonths: number;
-        year: number;
+    [key: string]: {
+      address: string;
+      tokens: {
+        lpToken: {
+          address: string;
+        };
       };
     };
-    __v: number;
-  }[];
+  };
+};
+
+const NETWORK_CHAIN_ID_HEX: Partial<Record<Network, string>> = {
+  [Network.ARBITRUM_MAINNET]: '0xa4b1',
+  [Network.BINANCE_SMART_CHAIN_MAINNET]: '0x38',
+  [Network.FANTOM_OPERA_MAINNET]: '0xfa',
+  [Network.OPTIMISM_MAINNET]: '0xa',
 };
 
 export class ReaperVaultCacheManager {
-  async getCryptDefinitions(network: Network) {
-    if (network === Network.OPTIMISM_MAINNET) return this.getOptimismCryptDefinitions();
-    if (network === Network.FANTOM_OPERA_MAINNET) return this.getFantomCryptDefinitions();
-    throw new Error('Unsupported network');
-  }
-
-  @CacheOnInterval({
-    key: `studio:fantom:reaper:vault:addresses`,
-    timeout: 5 * 60 * 1000,
-    failOnMissingData: false,
+  @Cache({
+    key: (network: Network) => `studio:reaper:${network}:vaults`,
+    ttl: 15 * 60, // 15 minutes
   })
-  private async getFantomCryptDefinitions() {
-    return this.fetchCryptDefinitions('https://yzo0r3ahok.execute-api.us-east-1.amazonaws.com/dev/api/crypts');
+  private async getVaultData(network: Network) {
+    const chainIdHex = NETWORK_CHAIN_ID_HEX[network];
+    const url = `https://2ch9hbg8hh.execute-api.us-east-1.amazonaws.com/dev/api/vaults/${chainIdHex}`;
+
+    const { data } = await Axios.get<ReaperVaultData>(url);
+    return data;
   }
 
-  @CacheOnInterval({
-    key: `studio:optimism:reaper:vault:addresses`,
-    timeout: 5 * 60 * 1000,
-    failOnMissingData: false,
-  })
-  private async getOptimismCryptDefinitions() {
-    return this.fetchCryptDefinitions('https://yzo0r3ahok.execute-api.us-east-1.amazonaws.com/dev/api/optimism/crypts');
-  }
+  async fetchVaults(network: Network) {
+    const vaultData = await this.getVaultData(network);
 
-  private async fetchCryptDefinitions(apiUrl: string) {
-    const { data } = await Axios.get<ReaperCryptsAPIData>(apiUrl);
-
-    const cryptDefinitions = data.data
-      .filter(v => !v.cryptContent.dead)
-      .map(v => ({
-        name: v.cryptContent.name,
-        address: v.cryptContent.vault.address.toLowerCase(),
-        underlyingAddress: v.cryptContent.lpToken.address.toLowerCase(),
-        apy: v.analytics.yields.year,
-      }));
-
-    return uniqBy(cryptDefinitions, v => v.address);
+    return Object.values(vaultData.data).map(vault => {
+      return {
+        address: vault.address.toLowerCase(),
+        underlyingTokenAddress: vault.tokens.lpToken.address.toLowerCase(),
+      };
+    });
   }
 }

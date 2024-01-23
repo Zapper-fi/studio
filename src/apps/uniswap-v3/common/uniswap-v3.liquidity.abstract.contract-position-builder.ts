@@ -1,21 +1,19 @@
 import { BigNumber } from 'bignumber.js';
-import { BaseContract, BigNumber as EtherBigNumber, BigNumberish } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Standard, Token } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
-import { TokenDependency, TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
+import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types';
-
-import { UniswapV3Pool, UniswapV3PositionManager } from '../contracts';
 
 import { UniswapV3LiquidityPositionDataProps } from './uniswap-v3.liquidity.contract-position-fetcher';
 import {
@@ -26,30 +24,17 @@ import {
 import { getClaimable } from './uniswap-v3.liquidity.utils';
 
 type UniswapV3LiquidityContractPositionHelperParams = {
-  multicall: IMulticallWrapper;
+  multicall: ViemMulticallDataLoader;
   tokenLoader: TokenDependencySelector;
   positionId: BigNumberish;
   network: Network;
   collapseClaimable?: boolean;
 };
 
-type IUniswapV3Pool = BaseContract & {
-  slot0: UniswapV3Pool['slot0'];
-  tickSpacing: UniswapV3Pool['tickSpacing'];
-  liquidity: UniswapV3Pool['liquidity'];
-  feeGrowthGlobal0X128: UniswapV3Pool['feeGrowthGlobal0X128'];
-  feeGrowthGlobal1X128: UniswapV3Pool['feeGrowthGlobal1X128'];
-  ticks: (n: number) => Promise<UniswapV3LiquidityTickContractData>;
-};
-
-type IUniswapPositionManager = BaseContract & {
-  positions: UniswapV3PositionManager['positions'];
-};
-
 export abstract class AbstractUniswapV3LiquidityContractPositionBuilder<
-  V3PoolType extends IUniswapV3Pool,
-  V3FactoryType,
-  PositionManagerType extends IUniswapPositionManager,
+  PoolAbi extends Abi,
+  FactoryAbi extends Abi,
+  PositionManagerAbi extends Abi,
 > {
   protected readonly managerAddress: string;
   protected readonly factoryAddress: string;
@@ -72,7 +57,7 @@ export abstract class AbstractUniswapV3LiquidityContractPositionBuilder<
     token0: Token;
     token1: Token;
     network: Network;
-    liquidity: EtherBigNumber;
+    liquidity: BigNumberish;
   });
 
   abstract getSupplied({
@@ -88,25 +73,41 @@ export abstract class AbstractUniswapV3LiquidityContractPositionBuilder<
     token0: Token;
     token1: Token;
     network: Network;
-    liquidity: EtherBigNumber;
+    liquidity: BigNumberish;
   });
 
-  abstract getPoolContract({
-    token0,
-    token1,
-    fee,
-    multicall,
-    network,
-  }: {
-    token0: string;
-    token1: string;
-    fee: number;
-    multicall: IMulticallWrapper;
-    network: Network;
-  }): Promise<V3PoolType>;
-  abstract getPositionManager(network: Network): PositionManagerType;
-  abstract getFactoryContract(network: Network): V3FactoryType;
-  abstract getERC20(tokenDep: TokenDependency): Erc20;
+  abstract getPositionManager(network: Network): GetContractReturnType<PositionManagerAbi, PublicClient>;
+  abstract getFactoryContract(network: Network): GetContractReturnType<FactoryAbi, PublicClient>;
+  abstract getPoolContract(network: Network, address: string): GetContractReturnType<PoolAbi, PublicClient>;
+
+  abstract getPoolAddress(
+    contract: GetContractReturnType<FactoryAbi, PublicClient>,
+    token0: string,
+    token1: string,
+    fee: BigNumberish,
+  ): Promise<string>;
+
+  abstract getPosition(
+    contract: GetContractReturnType<PositionManagerAbi, PublicClient>,
+    positionId: BigNumberish,
+  ): Promise<UniswapV3LiquidityPositionContractData>;
+
+  abstract getSlot0(
+    contract: GetContractReturnType<PoolAbi, PublicClient>,
+  ): Promise<UniswapV3LiquiditySlotContractData>;
+
+  abstract getTickSpacing(contract: GetContractReturnType<PoolAbi, PublicClient>): Promise<BigNumberish>;
+
+  abstract getLiquidity(contract: GetContractReturnType<PoolAbi, PublicClient>): Promise<BigNumberish>;
+
+  abstract getFeeGrowthGlobal0X128(contract: GetContractReturnType<PoolAbi, PublicClient>): Promise<BigNumberish>;
+
+  abstract getFeeGrowthGlobal1X128(contract: GetContractReturnType<PoolAbi, PublicClient>): Promise<BigNumberish>;
+
+  abstract getTick(
+    contract: GetContractReturnType<PoolAbi, PublicClient>,
+    tick: BigNumberish,
+  ): Promise<UniswapV3LiquidityTickContractData>;
 
   async getTokensForPosition({
     multicall,
@@ -114,7 +115,8 @@ export abstract class AbstractUniswapV3LiquidityContractPositionBuilder<
     tokenLoader,
     network,
   }: UniswapV3LiquidityContractPositionHelperParams) {
-    const position = await multicall.wrap(this.getPositionManager(network)).positions(positionId);
+    const positionManagerContract = multicall.wrap(this.getPositionManager(network));
+    const position = await this.getPosition(positionManagerContract, positionId);
 
     const token0Address = position.token0.toLowerCase();
     const token1Address = position.token1.toLowerCase();
@@ -130,43 +132,43 @@ export abstract class AbstractUniswapV3LiquidityContractPositionBuilder<
     network,
     collapseClaimable,
   }: UniswapV3LiquidityContractPositionHelperParams) {
-    const positionManager = this.getPositionManager(network);
-    const position = await multicall.wrap(positionManager).positions(positionId);
+    const positionManagerContract = multicall.wrap(this.getPositionManager(network));
+    const factoryContract = multicall.wrap(this.getFactoryContract(network));
+    const position = await this.getPosition(positionManagerContract, positionId);
 
     const [token0, token1] = await this.getTokensForPosition({ multicall, positionId, tokenLoader, network });
     if (!token0 || !token1) return null;
 
     const fee = position.fee;
+    const poolAddress = await this.getPoolAddress(factoryContract, token0.address, token1.address, fee);
+    const poolContract = multicall.wrap(this.getPoolContract(network, poolAddress));
 
-    const poolContract = await this.getPoolContract({
-      token0: token0.address,
-      token1: token1.address,
-      fee,
-      network,
-      multicall,
-    });
-
-    const token0Contract = this.getERC20(token0);
-    const token1Contract = this.getERC20(token1);
+    const token0Contract = this.appToolkit.globalViemContracts.erc20(token0);
+    const token1Contract = this.appToolkit.globalViemContracts.erc20(token1);
 
     const [slot, tickSpacing, liquidity, feeGrowth0, feeGrowth1, ticksLower, ticksUpper, reserveRaw0, reserveRaw1] =
       await Promise.all([
-        multicall.wrap(poolContract).slot0(),
-        multicall.wrap(poolContract).tickSpacing(),
-        multicall.wrap(poolContract).liquidity(),
-        multicall.wrap(poolContract).feeGrowthGlobal0X128(),
-        multicall.wrap(poolContract).feeGrowthGlobal1X128(),
-        multicall.wrap(poolContract).ticks(Number(position.tickLower)),
-        multicall.wrap(poolContract).ticks(Number(position.tickUpper)),
-        multicall.wrap(token0Contract).balanceOf(poolContract.address),
-        multicall.wrap(token1Contract).balanceOf(poolContract.address),
+        this.getSlot0(poolContract),
+        this.getTickSpacing(poolContract),
+        this.getLiquidity(poolContract),
+        this.getFeeGrowthGlobal0X128(poolContract),
+        this.getFeeGrowthGlobal1X128(poolContract),
+        this.getTick(poolContract, position.tickLower),
+        this.getTick(poolContract, position.tickUpper),
+        multicall.wrap(token0Contract).read.balanceOf([poolContract.address]),
+        multicall.wrap(token1Contract).read.balanceOf([poolContract.address]),
       ]);
 
     // Retrieve underlying reserves, both supplied and claimable
     const range = this.getRange({ position, slot, token0, token1, network, liquidity });
     const suppliedBalances = this.getSupplied({ position, slot, token0, token1, network, liquidity });
-    const isMin = Math.floor(-position.tickLower / tickSpacing) === Math.floor(-this.MIN_TICK / tickSpacing);
-    const isMax = Math.floor(position.tickUpper / tickSpacing) === Math.floor(this.MAX_TICK / tickSpacing);
+
+    const minTick = Math.floor(-this.MIN_TICK / Number(tickSpacing));
+    const maxTick = Math.floor(this.MAX_TICK / Number(tickSpacing));
+    const tickLower = Math.floor(Number(-position.tickLower) / Number(tickSpacing));
+    const tickUpper = Math.floor(Number(position.tickUpper) / Number(tickSpacing));
+    const isMin = tickLower === minTick;
+    const isMax = tickUpper === maxTick;
 
     const suppliedTokens = [token0, token1].map(v => supplied(v));
     const suppliedTokenBalances = suppliedTokens.map((t, i) => drillBalance(t, suppliedBalances[i]));

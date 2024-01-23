@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LyraAvalonContractFactory, LyraStkLyra } from '../contracts';
+import { LyraAvalonViemContractFactory } from '../contracts';
+import { LyraStkLyra } from '../contracts/viem';
 
 export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LyraStkLyra> {
   groupLabel = 'stkLYRA Rewards';
@@ -20,12 +21,12 @@ export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends 
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LyraAvalonContractFactory) protected readonly contractFactory: LyraAvalonContractFactory,
+    @Inject(LyraAvalonViemContractFactory) protected readonly contractFactory: LyraAvalonViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LyraStkLyra {
+  getContract(address: string) {
     return this.contractFactory.lyraStkLyra({ address, network: this.network });
   }
 
@@ -37,18 +38,18 @@ export abstract class LyraAvalonStkLyraClaimableContractPositionFetcher extends 
     return [
       {
         metaType: MetaType.CLAIMABLE,
-        address: await contract.STAKED_TOKEN(),
+        address: await contract.read.STAKED_TOKEN(),
         network: this.network,
       },
     ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<LyraStkLyra>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LyraStkLyra>) {
-    const rewardBalance = await contract.getTotalRewardsBalance(address);
+    const rewardBalance = await contract.read.getTotalRewardsBalance([address]);
     return [rewardBalance];
   }
 }

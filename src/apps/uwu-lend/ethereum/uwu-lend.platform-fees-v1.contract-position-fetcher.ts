@@ -14,7 +14,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { UwuLendContractFactory, UwuLendStakingV1 } from '../contracts';
+import { UwuLendViemContractFactory } from '../contracts';
+import { UwuLendStakingV1 } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositionTemplatePositionFetcher<UwuLendStakingV1> {
@@ -26,7 +27,7 @@ export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UwuLendContractFactory) private readonly contractFactory: UwuLendContractFactory,
+    @Inject(UwuLendViemContractFactory) private readonly contractFactory: UwuLendViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -42,8 +43,8 @@ export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositi
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<UwuLendStakingV1>) {
     const [rewards, uwuTokenAddressRaw] = await Promise.all([
-      contract.claimableRewards(ZERO_ADDRESS),
-      contract.rewardToken(),
+      contract.read.claimableRewards([ZERO_ADDRESS]),
+      contract.read.rewardToken(),
     ]);
     const rewardTokenAddressesRaw = rewards.map(x => x.token.toLowerCase()).filter(x => x !== this.NotSupportedToken);
 
@@ -83,22 +84,20 @@ export class EthereumUwuLendPlatformFeesV1PositionFetcher extends ContractPositi
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<UwuLendStakingV1>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
-      contract.lockedBalances(address),
-      contract.withdrawableBalance(address),
-      contract.claimableRewards(address),
+      contract.read.lockedBalances([address]),
+      contract.read.withdrawableBalance([address]),
+      contract.read.claimableRewards([address]),
     ]);
 
-    const withdrawableBalanceRaw = withdrawableDataRaw.amount.sub(withdrawableDataRaw.penaltyAmount).toString();
-
     return contractPosition.tokens.map((token, idx) => {
-      if (idx === 0) return lockedBalancesData.total; // Locked UWU/WETH LP
-      if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked UWU
+      if (idx === 0) return lockedBalancesData[0]; // Locked UWU/WETH LP
+      if (idx === 1) return withdrawableDataRaw[0] - withdrawableDataRaw[1]; // Vested/Unlocked UWU
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
-        ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,
+        ({ token: tokenAddressRaw }) => tokenAddressRaw.toLowerCase() === token.address,
       );
 
-      return rewardTokenMatch?.amount ?? 0;
+      return rewardTokenMatch?.amount ?? BigInt(0);
     });
   }
 }

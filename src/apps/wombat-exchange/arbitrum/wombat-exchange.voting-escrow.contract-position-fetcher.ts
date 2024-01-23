@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { WombatExchangeContractFactory, WombatExchangeVotingEscrow } from '../contracts';
+import { WombatExchangeViemContractFactory } from '../contracts';
+import { WombatExchangeVotingEscrow } from '../contracts/viem';
+import { WombatExchangeVotingEscrowContract } from '../contracts/viem/WombatExchangeVotingEscrow';
 
 @PositionTemplate()
 export class ArbitrumWombatExchangeVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<WombatExchangeVotingEscrow> {
@@ -14,20 +16,20 @@ export class ArbitrumWombatExchangeVotingEscrowContractPositionFetcher extends V
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(WombatExchangeContractFactory) protected readonly contractFactory: WombatExchangeContractFactory,
+    @Inject(WombatExchangeViemContractFactory) protected readonly contractFactory: WombatExchangeViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): WombatExchangeVotingEscrow {
+  getEscrowContract(address: string): WombatExchangeVotingEscrowContract {
     return this.contractFactory.wombatExchangeVotingEscrow({ address, network: this.network });
   }
 
   getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<WombatExchangeVotingEscrow>) {
-    return contract.wom();
+    return contract.read.wom();
   }
 
   getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<WombatExchangeVotingEscrow>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 }

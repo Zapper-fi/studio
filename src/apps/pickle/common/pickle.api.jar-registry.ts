@@ -4,28 +4,25 @@ import Axios from 'axios';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
-export type PicklePoolDetails = {
-  identifier: string;
-  liquidity_locked: number;
-  apy: number;
-  jarApy: number;
-  tokenAddress: string;
-  jarAddress: string;
-  gaugeAddress: string | null;
-  tokens: number;
-  ratio: number;
-  network: string;
+export type PickleJarData = {
+  assets: {
+    jars: {
+      contract: string;
+      chain: string;
+      farm?: {
+        farmAddress: string | null;
+      };
+    }[];
+  };
 };
 
 const NETWORK_MAPPING = {
   [Network.ETHEREUM_MAINNET]: 'eth',
   [Network.POLYGON_MAINNET]: 'polygon',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
-  [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.OPTIMISM_MAINNET]: 'optimism',
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',
   [Network.GNOSIS_MAINNET]: 'gnosis',
-  [Network.AURORA_MAINNET]: 'aurora',
 };
 
 @Injectable()
@@ -36,21 +33,20 @@ export class PickleApiJarRegistry {
     failOnMissingData: false,
   })
   private async getJarDefinitionsData() {
-    const apyUrl = 'https://api.pickle.finance/prod/protocol/pools';
-    const data = await Axios.get<PicklePoolDetails[]>(apyUrl).then(v => v.data);
+    const apyUrl = 'https://f8wgg18t1h.execute-api.us-west-1.amazonaws.com/prod/protocol/pfcore';
+    const { data } = await Axios.get<PickleJarData>(apyUrl);
     return data;
   }
 
-  async getJarDefinitions(opts: { network: Network }) {
+  async getJarDefinitions(network: Network) {
     const definitionsData = await this.getJarDefinitionsData();
+    const networkId = NETWORK_MAPPING[network];
 
-    return definitionsData
-      .filter(({ network, liquidity_locked }) => network === NETWORK_MAPPING[opts.network] && liquidity_locked > 1000)
-      .map(({ tokenAddress, jarAddress, gaugeAddress, apy = 0 }) => ({
-        tokenAddress: tokenAddress.toLowerCase(),
-        vaultAddress: jarAddress.toLowerCase(),
-        gaugeAddress: gaugeAddress?.toLowerCase() ?? null,
-        apy,
-      }));
+    const jarsDefinitionRaw = definitionsData.assets.jars.filter(jar => jar.chain === networkId);
+
+    return jarsDefinitionRaw.map(jar => ({
+      jarAddress: jar.contract.toLowerCase(),
+      gaugeAddress: jar.farm?.farmAddress?.toLowerCase() ?? null,
+    }));
   }
 }

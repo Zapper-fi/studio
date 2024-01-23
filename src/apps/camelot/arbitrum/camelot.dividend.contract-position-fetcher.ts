@@ -3,14 +3,20 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
 import { GetDefinitionsParams } from '~position/template/app-token.template.types';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { CamelotContractFactory, CamelotDividend } from '../contracts';
+import { CamelotViemContractFactory } from '../contracts';
+import { CamelotDividend } from '../contracts/viem';
 
 export type CamelotDividendDefinition = {
   address: string;
@@ -30,12 +36,12 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CamelotContractFactory) protected readonly contractFactory: CamelotContractFactory,
+    @Inject(CamelotViemContractFactory) protected readonly contractFactory: CamelotViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CamelotDividend {
+  getContract(address: string) {
     return this.contractFactory.camelotDividend({ address, network: this.network });
   }
 
@@ -45,16 +51,16 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
       network: this.network,
     });
 
-    const numRewardToken = await multicall.wrap(dividenContract).distributedTokensLength();
+    const numRewardToken = await multicall.wrap(dividenContract).read.distributedTokensLength();
 
     const rewardTokenAddresses = await Promise.all(
-      range(0, numRewardToken.toNumber()).map(async index => {
-        const rewardTokenAddressRaw = await multicall.wrap(dividenContract).distributedToken(index);
+      range(0, Number(numRewardToken)).map(async index => {
+        const rewardTokenAddressRaw = await multicall.wrap(dividenContract).read.distributedToken([BigInt(index)]);
         return rewardTokenAddressRaw.toLowerCase();
       }),
     );
 
-    const suppliedTokenAddress = await multicall.wrap(dividenContract).xGrailToken();
+    const suppliedTokenAddress = await multicall.wrap(dividenContract).read.xGrailToken();
 
     return [{ address: this.dividendContractAddress, suppliedTokenAddress, rewardTokenAddresses }];
   }
@@ -74,17 +80,17 @@ export class ArbitrumCamelotDividendContractPositionFetcher extends ContractPosi
     ];
   }
 
-  async getLabel() {
-    return `Dividends`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<CamelotDividend>) {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<CamelotDividend>) {
-    const allocation = await contract.usersAllocation(address);
+    const allocation = await contract.read.usersAllocation([address]);
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
 
     const claimableBalances = await Promise.all(
       claimableTokens.map(token => {
-        return contract.pendingDividendsAmount(token.address, address);
+        return contract.read.pendingDividendsAmount([token.address, address]);
       }),
     );
 

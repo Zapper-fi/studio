@@ -1,22 +1,22 @@
-import { BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 export type UniswapV3LiquidityPositionContractData = {
-  nonce: BigNumber;
+  nonce: BigNumberish;
   operator: string;
   token0: string;
   token1: string;
   fee: number;
   tickLower: number;
   tickUpper: number;
-  liquidity: BigNumber;
-  feeGrowthInside0LastX128: BigNumber;
-  feeGrowthInside1LastX128: BigNumber;
-  tokensOwed0: BigNumber;
-  tokensOwed1: BigNumber;
+  liquidity: BigNumberish;
+  feeGrowthInside0LastX128: BigNumberish;
+  feeGrowthInside1LastX128: BigNumberish;
+  tokensOwed0: BigNumberish;
+  tokensOwed1: BigNumberish;
 };
 
 export type UniswapV3LiquiditySlotContractData = {
-  sqrtPriceX96: BigNumber;
+  sqrtPriceX96: BigNumberish;
   tick: number;
   observationIndex: number;
   observationCardinality: number;
@@ -26,8 +26,8 @@ export type UniswapV3LiquiditySlotContractData = {
 };
 
 export type UniswapV3LiquidityTickContractData = {
-  liquidityGross: BigNumber;
-  liquidityNet: BigNumber;
-  feeGrowthOutside0X128: BigNumber;
-  feeGrowthOutside1X128: BigNumber;
+  liquidityGross: BigNumberish;
+  liquidityNet: BigNumberish;
+  feeGrowthOutside0X128: BigNumberish;
+  feeGrowthOutside1X128: BigNumberish;
 };

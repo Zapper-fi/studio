@@ -9,8 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PlutusContractFactory } from '../contracts';
-import { PlutusFarmPlsRdnt } from '../contracts/ethers/PlutusFarmPlsRdnt';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusFarmPlsRdnt } from '../contracts/viem/PlutusFarmPlsRdnt';
 
 export type PlutusFarmDefinition = SingleStakingFarmDefinition & {
   label: string;
@@ -26,12 +26,12 @@ export class ArbitrumPlutusFarmPlsRdntContractPositionFetcher extends SingleStak
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPlsRdnt {
+  getContract(address: string) {
     return this.contractFactory.plutusFarmPlsRdnt({ address, network: this.network });
   }
 
@@ -68,10 +68,15 @@ export class ArbitrumPlutusFarmPlsRdntContractPositionFetcher extends SingleStak
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsRdnt>) {
-    return contract.userInfo(address).then(v => v.amount);
+    return contract.read.userInfo([address]).then(v => v[0]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsRdnt>) {
-    return contract.pendingRewards(address);
+    try {
+      const rewards = await contract.read.pendingRewards([address]);
+      return [rewards.pls, rewards.wbtc, rewards.usdt, rewards.usdc, rewards.dai, rewards.weth];
+    } catch (error) {
+      return [0, 0, 0, 0, 0, 0];
+    }
   }
 }

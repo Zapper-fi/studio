@@ -12,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { AcrossContractFactory, AcrossStaking } from '../contracts';
+import { AcrossViemContractFactory } from '../contracts';
+import { AcrossStaking } from '../contracts/viem';
 
 export type AcrossStakingContractPositionDefinition = {
   address: string;
@@ -29,17 +30,17 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AcrossContractFactory) protected readonly contractFactory: AcrossContractFactory,
+    @Inject(AcrossViemContractFactory) protected readonly contractFactory: AcrossViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AcrossStaking {
+  getContract(address: string) {
     return this.contractFactory.acrossStaking({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<AcrossStakingContractPositionDefinition[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: this.appId,
       network: this.network,
@@ -50,7 +51,7 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
       address: this.acceleratingDistributorAddress,
       network: this.network,
     });
-    const rewardTokenAddress = await multicall.wrap(acceleratingDistributorContract).rewardToken();
+    const rewardTokenAddress = await multicall.wrap(acceleratingDistributorContract).read.rewardToken();
 
     return appTokens.map(pool => {
       return {
@@ -85,8 +86,8 @@ export abstract class AcrossStakingContractPositionFetcher extends ContractPosit
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<AcrossStaking>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const [supplied, rewards] = await Promise.all([
-      contract.getUserStake(stakedToken.address, address),
-      contract.getOutstandingRewards(stakedToken.address, address),
+      contract.read.getUserStake([stakedToken.address, address]),
+      contract.read.getOutstandingRewards([stakedToken.address, address]),
     ]);
     return [supplied.cumulativeBalance, rewards];
   }

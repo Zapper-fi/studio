@@ -13,7 +13,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { LooksRareCompounder, LooksRareContractFactory } from '../contracts';
+import { LooksRareViemContractFactory } from '../contracts';
+import { LooksRareCompounder } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLooksRareCompounderContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LooksRareCompounder> {
@@ -21,12 +22,12 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LooksRareContractFactory) protected readonly contractFactory: LooksRareContractFactory,
+    @Inject(LooksRareViemContractFactory) protected readonly contractFactory: LooksRareViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LooksRareCompounder {
+  getContract(address: string) {
     return this.contractFactory.looksRareCompounder({ address, network: this.network });
   }
 
@@ -38,20 +39,20 @@ export class EthereumLooksRareCompounderContractPositionFetcher extends Contract
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.looksRareToken(),
+        address: await contract.read.looksRareToken(),
         network: this.network,
       },
     ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<LooksRareCompounder>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])} Compounder`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LooksRareCompounder>) {
     const [shareBalanceRaw, pricePerShareRaw] = await Promise.all([
-      contract.userInfo(address),
-      contract.calculateSharePriceInLOOKS(),
+      contract.read.userInfo([address]),
+      contract.read.calculateSharePriceInLOOKS(),
     ]);
 
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;

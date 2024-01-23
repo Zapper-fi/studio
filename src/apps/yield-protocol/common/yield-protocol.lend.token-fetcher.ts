@@ -6,7 +6,7 @@ import moment, { unix } from 'moment';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -17,8 +17,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { YieldProtocolContractFactory } from '../contracts';
-import { YieldProtocolLendToken } from '../contracts/ethers/YieldProtocolLendToken';
+import { YieldProtocolViemContractFactory } from '../contracts';
+import { YieldProtocolLendToken } from '../contracts/viem/YieldProtocolLendToken';
 
 export const formatMaturity = (maturity: number) => {
   return moment(unix(maturity)).format('MMMM D, yyyy');
@@ -92,12 +92,12 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) protected readonly contractFactory: YieldProtocolContractFactory,
+    @Inject(YieldProtocolViemContractFactory) protected readonly contractFactory: YieldProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YieldProtocolLendToken {
+  getContract(address: string) {
     return this.contractFactory.yieldProtocolLendToken({ address, network: this.network });
   }
 
@@ -118,7 +118,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolLendToken>) {
-    return [{ address: await contract.underlying(), network: this.network }];
+    return [{ address: await contract.read.underlying(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -132,29 +132,34 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
     const poolBalance = await multicall
       .wrap(pool)
-      .getBaseBalance()
+      .read.getBaseBalance()
       .catch(err => {
-        if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+        if (isViemMulticallUnderlyingError(err)) return BigNumber.from(0);
         throw err;
       });
-    if (poolBalance.isZero()) return [0];
+    if (poolBalance === BigInt(0)) return [0];
 
-    const maturity = await contract.maturity();
+    const maturity = await contract.read.maturity();
     const isMatured = Math.floor(new Date().getTime() / 1000) > Number(maturity);
     if (isMatured) return [1];
 
     // use smaller unit for weth
     const estimateRaw =
       appToken.tokens[0].symbol === 'WETH'
-        ? (await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('.01', appToken.decimals))).mul(100)
-        : await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('1', appToken.decimals));
+        ? (await multicall
+            .wrap(pool)
+            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('.01', appToken.decimals).toString())])) *
+          BigInt(100)
+        : await multicall
+            .wrap(pool)
+            .read.sellFYTokenPreview([BigInt(ethers.utils.parseUnits('1', appToken.decimals).toString())]);
 
     return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }
 
   async getDataProps(params: GetDataPropsParams<YieldProtocolLendToken, FyTokenDataProps, FyTokenDefinition>) {
     const defaultDataProps = await super.getDataProps(params);
-    const maturity = await params.contract.maturity();
+    const maturity = await params.contract.read.maturity();
     return { ...defaultDataProps, maturity: Number(maturity) };
   }
 

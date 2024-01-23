@@ -14,8 +14,8 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AaveAmmContractFactory } from '../contracts';
-import { AaveAmmAToken } from '../contracts/ethers/AaveAmmAToken';
+import { AaveAmmViemContractFactory } from '../contracts';
+import { AaveAmmAToken } from '../contracts/viem/AaveAmmAToken';
 
 const LT_MASK = Number('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000ffff');
 const LT_START_BIT_POSITION = 16;
@@ -26,7 +26,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveAmmContractFactory) protected readonly contractFactory: AaveAmmContractFactory,
+    @Inject(AaveAmmViemContractFactory) protected readonly contractFactory: AaveAmmViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -35,12 +35,12 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
   abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
   abstract getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number;
 
-  getContract(address: string): AaveAmmAToken {
+  getContract(address: string) {
     return this.contractFactory.aaveAmmAToken({ network: this.network, address });
   }
 
   async getAddresses(): Promise<string[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const pool = multicall.wrap(
       this.contractFactory.aaveAmmLendingPool({
         network: this.network,
@@ -48,20 +48,20 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
       }),
     );
 
-    const reserveTokenAddresses = await pool.getReservesList();
-    const reserveTokensData = await Promise.all(reserveTokenAddresses.map(r => pool.getReserveData(r)));
+    const reserveTokenAddresses = await pool.read.getReservesList();
+    const reserveTokensData = await Promise.all(reserveTokenAddresses.map(r => pool.read.getReserveData([r])));
 
     return reserveTokensData.map(data =>
       this.getTokenAddress({
-        aTokenAddress: data[7].toLowerCase(),
-        stableDebtTokenAddress: data[8].toLowerCase(),
-        variableDebtTokenAddress: data[9].toLowerCase(),
+        aTokenAddress: data.aTokenAddress.toLowerCase(),
+        stableDebtTokenAddress: data.stableDebtTokenAddress.toLowerCase(),
+        variableDebtTokenAddress: data.variableDebtTokenAddress.toLowerCase(),
       }),
     );
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AaveAmmAToken>) {
-    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
+    return [{ address: await contract.read.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getPricePerShare() {
@@ -79,8 +79,8 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
       }),
     );
 
-    const data = await pool.getReserveData(appToken.tokens[0].address);
-    const configurationData = data[0].data;
+    const data = await pool.read.getReserveData([appToken.tokens[0].address]);
+    const configurationData = data.configuration.data;
     if (!configurationData) return { liquidationThreshold: 0, enabledAsCollateral: false };
 
     const liquidationThreshold = (Number(configurationData) & ~LT_MASK) >> LT_START_BIT_POSITION;
@@ -105,7 +105,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
       address: this.providerAddress,
     });
 
-    const reservesData = await multicall.wrap(pool).getReserveData(appToken.tokens[0].address);
+    const reservesData = await multicall.wrap(pool).read.getReserveData([appToken.tokens[0].address]);
     const supplyApy = Number(reservesData[3]) / 10 ** 27;
     const stableBorrowApy = Number(reservesData[4]) / 10 ** 27;
     const variableBorrowApy = Number(reservesData[5]) / 10 ** 27;

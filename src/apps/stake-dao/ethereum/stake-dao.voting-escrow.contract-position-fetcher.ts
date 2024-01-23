@@ -5,7 +5,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { StakeDaoContractFactory, StakeDaoVotingEscrow } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoVotingEscrow } from '../contracts/viem';
+import { StakeDaoVotingEscrowContract } from '../contracts/viem/StakeDaoVotingEscrow';
 
 @PositionTemplate()
 export class EthereumStakeDaoEscrowedQiContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<StakeDaoVotingEscrow> {
@@ -14,20 +16,20 @@ export class EthereumStakeDaoEscrowedQiContractPositionFetcher extends VotingEsc
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): StakeDaoVotingEscrow {
+  getEscrowContract(address: string): StakeDaoVotingEscrowContract {
     return this.contractFactory.stakeDaoVotingEscrow({ address, network: this.network });
   }
 
   async getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<StakeDaoVotingEscrow>) {
-    return contract.token();
+    return contract.read.token();
   }
 
   async getEscrowedTokenBalance({ address, contract }: GetTokenBalancesParams<StakeDaoVotingEscrow>) {
-    return contract.locked(address).then(v => v.amount);
+    return contract.read.locked([address]).then(v => v[0]);
   }
 }

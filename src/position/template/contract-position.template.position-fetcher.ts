@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import { BigNumberish } from 'ethers/lib/ethers';
 import _, { compact, sumBy } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -30,7 +31,7 @@ import {
 import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
 export abstract class ContractPositionTemplatePositionFetcher<
-  T extends Contract,
+  T extends Abi,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
@@ -47,7 +48,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   // 1. Get contract instance
-  abstract getContract(address: string): T;
+  abstract getContract(address: string): GetContractReturnType<T, PublicClient>;
 
   // 2. Get contract position definitions (i.e.: contract addresses and additional context)
   abstract getDefinitions(params: GetDefinitionsParams): Promise<R[]>;
@@ -95,7 +96,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
@@ -199,10 +200,6 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return tokens;
   }
 
-  async getAccountAddress(address: string) {
-    return address;
-  }
-
   async getPositionsForBalances() {
     return this.appToolkit.getAppContractPositions<V>({
       appId: this.appId,
@@ -222,9 +219,8 @@ export abstract class ContractPositionTemplatePositionFetcher<
     multicall,
   }: GetTokenBalancesParams<T, V>): Promise<BigNumberish[]>;
 
-  async getBalances(_address: string): Promise<ContractPositionBalance<V>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const address = await this.getAccountAddress(_address);
+  async getBalances(address: string): Promise<ContractPositionBalance<V>[]> {
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     if (address === ZERO_ADDRESS) return [];
 
     const contractPositions = await this.getPositionsForBalances();
@@ -249,9 +245,8 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return balances;
   }
 
-  async getRawBalances(_address: string): Promise<RawContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const address = await this.getAccountAddress(_address);
+  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     if (address === ZERO_ADDRESS) return [];
 
     const contractPositions = await this.getPositionsForBalances();

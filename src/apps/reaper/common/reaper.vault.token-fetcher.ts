@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -11,36 +11,35 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { ReaperContractFactory, ReaperCrypt } from '../contracts';
+import { ReaperViemContractFactory } from '../contracts';
+import { ReaperCrypt } from '../contracts/viem';
 
 import { ReaperVaultCacheManager } from './reaper.vault.cache-manager';
 
 type ReaperVaultDefinition = {
-  name: string;
   address: string;
-  underlyingAddress: string;
-  apy: number;
+  underlyingTokenAddress: string;
 };
 
-export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
-  ReaperCrypt,
-  DefaultAppTokenDataProps,
-  ReaperVaultDefinition
-> {
+export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFetcher<ReaperCrypt> {
+  VaultAddressesNotCompatibleErc20: string[] = [];
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ReaperContractFactory) protected readonly contractFactory: ReaperContractFactory,
+    @Inject(ReaperViemContractFactory) protected readonly contractFactory: ReaperViemContractFactory,
     @Inject(ReaperVaultCacheManager) protected readonly cacheManager: ReaperVaultCacheManager,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ReaperCrypt {
+  getContract(address: string) {
     return this.contractFactory.reaperCrypt({ address, network: this.network });
   }
 
   async getDefinitions() {
-    return this.cacheManager.getCryptDefinitions(this.network);
+    const vaultDefinitions = await this.cacheManager.fetchVaults(this.network);
+
+    return vaultDefinitions.filter(v => !this.VaultAddressesNotCompatibleErc20.includes(v.address));
   }
 
   async getAddresses({ definitions }: GetAddressesParams) {
@@ -48,15 +47,15 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<ReaperCrypt, ReaperVaultDefinition>) {
-    return [{ address: definition.underlyingAddress, network: this.network }];
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({
     appToken,
     contract,
   }: GetPricePerShareParams<ReaperCrypt, DefaultAppTokenDataProps, ReaperVaultDefinition>) {
-    const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+    const pricePerShareRaw = await contract.read.getPricePerFullShare().catch(err => {
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
 
@@ -65,6 +64,6 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<ReaperCrypt>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

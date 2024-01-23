@@ -17,7 +17,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { CreditManagerV2, GearboxContractFactory } from '../contracts';
+import { GearboxViemContractFactory } from '../contracts';
+import { CreditManagerV2 } from '../contracts/viem';
 
 export type GearboxCreditAccountsDefinition = {
   address: string;
@@ -37,12 +38,12 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) private readonly contractFactory: GearboxContractFactory,
+    @Inject(GearboxViemContractFactory) private readonly contractFactory: GearboxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): CreditManagerV2 {
+  getContract(address: string) {
     return this.contractFactory.creditManagerV2({ address, network: this.network });
   }
 
@@ -52,23 +53,23 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
       network: this.network,
     });
 
-    const creditManagerAddresses = await multicall.wrap(contractsRegister).getCreditManagers();
+    const creditManagerAddresses = await multicall.wrap(contractsRegister).read.getCreditManagers();
 
     const CreditManagerV2AddressesRaw = await Promise.all(
       creditManagerAddresses.map(async address => {
         const creditManagerV2Contract = this.contractFactory.creditManagerV2({ address, network: this.network });
-        const version = await multicall.wrap(creditManagerV2Contract).version();
+        const version = await multicall.wrap(creditManagerV2Contract).read.version();
         if (Number(version) !== 2) return null;
 
         const [underlyingTokenAddressRaw, collateralTokensCount] = await Promise.all([
-          multicall.wrap(creditManagerV2Contract).underlying(),
-          multicall.wrap(creditManagerV2Contract).collateralTokensCount(),
+          multicall.wrap(creditManagerV2Contract).read.underlying(),
+          multicall.wrap(creditManagerV2Contract).read.collateralTokensCount(),
         ]);
 
         const collateralTokenAddresses = await Promise.all(
-          _.range(collateralTokensCount.toNumber()).map(async id => {
-            const collateralToken = await multicall.wrap(creditManagerV2Contract).collateralTokens(id);
-            return collateralToken.token;
+          _.range(Number(collateralTokensCount)).map(async id => {
+            const collateralToken = await multicall.wrap(creditManagerV2Contract).read.collateralTokens([BigInt(id)]);
+            return collateralToken[0];
           }),
         );
 
@@ -117,7 +118,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
       address: ACCOUNT_FACTORY_ADDRESS,
       network: this.network,
     });
-    const isCreditAccount = await multicall.wrap(accountFactoryContract).isCreditAccount(address);
+    const isCreditAccount = await multicall.wrap(accountFactoryContract).read.isCreditAccount([address]);
     // credit acccounts themselves cannot have other credit accounts
     // also this helps prevent double counting of convex positions via
     // phantom tokens and convex position fetcher
@@ -126,7 +127,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     }
 
     try {
-      creditAccountAddress = await contract.getCreditAccountOrRevert(address);
+      creditAccountAddress = await contract.read.getCreditAccountOrRevert([address]);
     } catch (err) {
       return emptyBalances;
     }
@@ -134,12 +135,15 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     const balances = await Promise.all(
       contractPosition.tokens.map(async token => {
         if (token.metaType === MetaType.BORROWED) {
-          const debt = await contract.calcCreditAccountAccruedInterest(creditAccountAddress);
-          return debt.borrowedAmountWithInterestAndFees;
+          const debt = await contract.read.calcCreditAccountAccruedInterest([creditAccountAddress]);
+          return debt[2];
         }
 
-        const tokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-        return multicall.wrap(tokenContract).balanceOf(creditAccountAddress);
+        const tokenContract = this.appToolkit.globalViemContracts.erc20({
+          address: token.address,
+          network: this.network,
+        });
+        return multicall.wrap(tokenContract).read.balanceOf([creditAccountAddress]);
       }),
     );
 

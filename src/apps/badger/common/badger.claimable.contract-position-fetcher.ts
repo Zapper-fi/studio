@@ -14,7 +14,8 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { BadgerContractFactory, BadgerTree } from '../contracts';
+import { BadgerViemContractFactory } from '../contracts';
+import { BadgerTree } from '../contracts/viem';
 
 import { BadgerClaimableRewardsResolver } from './badger.claimable.rewards-resolver';
 
@@ -32,14 +33,14 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BadgerContractFactory) protected readonly contractFactory: BadgerContractFactory,
+    @Inject(BadgerViemContractFactory) protected readonly contractFactory: BadgerViemContractFactory,
     @Inject(BadgerClaimableRewardsResolver)
     protected readonly badgerClaimableRewardsResolver: BadgerClaimableRewardsResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BadgerTree {
+  getContract(address: string) {
     return this.contractFactory.badgerTree({ network: this.network, address });
   }
 
@@ -55,9 +56,8 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     ];
   }
 
-  async getLabel(params: GetDisplayPropsParams<BadgerTree>): Promise<string> {
-    const suppliedToken = params.contractPosition.tokens[0];
-    return `Claimable ${getLabelFromToken(suppliedToken)}`;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<BadgerTree>): Promise<string> {
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({
@@ -76,11 +76,11 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     if (!match) return [0];
     let cumulativeAmount = match.rewardTokenBalanceRaw;
 
-    let claimed = await contract.claimed(address, rewardToken.address).then(v => v.toString());
+    let claimed = await contract.read.claimed([address, rewardToken.address]).then(v => v.toString());
 
     if (rewardToken.address === this.diggTokenAddress) {
       const diggTokenContract = this.contractFactory.badgerDiggToken(rewardToken);
-      const sharesPerFragment = await multicall.wrap(diggTokenContract)._sharesPerFragment();
+      const sharesPerFragment = await multicall.wrap(diggTokenContract).read._sharesPerFragment();
       cumulativeAmount = new BigNumber(cumulativeAmount)
         .dividedBy(new BigNumber(sharesPerFragment.toString()))
         .toFixed(0);

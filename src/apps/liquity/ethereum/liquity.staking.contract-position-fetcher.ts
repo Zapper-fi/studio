@@ -9,7 +9,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { LiquityContractFactory, LiquityStaking } from '../contracts';
+import { LiquityViemContractFactory } from '../contracts';
+import { LiquityStaking } from '../contracts/viem';
 
 const FARMS = [
   {
@@ -25,12 +26,12 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory) protected readonly contractFactory: LiquityContractFactory,
+    @Inject(LiquityViemContractFactory) protected readonly contractFactory: LiquityViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): LiquityStaking {
+  getContract(address: string) {
     return this.contractFactory.liquityStaking({ address, network: this.network });
   }
 
@@ -47,10 +48,10 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
-    return contract.stakes(address);
+    return contract.read.stakes([address]);
   }
 
   async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
-    return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
+    return Promise.all([contract.read.getPendingLUSDGain([address]), contract.read.getPendingETHGain([address])]);
   }
 }

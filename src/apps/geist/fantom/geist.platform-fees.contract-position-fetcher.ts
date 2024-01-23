@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -15,7 +16,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { GeistContractFactory, GeistStaking } from '../contracts';
+import { GeistViemContractFactory } from '../contracts';
+import { GeistStaking } from '../contracts/viem';
 
 @PositionTemplate()
 export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistStaking> {
@@ -27,7 +29,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(GeistContractFactory) private readonly contractFactory: GeistContractFactory,
+    @Inject(GeistViemContractFactory) private readonly contractFactory: GeistViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -44,8 +46,8 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<GeistStaking>) {
     const rewardTokenAddresses = await Promise.all(
       range(50).map(idx =>
-        contract.rewardTokens(idx).catch(e => {
-          if (isMulticallUnderlyingError(e)) return null;
+        contract.read.rewardTokens([BigInt(idx)]).catch(e => {
+          if (isViemMulticallUnderlyingError(e)) return null;
           throw e;
         }),
       ),
@@ -87,19 +89,19 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<GeistStaking>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
-      contract.lockedBalances(address),
-      contract.withdrawableBalance(address),
-      contract.claimableRewards(address),
+      contract.read.lockedBalances([address]),
+      contract.read.withdrawableBalance([address]),
+      contract.read.claimableRewards([address]),
     ]);
 
-    const withdrawableBalanceRaw = withdrawableDataRaw.amount.add(withdrawableDataRaw.penaltyAmount).toString();
+    const withdrawableBalanceRaw = BigNumber.from(withdrawableDataRaw[0]).add(withdrawableDataRaw[1]).toString();
 
     return contractPosition.tokens.map((token, idx) => {
-      if (idx === 0) return lockedBalancesData.total; // Locked GEIST
+      if (idx === 0) return lockedBalancesData[0]; // Locked GEIST
       if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked GEIST
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
-        ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,
+        ({ token: tokenAddressRaw }) => tokenAddressRaw.toLowerCase() === token.address,
       );
 
       return rewardTokenMatch?.amount ?? 0;

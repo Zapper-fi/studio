@@ -11,7 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { Api3ContractFactory, Api3Staking } from '../contracts';
+import { Api3ViemContractFactory } from '../contracts';
+import { Api3Staking } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumApi3StakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Api3Staking> {
@@ -19,12 +20,12 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(Api3ContractFactory) protected readonly contractFactory: Api3ContractFactory,
+    @Inject(Api3ViemContractFactory) protected readonly contractFactory: Api3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Api3Staking {
+  getContract(address: string) {
     return this.contractFactory.api3Staking({ address, network: this.network });
   }
 
@@ -36,17 +37,17 @@ export class EthereumApi3StakingContractPositionFetcher extends ContractPosition
     return [
       {
         metaType: MetaType.SUPPLIED,
-        address: await contract.api3Token(),
+        address: await contract.read.api3Token(),
         network: this.network,
       },
     ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Api3Staking>) {
-    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Api3Staking>) {
-    return [await contract.userStake(address)];
+    return [await contract.read.userStake([address])];
   }
 }

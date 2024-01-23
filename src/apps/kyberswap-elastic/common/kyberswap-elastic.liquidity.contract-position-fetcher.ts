@@ -1,5 +1,4 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import DataLoader from 'dataloader';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -14,7 +13,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { KyberswapElasticContractFactory, PositionManager } from '../contracts';
+import { KyberswapElasticViemContractFactory } from '../contracts';
+import { PositionManager } from '../contracts/viem';
 
 import { KyberswapElasticApyDataLoader } from './kyberswap-elastic.apy.data-loader';
 import { KyberswapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
@@ -64,11 +64,10 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
   abstract blockSubgraphUrl: string;
   protected poolFeeMapping: Record<string, number> | null;
 
-  apyDataLoader: DataLoader<string, number>;
-
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
+    @Inject(KyberswapElasticViemContractFactory)
+    protected readonly contractFactory: KyberswapElasticViemContractFactory,
     @Inject(KyberswapElasticLiquidityContractPositionBuilder)
     protected readonly kyberElasticLiquidityContractPositionBuilder: KyberswapElasticLiquidityContractPositionBuilder,
     @Inject(KyberswapElasticApyDataLoader)
@@ -77,16 +76,11 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
     super(appToolkit);
   }
 
-  getContract(address: string): PositionManager {
+  getContract(address: string) {
     return this.contractFactory.positionManager({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<KyberswapElasticLiquidityPositionDefinition[]> {
-    this.apyDataLoader = this.apyDataLoaderBuilder.getLoader({
-      subgraphUrl: this.subgraphUrl,
-      blockSubgraphUrl: this.blockSubgraphUrl,
-    });
-
     const data = await gqlFetch<GetTopPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_TOP_POOLS_QUERY,
@@ -131,17 +125,16 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
     const { tokens } = contractPosition;
 
     const [reserveRaw0, reserveRaw1] = await Promise.all([
-      multicall.wrap(this.contractFactory.erc20(tokens[0])).balanceOf(poolAddress),
-      multicall.wrap(this.contractFactory.erc20(tokens[1])).balanceOf(poolAddress),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[0])).read.balanceOf([poolAddress]),
+      multicall.wrap(this.appToolkit.globalViemContracts.erc20(tokens[1])).read.balanceOf([poolAddress]),
     ]);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
-    const apy = await this.apyDataLoader.load(poolAddress);
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard, apy, positionKey: `${feeTier}` };
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, positionKey: `${feeTier}` };
   }
 
   async getLabel({
@@ -164,7 +157,7 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
 
   async getBalances(address: string): Promise<ContractPositionBalance<KyberswapElasticLiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template_balances` },
     });
@@ -174,12 +167,12 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
       network: this.network,
     });
 
-    const numPositionsRaw = await positionManager.balanceOf(address);
+    const numPositionsRaw = await positionManager.read.balanceOf([address]);
 
     const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index =>
+      range(0, Number(numPositionsRaw)).map(async index =>
         this.kyberElasticLiquidityContractPositionBuilder.buildPosition({
-          positionId: await multicall.wrap(positionManager).tokenOfOwnerByIndex(address, index),
+          positionId: await multicall.wrap(positionManager).read.tokenOfOwnerByIndex([address, BigInt(index)]),
           network: this.network,
           multicall,
           tokenLoader,

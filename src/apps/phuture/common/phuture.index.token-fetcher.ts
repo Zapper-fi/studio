@@ -8,7 +8,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { PhutureContractFactory, PhutureManagedIndex } from '../contracts';
+import { PhutureViemContractFactory } from '../contracts';
+import { PhutureManagedIndex } from '../contracts/viem';
 
 export type PhutureIndexAppTokenDefinition = {
   address: string;
@@ -25,12 +26,12 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PhutureContractFactory) protected readonly contractFactory: PhutureContractFactory,
+    @Inject(PhutureViemContractFactory) protected readonly contractFactory: PhutureViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PhutureManagedIndex {
+  getContract(address: string) {
     return this.contractFactory.phutureManagedIndex({ address, network: this.network });
   }
 
@@ -39,17 +40,15 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getUnderlyingTokenDefinitions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const managerContract = this.contractFactory.phutureManagedIndex({
       address: this.managerAddress,
       network: this.network,
     });
 
-    const anatomy = await multicall.wrap(managerContract).anatomy();
+    const anatomy = await multicall.wrap(managerContract).read.anatomy();
 
-    const underlyingTokenAddresses = anatomy._assets.map(underlyingTokenAddress =>
-      underlyingTokenAddress.toLowerCase(),
-    );
+    const underlyingTokenAddresses = anatomy[0].map(underlyingTokenAddress => underlyingTokenAddress.toLowerCase());
 
     return underlyingTokenAddresses.map(address => {
       return { address, network: this.network };
@@ -67,12 +66,12 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
 
     const reserves = await Promise.all(
       appToken.tokens.map(async token => {
-        const vTokenAddressRaw = await multicall.wrap(vTokenFactoryContract).vTokenOf(token.address);
+        const vTokenAddressRaw = await multicall.wrap(vTokenFactoryContract).read.vTokenOf([token.address]);
         const vTokenContract = this.contractFactory.phutureVToken({
           address: vTokenAddressRaw.toLowerCase(),
           network: this.network,
         });
-        const reserveRaw = await multicall.wrap(vTokenContract).assetBalanceOf(this.managerAddress);
+        const reserveRaw = await multicall.wrap(vTokenContract).read.assetBalanceOf([this.managerAddress]);
         const reserve = Number(reserveRaw) / 10 ** token.decimals;
         return reserve;
       }),
@@ -82,6 +81,6 @@ export abstract class PhutureIndexTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<PhutureManagedIndex>) {
-    return contract.name();
+    return contract.read.name();
   }
 }

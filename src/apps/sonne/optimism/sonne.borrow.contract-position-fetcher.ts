@@ -12,7 +12,7 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { StatsItem } from '~position/display.interface';
 import {
   GetDataPropsParams,
@@ -21,7 +21,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { SonneComptroller, SonneContractFactory, SonneSoToken } from '../contracts';
+import { SonneViemContractFactory } from '../contracts';
+import { SonneComptroller, SonneSoToken } from '../contracts/viem';
 
 export type SonneBorrowTokenDataProps = CompoundBorrowTokenDataProps & {
   collateralFactor: number;
@@ -37,7 +38,7 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SonneContractFactory) protected readonly contractFactory: SonneContractFactory,
+    @Inject(SonneViemContractFactory) protected readonly contractFactory: SonneViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -51,35 +52,35 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
   }
 
   async getMarkets({ contract }: GetMarketsParams<SonneComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<SonneSoToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.callStatic.exchangeRateCurrent();
+    return contract.simulate.exchangeRateCurrent().then(v => v.result);
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.borrowRatePerBlock();
+    return contract.read.borrowRatePerBlock();
   }
 
   async getCash({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<SonneSoToken>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({ address, contract }: GetTokenBalancesParams<SonneSoToken>) {
-    return contract.callStatic.borrowBalanceCurrent(address);
+    return contract.simulate.borrowBalanceCurrent([address]).then(v => v.result);
   }
 
   async getDataProps(
@@ -94,7 +95,7 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
       this.getCTokenSupply(params),
       this.getPricePerShare(params),
       this.getCash(params).catch(e => {
-        if (isMulticallUnderlyingError(e)) return 0;
+        if (isViemMulticallUnderlyingError(e)) return 0;
         throw e;
       }),
     ]);
@@ -106,8 +107,8 @@ export class OptimismSonneBorrowContractPositionFetcher extends CompoundBorrowCo
     const comptrollerContract = this.getCompoundComptrollerContract(this.comptrollerAddress);
     const collateralFactorRaw = await params.multicall
       .wrap(comptrollerContract)
-      .markets(params.contractPosition.address);
-    const collateralFactor = Number(collateralFactorRaw.collateralFactorMantissa) / 10 ** 18;
+      .read.markets([params.contractPosition.address]);
+    const collateralFactor = Number(collateralFactorRaw[1]) / 10 ** 18;
 
     // The "cash" needs to be converted back into a proper number format.
     // We use the underlying token as the basis for the conversion.

@@ -7,7 +7,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { PendleContractFactory, PendleStaking } from '../contracts';
+import { PendleViemContractFactory } from '../contracts';
+import { PendleStaking } from '../contracts/viem';
 
 const FARMS = [
   // PENDLE
@@ -24,12 +25,12 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleContractFactory) protected readonly contractFactory: PendleContractFactory,
+    @Inject(PendleViemContractFactory) protected readonly contractFactory: PendleViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PendleStaking {
+  getContract(address: string) {
     return this.contractFactory.pendleStaking({ address, network: this.network });
   }
 
@@ -38,29 +39,29 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
   }
 
   async getRewardRates({ contract, multicall }: GetDataPropsParams<PendleStaking>) {
-    const stakingManagerAddress = await contract.stakingManager();
+    const stakingManagerAddress = await contract.read.stakingManager();
     const stakingManager = this.contractFactory.pendleStakingManager({
       address: stakingManagerAddress,
       network: this.network,
     });
 
-    const rewardRate = await multicall.wrap(stakingManager).rewardPerBlock();
+    const rewardRate = await multicall.wrap(stakingManager).read.rewardPerBlock();
     return new BigNumber(rewardRate.toString()).times(BLOCKS_PER_DAY[this.network] / 86_400).toString();
   }
 
   async getIsActive({ contract, multicall }: GetDataPropsParams<PendleStaking>): Promise<boolean> {
-    const stakingManagerAddress = await contract.stakingManager();
+    const stakingManagerAddress = await contract.read.stakingManager();
     const stakingManager = this.contractFactory.pendleStakingManager({
       address: stakingManagerAddress,
       network: this.network,
     });
 
-    const rewardRate = await multicall.wrap(stakingManager).rewardPerBlock();
-    return rewardRate.gt(0);
+    const rewardRate = await multicall.wrap(stakingManager).read.rewardPerBlock();
+    return rewardRate > 0;
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PendleStaking>) {
-    return contract.balances(address);
+    return contract.read.balances([address]);
   }
 
   async getRewardTokenBalances() {

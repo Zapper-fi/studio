@@ -1,10 +1,11 @@
-import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
+import { Abi, GetContractReturnType, PublicClient } from 'viem';
 
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import {
@@ -30,10 +31,10 @@ export type RariFuseBorrowContractPositionDefinition = {
 };
 
 export abstract class RariFuseBorrowContractPositionFetcher<
-  T extends Contract,
-  V extends Contract,
-  R extends Contract,
-  S extends Contract,
+  T extends Abi,
+  V extends Abi,
+  R extends Abi,
+  S extends Abi,
 > extends CustomContractPositionTemplatePositionFetcher<
   R,
   RariFuseBorrowContractPositionDataProps,
@@ -42,20 +43,23 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   abstract poolDirectoryAddress: string;
   abstract lensAddress: string;
 
-  abstract getPoolDirectoryContract(address: string): T;
-  abstract getComptrollerContract(address: string): V;
-  abstract getTokenContract(address: string): R;
-  abstract getLensContract(address: string): S;
+  abstract getPoolDirectoryContract(address: string): GetContractReturnType<T, PublicClient>;
+  abstract getComptrollerContract(address: string): GetContractReturnType<V, PublicClient>;
+  abstract getTokenContract(address: string): GetContractReturnType<R, PublicClient>;
+  abstract getLensContract(address: string): GetContractReturnType<S, PublicClient>;
 
-  abstract getPools(contract: T): Promise<{ name: string; comptroller: string }[]>;
-  abstract getMarketTokenAddresses(contract: V): Promise<string[]>;
-  abstract getUnderlyingTokenAddress(contract: R): Promise<string>;
-  abstract getBorrowRateRaw(contract: R): Promise<BigNumberish>;
-  abstract getTotalBorrows(contract: R): Promise<BigNumberish>;
-  abstract getBorrowBalance(address: string, contract: R): Promise<BigNumberish>;
-  abstract getPoolsBySupplier(address: string, contract: S): Promise<[BigNumber[], { comptroller: string }[]]>;
+  abstract getPools(contract: GetContractReturnType<T, PublicClient>): Promise<{ name: string; comptroller: string }[]>;
+  abstract getMarketTokenAddresses(contract: GetContractReturnType<V, PublicClient>): Promise<string[]>;
+  abstract getUnderlyingTokenAddress(contract: GetContractReturnType<R, PublicClient>): Promise<string>;
+  abstract getBorrowRateRaw(contract: GetContractReturnType<R, PublicClient>): Promise<BigNumberish>;
+  abstract getTotalBorrows(contract: GetContractReturnType<R, PublicClient>): Promise<BigNumberish>;
+  abstract getBorrowBalance(address: string, contract: GetContractReturnType<R, PublicClient>): Promise<BigNumberish>;
+  abstract getPoolsBySupplier(
+    address: string,
+    contract: GetContractReturnType<S, PublicClient>,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]>;
 
-  getContract(address: string): R {
+  getContract(address: string) {
     return this.getTokenContract(address);
   }
 
@@ -115,7 +119,7 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<R>) {
     return [
       await this.getBorrowBalance(address, contract).catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
+        if (isViemMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
     ];
@@ -126,7 +130,7 @@ export abstract class RariFuseBorrowContractPositionFetcher<
     const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
     const participatedComptrollers = poolsBySupplier[1].map(p => p.comptroller.toLowerCase());
 
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions<RariFuseBorrowContractPositionDataProps>({
       appId: this.appId,
       network: this.network,

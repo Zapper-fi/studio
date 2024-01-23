@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -11,7 +12,8 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusPrivateTgeVester } from '../contracts/viem';
 
 @PositionTemplate()
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
@@ -20,12 +22,12 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusPrivateTgeVester {
+  getContract(address: string) {
     return this.contractFactory.plutusPrivateTgeVester({ address, network: this.network });
   }
 
@@ -44,11 +46,11 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusPrivateTgeVester>) {
-    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
-    const pendingClaims = await contract.pendingClaims(address);
-    return [pendingClaims._allocation.sub(pendingClaims._claimed)];
+    const pendingClaims = await contract.read.pendingClaims([address]);
+    return [BigNumber.from(pendingClaims[2]).sub(pendingClaims[1])];
   }
 }

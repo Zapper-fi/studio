@@ -10,7 +10,9 @@ import {
   ResolvePoolReserveParams,
 } from '~apps/curve/common/curve.pool-static.token-fetcher';
 
-import { SaddleContractFactory, SaddleSwap } from '../contracts';
+import { SaddleViemContractFactory } from '../contracts';
+import { SaddleSwap } from '../contracts/viem';
+import { SaddleSwapContract } from '../contracts/viem/SaddleSwap';
 
 import { SADDLE_POOL_DEFINITIONS } from './saddle.pool.definitions';
 
@@ -21,21 +23,21 @@ export class EthereumSaddlePoolTokenFetcher extends CurvePoolStaticTokenFetcher<
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+    @Inject(SaddleViemContractFactory) protected readonly contractFactory: SaddleViemContractFactory,
   ) {
-    super(appToolkit, contractFactory);
+    super(appToolkit);
   }
 
-  resolvePoolContract(definition: CurvePoolDefinition): SaddleSwap {
+  resolvePoolContract(definition: CurvePoolDefinition): SaddleSwapContract {
     return this.contractFactory.saddleSwap({ address: definition.swapAddress, network: this.network });
   }
 
   async resolvePoolCoinAddress({ contract, index }: ResolvePoolCoinAddressParams<SaddleSwap>) {
-    return contract.getToken(index);
+    return contract.read.getToken([index]);
   }
 
   async resolvePoolReserve({ contract, index }: ResolvePoolReserveParams<SaddleSwap>) {
-    return contract.getTokenBalance(index);
+    return contract.read.getTokenBalance([index]);
   }
 
   async resolvePoolFee() {

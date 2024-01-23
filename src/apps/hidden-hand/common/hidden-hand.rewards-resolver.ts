@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, BigNumberish, ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { NETWORK_IDS, Network } from '~types';
 
-import { HiddenHandContractFactory } from '../contracts';
+import { HiddenHandViemContractFactory } from '../contracts';
 
 type PROTOCOL = {
   identifier: string;
@@ -134,12 +134,12 @@ export const PROTOCOLS: Partial<Record<Network, Record<string, PROTOCOL>>> = {
       address: '0x054d189225e66438a4d88441507cfa3193fa34a2',
     },
     'aura-v2': {
-      identifier: '',
+      identifier: 'AURA',
       name: 'Aura Market v2',
       address: '0x679c5c5828367db9005fdea80faa45ae7b881791',
     },
     'balancer-v2': {
-      identifier: '',
+      identifier: 'BALANCER',
       name: 'Balancer Market v2',
       address: '0xea1aac67b6ad9005e1551a4085fffe5aef0f3f09',
     },
@@ -151,12 +151,12 @@ export const PROTOCOLS: Partial<Record<Network, Record<string, PROTOCOL>>> = {
   },
   [Network.ARBITRUM_MAINNET]: {
     'aura-v2': {
-      identifier: '',
+      identifier: 'AURA',
       name: 'Aura Market v2',
       address: '0x928b06229a3f4bc7806d80fe54e48e777bb74536',
     },
     'pendle-v2': {
-      identifier: '',
+      identifier: 'PENDLE',
       name: 'Pendle Market v2',
       address: '0x12ca7c85db4cd7f03704ccce2311c95895cf17f5',
     },
@@ -194,7 +194,7 @@ export const REWARD_DISTRIBUTOR: Record<string, Partial<Record<Network, string>>
 export class HiddenHandRewardsResolver {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(HiddenHandContractFactory) protected readonly contractFactory: HiddenHandContractFactory,
+    @Inject(HiddenHandViemContractFactory) protected readonly contractFactory: HiddenHandViemContractFactory,
   ) {}
 
   @Cache({
@@ -296,7 +296,7 @@ export class HiddenHandRewardsResolver {
     rewardsIdentifier: string,
     distributor: string,
     network: Network,
-  ): Promise<BigNumber> {
+  ): Promise<BigNumberish> {
     const distributorAddress = REWARD_DISTRIBUTOR[distributor][network] || '';
     if (distributor === 'harvester') {
       const rewardDistributor = this.contractFactory.hiddenHandHarvester({
@@ -304,7 +304,7 @@ export class HiddenHandRewardsResolver {
         network,
       });
       try {
-        const claimedAmount = await rewardDistributor.claimed(rewardsIdentifier, address);
+        const claimedAmount = await rewardDistributor.read.claimed([rewardsIdentifier, address]);
         return claimedAmount;
       } catch (error) {
         return BigNumber.from(0);
@@ -312,7 +312,7 @@ export class HiddenHandRewardsResolver {
     } else {
       const harvester = this.contractFactory.hiddenHandRewardDistributor({ address: distributorAddress, network });
       try {
-        const claimedAmount = await harvester.claimed(rewardsIdentifier, address);
+        const claimedAmount = await harvester.read.claimed([rewardsIdentifier, address]);
         return claimedAmount;
       } catch (error) {
         return BigNumber.from(0);

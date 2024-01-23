@@ -11,7 +11,9 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { YieldYakChef, YieldYakContractFactory } from '../contracts';
+import { YieldYakViemContractFactory } from '../contracts';
+import { YieldYakChef } from '../contracts/viem';
+import { YieldYakChefContract } from '../contracts/viem/YieldYakChef';
 
 @PositionTemplate()
 export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<YieldYakChef> {
@@ -21,21 +23,21 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldYakContractFactory) private readonly contractFactory: YieldYakContractFactory,
+    @Inject(YieldYakViemContractFactory) private readonly contractFactory: YieldYakViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YieldYakChef {
+  getContract(address: string) {
     return this.contractFactory.yieldYakChef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: YieldYakChef) {
-    return contract.poolLength();
+  async getPoolLength(contract: YieldYakChefContract) {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: YieldYakChef, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.token);
+  async getStakedTokenAddress(contract: YieldYakChefContract, poolIndex: number) {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
   async getRewardTokenAddress() {
@@ -43,18 +45,18 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.rewardsPerSecond();
+    return contract.read.rewardsPerSecond();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -62,7 +64,7 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -70,6 +72,6 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<YieldYakChef>): Promise<BigNumberish> {
-    return contract.pendingRewards(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingRewards([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

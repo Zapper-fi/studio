@@ -1,12 +1,15 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { RariFuseSupplyTokenFetcher } from '~apps/rari-fuse/common/rari-fuse.supply.token-fetcher';
 
-import { MarketXyzContractFactory, MarketXyzPoolDirectory, MarketXyzPoolLens } from '../contracts';
-import { MarketXyzComptroller } from '../contracts/ethers/MarketXyzComptroller';
-import { MarketXyzToken } from '../contracts/ethers/MarketXyzToken';
+import { MarketXyzViemContractFactory } from '../contracts';
+import { MarketXyzPoolDirectory, MarketXyzComptroller, MarketXyzToken, MarketXyzPoolLens } from '../contracts/viem';
+import { MarketXyzComptrollerContract } from '../contracts/viem/MarketXyzComptroller';
+import { MarketXyzPoolDirectoryContract } from '../contracts/viem/MarketXyzPoolDirectory';
+import { MarketXyzPoolLensContract } from '../contracts/viem/MarketXyzPoolLens';
+import { MarketXyzTokenContract } from '../contracts/viem/MarketXyzToken';
 
 export abstract class MarketXyzSupplyTokenFetcher extends RariFuseSupplyTokenFetcher<
   MarketXyzPoolDirectory,
@@ -16,48 +19,52 @@ export abstract class MarketXyzSupplyTokenFetcher extends RariFuseSupplyTokenFet
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(MarketXyzContractFactory) protected readonly contractFactory: MarketXyzContractFactory,
+    @Inject(MarketXyzViemContractFactory) protected readonly contractFactory: MarketXyzViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getPoolDirectoryContract(address: string): MarketXyzPoolDirectory {
+  getPoolDirectoryContract(address: string): MarketXyzPoolDirectoryContract {
     return this.contractFactory.marketXyzPoolDirectory({ address, network: this.network });
   }
 
-  getComptrollerContract(address: string): MarketXyzComptroller {
+  getComptrollerContract(address: string): MarketXyzComptrollerContract {
     return this.contractFactory.marketXyzComptroller({ address, network: this.network });
   }
 
-  getTokenContract(address: string): MarketXyzToken {
+  getTokenContract(address: string): MarketXyzTokenContract {
     return this.contractFactory.marketXyzToken({ address, network: this.network });
   }
 
-  getLensContract(address: string): MarketXyzPoolLens {
+  getLensContract(address: string): MarketXyzPoolLensContract {
     return this.contractFactory.marketXyzPoolLens({ address, network: this.network });
   }
 
-  getPools(contract: MarketXyzPoolDirectory): Promise<{ name: string; comptroller: string }[]> {
-    return contract.getAllPools();
+  getPools(contract: MarketXyzPoolDirectoryContract): Promise<{ name: string; comptroller: string }[]> {
+    return contract.read.getAllPools().then(pools => pools.map(p => ({ name: p.name, comptroller: p.comptroller })));
   }
 
-  getMarketTokenAddresses(contract: MarketXyzComptroller): Promise<string[]> {
-    return contract.getAllMarkets();
+  getMarketTokenAddresses(contract: MarketXyzComptrollerContract): Promise<string[]> {
+    return contract.read.getAllMarkets().then(v => v.map(market => market));
   }
 
-  getUnderlyingTokenAddress(contract: MarketXyzToken): Promise<string> {
-    return contract.underlying();
+  getUnderlyingTokenAddress(contract: MarketXyzTokenContract): Promise<string> {
+    return contract.read.underlying();
   }
 
-  getExchangeRateCurrent(contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.exchangeRateCurrent();
+  getExchangeRateCurrent(contract: MarketXyzTokenContract): Promise<BigNumberish> {
+    return contract.read.exchangeRateCurrent();
   }
 
-  getSupplyRateRaw(contract: MarketXyzToken): Promise<BigNumberish> {
-    return contract.supplyRatePerBlock();
+  getSupplyRateRaw(contract: MarketXyzTokenContract): Promise<BigNumberish> {
+    return contract.read.supplyRatePerBlock();
   }
 
-  getPoolsBySupplier(address: string, contract: MarketXyzPoolLens): Promise<[BigNumber[], { comptroller: string }[]]> {
-    return contract.getPoolsBySupplier(address);
+  async getPoolsBySupplier(
+    address: string,
+    contract: MarketXyzPoolLensContract,
+  ): Promise<[BigNumberish[], { comptroller: string }[]]> {
+    const [pools, comptrollers] = await contract.read.getPoolsBySupplier([address]);
+    return [[...pools], comptrollers.map(c => ({ comptroller: c.comptroller }))];
   }
 }

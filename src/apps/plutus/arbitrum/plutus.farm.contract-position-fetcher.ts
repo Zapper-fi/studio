@@ -10,7 +10,9 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { PlutusChef, PlutusContractFactory } from '../contracts';
+import { PlutusViemContractFactory } from '../contracts';
+import { PlutusChef } from '../contracts/viem';
+import { PlutusChefContract } from '../contracts/viem/PlutusChef';
 
 @PositionTemplate()
 export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlutusChef> {
@@ -20,37 +22,37 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+    @Inject(PlutusViemContractFactory) protected readonly contractFactory: PlutusViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusChef {
+  getContract(address: string) {
     return this.contractFactory.plutusChef({ address, network: this.network });
   }
 
-  async getPoolLength(contract: PlutusChef): Promise<BigNumberish> {
-    return contract.poolLength();
+  async getPoolLength(contract: PlutusChefContract): Promise<BigNumberish> {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: PlutusChef, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: PlutusChefContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: PlutusChef): Promise<string> {
-    return contract.PLS();
+  async getRewardTokenAddress(contract: PlutusChefContract): Promise<string> {
+    return contract.read.PLS();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.plsPerSecond();
+    return contract.read.plsPerSecond();
   }
 
   async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -58,7 +60,7 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -66,6 +68,6 @@ export class ArbitrumPlutusFarmContractPositionFetcher extends MasterChefTemplat
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlutusChef>): Promise<BigNumberish> {
-    return contract.pendingPls(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingPls([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

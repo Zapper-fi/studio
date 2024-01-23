@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import axios from 'axios';
 import { ethers, BigNumberish } from 'ethers';
-import moment from 'moment';
+import { duration } from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -17,7 +17,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
-import { PoolTogetherMerkleDistributor, PoolTogetherV3ContractFactory } from '../contracts';
+import { PoolTogetherV3ViemContractFactory } from '../contracts';
+import { PoolTogetherMerkleDistributor } from '../contracts/viem';
 
 export abstract class PoolTogetherV3AirdropContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolTogetherMerkleDistributor> {
   abstract merkleAddress: string;
@@ -26,14 +27,14 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3ViemContractFactory) private readonly contractFactory: PoolTogetherV3ViemContractFactory,
   ) {
     super(appToolkit);
   }
 
   @Cache({
     key: (network: Network, address: string) => `pool-together-v3:aidrop-data:${network}:${address}:`,
-    ttl: moment.duration(30, 'minutes').asSeconds(),
+    ttl: duration(30, 'minutes').asSeconds(),
   })
   private async getAirdropData(_network: Network, address: string) {
     const checksumAddress = ethers.utils.getAddress(address);
@@ -43,7 +44,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
       .catch(() => null);
   }
 
-  getContract(address: string): PoolTogetherMerkleDistributor {
+  getContract(address: string) {
     return this.contractFactory.poolTogetherMerkleDistributor({ address, network: this.network });
   }
 
@@ -64,8 +65,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PoolTogetherMerkleDistributor>) {
-    const rewardToken = contractPosition.tokens[0];
-    return `Claimable ${getLabelFromToken(rewardToken)}`;
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getTokenBalancesPerPosition({
@@ -75,7 +75,7 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
     const airdropData = await this.getAirdropData(this.network, address);
     if (!airdropData) return [0];
 
-    const isClaimed = await contract.isClaimed(airdropData.index);
+    const isClaimed = await contract.read.isClaimed([BigInt(airdropData.index)]);
     if (isClaimed) return [0];
 
     const claimableBalanceRaw = String(parseInt(airdropData.amount, 16));

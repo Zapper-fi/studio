@@ -14,19 +14,20 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { ImpermaxContractFactory, Borrowable } from '../contracts';
+import { ImpermaxViemContractFactory } from '../contracts';
+import { Borrowable } from '../contracts/viem';
 
 export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Borrowable> {
   abstract factoryAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(ImpermaxContractFactory) private readonly contractFactory: ImpermaxContractFactory,
+    @Inject(ImpermaxViemContractFactory) private readonly contractFactory: ImpermaxViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): Borrowable {
+  getContract(address: string) {
     return this.contractFactory.borrowable({ address, network: this.network });
   }
 
@@ -35,11 +36,11 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
       this.contractFactory.factory({ network: this.network, address: this.factoryAddress }),
     );
 
-    const poolLength = await factoryContract.allLendingPoolsLength().then(length => Number(length));
+    const poolLength = await factoryContract.read.allLendingPoolsLength().then(length => Number(length));
     const collateralAddresses = await Promise.all(
       _.range(poolLength).map(async i => {
-        const poolAddress = await factoryContract.allLendingPools(i);
-        const { initialized, borrowable0, borrowable1 } = await factoryContract.getLendingPool(poolAddress);
+        const poolAddress = await factoryContract.read.allLendingPools([BigInt(i)]);
+        const [initialized, , , borrowable0, borrowable1] = await factoryContract.read.getLendingPool([poolAddress]);
         return initialized ? [borrowable0.toLowerCase(), borrowable1.toLowerCase()] : [];
       }),
     ).then(addresses => addresses.flat());
@@ -48,7 +49,7 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Borrowable>) {
-    const underlyingAddress = await contract.underlying();
+    const underlyingAddress = await contract.read.underlying();
     return [
       {
         metaType: MetaType.BORROWED,
@@ -59,8 +60,7 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Borrowable>): Promise<DisplayProps['label']> {
-    const [underlyingToken] = contractPosition.tokens;
-    return getLabelFromToken(underlyingToken);
+    return getLabelFromToken(contractPosition.tokens[0]);
   }
 
   async getSecondaryLabel({
@@ -71,7 +71,7 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<Borrowable>) {
-    const balanceRaw = await contract.borrowBalance(address);
+    const balanceRaw = await contract.read.borrowBalance([address]);
     return [balanceRaw];
   }
 }

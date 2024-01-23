@@ -8,7 +8,8 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { ShapeshiftContractFactory, ShapeshiftStakingRewards } from '../contracts';
+import { ShapeshiftViemContractFactory } from '../contracts';
+import { ShapeshiftStakingRewards } from '../contracts/viem';
 
 const FARMS = [
   // UNI-V2 FOX / ETH v1 (inactive)
@@ -41,9 +42,21 @@ const FARMS = [
     stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
     rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
   },
-  // UNI-V2 FOX / ETH v6 (active)
+  // UNI-V2 FOX / ETH v6 (inactive)
   {
     address: '0xebb1761ad43034fd7faa64d84e5bbd8cb5c40b68',
+    stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
+    rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
+  },
+  // UNI-V2 FOX / ETH v7 (inactive)
+  {
+    address: '0x5939783dbf3e9f453a69bc9ddc1e492efac1fbcb',
+    stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
+    rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
+  },
+  // UNI-V2 FOX / ETH v8 (active)
+  {
+    address: '0x662da6c777a258382f08b979d9489c3fbbbd8ac3',
     stakedTokenAddress: '0x470e8de2ebaef52014a47cb5e6af86884947f08c',
     rewardTokenAddresses: ['0xc770eefad204b5180df6a14ee197d99d808ee52d'],
   },
@@ -55,12 +68,12 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ShapeshiftContractFactory) protected readonly contractFactory: ShapeshiftContractFactory,
+    @Inject(ShapeshiftViemContractFactory) protected readonly contractFactory: ShapeshiftViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): ShapeshiftStakingRewards {
+  getContract(address: string) {
     return this.contractFactory.shapeshiftStakingRewards({ address, network: this.network });
   }
 
@@ -69,18 +82,19 @@ export class EthereumShapeshiftFarmContractPositionFetcher extends SingleStaking
   }
 
   async getRewardRates({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return contract.rewardRate();
+    return contract.read.rewardRate();
   }
 
   async getIsActive({ contract }: GetDataPropsParams<ShapeshiftStakingRewards>) {
-    return (await contract.periodFinish()).gt(Math.floor(Date.now() / 1000));
+    const periodFinish = await contract.read.periodFinish();
+    return Number(periodFinish) > Math.floor(Date.now() / 1000);
   }
 
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {
-    return contract.balanceOf(address);
+    return contract.read.balanceOf([address]);
   }
 
   async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ShapeshiftStakingRewards>) {
-    return contract.earned(address);
+    return contract.read.earned([address]);
   }
 }

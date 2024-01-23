@@ -6,24 +6,26 @@ import { OptimismMuxPerpContractPositionFetcher } from '~apps/mux/optimism/mux.p
 
 import { ArbitrumMuxFarmContractPositionFetcher } from './arbitrum/mux.farm.contract-position-fetcher';
 import { ArbitrumMuxMlpTokenFetcher } from './arbitrum/mux.mlp.token-fetcher';
-import { ArbitrumMuxMuxTokenFetcher } from './arbitrum/mux.mux.token-fetcher';
+import { ArbitrumMuxMuxLpStakingContractPositionFetcher } from './arbitrum/mux.mux-lp-staking.contract-position-fetcher';
 import { ArbitrumMuxPerpContractPositionFetcher } from './arbitrum/mux.perp.contract-position-fetcher';
+import { ArbitrumMuxVeMuxContractPositionFetcher } from './arbitrum/mux.ve-mux.contract-position-fetcher';
 import { AvalancheMuxMlpTokenFetcher } from './avalanche/mux.mlp.token-fetcher';
 import { AvalancheMuxPerpContractPositionFetcher } from './avalanche/mux.perp.contract-position-fetcher';
 import { BinanceSmartChainMuxMlpTokenFetcher } from './binance-smart-chain/mux.mlp.token-fetcher';
 import { BinanceSmartChainMuxPerpContractPositionFetcher } from './binance-smart-chain/mux.perp.contract-position-fetcher';
-import { MuxContractFactory } from './contracts';
+import { MuxViemContractFactory } from './contracts';
 import { FantomMuxMlpTokenFetcher } from './fantom/mux.mlp.token-fetcher';
 import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract-position-fetcher';
 
 @Module({
   providers: [
-    MuxContractFactory,
+    MuxViemContractFactory,
     // Arbitrum
     ArbitrumMuxFarmContractPositionFetcher,
     ArbitrumMuxPerpContractPositionFetcher,
     ArbitrumMuxMlpTokenFetcher,
-    ArbitrumMuxMuxTokenFetcher,
+    ArbitrumMuxMuxLpStakingContractPositionFetcher,
+    ArbitrumMuxVeMuxContractPositionFetcher,
     // Avalanche
     AvalancheMuxPerpContractPositionFetcher,
     AvalancheMuxMlpTokenFetcher,

@@ -10,7 +10,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { CompoundSupplyTokenFetcher, GetMarketsParams } from '../common/compound.supply.token-fetcher';
-import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
+import { CompoundViemContractFactory } from '../contracts';
+import { CompoundComptroller, CompoundCToken } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
@@ -22,7 +23,7 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CompoundContractFactory) protected readonly contractFactory: CompoundContractFactory,
+    @Inject(CompoundViemContractFactory) protected readonly contractFactory: CompoundViemContractFactory,
   ) {
     super(appToolkit);
   }
@@ -36,18 +37,18 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
   }
 
   async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CompoundCToken>) {
-    return contract.underlying();
+    return contract.read.underlying();
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<CompoundCToken, DefaultAppTokenDataProps>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<CompoundCToken, DefaultAppTokenDataProps>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 }

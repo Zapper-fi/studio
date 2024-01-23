@@ -11,7 +11,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { EaseContractFactory, EaseRcaShield } from '../contracts';
+import { EaseViemContractFactory } from '../contracts';
+import { EaseRcaShield } from '../contracts/viem';
 
 import { EaseRcaDefinitionsResolver } from './ease.rca-definition-resolver';
 
@@ -29,12 +30,12 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(EaseRcaDefinitionsResolver)
     private readonly vaultDefinitionsResolver: EaseRcaDefinitionsResolver,
-    @Inject(EaseContractFactory) protected readonly contractFactory: EaseContractFactory,
+    @Inject(EaseViemContractFactory) protected readonly contractFactory: EaseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): EaseRcaShield {
+  getContract(address: string) {
     return this.contractFactory.easeRcaShield({ network: this.network, address });
   }
 
@@ -61,6 +62,6 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<EaseRcaShield>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Ease Vault`;
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }

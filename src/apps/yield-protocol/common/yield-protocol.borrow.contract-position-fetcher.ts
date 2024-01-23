@@ -20,7 +20,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { YieldProtocolContractFactory, YieldProtocolLadle } from '../contracts';
+import { YieldProtocolViemContractFactory } from '../contracts';
+import { YieldProtocolLadle } from '../contracts/viem';
 
 import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 
@@ -143,12 +144,12 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) protected readonly contractFactory: YieldProtocolContractFactory,
+    @Inject(YieldProtocolViemContractFactory) protected readonly contractFactory: YieldProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): YieldProtocolLadle {
+  getContract(address: string) {
     return this.contractFactory.yieldProtocolLadle({ address, network: this.network });
   }
 
@@ -174,8 +175,8 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
             const { assetId: artId, id: artAddress } = art.baseAsset;
 
             // assume this is an invalid art/ilk pair if the max debt has not been set
-            const { max: maxDebt } = await multicall.wrap(cauldron).debt(artId, ilkId);
-            if (maxDebt.eq(ethers.constants.Zero)) return null;
+            const [maxDebt] = await multicall.wrap(cauldron).read.debt([artId, ilkId]);
+            if (Number(maxDebt) === 0) return null;
 
             return { address: this.ladleAddress, ilkId, artId, ilkAddress, artAddress };
           }),
@@ -205,7 +206,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
     });
 
     const { artId, ilkId } = definition;
-    const { ratio } = await multicall.wrap(cauldron).spotOracles(artId, ilkId);
+    const [, ratio] = await multicall.wrap(cauldron).read.spotOracles([artId, ilkId]);
     const minCollateralizationRatio = ratio / 10 ** 6; // ratio uses 6 decimals for all pairs
 
     const defaultDataProps = await super.getDataProps(params);
@@ -223,7 +224,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<YieldProtocolBorrowDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(this.network);
 
     const cauldron = this.contractFactory.yieldProtocolCauldron({
@@ -272,7 +273,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
         const collateralizationRatio =
           debt.balanceUSD === 0 ? 0 : (collateral.balanceUSD / Math.abs(debt.balanceUSD)) * 100;
 
-        const { ratio } = await multicall.wrap(cauldron).spotOracles(artId, ilkId);
+        const [, ratio] = await multicall.wrap(cauldron).read.spotOracles([artId, ilkId]);
         const minCollateralizationRatio = ratio / 10 ** 6; // ratio uses 6 decimals for all pairs
         const liquidationPrice = (debtAmount * minCollateralizationRatio) / collateralAmount;
 

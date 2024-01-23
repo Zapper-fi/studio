@@ -8,7 +8,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { SpoolContractFactory, SpoolStaking } from '~apps/spool/contracts';
+import { SpoolViemContractFactory } from '~apps/spool/contracts';
 import {
   REWARDS_QUERY,
   SPOOL_ADDRESS,
@@ -27,6 +27,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
+import { SpoolStaking } from '../contracts/viem';
+
 type SpoolStakingDataProps = {
   tvl: number;
   spoolStaked: number;
@@ -42,12 +44,12 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SpoolContractFactory) protected readonly contractFactory: SpoolContractFactory,
+    @Inject(SpoolViemContractFactory) protected readonly contractFactory: SpoolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SpoolStaking {
+  getContract(address: string) {
     return this.contractFactory.spoolStaking({ address, network: this.network });
   }
 
@@ -79,20 +81,15 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
 
   async getDataProps({ multicall, contractPosition }: GetDataPropsParams<SpoolStaking, SpoolStakingDataProps>) {
     const [spoolToken, voSpoolToken] = contractPosition.tokens;
-    const spoolContract = this.contractFactory.erc20(spoolToken);
+    const spoolContract = this.appToolkit.globalViemContracts.erc20(spoolToken);
     const voSpoolContract = this.contractFactory.spoolVospool(voSpoolToken);
 
-    const totalStaked = await multicall.wrap(spoolContract).balanceOf(STAKING_ADDRESS);
-    const votingPowerRaw = await multicall.wrap(voSpoolContract).getTotalGradualVotingPower();
+    const totalStakedRaw = await multicall.wrap(spoolContract).read.balanceOf([STAKING_ADDRESS]);
+    const votingPowerRaw = await multicall.wrap(voSpoolContract).read.getTotalGradualVotingPower();
 
-    const spoolStaked = totalStaked.div(BigNumber.from(10).pow(spoolToken.decimals)).toNumber();
-    const totalAccVoSpool = votingPowerRaw.div(BigNumber.from(10).pow(voSpoolToken.decimals)).toNumber();
-    const pricePrecision = 10 ** 10;
-    const tvl = BigNumber.from(pricePrecision * spoolToken.price)
-      .mul(totalStaked)
-      .div(pricePrecision)
-      .div(BigNumber.from(10).pow(spoolToken.decimals))
-      .toNumber();
+    const totalAccVoSpool = Number(votingPowerRaw) / 10 ** voSpoolToken.decimals;
+    const spoolStaked = Number(totalStakedRaw) / 10 ** spoolToken.decimals;
+    const tvl = spoolStaked * spoolToken.price;
 
     return { tvl, spoolStaked, totalAccVoSpool };
   }
@@ -121,9 +118,12 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     const voSpool = this.contractFactory.spoolVospool({ address: VOSPOOL_ADDRESS, network: this.network });
 
     const [votingPowerRaw, voSpoolRewards, ...tokenRewards] = await Promise.all([
-      multicall.wrap(voSpool).getUserGradualVotingPower(address),
-      multicall.wrap(staking).callStatic.getUpdatedVoSpoolRewardAmount({ from: address }),
-      ...rewardTokens.map(reward => multicall.wrap(staking).earned(reward.address, address)),
+      multicall.wrap(voSpool).read.getUserGradualVotingPower([address]),
+      multicall
+        .wrap(staking)
+        .simulate.getUpdatedVoSpoolRewardAmount({ account: address })
+        .then(v => v.result),
+      ...rewardTokens.map(reward => multicall.wrap(staking).read.earned([reward.address, address])),
     ]);
 
     const stakedSpool = await gqlFetch<UserSpoolStaking>({
@@ -138,8 +138,8 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
       // Add voSPOOL rewards (always in SPOOL)
       const rewards =
         token.address.toLowerCase() == suppliedToken.address.toLowerCase()
-          ? tokenRewards[idx].add(voSpoolRewards)
-          : tokenRewards[idx];
+          ? BigNumber.from(tokenRewards[idx]).add(voSpoolRewards)
+          : BigNumber.from(tokenRewards[idx]);
 
       return rewards.toString();
     });

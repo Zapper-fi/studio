@@ -10,7 +10,9 @@ import {
   RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { StakeDaoContractFactory, StakeDaoFarm } from '../contracts';
+import { StakeDaoViemContractFactory } from '../contracts';
+import { StakeDaoFarm } from '../contracts/viem';
+import { StakeDaoFarmContract } from '../contracts/viem/StakeDaoFarm';
 
 @PositionTemplate()
 export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StakeDaoFarm> {
@@ -20,40 +22,40 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(StakeDaoContractFactory) protected readonly contractFactory: StakeDaoContractFactory,
+    @Inject(StakeDaoViemContractFactory) protected readonly contractFactory: StakeDaoViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): StakeDaoFarm {
+  getContract(address: string) {
     return this.contractFactory.stakeDaoFarm({ address, network: this.network });
   }
 
-  async getPoolLength(contract: StakeDaoFarm): Promise<BigNumberish> {
-    return contract.poolLength();
+  async getPoolLength(contract: StakeDaoFarmContract): Promise<BigNumberish> {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: StakeDaoFarm, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: StakeDaoFarmContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[0]);
   }
 
-  async getRewardTokenAddress(contract: StakeDaoFarm): Promise<string> {
-    return contract.sdt();
+  async getRewardTokenAddress(contract: StakeDaoFarmContract): Promise<string> {
+    return contract.read.sdt();
   }
 
   async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.totalAllocPoint();
+    return contract.read.totalAllocPoint();
   }
 
   async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.sdtPerBlock();
+    return contract.read.sdtPerBlock();
   }
 
   async getPoolAllocPoints({
     contract,
     definition,
   }: GetMasterChefDataPropsParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+    return contract.read.poolInfo([BigInt(definition.poolIndex)]).then(v => v[1]);
   }
 
   async getStakedTokenBalance({
@@ -61,7 +63,7 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -69,6 +71,6 @@ export class EthereumStakeDaoFarmContractPositionFetcher extends MasterChefTempl
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<StakeDaoFarm>): Promise<BigNumberish> {
-    return contract.pendingSdt(contractPosition.dataProps.poolIndex, address);
+    return contract.read.pendingSdt([BigInt(contractPosition.dataProps.poolIndex), address]);
   }
 }

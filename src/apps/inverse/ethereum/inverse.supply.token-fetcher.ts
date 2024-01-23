@@ -10,8 +10,10 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { InverseContractFactory, InverseController } from '../contracts';
-import { InverseLendingPool } from '../contracts/ethers/InverseLendingPool';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseController } from '../contracts/viem';
+import { InverseControllerContract } from '../contracts/viem/InverseController';
+import { InverseLendingPool, InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
 
 @PositionTemplate()
 export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
@@ -23,29 +25,29 @@ export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetche
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getCompoundCTokenContract(address: string): InverseLendingPool {
+  getCompoundCTokenContract(address: string): InverseLendingPoolContract {
     return this.contractFactory.inverseLendingPool({ address, network: this.network });
   }
 
-  getCompoundComptrollerContract(address: string): InverseController {
+  getCompoundComptrollerContract(address: string): InverseControllerContract {
     return this.contractFactory.inverseController({ address, network: this.network });
   }
 
   async getMarkets({ contract }: GetMarketsParams<InverseController>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<InverseLendingPool>) {
-    return contract.underlying().catch(() => ZERO_ADDRESS);
+    return contract.read.underlying().catch(() => ZERO_ADDRESS);
   }
 
   async getExchangeRate({ contract }: GetPricePerShareParams<InverseLendingPool>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getExchangeRateMantissa({ appToken }: GetPricePerShareParams<InverseLendingPool>) {
@@ -53,6 +55,6 @@ export class EthereumInverseSupplyTokenFetcher extends CompoundSupplyTokenFetche
   }
 
   async getSupplyRate({ contract }: GetDataPropsParams<InverseLendingPool>) {
-    return contract.supplyRatePerBlock().catch(() => 0);
+    return contract.read.supplyRatePerBlock().catch(() => 0);
   }
 }

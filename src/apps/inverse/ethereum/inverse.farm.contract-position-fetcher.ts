@@ -2,12 +2,14 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix/contracts';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
+
+import { InverseViemContractFactory } from '../contracts';
+import { InverseStaking } from '../contracts/viem';
 
 const FARMS = [
   // DOLA 3CRV Curve
@@ -19,37 +21,37 @@ const FARMS = [
 ];
 
 @PositionTemplate()
-export class EthereumInverseFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SynthetixRewards> {
+export class EthereumInverseFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<InverseStaking> {
   groupLabel = 'Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixRewards {
-    return this.contractFactory.synthetixRewards({ address, network: this.network });
+  getContract(address: string) {
+    return this.contractFactory.inverseStaking({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
     return FARMS;
   }
 
-  async getRewardRates({ contract }: GetDataPropsParams<SynthetixRewards>) {
-    return contract.rewardRate();
+  async getRewardRates({ contract }: GetDataPropsParams<InverseStaking>) {
+    return contract.read.rewardRate();
   }
 
-  async getIsActive({ contract }: GetDataPropsParams<SynthetixRewards>): Promise<boolean> {
-    return (await contract.rewardRate()).gt(0);
+  async getIsActive({ contract }: GetDataPropsParams<InverseStaking>): Promise<boolean> {
+    return (await contract.read.rewardRate()) > 0;
   }
 
-  async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
-    return contract.balanceOf(address);
+  async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<InverseStaking>) {
+    return contract.read.balanceOf([address]);
   }
 
-  async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
-    return contract.earned(address);
+  async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<InverseStaking>) {
+    return contract.read.earned([address]);
   }
 }

@@ -1,6 +1,5 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-
-import { UniswapV3LiquidityContractPositionFetcher } from '../common/uniswap-v3.liquidity.contract-position-fetcher';
+import { UniswapV3LiquidityContractPositionFetcher } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-fetcher';
 
 @PositionTemplate()
 export class ArbitrumRamsesV2LiquidityContractPositionFetcher extends UniswapV3LiquidityContractPositionFetcher {

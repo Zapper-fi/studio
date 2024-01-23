@@ -15,7 +15,8 @@ import {
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
-import { WolfGameContractFactory, WolfGameWoolPouch } from '../contracts';
+import { WolfGameViemContractFactory } from '../contracts';
+import { WolfGameWoolPouch } from '../contracts/viem';
 
 type PouchesResult = {
   pouches: { id: string }[];
@@ -33,14 +34,14 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
   groupLabel = 'Wool Pouches';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(WolfGameContractFactory) protected readonly contractFactory: WolfGameContractFactory,
+    @Inject(WolfGameViemContractFactory) protected readonly contractFactory: WolfGameViemContractFactory,
   ) {
     super(appToolkit);
   }
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0xb76fbbb30e31f2c3bdaa2466cfb1cfe39b220d06' }];
   }
-  getContract(address: string): WolfGameWoolPouch {
+  getContract(address: string) {
     return this.contractFactory.wolfGameWoolPouch({ address, network: this.network });
   }
   async getTokenDefinitions(
@@ -64,7 +65,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,
@@ -78,7 +79,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
     const balances = await Promise.all(
       result.pouches.map(async pouch => {
         const contract = this.getContract(contractPositions[0].address);
-        const claimableAmountRaw = await multicall.wrap(contract).amountAvailable(pouch.id);
+        const claimableAmountRaw = await multicall.wrap(contract).read.amountAvailable([BigInt(pouch.id)]);
 
         const tokenBalance = drillBalance(contractPositions[0].tokens[0], claimableAmountRaw.toString());
         return { ...contractPositions[0], tokens: [tokenBalance], balanceUSD: tokenBalance.balanceUSD };

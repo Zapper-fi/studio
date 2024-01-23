@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -16,46 +15,28 @@ import {
   GetUnderlyingTokensParams,
   UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
-import { NETWORK_IDS } from '~types/network.interface';
 
-import { PendleMarket, PendleV2ContractFactory } from '../contracts';
-import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
-import { MarketsQueryResponse, TokenResponse } from '../pendle-v2.types';
+import { PendleV2ViemContractFactory } from '../contracts';
+import { PendleMarket } from '../contracts/viem';
 
-type Token = {
-  name: string;
-  icon: string;
-  address: string;
-  price: number;
-};
+import { AppTokenResponse, PendleV2MarketDefinitionsResolver } from './pendle-v2.market-definition-resolver';
 
 export type PendleV2MarketTokenDefinition = {
   address: string;
+  name: string;
+  price: number;
+  expiry: string;
+  pt: AppTokenResponse;
+  sy: AppTokenResponse;
+  yt: AppTokenResponse;
   aggregatedApy: number;
   ytFloatingApy: number;
   impliedApy: number;
   underlyingApy: number;
   ptDiscount: number;
-  pt: Token;
-  sy: Token;
-  yt: Token;
-  price: number;
-  expiry: string;
-  name: string;
-  icon: string;
 };
 
 export type PendleV2MarketDataProps = DefaultAppTokenDataProps & PendleV2MarketTokenDefinition;
-
-function toToken(tokenResp: TokenResponse): Token {
-  return {
-    // use simpleName if available, otherwise use proName
-    name: tokenResp.simpleName ?? tokenResp.proName,
-    icon: tokenResp.proIcon,
-    address: tokenResp.address,
-    price: tokenResp.price.usd,
-  };
-}
 
 export abstract class PendleV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleMarket,
@@ -63,41 +44,17 @@ export abstract class PendleV2PoolTokenFetcher extends AppTokenTemplatePositionF
   PendleV2MarketTokenDefinition
 > {
   groupLabel = 'Pools';
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
+    @Inject(PendleV2ViemContractFactory) protected readonly pendleV2ContractFactory: PendleV2ViemContractFactory,
+    @Inject(PendleV2MarketDefinitionsResolver) protected readonly pendleV2Resolver: PendleV2MarketDefinitionsResolver,
   ) {
     super(appToolkit);
   }
 
   async getDefinitions(): Promise<PendleV2MarketTokenDefinition[]> {
-    const marketsResponse = await gqlFetch<MarketsQueryResponse>({
-      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
-      query: BACKEND_QUERIES.getMarkets,
-      variables: { chainId: NETWORK_IDS[this.network] },
-    });
-
-    const definitions = await Promise.all(
-      marketsResponse.markets.results.map(async market => {
-        return {
-          address: market.address,
-          aggregatedApy: market.aggregatedApy,
-          ytFloatingApy: market.ytFloatingApy,
-          pt: toToken(market.pt),
-          sy: toToken(market.sy),
-          yt: toToken(market.yt),
-          price: market.lp.price.usd,
-          expiry: market.expiry,
-          name: market.proName,
-          icon: market.proIcon,
-          impliedApy: market.impliedApy,
-          underlyingApy: market.underlyingApy,
-          ptDiscount: market.ptDiscount,
-        };
-      }),
-    );
-
-    return definitions;
+    return this.pendleV2Resolver.getMarketDefinitions(this.network);
   }
 
   getContract(address: string) {
@@ -127,7 +84,7 @@ export abstract class PendleV2PoolTokenFetcher extends AppTokenTemplatePositionF
     definition,
   }: GetPricePerShareParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>) {
     const price = definition.price;
-    return [price / definition.pt.price, price / definition.sy.price];
+    return [price / definition.pt.price.usd, price / definition.sy.price.usd];
   }
 
   async getApy({
@@ -148,12 +105,6 @@ export abstract class PendleV2PoolTokenFetcher extends AppTokenTemplatePositionF
     string | number | DollarDisplayItem | PercentageDisplayItem | undefined
   > {
     return moment(definition.expiry).format('MMM DD, YYYY');
-  }
-
-  async getImages({
-    definition,
-  }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string[]> {
-    return [definition.icon];
   }
 
   async getDataProps(

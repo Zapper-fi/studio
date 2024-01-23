@@ -3,13 +3,15 @@ import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { IMulticallWrapper } from '~multicall';
+import { ViemMulticallDataLoader } from '~multicall';
 import {
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { ConcentratorContractFactory, AladdinConcentratorAcrvVault } from '../contracts';
+import { ConcentratorViemContractFactory } from '../contracts';
+import { AladdinConcentratorAcrvVault } from '../contracts/viem';
+import { AladdinConcentratorAcrvVaultContract } from '../contracts/viem/AladdinConcentratorAcrvVault';
 
 @PositionTemplate()
 export class EthereumConcentratorAcrvVaultContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorAcrvVault> {
@@ -19,29 +21,29 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ConcentratorContractFactory) protected readonly contractFactory: ConcentratorContractFactory,
+    @Inject(ConcentratorViemContractFactory) protected readonly contractFactory: ConcentratorViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConcentratorAcrvVault {
+  getContract(address: string) {
     return this.contractFactory.aladdinConcentratorAcrvVault({ address, network: this.network });
   }
 
-  async getPoolLength(contract: AladdinConcentratorAcrvVault): Promise<BigNumberish> {
-    return contract.poolLength();
+  async getPoolLength(contract: AladdinConcentratorAcrvVaultContract): Promise<BigNumberish> {
+    return contract.read.poolLength();
   }
 
-  async getStakedTokenAddress(contract: AladdinConcentratorAcrvVault, poolIndex: number): Promise<string> {
-    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  async getStakedTokenAddress(contract: AladdinConcentratorAcrvVaultContract, poolIndex: number): Promise<string> {
+    return contract.read.poolInfo([BigInt(poolIndex)]).then(v => v[4]);
   }
 
   async getRewardTokenAddress(
-    contract: AladdinConcentratorAcrvVault,
+    contract: AladdinConcentratorAcrvVaultContract,
     _poolIndex: number,
-    multicall: IMulticallWrapper,
+    multicall: ViemMulticallDataLoader,
   ) {
-    return Promise.all([multicall.wrap(contract).ctr(), multicall.wrap(contract).aladdinCRV()]);
+    return Promise.all([multicall.wrap(contract).read.ctr(), multicall.wrap(contract).read.aladdinCRV()]);
   }
 
   async getTotalAllocPoints() {
@@ -61,7 +63,7 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorAcrvVault>) {
-    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v[0]);
+    return contract.read.userInfo([BigInt(contractPosition.dataProps.poolIndex), address]).then(v => v[0]);
   }
 
   async getRewardTokenBalance({
@@ -70,8 +72,8 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
     contractPosition,
   }: GetMasterChefTokenBalancesParams<AladdinConcentratorAcrvVault>) {
     const poolIndex = contractPosition.dataProps.poolIndex;
-    const ctrBalanceRaw = await contract.pendingCTR(poolIndex, address);
-    const aCrvBalanceRaw = await contract.pendingReward(poolIndex, address);
+    const ctrBalanceRaw = await contract.read.pendingCTR([BigInt(poolIndex), address]);
+    const aCrvBalanceRaw = await contract.read.pendingReward([BigInt(poolIndex), address]);
     return [ctrBalanceRaw, aCrvBalanceRaw];
   }
 }

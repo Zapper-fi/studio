@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { CleverContractFactory } from './contracts';
+import { CleverViemContractFactory } from './contracts';
 import { EthereumCleverLockContractPositionFetcher } from './ethereum/clever.clever.contract-position-fetcher';
 import { EthereumCleverFarmingContractPositionFetcher } from './ethereum/clever.farming.contract-position-fetcher';
 import { EthereumCleverFurnaceContractPositionFetcher } from './ethereum/clever.furnace.contract-position-fetcher';
@@ -13,7 +13,7 @@ import { EthereumCleverVotingEscrowContractPositionFetcher } from './ethereum/cl
 
 @Module({
   providers: [
-    CleverContractFactory,
+    CleverViemContractFactory,
     EthereumCleverLeverTokenFetcher,
     EthereumCleverFurnaceContractPositionFetcher,
     EthereumCleverLockContractPositionFetcher,

@@ -9,10 +9,13 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { GetDataPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { InverseContractFactory, InverseController, InverseLendingPool } from '../contracts';
+import { InverseViemContractFactory } from '../contracts';
+import { InverseController, InverseLendingPool } from '../contracts/viem';
+import { InverseControllerContract } from '../contracts/viem/InverseController';
+import { InverseLendingPoolContract } from '../contracts/viem/InverseLendingPool';
 
 @PositionTemplate()
 export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
@@ -24,53 +27,53 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(InverseContractFactory) protected readonly contractFactory: InverseContractFactory,
+    @Inject(InverseViemContractFactory) protected readonly contractFactory: InverseViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getCompoundCTokenContract(address: string): InverseLendingPool {
+  getCompoundCTokenContract(address: string): InverseLendingPoolContract {
     return this.contractFactory.inverseLendingPool({ address, network: this.network });
   }
 
-  getCompoundComptrollerContract(address: string): InverseController {
+  getCompoundComptrollerContract(address: string): InverseControllerContract {
     return this.contractFactory.inverseController({ address, network: this.network });
   }
 
   async getMarkets({ contract }: GetMarketsParams<InverseController>) {
-    return contract.getAllMarkets();
+    return contract.read.getAllMarkets().then(v => [...v]);
   }
 
   async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<InverseLendingPool>) {
-    return contract.underlying().catch(() => ZERO_ADDRESS);
+    return contract.read.underlying().catch(() => ZERO_ADDRESS);
   }
 
   async getExchangeRate({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.exchangeRateCurrent();
+    return contract.read.exchangeRateCurrent();
   }
 
   async getExchangeRateMantissa({
     contract,
     contractPosition,
   }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    const decimals = await contract.decimals();
+    const decimals = await contract.read.decimals();
     return 18 + contractPosition.tokens[0].decimals - decimals;
   }
 
   async getBorrowRate({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.borrowRatePerBlock().catch(() => 0);
+    return contract.read.borrowRatePerBlock().catch(() => 0);
   }
 
   async getCash({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
+    return contract.read.getCash();
   }
 
   async getCTokenSupply({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.totalSupply();
+    return contract.read.totalSupply();
   }
 
   async getCTokenDecimals({ contract }: GetDataPropsParams<InverseLendingPool, CompoundBorrowTokenDataProps>) {
-    return contract.decimals();
+    return contract.read.decimals();
   }
 
   async getBorrowBalance({
@@ -78,10 +81,10 @@ export class EthereumInverseBorrowContractPositionFetcher extends CompoundBorrow
     address,
   }: {
     address: string;
-    contract: InverseLendingPool;
+    contract: InverseLendingPoolContract;
   }): Promise<BigNumberish> {
-    return contract.borrowBalanceCurrent(address).catch(err => {
-      if (isMulticallUnderlyingError(err)) return 0;
+    return contract.read.borrowBalanceCurrent([address]).catch(err => {
+      if (isViemMulticallUnderlyingError(err)) return 0;
       throw err;
     });
   }

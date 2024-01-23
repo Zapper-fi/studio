@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -14,7 +14,8 @@ import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/temp
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { LlamapayStreamApiClient } from '../common/llamapay.stream.api-client';
-import { LlamapayContractFactory, LlamapayStream } from '../contracts';
+import { LlamapayViemContractFactory } from '../contracts';
+import { LlamapayStream } from '../contracts/viem';
 
 export type LlamapayStreamContractPositionDefinition = {
   address: string;
@@ -31,7 +32,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(LlamapayContractFactory) protected readonly contractFactory: LlamapayContractFactory,
+    @Inject(LlamapayViemContractFactory) protected readonly contractFactory: LlamapayViemContractFactory,
     @Inject(LlamapayStreamApiClient) protected readonly apiClient: LlamapayStreamApiClient,
   ) {
     super(appToolkit);
@@ -41,7 +42,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
     return this.apiClient.getTokens(this.subgraph);
   }
 
-  getContract(address: string): LlamapayStream {
+  getContract(address: string) {
     return this.contractFactory.llamapayStream({ address, network: this.network });
   }
 
@@ -66,7 +67,7 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const streams = await this.apiClient.getStreams(address, this.subgraph);
     if (streams.length === 0) return [];
 
@@ -88,10 +89,10 @@ export abstract class LlamapayStreamContractPositionFetcher extends CustomContra
           network: this.network,
         });
         const llamapay = multicall.wrap(llamapayContract);
-        const streamBalanceRaw = await llamapay
-          .withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec)
+        const streamBalanceRaw = await llamapay.read
+          .withdrawable([stream.payer.id, stream.payee.id, BigInt(stream.amountPerSec)])
           .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
+            if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
           });
 

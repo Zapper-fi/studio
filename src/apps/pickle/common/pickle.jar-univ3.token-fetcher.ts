@@ -3,7 +3,7 @@ import { compact, isArray, sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { isViemMulticallUnderlyingError } from '~multicall/errors';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -14,14 +14,15 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { PickleContractFactory, PickleJarUniv3 } from '../contracts';
+import { PickleViemContractFactory } from '../contracts';
+import { PickleJarUniv3 } from '../contracts/viem';
 
 import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 
 export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositionFetcher<PickleJarUniv3> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+    @Inject(PickleViemContractFactory) protected readonly contractFactory: PickleViemContractFactory,
     @Inject(PickleApiJarRegistry) protected readonly jarRegistry: PickleApiJarRegistry,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     private readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
@@ -29,12 +30,12 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): PickleJarUniv3 {
+  getContract(address: string) {
     return this.contractFactory.pickleJarUniv3({ address, network: this.network });
   }
 
   async getPositions() {
-    const multicall = this.appToolkit.getMulticall(this.network);
+    const multicall = this.appToolkit.getViemMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
@@ -54,26 +55,26 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
         const underlyingTokenDefinitions = await this.getUnderlyingTokenDefinitions(context)
           .then(v => v.map(t => ({ address: t.address.toLowerCase(), network: t.network })))
           .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
+            if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
           });
 
         if (!underlyingTokenDefinitions) return null;
 
-        const controllerAddr = await contract.controller();
+        const controllerAddr = await contract.read.controller();
         const controller = multicall.wrap(
           this.contractFactory.pickleController({ address: controllerAddr, network: this.network }),
         );
-        const strategyAddr = await controller.strategies(underlyingTokenDefinitions[0].address);
+        const strategyAddr = await controller.read.strategies([underlyingTokenDefinitions[0].address]);
         const strategy = multicall.wrap(
           this.contractFactory.pickleStrategyUniv3({ address: strategyAddr, network: this.network }),
         );
 
-        const tokenId = await strategy
+        const tokenId = await strategy.read
           .tokenId()
           .then(x => x?.toString())
           .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
+            if (isViemMulticallUnderlyingError(err)) return null;
             throw err;
           });
         if (!tokenId) return null;
@@ -153,16 +154,16 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
   }
 
   async getAddresses() {
-    const vaults = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    return vaults.map(v => v.vaultAddress);
+    const jarDefinitionData = await this.jarRegistry.getJarDefinitions(this.network);
+    return jarDefinitionData.map(x => x.jarAddress);
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJarUniv3>) {
-    return [{ address: await contract.pool(), network: this.network }];
+    return [{ address: await contract.read.pool(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PickleJarUniv3, DefaultDataProps>) {
-    return contract.getRatio().then(v => [Number(v) / 10 ** 18]);
+    return contract.read.getRatio().then(v => [Number(v) / 10 ** 18]);
   }
 
   async getLiquidity() {
@@ -170,14 +171,8 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
   }
 
   async getReserves({ contract }: GetDataPropsParams<PickleJarUniv3>) {
-    const reserveRaw = await contract.totalLiquidity();
+    const reserveRaw = await contract.read.totalLiquidity();
     const reserve = Number(reserveRaw) / 10 ** 18;
     return [reserve];
-  }
-
-  async getApy({ appToken }: GetDataPropsParams<PickleJarUniv3>) {
-    const vaultDefinitions = await this.jarRegistry.getJarDefinitions({ network: this.network });
-    const vaultDefinition = vaultDefinitions.find(v => v.vaultAddress === appToken.address);
-    return vaultDefinition?.apy ?? 0;
   }
 }

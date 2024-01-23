@@ -12,7 +12,8 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { BProtocolContractFactory, BProtocolBamm } from '../contracts';
+import { BProtocolViemContractFactory } from '../contracts';
+import { BProtocolBamm } from '../contracts/viem';
 
 @PositionTemplate()
 export class EthereumLiquityStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BProtocolBamm> {
@@ -20,12 +21,12 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
+    @Inject(BProtocolViemContractFactory) protected readonly contractFactory: BProtocolViemContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): BProtocolBamm {
+  getContract(address: string) {
     return this.contractFactory.bProtocolBamm({ address, network: this.network });
   }
 
@@ -51,7 +52,7 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition({ address, contractPosition }: GetTokenBalancesParams<BProtocolBamm>) {
     const bammLensAddress = '0xfae2e2d3f11bab10ee0ddd0332f6dfe957414ccb';
     const contract = this.contractFactory.bProtocolBammLens({ address: bammLensAddress, network: this.network });
-    const userDeposit = await contract.getUserDeposit(address, contractPosition.address);
-    return [userDeposit.lusd, userDeposit.eth];
+    const [lusdDepositRaw, ethDepositRaw] = await contract.read.getUserDeposit([address, contractPosition.address]);
+    return [lusdDepositRaw, ethDepositRaw];
   }
 }
