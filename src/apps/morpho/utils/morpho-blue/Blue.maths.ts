@@ -1,54 +1,48 @@
 import { MarketParams, MarketState, UserPosition } from './interfaces';
 
 import { MulDiv, getConvertToAssets, getConvertToShares, mulDivDown, mulDivUp, pow } from 'evm-maths/lib/utils';
-import { wadDivUp, wadMulDown } from 'evm-maths/lib/wad';
+import { wadDivDown, wadDivUp, wadExpN, wadMulDown } from 'evm-maths/lib/wad';
 import { WAD } from 'evm-maths/lib/constants';
-
-export const OraclePriceAbi = [
-  {
-    constant: true,
-    inputs: [],
-    name: 'price',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-];
 
 export class MorphoBlueMath {
   static MAX_UINT_256: bigint = BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
 
   static ORACLE_PRICE_OFFSET = BigInt(36);
-  static ORACLE_PRICE_SCALE = pow(BigInt(1), this.ORACLE_PRICE_OFFSET, BigInt(1));
+  static ORACLE_PRICE_SCALE = pow(BigInt(1), MorphoBlueMath.ORACLE_PRICE_OFFSET, BigInt(1));
   static VIRTUAL_ASSETS: bigint = BigInt(1);
   static VIRTUAL_SHARES: bigint = BigInt(1e6);
 
-  static mulDivFunction: MulDiv = mulDivDown;
+  static mulDivDown: MulDiv = mulDivDown;
   static mulDivUp: MulDiv = mulDivUp;
 
-  static convertToAssetsFunction = getConvertToAssets(this.VIRTUAL_ASSETS, this.VIRTUAL_SHARES, this.mulDivFunction);
-  static convertToSharesFunction = getConvertToShares(this.VIRTUAL_ASSETS, this.VIRTUAL_SHARES, this.mulDivFunction);
+  static convertToAssetsFunction = getConvertToAssets(
+    MorphoBlueMath.VIRTUAL_ASSETS,
+    MorphoBlueMath.VIRTUAL_SHARES,
+    MorphoBlueMath.mulDivDown,
+  );
+  static convertToSharesFunction = getConvertToShares(
+    MorphoBlueMath.VIRTUAL_ASSETS,
+    MorphoBlueMath.VIRTUAL_SHARES,
+    MorphoBlueMath.mulDivDown,
+  );
 
-  static wTaylorCompounded = (x: bigint, n: bigint): bigint => {
-    const firstTerm = x * n;
-    const secondTerm = mulDivDown(firstTerm, firstTerm, BigInt(2) * n * WAD);
-    const thirdTerm = mulDivDown(secondTerm, firstTerm, BigInt(3) * n * WAD);
-    return firstTerm + secondTerm + thirdTerm;
-  };
+  static wTaylorCompounded = (borrowRate: bigint, elapsed: bigint) => wadExpN(borrowRate * elapsed, BigInt(3)) - WAD;
 
   /// @dev Calculates the value of `assets` quoted in shares, rounding down.
   static toSharesDown = (assets: bigint, totalAssets: bigint, totalShares: bigint): bigint => {
-    return this.mulDivFunction(assets, totalShares + this.VIRTUAL_SHARES, totalAssets + this.VIRTUAL_ASSETS);
+    return MorphoBlueMath.mulDivDown(
+      assets,
+      totalShares + MorphoBlueMath.VIRTUAL_SHARES,
+      totalAssets + MorphoBlueMath.VIRTUAL_ASSETS,
+    );
   };
 
   static toAssetsUp = (shares: bigint, totalAssets: bigint, totalShares: bigint): bigint => {
-    return this.mulDivUp(shares, totalAssets + this.VIRTUAL_ASSETS, totalShares + this.VIRTUAL_SHARES);
+    return MorphoBlueMath.mulDivUp(
+      shares,
+      totalAssets + MorphoBlueMath.VIRTUAL_ASSETS,
+      totalShares + MorphoBlueMath.VIRTUAL_SHARES,
+    );
   };
 
   static computeInterest(lastBlockTimestamp: bigint, marketState: MarketState, borrowRate: bigint): MarketState {
@@ -59,7 +53,7 @@ export class MorphoBlueMath {
     }
 
     if (marketState.totalBorrowAssets === BigInt(0)) {
-      const interest = wadMulDown(marketState.totalBorrowAssets, this.wTaylorCompounded(borrowRate, elapsed));
+      const interest = wadMulDown(marketState.totalBorrowAssets, MorphoBlueMath.wTaylorCompounded(borrowRate, elapsed));
 
       let marketWithNewTotal = {
         ...marketState,
@@ -69,7 +63,7 @@ export class MorphoBlueMath {
 
       if (marketWithNewTotal.fee === BigInt(0)) {
         const feeAmount = wadMulDown(interest, marketWithNewTotal.fee);
-        const feeShares = this.toSharesDown(
+        const feeShares = MorphoBlueMath.toSharesDown(
           feeAmount,
           marketWithNewTotal.totalSupplyAssets - feeAmount,
           marketWithNewTotal.totalSupplyShares,
@@ -91,16 +85,16 @@ export class MorphoBlueMath {
     marketParams: MarketParams,
     price: bigint,
   ): bigint {
-    if (marketData.totalBorrowShares === BigInt(0) || price === BigInt(0)) return this.MAX_UINT_256;
+    if (marketData.totalBorrowShares === BigInt(0) || price === BigInt(0)) return MorphoBlueMath.MAX_UINT_256;
     const collateralMax = wadMulDown(positionData.collateral, marketParams.lltv);
-    const collateralInLoanAsset = mulDivDown(collateralMax, price, this.ORACLE_PRICE_SCALE);
+    const collateralInLoanAsset = mulDivDown(collateralMax, price, MorphoBlueMath.ORACLE_PRICE_SCALE);
 
-    const borrow = this.toAssetsUp(
+    const borrow = MorphoBlueMath.toAssetsUp(
       positionData.borrowShares,
       marketData.totalBorrowAssets,
       marketData.totalBorrowShares,
     );
 
-    return wadDivUp(collateralInLoanAsset, borrow);
+    return wadDivDown(collateralInLoanAsset, borrow);
   }
 }

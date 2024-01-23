@@ -86,7 +86,7 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
 
     const [totalSupplyAssets, totalSupplyShares, totalBorrowAssets, totalBorrowShares, lastUpdate, fee] =
       await morpho.read.market([marketId]);
-    const irm = this.contractFactory.morphoAdaptiveCurve({ address: irmAddress, network: this.network });
+    const irm = this.contractFactory.morphoBlueIrm({ address: irmAddress, network: this.network });
     const borrowRate = await irm.read.borrowRateView([
       {
         loanToken: loanTokenAddress,
@@ -106,12 +106,13 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
     ]);
 
     const borrowRateYear = borrowRate * BigInt(SECONDS_PER_YEAR);
-    const borrowApy: number = +formatUnits(expN(borrowRateYear, BigInt(3), WAD, mulDivDown) - WAD, 18);
+    const borrowApy: number = +formatUnits(MorphoBlueMath.wTaylorCompounded(borrowRateYear, BigInt(1)), 18);
+
     const utilization: bigint =
       totalSupplyAssets != BigInt(0) ? wadDivDown(totalBorrowAssets, totalSupplyAssets) : BigInt(1);
 
     const supplyRate = wadMulDown(wadMulDown(utilization, borrowRateYear), BigInt(WAD) - BigInt(fee));
-    const supplyApy: number = +formatUnits(expN(supplyRate, BigInt(3), WAD) - BigInt(WAD), 18);
+    const supplyApy: number = +formatUnits(MorphoBlueMath.wTaylorCompounded(supplyRate, BigInt(1)), 18);
 
     const underlyingToken = contractPosition.tokens[0];
     const collateralToken = contractPosition.tokens[1];
@@ -153,10 +154,9 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
     collateral: bigint,
     marketState: MarketState,
   ): Promise<bigint[]> {
-    const virtualAssets: bigint = BigInt(1);
-    const virtualShares: bigint = BigInt(1e6);
-    const mulDivFunction: MulDiv = mulDivDown;
-    const convertToAssetsFunction = getConvertToAssets(virtualAssets, virtualShares, mulDivFunction);
+    const virtualAssets = MorphoBlueMath.VIRTUAL_ASSETS;
+    const virtualShares = MorphoBlueMath.VIRTUAL_SHARES;
+    const convertToAssetsFunction = getConvertToAssets(virtualAssets, virtualShares, MorphoBlueMath.mulDivDown);
     const supplyBalance = convertToAssetsFunction(
       supplyShares,
       marketState.totalSupplyAssets,
@@ -185,10 +185,10 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
 
     const provider = this.appToolkit.getNetworkProvider(this.network);
     const blockNumber = await provider.getBlockNumber();
-    const timestamp = (await provider.getBlock(blockNumber)).timestamp;
+    const timestampPromise = provider.getBlock(blockNumber).then(block => block.timestamp);
 
-    const [totalSupplyAssets, totalSupplyShares, totalBorrowAssets, totalBorrowShares, lastUpdate, fee] =
-      await morpho.read.market([contractPosition.dataProps.marketId]);
+    const [timestamp, [totalSupplyAssets, totalSupplyShares, totalBorrowAssets, totalBorrowShares, lastUpdate, fee]] =
+      await Promise.all([timestampPromise, await morpho.read.market([contractPosition.dataProps.marketId])]);
 
     const marketState: MarketState = {
       totalSupplyAssets,

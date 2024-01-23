@@ -9,7 +9,7 @@ import { ViemMulticallDataLoader } from '~multicall/impl/multicall.viem';
 
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 import { MorphoViemContractFactory } from '../contracts';
-import { MorphoBlueMath, OraclePriceAbi } from '../utils/morpho-blue/Blue.maths';
+import { MorphoBlueMath } from '../utils/morpho-blue/Blue.maths';
 import { MarketParams, MarketState, UserPosition } from '../utils/morpho-blue/interfaces';
 import { MorphoBlueMarkets } from '../utils/morpho-blue/markets';
 
@@ -40,17 +40,13 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
   override async dataProps(address: string): Promise<EthereumMorphoPositionPresenterDataProps | undefined> {
     const multicall = this.appToolkit.getViemMulticall(this.network);
 
-    // Fetch health factors for Morpho AaveV2, Morpho Compound, and Morpho AaveV3
-    const [healthFactorMA2, healthFactorMC, healthFactorMA3] = await Promise.all([
+    // Fetch health factors for Morpho AaveV2, Morpho Compound, Morpho AaveV3 and the respective Health Factors on the different Morpho Blue markets
+    const [healthFactorMA2, healthFactorMC, healthFactorMA3, healthFactorsMorphoBlue] = await Promise.all([
       this._fetchHealthFactorMA2(address, multicall),
       this._fetchHealthFactorMC(address, multicall),
       this._fetchHealthFactorMA3(address, multicall),
+      this._fetchHealthFactorsMorphoBlue(address, multicall),
     ]);
-
-    const healthFactorsMorphoBlue: { [marketId: string]: number } = await this._fetchMorphoBlueHealthFactors(
-      address,
-      multicall,
-    );
 
     return {
       healthFactorMA2,
@@ -105,44 +101,51 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
   ): Promise<{ marketId: string; healthFactor: bigint }> {
     const provider = this.appToolkit.getNetworkProvider(this.network);
     const blockNumber = await provider.getBlockNumber();
-    const timestamp = (await provider.getBlock(blockNumber)).timestamp;
+    const timestampPromise = provider.getBlock(blockNumber).then(block => block.timestamp);
 
-    const irm = multicall.wrap(
-      this.contractFactory.morphoAdaptiveCurve({
+    const irmContract = multicall.wrap(
+      this.contractFactory.morphoBlueIrm({
         address: this.morphoBlueAddress,
         network: this.network,
       }),
     );
-    const borrowRate = await irm.read.borrowRateView([
-      {
-        loanToken: marketParams.loanToken,
-        collateralToken: marketParams.collateralToken,
-        oracle: marketParams.oracle,
-        irm: marketParams.irm,
-        lltv: marketParams.lltv,
-      },
-      {
-        totalSupplyAssets: marketState.totalSupplyAssets,
-        totalSupplyShares: marketState.totalSupplyShares,
-        totalBorrowAssets: marketState.totalBorrowAssets,
-        totalBorrowShares: marketState.totalBorrowShares,
-        lastUpdate: marketState.lastUpdate,
-        fee: marketState.fee,
-      },
+
+    const oracleContract = multicall.wrap(
+      this.contractFactory.morphoBlueOracle({
+        address: marketParams.oracle,
+        network: this.network,
+      }),
+    );
+
+    const [timestamp, borrowRate, price] = await Promise.all([
+      timestampPromise,
+      irmContract.read.borrowRateView([
+        {
+          loanToken: marketParams.loanToken,
+          collateralToken: marketParams.collateralToken,
+          oracle: marketParams.oracle,
+          irm: marketParams.irm,
+          lltv: marketParams.lltv,
+        },
+        {
+          totalSupplyAssets: marketState.totalSupplyAssets,
+          totalSupplyShares: marketState.totalSupplyShares,
+          totalBorrowAssets: marketState.totalBorrowAssets,
+          totalBorrowShares: marketState.totalBorrowShares,
+          lastUpdate: marketState.lastUpdate,
+          fee: marketState.fee,
+        },
+      ]),
+      oracleContract.read.price(),
     ]);
 
     const newMarketState = MorphoBlueMath.computeInterest(BigInt(timestamp), marketState, borrowRate);
-    const oracleContract = new Contract(
-      marketParams.oracle,
-      OraclePriceAbi,
-      this.appToolkit.getNetworkProvider(this.network),
-    );
-    const price = await oracleContract.price();
     const healthFactor = MorphoBlueMath.getHealthFactor(positionData, newMarketState, marketParams, price);
+
     return { marketId, healthFactor };
   }
 
-  private async _fetchMorphoBlueHealthFactors(
+  private async _fetchHealthFactorsMorphoBlue(
     address: string,
     multicall: ViemMulticallDataLoader,
   ): Promise<{ [marketId: string]: number }> {
