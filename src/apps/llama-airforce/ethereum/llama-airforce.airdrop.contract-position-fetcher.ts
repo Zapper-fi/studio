@@ -51,9 +51,8 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends Contrac
         address: '0x5682a28919389b528ae74dd627e0d632ca7e398c',
         rewardTokenAddress: '0x3a886455e5b33300a31c5e77bac01e76c0c7b29c', // uFXS
       },
-
       {
-        address: '0x27a11054b62c29c166f3fab2b0ac708043b0cb49',
+        address: '0x6788234f40931ca615b0d221c1afbf0ec07afcc5',
         rewardTokenAddress: '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
       },
     ];
