@@ -21,7 +21,7 @@ import {
 
 import { MorphoViemContractFactory } from '../contracts';
 
-import { MulDiv, expN, getConvertToAssets, mulDivDown } from 'evm-maths/lib/utils';
+import { getConvertToAssets } from 'evm-maths/lib/utils';
 import { WAD } from 'evm-maths/lib/constants';
 
 import { MorphoBlueMath } from '../utils/morpho-blue/Blue.maths';
@@ -105,14 +105,16 @@ export class EthereumMorphoBlueSupplyContractPositionFetcher extends MorphoSuppl
       },
     ]);
 
-    const borrowRateYear = borrowRate * BigInt(SECONDS_PER_YEAR);
-    const borrowApy: number = +formatUnits(MorphoBlueMath.wTaylorCompounded(borrowRateYear, BigInt(1)), 18);
+    const borrowApyBigInt: bigint = MorphoBlueMath.wTaylorCompounded(borrowRate, BigInt(SECONDS_PER_YEAR));
+    const borrowApy: number = +formatUnits(borrowApyBigInt, 18);
 
     const utilization: bigint =
       totalSupplyAssets != BigInt(0) ? wadDivDown(totalBorrowAssets, totalSupplyAssets) : BigInt(1);
 
-    const supplyRate = wadMulDown(wadMulDown(utilization, borrowRateYear), BigInt(WAD) - BigInt(fee));
-    const supplyApy: number = +formatUnits(MorphoBlueMath.wTaylorCompounded(supplyRate, BigInt(1)), 18);
+    const supplyApy: number = +formatUnits(
+      wadMulDown(wadMulDown(utilization, borrowApyBigInt), BigInt(WAD) - BigInt(fee)),
+      18,
+    );
 
     const underlyingToken = contractPosition.tokens[0];
     const collateralToken = contractPosition.tokens[1];
