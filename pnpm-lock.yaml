@@ -174,7 +174,7 @@ devDependencies:
     version: 0.9.8(typescript@5.1.6)
   axios:
     specifier: ^1.6.0
-    version: 1.6.2
+    version: 1.6.3
   bignumber.js:
     specifier: ^9.0.2
     version: 9.0.2
@@ -4435,8 +4435,8 @@ packages:
       - debug
     dev: false
 
-  /axios@1.6.2:
-    resolution: {integrity: sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==}
+  /axios@1.6.3:
+    resolution: {integrity: sha512-fWyNdeawGam70jXSVlKl+SUNVcL6j6W79CuSIPfi6HnDUmSCH6gyUys/HrqHeA/wU0Az41rRgean494d0Jb+ww==}
     dependencies:
       follow-redirects: 1.15.4(debug@4.3.4)
       form-data: 4.0.0
